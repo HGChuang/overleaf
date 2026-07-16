@@ -128,17 +128,19 @@ if (process.env.DOCKER_RUNNER) {
     process.exit(1)
   }
 
-  try {
-    seccompProfilePath = Path.resolve(__dirname, '../seccomp/clsi-profile.json')
-    module.exports.clsi.docker.seccomp_profile = JSON.stringify(
-      JSON.parse(require('fs').readFileSync(seccompProfilePath))
-    )
-  } catch (error) {
-    console.error(
-      error,
-      `could not load seccomp profile from ${seccompProfilePath}`
-    )
-    process.exit(1)
+  if (process.env.DISABLE_SECCOMP !== 'true') {
+    try {
+      seccompProfilePath = Path.resolve(__dirname, '../seccomp/clsi-profile.json')
+      module.exports.clsi.docker.seccomp_profile = JSON.stringify(
+        JSON.parse(require('fs').readFileSync(seccompProfilePath))
+      )
+    } catch (error) {
+      console.error(
+        error,
+        `could not load seccomp profile from ${seccompProfilePath}`
+      )
+      process.exit(1)
+    }
   }
 
   if (process.env.APPARMOR_PROFILE) {

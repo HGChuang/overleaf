@@ -5,6 +5,7 @@
 FROM node:18.20.2 AS base
 
 WORKDIR /overleaf/services/real-time
+RUN npm config set registry https://registry.npmmirror.com
 
 # Google Cloud Storage needs a writable $HOME/.config for resumable uploads
 # (see https://googleapis.dev/nodejs/storage/latest/File.html#createWriteStream)

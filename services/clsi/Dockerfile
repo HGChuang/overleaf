@@ -5,6 +5,7 @@
 FROM node:18.20.2 AS base
 
 WORKDIR /overleaf/services/clsi
+RUN npm config set registry https://registry.npmmirror.com
 COPY services/clsi/install_deps.sh /overleaf/services/clsi/
 RUN chmod 0755 ./install_deps.sh && ./install_deps.sh
 ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]

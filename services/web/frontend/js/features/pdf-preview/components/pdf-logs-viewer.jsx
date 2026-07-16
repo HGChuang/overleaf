@@ -11,6 +11,7 @@ import PdfLogsEntries from './pdf-logs-entries'
 import withErrorBoundary from '../../../infrastructure/error-boundary'
 import PdfPreviewErrorBoundaryFallback from './pdf-preview-error-boundary-fallback'
 import PdfCodeCheckFailedNotice from './pdf-code-check-failed-notice'
+import { CopilotCompileCta } from '@/features/copilot'
 import { useDetachCompileContext as useCompileContext } from '../../../shared/context/detach-compile-context'
 import PdfLogEntry from './pdf-log-entry'
 import { usePdfPreviewContext } from '@/features/pdf-preview/components/pdf-preview-provider'
@@ -38,6 +39,8 @@ function PdfLogsViewer() {
       })}
     >
       <div className="logs-pane-content">
+        <CopilotCompileCta />
+
         {codeCheckFailed && <PdfCodeCheckFailedNotice />}
 
         {stoppedOnFirstError && <StopOnFirstErrorPrompt />}

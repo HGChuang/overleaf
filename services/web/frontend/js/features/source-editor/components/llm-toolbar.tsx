@@ -1,6 +1,8 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { EditorView } from '@codemirror/view'
 import { marked } from "marked"
+import getMeta from '@/utils/meta'
+import { useCopilotContext } from '@/features/copilot'
 
 export type LLMToolbarHandle = {
   show: (view: EditorView) => void
@@ -67,7 +69,7 @@ function base64DecodeUnicode(b64: string) {
 
 /* ---------- types ---------- */
 
-type ParaphraseKind = 'paraphrase' | 'style' | 'splitjoin' | 'summarize' | 'explain' | 'title' | 'abstract' | 'chat'
+type ParaphraseKind = 'paraphrase' | 'style' | 'splitjoin' | 'summarize' | 'explain' | 'title' | 'abstract' | 'chat' | 'table' | 'formula' | 'algorithm'
 const kindTitleMap: Record<ParaphraseKind, string> = {
   paraphrase: 'Paraphrase',
   style: 'Change style',
@@ -76,8 +78,20 @@ const kindTitleMap: Record<ParaphraseKind, string> = {
   explain: 'Explain',
   title: 'Title Generator',
   abstract: 'Abstract Generator',
-  chat: 'AI Response'
+  chat: 'AI Response',
+  table: 'Table Generator',
+  formula: 'Formula Generator',
+  algorithm: 'Algorithm Generator',
 }
+
+// generators routed through the new /api/v1/copilot/chat endpoint (tab: write).
+// The legacy numeric-mode path (/api/v1/llm/llm) stays for paraphrase/style/etc.
+const GENERATOR_PROMPTS: Record<'table' | 'formula' | 'algorithm', string> = {
+  table: 'Generate a LaTeX table based on the selected content. Return only the LaTeX table code inside a latex code fence.',
+  formula: 'Generate a LaTeX formula based on the selected content. Return only the LaTeX formula inside a latex code fence.',
+  algorithm: 'Generate a LaTeX algorithm (algorithmic environment) based on the selected content. Return only the LaTeX code inside a latex code fence.',
+}
+const GENERATOR_KINDS: ParaphraseKind[] = ['table', 'formula', 'algorithm']
 
 /* ---------- component ---------- */
 
@@ -98,6 +112,11 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
   const [editMode, setEditMode] = useState(false)
   const [showDiff, setShowDiff] = useState(false)
   const [kind, setKind] = useState<ParaphraseKind>('paraphrase')
+  const [lastGenPrompt, setLastGenPrompt] = useState('')
+
+  // optional Copilot context for "Continue in Copilot". The LLMToolbar is
+  // always rendered inside CopilotProvider in the app, so this is defined.
+  const copilotCtx = useCopilotContext()
 
   // editor height state (used to compute 70%)
   const [editorHeight, setEditorHeight] = useState<number>(600) // fallback
@@ -133,6 +152,34 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
     }
   }
 
+  // Route the Table/Formula/Algorithm generators through the new Copilot
+  // chat endpoint (/api/v1/copilot/chat, source: selection, tab: write).
+  // Project context is built server-side from projectId. Returns the
+  // assistant message text (joined blocks, falling back to content).
+  const postToCopilot = async (ask: string) => {
+    const projectId = getMeta('ol-project_id')
+    const body = {
+      projectId,
+      conversation: { source: 'selection', tab: 'write' },
+      context: { selectedText: selectionText },
+      message: { role: 'user', content: ask },
+    }
+    try {
+      const resp = await fetch('/api/v1/copilot/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify(body) })
+      if (!resp) throw new Error('no response')
+      const json = await resp.json()
+      if (json?.success) {
+        const msg = json.data?.message
+        const blocksText = (msg?.blocks || []).map((b: any) => b.text || '').filter(Boolean).join('\n\n')
+        return blocksText || (typeof msg?.content === 'string' ? msg.content : '') || ''
+      }
+      throw new Error(json?.error?.message || 'api error')
+    } catch (err: any) {
+      console.error('Copilot API error', err)
+      return `Error: ${err?.message || 'Request failed'}`
+    }
+  }
+
   // startFetch will: set kind, open appropriate panel (chat/paraphrase),
   // close the menu list (if open) but keep the input + panel visible while waiting.
   const startFetch = async (mode: number, k: ParaphraseKind, ask?: string) => {
@@ -146,6 +193,35 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
     const resp = await postToAPI(mode, (ask ?? query).trim())
     setResult(resp)
     setLoading(false)
+  }
+
+  // run a Copilot generator (Table / Formula / Algorithm) via /copilot/chat.
+  const runGenerator = async (k: 'table' | 'formula' | 'algorithm') => {
+    const prompt = GENERATOR_PROMPTS[k]
+    setKind(k)
+    setLastGenPrompt(prompt)
+    setPanelMode('paraphrase') // generators reuse the paraphrase panel (Insert + Regenerate)
+    setLoading(true)
+    setEditMode(false)
+    setShowDiff(false)
+    setResult('')
+    const resp = await postToCopilot(prompt)
+    setResult(resp)
+    setLoading(false)
+  }
+
+  // regenerate the current result, dispatching to the right backend path.
+  const regenerate = () => {
+    if ((GENERATOR_KINDS as ParaphraseKind[]).includes(kind)) {
+      runGenerator(kind as 'table' | 'formula' | 'algorithm')
+    } else {
+      startFetch(kindToMode[kind], kind)
+    }
+  }
+
+  // "Continue in Copilot": open the panel's chat tab seeded with this result.
+  const continueInCopilot = () => {
+    copilotCtx?.continueInCopilot({ tab: 'ask', seedText: result, selectionText })
   }
 
   // update editorHeight on window resize (use viewRef if available)
@@ -497,6 +573,9 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
               <div style={{ fontSize: 12, color: '#98a3af', padding: '6px 8px' }}>Widgets</div>
               <div className="llm-item" onClick={() => startFetch(9, 'title')}><ArrowUpIcon /> <span>Title Generator</span></div>
               <div className="llm-item" onClick={() => startFetch(10, 'abstract')}><CopyIcon /> <span>Abstract Generator</span></div>
+              <div className="llm-item" onClick={() => runGenerator('table')}><ArrowUpIcon /> <span>Table Generator</span></div>
+              <div className="llm-item" onClick={() => runGenerator('formula')}><CopyIcon /> <span>Formula Generator</span></div>
+              <div className="llm-item" onClick={() => runGenerator('algorithm')}><EditIcon /> <span>Algorithm Generator</span></div>
             </div>
           </div>
         </div>
@@ -539,6 +618,9 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
                   <div className="llm-paraphrase-footer">
                     <button className="llm-btn llm-primary" onClick={() => { setPanelMode('hidden'); setQuery(''); setResult('') }}>Cancel</button>
                     <button className="llm-btn llm-primary" onClick={() => insertCodeAfterSelection(result)} disabled={!result}>Insert</button>
+                    <button className="llm-btn" onClick={continueInCopilot} disabled={!result} title="Open this result in the Copilot panel to continue">
+                      Continue in Copilot
+                    </button>
                     <button className="llm-btn llm-primary" onClick={() => startFetch(0, 'chat')} disabled={loading || !query.trim()}>
                       {loading ? <><Spinner /><span style={{ fontSize: 13, marginLeft: 8 }}>Regenerating</span></> : 'Regenerate'}
                     </button>
@@ -597,11 +679,11 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
                   <button className="llm-btn llm-primary" onClick={() => { setPanelMode('hidden'); setAnchorShown(false); setResult(''); setQuery('') }}>Cancel</button>
 
                   {/* Footer buttons vary by kind:
-                      - title / abstract: Insert, Regenerate
+                      - title / abstract / table / formula / algorithm: Insert, Regenerate
                       - summarize / explain: only Regenerate (and Cancel)
                       - paraphrase / style / splitjoin: Replace, Regenerate
                   */}
-                  {(kind === 'title' || kind === 'abstract') ? (
+                  {(kind === 'title' || kind === 'abstract' || kind === 'table' || kind === 'formula' || kind === 'algorithm') ? (
                     <>
                       <button className="llm-btn llm-primary" onClick={() => insertCodeAfterSelection(result)} disabled={loading || !result}>Insert</button>
                     </>
@@ -609,7 +691,11 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
                     <button className="llm-btn llm-primary" onClick={() => replaceSelectionWith(result)} disabled={loading || !result}>Replace</button>
                   ))}
 
-                  <button className="llm-btn llm-primary" onClick={() => startFetch(kindToMode[kind], kind)} disabled={loading}>
+                  <button className="llm-btn" onClick={continueInCopilot} disabled={loading || !result} title="Open this result in the Copilot panel to continue">
+                    Continue in Copilot
+                  </button>
+
+                  <button className="llm-btn llm-primary" onClick={regenerate} disabled={loading}>
                     {loading ? <><Spinner /><span style={{ marginLeft: 8 }}>Regenerating</span></> : 'Regenerate'}
                   </button>
                 </div>

@@ -30,6 +30,7 @@ services:
       - DOCKER_RUNNER=true
       - TEXLIVE_IMAGE=texlive-full # docker build texlive -t texlive-full
       - COMPILES_HOST_DIR=${PWD}/compiles
+      - DISABLE_SECCOMP=true
     user: root
     volumes:
       - ${PWD}/compiles:/overleaf/services/clsi/compiles
@@ -194,6 +195,8 @@ services:
       dockerfile: services/web/Dockerfile
       target: dev
     command: ["npx", "webpack", "serve", "--config", "webpack.config.dev-env.js"]
+    environment:
+      - NODE_PATH=/overleaf/services/web/node_modules
     ports:
       - "127.0.0.1:80:3808"
     volumes:

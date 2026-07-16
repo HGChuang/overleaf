@@ -38,6 +38,7 @@ import StaticPagesRouter from './Features/StaticPages/StaticPagesRouter.js'
 import ChatController from './Features/Chat/ChatController.js'
 import Modules from './infrastructure/Modules.js'
 import LlmController from './Features/Llm/LlmController.js'
+import CopilotController from './Features/Copilot/CopilotController.js'
 import {
   RateLimiter,
   openProjectRateLimiter,
@@ -256,6 +257,21 @@ async function initialize(webRouter, privateApiRouter, publicApiRouter) {
 
   webRouter.csrf.disableDefaultCsrfProtection('/api/v1/llm/usingModel', 'PUT')
   webRouter.put('/api/v1/llm/usingModel', LlmController.usingModel)
+
+  webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/chat', 'POST')
+  webRouter.post('/api/v1/copilot/chat', CopilotController.chat)
+
+  webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/compile-diagnose', 'POST')
+  webRouter.post('/api/v1/copilot/compile-diagnose', CopilotController.compileDiagnose)
+
+  webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/checks/run', 'POST')
+  webRouter.post('/api/v1/copilot/checks/run', CopilotController.runChecks)
+
+  webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/checks/explain', 'POST')
+  webRouter.post('/api/v1/copilot/checks/explain', CopilotController.explainCheck)
+
+  webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/conversations/:conversationId', 'GET')
+  webRouter.get('/api/v1/copilot/conversations/:conversationId', CopilotController.getConversation)
 
   webRouter.get('/login', UserPagesController.loginPage)
   AuthenticationController.addEndpointToLoginWhitelist('/login')

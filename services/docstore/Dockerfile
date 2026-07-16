@@ -10,6 +10,8 @@ WORKDIR /overleaf/services/docstore
 # (see https://googleapis.dev/nodejs/storage/latest/File.html#createWriteStream)
 RUN mkdir /home/node/.config && chown node:node /home/node/.config
 
+RUN npm config set registry https://registry.npmmirror.com
+
 FROM base AS app
 
 COPY package.json package-lock.json /overleaf/

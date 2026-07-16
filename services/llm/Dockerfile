@@ -1,6 +1,7 @@
 FROM node:20.19.5 AS base
 
 WORKDIR /overleaf/services/llm
+RUN npm config set registry https://registry.npmmirror.com
 
 
 FROM base AS app

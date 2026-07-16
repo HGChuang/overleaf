@@ -6,6 +6,7 @@ import CobrandingLogo from './cobranding-logo'
 import BackToProjectsButton from './back-to-projects-button'
 import UpgradePrompt from './upgrade-prompt'
 import ChatToggleButton from './chat-toggle-button'
+import CopilotToggleButton from '@/features/copilot/components/copilot-toggle-button'
 import LayoutDropdownButton from './layout-dropdown-button'
 import OnlineUsersWidget from './online-users-widget'
 import ProjectNameEditableLabel from './project-name-editable-label'
@@ -124,6 +125,8 @@ const ToolbarHeader = React.memo(function ToolbarHeader({
             )}
 
             <LayoutDropdownButton />
+
+            <CopilotToggleButton />
 
             {chatEnabled && chatVisible && (
               <ChatToggleButton

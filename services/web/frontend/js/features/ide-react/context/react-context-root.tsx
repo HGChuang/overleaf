@@ -23,6 +23,7 @@ import { PermissionsProvider } from '@/features/ide-react/context/permissions-co
 import { FileTreeOpenProvider } from '@/features/ide-react/context/file-tree-open-context'
 import { OutlineProvider } from '@/features/ide-react/context/outline-context'
 import { SnapshotProvider } from '@/features/ide-react/context/snapshot-context'
+import { CopilotProvider } from '@/features/copilot'
 
 export const ReactContextRoot: FC = ({ children }) => {
   return (
@@ -50,7 +51,9 @@ export const ReactContextRoot: FC = ({ children }) => {
                                               <OnlineUsersProvider>
                                                 <MetadataProvider>
                                                   <OutlineProvider>
-                                                    {children}
+                                                    <CopilotProvider>
+                                                      {children}
+                                                    </CopilotProvider>
                                                   </OutlineProvider>
                                                 </MetadataProvider>
                                               </OnlineUsersProvider>

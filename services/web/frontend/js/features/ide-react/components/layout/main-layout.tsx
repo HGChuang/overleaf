@@ -13,6 +13,7 @@ import { useSidebarPane } from '@/features/ide-react/hooks/use-sidebar-pane'
 import { useChatPane } from '@/features/ide-react/hooks/use-chat-pane'
 import { EditorAndPdf } from '@/features/ide-react/components/editor-and-pdf'
 import HistoryContainer from '@/features/ide-react/components/history-container'
+import { CopilotDrawer } from '@/features/copilot'
 import getMeta from '@/utils/meta'
 
 export const MainLayout: FC = () => {
@@ -46,6 +47,7 @@ export const MainLayout: FC = () => {
   return (
     <div className="ide-react-main">
       <EditorNavigationToolbar />
+      <CopilotDrawer />
       <div className="ide-react-body">
         <PanelGroup
           autoSaveId="ide-outer-layout"

@@ -1,0 +1,68 @@
+// Renders a conversation (list of CopilotMessage). Assistant messages render
+// their markdown `content` plus any structured `blocks` and `suggestedActions`.
+
+import { FC } from 'react'
+import type { CopilotMessage } from '../utils/types'
+import { renderMarkdown } from '../utils/markdown'
+import MessageBlockView from './message-block'
+
+function Spinner() {
+  return <span className="copilot-spinner" aria-label="loading" />
+}
+
+export const MessageList: FC<{ messages: CopilotMessage[] }> = ({
+  messages,
+}) => {
+  if (messages.length === 0) return null
+
+  return (
+    <div className="copilot-message-list">
+      {messages.map((msg, i) => {
+        const isUser = msg.role === 'user'
+        const isPending = msg.pending
+        return (
+          <div
+            key={i}
+            className={`copilot-msg ${isUser ? 'copilot-msg-user' : 'copilot-msg-assistant'}`}
+          >
+            {isUser ? (
+              <div className="copilot-msg-bubble copilot-msg-bubble-user">
+                {msg.content}
+              </div>
+            ) : isPending ? (
+              <div className="copilot-msg-pending">
+                <Spinner />
+                <span>Thinking…</span>
+              </div>
+            ) : (
+              <div className="copilot-msg-body">
+                {msg.content && (
+                  <div
+                    className="copilot-md"
+                    dangerouslySetInnerHTML={{
+                      __html: renderMarkdown(msg.content),
+                    }}
+                  />
+                )}
+                {msg.blocks?.map((block, j) => (
+                  <MessageBlockView key={j} block={block} />
+                ))}
+                {msg.suggestedActions && msg.suggestedActions.length > 0 && (
+                  <div className="copilot-suggested-actions">
+                    {msg.suggestedActions.map((a, k) => (
+                      <span key={k} className="copilot-suggested-action-chip">
+                        {a.label}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+export default MessageList

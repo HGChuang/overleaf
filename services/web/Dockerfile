@@ -8,6 +8,8 @@ WORKDIR /overleaf/services/web
 # (see https://googleapis.dev/nodejs/storage/latest/File.html#createWriteStream)
 RUN mkdir /home/node/.config && chown node:node /home/node/.config
 
+RUN npm config set registry https://registry.npmmirror.com
+
 RUN mkdir -p /overleaf/services/web/data/dumpFolder \
     &&  mkdir -p /overleaf/services/web/data/logs \
     &&  mkdir -p /overleaf/services/web/data/pdf \

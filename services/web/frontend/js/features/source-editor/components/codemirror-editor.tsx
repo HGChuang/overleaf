@@ -86,6 +86,28 @@ function CodeMirrorEditor() {
     }
   }, [])
 
+  // Bridge from the Copilot panel: insert generated text at the cursor.
+  // The panel lives outside the source editor and has no EditorView, so it
+  // dispatches a `copilot:insert-text` CustomEvent; we insert here.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const view = viewRef.current
+      if (!view) return
+      const text = (e as CustomEvent<{ text: string }>).detail?.text
+      if (typeof text !== 'string' || !text) return
+      const head = view.state.selection.main.head
+      view.dispatch({
+        changes: { from: head, insert: text },
+        selection: { anchor: head + text.length },
+        scrollIntoView: true,
+      })
+      view.focus()
+    }
+    window.addEventListener('copilot:insert-text', handler as EventListener)
+    return () =>
+      window.removeEventListener('copilot:insert-text', handler as EventListener)
+  }, [])
+
   if (viewRef.current === null) {
     const timer = dispatchTimer()
 

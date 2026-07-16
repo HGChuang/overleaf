@@ -258,7 +258,7 @@ const DockerRunner = {
             Hard: timeoutInSeconds + 10,
           },
         ],
-        CapDrop: 'ALL',
+        CapDrop: ['ALL'],
         SecurityOpt: ['no-new-privileges'],
       },
     }
