@@ -23,6 +23,11 @@ import {
 
 
 import { inlineCompletionExtension, INLINE_COMPLETION_PLUGIN } from './llm-completion'
+import {
+  setActivePatch,
+  setPatchEffect,
+  type PatchHunk,
+} from '../extensions/copilot-patch-preview'
 
 // TODO: remove this when definitely no longer used
 export * from './codemirror-context'
@@ -66,6 +71,24 @@ function CodeMirrorEditor() {
       }
       lastSelectionRef.current = { from: selection.from, to: selection.to }
 
+      // Bridge the selection to the Copilot pane so its composer can show a
+      // line-number reference chip and send the selected text as context.
+      if (!selection.empty) {
+        const doc = view.state.doc
+        const fromLine = doc.lineAt(selection.from).number
+        const toLine = doc.lineAt(selection.to).number
+        const text = view.state.sliceDoc(selection.from, selection.to)
+        window.dispatchEvent(
+          new CustomEvent('copilot:selection-change', {
+            detail: { fromLine, toLine, text },
+          })
+        )
+      } else {
+        window.dispatchEvent(
+          new CustomEvent('copilot:selection-change', { detail: null })
+        )
+      }
+
       if (!selection.empty && llmToolbarref.current) {
         llmToolbarref.current.show(view)
       } else if (llmToolbarref.current) {
@@ -106,6 +129,93 @@ function CodeMirrorEditor() {
     window.addEventListener('copilot:insert-text', handler as EventListener)
     return () =>
       window.removeEventListener('copilot:insert-text', handler as EventListener)
+  }, [])
+
+  // Bridge from the Copilot panel: apply a concrete fix by replacing the
+  // first occurrence of `oldText` (nearest to `line`) with `newText`. Falls
+  // back to inserting `newText` at the cursor if `oldText` isn't found.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const view = viewRef.current
+      if (!view) return
+      const detail = (e as CustomEvent<{
+        oldText?: string
+        newText?: string
+        line?: number | null
+      }>).detail
+      const newText = detail?.newText
+      if (typeof newText !== 'string' || !newText) return
+      const oldText = typeof detail?.oldText === 'string' ? detail.oldText : ''
+
+      if (oldText.length > 0) {
+        const doc = view.state.doc
+        const full = doc.toString()
+        // collect all occurrences of oldText
+        const occurrences: number[] = []
+        let from = full.indexOf(oldText)
+        while (from !== -1) {
+          occurrences.push(from)
+          from = full.indexOf(oldText, from + 1)
+        }
+        if (occurrences.length === 0) {
+          // oldText not found in the open doc (model didn't copy it verbatim,
+          // or the target file isn't open). Don't insert blindly — no-op.
+          console.debug('[CodeMirrorEditor] copilot apply-fix: oldText not found, skipping')
+          return
+        }
+        // pick the occurrence nearest to the reported line (if any)
+        let pos = occurrences[0]
+        if (detail?.line != null && detail.line >= 1 && detail.line <= doc.lines) {
+          const target = doc.line(detail.line).from
+          pos = occurrences.reduce((best, o) =>
+            Math.abs(o - target) < Math.abs(best - target) ? o : best
+          , occurrences[0])
+        }
+        view.dispatch({
+          changes: { from: pos, to: pos + oldText.length, insert: newText },
+          selection: { anchor: pos + newText.length },
+          scrollIntoView: true,
+        })
+        view.focus()
+      }
+    }
+    window.addEventListener('copilot:apply-fix', handler as EventListener)
+    return () =>
+      window.removeEventListener('copilot:apply-fix', handler as EventListener)
+  }, [])
+
+  // Bridge from the Copilot panel: show a pending patch as an inline-diff ghost
+  // preview (struck old + gray new), or clear it. The panel lives outside the
+  // source editor and dispatches `copilot:show-patch` / `copilot:clear-patch`
+  // CustomEvents; we forward the hunks to the `copilotPatchPreview` extension.
+  // Only hunks whose `oldText` is in the currently-open doc are decorated;
+  // cross-file hunks render once the user opens the target file (the extension
+  // rebuilds from module-level state on every doc change).
+  useEffect(() => {
+    const showHandler = (e: Event) => {
+      const view = viewRef.current
+      const detail = (
+        e as CustomEvent<{ hunks: PatchHunk[] }>
+      ).detail
+      const hunks = Array.isArray(detail?.hunks) ? detail.hunks : []
+      setActivePatch(hunks)
+      if (view) {
+        view.dispatch({ effects: setPatchEffect.of(hunks) })
+      }
+    }
+    const clearHandler = () => {
+      const view = viewRef.current
+      setActivePatch(null)
+      if (view) {
+        view.dispatch({ effects: setPatchEffect.of(null) })
+      }
+    }
+    window.addEventListener('copilot:show-patch', showHandler as EventListener)
+    window.addEventListener('copilot:clear-patch', clearHandler as EventListener)
+    return () => {
+      window.removeEventListener('copilot:show-patch', showHandler as EventListener)
+      window.removeEventListener('copilot:clear-patch', clearHandler as EventListener)
+    }
   }, [])
 
   if (viewRef.current === null) {

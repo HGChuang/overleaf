@@ -53,6 +53,7 @@ import { isSplitTestEnabled } from '@/utils/splitTestUtils'
 import { ranges } from './ranges'
 import { trackDetachedComments } from './track-detached-comments'
 import { addComment } from './add-comment'
+import { copilotPatchPreview } from './copilot-patch-preview'
 
 const moduleExtensions: Array<(options: Record<string, any>) => Extension> =
   importOverleafModules('sourceEditorExtensions').map(
@@ -154,4 +155,5 @@ export const createExtensions = (options: Record<string, any>): Extension[] => [
   effectListeners(),
   geometryChangeEvent(),
   fileTreeItemDrop(),
+  copilotPatchPreview(),
 ]

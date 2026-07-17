@@ -11,9 +11,10 @@ import EditorSidebar from '@/features/ide-react/components/editor-sidebar'
 import { useTranslation } from 'react-i18next'
 import { useSidebarPane } from '@/features/ide-react/hooks/use-sidebar-pane'
 import { useChatPane } from '@/features/ide-react/hooks/use-chat-pane'
+import { useCopilotPane } from '@/features/ide-react/hooks/use-copilot-pane'
 import { EditorAndPdf } from '@/features/ide-react/components/editor-and-pdf'
 import HistoryContainer from '@/features/ide-react/components/history-container'
-import { CopilotDrawer } from '@/features/copilot'
+import { CopilotPane } from '@/features/copilot'
 import getMeta from '@/utils/meta'
 
 export const MainLayout: FC = () => {
@@ -40,6 +41,23 @@ export const MainLayout: FC = () => {
     handlePaneExpand: handleChatExpand,
   } = useChatPane()
 
+  const {
+    isOpen: copilotIsOpen,
+    setIsOpen: setCopilotIsOpen,
+    panelRef: copilotPanelRef,
+    togglePane: toggleCopilot,
+    resizing: copilotResizing,
+    setResizing: setCopilotResizing,
+    handlePaneCollapse: handleCopilotCollapse,
+    handlePaneExpand: handleCopilotExpand,
+  } = useCopilotPane()
+
+  // Copilot and Chat are independent right-side panels. Each toolbar button
+  // toggles only its own panel state (copilot:open vs ui.chatOpen), so
+  // clicking Copilot opens/closes Copilot without touching Chat, and clicking
+  // Chat opens/closes Chat without touching Copilot. Both may be open at once.
+  // Do NOT re-add mutual-exclusion effects (opening one closes the other) —
+  // that produces the exact "clicking Copilot switches to Chat" bug we fixed.
   const chatEnabled = getMeta('ol-chatEnabled')
 
   const { t } = useTranslation()
@@ -47,13 +65,13 @@ export const MainLayout: FC = () => {
   return (
     <div className="ide-react-main">
       <EditorNavigationToolbar />
-      <CopilotDrawer />
       <div className="ide-react-body">
         <PanelGroup
           autoSaveId="ide-outer-layout"
           direction="horizontal"
           className={classNames({
-            'ide-panel-group-resizing': sidebarResizing || chatResizing,
+            'ide-panel-group-resizing':
+              sidebarResizing || chatResizing || copilotResizing,
           })}
         >
           {/* sidebar */}
@@ -89,7 +107,12 @@ export const MainLayout: FC = () => {
           </HorizontalResizeHandle>
 
           <Panel id="panel-outer-main" order={2}>
-            <PanelGroup autoSaveId="ide-inner-layout" direction="horizontal">
+            {/* autoSaveId bumped to v2: the pre-Copilot layout saved only 2
+              panels (main + chat). Adding the third collapsible Copilot panel
+              to the same id restored a stale 2-panel layout, which made the
+              chat/copilot panels mis-share space and the togglers appear to
+              cross-wire. A fresh id discards the stale layout. */}
+            <PanelGroup autoSaveId="ide-inner-layout-v2" direction="horizontal">
               <Panel className="ide-react-panel" id="panel-main" order={1}>
                 <HistoryContainer />
                 <EditorAndPdf />
@@ -120,6 +143,37 @@ export const MainLayout: FC = () => {
                   </Panel>
                 </>
               )}
+
+              <HorizontalResizeHandle
+                onDoubleClick={toggleCopilot}
+                resizable={copilotIsOpen}
+                onDragging={setCopilotResizing}
+                hitAreaMargins={{ coarse: 0, fine: 0 }}
+              >
+                <HorizontalToggler
+                  id="panel-copilot"
+                  togglerType="east"
+                  isOpen={copilotIsOpen}
+                  setIsOpen={setCopilotIsOpen}
+                  tooltipWhenOpen="Hide Copilot"
+                  tooltipWhenClosed="Show Copilot"
+                />
+              </HorizontalResizeHandle>
+
+              {/* copilot */}
+              <Panel
+                ref={copilotPanelRef}
+                id="panel-copilot"
+                order={3}
+                defaultSize={22}
+                minSize={5}
+                maxSize={40}
+                collapsible
+                onCollapse={handleCopilotCollapse}
+                onExpand={handleCopilotExpand}
+              >
+                <CopilotPane />
+              </Panel>
             </PanelGroup>
           </Panel>
         </PanelGroup>

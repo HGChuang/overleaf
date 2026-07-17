@@ -13,10 +13,7 @@ describe('CopilotController', function () {
       json: sinon.stub().resolves({ success: true, data: { ok: true } }),
     })
     this.contextBuilder = {
-      buildChatBody: sinon.stub().resolves({ project: { projectId: 'project-1' } }),
-      buildCompileBody: sinon.stub().resolves({ project: { projectId: 'project-1' } }),
-      buildChecksRunBody: sinon.stub().resolves({ project: { projectId: 'project-1' } }),
-      buildChecksExplainBody: sinon.stub().resolves({ project: { projectId: 'project-1' } }),
+      buildCopilotBody: sinon.stub().resolves({ project: { projectId: 'project-1' } }),
     }
     this.authorizationManager = {
       promises: {

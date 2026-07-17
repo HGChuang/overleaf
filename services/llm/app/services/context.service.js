@@ -85,9 +85,8 @@ export class ContextService {
   normalizeCompileContext(payload = {}) {
     const project = normalizeProject(payload.project || {});
     const compile = payload.compile || {};
-    if (!compile.logText && (!Array.isArray(compile.annotations) || compile.annotations.length === 0)) {
-      throw badRequest('compile.logText or compile.annotations is required');
-    }
+    // Tolerant of an empty log (e.g. the latest compile produced no parseable
+    // output): don't 400 — let the agent respond that no errors were found.
 
     const normalized = {
       conversation: normalizeConversation(payload.conversation, {

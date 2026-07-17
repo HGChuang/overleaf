@@ -77,27 +77,15 @@ async function proxy(req, res, url, bodyBuilder) {
 }
 
 module.exports = {
+  // One unified Copilot endpoint. The body's `intent` (chat / compile-diagnose
+  // / run-checks / explain-issue) is forwarded to the LLM service's single
+  // /api/v1/copilot/chat route; CopilotContextBuilder.buildCopilotBody injects
+  // the server-side project context (and the compile log for the diagnose
+  // intent). The former compileDiagnose / runChecks / explainCheck proxy
+  // methods were folded into this one when the Ask/Fix/Check distinction was
+  // removed.
   async chat(req, res) {
-    return proxy(req, res, '/api/v1/copilot/chat', CopilotContextBuilder.buildChatBody)
-  },
-  async compileDiagnose(req, res) {
-    return proxy(
-      req,
-      res,
-      '/api/v1/copilot/compile-diagnose',
-      CopilotContextBuilder.buildCompileBody
-    )
-  },
-  async runChecks(req, res) {
-    return proxy(req, res, '/api/v1/copilot/checks/run', CopilotContextBuilder.buildChecksRunBody)
-  },
-  async explainCheck(req, res) {
-    return proxy(
-      req,
-      res,
-      '/api/v1/copilot/checks/explain',
-      CopilotContextBuilder.buildChecksExplainBody
-    )
+    return proxy(req, res, '/api/v1/copilot/chat', CopilotContextBuilder.buildCopilotBody)
   },
   async getConversation(req, res) {
     return proxy(req, res, `/api/v1/copilot/conversations/${req.params.conversationId}`)

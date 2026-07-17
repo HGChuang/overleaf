@@ -258,17 +258,13 @@ async function initialize(webRouter, privateApiRouter, publicApiRouter) {
   webRouter.csrf.disableDefaultCsrfProtection('/api/v1/llm/usingModel', 'PUT')
   webRouter.put('/api/v1/llm/usingModel', LlmController.usingModel)
 
+  // A single unified Copilot endpoint. The body's `intent` field selects
+  // chat / compile-diagnose / run-checks / explain-issue; all return the same
+  // `{conversationId, message:{role,content,blocks}, suggestedActions}` shape.
+  // The former /compile-diagnose, /checks/run, /checks/explain routes were
+  // folded into /chat when the Ask/Fix/Check distinction was removed.
   webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/chat', 'POST')
   webRouter.post('/api/v1/copilot/chat', CopilotController.chat)
-
-  webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/compile-diagnose', 'POST')
-  webRouter.post('/api/v1/copilot/compile-diagnose', CopilotController.compileDiagnose)
-
-  webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/checks/run', 'POST')
-  webRouter.post('/api/v1/copilot/checks/run', CopilotController.runChecks)
-
-  webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/checks/explain', 'POST')
-  webRouter.post('/api/v1/copilot/checks/explain', CopilotController.explainCheck)
 
   webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/conversations/:conversationId', 'GET')
   webRouter.get('/api/v1/copilot/conversations/:conversationId', CopilotController.getConversation)

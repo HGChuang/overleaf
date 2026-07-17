@@ -1,7 +1,8 @@
 // Entry 4 — Compile Log Copilot CTA banner. Rendered at the top of the
 // compile logs pane. Shows when the latest compile failed and there is a
-// parseable log; "Explain errors" opens the Copilot panel's Fix tab and
-// triggers /copilot/compile-diagnose with the current log + annotations.
+// parseable log; "Explain errors" opens the Copilot panel and triggers the
+// unified /copilot/chat endpoint with intent: 'compile-diagnose', sending
+// the current log + annotations.
 
 import { FC } from 'react'
 import { useDetachCompileContext } from '@/shared/context/detach-compile-context'
@@ -9,14 +10,14 @@ import { useCopilotContext } from '../context/copilot-context'
 
 export const CopilotCompileCta: FC = () => {
   const { error, rawLog, logEntries } = useDetachCompileContext()
-  const { openCompileDiagnose, status, loadingTab } = useCopilotContext()
+  const { openCompileDiagnose, status, loadingAction } = useCopilotContext()
 
   const hasLog = Boolean(rawLog) || Boolean((logEntries?.errors || []).length)
   // only show when the compile actually failed and we have a log to explain
   const visible = Boolean(error) && hasLog
   if (!visible) return null
 
-  const loading = status === 'loading' && loadingTab === 'fix'
+  const loading = status === 'loading' && loadingAction === 'diagnose'
 
   return (
     <div className="copilot-cta" role="status">

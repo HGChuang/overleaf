@@ -3,15 +3,20 @@
 // rendered via the shared marked renderer; LaTeX copy buttons are handled
 // by delegated click on the container.
 
-import { useEffect, useRef, FC } from 'react'
-import type { MessageBlock, FileRef, ActionItem } from '../utils/types'
+import { FC, useCallback, useEffect, useState } from 'react'
+import type { MessageBlock, FileRef, ActionItem, Patch } from '../utils/types'
+import { extractLatexFromMarkdown } from '../utils/markdown'
 import {
-  renderMarkdown,
-  decodeCodeBlock,
-  extractLatexFromMarkdown,
-} from '../utils/markdown'
-import { insertIntoEditor } from '../utils/editor-bridge'
+  insertIntoEditor,
+  applyFixInEditor,
+  showPatchPreview,
+  clearPatchPreview,
+} from '../utils/editor-bridge'
+import MarkdownContent from './markdown-content'
 import { useDetachCompileContext } from '@/shared/context/detach-compile-context'
+import { useEditorManagerContext } from '@/features/ide-react/context/editor-manager-context'
+import DiagnosticCard from './diagnostic-card'
+import IssueCard from './checks/issue-card'
 
 async function copyText(text: string): Promise<void> {
   try {
@@ -117,43 +122,122 @@ const CodeBlock: FC<{ text: string; language?: string }> = ({ text }) => {
   )
 }
 
-export const MessageBlockView: FC<{ block: MessageBlock }> = ({ block }) => {
-  const rootRef = useRef<HTMLDivElement | null>(null)
+// A proposed text edit (from `submit_patch`) rendered as a mini per-hunk diff
+// with Accept / Reject. While pending, the hunks are also shown as an inline-diff
+// GHOST in the source editor (struck old + gray new) via `showPatchPreview`;
+// Accept applies each hunk through the existing `applyFixInEditor` → OT path
+// (with the cross-file open-then-apply sequence from DiagnosticCard), Reject
+// just clears the ghost. Status is local state — no backend round-trip.
+const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
+  const editorManager = useEditorManagerContext()
+  const { syncToEntry } = useDetachCompileContext()
+  const [status, setStatus] = useState<'pending' | 'accepted' | 'rejected'>(
+    'pending'
+  )
+  const currentFile = editorManager.currentDocument?.docName || null
 
-  // delegated click handler for LaTeX copy buttons inside rendered markdown
+  // (re)show the ghost preview when the block mounts or the open doc changes,
+  // so cross-file hunks render once the user opens the target file.
   useEffect(() => {
-    const root = rootRef.current
-    if (!root) return
-    const handler = (e: MouseEvent) => {
-      const target = e.target as HTMLElement | null
-      const btn = target?.closest?.('.copilot-copy-latex') as HTMLElement | null
-      if (!btn) return
-      const b64 = btn.getAttribute('data-code')
-      if (!b64) return
-      e.preventDefault()
-      const code = decodeCodeBlock(b64)
-      copyText(code).then(() => {
-        const prev = btn.innerText
-        btn.innerText = '✓'
-        window.setTimeout(() => {
-          btn.innerText = prev
-        }, 900)
-      })
+    if (status === 'pending') {
+      showPatchPreview(patch.hunks)
     }
-    root.addEventListener('click', handler)
-    return () => root.removeEventListener('click', handler)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, currentFile])
+
+  // Clear the ghost when the block unmounts (e.g. new turn supersedes it).
+  useEffect(() => {
+    return () => {
+      clearPatchPreview()
+    }
   }, [])
 
+  const accept = useCallback(async () => {
+    for (const hunk of patch.hunks) {
+      const targetFile = hunk.file || null
+      const edit = {
+        file: targetFile,
+        line: hunk.line ?? null,
+        oldText: hunk.oldText,
+        newText: hunk.newText,
+      }
+      if (!hunk.oldText) {
+        // pure insertion: best-effort insert at the cursor (apply-fix needs an
+        // anchor text; insertions are an edge case the prompt discourages).
+        insertIntoEditor(hunk.newText)
+      } else if (
+        !targetFile ||
+        targetFile === (editorManager.currentDocument?.docName || null)
+      ) {
+        applyFixInEditor(edit)
+      } else {
+        // open the target file, then apply once it has (likely) loaded
+        syncToEntry({ file: targetFile, line: hunk.line ?? undefined })
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise<void>(resolve => setTimeout(resolve, 700))
+        applyFixInEditor(edit)
+      }
+    }
+    clearPatchPreview()
+    setStatus('accepted')
+  }, [patch.hunks, editorManager, syncToEntry])
+
+  const reject = useCallback(() => {
+    clearPatchPreview()
+    setStatus('rejected')
+  }, [])
+
+  return (
+    <div className="copilot-patch">
+      {patch.title && <div className="copilot-patch-title">{patch.title}</div>}
+      <div className="copilot-patch-hunks">
+        {patch.hunks.map((h, i) => (
+          <div className="copilot-patch-hunk" key={i}>
+            {h.file && (
+              <button
+                className="copilot-patch-loc"
+                onClick={() =>
+                  syncToEntry({ file: h.file!, line: h.line ?? undefined })
+                }
+                title={`Open ${h.file}${h.line != null ? `:${h.line}` : ''}`}
+              >
+                {h.file}
+                {h.line != null ? `:${h.line}` : ''}
+              </button>
+            )}
+            {h.oldText && <pre className="copilot-patch-old">{h.oldText}</pre>}
+            <pre className="copilot-patch-new">{h.newText}</pre>
+          </div>
+        ))}
+      </div>
+      <div className="copilot-patch-actions">
+        <span className={`copilot-patch-status copilot-patch-status-${status}`}>
+          {status}
+        </span>
+        {status === 'pending' && (
+          <>
+            <button className="copilot-btn" onClick={reject}>
+              Reject
+            </button>
+            <button
+              className="copilot-btn copilot-btn-primary"
+              onClick={accept}
+            >
+              Accept
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export const MessageBlockView: FC<{ block: MessageBlock }> = ({ block }) => {
   let inner: JSX.Element
   switch (block.type) {
     case 'text':
     case 'markdown':
-      inner = (
-        <div
-          className="copilot-md"
-          dangerouslySetInnerHTML={{ __html: renderMarkdown(block.text) }}
-        />
-      )
+      inner = <MarkdownContent content={block.text} />
       break
     case 'code':
       inner = <CodeBlock text={block.text} language={block.language} />
@@ -168,27 +252,26 @@ export const MessageBlockView: FC<{ block: MessageBlock }> = ({ block }) => {
       inner = <Actions items={block.items} />
       break
     case 'diagnostic':
-      // diagnostic blocks are rendered by the Fix tab directly; fall back to text
-      inner = (
-        <div className="copilot-md" dangerouslySetInnerHTML={{ __html: renderMarkdown(block.diagnostic.title) }} />
-      )
+      inner = <DiagnosticCard diagnostic={block.diagnostic} />
       break
     case 'issue_list':
-      // issue lists are rendered by the Check tab; fall back to a simple list
       inner = (
-        <ul className="copilot-issue-list-fallback">
-          {block.items.map((it, i) => (
-            <li key={i}>{it.title}</li>
+        <>
+          {block.items.map(it => (
+            <IssueCard key={it.id} issue={it} />
           ))}
-        </ul>
+        </>
       )
+      break
+    case 'patch':
+      inner = <PatchBlock patch={block.patch} />
       break
     default:
       inner = null
   }
 
   return (
-    <div className={`copilot-block copilot-block-${block.type}`} ref={rootRef}>
+    <div className={`copilot-block copilot-block-${block.type}`}>
       {inner}
     </div>
   )

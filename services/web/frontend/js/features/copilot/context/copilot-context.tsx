@@ -1,8 +1,11 @@
 // Central React context for the Overleaf Copilot feature.
 //
-// Owns: drawer open/close + active tab, per-source conversationIds, message
-// streams (ask/write, fix), compile diagnostics, checks issues/summary, and
-// the actions that call the /api/v1/copilot/* endpoints. Project context
+// Owns: pane open/close, a single unified conversation (one conversationId —
+// the backend keys memory by conversationId, so chat + diagnose + checks +
+// explain all share one thread, and a follow-up after a diagnose inherits the
+// diagnose tool-call memory), the unified message stream (ask/write Q&A,
+// folded-in compile diagnostics and checks issues), the editor selection chip,
+// and the actions that call the /api/v1/copilot/* endpoints. Project context
 // (fileList/outline/files) is built server-side by the web layer, so we only
 // send `projectId` + conversation/context/compile/checks.
 
@@ -11,6 +14,7 @@ import {
   FC,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -19,59 +23,57 @@ import usePersistedState from '@/shared/hooks/use-persisted-state'
 import { useProjectContext } from '@/shared/context/project-context'
 import { useEditorManagerContext } from '@/features/ide-react/context/editor-manager-context'
 import { useDetachCompileContext } from '@/shared/context/detach-compile-context'
-import {
-  copilotChat,
-  copilotCompileDiagnose,
-  copilotRunChecks,
-  copilotExplainIssue,
-  CopilotError,
-} from '../utils/copilot-api'
+import { copilotChat, CopilotError } from '../utils/copilot-api'
 import type {
   CopilotMessage,
   CopilotTab,
-  Diagnostic,
   CheckIssue,
-  CheckSummary,
 } from '../utils/types'
 
 type Status = 'idle' | 'loading'
+type LoadingAction = 'chat' | 'diagnose' | 'checks' | 'explain' | null
+
+export interface CopilotSelection {
+  file: string | null
+  fromLine: number
+  toLine: number
+  text: string
+}
 
 interface ContinueSeed {
-  tab: CopilotTab
+  tab?: CopilotTab
   seedText?: string
-  selectionText?: string
 }
 
 export interface CopilotContextValue {
-  // drawer
+  // pane
   isOpen: boolean
   openCopilot: (tab?: CopilotTab, seed?: ContinueSeed) => void
   closeCopilot: () => void
   setIsOpen: (open: boolean) => void
 
-  // tab + seeding
-  activeTab: CopilotTab
-  setActiveTab: (tab: CopilotTab) => void
+  // seeding (Continue in Copilot pre-fill prompt)
   seedText: string | null
   clearSeed: () => void
 
-  // conversation state
-  panelMessages: CopilotMessage[]
-  fixMessages: CopilotMessage[]
-  diagnostics: Diagnostic[]
-  fixSummary: string | null
-  issues: CheckIssue[]
-  checkSummary: CheckSummary | null
-  explainResults: Record<string, CopilotMessage>
+  // editor selection chip
+  selection: CopilotSelection | null
+  clearSelection: () => void
+
+  // unified conversation
+  conversationId: string
+  messages: CopilotMessage[]
+  hasCompileLog: boolean
 
   // status + errors
   status: Status
-  loadingTab: CopilotTab | null
+  loadingAction: LoadingAction
   error: string | null
   clearError: () => void
 
   // actions
-  sendMessage: (text: string, tab: CopilotTab) => void
+  sendMessage: (text: string, tab?: CopilotTab) => void
+  startNewChat: () => void
   openCompileDiagnose: () => void
   regenerateCompileDiagnose: () => void
   runChecks: (checks?: string[]) => void
@@ -97,51 +99,46 @@ function genId(prefix: string): string {
     .slice(2, 8)}`
 }
 
+// Remove the last diagnose turn (synthetic user "Explain…" + assistant with
+// diagnostic blocks) from the stream — used by "regenerate".
+function trimLastDiagnoseTurn(messages: CopilotMessage[]): CopilotMessage[] {
+  let idx = -1
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const m = messages[i]
+    if (
+      m.role === 'assistant' &&
+      m.blocks?.some(b => b.type === 'diagnostic')
+    ) {
+      idx = i
+      break
+    }
+  }
+  if (idx === -1) return messages
+  const start =
+    idx > 0 && messages[idx - 1].role === 'user' ? idx - 1 : idx
+  return [...messages.slice(0, start), ...messages.slice(idx + 1)]
+}
+
 export const CopilotProvider: FC = ({ children }) => {
   const { _id: projectId } = useProjectContext()
   const editorManager = useEditorManagerContext()
   const compile = useDetachCompileContext()
 
   // --- persisted state ---
-  const [isOpen, setIsOpen] = usePersistedState<boolean>(
-    'copilot:open',
-    false
-  )
-  // generate stable conversation ids once (memoised so we don't regenerate
-  // every render); persisted so a reload keeps the same conversation
-  const panelIdDefault = useMemo(() => genId('conv_panel'), [])
-  const fixIdDefault = useMemo(() => genId('conv_fix'), [])
-  const checkIdDefault = useMemo(() => genId('conv_check'), [])
-  const [panelConversationId] = usePersistedState<string>(
+  const [isOpen, setIsOpen] = usePersistedState<boolean>('copilot:open', false)
+  const conversationIdDefault = useMemo(() => genId('conv_panel'), [])
+  const [conversationId, setConversationId] = usePersistedState<string>(
     'copilot:conv:panel',
-    panelIdDefault
-  )
-  const [fixConversationId] = usePersistedState<string>(
-    'copilot:conv:fix',
-    fixIdDefault
-  )
-  const [checkConversationId] = usePersistedState<string>(
-    'copilot:conv:check',
-    checkIdDefault
+    conversationIdDefault
   )
 
   // --- ephemeral state ---
-  const [activeTab, setActiveTab] = useState<CopilotTab>('ask')
+  const [messages, setMessages] = useState<CopilotMessage[]>([])
   const [seedText, setSeedText] = useState<string | null>(null)
-  const [pendingSelectionText, setPendingSelectionText] = useState<string>('')
-
-  const [panelMessages, setPanelMessages] = useState<CopilotMessage[]>([])
-  const [fixMessages, setFixMessages] = useState<CopilotMessage[]>([])
-  const [diagnostics, setDiagnostics] = useState<Diagnostic[]>([])
-  const [fixSummary, setFixSummary] = useState<string | null>(null)
-  const [issues, setIssues] = useState<CheckIssue[]>([])
-  const [checkSummary, setCheckSummary] = useState<CheckSummary | null>(null)
-  const [explainResults, setExplainResults] = useState<
-    Record<string, CopilotMessage>
-  >({})
+  const [selection, setSelection] = useState<CopilotSelection | null>(null)
 
   const [status, setStatus] = useState<Status>('idle')
-  const [loadingTab, setLoadingTab] = useState<CopilotTab | null>(null)
+  const [loadingAction, setLoadingAction] = useState<LoadingAction>(null)
   const [error, setError] = useState<string | null>(null)
 
   // abort controllers per action kind
@@ -150,9 +147,26 @@ export const CopilotProvider: FC = ({ children }) => {
   const checksAbortRef = useRef<AbortController | null>(null)
   const explainAbortRef = useRef<AbortController | null>(null)
 
+  // refs to read the latest value inside stable callbacks without churning
+  // their identity on every selection/seed change.
   const getCurrentFile = useCallback((): string | null => {
     return editorManager.currentDocument?.docName || null
   }, [editorManager])
+
+  const getCurrentFileRef = useRef(getCurrentFile)
+  useEffect(() => {
+    getCurrentFileRef.current = getCurrentFile
+  }, [getCurrentFile])
+
+  const selectionRef = useRef(selection)
+  useEffect(() => {
+    selectionRef.current = selection
+  }, [selection])
+
+  const seedTextRef = useRef(seedText)
+  useEffect(() => {
+    seedTextRef.current = seedText
+  }, [seedText])
 
   const describeError = useCallback((err: unknown): string => {
     if (err instanceof CopilotError) {
@@ -166,50 +180,88 @@ export const CopilotProvider: FC = ({ children }) => {
 
   // ----- open / close / seed -----
   const openCopilot = useCallback(
-    (tab: CopilotTab = 'ask', seed?: ContinueSeed) => {
+    (tab?: CopilotTab, seed?: ContinueSeed) => {
       setIsOpen(true)
-      setActiveTab(tab)
       setError(null)
       if (seed?.seedText) {
         setSeedText(seed.seedText)
-        setPendingSelectionText(seed.selectionText || seed.seedText)
       }
     },
     [setIsOpen]
   )
 
-  const closeCopilot = useCallback(() => {
-    setIsOpen(false)
-  }, [setIsOpen])
+  const closeCopilot = useCallback(() => setIsOpen(false), [setIsOpen])
 
   const continueInCopilot = useCallback(
     (seed: ContinueSeed) => {
-      openCopilot(seed.tab || 'write', seed)
+      openCopilot(seed.tab || 'ask', seed)
     },
     [openCopilot]
   )
 
-  const clearSeed = useCallback(() => {
-    setSeedText(null)
-    setPendingSelectionText('')
+  const clearSeed = useCallback(() => setSeedText(null), [])
+  const clearSelection = useCallback(() => setSelection(null), [])
+  const clearError = useCallback(() => setError(null), [])
+
+  // whether the latest compile produced a log we can diagnose
+  const hasCompileLog =
+    Boolean(compile.rawLog) ||
+    Boolean((compile.logEntries?.errors || []).length)
+
+  // track the editor selection via the codemirror-editor bridge
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{
+        fromLine: number
+        toLine: number
+        text: string
+      } | null>).detail
+      if (!detail || !detail.text) {
+        setSelection(null)
+        return
+      }
+      setSelection({
+        file: getCurrentFileRef.current(),
+        fromLine: detail.fromLine,
+        toLine: detail.toLine,
+        text: detail.text,
+      })
+    }
+    window.addEventListener('copilot:selection-change', handler as EventListener)
+    return () =>
+      window.removeEventListener(
+        'copilot:selection-change',
+        handler as EventListener
+      )
   }, [])
 
-  const clearError = useCallback(() => setError(null), [])
+  // ----- start new chat -----
+  const startNewChat = useCallback(() => {
+    setConversationId(genId('conv_panel'))
+    setMessages([])
+    setError(null)
+    setSelection(null)
+    setSeedText(null)
+    setStatus('idle')
+    setLoadingAction(null)
+    if (chatAbortRef.current) chatAbortRef.current.abort()
+    if (diagnoseAbortRef.current) diagnoseAbortRef.current.abort()
+    if (checksAbortRef.current) checksAbortRef.current.abort()
+  }, [setConversationId])
 
   // ----- chat (ask / write) -----
   const sendMessage = useCallback(
-    (text: string, tab: CopilotTab) => {
+    (text: string, tab: CopilotTab = 'ask') => {
       const content = text.trim()
       if (!content) return
 
-      // abort any in-flight chat
       if (chatAbortRef.current) chatAbortRef.current.abort()
       const controller = new AbortController()
       chatAbortRef.current = controller
 
       setError(null)
       setStatus('loading')
-      setLoadingTab(tab)
+      setLoadingAction('chat')
 
       const userMessage: CopilotMessage = { role: 'user', content }
       const pendingAssistant: CopilotMessage = {
@@ -217,24 +269,19 @@ export const CopilotProvider: FC = ({ children }) => {
         content: '',
         pending: true,
       }
-      // ask + write share the panel conversation; fix follow-ups continue the
-      // compile conversation (source: compile, fixConversationId)
-      const isFix = tab === 'fix'
-      const conversationId = isFix ? fixConversationId : panelConversationId
-      const source = isFix ? 'compile' : 'panel'
-      const setMessages = isFix ? setFixMessages : setPanelMessages
       setMessages(prev => [...prev, userMessage, pendingAssistant])
 
+      const sel = selectionRef.current
       const body = {
+        intent: 'chat',
         projectId,
-        conversation: {
-          conversationId,
-          source,
-          tab,
-        },
+        conversation: { conversationId, source: 'panel', tab },
         context: {
-          currentFile: getCurrentFile(),
-          selectedText: pendingSelectionText || '',
+          currentFile: getCurrentFileRef.current(),
+          selectedText: sel?.text || '',
+          selectionRange: sel
+            ? { file: sel.file, fromLine: sel.fromLine, toLine: sel.toLine }
+            : null,
           attachedFiles: [] as string[],
           recentCompileErrorId: null,
         },
@@ -247,26 +294,21 @@ export const CopilotProvider: FC = ({ children }) => {
             role: 'assistant',
             content: data.message?.content || '',
             blocks: data.message?.blocks,
-            suggestedActions: data.suggestedActions || data.message?.suggestedActions,
+            suggestedActions:
+              data.suggestedActions || data.message?.suggestedActions,
           }
-          setMessages(prev => [
-            ...prev.slice(0, -1), // drop pending placeholder
-            assistant,
-          ])
-          // consume the seed after first use
-          if (pendingSelectionText) setPendingSelectionText('')
-          if (seedText) setSeedText(null)
+          setMessages(prev => [...prev.slice(0, -1), assistant])
+          if (seedTextRef.current) setSeedText(null)
         })
         .catch((err: unknown) => {
           if (err instanceof Error && err.name === 'AbortError') {
-            // drop the pending placeholder silently
             setMessages(prev =>
               prev.length && prev[prev.length - 1]?.pending
                 ? prev.slice(0, -1)
                 : prev
             )
             setStatus('idle')
-            setLoadingTab(null)
+            setLoadingAction(null)
             return
           }
           const msg = describeError(err)
@@ -279,152 +321,158 @@ export const CopilotProvider: FC = ({ children }) => {
         })
         .finally(() => {
           setStatus('idle')
-          setLoadingTab(null)
+          setLoadingAction(null)
         })
     },
-    [
-      projectId,
-      panelConversationId,
-      fixConversationId,
-      getCurrentFile,
-      pendingSelectionText,
-      seedText,
-      describeError,
-    ]
+    [projectId, conversationId, describeError]
   )
 
-  // ----- compile diagnose (fix) -----
-  const runDiagnose = useCallback(
-    () => {
-      if (diagnoseAbortRef.current) diagnoseAbortRef.current.abort()
-      const controller = new AbortController()
-      diagnoseAbortRef.current = controller
+  // Shared helper: append a synthetic user bubble + a pending assistant bubble,
+  // POST the unified `/copilot/chat` body, and replace the pending bubble with
+  // the resolved assistant message. Every intent returns the same
+  // {message, suggestedActions} shape, so the mapping is uniform — structured
+  // extras (diagnostic cards, issue lists) ride as message.blocks. Used by
+  // diagnose / checks / explain (sendMessage has its own inline copy that also
+  // clears the seed prompt on success).
+  const runAssistantTurn = useCallback(
+  (
+    action: Exclude<LoadingAction, null>,
+    abortRef: { current: AbortController | null },
+    userLabel: string,
+    body: Record<string, unknown>
+  ) => {
+    if (abortRef.current) abortRef.current.abort()
+    const controller = new AbortController()
+    abortRef.current = controller
 
-      setError(null)
-      setStatus('loading')
-      setLoadingTab('fix')
+    setError(null)
+    setStatus('loading')
+    setLoadingAction(action)
 
-      const annotations = (compile.logEntries?.errors || [])
-        .filter((e: any) => e)
-        .map((e: any) => ({
-          file: e.file,
-          line: e.line,
-          severity: e.level || 'error',
-          message: e.message,
-        }))
+    setMessages(prev => [
+      ...prev,
+      { role: 'user', content: userLabel },
+      { role: 'assistant', content: '', pending: true },
+    ])
 
-      const body = {
-        projectId,
-        conversation: {
-          conversationId: fixConversationId,
-          source: 'compile',
-          tab: 'fix',
-        },
-        compile: {
-          status: 'failed',
-          logText: compile.rawLog || '',
-          annotations,
-          clsiServerId: compile.clsiServerId,
-        },
-        editor: { currentFile: getCurrentFile() },
-      }
-
-      copilotCompileDiagnose(body, controller.signal)
-        .then(data => {
-          setDiagnostics(data.diagnostics || [])
-          setFixSummary(data.summary || null)
-          setFixMessages([])
-        })
-        .catch((err: unknown) => {
-          if (err instanceof Error && err.name === 'AbortError') return
-          setError(describeError(err))
-        })
-        .finally(() => {
+    copilotChat(body, controller.signal)
+      .then(data => {
+        const assistant: CopilotMessage = {
+          role: 'assistant',
+          content: data.message?.content || '',
+          blocks: data.message?.blocks,
+          suggestedActions:
+            data.suggestedActions || data.message?.suggestedActions,
+        }
+        setMessages(prev => [...prev.slice(0, -1), assistant])
+      })
+      .catch((err: unknown) => {
+        if (err instanceof Error && err.name === 'AbortError') {
+          setMessages(prev =>
+            prev.length && prev[prev.length - 1]?.pending
+              ? prev.slice(0, -1)
+              : prev
+          )
           setStatus('idle')
-          setLoadingTab(null)
-        })
-    },
-    [
-      projectId,
-      fixConversationId,
-      compile.rawLog,
-      compile.logEntries,
-      compile.clsiServerId,
-      getCurrentFile,
-      describeError,
-    ]
+          setLoadingAction(null)
+          return
+        }
+        const msg = describeError(err)
+        if (msg) setError(msg)
+        setMessages(prev =>
+          prev.length && prev[prev.length - 1]?.pending
+            ? prev.slice(0, -1)
+            : prev
+        )
+      })
+      .finally(() => {
+        setStatus('idle')
+        setLoadingAction(null)
+      })
+  },
+  [describeError]
   )
+
+  // ----- compile diagnose (folded into the chat) -----
+  const runDiagnose = useCallback(() => {
+    // guard: the compile-diagnose backend requires a log.
+    if (
+      !compile.rawLog &&
+      !((compile.logEntries?.errors || []) as any[]).length
+    ) {
+      setError(
+        'No compile log available. Run a compile that fails, then click "Explain errors" in the compile log.'
+      )
+      setStatus('idle')
+      setLoadingAction(null)
+      return
+    }
+
+    const annotations = (compile.logEntries?.errors || [])
+      .filter((e: any) => e)
+      .map((e: any) => ({
+        file: e.file,
+        line: e.line,
+        severity: e.level || 'error',
+        message: e.message,
+      }))
+
+    runAssistantTurn('diagnose', diagnoseAbortRef, 'Explain the latest compile errors', {
+      intent: 'compile-diagnose',
+      projectId,
+      conversation: { conversationId, source: 'compile', tab: 'fix' },
+      compile: {
+        status: 'failed',
+        logText: compile.rawLog || '',
+        annotations,
+        clsiServerId: compile.clsiServerId,
+      },
+      editor: { currentFile: getCurrentFileRef.current() },
+    })
+  }, [
+    compile.rawLog,
+    compile.logEntries,
+    compile.clsiServerId,
+    projectId,
+    conversationId,
+    runAssistantTurn,
+  ])
 
   const openCompileDiagnose = useCallback(() => {
     setIsOpen(true)
-    setActiveTab('fix')
     setError(null)
     runDiagnose()
   }, [setIsOpen, runDiagnose])
 
   const regenerateCompileDiagnose = useCallback(() => {
+    setMessages(prev => trimLastDiagnoseTurn(prev))
     runDiagnose()
   }, [runDiagnose])
 
-  // ----- checks (run) -----
+  // ----- checks (folded into the chat) -----
   const runChecks = useCallback(
     (checks?: string[]) => {
-      if (checksAbortRef.current) checksAbortRef.current.abort()
-      const controller = new AbortController()
-      checksAbortRef.current = controller
-
-      setError(null)
-      setStatus('loading')
-      setLoadingTab('check')
-
-      const body = {
+      runAssistantTurn('checks', checksAbortRef, 'Run checks', {
+        intent: 'run-checks',
         projectId,
-        conversation: {
-          conversationId: checkConversationId,
-          source: 'checks',
-          tab: 'check',
-        },
-        checks: checks && checks.length
-          ? checks
-          : ['citations', 'references', 'figures_tables', 'terminology'],
+        conversation: { conversationId, source: 'checks', tab: 'check' },
+        checks:
+          checks && checks.length
+            ? checks
+            : ['citations', 'references', 'figures_tables', 'terminology'],
         options: { includeSuggestions: true },
-      }
-
-      copilotRunChecks(body, controller.signal)
-        .then(data => {
-          setIssues(data.issues || [])
-          setCheckSummary(data.summary || null)
-        })
-        .catch((err: unknown) => {
-          if (err instanceof Error && err.name === 'AbortError') return
-          setError(describeError(err))
-        })
-        .finally(() => {
-          setStatus('idle')
-          setLoadingTab(null)
-        })
+      })
     },
-    [projectId, checkConversationId, describeError]
+    [projectId, conversationId, runAssistantTurn]
   )
 
-  // ----- checks (explain) -----
+  // ----- checks (explain, folded into the chat) -----
   const explainIssue = useCallback(
     (issue: CheckIssue) => {
-      if (explainAbortRef.current) explainAbortRef.current.abort()
-      const controller = new AbortController()
-      explainAbortRef.current = controller
-
-      setError(null)
-      setStatus('loading')
-      setLoadingTab('check')
-
-      const body = {
+      runAssistantTurn('explain', explainAbortRef, `Explain: ${issue.title}`, {
+        intent: 'explain-issue',
         projectId,
-        conversation: {
-          conversationId: checkConversationId,
-          source: 'checks',
-          tab: 'check',
-        },
+        conversation: { conversationId, source: 'checks', tab: 'check' },
         issue: {
           id: issue.id,
           type: issue.type,
@@ -432,25 +480,9 @@ export const CopilotProvider: FC = ({ children }) => {
           description: issue.description,
           location: issue.location,
         },
-      }
-
-      copilotExplainIssue(body, controller.signal)
-        .then(data => {
-          setExplainResults(prev => ({
-            ...prev,
-            [issue.id]: data.message || { role: 'assistant', content: '' },
-          }))
-        })
-        .catch((err: unknown) => {
-          if (err instanceof Error && err.name === 'AbortError') return
-          setError(describeError(err))
-        })
-        .finally(() => {
-          setStatus('idle')
-          setLoadingTab(null)
-        })
+      })
     },
-    [projectId, checkConversationId, describeError]
+    [projectId, conversationId, runAssistantTurn]
   )
 
   const value = useMemo<CopilotContextValue>(
@@ -459,22 +491,19 @@ export const CopilotProvider: FC = ({ children }) => {
       openCopilot,
       closeCopilot,
       setIsOpen,
-      activeTab,
-      setActiveTab,
       seedText,
       clearSeed,
-      panelMessages,
-      fixMessages,
-      diagnostics,
-      fixSummary,
-      issues,
-      checkSummary,
-      explainResults,
+      selection,
+      clearSelection,
+      conversationId,
+      messages,
+      hasCompileLog,
       status,
-      loadingTab,
+      loadingAction,
       error,
       clearError,
       sendMessage,
+      startNewChat,
       openCompileDiagnose,
       regenerateCompileDiagnose,
       runChecks,
@@ -485,21 +514,19 @@ export const CopilotProvider: FC = ({ children }) => {
       isOpen,
       openCopilot,
       closeCopilot,
-      activeTab,
       seedText,
       clearSeed,
-      panelMessages,
-      fixMessages,
-      diagnostics,
-      fixSummary,
-      issues,
-      checkSummary,
-      explainResults,
+      selection,
+      clearSelection,
+      conversationId,
+      messages,
+      hasCompileLog,
       status,
-      loadingTab,
+      loadingAction,
       error,
       clearError,
       sendMessage,
+      startNewChat,
       openCompileDiagnose,
       regenerateCompileDiagnose,
       runChecks,

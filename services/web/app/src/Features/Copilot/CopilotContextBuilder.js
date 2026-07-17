@@ -75,71 +75,55 @@ async function buildCompileContext(projectId, reqBody, session) {
   }
 }
 
-module.exports = {
-  async buildChatBody(req) {
-    const project = await buildProjectContext(req.body.projectId || req.body.project?.projectId)
-    return {
-      conversation: req.body.conversation || {
-        conversationId: req.body.conversationId || null,
-        source: 'panel',
-        tab: 'ask',
-      },
-      project,
-      context: req.body.context || {
-        currentFile: req.body.currentFile || null,
-        selectedText: req.body.selection || '',
-        attachedFiles: [],
-        recentCompileErrorId: null,
-      },
-      message: req.body.message || {
-        role: 'user',
-        content: req.body.ask || '',
-      },
-    }
-  },
+// Per-intent defaults for the conversation envelope, mirroring the old
+// per-endpoint builders (chat→panel/ask, compile-diagnose→compile/fix,
+// run-checks & explain-issue→checks/check).
+const CONVERSATION_DEFAULTS = {
+  chat: { source: 'panel', tab: 'ask' },
+  'compile-diagnose': { source: 'compile', tab: 'fix' },
+  'run-checks': { source: 'checks', tab: 'check' },
+  'explain-issue': { source: 'checks', tab: 'check' },
+}
 
-  async buildCompileBody(req) {
+// Build the body for the unified `POST /api/v1/copilot/chat` request. Every
+// intent shares this builder: it always injects the server-side project context
+// (fileList/outline/files) from `projectId`, and — only for the compile-diagnose
+// intent — fetches the CLSI output.log when a `compile.compileId` is present
+// without a logText (the logic formerly owned by buildCompileBody). All other
+// fields (context/message/editor/checks/options/issue/intent) are forwarded
+// verbatim from the client.
+module.exports = {
+  async buildCopilotBody(req) {
     const projectId = req.body.projectId || req.body.project?.projectId
     const project = await buildProjectContext(projectId)
-    const compile = await buildCompileContext(projectId, req.body, req.session)
-    return {
-      conversation: req.body.conversation || {
-        conversationId: req.body.conversationId || null,
-        source: 'compile',
-        tab: 'fix',
-      },
-      project,
-      editor: req.body.editor || {
-        currentFile: req.body.currentFile || null,
-      },
-      compile,
-    }
-  },
+    const intent = req.body.intent || 'chat'
+    const defaults = CONVERSATION_DEFAULTS[intent] || CONVERSATION_DEFAULTS.chat
 
-  async buildChecksRunBody(req) {
-    const project = await buildProjectContext(req.body.projectId || req.body.project?.projectId)
-    return {
-      conversation: req.body.conversation || {
-        conversationId: req.body.conversationId || null,
-        source: 'checks',
-        tab: 'check',
-      },
+    const body = {
+      intent,
+      conversation:
+        req.body.conversation || {
+          conversationId: req.body.conversationId || null,
+          source: defaults.source,
+          tab: defaults.tab,
+        },
       project,
-      checks: req.body.checks || ['citations'],
-      options: req.body.options || {},
     }
-  },
 
-  async buildChecksExplainBody(req) {
-    const project = await buildProjectContext(req.body.projectId || req.body.project?.projectId)
-    return {
-      conversation: req.body.conversation || {
-        conversationId: req.body.conversationId || null,
-        source: 'checks',
-        tab: 'check',
-      },
-      project,
-      issue: req.body.issue,
+    // forward the optional, intent-specific fields the client sent
+    if (req.body.context) body.context = req.body.context
+    if (req.body.message) body.message = req.body.message
+    if (req.body.editor) body.editor = req.body.editor
+    if (req.body.checks) body.checks = req.body.checks
+    if (req.body.options) body.options = req.body.options
+    if (req.body.issue) body.issue = req.body.issue
+
+    if (intent === 'compile-diagnose') {
+      body.compile = await buildCompileContext(projectId, req.body, req.session)
+    } else if (req.body.compile) {
+      body.compile = req.body.compile
     }
+
+    return body
   },
 }

@@ -25,6 +25,7 @@ export type MessageBlockType =
   | 'issue_list'
   | 'suggested_fix'
   | 'actions'
+  | 'patch'
 
 export interface FileRef {
   path: string
@@ -48,6 +49,23 @@ export type MessageBlock =
   | { type: 'issue_list'; items: CheckIssue[] }
   | { type: 'suggested_fix'; text: string; language?: string }
   | { type: 'actions'; items: ActionItem[] }
+  | { type: 'patch'; patch: Patch }
+
+// A proposed text edit the user can preview (inline-diff ghost in the editor)
+// and Accept/Reject. Mirrors the `FixEdit` shape in editor-bridge.ts so it
+// round-trips through the `copilot:apply-fix` apply path.
+export interface PatchHunk {
+  file?: string | null
+  line?: number | null
+  oldText: string
+  newText: string
+}
+
+export interface Patch {
+  id: string
+  title?: string
+  hunks: PatchHunk[]
+}
 
 export interface CopilotMessage {
   role: 'user' | 'assistant' | 'system'
@@ -67,12 +85,18 @@ export interface CodeLocation {
   line?: number
 }
 
+export interface DiagnosticFix {
+  oldText: string
+  newText: string
+}
+
 export interface Diagnostic {
   id?: string
   title: string
   whatHappened?: string
   likelyCause?: string
   suggestedFix?: string
+  fix?: DiagnosticFix | null
   location?: CodeLocation
   actions?: string[]
 }
@@ -136,26 +160,16 @@ export class CopilotError extends Error {
 // API response `data` shapes
 // ---------------------------------------------------------------------------
 
+// Every Copilot action (chat / compile-diagnose / run-checks / explain-issue)
+// flows through the single `POST /api/v1/copilot/chat` endpoint and returns
+// this one unified shape. The human-readable summary is in `message.content`;
+// structured extras ride as `message.blocks` — diagnostic cards
+// ({type:'diagnostic'}) for compile-diagnose, an issue list
+// ({type:'issue_list'}) for run-checks.
 export interface ChatResponseData {
   conversationId?: string
   message: CopilotMessage
   suggestedActions?: ActionItem[]
-}
-
-export interface CompileDiagnoseResponseData {
-  conversationId?: string
-  summary?: string
-  diagnostics?: Diagnostic[]
-}
-
-export interface RunChecksResponseData {
-  runId?: string
-  summary?: CheckSummary
-  issues?: CheckIssue[]
-}
-
-export interface ExplainIssueResponseData {
-  message: CopilotMessage
 }
 
 export interface GetConversationResponseData {

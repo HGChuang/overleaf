@@ -31,6 +31,16 @@ describe('CopilotService', function () {
       load: sinon.stub().resolves([]),
       append: sinon.stub().resolves(),
     };
+    // Long-term memory store stubbed so the tests never touch real Redis.
+    // Defaults make the long-term path a no-op (empty index, no relevant
+    // memories, background extraction/consolidation resolve cleanly).
+    this.longTermMemoryStore = {
+      readIndex: sinon.stub().resolves([]),
+      renderIndexForPrompt: sinon.stub().returns(''),
+      loadRelevant: sinon.stub().resolves(''),
+      extractMemories: sinon.stub().resolves([]),
+      consolidate: sinon.stub().resolves(false),
+    };
     this.graphFactory = sinon.stub().returns({
       invoke: sinon.stub().resolves({ messages: [new AIMessage('panel answer')] }),
     });
@@ -41,6 +51,7 @@ describe('CopilotService', function () {
       apiKeyMapper: this.apiKeyMapper,
       clientRegistry: this.clientRegistry,
       memoryStore: this.memoryStore,
+      longTermMemoryStore: this.longTermMemoryStore,
       graphFactory: this.graphFactory,
     });
 
@@ -61,6 +72,7 @@ describe('CopilotService', function () {
       apiKeyMapper: this.apiKeyMapper,
       clientRegistry: this.clientRegistry,
       memoryStore: this.memoryStore,
+      longTermMemoryStore: this.longTermMemoryStore,
       graphFactory: this.graphFactory,
     });
 

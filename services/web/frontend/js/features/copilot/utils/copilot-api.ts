@@ -1,8 +1,15 @@
-// Thin transport layer for the /api/v1/copilot/* endpoints.
+// Thin transport layer for the Copilot backend.
+//
+// A single endpoint — `POST /api/v1/copilot/chat` — handles every action
+// (chat / compile-diagnose / run-checks / explain-issue). The request body's
+// `intent` field selects which path runs server-side; every action returns
+// the same unified `{ conversationId, message:{role,content,blocks},
+// suggestedActions }` shape.
 //
 // The web layer (`services/web/app/src/Features/Copilot/CopilotController.js`)
-// proxies these routes and builds project context server-side from `projectId`,
-// so callers only need to send `projectId` + conversation/context/compile/checks.
+// proxies this route and builds project context server-side from `projectId`,
+// so callers only send `projectId` + `intent` + the intent-specific fields
+// (context/message, compile/editor, checks/options, issue).
 //
 // All responses use the unified envelope `{ success, data, error, meta }`.
 // We unwrap it and throw a `CopilotError` on failure. Aborted requests are
@@ -13,9 +20,6 @@ import {
   CopilotEnvelope,
   CopilotError,
   ChatResponseData,
-  CompileDiagnoseResponseData,
-  RunChecksResponseData,
-  ExplainIssueResponseData,
   GetConversationResponseData,
 } from './types'
 
@@ -79,52 +83,14 @@ async function copilotFetch<T>(
   return (json.data as T) ?? ({} as T)
 }
 
+// One unified Copilot request. The body MUST include an `intent`
+// ('chat' | 'compile-diagnose' | 'run-checks' | 'explain-issue'); the server
+// defaults to 'chat' if omitted.
 export function copilotChat(
   body: Record<string, unknown>,
   signal?: AbortSignal
 ): Promise<ChatResponseData> {
-  return copilotFetch<ChatResponseData>(
-    `${BASE}/chat`,
-    'POST',
-    body,
-    signal
-  )
-}
-
-export function copilotCompileDiagnose(
-  body: Record<string, unknown>,
-  signal?: AbortSignal
-): Promise<CompileDiagnoseResponseData> {
-  return copilotFetch<CompileDiagnoseResponseData>(
-    `${BASE}/compile-diagnose`,
-    'POST',
-    body,
-    signal
-  )
-}
-
-export function copilotRunChecks(
-  body: Record<string, unknown>,
-  signal?: AbortSignal
-): Promise<RunChecksResponseData> {
-  return copilotFetch<RunChecksResponseData>(
-    `${BASE}/checks/run`,
-    'POST',
-    body,
-    signal
-  )
-}
-
-export function copilotExplainIssue(
-  body: Record<string, unknown>,
-  signal?: AbortSignal
-): Promise<ExplainIssueResponseData> {
-  return copilotFetch<ExplainIssueResponseData>(
-    `${BASE}/checks/explain`,
-    'POST',
-    body,
-    signal
-  )
+  return copilotFetch<ChatResponseData>(`${BASE}/chat`, 'POST', body, signal)
 }
 
 export function copilotGetConversation(

@@ -1,18 +1,14 @@
-// A single Checks issue row (entry 5, Check tab).
-// Shows title, type badge, severity, file:line, description, and actions
-// (View details, Jump to file, Explain with Copilot, Suggest fix).
+// A single Checks issue row (entry 5), now rendered inline inside the unified
+// chat (via the `issue_list` message block). Shows title, type badge,
+// severity, file:line, description, and actions (Jump to file, Explain with
+// Copilot). "Explain" appends the explanation as the next chat message.
+// Self-contained: reads explain state from the Copilot context so it can be
+// rendered by MessageBlockView with no prop drilling.
 
-import { FC, useState } from 'react'
-import type { CheckIssue, CopilotMessage } from '../../utils/types'
+import { FC } from 'react'
+import type { CheckIssue } from '../../utils/types'
 import { useDetachCompileContext } from '@/shared/context/detach-compile-context'
-import MessageBlockView from '../message-block'
-
-interface IssueCardProps {
-  issue: CheckIssue
-  explainResult?: CopilotMessage
-  onExplain?: (issue: CheckIssue) => void
-  loading?: boolean
-}
+import { useCopilotContext } from '../../context/copilot-context'
 
 const SEVERITY_LABEL: Record<string, string> = {
   error: 'error',
@@ -20,18 +16,14 @@ const SEVERITY_LABEL: Record<string, string> = {
   info: 'info',
 }
 
-export const IssueCard: FC<IssueCardProps> = ({
-  issue,
-  explainResult,
-  onExplain,
-  loading,
-}) => {
+export const IssueCard: FC<{ issue: CheckIssue }> = ({ issue }) => {
   const { syncToEntry } = useDetachCompileContext()
-  const [expanded, setExpanded] = useState(false)
+  const { explainIssue, status, loadingAction } = useCopilotContext()
 
   const loc = issue.location
   const hasLoc = !!(loc && (loc.file || loc.line != null))
   const sev = issue.severity || 'warning'
+  const explaining = status === 'loading' && loadingAction === 'explain'
 
   return (
     <div className={`copilot-issue copilot-sev-${sev}`}>
@@ -58,12 +50,6 @@ export const IssueCard: FC<IssueCardProps> = ({
       )}
 
       <div className="copilot-issue-actions">
-        <button
-          className="copilot-btn"
-          onClick={() => setExpanded(s => !s)}
-        >
-          {expanded ? 'Hide details' : 'View details'}
-        </button>
         {hasLoc && (
           <button
             className="copilot-btn"
@@ -74,23 +60,12 @@ export const IssueCard: FC<IssueCardProps> = ({
         )}
         <button
           className="copilot-btn copilot-btn-primary"
-          disabled={loading}
-          onClick={() => onExplain?.(issue)}
+          disabled={explaining}
+          onClick={() => explainIssue(issue)}
         >
-          {loading ? 'Explaining…' : 'Explain with Copilot'}
+          {explaining ? 'Explaining…' : 'Explain with Copilot'}
         </button>
       </div>
-
-      {expanded && explainResult && (
-        <div className="copilot-issue-explain">
-          {explainResult.content && (
-            <div className="copilot-md">{explainResult.content}</div>
-          )}
-          {explainResult.blocks?.map((b, i) => (
-            <MessageBlockView key={i} block={b} />
-          ))}
-        </div>
-      )}
     </div>
   )
 }

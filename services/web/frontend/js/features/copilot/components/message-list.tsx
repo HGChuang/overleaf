@@ -1,9 +1,11 @@
 // Renders a conversation (list of CopilotMessage). Assistant messages render
 // their markdown `content` plus any structured `blocks` and `suggestedActions`.
+// `text`/`markdown` blocks are skipped below — they would duplicate `content`
+// (the backend used to echo the answer as a {type:'text'} block as well).
 
 import { FC } from 'react'
 import type { CopilotMessage } from '../utils/types'
-import { renderMarkdown } from '../utils/markdown'
+import MarkdownContent from './markdown-content'
 import MessageBlockView from './message-block'
 
 function Spinner() {
@@ -36,17 +38,14 @@ export const MessageList: FC<{ messages: CopilotMessage[] }> = ({
               </div>
             ) : (
               <div className="copilot-msg-body">
-                {msg.content && (
-                  <div
-                    className="copilot-md"
-                    dangerouslySetInnerHTML={{
-                      __html: renderMarkdown(msg.content),
-                    }}
-                  />
-                )}
-                {msg.blocks?.map((block, j) => (
-                  <MessageBlockView key={j} block={block} />
-                ))}
+                {msg.content && <MarkdownContent content={msg.content} />}
+                {msg.blocks
+                  ?.filter(
+                    block => block.type !== 'text' && block.type !== 'markdown'
+                  )
+                  .map((block, j) => (
+                    <MessageBlockView key={j} block={block} />
+                  ))}
                 {msg.suggestedActions && msg.suggestedActions.length > 0 && (
                   <div className="copilot-suggested-actions">
                     {msg.suggestedActions.map((a, k) => (

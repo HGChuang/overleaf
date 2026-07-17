@@ -159,6 +159,7 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
   const postToCopilot = async (ask: string) => {
     const projectId = getMeta('ol-project_id')
     const body = {
+      intent: 'chat',
       projectId,
       conversation: { source: 'selection', tab: 'write' },
       context: { selectedText: selectionText },
@@ -219,9 +220,10 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
     }
   }
 
-  // "Continue in Copilot": open the panel's chat tab seeded with this result.
+  // "Continue in Copilot": open the panel's chat seeded with this result.
+  // (The editor selection is tracked separately by the Copilot pane.)
   const continueInCopilot = () => {
-    copilotCtx?.continueInCopilot({ tab: 'ask', seedText: result, selectionText })
+    copilotCtx?.continueInCopilot({ tab: 'ask', seedText: result })
   }
 
   // update editorHeight on window resize (use viewRef if available)

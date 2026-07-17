@@ -2,7 +2,12 @@ import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 import { END, START, StateGraph, MessagesAnnotation } from '@langchain/langgraph';
 import { ToolNode, toolsCondition } from '@langchain/langgraph/prebuilt';
 
-export function buildAgentGraph({ model, tools = [], checkpointer } = {}) {
+export function buildAgentGraph({
+  model,
+  tools = [],
+  checkpointer,
+  recursionLimit = 25,
+} = {}) {
   const toolNode = new ToolNode(tools);
 
   const callModel = async state => {
@@ -17,7 +22,13 @@ export function buildAgentGraph({ model, tools = [], checkpointer } = {}) {
     .addConditionalEdges('agent', toolsCondition, ['tools', END])
     .addEdge('tools', 'agent');
 
-  return checkpointer ? graph.compile({ checkpointer }) : graph.compile();
+  // `recursionLimit` caps the number of graph super-steps (agent↔tool round
+  // trips). Without it a model that keeps calling tools can loop until the
+  // provider times out. 25 is enough for the diagnose-all-errors flow
+  // (enumerate → read fragments → classify → submit) with headroom.
+  return checkpointer
+    ? graph.compile({ checkpointer, recursionLimit })
+    : graph.compile({ recursionLimit });
 }
 
 export function buildAgentInput({ systemPrompt, history = [], userMessage }) {
