@@ -1,15 +1,12 @@
 // Thin transport layer for the Copilot backend.
 //
-// A single endpoint — `POST /api/v1/copilot/chat` — handles every action
-// (chat / compile-diagnose / run-checks / explain-issue). The request body's
-// `intent` field selects which path runs server-side; every action returns
-// the same unified `{ conversationId, message:{role,content,blocks},
-// suggestedActions }` shape.
+// A single endpoint — `POST /api/v1/copilot/chat` — handles every action.
+// Every action returns the same unified
+// `{ conversationId, message:{role,content,blocks}, suggestedActions }` shape.
 //
 // The web layer (`services/web/app/src/Features/Copilot/CopilotController.js`)
 // proxies this route and builds project context server-side from `projectId`,
-// so callers only send `projectId` + `intent` + the intent-specific fields
-// (context/message, compile/editor, checks/options, issue).
+// so callers only send `projectId` + `conversation` + `context` + `message`.
 //
 // All responses use the unified envelope `{ success, data, error, meta }`.
 // We unwrap it and throw a `CopilotError` on failure. Aborted requests are
@@ -83,9 +80,8 @@ async function copilotFetch<T>(
   return (json.data as T) ?? ({} as T)
 }
 
-// One unified Copilot request. The body MUST include an `intent`
-// ('chat' | 'compile-diagnose' | 'run-checks' | 'explain-issue'); the server
-// defaults to 'chat' if omitted.
+// One unified Copilot chat request. The body carries `projectId`,
+// `conversation`, `context`, and `message`.
 export function copilotChat(
   body: Record<string, unknown>,
   signal?: AbortSignal

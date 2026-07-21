@@ -152,16 +152,15 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
     }
   }
 
-  // Route the Table/Formula/Algorithm generators through the new Copilot
-  // chat endpoint (/api/v1/copilot/chat, source: selection, tab: write).
-  // Project context is built server-side from projectId. Returns the
-  // assistant message text (joined blocks, falling back to content).
+  // Route the Table/Formula/Algorithm generators through the Copilot chat
+  // endpoint (/api/v1/copilot/chat, source: selection). Project context is
+  // built server-side from projectId. Returns the assistant message text
+  // (joined blocks, falling back to content).
   const postToCopilot = async (ask: string) => {
     const projectId = getMeta('ol-project_id')
     const body = {
-      intent: 'chat',
       projectId,
-      conversation: { source: 'selection', tab: 'write' },
+      conversation: { source: 'selection' },
       context: { selectedText: selectionText },
       message: { role: 'user', content: ask },
     }
@@ -223,7 +222,7 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
   // "Continue in Copilot": open the panel's chat seeded with this result.
   // (The editor selection is tracked separately by the Copilot pane.)
   const continueInCopilot = () => {
-    copilotCtx?.continueInCopilot({ tab: 'ask', seedText: result })
+    copilotCtx?.continueInCopilot({ seedText: result })
   }
 
   // update editorHeight on window resize (use viewRef if available)

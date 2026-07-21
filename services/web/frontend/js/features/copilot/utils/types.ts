@@ -1,9 +1,6 @@
 // Type definitions for the Overleaf Copilot frontend feature.
-// These mirror the response `data` shapes defined in
-// COPILOT_API_INTERFACE_REQUIREMENTS.md and the unified envelope
-// `{ success, data, error, meta }` returned by all /api/v1/copilot/* endpoints.
-
-export type CopilotTab = 'ask' | 'write' | 'fix' | 'check'
+// These mirror the response `data` shapes returned by the /api/v1/copilot/*
+// endpoints (unified envelope `{ success, data, error, meta }`).
 
 export type CopilotSource =
   | 'completion'
@@ -21,8 +18,6 @@ export type MessageBlockType =
   | 'markdown'
   | 'code'
   | 'file_refs'
-  | 'diagnostic'
-  | 'issue_list'
   | 'suggested_fix'
   | 'actions'
   | 'patch'
@@ -45,8 +40,6 @@ export type MessageBlock =
   | { type: 'markdown'; text: string }
   | { type: 'code'; language?: string; text: string }
   | { type: 'file_refs'; items: FileRef[] }
-  | { type: 'diagnostic'; diagnostic: Diagnostic }
-  | { type: 'issue_list'; items: CheckIssue[] }
   | { type: 'suggested_fix'; text: string; language?: string }
   | { type: 'actions'; items: ActionItem[] }
   | { type: 'patch'; patch: Patch }
@@ -74,59 +67,6 @@ export interface CopilotMessage {
   suggestedActions?: ActionItem[]
   // internal: whether this message is currently loading a response
   pending?: boolean
-}
-
-// ---------------------------------------------------------------------------
-// Compile diagnostics (entry 4)
-// ---------------------------------------------------------------------------
-
-export interface CodeLocation {
-  file?: string
-  line?: number
-}
-
-export interface DiagnosticFix {
-  oldText: string
-  newText: string
-}
-
-export interface Diagnostic {
-  id?: string
-  title: string
-  whatHappened?: string
-  likelyCause?: string
-  suggestedFix?: string
-  fix?: DiagnosticFix | null
-  location?: CodeLocation
-  actions?: string[]
-}
-
-// ---------------------------------------------------------------------------
-// Checks (entry 5)
-// ---------------------------------------------------------------------------
-
-export type CheckType =
-  | 'citations'
-  | 'references'
-  | 'figures_tables'
-  | 'terminology'
-  | string
-
-export type Severity = 'error' | 'warning' | 'info' | string
-
-export interface CheckIssue {
-  id: string
-  type: CheckType
-  severity: Severity
-  title: string
-  description?: string
-  location?: CodeLocation
-  actions?: string[]
-}
-
-export interface CheckSummary {
-  total: number
-  byType: Record<string, number>
 }
 
 // ---------------------------------------------------------------------------
@@ -160,12 +100,10 @@ export class CopilotError extends Error {
 // API response `data` shapes
 // ---------------------------------------------------------------------------
 
-// Every Copilot action (chat / compile-diagnose / run-checks / explain-issue)
-// flows through the single `POST /api/v1/copilot/chat` endpoint and returns
-// this one unified shape. The human-readable summary is in `message.content`;
-// structured extras ride as `message.blocks` — diagnostic cards
-// ({type:'diagnostic'}) for compile-diagnose, an issue list
-// ({type:'issue_list'}) for run-checks.
+// Every Copilot action flows through the single `POST /api/v1/copilot/chat`
+// endpoint and returns this one unified shape. The human-readable summary is
+// in `message.content`; structured extras ride as `message.blocks` — a `patch`
+// block ({type:'patch'}) when the model proposed an edit via `submit_patch`.
 export interface ChatResponseData {
   conversationId?: string
   message: CopilotMessage

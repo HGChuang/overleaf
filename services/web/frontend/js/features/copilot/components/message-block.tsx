@@ -15,8 +15,6 @@ import {
 import MarkdownContent from './markdown-content'
 import { useDetachCompileContext } from '@/shared/context/detach-compile-context'
 import { useEditorManagerContext } from '@/features/ide-react/context/editor-manager-context'
-import DiagnosticCard from './diagnostic-card'
-import IssueCard from './checks/issue-card'
 
 async function copyText(text: string): Promise<void> {
   try {
@@ -126,8 +124,9 @@ const CodeBlock: FC<{ text: string; language?: string }> = ({ text }) => {
 // with Accept / Reject. While pending, the hunks are also shown as an inline-diff
 // GHOST in the source editor (struck old + gray new) via `showPatchPreview`;
 // Accept applies each hunk through the existing `applyFixInEditor` → OT path
-// (with the cross-file open-then-apply sequence from DiagnosticCard), Reject
-// just clears the ghost. Status is local state — no backend round-trip.
+// (with the cross-file open-then-apply sequence when a hunk targets another
+// file), Reject just clears the ghost. Status is local state — no backend
+// round-trip.
 const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
   const editorManager = useEditorManagerContext()
   const { syncToEntry } = useDetachCompileContext()
@@ -250,18 +249,6 @@ export const MessageBlockView: FC<{ block: MessageBlock }> = ({ block }) => {
       break
     case 'actions':
       inner = <Actions items={block.items} />
-      break
-    case 'diagnostic':
-      inner = <DiagnosticCard diagnostic={block.diagnostic} />
-      break
-    case 'issue_list':
-      inner = (
-        <>
-          {block.items.map(it => (
-            <IssueCard key={it.id} issue={it} />
-          ))}
-        </>
-      )
       break
     case 'patch':
       inner = <PatchBlock patch={block.patch} />

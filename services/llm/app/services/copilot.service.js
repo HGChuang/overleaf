@@ -8,14 +8,12 @@ import { RedisMemoryStore } from '../agent/memory.js';
 import { LongTermMemoryStore } from '../agent/longTermMemory.js';
 import { extractTextContent } from '../agent/messageText.js';
 import { buildToolPool } from '../agent/tools/index.js';
-import { runChecksOver } from '../agent/tools/checksTools.js';
 import { isPromptTooLong, reactiveCompact } from '../agent/recovery.js';
 import { ClientRegistry } from '../utils/clientRegistry.js';
 import { badRequest } from '../utils/errors.js';
 
 const MEMORY_TTL_SECONDS = Number(settings.LLM_MEMORY_TTL_SECONDS || 60 * 60);
 const MEMORY_MAX_MESSAGES = Number(settings.LLM_MEMORY_MAX_MESSAGES || 20);
-const MAX_ISSUES = Number(settings.COPILOT_CHECKS_MAX_ISSUES || 100);
 const AGENT_RECURSION_LIMIT = Number(settings.COPILOT_AGENT_RECURSION_LIMIT || 25);
 const LTMEM_ENABLED = settings.COPILOT_LTMEM_ENABLED !== 'false';
 
@@ -31,96 +29,14 @@ function createMessageResponse(content, extraBlocks = []) {
   };
 }
 
-function safeJsonParse(text) {
-  if (!text || typeof text !== 'string') return null;
-  try {
-    return JSON.parse(text);
-  } catch {
-    return null;
-  }
-}
-
-// ---- compile-diagnose structured-output helpers ----
-
-// Map a model-produced diagnostic entry to the API response shape.
-function toDiagnostic(entry, index) {
-  const e = entry && typeof entry === 'object' ? entry : {};
-  const hasLoc = typeof e.file === 'string' && e.file ? true : e.line != null;
-  const fix =
-    e.fix && typeof e.fix === 'object'
-      ? {
-          oldText: typeof e.fix.oldText === 'string' ? e.fix.oldText : '',
-          newText: typeof e.fix.newText === 'string' ? e.fix.newText : '',
-        }
-      : null;
-  return {
-    id: `diag_${index}_${randomUUID().slice(0, 8)}`,
-    title:
-      typeof e.title === 'string' && e.title ? e.title : 'Compile diagnosis',
-    whatHappened: typeof e.whatHappened === 'string' ? e.whatHappened : '',
-    likelyCause: typeof e.likelyCause === 'string' ? e.likelyCause : '',
-    suggestedFix: typeof e.suggestedFix === 'string' ? e.suggestedFix : '',
-    fix,
-    location: hasLoc
-      ? {
-          file: typeof e.file === 'string' && e.file ? e.file : undefined,
-          line: Number.isInteger(e.line) ? e.line : undefined,
-        }
-      : null,
-    actions: ['jump_to_line', 'copy', 'regenerate', 'apply_fix'],
-  };
-}
-
-// Find the last `submit_diagnostics` tool call in the message list and return
-// the raw diagnostics array the model passed (or null).
-function extractSubmittedDiagnostics(messages) {
-  for (let i = messages.length - 1; i >= 0; i--) {
-    const m = messages[i];
-    const toolCalls = m && Array.isArray(m.tool_calls) ? m.tool_calls : null;
-    if (!toolCalls || toolCalls.length === 0) continue;
-    const sd = toolCalls.find(tc => tc && tc.name === 'submit_diagnostics');
-    if (!sd) continue;
-    const args = sd.args || {};
-    const diags = Array.isArray(args.diagnostics)
-      ? args.diagnostics
-      : Array.isArray(args)
-        ? args
-        : null;
-    if (diags && diags.length > 0) return diags;
-  }
-  return null;
-}
-
-// Find the last `run_checks` tool RESULT in the message list and return the
-// parsed {summary, issues} the tool returned (or null). Mirrors
-// extractSubmittedDiagnostics but reads the ToolMessage output rather than
-// the AIMessage tool-call args.
-function extractRunChecksResult(messages) {
-  for (let i = messages.length - 1; i >= 0; i--) {
-    const m = messages[i];
-    const type = typeof m?._getType === 'function' ? m._getType() : null;
-    const typeAlt = typeof m?.getType === 'function' ? m.getType() : null;
-    const isTool = type === 'tool' || typeAlt === 'tool';
-    if (!isTool) continue;
-    const name = m.name || m.tool_name;
-    if (name !== 'run_checks') continue;
-    const content = typeof m.content === 'string' ? m.content : JSON.stringify(m.content || {});
-    const parsed = safeJsonParse(content);
-    if (parsed && Array.isArray(parsed.issues)) return parsed;
-  }
-  return null;
-}
-
 // ---- patch (submit_patch) structured-output helpers ----
 //
-// `submit_patch` is the chat-path counterpart of the compile path's per-error
-// `fix`: the model proposes a list of {oldText,newText} hunks instead of
-// returning the whole document. The frontend renders an inline-diff ghost
-// preview (struck old + gray new) with Accept/Reject; accept applies the edit
-// client-side through the existing applyFixInEditor → OT path.
+// `submit_patch` lets the model propose a list of {oldText,newText} hunks
+// instead of returning the whole document. The frontend renders an inline-diff
+// ghost preview (struck old + gray new) with Accept/Reject; accept applies the
+// edit client-side through the existing applyFixInEditor → OT path.
 
-// Map a model-produced patch hunk to the API shape, with the same defensive
-// coercion as the diagnostic `fix` field in `toDiagnostic`.
+// Map a model-produced patch hunk to the API shape, with defensive coercion.
 function toPatchHunk(entry) {
   const e = entry && typeof entry === 'object' ? entry : {};
   return {
@@ -132,7 +48,7 @@ function toPatchHunk(entry) {
 }
 
 // Find the last `submit_patch` tool call in the message list and return the raw
-// {hunks, summary} the model passed (or null). Mirrors extractSubmittedDiagnostics.
+// {hunks, summary} the model passed (or null).
 function extractSubmittedPatch(messages) {
   for (let i = messages.length - 1; i >= 0; i--) {
     const m = messages[i];
@@ -168,79 +84,9 @@ function toPatchBlock(rawPatch, index) {
   };
 }
 
-// Belt-and-suspenders: if the model did not call `run_checks` on the run-checks
-// intent, run the deterministic scanners directly so the structured
-// issue_list block is still produced (preserves the CTA's guarantee).
-// Delegates to the shared `runChecksOver` so the tool and the fallback stay
-// in lockstep.
-function runChecksFallback(context = {}) {
-  return runChecksOver(context.project || {}, context.checks, MAX_ISSUES);
-}
-
-// Tolerant JSON parse of a free-text model response into a diagnostics array.
-// Accepts `[{...}]` or `{diagnostics:[...]}`, strips code fences, and handles
-// strings containing brackets while scanning for the matching close.
-function tryParseDiagnosticsJson(text) {
-  if (!text || typeof text !== 'string') return null;
-  let candidate = text.trim();
-  const fence = candidate.match(/```(?:json)?\s*([\s\S]*?)```/i);
-  if (fence) candidate = fence[1].trim();
-  const arrStart = candidate.indexOf('[');
-  const objStart = candidate.indexOf('{');
-  let start;
-  if (arrStart === -1 && objStart === -1) return null;
-  else if (arrStart === -1) start = objStart;
-  else if (objStart === -1) start = arrStart;
-  else start = Math.min(arrStart, objStart);
-  const open = candidate[start];
-  const close = open === '[' ? ']' : '}';
-  let depth = 0;
-  let inString = false;
-  let escape = false;
-  let end = -1;
-  for (let i = start; i < candidate.length; i++) {
-    const c = candidate[i];
-    if (inString) {
-      if (escape) escape = false;
-      else if (c === '\\') escape = true;
-      else if (c === '"') inString = false;
-      continue;
-    }
-    if (c === '"') inString = true;
-    else if (c === open) depth++;
-    else if (c === close) {
-      depth--;
-      if (depth === 0) {
-        end = i;
-        break;
-      }
-    }
-  }
-  if (end === -1) return null;
-  let parsed;
-  try {
-    parsed = JSON.parse(candidate.slice(start, end + 1));
-  } catch {
-    return null;
-  }
-  let arr = null;
-  if (Array.isArray(parsed)) arr = parsed;
-  else if (parsed && Array.isArray(parsed.diagnostics)) arr = parsed.diagnostics;
-  if (!arr || arr.length === 0) return null;
-  return arr;
-}
-
-// Build a user-facing summary from the final message + diagnostics count.
-function buildDiagnoseSummary(finalContent, diagnostics) {
-  const count = Array.isArray(diagnostics) ? diagnostics.length : 0;
-  const isToolConfirm = /"submitted"\s*:\s*true/.test(finalContent || '');
-  if (finalContent && !isToolConfirm) return finalContent;
-  return `Diagnosed ${count} compile error${count === 1 ? '' : 's'}.`;
-}
-
 // Intent-specific user message payload. Project *paths* (not full contents) —
 // the model reads source via the read_file / read_file_fragment tools.
-function buildUserMessage(context = {}, intent = 'chat') {
+function buildUserMessage(context = {}) {
   const project = context.project || {};
   const projectShell = {
     projectId: project.projectId,
@@ -249,37 +95,6 @@ function buildUserMessage(context = {}, intent = 'chat') {
     outline: project.outline || [],
   };
 
-  if (intent === 'compile-diagnose') {
-    return JSON.stringify(
-      {
-        COMPILE: context.compile,
-        PROJECT: {
-          ...projectShell,
-          filePaths: (project.files || []).map(f => f.path),
-        },
-      },
-      null,
-      2
-    );
-  }
-
-  if (intent === 'run-checks') {
-    return JSON.stringify(
-      {
-        REQUEST: 'Run the project quality checks and report the findings.',
-        CHECKS: context.checks,
-        PROJECT: projectShell,
-      },
-      null,
-      2
-    );
-  }
-
-  if (intent === 'explain-issue') {
-    return JSON.stringify({ ISSUE: context.issue, PROJECT: projectShell }, null, 2);
-  }
-
-  // default: chat
   return JSON.stringify(
     {
       MESSAGE: context.message?.content,
@@ -329,14 +144,12 @@ export class CopilotService {
     this.graphFactory = graphFactory;
   }
 
-  // The single unified agent entry point. Every intent flows through here:
-  // the controller normalizes the request (size validation) and passes the
-  // `intent` as a HINT — it biases the system prompt + tool availability, but
-  // the MODEL decides which tools to call (real intent recognition). The
-  // result is mapped into the unified {conversationId, message, suggestedActions}
-  // envelope, with structured blocks (diagnostic / issue_list) emitted when the
-  // model called the structured tools.
-  async chat(userIdentifier, context, intent = 'chat') {
+  // The single unified agent entry point. The controller normalizes the
+  // request (size validation) and the MODEL decides which tools to call (real
+  // intent recognition). The result is mapped into the unified
+  // {conversationId, message, suggestedActions} envelope, with a `patch`
+  // structured block emitted when the model called `submit_patch`.
+  async chat(userIdentifier, context) {
     const conversationId =
       context.conversation?.conversationId || `conv_${randomUUID()}`;
     const threadId = this.buildThreadId(userIdentifier, conversationId);
@@ -348,7 +161,7 @@ export class CopilotService {
       model.id
     );
 
-    const tools = this.toolPoolFactory(context, intent);
+    const tools = this.toolPoolFactory(context);
     const boundModel =
       tools.length > 0 && typeof chatModel.bindTools === 'function'
         ? chatModel.bindTools(tools)
@@ -365,10 +178,9 @@ export class CopilotService {
     // and fully swallowed so a flaky memory subsystem never breaks a turn.
     let systemPrompt = buildUnifiedSystemPrompt(
       context,
-      intent,
       tools.map(t => t.name)
     );
-    let userMessage = buildUserMessage(context, intent);
+    let userMessage = buildUserMessage(context);
     const lt = LTMEM_ENABLED ? this.longTermMemoryStore : null;
     if (lt) {
       try {
@@ -425,7 +237,7 @@ export class CopilotService {
     // and fully swallowed — never affects the response or breaks the caller.
     this._maybePersistLongTermMemory(userIdentifier, messages, chatModel);
 
-    return this.mapResult(messages, context, intent, conversationId);
+    return this.mapResult(messages, context, conversationId);
   }
 
   // A lightweight stand-in for the current user message so loadRelevant's
@@ -456,86 +268,21 @@ export class CopilotService {
     });
   }
 
-  // Map the agent's message list into the unified response envelope. Each
-  // intent's structured tools (submit_diagnostics / run_checks) are detected
-  // and turned into the matching message.blocks; free-text answers ride as
-  // message.content. Deterministic fallbacks preserve the structured-output
-  // guarantee when the model routes loosely.
-  mapResult(messages, context, intent, conversationId) {
+  // Map the agent's message list into the unified response envelope. A
+  // `patch` block is emitted when the model called `submit_patch` (a
+  // structured edit proposal the frontend renders as an inline-diff ghost
+  // preview with Accept/Reject); otherwise the free-text answer rides as
+  // message.content.
+  mapResult(messages, context, conversationId) {
     const finalContent = extractTextContent(messages[messages.length - 1]);
 
-    if (intent === 'compile-diagnose') {
-      let rawDiags = extractSubmittedDiagnostics(messages);
-      if (!rawDiags || rawDiags.length === 0) {
-        rawDiags = tryParseDiagnosticsJson(finalContent);
-      }
-      let diagnostics;
-      let content;
-      if (rawDiags && rawDiags.length > 0) {
-        diagnostics = rawDiags.map((e, i) => toDiagnostic(e, i));
-        content = buildDiagnoseSummary(finalContent, diagnostics);
-      } else {
-        // fallback: single free-text diagnostic grounded in the first annotation.
-        const annotations = context.compile?.annotations || [];
-        const primary = annotations[0] || null;
-        diagnostics = [
-          {
-            id: `diag_0_${randomUUID().slice(0, 8)}`,
-            title: primary?.message || 'Compile diagnosis',
-            whatHappened: finalContent || 'No diagnosis produced.',
-            likelyCause: '',
-            suggestedFix: '',
-            location: primary
-              ? { file: primary.file, line: primary.line }
-              : null,
-            actions: ['jump_to_line', 'copy', 'regenerate'],
-          },
-        ];
-        content = buildDiagnoseSummary(finalContent, diagnostics);
-      }
-      return {
-        conversationId,
-        message: {
-          role: 'assistant',
-          content,
-          blocks: diagnostics.map(diagnostic => ({ type: 'diagnostic', diagnostic })),
-        },
-        suggestedActions: [],
-      };
-    }
-
-    if (intent === 'run-checks') {
-      let rc = extractRunChecksResult(messages);
-      if (!rc || !Array.isArray(rc.issues)) {
-        rc = runChecksFallback(context);
-      }
-      const issues = (rc.issues || []).slice(0, MAX_ISSUES);
-      const total = issues.length;
-      const isToolConfirm = /"submitted"\s*:\s*true/.test(finalContent || '');
-      const content =
-        finalContent && !isToolConfirm
-          ? finalContent
-          : total
-            ? `${total} issue${total === 1 ? '' : 's'} found`
-            : 'Checks complete';
-      return {
-        conversationId,
-        message: {
-          role: 'assistant',
-          content,
-          blocks: total ? [{ type: 'issue_list', items: issues }] : [],
-        },
-        suggestedActions: [],
-      };
-    }
-
-    // explain-issue + chat: free-text answer, plus a `patch` block when the
-    // model called `submit_patch` (a structured edit proposal the frontend
-    // renders as an inline-diff ghost preview with Accept/Reject). `content`
-    // is a SHORT generic intro only — the model's `summary` rides as
-    // `patch.title` inside the card (see `toPatchBlock`). Rendering the summary
-    // in BOTH `content` and `patch.title` showed it twice in the chat
-    // (message-list renders `content` as markdown *and* the block).
+    // chat: free-text answer, plus a `patch` block when the model called
+    // `submit_patch` (a structured edit proposal the frontend renders as an
+    // inline-diff ghost preview with Accept/Reject). `content` is a SHORT
+    // generic intro only — the model's `summary` rides as `patch.title` inside
+    // the card (see `toPatchBlock`). Rendering the summary in BOTH `content`
+    // and `patch.title` showed it twice in the chat (message-list renders
+    // `content` as markdown *and* the block).
     const patchRaw = extractSubmittedPatch(messages);
     if (patchRaw) {
       const patch = toPatchBlock(patchRaw, 0);
@@ -556,22 +303,6 @@ export class CopilotService {
       conversationId,
       message: createMessageResponse(finalContent),
       suggestedActions: [],
-    };
-  }
-
-  // Back-compat wrapper: the old compileDiagnose(userIdentifier, context)
-  // signature, now delegating to the unified chat() and reshaping the unified
-  // envelope back to {conversationId, summary, diagnostics}. Kept so existing
-  // callers/tests of the old shape keep working.
-  async compileDiagnose(userIdentifier, context) {
-    const r = await this.chat(userIdentifier, context, 'compile-diagnose');
-    const diagnostics = (r.message.blocks || [])
-      .filter(b => b && b.type === 'diagnostic')
-      .map(b => b.diagnostic);
-    return {
-      conversationId: r.conversationId,
-      summary: r.message.content,
-      diagnostics,
     };
   }
 

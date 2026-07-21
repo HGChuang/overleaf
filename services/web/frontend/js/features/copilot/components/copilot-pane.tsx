@@ -288,41 +288,6 @@ const PANE_CSS = `
   border-radius: 999px; padding: 3px 10px; font-size: 12px; color: var(--copilot-fg-muted);
 }
 
-/* diagnostics (folded inline) */
-.copilot-diag {
-  background: var(--copilot-hover); border: 1px solid var(--copilot-edge); border-left: 3px solid #ff6b6b;
-  border-radius: 8px; padding: 10px 12px; margin: 10px 0;
-}
-.copilot-diag-title { font-weight: 600; margin-bottom: 6px; }
-.copilot-diag-section { margin: 6px 0; }
-.copilot-diag-section-label { font-size: 12px; font-weight: 600; color: var(--copilot-fg-muted); margin-bottom: 2px; }
-.copilot-diag-section-body { line-height: 1.5; }
-.copilot-diag-location { font-size: 13px; margin: 6px 0; }
-.copilot-diag-location-link { background: none; border: none; color: var(--copilot-accent); cursor: pointer; padding: 0; text-decoration: underline; }
-.copilot-diag-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-.copilot-diag-summary { background: #3a1f24; border: 1px solid #6b2a30; color: #ffb4b4; border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; }
-
-/* checks (folded inline) */
-.copilot-check-summary { display: flex; flex-wrap: wrap; gap: 10px; font-size: 13px; margin-bottom: 8px; color: var(--copilot-fg-muted); }
-.copilot-check-total { font-weight: 600; color: var(--copilot-fg); }
-.copilot-issue-group { margin-bottom: 14px; }
-.copilot-issue-group-title { font-size: 13px; font-weight: 600; color: var(--copilot-fg-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.03em; }
-.copilot-issue {
-  border: 1px solid var(--copilot-edge); border-radius: 8px; padding: 10px 12px; margin: 8px 0; background: var(--copilot-hover);
-}
-.copilot-issue-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.copilot-issue-title { font-weight: 500; }
-.copilot-issue-type { font-size: 11px; color: var(--copilot-fg-muted); text-transform: uppercase; }
-.copilot-badge { font-size: 11px; font-weight: 600; border-radius: 999px; padding: 2px 8px; text-transform: uppercase; }
-.copilot-sev-error { background: #4a2329; color: #ff9b9b; }
-.copilot-sev-warning { background: #4a3a23; color: #ffcf8a; }
-.copilot-sev-info { background: #23324a; color: #9ec1ff; }
-.copilot-issue-loc { background: none; border: none; cursor: pointer; color: var(--copilot-accent); font-size: 12px; padding: 0; text-decoration: underline; }
-.copilot-issue-desc { font-size: 13px; color: var(--copilot-fg); margin: 6px 0; line-height: 1.5; }
-.copilot-issue-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-.copilot-issue-explain { margin-top: 8px; border-top: 1px dashed var(--copilot-edge); padding-top: 8px; }
-.copilot-issue-list-fallback { margin: 6px 0; padding-left: 18px; }
-
 /* patch block (AI-proposed edit with inline-diff preview + accept/reject).
    The EDITOR ghost decorations use the .cm-copilot-patch-* classes styled by
    the copilotPatchPreview extension's baseTheme; the rules below style the

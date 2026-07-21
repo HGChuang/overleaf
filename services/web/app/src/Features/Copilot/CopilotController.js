@@ -77,13 +77,12 @@ async function proxy(req, res, url, bodyBuilder) {
 }
 
 module.exports = {
-  // One unified Copilot endpoint. The body's `intent` (chat / compile-diagnose
-  // / run-checks / explain-issue) is forwarded to the LLM service's single
+  // The single Copilot endpoint. Forwards to the LLM service's
   // /api/v1/copilot/chat route; CopilotContextBuilder.buildCopilotBody injects
-  // the server-side project context (and the compile log for the diagnose
-  // intent). The former compileDiagnose / runChecks / explainCheck proxy
-  // methods were folded into this one when the Ask/Fix/Check distinction was
-  // removed.
+  // the server-side project context. (The former compileDiagnose / runChecks /
+  // explainCheck proxy methods — and later the multi-intent dispatch — were
+  // removed when the Ask/Fix/Check distinction was dropped; there is now only
+  // chat.)
   async chat(req, res) {
     return proxy(req, res, '/api/v1/copilot/chat', CopilotContextBuilder.buildCopilotBody)
   },

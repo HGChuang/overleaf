@@ -1,22 +1,22 @@
-// Text-edit tools for the unified Copilot agent.
+// Text-edit tools for the Copilot agent.
 //
-// `buildEditTools()` returns the `submit_patch` tool, used on the chat / write /
-// fix path when the user asks the AI to MODIFY existing text. Instead of returning
-// the whole corrected document (which the user then has to copy), the agent returns
-// a structured PATCH: a list of `{oldText, newText}` hunks. `oldText` MUST be copied
-// VERBATIM from the source (the model reads it via `read_file` / `read_file_fragment`)
-// so the frontend can anchor an inline-diff ghost preview in the editor and let the
-// user Accept / Reject each patch without ever leaving the editor.
+// `buildEditTools()` returns the `submit_patch` tool, used when the user asks
+// the AI to MODIFY existing text. Instead of returning the whole corrected
+// document (which the user then has to copy), the agent returns a structured
+// PATCH: a list of `{oldText, newText}` hunks. `oldText` MUST be copied
+// VERBATIM from the source (the model reads it via `read_file` /
+// `read_file_fragment`) so the frontend can anchor an inline-diff ghost
+// preview in the editor and let the user Accept / Reject each patch without
+// ever leaving the editor.
 //
-// The tool does NOT mutate any project file server-side — it is a structured-output
-// tool (`returnDirect: true`); the actual edit is applied CLIENT-SIDE by the frontend
-// through the existing `applyFixInEditor` → OT/sharejs path. This keeps the
-// read/structured-only tool posture (see the copilot-agent-upgrade plan: M5 skipped —
-// no server-side project-mutating tools).
+// The tool does NOT mutate any project file server-side — it is a
+// structured-output tool (`returnDirect: true`); the actual edit is applied
+// CLIENT-SIDE by the frontend through the existing `applyFixInEditor` →
+// OT/sharejs path. This keeps the read/structured-only tool posture (see the
+// copilot-agent-upgrade plan: M5 skipped — no server-side project-mutating
+// tools).
 //
-// Uses `defineTool` (wraps @langchain/core `tool()`) + Zod schemas. Mirrors
-// `submit_diagnostics` in compileTools.js (which carries per-error `fix` hunks for
-// the compile path).
+// Uses `defineTool` (wraps @langchain/core `tool()`) + Zod schemas.
 
 import { z } from 'zod';
 import { defineTool } from './baseTool.js';
