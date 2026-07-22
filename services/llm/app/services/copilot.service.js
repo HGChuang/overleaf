@@ -9,13 +9,24 @@ import { LongTermMemoryStore } from '../agent/longTermMemory.js';
 import { extractTextContent } from '../agent/messageText.js';
 import { buildToolPool } from '../agent/tools/index.js';
 import { isPromptTooLong, reactiveCompact } from '../agent/recovery.js';
+import {
+  extractSubmittedPatch,
+  mapMessagesForView,
+  patchIntroContent,
+  toPatchBlock,
+} from '../agent/patchBlocks.js';
 import { ClientRegistry } from '../utils/clientRegistry.js';
-import { badRequest } from '../utils/errors.js';
+import { badRequest, CopilotError, timeout } from '../utils/errors.js';
 
 const MEMORY_TTL_SECONDS = Number(settings.LLM_MEMORY_TTL_SECONDS || 60 * 60);
 const MEMORY_MAX_MESSAGES = Number(settings.LLM_MEMORY_MAX_MESSAGES || 20);
 const AGENT_RECURSION_LIMIT = Number(settings.COPILOT_AGENT_RECURSION_LIMIT || 25);
 const LTMEM_ENABLED = settings.COPILOT_LTMEM_ENABLED !== 'false';
+// Hard wall-clock budget for ONE chat turn (all agent steps + queueing). The
+// per-CALL model timeout (60s) bounds a single step; without an overall
+// deadline a 25-step turn can burn ~25 minutes after the client has long
+// given up. 120s comfortably fits the diagnose-all-errors flow.
+const TURN_TIMEOUT_MS = Number(settings.COPILOT_TURN_TIMEOUT_MS || 120_000);
 
 function createMessageResponse(content, extraBlocks = []) {
   // `content` already carries the assistant's markdown text — don't also echo
@@ -29,59 +40,20 @@ function createMessageResponse(content, extraBlocks = []) {
   };
 }
 
-// ---- patch (submit_patch) structured-output helpers ----
-//
-// `submit_patch` lets the model propose a list of {oldText,newText} hunks
-// instead of returning the whole document. The frontend renders an inline-diff
-// ghost preview (struck old + gray new) with Accept/Reject; accept applies the
-// edit client-side through the existing applyFixInEditor → OT path.
-
-// Map a model-produced patch hunk to the API shape, with defensive coercion.
-function toPatchHunk(entry) {
-  const e = entry && typeof entry === 'object' ? entry : {};
-  return {
-    file: typeof e.file === 'string' && e.file ? e.file : null,
-    line: Number.isInteger(e.line) ? e.line : null,
-    oldText: typeof e.oldText === 'string' ? e.oldText : '',
-    newText: typeof e.newText === 'string' ? e.newText : '',
-  };
+function isAbortError(err) {
+  return (
+    err?.name === 'AbortError' ||
+    String(err?.message || '').toLowerCase().includes('abort')
+  );
 }
 
-// Find the last `submit_patch` tool call in the message list and return the raw
-// {hunks, summary} the model passed (or null).
-function extractSubmittedPatch(messages) {
-  for (let i = messages.length - 1; i >= 0; i--) {
-    const m = messages[i];
-    const toolCalls = m && Array.isArray(m.tool_calls) ? m.tool_calls : null;
-    if (!toolCalls || toolCalls.length === 0) continue;
-    const sp = toolCalls.find(tc => tc && tc.name === 'submit_patch');
-    if (!sp) continue;
-    const args = sp.args || {};
-    const hunks = Array.isArray(args.hunks) ? args.hunks : null;
-    if (hunks && hunks.length > 0) {
-      return {
-        hunks,
-        summary: typeof args.summary === 'string' ? args.summary : '',
-      };
-    }
-  }
-  return null;
-}
-
-// Build a {type:'patch'} block from a raw patch, dropping no-op hunks.
-// Returns null if nothing meaningful remains (caller then falls back to text).
-function toPatchBlock(rawPatch, index) {
-  if (!rawPatch || !Array.isArray(rawPatch.hunks)) return null;
-  const hunks = rawPatch.hunks.map(toPatchHunk).filter(h => h.oldText || h.newText);
-  if (hunks.length === 0) return null;
-  return {
-    id: `patch_${index}_${randomUUID().slice(0, 8)}`,
-    title:
-      typeof rawPatch.summary === 'string' && rawPatch.summary
-        ? rawPatch.summary
-        : `Proposed change (${hunks.length} hunk${hunks.length === 1 ? '' : 's'})`,
-    hunks,
-  };
+// LangGraph throws GraphRecursionError when the agent↔tool loop exceeds
+// recursionLimit. Surface it as a readable CopilotError instead of a bare 500.
+function isRecursionError(err) {
+  return (
+    err?.name === 'GraphRecursionError' ||
+    String(err?.message || '').includes('Recursion limit')
+  );
 }
 
 // Intent-specific user message payload. Project *paths* (not full contents) —
@@ -114,6 +86,7 @@ export class CopilotService {
     longTermMemoryStore,
     toolPoolFactory = buildToolPool,
     graphFactory = buildAgentGraph,
+    turnTimeoutMs = TURN_TIMEOUT_MS,
   } = {}) {
     this.apiKeyMapper = apiKeyMapper;
     this.memoryStore =
@@ -142,6 +115,7 @@ export class CopilotService {
         maxConcurrentPerKey: 8,
       });
     this.graphFactory = graphFactory;
+    this.turnTimeoutMs = turnTimeoutMs;
   }
 
   // The single unified agent entry point. The controller normalizes the
@@ -149,7 +123,11 @@ export class CopilotService {
   // intent recognition). The result is mapped into the unified
   // {conversationId, message, suggestedActions} envelope, with a `patch`
   // structured block emitted when the model called `submit_patch`.
-  async chat(userIdentifier, context) {
+  //
+  // opts.signal: AbortSignal from the controller (fires when the HTTP client
+  // disconnects) — combined here with the overall turn deadline so a gone or
+  // timed-out turn cancels in-flight model calls instead of burning tokens.
+  async chat(userIdentifier, context, { signal } = {}) {
     const conversationId =
       context.conversation?.conversationId || `conv_${randomUUID()}`;
     const threadId = this.buildThreadId(userIdentifier, conversationId);
@@ -169,7 +147,6 @@ export class CopilotService {
     const graph = this.graphFactory({
       model: boundModel,
       tools,
-      recursionLimit: AGENT_RECURSION_LIMIT,
     });
 
     // Build the base prompt + user message, then layer in long-term memory
@@ -197,19 +174,36 @@ export class CopilotService {
       }
     }
 
+    // Overall turn deadline + external (client-disconnect) abort.
+    const ac = new AbortController();
+    let timedOut = false;
+    const timer = setTimeout(() => {
+      timedOut = true;
+      ac.abort();
+    }, this.turnTimeoutMs);
+    const onOuterAbort = () => ac.abort();
+    if (signal) {
+      if (signal.aborted) ac.abort();
+      else signal.addEventListener('abort', onOuterAbort, { once: true });
+    }
+
     const invoke = hist =>
-      graph.invoke(
-        buildAgentInput({ systemPrompt, history: hist, userMessage }),
-        {
-          configurable: { thread_id: threadId },
-          recursionLimit: AGENT_RECURSION_LIMIT,
-        }
-      );
+      graph.invoke(buildAgentInput({ systemPrompt, history: hist, userMessage }), {
+        configurable: { thread_id: threadId },
+        recursionLimit: AGENT_RECURSION_LIMIT,
+        signal: ac.signal,
+      });
 
     await semaphore.acquire();
     let messages;
     try {
+      if (ac.signal.aborted) {
+        throw Object.assign(new Error('copilot turn aborted'), {
+          name: 'AbortError',
+        });
+      }
       let effectiveHistory = history;
+      let compacted = false;
       let response;
       try {
         response = await invoke(effectiveHistory);
@@ -217,8 +211,9 @@ export class CopilotService {
         // s11 reactive compact: on context-too-large, summarize the short-term
         // history and retry once. Rare (recursionLimit + micro_compact bound
         // growth), but the GLM proxy can be picky about context size.
-        if (!isPromptTooLong(err)) throw err;
+        if (ac.signal.aborted || !isPromptTooLong(err)) throw err;
         effectiveHistory = await reactiveCompact(effectiveHistory, chatModel);
+        compacted = true;
         response = await invoke(effectiveHistory);
       }
       messages = Array.isArray(response?.messages) ? response.messages : [];
@@ -228,14 +223,42 @@ export class CopilotService {
       // too (was dropped before) so follow-up turns keep the user's prior
       // questions and long-term extraction can see user preferences.
       const appendedMessages = messages.slice(effectiveHistory.length + 1);
-      await this.memoryStore.append(threadId, appendedMessages);
+      if (compacted) {
+        // PERSIST the compacted history + new turn: append() would merge the
+        // new turn into the OLD, still-oversized stored history, and every
+        // subsequent turn would prompt_too_long again (re-paying one
+        // summarize LLM call each time, forever).
+        await this.memoryStore.replace(threadId, [
+          ...effectiveHistory,
+          ...appendedMessages,
+        ]);
+      } else {
+        await this.memoryStore.append(threadId, appendedMessages);
+      }
+    } catch (err) {
+      if (timedOut && isAbortError(err)) {
+        throw timeout(
+          'copilot turn timed out — please narrow the request and try again'
+        );
+      }
+      if (isRecursionError(err)) {
+        throw new CopilotError(
+          'COPILOT_STEP_LIMIT',
+          'Copilot hit its step budget for this turn — please narrow the request or break it into smaller pieces.',
+          500,
+          { cause: err }
+        );
+      }
+      throw err;
     } finally {
+      clearTimeout(timer);
+      if (signal) signal.removeEventListener('abort', onOuterAbort);
       semaphore.release();
     }
 
     // M3: fire-and-forget long-term extraction + consolidation. Non-blocking
     // and fully swallowed — never affects the response or breaks the caller.
-    this._maybePersistLongTermMemory(userIdentifier, messages, chatModel);
+    this._maybePersistLongTermMemory(userIdentifier, messages, chatModel, semaphore);
 
     return this.mapResult(messages, context, conversationId);
   }
@@ -253,15 +276,37 @@ export class CopilotService {
 
   // Background long-term memory persistence (s09 stop-hook pattern). Runs after
   // the response is returned via setImmediate; every error is swallowed.
-  _maybePersistLongTermMemory(userIdentifier, messages, chatModel) {
+  // Serialized per user (racing extract/consolidate cycles clobber the memory
+  // index) and routed through the same per-key semaphore as foreground turns —
+  // background LLM calls previously bypassed it and could push a key past its
+  // provider rate limit.
+  _maybePersistLongTermMemory(userIdentifier, messages, chatModel, semaphore) {
     const lt = LTMEM_ENABLED ? this.longTermMemoryStore : null;
     if (!lt || !chatModel || !Array.isArray(messages) || messages.length === 0) {
       return;
     }
     setImmediate(async () => {
       try {
-        await lt.extractMemories(userIdentifier, messages, chatModel);
-        await lt.consolidate(userIdentifier, chatModel);
+        const work = async () => {
+          await lt.extractMemories(userIdentifier, messages, chatModel);
+          await lt.consolidate(userIdentifier, chatModel);
+        };
+        const gated =
+          semaphore && typeof semaphore.acquire === 'function'
+            ? async () => {
+                await semaphore.acquire();
+                try {
+                  await work();
+                } finally {
+                  semaphore.release();
+                }
+              }
+            : work;
+        if (typeof lt.runExclusive === 'function') {
+          await lt.runExclusive(userIdentifier, gated);
+        } else {
+          await gated();
+        }
       } catch {
         /* swallow — never break the caller */
       }
@@ -287,13 +332,11 @@ export class CopilotService {
     if (patchRaw) {
       const patch = toPatchBlock(patchRaw, 0);
       if (patch) {
-        const count = patch.hunks.length;
-        const content = `Proposed ${count} change${
-          count === 1 ? '' : 's'
-        } — review the inline preview, then Accept or Reject.`;
         return {
           conversationId,
-          message: createMessageResponse(content, [{ type: 'patch', patch }]),
+          message: createMessageResponse(patchIntroContent(patch.hunks.length), [
+            { type: 'patch', patch },
+          ]),
           suggestedActions: [],
         };
       }
@@ -314,10 +357,7 @@ export class CopilotService {
     const messages = await this.memoryStore.load(threadId);
     return {
       conversationId,
-      messages: messages.map(message => ({
-        role: message.getType ? message.getType() : message._getType?.() || 'message',
-        content: message.content,
-      })),
+      messages: mapMessagesForView(messages),
     };
   }
 

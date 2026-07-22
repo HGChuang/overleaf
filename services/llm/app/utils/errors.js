@@ -39,6 +39,10 @@ export function forbidden(message, code = 'COPILOT_FORBIDDEN') {
   return new CopilotError(code, message, 403);
 }
 
+export function unauthorized(message, code = 'COPILOT_UNAUTHORIZED') {
+  return new CopilotError(code, message, 401);
+}
+
 export function payloadTooLarge(message, code = 'COPILOT_CONTEXT_TOO_LARGE') {
   return new CopilotError(code, message, 413);
 }

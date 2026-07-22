@@ -11,13 +11,26 @@
 // Design principle (from the tutorial): cheap layers run first, the expensive
 // LLM layer runs last. Here we only implement the cheap layers.
 
-import { HumanMessage, ToolMessage } from '@langchain/core/messages';
+import { AIMessage, HumanMessage, ToolMessage } from '@langchain/core/messages';
 
 function isToolMessage(m) {
   if (!m) return false;
   const t = typeof m._getType === 'function' ? m._getType() : null;
   const t2 = typeof m.getType === 'function' ? m.getType() : null;
   return t === 'tool' || t2 === 'tool';
+}
+
+function isAiMessage(m) {
+  if (!m) return false;
+  const t = typeof m._getType === 'function' ? m._getType() : null;
+  const t2 = typeof m.getType === 'function' ? m.getType() : null;
+  return t === 'ai' || t2 === 'ai';
+}
+
+function hasTextContent(m) {
+  if (typeof m?.content === 'string') return m.content.length > 0;
+  if (Array.isArray(m?.content)) return m.content.length > 0;
+  return false;
 }
 
 // L1 — snip: keep `keepHead` head messages (initial context) + the tail
@@ -71,17 +84,62 @@ export function microCompact(messages, keepRecent = 3) {
   });
 }
 
-// Rough byte-size estimate of a message list, for threshold checks. Cheap and
-// good enough — does not need a tokenizer.
-export function estimateBytes(messages) {
-  if (!Array.isArray(messages)) return 0;
-  let total = 0;
-  for (const m of messages) {
-    const c = typeof m?.content === 'string' ? m.content : JSON.stringify(m?.content ?? {});
-    total += c.length;
-    if (Array.isArray(m?.tool_calls)) {
-      total += JSON.stringify(m.tool_calls).length;
-    }
+// Tool-call pairing repair. ANY truncation of the message list (the hard
+// slice(-maxMessages) cap in RedisMemoryStore, snipCompact's middle-drop, or
+// reactiveCompact's tail-keep) can cut between an AIMessage carrying
+// tool_calls and the ToolMessages that answer it. OpenAI-compatible providers
+// HARD-REJECT such a history ("messages with role 'tool' must be a response
+// to a preceding message with 'tool_calls'") — and because the poisoned list
+// is what gets persisted, every subsequent turn of that conversation would
+// fail the same way until the thread expires. This pass makes the list
+// provider-safe again:
+//   - an AIMessage whose tool_calls are NOT all answered by the ToolMessages
+//     immediately following it is degraded to a plain assistant message
+//     (tool_calls stripped; dropped entirely if it has no content either);
+//   - a ToolMessage not consumed by such a pair (orphan) is dropped.
+// The conversation loses the broken tool round-trip but stays loadable.
+export function sanitizeToolPairing(messages) {
+  if (!Array.isArray(messages) || messages.length === 0) {
+    return messages || [];
   }
-  return total;
+  const result = [];
+  for (let i = 0; i < messages.length; i++) {
+    const m = messages[i];
+    if (isAiMessage(m) && Array.isArray(m.tool_calls) && m.tool_calls.length > 0) {
+      const ids = m.tool_calls.map(tc => tc && tc.id).filter(Boolean);
+      // Collect the run of ToolMessages immediately after this AIMessage.
+      const following = [];
+      let j = i + 1;
+      while (j < messages.length && isToolMessage(messages[j])) {
+        following.push(messages[j]);
+        j++;
+      }
+      const answered = new Set(following.map(tm => tm.tool_call_id));
+      const allAnswered = ids.length > 0 && ids.every(id => answered.has(id));
+      if (allAnswered) {
+        result.push(m);
+        for (const tm of following) {
+          if (ids.includes(tm.tool_call_id)) result.push(tm);
+        }
+      } else if (hasTextContent(m)) {
+        // Degrade to a plain assistant message; strip provider-specific
+        // tool_call fields from additional_kwargs too so nothing dangling
+        // remains for strict providers to reject.
+        const extra = { ...(m.additional_kwargs || {}) };
+        delete extra.tool_calls;
+        result.push(
+          new AIMessage({ content: m.content, additional_kwargs: extra })
+        );
+      }
+      // Either way the immediately-following ToolMessages are consumed here
+      // (paired ones kept above, unpaired ones dropped as orphans).
+      i = j - 1;
+      continue;
+    }
+    if (isToolMessage(m)) {
+      continue; // orphan with no preceding tool_calls — drop
+    }
+    result.push(m);
+  }
+  return result;
 }

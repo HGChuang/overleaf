@@ -6,7 +6,6 @@ export function buildAgentGraph({
   model,
   tools = [],
   checkpointer,
-  recursionLimit = 25,
 } = {}) {
   const toolNode = new ToolNode(tools);
 
@@ -22,13 +21,13 @@ export function buildAgentGraph({
     .addConditionalEdges('agent', toolsCondition, ['tools', END])
     .addEdge('tools', 'agent');
 
-  // `recursionLimit` caps the number of graph super-steps (agent↔tool round
-  // trips). Without it a model that keeps calling tools can loop until the
-  // provider times out. 25 is enough for the diagnose-all-errors flow
-  // (enumerate → read fragments → classify → submit) with headroom.
-  return checkpointer
-    ? graph.compile({ checkpointer, recursionLimit })
-    : graph.compile({ recursionLimit });
+  // NOTE: recursionLimit is a RUNTIME config (CopilotService passes it to
+  // graph.invoke), not a compile option — langgraph's compile() ignores it.
+  // It caps agent↔tool round trips so a model that keeps calling tools can't
+  // loop until the provider times out. 25 is enough for the
+  // diagnose-all-errors flow (enumerate → read fragments → classify → submit)
+  // with headroom.
+  return checkpointer ? graph.compile({ checkpointer }) : graph.compile();
 }
 
 export function buildAgentInput({ systemPrompt, history = [], userMessage }) {

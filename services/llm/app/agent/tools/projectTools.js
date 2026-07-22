@@ -11,6 +11,23 @@ import { z } from 'zod';
 import { defineTool } from './baseTool.js';
 import { buildFileMap, lookupFile, readFileFragment } from './fileMap.js';
 
+// Hard output caps. The tool result rides into the model context verbatim and
+// microCompact keeps the most recent tool results INTACT — a couple of
+// unbounded full-file reads can blow the whole context window on their own
+// (the 120KB request budget covers the request, not the accumulated history).
+// 20KB ≈ 5-6k tokens, safe alongside the system prompt + a few more results.
+const MAX_READ_CHARS = 20_000;
+const MAX_FRAGMENT_LINES = 200;
+
+function capContent(content, totalLines) {
+  if (content.length <= MAX_READ_CHARS) return content;
+  return (
+    content.slice(0, MAX_READ_CHARS) +
+    `\n... [truncated at ${MAX_READ_CHARS} chars of a ${totalLines}-line file — ` +
+    `use read_file_fragment with a line range to read more]`
+  );
+}
+
 export function buildProjectTools(context = {}) {
   const project = context.project || {};
   const fileMap = buildFileMap(project.files);
@@ -48,7 +65,12 @@ export function buildProjectTools(context = {}) {
         limit && limit < lines.length
           ? lines.slice(0, limit).join('\n') + `\n... (${lines.length - limit} more lines)`
           : content;
-      return JSON.stringify({ found: true, path, totalLines: lines.length, content: limited });
+      return JSON.stringify({
+        found: true,
+        path,
+        totalLines: lines.length,
+        content: capContent(limited, lines.length),
+      });
     },
   });
 
@@ -61,8 +83,18 @@ export function buildProjectTools(context = {}) {
       startLine: z.number().int().min(1).describe('1-based start line'),
       endLine: z.number().int().min(1).describe('1-based end line (inclusive)'),
     }),
-    handler: async ({ path, startLine, endLine }) =>
-      JSON.stringify(readFileFragment(fileMap, path, startLine, endLine)),
+    handler: async ({ path, startLine, endLine }) => {
+      // Clamp absurd windows: the result is also capped to MAX_READ_CHARS.
+      const cappedEnd =
+        Number.isInteger(endLine) && Number.isInteger(startLine)
+          ? Math.min(endLine, startLine + MAX_FRAGMENT_LINES - 1)
+          : endLine;
+      const fragment = readFileFragment(fileMap, path, startLine, cappedEnd);
+      if (fragment.found && typeof fragment.content === 'string') {
+        fragment.content = capContent(fragment.content, fragment.totalLines || 0);
+      }
+      return JSON.stringify(fragment);
+    },
   });
 
   const searchProject = defineTool({

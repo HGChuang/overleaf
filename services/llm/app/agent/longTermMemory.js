@@ -33,7 +33,34 @@ const CONSOLIDATE_THRESHOLD = 12;
 const CONSOLIDATE_TARGET = 8;
 const MAX_MEMORIES = 60;
 const MAX_RELEVANT = 5;
+const MAX_BODY_CHARS = 4000;
+const MAX_RELEVANT_CHARS = 6000;
+const MAX_QUERY_TOKENS = 64;
 const MEMORY_TYPES = new Set(['user', 'feedback', 'project', 'reference']);
+
+// Keyword tokenizer for memory retrieval. The previous latin-only split
+// (/[^a-z0-9]+/i) treated every CJK character as a SEPARATOR, so a pure
+// Chinese message tokenized to nothing and retrieval silently never matched —
+// memories were written but never loaded for Chinese conversations. Text is
+// scanned as alternating CJK / latin-alnum runs: unsegmented CJK runs index
+// as overlapping bigrams (plus the whole run when short), latin words keep a
+// length floor to skip noise.
+function tokenizeForMatch(text) {
+  const tokens = new Set();
+  const runs = String(text || '').toLowerCase().match(/[a-z0-9]+|[一-鿿]+/gu) || [];
+  for (const run of runs) {
+    if (/^[一-鿿]+$/.test(run)) {
+      if (run.length <= 6) tokens.add(run);
+      for (let i = 0; i < run.length - 1; i++) {
+        tokens.add(run.slice(i, i + 2));
+      }
+    } else if (run.length > 2) {
+      tokens.add(run);
+    }
+    if (tokens.size >= MAX_QUERY_TOKENS) break;
+  }
+  return [...tokens].slice(0, MAX_QUERY_TOKENS);
+}
 
 function slugify(name) {
   return String(name || `mem_${randomUUID().slice(0, 8)}`)
@@ -104,6 +131,27 @@ export class LongTermMemoryStore {
     this.consolidateTarget = consolidateTarget;
     this.maxMemories = maxMemories;
     this.maxRelevant = maxRelevant;
+    // Per-user promise chains serializing the background write paths
+    // (extractMemories + consolidate). Those run fire-and-forget and can
+    // overlap across requests; without serialization their
+    // read-index→write-index cycles race and clobber each other.
+    this._userChains = new Map();
+  }
+
+  // Run `fn` after all previously queued work for this user settles. Errors
+  // in earlier links never block later ones.
+  runExclusive(userId, fn) {
+    const key = String(userId);
+    const prev = this._userChains.get(key) || Promise.resolve();
+    const next = prev.catch(() => {}).then(fn);
+    this._userChains.set(key, next);
+    const cleanup = () => {
+      if (this._userChains.get(key) === next) {
+        this._userChains.delete(key);
+      }
+    };
+    next.then(cleanup, cleanup);
+    return next;
   }
 
   indexKey(userId) {
@@ -159,7 +207,9 @@ export class LongTermMemoryStore {
     };
     const record = {
       ...entry,
-      body: String(body || ''),
+      // Cap the body: an unbounded body rides back into the user turn via
+      // loadRelevant and can bloat the context well past the model window.
+      body: String(body || '').slice(0, MAX_BODY_CHARS),
       updatedAt: new Date().toISOString(),
     };
     await this.client.set(this.memoryKey(userId, slug), JSON.stringify(record));
@@ -212,11 +262,7 @@ export class LongTermMemoryStore {
     }
 
     // keyword fallback
-    const words = recentUserText
-      .toLowerCase()
-      .split(/[^a-z0-9]+/i)
-      .filter(w => w && w.length > 3);
-    const uniqueWords = [...new Set(words)];
+    const uniqueWords = tokenizeForMatch(recentUserText);
     if (uniqueWords.length === 0) return [];
     const scored = index
       .map(entry => {
@@ -272,6 +318,8 @@ export class LongTermMemoryStore {
 
   // Load the full content of relevant memories as a block to prepend to the
   // user turn. Returns '' when nothing is relevant (so nothing is injected).
+  // The whole block is capped so a batch of max-size memories can't blow up
+  // the context on its own.
   async loadRelevant(userId, messages, opts = {}) {
     try {
       const slugs = await this.selectRelevant(userId, messages, opts);
@@ -279,10 +327,18 @@ export class LongTermMemoryStore {
       const memories = await Promise.all(
         slugs.map(slug => this.readMemory(userId, slug))
       );
-      const parts = memories.filter(Boolean).map(mem => {
+      const parts = [];
+      let budget = MAX_RELEVANT_CHARS;
+      for (const mem of memories.filter(Boolean)) {
         const header = `[${mem.name}] (${mem.type})`;
-        return `${header}\n${mem.body || mem.description || ''}`;
-      });
+        const part = `${header}\n${mem.body || mem.description || ''}`;
+        if (part.length > budget) {
+          if (parts.length === 0) parts.push(part.slice(0, MAX_RELEVANT_CHARS));
+          break;
+        }
+        parts.push(part);
+        budget -= part.length;
+      }
       if (parts.length === 0) return '';
       return `<relevant_memories>\n${parts.join('\n\n')}\n</relevant_memories>`;
     } catch {
@@ -355,7 +411,8 @@ export class LongTermMemoryStore {
   }
 
   // Consolidate (dedupe/merge) when the memory count crosses the threshold.
-  // LLM call. Fire-and-forget from the service.
+  // LLM call. Fire-and-forget from the service (serialized per user via
+  // runExclusive there).
   async consolidate(userId, model) {
     if (!userId || !model) return false;
     try {
@@ -377,16 +434,35 @@ export class LongTermMemoryStore {
       const res = await model.invoke([new HumanMessage(prompt)]);
       const items = parseJsonArrayLoose(extractTextContent(res));
       if (!items || items.length === 0) return false;
-      // replace all memories with the consolidated set
-      await this.clear(userId);
+      // Upsert the consolidated set FIRST, then delete stale entries and
+      // rewrite the index. The previous clear()-then-rewrite had a window
+      // where a crash lost EVERY memory, and a concurrent extractMemories
+      // could resurrect slugs the consolidation had just removed.
+      const newSlugs = new Set();
+      const newIndex = [];
       for (const mem of items.slice(0, this.maxMemories)) {
-        await this.writeMemory(userId, {
+        const rec = await this.writeMemory(userId, {
           name: mem.name,
           type: mem.type,
           description: mem.description,
           body: mem.body,
         });
+        if (rec) {
+          newSlugs.add(rec.slug);
+          newIndex.push({
+            slug: rec.slug,
+            name: rec.name,
+            type: rec.type,
+            description: rec.description,
+          });
+        }
       }
+      if (newSlugs.size === 0) return false;
+      const stale = index.filter(e => !newSlugs.has(e.slug));
+      await Promise.all(
+        stale.map(e => this.client.del(this.memoryKey(userId, e.slug)))
+      );
+      await this._writeIndex(userId, newIndex);
       return true;
     } catch {
       return false;

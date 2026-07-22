@@ -2,6 +2,7 @@ import { CopilotService } from '../services/copilot.service.js';
 import { ContextService } from '../services/context.service.js';
 import { ConversationService } from '../services/conversation.service.js';
 import { getUserIdentifier } from '../utils/common.js';
+import { unauthorized } from '../utils/errors.js';
 import { fail, getRequestId, ok } from '../utils/response.js';
 
 // The single Copilot endpoint. `POST /chat` runs the one CopilotService.chat
@@ -23,10 +24,24 @@ export class CopilotController {
 
   async chat(req, res) {
     const requestId = getRequestId(req);
+    // Abort the agent turn when the HTTP client goes away (panel closed,
+    // page navigated, proxy timeout) so the graph stops burning tokens
+    // instead of running to completion for nobody. This MUST be res-based:
+    // req 'close' fires as soon as the request body has been consumed
+    // (express.json does that immediately) and would abort every turn at
+    // once; res 'close' + the writableEnded guard only fires early when the
+    // connection genuinely dies before we answered.
+    const ac = new AbortController();
+    const onClose = () => {
+      if (!res.writableEnded) ac.abort();
+    };
+    res.on('close', onClose);
     try {
       const userIdentifier = await this.getUserIdentifier(req);
       const context = this.contextService.normalizeChatContext(req.body || {});
-      const r = await this.copilotService.chat(userIdentifier, context);
+      const r = await this.copilotService.chat(userIdentifier, context, {
+        signal: ac.signal,
+      });
       const data = {
         conversationId: r.conversationId,
         message: r.message,
@@ -36,6 +51,8 @@ export class CopilotController {
     } catch (error) {
       const response = fail(error, { requestId });
       res.status(response.status).json(response.body);
+    } finally {
+      res.removeListener('close', onClose);
     }
   }
 
@@ -56,6 +73,11 @@ export class CopilotController {
 
   async getUserIdentifier(req) {
     const sid = req.cookies['overleaf.sid'];
+    if (!sid) {
+      // Missing session cookie is an auth problem (401), not a server fault
+      // (500 from a TypeError deep in extractIdentifier).
+      throw unauthorized('missing overleaf.sid session cookie');
+    }
     return getUserIdentifier(sid);
   }
 }

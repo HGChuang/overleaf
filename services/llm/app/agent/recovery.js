@@ -1,18 +1,17 @@
 // Error recovery (s11) + the deferred LLM summarize layer (s08 L4).
 //
-// `withRecovery` wraps the graph.invoke call: on a `prompt_too_long` error it
-// reactively compacts the short-term history (summarize → keep recent tail) and
-// retries once. `summarizeHistory` is also the L4 auto-compact primitive the
-// short-term memory will use when the stored history crosses the summarize
-// threshold. Both need the per-user model, which is why they live here (not in
-// the model-free RedisMemoryStore).
+// The caller (CopilotService) wraps graph.invoke: on a `prompt_too_long` error
+// it reactively compacts the short-term history via `reactiveCompact`
+// (summarize → keep recent tail) and retries once. `summarizeHistory` is also
+// the L4 auto-compact primitive. Both need the per-user model, which is why
+// they live here (not in the model-free RedisMemoryStore).
 //
 // The model's own `maxRetries` (set in modelFactory) already handles transient
 // network/timeout retries; this layer adds the context-too-large path.
 
 import { HumanMessage } from '@langchain/core/messages';
 import { extractTextContent } from './messageText.js';
-import { microCompact } from './compact.js';
+import { microCompact, sanitizeToolPairing } from './compact.js';
 
 const REACTIVE_KEEP_TAIL = 5;
 
@@ -84,29 +83,18 @@ export async function summarizeHistory(messages, model) {
 // most recent REACTIVE_KEEP_TAIL messages. Used when an invoke throws
 // prompt_too_long (rare; bounded by recursionLimit + micro_compact, but the
 // GLM proxy this runs on can be picky about context size).
+// The tail-slice can cut between an AIMessage with tool_calls and its
+// ToolMessages, so the result goes through sanitizeToolPairing — otherwise the
+// retry itself would fail provider-side validation (a 400, not a second
+// prompt_too_long) and the recovery would be wasted.
 export async function reactiveCompact(messages, model) {
   if (!Array.isArray(messages) || messages.length === 0) return messages;
   const summary = await summarizeHistory(messages, model);
   const tail = messages.slice(-REACTIVE_KEEP_TAIL);
-  if (summary) return [summary, ...tail];
+  if (summary) return sanitizeToolPairing([summary, ...tail]);
   // summarize failed — fall back to a hard tail-trim so we still shrink.
-  return [
+  return sanitizeToolPairing([
     new HumanMessage({ content: '[Reactive compact: summary unavailable; kept recent tail only]' }),
     ...tail,
-  ];
-}
-
-// Wrap an async `fn(input)` that may throw. On a prompt_too_long error, run
-// `compact(input)` to get a reduced input and retry `fn` once with it. Any
-// other error (or a second prompt_too_long) is rethrown.
-export async function withRecovery(fn, input, { compact, retries = 1 } = {}) {
-  try {
-    return await fn(input);
-  } catch (err) {
-    if (!isPromptTooLong(err) || retries <= 0 || typeof compact !== 'function') {
-      throw err;
-    }
-    const reduced = await compact(input);
-    return await fn(reduced);
-  }
+  ]);
 }
