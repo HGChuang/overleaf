@@ -67,6 +67,8 @@ export interface CopilotMessage {
   suggestedActions?: ActionItem[]
   // internal: whether this message is currently loading a response
   pending?: boolean
+  // internal: name of the tool the agent is currently running (SSE mode)
+  toolActivity?: string
 }
 
 // ---------------------------------------------------------------------------

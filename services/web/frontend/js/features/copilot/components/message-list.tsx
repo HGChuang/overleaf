@@ -33,8 +33,15 @@ export const MessageList: FC<{ messages: CopilotMessage[] }> = ({
               </div>
             ) : isPending ? (
               <div className="copilot-msg-pending">
+                {msg.content && <MarkdownContent content={msg.content} />}
                 <Spinner />
-                <span>Thinking…</span>
+                <span>
+                  {msg.toolActivity
+                    ? `Using tool ${msg.toolActivity}…`
+                    : msg.content
+                      ? 'Writing…'
+                      : 'Thinking…'}
+                </span>
               </div>
             ) : (
               <div className="copilot-msg-body">

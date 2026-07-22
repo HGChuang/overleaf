@@ -20,7 +20,7 @@ import {
 import usePersistedState from '@/shared/hooks/use-persisted-state'
 import { useProjectContext } from '@/shared/context/project-context'
 import { useEditorManagerContext } from '@/features/ide-react/context/editor-manager-context'
-import { copilotChat, CopilotError } from '../utils/copilot-api'
+import { copilotChatStream, CopilotError } from '../utils/copilot-api'
 import type { CopilotMessage } from '../utils/types'
 
 type Status = 'idle' | 'loading'
@@ -238,7 +238,40 @@ export const CopilotProvider: FC = ({ children }) => {
         message: { role: 'user', content },
       }
 
-      copilotChat(body, controller.signal)
+      copilotChatStream(body, {
+        signal: controller.signal,
+        onEvent: event => {
+          // Mid-turn updates land on the pending assistant placeholder:
+          // text deltas accumulate into its content; tool activity replaces
+          // the "Thinking…" label until the terminal `done` swaps in the
+          // final message (patch blocks included).
+          if (event.type === 'text_delta') {
+            setMessages(prev => {
+              const last = prev[prev.length - 1]
+              if (!last?.pending) return prev
+              return [
+                ...prev.slice(0, -1),
+                { ...last, content: last.content + event.delta },
+              ]
+            })
+          } else if (event.type === 'tool_start') {
+            setMessages(prev => {
+              const last = prev[prev.length - 1]
+              if (!last?.pending) return prev
+              return [
+                ...prev.slice(0, -1),
+                { ...last, toolActivity: event.toolName },
+              ]
+            })
+          } else if (event.type === 'tool_end') {
+            setMessages(prev => {
+              const last = prev[prev.length - 1]
+              if (!last?.pending) return prev
+              return [...prev.slice(0, -1), { ...last, toolActivity: undefined }]
+            })
+          }
+        },
+      })
         .then(data => {
           const assistant: CopilotMessage = {
             role: 'assistant',
