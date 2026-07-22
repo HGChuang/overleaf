@@ -19,10 +19,14 @@ export interface FixEdit {
 }
 
 // Reserved pseudo-user id that Copilot's tracked changes are attributed to.
-// Deliberately not a mongo ObjectId, so it can never collide with a real
-// account; the real-time service rewrites `meta.user_id` to this value when
-// an update arrives with `meta.agent === 'copilot'`.
-export const COPILOT_USER_ID = 'copilot'
+// MUST be 24 lowercase hex chars (mongo ObjectId shape): project-history's
+// overleaf-editor-core asserts v2 author ids against /^[0-9a-f]{24}$/ and
+// crashes the whole service on anything else, and web casts lastUpdatedBy to
+// ObjectId. This synthetic constant can never collide with a real account.
+// The real-time service rewrites `meta.user_id` to this value when an update
+// arrives with `meta.agent === 'copilot'` — keep it in sync with
+// services/real-time/app/js/WebsocketController.js.
+export const COPILOT_USER_ID = 'c0c0c0c0c0c0c0c0c0c0c0c0'
 
 /**
  * Apply a concrete fix in the editor: replace the first occurrence of

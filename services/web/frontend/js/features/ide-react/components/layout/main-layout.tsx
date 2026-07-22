@@ -52,12 +52,19 @@ export const MainLayout: FC = () => {
     handlePaneExpand: handleCopilotExpand,
   } = useCopilotPane()
 
-  // Copilot and Chat are independent right-side panels. Each toolbar button
-  // toggles only its own panel state (copilot:open vs ui.chatOpen), so
-  // clicking Copilot opens/closes Copilot without touching Chat, and clicking
-  // Chat opens/closes Chat without touching Copilot. Both may be open at once.
-  // Do NOT re-add mutual-exclusion effects (opening one closes the other) —
-  // that produces the exact "clicking Copilot switches to Chat" bug we fixed.
+  // Copilot and Chat are independent right-side panels: each toolbar button
+  // toggles only its own panel state (copilot:open vs ui.chatOpen), and both
+  // panels may be open at once.
+  //
+  // For that independence to hold, the two collapsible panels must NOT be
+  // siblings in the same flat PanelGroup. react-resizable-panels donates the
+  // space freed by a collapsing panel to its pivot neighbor (and an expanding
+  // panel steals from that neighbor first). In a flat [main | chat | copilot]
+  // group, collapsing Copilot force-expands Chat from 0 — and the panel's
+  // onExpand callback then flips ui.chatOpen to true, so clicking "Copilot"
+  // visibly "switched to Chat" (and vice versa). Nesting [main | chat] in its
+  // own PanelGroup (below) makes each side panel trade space only with the
+  // editor area.
   const chatEnabled = getMeta('ol-chatEnabled')
 
   const { t } = useTranslation()
@@ -107,42 +114,50 @@ export const MainLayout: FC = () => {
           </HorizontalResizeHandle>
 
           <Panel id="panel-outer-main" order={2}>
-            {/* autoSaveId bumped to v2: the pre-Copilot layout saved only 2
-              panels (main + chat). Adding the third collapsible Copilot panel
-              to the same id restored a stale 2-panel layout, which made the
-              chat/copilot panels mis-share space and the togglers appear to
-              cross-wire. A fresh id discards the stale layout. */}
-            <PanelGroup autoSaveId="ide-inner-layout-v2" direction="horizontal">
-              <Panel className="ide-react-panel" id="panel-main" order={1}>
-                <HistoryContainer />
-                <EditorAndPdf />
-              </Panel>
-
-              {chatEnabled && (
-                <>
-                  <HorizontalResizeHandle
-                    onDoubleClick={toggleChat}
-                    resizable={chatIsOpen}
-                    onDragging={setChatResizing}
-                    hitAreaMargins={{ coarse: 0, fine: 0 }}
-                  />
-
-                  {/* chat */}
-                  <Panel
-                    ref={chatPanelRef}
-                    id="panel-chat"
-                    order={2}
-                    defaultSize={20}
-                    minSize={5}
-                    maxSize={30}
-                    collapsible
-                    onCollapse={handleChatCollapse}
-                    onExpand={handleChatExpand}
-                  >
-                    <ChatPane />
+            {/* autoSaveId bumped to v3: the group was restructured — Chat now
+              lives in a nested group with the main panel (see comment above),
+              so layouts saved for the old flat 3-panel group must be
+              discarded. */}
+            <PanelGroup autoSaveId="ide-inner-layout-v3" direction="horizontal">
+              <Panel id="panel-main-chat" order={1}>
+                {/* Nested group: Chat collapses/expands against the main
+                  editor panel only, never against Copilot. */}
+                <PanelGroup
+                  autoSaveId="ide-main-chat-layout"
+                  direction="horizontal"
+                >
+                  <Panel className="ide-react-panel" id="panel-main" order={1}>
+                    <HistoryContainer />
+                    <EditorAndPdf />
                   </Panel>
-                </>
-              )}
+
+                  {chatEnabled && (
+                    <>
+                      <HorizontalResizeHandle
+                        onDoubleClick={toggleChat}
+                        resizable={chatIsOpen}
+                        onDragging={setChatResizing}
+                        hitAreaMargins={{ coarse: 0, fine: 0 }}
+                      />
+
+                      {/* chat */}
+                      <Panel
+                        ref={chatPanelRef}
+                        id="panel-chat"
+                        order={2}
+                        defaultSize={20}
+                        minSize={5}
+                        maxSize={30}
+                        collapsible
+                        onCollapse={handleChatCollapse}
+                        onExpand={handleChatExpand}
+                      >
+                        <ChatPane />
+                      </Panel>
+                    </>
+                  )}
+                </PanelGroup>
+              </Panel>
 
               <HorizontalResizeHandle
                 onDoubleClick={toggleCopilot}
@@ -164,7 +179,7 @@ export const MainLayout: FC = () => {
               <Panel
                 ref={copilotPanelRef}
                 id="panel-copilot"
-                order={3}
+                order={2}
                 defaultSize={22}
                 minSize={5}
                 maxSize={40}
