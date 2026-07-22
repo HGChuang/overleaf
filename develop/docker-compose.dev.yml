@@ -124,15 +124,17 @@ services:
       - ../services/real-time/config:/overleaf/services/real-time/config
 
   llm:
-    command: ["node", "--watch", "app.js"]
+    command: ["npx", "tsx", "watch", "app.ts"]
     environment:
       - NODE_OPTIONS=--inspect=0.0.0.0:9229
     ports:
       - "127.0.0.1:9241:9229"
     volumes:
       - ../services/llm/app:/overleaf/services/llm/app
-      - ../services/llm/app.js:/overleaf/services/llm/app.js
+      - ../services/llm/app.ts:/overleaf/services/llm/app.ts
       - ../services/llm/config:/overleaf/services/llm/config
+      - ../services/llm/test:/overleaf/services/llm/test
+      - ../services/llm/tsconfig.json:/overleaf/services/llm/tsconfig.json
 
 
   web:
