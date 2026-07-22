@@ -561,14 +561,19 @@ module.exports = WebsocketController = {
         update.meta.user_id = userId
         // Copilot track-changes attribution: when the client marks an update
         // as produced by the Copilot agent (meta.agent === 'copilot'), record
-        // the change under the reserved pseudo-user id 'copilot' so review
-        // panels attribute it to the AI instead of the acting user. The id is
-        // deliberately not a mongo ObjectId so it can never collide with a
-        // real account. NOTE: this trusts the client flag; if stronger
-        // guarantees are ever needed, verify a token issued by the llm
-        // service here instead of the bare flag.
+        // the change under a reserved pseudo-user id so review panels
+        // attribute it to the AI instead of the acting user. The id MUST be
+        // 24 lowercase hex chars (mongo ObjectId shape): project-history's
+        // overleaf-editor-core asserts v2 author ids against /^[0-9a-f]{24}$/
+        // and the process dies mid-queue on anything else, and web casts
+        // lastUpdatedBy to ObjectId. The synthetic constant can never collide
+        // with a real account. Keep in sync with COPILOT_USER_ID in
+        // services/web/frontend/js/features/copilot/utils/editor-bridge.ts.
+        // NOTE: this trusts the client flag; if stronger guarantees are ever
+        // needed, verify a token issued by the llm service here instead of
+        // the bare flag.
         if (update.meta.agent === 'copilot') {
-          update.meta.user_id = 'copilot'
+          update.meta.user_id = 'c0c0c0c0c0c0c0c0c0c0c0c0'
         }
         update.meta.tsRT = performance.now()
         metrics.inc('editor.doc-update', 0.3, { status: client.transport })
