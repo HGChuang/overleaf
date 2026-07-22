@@ -9,12 +9,14 @@ import { extractLatexFromMarkdown } from '../utils/markdown'
 import {
   insertIntoEditor,
   applyFixInEditor,
+  applyFixAsTrackedChange,
   showPatchPreview,
   clearPatchPreview,
 } from '../utils/editor-bridge'
 import MarkdownContent from './markdown-content'
 import { useDetachCompileContext } from '@/shared/context/detach-compile-context'
 import { useEditorManagerContext } from '@/features/ide-react/context/editor-manager-context'
+import { useProjectContext } from '@/shared/context/project-context'
 
 async function copyText(text: string): Promise<void> {
   try {
@@ -130,10 +132,14 @@ const CodeBlock: FC<{ text: string; language?: string }> = ({ text }) => {
 const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
   const editorManager = useEditorManagerContext()
   const { syncToEntry } = useDetachCompileContext()
-  const [status, setStatus] = useState<'pending' | 'accepted' | 'rejected'>(
-    'pending'
-  )
+  const { features } = useProjectContext()
+  const [status, setStatus] = useState<
+    'pending' | 'accepted' | 'rejected' | 'submitted'
+  >('pending')
   const currentFile = editorManager.currentDocument?.docName || null
+  // "Submit as revision" lands the patch as tracked changes attributed to the
+  // Copilot pseudo-user; only meaningful when the review UI is available.
+  const canSubmitAsRevision = Boolean(features?.trackChanges)
 
   // (re)show the ghost preview when the block mounts or the open doc changes,
   // so cross-file hunks render once the user opens the target file.
@@ -186,6 +192,39 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
     setStatus('rejected')
   }, [])
 
+  // Submit the patch as TRACKED CHANGES attributed to the Copilot pseudo-user:
+  // the edits show up in the review panel (struck/added markup) for any
+  // collaborator to accept/reject, instead of landing silently. Pure
+  // insertions have no anchor for the tracked-apply path, so they keep the
+  // direct-insert behavior (the prompt discourages them anyway).
+  const submitAsRevision = useCallback(async () => {
+    for (const hunk of patch.hunks) {
+      const targetFile = hunk.file || null
+      const edit = {
+        file: targetFile,
+        line: hunk.line ?? null,
+        oldText: hunk.oldText,
+        newText: hunk.newText,
+      }
+      if (!hunk.oldText) {
+        insertIntoEditor(hunk.newText)
+      } else if (
+        !targetFile ||
+        targetFile === (editorManager.currentDocument?.docName || null)
+      ) {
+        applyFixAsTrackedChange(edit)
+      } else {
+        // open the target file, then apply once it has (likely) loaded
+        syncToEntry({ file: targetFile, line: hunk.line ?? undefined })
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise<void>(resolve => setTimeout(resolve, 700))
+        applyFixAsTrackedChange(edit)
+      }
+    }
+    clearPatchPreview()
+    setStatus('submitted')
+  }, [patch.hunks, editorManager, syncToEntry])
+
   return (
     <div className="copilot-patch">
       {patch.title && <div className="copilot-patch-title">{patch.title}</div>}
@@ -211,13 +250,22 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
       </div>
       <div className="copilot-patch-actions">
         <span className={`copilot-patch-status copilot-patch-status-${status}`}>
-          {status}
+          {status === 'submitted' ? 'submitted as revision' : status}
         </span>
         {status === 'pending' && (
           <>
             <button className="copilot-btn" onClick={reject}>
               Reject
             </button>
+            {canSubmitAsRevision && (
+              <button
+                className="copilot-btn"
+                onClick={submitAsRevision}
+                title="Apply as tracked changes attributed to Copilot, so collaborators can review them in the review panel"
+              >
+                Submit as revision
+              </button>
+            )}
             <button
               className="copilot-btn copilot-btn-primary"
               onClick={accept}
@@ -232,7 +280,7 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
 }
 
 export const MessageBlockView: FC<{ block: MessageBlock }> = ({ block }) => {
-  let inner: JSX.Element
+  let inner: JSX.Element | null
   switch (block.type) {
     case 'text':
     case 'markdown':

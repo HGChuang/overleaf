@@ -18,6 +18,12 @@ export interface FixEdit {
   newText: string
 }
 
+// Reserved pseudo-user id that Copilot's tracked changes are attributed to.
+// Deliberately not a mongo ObjectId, so it can never collide with a real
+// account; the real-time service rewrites `meta.user_id` to this value when
+// an update arrives with `meta.agent === 'copilot'`.
+export const COPILOT_USER_ID = 'copilot'
+
 /**
  * Apply a concrete fix in the editor: replace the first occurrence of
  * `oldText` (preferring the one nearest `line`) with `newText`. If `oldText`
@@ -28,6 +34,21 @@ export function applyFixInEditor(edit: FixEdit): void {
   if (typeof window === 'undefined') return
   window.dispatchEvent(
     new CustomEvent('copilot:apply-fix', { detail: edit })
+  )
+}
+
+/**
+ * Like `applyFixInEditor`, but the edit lands as a TRACKED CHANGE attributed
+ * to the Copilot pseudo-user: it shows up in the review panel (struck/added
+ * markup) for collaborators to accept/reject, instead of silently editing the
+ * document. The source editor wraps the dispatch in the track-changes flags
+ * and flushes the op immediately (see the `copilot:apply-fix-tracked`
+ * listener in `codemirror-editor.tsx`).
+ */
+export function applyFixAsTrackedChange(edit: FixEdit): void {
+  if (typeof window === 'undefined') return
+  window.dispatchEvent(
+    new CustomEvent('copilot:apply-fix-tracked', { detail: edit })
   )
 }
 

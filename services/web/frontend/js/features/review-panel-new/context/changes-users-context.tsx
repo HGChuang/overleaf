@@ -9,12 +9,22 @@ import {
 import { getJSON } from '@/infrastructure/fetch-json'
 import { useProjectContext } from '@/shared/context/project-context'
 import { UserId } from '../../../../../types/user'
+import { COPILOT_USER_ID } from '@/features/copilot/utils/editor-bridge'
 
 type ChangesUser = {
   id: UserId
   email: string
   first_name?: string
   last_name?: string
+}
+
+// Display entry for the Copilot pseudo-user that AI-submitted tracked changes
+// are attributed to (see `applyFixAsTrackedChange` and the real-time
+// `meta.agent` handling).
+const COPILOT_CHANGES_USER: ChangesUser = {
+  id: COPILOT_USER_ID as UserId,
+  email: '',
+  first_name: 'Copilot',
 }
 
 export type ChangesUsers = Map<UserId, ChangesUser>
@@ -41,6 +51,7 @@ export const ChangesUsersProvider: FC = ({ children }) => {
     for (const member of members) {
       value.set(member._id, { ...member, id: member._id })
     }
+    value.set(COPILOT_CHANGES_USER.id, COPILOT_CHANGES_USER)
     return value
   }, [members, owner, changesUsers])
 

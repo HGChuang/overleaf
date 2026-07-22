@@ -559,6 +559,17 @@ module.exports = WebsocketController = {
         }
         update.meta.source = client.publicId
         update.meta.user_id = userId
+        // Copilot track-changes attribution: when the client marks an update
+        // as produced by the Copilot agent (meta.agent === 'copilot'), record
+        // the change under the reserved pseudo-user id 'copilot' so review
+        // panels attribute it to the AI instead of the acting user. The id is
+        // deliberately not a mongo ObjectId so it can never collide with a
+        // real account. NOTE: this trusts the client flag; if stronger
+        // guarantees are ever needed, verify a token issued by the llm
+        // service here instead of the bare flag.
+        if (update.meta.agent === 'copilot') {
+          update.meta.user_id = 'copilot'
+        }
         update.meta.tsRT = performance.now()
         metrics.inc('editor.doc-update', 0.3, { status: client.transport })
 

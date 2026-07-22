@@ -9,6 +9,7 @@ import {
 } from '../../../../../../../types/review-panel/review-panel'
 import { ReviewPanelEntry } from '../../../../../../../types/review-panel/entry'
 import { DocId } from '../../../../../../../types/project-settings'
+import { resolveChangeUser } from '@/features/source-editor/components/review-panel/utils/resolve-change-user'
 
 type OverviewFileEntriesProps = {
   docId: DocId
@@ -40,7 +41,7 @@ function OverviewFileEntries({ docId, docEntries }: OverviewFileEntriesProps) {
               docId={docId}
               entryId={id}
               permissions={permissions}
-              user={users[entry.metadata.user_id]}
+              user={resolveChangeUser(users, entry.metadata.user_id)}
               content={entry.content}
               offset={entry.offset}
               type={entry.type}
@@ -58,7 +59,7 @@ function OverviewFileEntries({ docId, docEntries }: OverviewFileEntriesProps) {
               docId={docId}
               entryId={id}
               permissions={permissions}
-              user={users[entry.metadata.user_id]}
+              user={resolveChangeUser(users, entry.metadata.user_id)}
               content={entry.content}
               replacedContent={entry.metadata.replaced_content}
               offset={entry.offset}

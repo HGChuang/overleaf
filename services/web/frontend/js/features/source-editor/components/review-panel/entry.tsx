@@ -10,6 +10,7 @@ import {
 } from '../../../../../../types/review-panel/review-panel'
 import { useReviewPanelValueContext } from '../../context/review-panel/review-panel-context'
 import { useEditorContext } from '../../../../shared/context/editor-context'
+import { resolveChangeUser } from './utils/resolve-change-user'
 
 type Props = {
   entry: ReviewPanelDocEntries[keyof ReviewPanelDocEntries]
@@ -45,7 +46,7 @@ function Entry({ entry, id }: Props) {
         docId={openDocId}
         entryId={id}
         permissions={permissions}
-        user={users[entry.metadata.user_id]}
+        user={resolveChangeUser(users, entry.metadata.user_id)}
         content={entry.content}
         offset={entry.offset}
         type={entry.type}
@@ -63,7 +64,7 @@ function Entry({ entry, id }: Props) {
         docId={openDocId}
         entryId={id}
         permissions={permissions}
-        user={users[entry.metadata.user_id]}
+        user={resolveChangeUser(users, entry.metadata.user_id)}
         content={entry.content}
         replacedContent={entry.metadata.replaced_content}
         offset={entry.offset}

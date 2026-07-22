@@ -27,6 +27,7 @@ import { debugConsole } from '@/utils/debugging'
 import { deleteJSON, getJSON, postJSON } from '@/infrastructure/fetch-json'
 import ColorManager from '@/ide/colors/ColorManager'
 import RangesTracker from '@overleaf/ranges-tracker'
+import { COPILOT_USER_ID } from '@/features/copilot/utils/editor-bridge'
 import type * as ReviewPanel from '@/features/source-editor/context/review-panel/types/review-panel-state'
 import {
   CommentId,
@@ -283,6 +284,13 @@ function useReviewPanelState(): ReviewPanel.ReviewPanelState {
           if (user?.id) {
             tempUsers[user.id] = formatUser(user)
           }
+
+          // Always include the Copilot pseudo-user so AI-submitted tracked
+          // changes render with a name/color instead of "Unknown".
+          tempUsers[COPILOT_USER_ID as UserId] = formatUser({
+            id: COPILOT_USER_ID,
+            first_name: 'Copilot',
+          })
 
           for (const user of usersResponse) {
             if (user.id) {

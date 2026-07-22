@@ -38,6 +38,14 @@ export class ShareJsDoc extends EventEmitter {
   type: string
   track_changes = false
   track_changes_id_seeds: TrackChangesIdSeeds | null = null
+  // One-shot marker: the next update flushed to the server is stamped
+  // `meta.agent = 'copilot'` (and `meta.tc` from the current id seed, even if
+  // global track changes is off) so the change lands as a tracked change
+  // attributed to the Copilot pseudo-user. The marker is consumed at send
+  // time, which makes it robust to deferred flushes (an inflight op delaying
+  // ours). Armed by the `copilot:apply-fix-tracked` handler in
+  // codemirror-editor.tsx.
+  agentEditForNextUpdate = false
   connection: Connection
 
   // @ts-ignore
@@ -71,6 +79,18 @@ export class ShareJsDoc extends EventEmitter {
             update.meta = {}
           }
           update.meta.tc = this.track_changes_id_seeds.inflight
+        }
+        if (this.agentEditForNextUpdate) {
+          this.agentEditForNextUpdate = false
+          if (update.meta == null) {
+            update.meta = {}
+          }
+          update.meta.agent = 'copilot'
+          // Force the update to be tracked even when global track changes is
+          // off for this doc — a Copilot revision must be reviewable.
+          if (update.meta.tc == null && this.track_changes_id_seeds) {
+            update.meta.tc = this.track_changes_id_seeds.inflight
+          }
         }
         return this.socket.emit(
           'applyOtUpdate',

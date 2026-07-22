@@ -11,7 +11,7 @@ import { CodeMirrorCommandTooltip } from './codemirror-command-tooltip'
 import { dispatchTimer } from '../../../infrastructure/cm6-performance'
 import importOverleafModules from '../../../../macros/import-overleaf-module.macro'
 import { FigureModal } from './figure-modal/figure-modal'
-import LLMToolbar from './llm-toolbar'
+import LLMToolbar, { type LLMToolbarHandle } from './llm-toolbar'
 import { ReviewPanelProviders } from '@/features/review-panel-new/context/review-panel-providers'
 import { ReviewPanelMigration } from '@/features/source-editor/components/review-panel/review-panel-migration'
 import ReviewTooltipMenu from '@/features/review-panel-new/components/review-tooltip-menu'
@@ -28,9 +28,42 @@ import {
   setPatchEffect,
   type PatchHunk,
 } from '../extensions/copilot-patch-preview'
+import useScopeValue from '@/shared/hooks/use-scope-value'
+import { DocumentContainer } from '@/features/ide-react/editor/document-container'
+import RangesTracker from '@overleaf/ranges-tracker'
+import { COPILOT_USER_ID } from '@/features/copilot/utils/editor-bridge'
 
 // TODO: remove this when definitely no longer used
 export * from './codemirror-context'
+
+// Find where a Copilot hunk should land: all occurrences of `oldText`, then
+// the one nearest to the reported 1-based `line` (if any). Returns null when
+// `oldText` is empty (pure insertion — handled at the cursor by the caller)
+// or when the text is not found in the open doc (caller should no-op rather
+// than insert blindly).
+function findHunkPosition(
+  view: EditorView,
+  oldText: string,
+  line?: number | null
+): number | null {
+  if (!oldText) return null
+  const doc = view.state.doc
+  const full = doc.toString()
+  const occurrences: number[] = []
+  let from = full.indexOf(oldText)
+  while (from !== -1) {
+    occurrences.push(from)
+    from = full.indexOf(oldText, from + 1)
+  }
+  if (occurrences.length === 0) return null
+  if (line != null && line >= 1 && line <= doc.lines) {
+    const target = doc.line(line).from
+    return occurrences.reduce((best, o) =>
+      Math.abs(o - target) < Math.abs(best - target) ? o : best
+    , occurrences[0])
+  }
+  return occurrences[0]
+}
 
 const sourceEditorComponents = importOverleafModules(
   'sourceEditorComponents'
@@ -52,8 +85,18 @@ function CodeMirrorEditor() {
 
   // create the view using the initial state and intercept transactions
   const viewRef = useRef<EditorView | null>(null)
-  const llmToolbarref = useRef<FloatingToolbarHandle>(null)
+  const llmToolbarref = useRef<LLMToolbarHandle>(null)
   const lastSelectionRef = useRef<{ from: number; to: number } | null>(null)
+
+  // The active sharejs document, tracked in a ref so the window-event
+  // listeners below (registered once) always see the current doc.
+  const [currentDoc] = useScopeValue<DocumentContainer | null>(
+    'editor.sharejs_doc'
+  )
+  const currentDocRef = useRef<DocumentContainer | null>(null)
+  useEffect(() => {
+    currentDocRef.current = currentDoc
+  }, [currentDoc])
 
   // Handle text selection changes
   useEffect(() => {
@@ -148,28 +191,12 @@ function CodeMirrorEditor() {
       const oldText = typeof detail?.oldText === 'string' ? detail.oldText : ''
 
       if (oldText.length > 0) {
-        const doc = view.state.doc
-        const full = doc.toString()
-        // collect all occurrences of oldText
-        const occurrences: number[] = []
-        let from = full.indexOf(oldText)
-        while (from !== -1) {
-          occurrences.push(from)
-          from = full.indexOf(oldText, from + 1)
-        }
-        if (occurrences.length === 0) {
+        const pos = findHunkPosition(view, oldText, detail?.line)
+        if (pos == null) {
           // oldText not found in the open doc (model didn't copy it verbatim,
           // or the target file isn't open). Don't insert blindly — no-op.
           console.debug('[CodeMirrorEditor] copilot apply-fix: oldText not found, skipping')
           return
-        }
-        // pick the occurrence nearest to the reported line (if any)
-        let pos = occurrences[0]
-        if (detail?.line != null && detail.line >= 1 && detail.line <= doc.lines) {
-          const target = doc.line(detail.line).from
-          pos = occurrences.reduce((best, o) =>
-            Math.abs(o - target) < Math.abs(best - target) ? o : best
-          , occurrences[0])
         }
         view.dispatch({
           changes: { from: pos, to: pos + oldText.length, insert: newText },
@@ -182,6 +209,70 @@ function CodeMirrorEditor() {
     window.addEventListener('copilot:apply-fix', handler as EventListener)
     return () =>
       window.removeEventListener('copilot:apply-fix', handler as EventListener)
+  }, [])
+
+  // Bridge from the Copilot panel: apply a fix as a TRACKED CHANGE attributed
+  // to the Copilot pseudo-user, so collaborators can review/accept/reject it
+  // in the review panel instead of the edit landing silently. The whole
+  // sequence below is synchronous, so no user input can interleave and get
+  // swept into the tracked update.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const view = viewRef.current
+      const currentDoc = currentDocRef.current
+      if (!view || !currentDoc?.doc || !currentDoc.ranges) return
+      const detail = (e as CustomEvent<{
+        oldText?: string
+        newText?: string
+        line?: number | null
+      }>).detail
+      const newText = detail?.newText
+      if (typeof newText !== 'string' || !newText) return
+      const oldText = typeof detail?.oldText === 'string' ? detail.oldText : ''
+      if (!oldText) return // pure insertions stay on the direct-insert path
+
+      const pos = findHunkPosition(view, oldText, detail?.line)
+      if (pos == null) {
+        console.debug('[CodeMirrorEditor] copilot apply-fix-tracked: oldText not found, skipping')
+        return
+      }
+
+      const shareJsDoc = currentDoc.doc
+      // 1. Flush any of the user's own pending ops first, so they are not
+      //    swept into the tracked Copilot update.
+      shareJsDoc.flushPendingOps()
+      // 2. Ensure track-changes id seeds exist (they are normally maintained
+      //    by the review-panel providers, which may be inactive). The seed
+      //    must match the local ranges tracker's seed so locally-generated
+      //    change ids agree with the server's.
+      if (!shareJsDoc.track_changes_id_seeds) {
+        const seed =
+          currentDoc.ranges.getIdSeed() || RangesTracker.generateIdSeed()
+        shareJsDoc.track_changes_id_seeds = { inflight: seed, pending: seed }
+      }
+      // 3. Attribute the local op to Copilot in the client-side ranges
+      //    tracker, and arm the one-shot wire marker (meta.agent + meta.tc).
+      const prevTrackChangesAs = currentDoc.track_changes_as
+      currentDoc.track_changes_as = COPILOT_USER_ID
+      shareJsDoc.agentEditForNextUpdate = true
+      try {
+        view.dispatch({
+          changes: { from: pos, to: pos + oldText.length, insert: newText },
+          selection: { anchor: pos + newText.length },
+          scrollIntoView: true,
+        })
+        // 4. Flush immediately so the update carries the marker. If another
+        //    op is still inflight, the one-shot marker stays armed until our
+        //    op flips to inflight and is sent.
+        shareJsDoc.flushPendingOps()
+      } finally {
+        currentDoc.track_changes_as = prevTrackChangesAs
+      }
+      view.focus()
+    }
+    window.addEventListener('copilot:apply-fix-tracked', handler as EventListener)
+    return () =>
+      window.removeEventListener('copilot:apply-fix-tracked', handler as EventListener)
   }, [])
 
   // Bridge from the Copilot panel: show a pending patch as an inline-diff ghost
