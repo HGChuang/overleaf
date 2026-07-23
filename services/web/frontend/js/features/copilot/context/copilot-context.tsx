@@ -229,9 +229,6 @@ export const CopilotProvider: FC = ({ children }) => {
         context: {
           currentFile: getCurrentFileRef.current(),
           selectedText: sel?.text || '',
-          selectionRange: sel
-            ? { file: sel.file, fromLine: sel.fromLine, toLine: sel.toLine }
-            : null,
           attachedFiles: [] as string[],
           recentCompileErrorId: null,
         },

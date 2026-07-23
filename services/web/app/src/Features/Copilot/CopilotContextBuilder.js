@@ -1,8 +1,13 @@
 const ProjectGetter = require('../Project/ProjectGetter')
 const ProjectEntityHandler = require('../Project/ProjectEntityHandler')
 const ProjectRootDocManager = require('../Project/ProjectRootDocManager')
+const DocumentUpdaterHandler = require('../DocumentUpdater/DocumentUpdaterHandler')
 
 async function buildProjectContext(projectId) {
+  // Force document-updater to flush pending doc ops to Mongo before reading,
+  // so the agent sees what the user currently sees in the editor — the same
+  // guarantee the compile path relies on (ClsiManager flushes before build).
+  await DocumentUpdaterHandler.promises.flushProjectToMongo(projectId)
   const project = await ProjectGetter.promises.getProjectWithoutDocLines(projectId)
   if (!project) {
     throw new Error(`project not found: ${projectId}`)

@@ -1,77 +1,75 @@
-# Copilot 独占性功能路线图
+# Copilot Roadmap
 
-> 本文档定义 Overleaf Copilot 区别于通用 Agent（如 Claude Code）的四个独占性功能方向。
->
-> **核心判断**：在"能力"层面，没有什么是通用 Agent 做不到的（编译闭环 = agent + pdflatex；文献调研 = agent + web search）。护城河不在功能清单，而在**只有 Overleaf 平台内部才拥有的数据与协议**。每个功能必须通过一个检验："它消费了哪些外部 agent 拿不到的数据？"消费得越多，含金量越高。
->
-> **外部 agent 结构上拿不到的五样资产**：
-> 1. 活的文档状态 —— OT/sharejs 实时文档、协作者并发编辑、光标/选区
-> 2. 协作协议 —— track changes、评论线程、审阅流
-> 3. 历史 —— OT 历史 × 编译状态时间线（"哪次编辑把编译改挂了"）
-> 4. 渲染产物与 SyncTeX 映射 —— PDF 页面图像 + PDF 坐标 ↔ 源码位置双向映射
-> 5. 用户群 —— 不装 TeX、不用命令行的研究者；真实竞品是"复制粘贴到 ChatGPT"，不是 Claude Code
+> 目标：把 Copilot 从「通用 agent + 文件读写工具」演进为 **可度量、可验证、平台深度集成** 的 LaTeX 写作 agent。
+> 差异化原则：不做任何一个 LangChain 教程都能做的事；优先做「需要评测/验证闭环/编辑器内核知识」才能做的事。
+
+## 现状基线（2026-07）
+
+- `services/llm`：Node 22 + TypeScript，vendored pi-agent-core（本地改造：step budget、streamFn 依赖注入、错误契约），SSE 全链路流式，Redis 记忆 + 三级压缩管线（micro/snip/summarize + 截断修复），patch 卡片 accept/reject。
+- 编译错误处理现状：**开环，且自动链路已被拆除**。历史上存在完整的自动诊断链（前端日志面板 `CopilotCompileCta` 携带 `rawLog`+已解析 `logEntries` → web 层 `buildCompileContext` 可按 `compileId` 从 CLSI 拉 `output.log` → llm 层 `compileTools.js` 内置 `ERROR_RULES` 知识表 + `submit_diagnostics`），在 `01d3ea6550`（2026-07-21 统一 chat 入口、砍 Ask/Fix/Check intent）中被整体删除。当前：`recentCompileErrorId` 恒为 null，agent 无任何 compile/log 工具，用户手工粘贴错误文本 → agent 出 patch → 用户手工重新编译。可复用资产：前端 `detach-compile-context` 的 `rawLog`/`logEntries` 仍在；git 历史有 `ERROR_RULES` 与 CLSI 拉日志实现可借鉴。
 
 ---
 
-## 方向 1：Track-changes 原生的 AI 修改流
+## P0-1 Agent 评测体系（Eval Harness）
 
-**一句话**：Agent 的每处修改不直接改文件，而是作为 track changes 进入 Overleaf 的审阅体系，署名 "Copilot"，合作者在熟悉的审阅界面里逐条 accept/reject。
+一切优化的度量基础；没有 eval 的 agent 优化都是玄学。
 
-**为什么独占**：要求写入 OT 协议层，只有平台内部的 agent 能做。外部 agent 只能改文件副本，无权参与协作信任体系。
+- **任务集**：3 类、20~50 个任务，每个任务 = { 项目快照, 用户指令, 判分器 }
+  - 编译修复类（缺环境、未定义命令、括号不匹配、`&` 误用……）
+  - 结构化改写类（章节重排、环境替换、公式加编号、批量重命名 label）
+  - 语义编辑类（润色段落、缩写摘要、统一术语）
+- **判分维度**：
+  - 编译通过率（硬指标，修复类的主判据）
+  - diff 相似度 / 定点断言（如「\textbf 残留数为 0」）
+  - LLM judge（语义类，固定 judge prompt + 温度 0）
+- **运行器**：离线批量跑 → 输出 成功率 / 平均轮次 / token 成本 / 失败分类；agent 侧任何改动（prompt、压缩策略、工具集）重跑回归。
+- **产出**：可写进简历的量化指标（如「LaTeX 编辑任务成功率 62% → 89%」）。
 
-**命中的核心场景**：多人协作中 AI 修改的可信、可审、可回溯。导师审阅 AI 的修改和审阅人类合作者的修改走同一套流程。
+## P0-2 编译错误自愈闭环（Self-healing Compile Loop）
 
-**实现要点**：
-- 现有 `submit_patch`（[editTools.js](services/llm/app/agent/tools/editTools.js)）产出的 `{oldText, newText}` hunks 已经是结构化补丁，需把落地通道从前端 `applyFixInEditor` 改为带 track-changes 元数据的 OT op（作者标记为 Copilot 虚拟用户）。
-- 需要调研 Overleaf track-changes 的 op 表示与审阅 UI 的接法。
-- 用户设置：允许选择"直接修改"还是"以修订形式提交"。
+generator–verifier 范式在 LaTeX 域的落地；与 P0-1 互相成就。
 
----
+**现状（开环）→ 闭环的差距，绝不只是「主动触发」：**
 
-## 方向 2：排版视觉医生（渲染闭环 + 多模态）
+1. **验证（核心）**：agent 自己能触发编译并读取结果，patch 生效后自动重新编译；未通过则带着「上次修复未生效 + 新错误」的反馈续修，bounded retry（上限 N 轮，终止条件 = 编译通过）。agent 从「提建议」变成「交付已验证的修复」。
+2. **结构化 log 解析**：`parse_latex_log` 把原始 log 解析为 `[{file, line, level, message}]`（web 前端已有 log parser 可借鉴/下沉共享），替代把整份 log 塞进上下文——省 token、定位更准。
+3. **高阶：shadow verify**：patch 先在后端临时副本上编译通过才展示给用户（用户见到的每个 patch 都是编译验证过的）。
+4. **主动触发（只是入口 UX）**：前端检测编译失败自动提示「让 Copilot 修复」。放在最后做。
 
-**一句话**：编译不报错 ≠ 排版没问题。Agent 编译后把 PDF 页面栅格化成图，用视觉模型"看"排版问题，经 SyncTeX 映射定位回源码，patch 修复后重渲染复查。
+**落地路径**：
+- 重建输入链：前端从 `detach-compile-context` 取 `rawLog`/`logEntries` 自动随消息带上（恢复并改造被删的 CTA）；web 层恢复 `compileId → CLSI output.log` 的拉取兜底（参考 `01d3ea6550^` 的 `buildCompileContext`）。
+- 新工具 `compile_project`（经 web 内部 compile API 触发 clsi）、`get_compile_errors`（结构化；可吸收 git 历史中的 `ERROR_RULES` 知识表）。
+- 闭环编排：`submit_patch` 被 accept 后（或 shadow 模式下应用后）自动 recompile；失败 → 把结构化错误作为 toolResult 反馈进入下一轮。
+- **度量**：修复成功率、平均修复轮次（由 P0-1 提供任务集与判分）。
 
-**检测目标**：overfull/underfull hbox、表格溢出页边距、float（图/表）位置不合理、公式断行难看、孤行寡行等——编译器静默、只有眼睛看得见的问题。
+## P1-1 Tracing 可观测性
 
-**为什么独占**：SyncTeX 双向映射和渲染管线是平台基础设施；且闭环必须对准 Overleaf 实际编译环境（TeX Live 版本、已装宏包），外部 agent 用本地 pdflatex 复现的环境对不上。
+- 每轮对话记录完整 trace：每次 tool call 的输入/输出/耗时、token 消耗、上下文压缩事件、重试与终止原因 → JSONL/Redis；前端做时间线回放（或先只做落库 + 脚本分析）。
+- 价值：badcase 分析的基础设施，eval 失败分类的数据来源。
 
-**实现要点**：
-- 新增 `compile_project` 工具（llm service → clsi）：返回编译结果 + 结构化日志 + 页面图像。编译是幂等外部副作用，不改项目文件，不违反 read-only 工具姿态。
-- 页面栅格化（pdftoppm 类）+ 视觉模型读图；SyncTeX 解析（PDF 坐标 → file:line）。
-- 循环控制复用现有 `recursionLimit` + `todo_write`；同一问题两轮无进展则停下来向用户解释。
+## P1-2 Track-changes 集成的 AI 编辑（平台独有）
 
----
+- AI 修改走 Overleaf 原生 track-changes，用户逐字 accept/reject。
+- 技术硬核点：LLM patch → 编辑器 range/track-changes 坐标系对齐；用户并发编辑下的冲突检测与降级策略。
 
-## 方向 3：历史归因问答（"谁、什么时候、把什么改挂了"）
+## P1-3 AST 级选择操作（平台独有）
 
-**一句话**：Agent 沿 OT 历史二分定位问题引入点——"周三还能编译，现在挂了，是哪次修改引入的？"——重放编译状态确认元凶，直接给出 revert patch；也能回答"我导师上周改了 intro 的什么"。
-
-**为什么独占**：数据源是细粒度 OT 历史 × 编译时间线，只存在于平台内部，是纯粹的独占资产。
-
-**实现要点**：
-- 新增历史读取工具：按时间/revision 拉取文件快照（doc ops 历史的查询接口）。
-- 归因算法：二分 revision + 重放编译（复用方向 2 的 `compile_project`），收敛到引入错误的 revision 区间。
-- 输出：元凶 revision 的作者/时间/diff 摘要 + 可选 revert patch（走现有 `submit_patch` 通道）。
-- 注意大项目历史体量，需要限制快照拉取的深度与范围。
-
----
-
-## 方向 4：选区级 LaTeX 语义操作
-
-**一句话**：对选中内容做 AST 级操作——"把这个 `equation` 改成 `align` 并在等号处对齐"、"把这段文字包成三线表"、"把这个定理环境里所有 `\eps` 统一成 `\varepsilon`"。
-
-**为什么独占**：依赖 LaTeX AST 级文档模型（环境树、宏定义解析、`\input` 包含图、math 模式识别），而非 grep 文本。通用 agent 用正则改 LaTeX 会破坏嵌套环境与注释；语义索引可以由垂直 agent 预建，外部 agent 建不准也懒得建。
-
-**实现要点**：
-- 构建项目语义索引（服务端或前端）：解析环境树、label/cite 图、宏定义与作用域。可分阶段：先做单文件环境树，再做跨文件包含图。
-- 前端把选区的 AST 节点上下文（而不仅是纯文本）随请求传给 llm service。
-- 落地复用 `submit_patch`；prompt 约定模型按语义节点生成 hunks，而非按裸文本。
+- lezer LaTeX 语法树已就绪。**「LLM 负责语义规划 + AST 负责确定性执行」混合架构**：如「把选区公式改成 align 环境」「本节所有 \textbf 换 \emph」，避免纯文本生成的不可靠，执行结果可断言（与 P0-1 判分器天然配合）。
 
 ---
 
-## 通用落地原则
+## P2（有余力再做）
 
-- 新功能 = 新工具 + prompt 约定，**不改动** [graph.js](services/llm/app/agent/graph.js) 的统一 tool-driven 架构；意图识别保持 model-driven tool selection。
-- 服务端工具维持只读/结构化输出姿态（M5 决定）：所有修改经 `submit_patch` 由客户端落地（方向 1 改为经 track-changes 通道落地）。
-- 每个方向上线时的自检清单：工具 schema + 单测；日志/历史数据缺失时的降级回答；recursionLimit 与 token 成本控制；前端交互（入口、流式进度、Accept/Reject）。
+- **视觉排版医生**：compile → PDF 分析。注意 llm harness 无多模态能力，先用 pdftotext + 布局启发式（overfull box 检测等），不做像素级。
+- **历史归因**：AI 建议与 history-v1 版本关联（CE 具备完整 history），回答「这行是谁写的」。
+- **成本/延迟优化**：简单任务路由小模型、prompt cache 命中率，量化收益。
+- **上下文工程对照实验**：压缩管线开/关 × 任务成功率/token 节省，把「有功能」变成「有数据」。
+- **Plan 模式**：先出可编辑计划再执行。
+
+---
+
+## 简历映射（完成 P0 后）
+
+- 搭建 LaTeX 编辑 agent 的离线评测体系（N 任务，编译通过率 + diff 相似度 + LLM-judge 三维判分），驱动任务成功率 x% → y%。
+- 设计编译自愈闭环：结构化 log 解析 + patch 生成 + 自动重新编译验证的 bounded retry，修复成功率 x%，平均轮次 y。
+- （P1 完成后追加）agent 全链路 tracing；LLM patch 与 track-changes/OT 坐标系对齐；LLM 规划 + AST 确定性执行的混合编辑架构。
