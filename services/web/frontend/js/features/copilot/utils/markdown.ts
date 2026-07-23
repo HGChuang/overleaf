@@ -72,7 +72,7 @@ let sharedRenderer: marked.Renderer | null = null
 export function renderMarkdown(text: string): string {
   if (!sharedRenderer) sharedRenderer = ensureRenderer()
   try {
-    return marked.parse(text || '', { renderer: sharedRenderer } as any) as string
+    return marked.parse(text || '', { renderer: sharedRenderer })
   } catch {
     return escapeHtml(text || '')
   }
