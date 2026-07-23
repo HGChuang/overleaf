@@ -82,9 +82,9 @@ async function proxy(req, res, url, bodyBuilder) {
         }),
       },
       // Buffered callers keep the original 60s budget; SSE turns are bounded
-      // by the llm service's own turn deadline (~120s), so the proxy backstop
-      // sits above it.
-      signal: AbortSignal.timeout(wantsStream ? 180_000 : 60_000),
+      // by the llm service's own turn deadline (~300s — a verification round
+      // includes a full LaTeX compile), so the proxy backstop sits above it.
+      signal: AbortSignal.timeout(wantsStream ? 360_000 : 60_000),
       ...(req.method !== 'GET' && req.method !== 'HEAD'
         ? { body: JSON.stringify(builtBody) }
         : {}),

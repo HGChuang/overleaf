@@ -13,6 +13,15 @@ const COPILOT_CONTEXT_SNIP_MAX = Number(process.env.COPILOT_CONTEXT_SNIP_MAX || 
 const COPILOT_CONTEXT_MICRO_KEEP = Number(process.env.COPILOT_CONTEXT_MICRO_KEEP || 3)
 const COPILOT_CONTEXT_SUMMARIZE_THRESHOLD = Number(process.env.COPILOT_CONTEXT_SUMMARIZE_THRESHOLD || 60000)
 const COPILOT_LTMEM_ENABLED = process.env.COPILOT_LTMEM_ENABLED !== 'false'
+// Compile self-healing loop: llm → web private API (service-to-service).
+// WEB_API_USER / WEB_API_PASSWORD come straight from dev.env (no defaults —
+// when unset the client sends no auth and the endpoint will 401).
+const WEB_API_BASE_URL = process.env.WEB_API_BASE_URL || `http://${process.env.WEB_HOST || 'web'}:3000`
+const WEB_API_USER = process.env.WEB_API_USER || ''
+const WEB_API_PASSWORD = process.env.WEB_API_PASSWORD || ''
+// A full LaTeX compile dominates a verification round — generous ceilings.
+const COMPILE_TOOL_TIMEOUT_MS = Number(process.env.COMPILE_TOOL_TIMEOUT_MS || 150000)
+const COPILOT_TURN_TIMEOUT_MS = Number(process.env.COPILOT_TURN_TIMEOUT_MS || 300000)
 
 module.exports = {
     MONGO_URL,
@@ -29,5 +38,10 @@ module.exports = {
     COPILOT_CONTEXT_SNIP_MAX,
     COPILOT_CONTEXT_MICRO_KEEP,
     COPILOT_CONTEXT_SUMMARIZE_THRESHOLD,
-    COPILOT_LTMEM_ENABLED
+    COPILOT_LTMEM_ENABLED,
+    WEB_API_BASE_URL,
+    WEB_API_USER,
+    WEB_API_PASSWORD,
+    COMPILE_TOOL_TIMEOUT_MS,
+    COPILOT_TURN_TIMEOUT_MS
 }

@@ -14,6 +14,7 @@ import { RedisMemoryStore } from '../agent/memory.js';
 import { LongTermMemoryStore } from '../agent/longTermMemory.js';
 import { extractTextContent } from '../agent/messageText.js';
 import { buildToolPool } from '../agent/tools/index.js';
+import { WebApiClient } from '../llm/webApiClient.js';
 import {
   isPromptTooLong,
   reactiveCompact,
@@ -55,7 +56,9 @@ const SUMMARIZE_TOKENS = Number(settings.COPILOT_SUMMARIZE_TOKENS || 80_000);
 // per-CALL model timeout (60s) bounds a single step; without an overall
 // deadline a 25-step turn can burn ~25 minutes after the client has long
 // given up. 120s comfortably fits the diagnose-all-errors flow.
-const TURN_TIMEOUT_MS = Number(settings.COPILOT_TURN_TIMEOUT_MS || 120_000);
+// Generous default: a verification round includes a full LaTeX compile
+// (compile_project tool timeout is 150s) plus model time.
+const TURN_TIMEOUT_MS = Number(settings.COPILOT_TURN_TIMEOUT_MS || 300_000);
 
 // Events forwarded to SSE clients mid-turn. `done`/`error` are sent by the
 // controller once the turn settles, not through this channel.
@@ -105,6 +108,9 @@ export class CopilotService {
   toolPoolFactory: typeof buildToolPool;
   clientRegistry: ClientRegistry;
   turnTimeoutMs: number;
+  // Web private-API client backing the compile_project verification tool —
+  // injectable for tests (same seam style as streamFn).
+  webClient: WebApiClient;
   // Provider stream function — injectable for tests (replaces the old
   // graphFactory seam). Both the agent loop and the summarize/LTM completer
   // route through it.
@@ -118,6 +124,7 @@ export class CopilotService {
     toolPoolFactory = buildToolPool,
     turnTimeoutMs = TURN_TIMEOUT_MS,
     streamFn = streamOpenAICompat,
+    webClient = undefined,
   }: {
     apiKeyMapper?: ApiKeyMapper;
     clientRegistry?: ClientRegistry;
@@ -126,6 +133,7 @@ export class CopilotService {
     toolPoolFactory?: typeof buildToolPool;
     turnTimeoutMs?: number;
     streamFn?: StreamFn;
+    webClient?: WebApiClient;
   } = {}) {
     this.apiKeyMapper = apiKeyMapper;
     this.memoryStore =
@@ -154,6 +162,7 @@ export class CopilotService {
       });
     this.turnTimeoutMs = turnTimeoutMs;
     this.streamFn = streamFn;
+    this.webClient = webClient || new WebApiClient();
   }
 
   // The single unified agent entry point. The controller normalizes the
@@ -183,7 +192,7 @@ export class CopilotService {
     );
     const apiKey = usingLlmInfo.apiKey;
 
-    const tools = this.toolPoolFactory(context);
+    const tools = this.toolPoolFactory(context, { webClient: this.webClient });
 
     // Build the base prompt + user message, then layer in long-term memory
     // (M3): the memory *index* (a cheap catalog) goes into the system prompt;

@@ -17,6 +17,7 @@ import MarkdownContent from './markdown-content'
 import { useDetachCompileContext } from '@/shared/context/detach-compile-context'
 import { useEditorManagerContext } from '@/features/ide-react/context/editor-manager-context'
 import { useProjectContext } from '@/shared/context/project-context'
+import { useCopilotContext } from '../context/copilot-context'
 
 async function copyText(text: string): Promise<void> {
   try {
@@ -133,6 +134,7 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
   const editorManager = useEditorManagerContext()
   const { syncToEntry } = useDetachCompileContext()
   const { features } = useProjectContext()
+  const { notifyPatchAccepted } = useCopilotContext()
   const [status, setStatus] = useState<
     'pending' | 'accepted' | 'rejected' | 'submitted'
   >('pending')
@@ -185,7 +187,10 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
     }
     clearPatchPreview()
     setStatus('accepted')
-  }, [patch.hunks, editorManager, syncToEntry])
+    // Self-healing loop: in a compile-fix conversation this fires one
+    // automatic verification turn (compile_project) — a no-op otherwise.
+    notifyPatchAccepted()
+  }, [patch.hunks, editorManager, syncToEntry, notifyPatchAccepted])
 
   const reject = useCallback(() => {
     clearPatchPreview()

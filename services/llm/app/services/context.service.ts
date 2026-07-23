@@ -3,6 +3,20 @@ import { badRequest, payloadTooLarge } from '../utils/errors.js';
 
 const DEFAULT_MAX_CONTEXT_BYTES = Number(settings.COPILOT_MAX_CONTEXT_BYTES || 120_000);
 const DEFAULT_MAX_ATTACH_FILES = Number(settings.COPILOT_MAX_ATTACH_FILES || 8);
+// Compile-error entries pushed by the frontend (parsed from the user's last
+// failed compile). Hard caps keep the structured list cheap in the
+// user-message envelope.
+const MAX_COMPILE_ERRORS = 20;
+const MAX_COMPILE_ERROR_MESSAGE = 300;
+
+function normalizeCompileErrors(value: any) {
+  if (!Array.isArray(value)) return [];
+  return value.slice(0, MAX_COMPILE_ERRORS).map(entry => ({
+    file: typeof entry?.file === 'string' ? entry.file : null,
+    line: Number.isFinite(Number(entry?.line)) ? Number(entry.line) : null,
+    message: String(entry?.message || '').slice(0, MAX_COMPILE_ERROR_MESSAGE),
+  }));
+}
 
 function jsonSize(value: unknown): number {
   return Buffer.byteLength(JSON.stringify(value || {}), 'utf8');
@@ -54,7 +68,7 @@ export class ContextService {
       attachedFiles: Array.isArray(payload.context?.attachedFiles)
         ? payload.context.attachedFiles.slice(0, this.maxAttachFiles)
         : [],
-      recentCompileErrorId: payload.context?.recentCompileErrorId || null,
+      compileErrors: normalizeCompileErrors(payload.context?.compileErrors),
     };
     const conversation = normalizeConversation(payload.conversation, {
       source: 'panel',

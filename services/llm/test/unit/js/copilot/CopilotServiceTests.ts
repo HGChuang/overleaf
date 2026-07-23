@@ -279,4 +279,104 @@ describe('CopilotService (vendored agent core)', function () {
     expect(patchBlock.patch.title).to.equal('Fix greeting');
     expect(patchBlock.patch.hunks[0].newText).to.equal('hello LaTeX');
   });
+
+  // Self-healing loop: a post-accept verification turn must call
+  // compile_project (real tool → fake webClient), react to remaining errors
+  // with a new patch, and confirm success only once the compile is clean.
+  it('closes the compile-fix loop: verify → still failing → patch → clean', async function () {
+    const VERIFY_CONTEXT = {
+      ...CHAT_CONTEXT,
+      message: { role: 'user', content: '[自动验证] 补丁已应用。' },
+    };
+    const compileProject = sinon.stub();
+    compileProject.onFirstCall().resolves({
+      status: 'failure',
+      errorCount: 1,
+      errors: [{ file: 'main.tex', line: 1, message: 'Undefined control sequence.' }],
+      warningCount: 0,
+    });
+    compileProject.onSecondCall().resolves({
+      status: 'success',
+      errorCount: 0,
+      errors: [],
+      warningCount: 0,
+    });
+    const webClient = { compileProject };
+    // Fake provider protocol: first action of a turn is always compile_project;
+    // after reading its result, patch again if errors remain, confirm if clean.
+    const streamFn = (_model: unknown, context: any) => {
+      const last = context.messages[context.messages.length - 1];
+      if (last?.role === 'toolResult') {
+        const text = last.content.map((b: any) => (b.type === 'text' ? b.text : '')).join('');
+        const parsed = JSON.parse(text);
+        if (parsed.errorCount === 0) {
+          return streamOf(assistantMessage({ text: '编译通过，修复成功' }));
+        }
+        return streamOf(
+          assistantMessage({
+            toolCalls: [
+              {
+                type: 'toolCall',
+                id: 'call_fix',
+                name: 'submit_patch',
+                arguments: {
+                  hunks: [{ file: 'main.tex', line: 1, oldText: '\\bad', newText: '\\good' }],
+                  summary: 'Fix remaining error',
+                },
+              },
+            ],
+            stopReason: 'toolUse',
+          })
+        );
+      }
+      return streamOf(
+        assistantMessage({
+          toolCalls: [
+            { type: 'toolCall', id: 'call_compile', name: 'compile_project', arguments: {} },
+          ],
+          stopReason: 'toolUse',
+        })
+      );
+    };
+    const service = new CopilotService({
+      apiKeyMapper: this.apiKeyMapper,
+      clientRegistry: this.clientRegistry,
+      memoryStore: this.memoryStore,
+      longTermMemoryStore: this.longTermMemoryStore,
+      toolPoolFactory: buildToolPool,
+      streamFn,
+      webClient: webClient as any,
+    });
+
+    // Round 1: verification finds remaining errors → agent submits a new patch.
+    const r1 = await service.chat('user-1', VERIFY_CONTEXT);
+    expect(webClient.compileProject).to.have.been.calledOnceWith('project-1');
+    expect(r1.message.blocks?.some((b: any) => b.type === 'patch')).to.equal(true);
+
+    // Round 2: verification is clean → brief confirmation, no new patch.
+    const r2 = await service.chat('user-1', VERIFY_CONTEXT);
+    expect(webClient.compileProject).to.have.been.calledTwice;
+    expect(r2.message.content).to.equal('编译通过，修复成功');
+    expect(r2.message.blocks?.some((b: any) => b.type === 'patch')).to.not.equal(true);
+  });
+
+  it('omits the compile tool when no webClient is wired (toolPoolFactory without deps)', async function () {
+    const seenToolNames: string[][] = [];
+    const streamFn = (_model: unknown, context: any) => {
+      seenToolNames.push((context.tools || []).map((t: any) => t.name));
+      return streamOf(assistantMessage({ text: 'ok' }));
+    };
+    const service = new CopilotService({
+      apiKeyMapper: this.apiKeyMapper,
+      clientRegistry: this.clientRegistry,
+      memoryStore: this.memoryStore,
+      longTermMemoryStore: this.longTermMemoryStore,
+      toolPoolFactory: (context: any) => buildToolPool(context), // legacy 1-arg factory
+      streamFn,
+    });
+
+    await service.chat('user-1', CHAT_CONTEXT);
+    expect(seenToolNames[0]).to.not.include('compile_project');
+    expect(seenToolNames[0]).to.include('read_file');
+  });
 });

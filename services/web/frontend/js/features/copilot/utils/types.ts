@@ -71,6 +71,15 @@ export interface CopilotMessage {
   toolActivity?: string
 }
 
+// One structured compile error, parsed from the user's last failed compile
+// (subset of the log-entry shape — only what the agent needs). Sent on
+// context.compileErrors so the agent grounds its diagnosis in the real log.
+export interface CompileErrorEntry {
+  file: string | null
+  line: number | null
+  message: string
+}
+
 // ---------------------------------------------------------------------------
 // API envelope + error
 // ---------------------------------------------------------------------------

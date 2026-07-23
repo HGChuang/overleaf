@@ -14,11 +14,20 @@
 import { buildProjectTools } from './projectTools.js';
 import { buildEditTools } from './editTools.js';
 import { buildTodoTools } from './todoTool.js';
+import { buildCompileTools } from './compileTools.js';
+import type { WebApiClient } from '../../llm/webApiClient.js';
 
-export function buildToolPool(context = {}) {
+export interface ToolPoolDeps {
+  /** Required for compile_project; when absent (e.g. unit tests that don't
+   * exercise verification) the compile tool is simply omitted from the pool. */
+  webClient?: WebApiClient;
+}
+
+export function buildToolPool(context = {}, deps: ToolPoolDeps = {}) {
   return [
     ...buildProjectTools(context),
     ...buildTodoTools(),
     ...buildEditTools(),
+    ...(deps.webClient ? buildCompileTools(context, { webClient: deps.webClient }) : []),
   ];
 }

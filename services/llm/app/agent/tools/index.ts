@@ -3,4 +3,5 @@ export { ToolRegistry, defaultToolRegistry } from './registry.js';
 export { buildFileMap, lookupFile, readFileFragment } from './fileMap.js';
 export { buildProjectTools } from './projectTools.js';
 export { buildTodoTools } from './todoTool.js';
+export { buildCompileTools } from './compileTools.js';
 export { buildToolPool } from './provider.js';

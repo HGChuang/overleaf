@@ -600,12 +600,19 @@ async function getOutputFileStream(
   outputFilePath
 ) {
   const { compileBackendClass, compileGroup } = options
-  const url = new URL(
-    `${Settings.apis.clsi.url}/project/${projectId}/user/${userId}/build/${buildId}/output/${outputFilePath}`
-  )
+  // Mirror _getCompilerUrl: per-project path when no per-user id (previously
+  // a null userId produced a broken `/user/null` URL).
+  let pathname = `/project/${projectId}`
+  if (userId != null) {
+    pathname += `/user/${userId}`
+  }
+  pathname += `/build/${buildId}/output/${outputFilePath}`
+  const url = new URL(`${Settings.apis.clsi.url}${pathname}`)
   url.searchParams.set('compileBackendClass', compileBackendClass)
   url.searchParams.set('compileGroup', compileGroup)
-  url.searchParams.set('clsiserverid', clsiServerId)
+  if (clsiServerId != null) {
+    url.searchParams.set('clsiserverid', clsiServerId)
+  }
   try {
     const stream = await fetchStream(url, {
       signal: AbortSignal.timeout(OUTPUT_FILE_TIMEOUT_MS),

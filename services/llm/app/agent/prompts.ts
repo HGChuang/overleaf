@@ -59,6 +59,12 @@ function toolsSection(toolNames: string[] = []) {
     section +=
       '\nWhen the user asks you to FIX, MODIFY, CORRECT, or REWRITE existing text in their files, do NOT return the whole document. Call `submit_patch` with one or more `{oldText, newText}` hunks: `oldText` copied VERBATIM from the source (read the file with `read_file` / `read_file_fragment` first so the editor can anchor the inline-diff preview), `newText` the replacement. Group nearby edits into separate hunks rather than one giant `oldText`. The user reviews an inline-diff preview (struck old + gray new) and Accepts/Rejects; the edit applies only after acceptance.';
   }
+  if (toolNames.includes('compile_project')) {
+    section +=
+      '\nCOMPILE-FIX PROTOCOL (self-healing loop):' +
+      '\n- When the user asks to fix compile errors, ground your diagnosis in the structured errors in the user message (CONTEXT.compileErrors — file/line/message from their last failed compile) rather than guessing from source alone; inspect each reported location with `read_file_fragment` (startLine ~ line-3, endLine ~ line+3).' +
+      '\n- A user message starting with [自动验证] means your patch was just APPLIED. Your FIRST action in that turn MUST be calling `compile_project` to recompile and get the authoritative result. If errorCount is 0, reply with a brief success confirmation (no patch). If errors remain, diagnose them with `read_file_fragment` and submit a new `submit_patch`. NEVER declare a fix successful without a compile_project verification, and never call compile_project more than once per turn.';
+  }
   return section;
 }
 
@@ -66,6 +72,10 @@ function toolsSection(toolNames: string[] = []) {
 // call any tool — intent is recognized by which tools it picks.
 export function buildUnifiedSystemPrompt(context: any = {}, toolNames: string[] = []) {
   const project = context.project || {};
+  const compileErrors = context.context?.compileErrors;
+  const compileNote = Array.isArray(compileErrors) && compileErrors.length
+    ? `\n\nThe user's last compile FAILED with ${compileErrors.length} structured error(s) — see CONTEXT.compileErrors in the user message for file/line/message. Follow the COMPILE-FIX PROTOCOL.`
+    : '';
   return (
     buildChatPrompt({
       projectId: project.projectId,
@@ -73,6 +83,6 @@ export function buildUnifiedSystemPrompt(context: any = {}, toolNames: string[] 
       currentFile: context.context?.currentFile,
       fileList: project.fileList,
       outline: project.outline,
-    }) + toolsSection(toolNames)
+    }) + toolsSection(toolNames) + compileNote
   );
 }

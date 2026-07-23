@@ -20,10 +20,18 @@ import {
 import usePersistedState from '@/shared/hooks/use-persisted-state'
 import { useProjectContext } from '@/shared/context/project-context'
 import { useEditorManagerContext } from '@/features/ide-react/context/editor-manager-context'
+import { useDetachCompileContext } from '@/shared/context/detach-compile-context'
 import { copilotChatStream, CopilotError } from '../utils/copilot-api'
-import type { CopilotMessage } from '../utils/types'
+import type { CompileErrorEntry, CopilotMessage } from '../utils/types'
 
 type Status = 'idle' | 'loading'
+
+// Caps mirror the llm-side normalization (context.service.ts).
+const MAX_COMPILE_ERRORS = 20
+const MAX_COMPILE_ERROR_MESSAGE = 300
+// Loop bound for the self-healing cycle: at most this many automatic
+// post-accept verification turns per conversation.
+const MAX_AUTO_VERIFY_PER_CONVERSATION = 3
 
 export interface CopilotSelection {
   file: string | null
@@ -64,6 +72,9 @@ export interface CopilotContextValue {
   sendMessage: (text: string) => void
   startNewChat: () => void
   continueInCopilot: (seed: ContinueSeed) => void
+  // called by PatchBlock after a patch was applied — may trigger an
+  // automatic compile-verification turn (self-healing loop)
+  notifyPatchAccepted: () => void
 }
 
 export const CopilotContext = createContext<CopilotContextValue | undefined>(
@@ -87,6 +98,10 @@ function genId(prefix: string): string {
 export const CopilotProvider: FC = ({ children }) => {
   const { _id: projectId } = useProjectContext()
   const editorManager = useEditorManagerContext()
+  // Compile state of the user's last compile (parsed log entries) — pushed to
+  // the agent as structured errors so compile-fix turns start from the real
+  // log, not from source-guessing (self-healing loop, input half).
+  const { logEntries } = useDetachCompileContext()
 
   // --- persisted state ---
   const [isOpen, setIsOpen] = usePersistedState<boolean>('copilot:open', false)
@@ -127,6 +142,30 @@ export const CopilotProvider: FC = ({ children }) => {
   useEffect(() => {
     seedTextRef.current = seedText
   }, [seedText])
+
+  // Latest compile errors, normalized to the wire shape (parser `line` can be
+  // a string; force number|null). Read via ref inside sendMessage so the
+  // callback identity stays stable across compiles.
+  const compileErrorsRef = useRef<CompileErrorEntry[]>([])
+  useEffect(() => {
+    const errors = (logEntries?.errors || [])
+      .slice(0, MAX_COMPILE_ERRORS)
+      .map((entry: any) => ({
+        file: typeof entry?.file === 'string' ? entry.file : null,
+        line: Number.isFinite(Number(entry?.line)) ? Number(entry.line) : null,
+        message: String(entry?.message || '').slice(
+          0,
+          MAX_COMPILE_ERROR_MESSAGE
+        ),
+      }))
+    compileErrorsRef.current = errors
+  }, [logEntries])
+
+  // Self-healing loop bookkeeping: did the last sent turn carry compile
+  // errors (i.e. is this a compile-fix conversation), and how many automatic
+  // verification turns have we already fired for this conversation.
+  const lastSentCompileErrorCountRef = useRef(0)
+  const autoVerifyCountRef = useRef(0)
 
   const describeError = useCallback((err: unknown): string => {
     if (err instanceof CopilotError) {
@@ -198,6 +237,8 @@ export const CopilotProvider: FC = ({ children }) => {
     setSelection(null)
     setSeedText(null)
     setStatus('idle')
+    lastSentCompileErrorCountRef.current = 0
+    autoVerifyCountRef.current = 0
     if (chatAbortRef.current) chatAbortRef.current.abort()
   }, [setConversationId])
 
@@ -223,6 +264,8 @@ export const CopilotProvider: FC = ({ children }) => {
       setMessages(prev => [...prev, userMessage, pendingAssistant])
 
       const sel = selectionRef.current
+      const compileErrors = compileErrorsRef.current
+      lastSentCompileErrorCountRef.current = compileErrors.length
       const body = {
         projectId,
         conversation: { conversationId, source: 'panel' },
@@ -230,7 +273,7 @@ export const CopilotProvider: FC = ({ children }) => {
           currentFile: getCurrentFileRef.current(),
           selectedText: sel?.text || '',
           attachedFiles: [] as string[],
-          recentCompileErrorId: null,
+          ...(compileErrors.length ? { compileErrors } : {}),
         },
         message: { role: 'user', content },
       }
@@ -305,6 +348,22 @@ export const CopilotProvider: FC = ({ children }) => {
     [projectId, conversationId, describeError]
   )
 
+  // ----- self-healing loop: post-accept auto-verification -----
+  // Called by PatchBlock after the patch's hunks were applied to the editor
+  // (they sync to the server via sharejs). When this conversation's last turn
+  // carried compile errors, fire ONE automatic follow-up turn asking the
+  // agent to verify via compile_project — closing the fix→verify loop.
+  // Bounded per conversation; a turn already in flight suppresses the trigger.
+  const notifyPatchAccepted = useCallback(() => {
+    if (status === 'loading') return
+    if (!lastSentCompileErrorCountRef.current) return
+    if (autoVerifyCountRef.current >= MAX_AUTO_VERIFY_PER_CONVERSATION) return
+    autoVerifyCountRef.current += 1
+    sendMessage(
+      '[自动验证] 补丁已应用。请调用 compile_project 触发重新编译：若仍有错误，请用 read_file_fragment 定位后继续修复并提交新 patch；若编译通过（errorCount 为 0），请简短确认修复成功。'
+    )
+  }, [status, sendMessage])
+
   const value = useMemo<CopilotContextValue>(
     () => ({
       isOpen,
@@ -323,6 +382,7 @@ export const CopilotProvider: FC = ({ children }) => {
       sendMessage,
       startNewChat,
       continueInCopilot,
+      notifyPatchAccepted,
     }),
     [
       isOpen,
@@ -340,6 +400,7 @@ export const CopilotProvider: FC = ({ children }) => {
       sendMessage,
       startNewChat,
       continueInCopilot,
+      notifyPatchAccepted,
     ]
   )
 

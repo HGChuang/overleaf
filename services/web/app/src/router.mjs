@@ -39,6 +39,7 @@ import ChatController from './Features/Chat/ChatController.js'
 import Modules from './infrastructure/Modules.js'
 import LlmController from './Features/Llm/LlmController.js'
 import CopilotController from './Features/Copilot/CopilotController.js'
+import CopilotCompileController from './Features/Copilot/CopilotCompileController.js'
 import {
   RateLimiter,
   openProjectRateLimiter,
@@ -1070,6 +1071,11 @@ async function initialize(webRouter, privateApiRouter, publicApiRouter) {
     '/internal/project/:project_id/compile/pdf',
     AuthenticationController.requirePrivateApiAuth(),
     CompileController.compileAndDownloadPdf
+  )
+  privateApiRouter.post(
+    '/internal/project/:project_id/copilot/compile',
+    AuthenticationController.requirePrivateApiAuth(),
+    CopilotCompileController.compileAndGetErrors
   )
 
   privateApiRouter.post(
