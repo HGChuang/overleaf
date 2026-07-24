@@ -16,6 +16,7 @@ import {
 import MarkdownContent from './markdown-content'
 import { useDetachCompileContext } from '@/shared/context/detach-compile-context'
 import { useEditorManagerContext } from '@/features/ide-react/context/editor-manager-context'
+import type { DocumentContainer } from '@/features/ide-react/editor/document-container'
 import { useProjectContext } from '@/shared/context/project-context'
 import { useCopilotContext } from '../context/copilot-context'
 
@@ -25,6 +26,34 @@ async function copyText(text: string): Promise<void> {
   } catch {
     /* ignore */
   }
+}
+
+// Bounds for waiting on the sharejs op round-trip after a patch is applied.
+// On timeout the verification fires anyway — that degrades to the old racy
+// behavior, never worse.
+const OPS_DRAIN_TIMEOUT_MS = 4000
+const OPS_DRAIN_POLL_MS = 100
+
+// Wait until the open document has no buffered sharejs ops (pending or
+// inflight). real-time only acks (clearing the inflight op) AFTER docupdater
+// has applied the update, so a drained queue guarantees a fresh compile sees
+// the patched content. Without this, the post-accept verification compile can
+// read pre-patch content (op travel time browser→docupdater is ~2s in dev)
+// and the agent "fixes" an already-fixed file — the accept/verify loop.
+async function waitForEditorOpsToDrain(
+  doc: DocumentContainer | null
+): Promise<void> {
+  if (!doc) return
+  // Let the CM6 → sharejs op conversion land first.
+  await new Promise<void>(resolve => setTimeout(resolve, 50))
+  const deadline = Date.now() + OPS_DRAIN_TIMEOUT_MS
+  do {
+    // Force an immediate send instead of waiting out the single-user
+    // batching delay (no-op while another op is inflight).
+    doc.flush()
+    if (!doc.hasBufferedOps()) return
+    await new Promise<void>(resolve => setTimeout(resolve, OPS_DRAIN_POLL_MS))
+  } while (Date.now() < deadline)
 }
 
 const FileRefs: FC<{ items: FileRef[] }> = ({ items }) => {
@@ -187,8 +216,11 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
     }
     clearPatchPreview()
     setStatus('accepted')
-    // Self-healing loop: in a compile-fix conversation this fires one
-    // automatic verification turn (compile_project) — a no-op otherwise.
+    // Self-healing loop: fire one automatic verification turn
+    // (compile_project) — but only after our edits have round-tripped to the
+    // server, otherwise the verify compile reads pre-patch content and the
+    // agent re-"fixes" an already-fixed file (the accept/verify loop).
+    await waitForEditorOpsToDrain(editorManager.currentDocument)
     notifyPatchAccepted()
   }, [patch.hunks, editorManager, syncToEntry, notifyPatchAccepted])
 

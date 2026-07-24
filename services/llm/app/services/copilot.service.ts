@@ -61,11 +61,54 @@ const SUMMARIZE_TOKENS = Number(settings.COPILOT_SUMMARIZE_TOKENS || 80_000);
 const TURN_TIMEOUT_MS = Number(settings.COPILOT_TURN_TIMEOUT_MS || 300_000);
 
 // Events forwarded to SSE clients mid-turn. `done`/`error` are sent by the
-// controller once the turn settles, not through this channel.
+// controller once the turn settles, not through this channel. tool_start /
+// tool_end carry compact I/O previews (args / resultSummary) so the frontend
+// can render the agent workflow Claude Code-style (step list); raw args and
+// results stay server-side.
 export type CopilotStreamEvent =
   | { type: 'text_delta'; delta: string }
-  | { type: 'tool_start'; toolCallId: string; toolName: string }
-  | { type: 'tool_end'; toolCallId: string; toolName: string; isError: boolean };
+  | { type: 'tool_start'; toolCallId: string; toolName: string; args?: Record<string, unknown> }
+  | { type: 'tool_end'; toolCallId: string; toolName: string; isError: boolean; resultSummary?: string };
+
+// Caps for the tool I/O previews shipped to the browser. Args are flattened
+// to a shallow object with per-value caps (submit_patch hunks can be large);
+// results reduce to their text content, one line, capped.
+const TOOL_ARG_MAX_KEYS = 6;
+const TOOL_ARG_VALUE_CHARS = 160;
+const TOOL_RESULT_PREVIEW_CHARS = 500;
+
+function summarizeToolArgs(args: unknown): Record<string, unknown> | undefined {
+  if (!args || typeof args !== 'object' || Array.isArray(args)) return undefined;
+  const out: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(args as Record<string, unknown>).slice(0, TOOL_ARG_MAX_KEYS)) {
+    if (typeof value === 'string') {
+      out[key] = value.length > TOOL_ARG_VALUE_CHARS ? `${value.slice(0, TOOL_ARG_VALUE_CHARS)}…` : value;
+    } else if (typeof value === 'number' || typeof value === 'boolean') {
+      out[key] = value;
+    } else if (value != null) {
+      try {
+        const json = JSON.stringify(value);
+        if (json) out[key] = json.length > TOOL_ARG_VALUE_CHARS ? `${json.slice(0, TOOL_ARG_VALUE_CHARS)}…` : json;
+      } catch {
+        // unstringifiable value — skip the key
+      }
+    }
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+
+function summarizeToolResult(result: any): string | undefined {
+  const content = result?.content;
+  if (!Array.isArray(content)) return undefined;
+  const text = content
+    .map((c: any) => (c?.type === 'text' && typeof c.text === 'string' ? c.text : ''))
+    .filter(Boolean)
+    .join('\n')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!text) return undefined;
+  return text.length > TOOL_RESULT_PREVIEW_CHARS ? `${text.slice(0, TOOL_RESULT_PREVIEW_CHARS)}…` : text;
+}
 
 function createMessageResponse(content: string, extraBlocks: unknown[] = []) {
   // `content` already carries the assistant's markdown text — don't also echo
@@ -331,6 +374,7 @@ export class CopilotService {
               type: 'tool_start',
               toolCallId: event.toolCallId,
               toolName: event.toolName,
+              args: summarizeToolArgs(event.args),
             });
           } else if (event.type === 'tool_execution_end') {
             onEvent({
@@ -338,6 +382,7 @@ export class CopilotService {
               toolCallId: event.toolCallId,
               toolName: event.toolName,
               isError: event.isError,
+              resultSummary: summarizeToolResult(event.result),
             });
           }
         });

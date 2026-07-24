@@ -108,9 +108,14 @@ export class CopilotController {
           if (e.type === 'text_delta') {
             send('text_delta', { delta: e.delta });
           } else if (e.type === 'tool_start') {
-            send('tool_start', { toolCallId: e.toolCallId, toolName: e.toolName });
+            send('tool_start', { toolCallId: e.toolCallId, toolName: e.toolName, args: e.args });
           } else if (e.type === 'tool_end') {
-            send('tool_end', { toolCallId: e.toolCallId, toolName: e.toolName, isError: e.isError });
+            send('tool_end', {
+              toolCallId: e.toolCallId,
+              toolName: e.toolName,
+              isError: e.isError,
+              resultSummary: e.resultSummary,
+            });
           }
         },
       });

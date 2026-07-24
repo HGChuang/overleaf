@@ -198,6 +198,20 @@ function CodeMirrorEditor() {
           console.debug('[CodeMirrorEditor] copilot apply-fix: oldText not found, skipping')
           return
         }
+        // Idempotence guard: a grow-hunk (newText starts with oldText, e.g.
+        // adding a missing brace) that is ALREADY applied still matches —
+        // oldText is found as a prefix of the fixed text — and re-applying
+        // would replace that prefix again and corrupt the text (`}}`).
+        // Skip when the text at the match is already newText. Grow-hunks
+        // only: after a shrink-hunk is applied, newText legitimately sits at
+        // the match position, so this check would misfire there.
+        if (
+          newText.length > oldText.length &&
+          view.state.doc.sliceString(pos, pos + newText.length) === newText
+        ) {
+          console.debug('[CodeMirrorEditor] copilot apply-fix: hunk already applied, skipping')
+          return
+        }
         view.dispatch({
           changes: { from: pos, to: pos + oldText.length, insert: newText },
           selection: { anchor: pos + newText.length },

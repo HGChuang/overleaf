@@ -211,26 +211,52 @@ const PANE_CSS = `
 .copilot-send:hover { background: #7bb0ff; }
 .copilot-send:disabled { background: #3a4150; color: #6a7178; cursor: not-allowed; }
 
-/* messages */
+/* messages — Claude Code-style single-column flow: every message is
+   full-width and left-aligned (no IM-style right/left bubbles). The user
+   message is a full-width shaded bar; assistant turns are plain text on the
+   pane background. The completed assistant message keeps the SAME plain
+   layout as the streaming (pending) one — no card swap when the turn ends,
+   so the tool-workflow view simply freezes in place. */
 .copilot-message-list { display: flex; flex-direction: column; gap: 14px; }
 .copilot-msg { display: flex; flex-direction: column; }
-.copilot-msg-user { align-items: flex-end; }
-.copilot-msg-assistant { align-items: flex-start; }
 .copilot-msg-bubble-user {
-  background: var(--copilot-accent); color: #0b1220; border-radius: 12px;
-  padding: 8px 12px; max-width: 85%; word-break: break-word; white-space: pre-wrap;
+  background: #4a4e55; color: var(--copilot-fg); border-radius: 8px;
+  padding: 8px 12px; word-break: break-word; white-space: pre-wrap;
 }
 .copilot-msg-body {
-  max-width: 100%; background: var(--copilot-hover); border: 1px solid var(--copilot-edge);
-  border-radius: 12px; padding: 10px 12px; word-break: break-word;
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 8px 12px; max-width: 100%; word-break: break-word;
 }
-.copilot-msg-pending { display: flex; align-items: center; gap: 8px; color: var(--copilot-fg-muted); padding: 8px 12px; }
+.copilot-msg-pending { display: flex; flex-direction: column; gap: 8px; color: var(--copilot-fg-muted); padding: 8px 12px; max-width: 100%; }
+.copilot-msg-pending-status { display: flex; align-items: center; gap: 8px; }
 .copilot-spinner {
   width: 14px; height: 14px; border-radius: 50%;
   border: 2px solid var(--copilot-edge); border-top-color: var(--copilot-accent);
   animation: copilot-spin 0.8s linear infinite; display: inline-block;
 }
 @keyframes copilot-spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+
+/* agent workflow steps (Claude Code-style tool-call timeline) */
+.copilot-steps { display: flex; flex-direction: column; gap: 4px; margin: 6px 0; font-size: 12.5px; max-width: 100%; }
+.copilot-step-head { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.copilot-step-spinner { width: 10px; height: 10px; border-width: 1.5px; flex: none; }
+.copilot-step-icon { font-size: 11px; width: 12px; text-align: center; flex: none; }
+.copilot-step-icon-success { color: #4caf7d; }
+.copilot-step-icon-error { color: #e5534b; }
+.copilot-step-name { font-weight: 600; color: var(--copilot-fg); flex: none; }
+.copilot-step-detail {
+  color: var(--copilot-fg-muted); overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; min-width: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11.5px;
+}
+.copilot-step-duration { color: var(--copilot-fg-muted); font-size: 11px; margin-left: auto; flex: none; }
+.copilot-step-result {
+  display: flex; gap: 6px; padding-left: 18px; color: var(--copilot-fg-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+}
+.copilot-step-result > :last-child { overflow: hidden; text-overflow: ellipsis; }
+.copilot-step-result-error { color: #e5534b; }
+.copilot-step-result-marker { flex: none; }
 
 /* markdown rendering (shared) */
 .copilot-md { line-height: 1.55; }

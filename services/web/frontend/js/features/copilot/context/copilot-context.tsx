@@ -22,7 +22,11 @@ import { useProjectContext } from '@/shared/context/project-context'
 import { useEditorManagerContext } from '@/features/ide-react/context/editor-manager-context'
 import { useDetachCompileContext } from '@/shared/context/detach-compile-context'
 import { copilotChatStream, CopilotError } from '../utils/copilot-api'
-import type { CompileErrorEntry, CopilotMessage } from '../utils/types'
+import type {
+  CompileErrorEntry,
+  CopilotMessage,
+  CopilotToolStep,
+} from '../utils/types'
 
 type Status = 'idle' | 'loading'
 
@@ -69,7 +73,7 @@ export interface CopilotContextValue {
   clearError: () => void
 
   // actions
-  sendMessage: (text: string) => void
+  sendMessage: (text: string, opts?: { hidden?: boolean }) => void
   startNewChat: () => void
   continueInCopilot: (seed: ContinueSeed) => void
   // called by PatchBlock after a patch was applied — may trigger an
@@ -122,6 +126,13 @@ export const CopilotProvider: FC = ({ children }) => {
   // abort controller for the in-flight chat request
   const chatAbortRef = useRef<AbortController | null>(null)
 
+  // toolCallId → start timestamp, for per-step durations in the workflow
+  // timeline (cleared at the start of every turn)
+  const toolStartTimesRef = useRef(new Map<string, number>())
+  // Monotonic id source for timeline text items (tool items key by
+  // toolCallId). Reset at the start of every turn.
+  const timelineSeqRef = useRef(0)
+
   // refs to read the latest value inside stable callbacks without churning
   // their identity on every selection/seed change.
   const getCurrentFile = useCallback((): string | null => {
@@ -161,10 +172,12 @@ export const CopilotProvider: FC = ({ children }) => {
     compileErrorsRef.current = errors
   }, [logEntries])
 
-  // Self-healing loop bookkeeping: did the last sent turn carry compile
-  // errors (i.e. is this a compile-fix conversation), and how many automatic
+  // Self-healing loop bookkeeping: is the latest turn a compile-fix turn
+  // (either it carried frontend-pushed compile errors, or the agent engaged
+  // compilation itself via compile_project), and how many automatic
   // verification turns have we already fired for this conversation.
   const lastSentCompileErrorCountRef = useRef(0)
+  const lastTurnUsedCompileProjectRef = useRef(false)
   const autoVerifyCountRef = useRef(0)
 
   const describeError = useCallback((err: unknown): string => {
@@ -238,13 +251,15 @@ export const CopilotProvider: FC = ({ children }) => {
     setSeedText(null)
     setStatus('idle')
     lastSentCompileErrorCountRef.current = 0
+    lastTurnUsedCompileProjectRef.current = false
     autoVerifyCountRef.current = 0
+    toolStartTimesRef.current.clear()
     if (chatAbortRef.current) chatAbortRef.current.abort()
   }, [setConversationId])
 
   // ----- chat -----
   const sendMessage = useCallback(
-    (text: string) => {
+    (text: string, opts?: { hidden?: boolean }) => {
       const content = text.trim()
       if (!content) return
 
@@ -255,13 +270,18 @@ export const CopilotProvider: FC = ({ children }) => {
       setError(null)
       setStatus('loading')
 
-      const userMessage: CopilotMessage = { role: 'user', content }
+      const userMessage: CopilotMessage = {
+        role: 'user',
+        content,
+        ...(opts?.hidden ? { hidden: true } : {}),
+      }
       const pendingAssistant: CopilotMessage = {
         role: 'assistant',
         content: '',
         pending: true,
       }
       setMessages(prev => [...prev, userMessage, pendingAssistant])
+      timelineSeqRef.current = 0
 
       const sel = selectionRef.current
       const compileErrors = compileErrorsRef.current
@@ -278,36 +298,87 @@ export const CopilotProvider: FC = ({ children }) => {
         message: { role: 'user', content },
       }
 
+      toolStartTimesRef.current.clear()
+      lastTurnUsedCompileProjectRef.current = false
+
       copilotChatStream(body, {
         signal: controller.signal,
         onEvent: event => {
-          // Mid-turn updates land on the pending assistant placeholder:
-          // text deltas accumulate into its content; tool activity replaces
-          // the "Thinking…" label until the terminal `done` swaps in the
-          // final message (patch blocks included).
+          // Mid-turn updates land on the pending assistant placeholder as an
+          // APPEND-ONLY chronological timeline: text deltas extend the
+          // trailing text segment (or open a new one after a tool call);
+          // tool_start pushes a step item; tool_end updates it in place.
+          // Rendering the timeline in order keeps the display faithful to
+          // the agent's real interleaving — a text segment never grows above
+          // a tool row that followed it.
           if (event.type === 'text_delta') {
             setMessages(prev => {
               const last = prev[prev.length - 1]
               if (!last?.pending) return prev
-              return [
-                ...prev.slice(0, -1),
-                { ...last, content: last.content + event.delta },
-              ]
+              const timeline = [...(last.timeline ?? [])]
+              const tail = timeline[timeline.length - 1]
+              if (tail?.kind === 'text') {
+                timeline[timeline.length - 1] = {
+                  ...tail,
+                  text: tail.text + event.delta,
+                }
+              } else {
+                timeline.push({
+                  kind: 'text',
+                  id: `tl_txt_${timelineSeqRef.current++}`,
+                  text: event.delta,
+                })
+              }
+              return [...prev.slice(0, -1), { ...last, timeline }]
             })
           } else if (event.type === 'tool_start') {
+            toolStartTimesRef.current.set(event.toolCallId, Date.now())
+            if (event.toolName === 'compile_project') {
+              lastTurnUsedCompileProjectRef.current = true
+            }
+            const step: CopilotToolStep = {
+              id: event.toolCallId,
+              name: event.toolName,
+              args: event.args,
+              status: 'running',
+            }
             setMessages(prev => {
               const last = prev[prev.length - 1]
               if (!last?.pending) return prev
               return [
                 ...prev.slice(0, -1),
-                { ...last, toolActivity: event.toolName },
+                {
+                  ...last,
+                  timeline: [
+                    ...(last.timeline ?? []),
+                    { kind: 'tool' as const, id: event.toolCallId, step },
+                  ],
+                },
               ]
             })
           } else if (event.type === 'tool_end') {
+            const startedAt = toolStartTimesRef.current.get(event.toolCallId)
+            toolStartTimesRef.current.delete(event.toolCallId)
             setMessages(prev => {
               const last = prev[prev.length - 1]
-              if (!last?.pending) return prev
-              return [...prev.slice(0, -1), { ...last, toolActivity: undefined }]
+              if (!last?.pending || !last.timeline) return prev
+              const timeline = last.timeline.map(item =>
+                item.kind === 'tool' && item.id === event.toolCallId
+                  ? {
+                      ...item,
+                      step: {
+                        ...item.step,
+                        status: (event.isError
+                          ? 'error'
+                          : 'success') as CopilotToolStep['status'],
+                        resultSummary: event.resultSummary,
+                        durationMs:
+                          startedAt != null ? Date.now() - startedAt : undefined,
+                      },
+                    }
+                  : item
+              )
+              return [...prev.slice(0, -1), { ...last, timeline }]
             })
           }
         },
@@ -320,7 +391,37 @@ export const CopilotProvider: FC = ({ children }) => {
             suggestedActions:
               data.suggestedActions || data.message?.suggestedActions,
           }
-          setMessages(prev => [...prev.slice(0, -1), assistant])
+          setMessages(prev => {
+            const last = prev[prev.length - 1]
+            // Freeze the streamed transcript onto the final message. The
+            // `done` payload's content is LOSSY — only the LAST text segment
+            // (mapResult takes the last assistant message), or a generic
+            // intro when a patch was submitted — so swapping it in erased
+            // everything the user watched streaming (the "thinking" segments
+            // between tool calls). The timeline already holds every streamed
+            // segment; the payload may only APPEND (never replace): any
+            // content that never streamed (e.g. the patch intro) lands as a
+            // final text segment.
+            if (last?.pending && last.timeline?.length) {
+              const timeline = [...last.timeline]
+              const finalText = (data.message?.content || '').trim()
+              if (finalText) {
+                const streamed = timeline
+                  .map(item => (item.kind === 'text' ? item.text : ''))
+                  .join('')
+                  .trim()
+                if (!streamed.includes(finalText)) {
+                  timeline.push({
+                    kind: 'text',
+                    id: `tl_txt_${timelineSeqRef.current++}`,
+                    text: data.message?.content || '',
+                  })
+                }
+              }
+              assistant.timeline = timeline
+            }
+            return [...prev.slice(0, -1), assistant]
+          })
           if (seedTextRef.current) setSeedText(null)
         })
         .catch((err: unknown) => {
@@ -350,17 +451,32 @@ export const CopilotProvider: FC = ({ children }) => {
 
   // ----- self-healing loop: post-accept auto-verification -----
   // Called by PatchBlock after the patch's hunks were applied to the editor
-  // (they sync to the server via sharejs). When this conversation's last turn
-  // carried compile errors, fire ONE automatic follow-up turn asking the
-  // agent to verify via compile_project — closing the fix→verify loop.
+  // (they sync to the server via sharejs). When the latest turn was a
+  // compile-fix turn, fire ONE automatic follow-up turn asking the agent to
+  // verify via compile_project — closing the fix→verify loop.
   // Bounded per conversation; a turn already in flight suppresses the trigger.
+  // The trigger message is hidden from the chat view: it is an instruction
+  // for the agent, not content for the user — what the user sees is the
+  // assistant turn that immediately starts working (Compile project step).
   const notifyPatchAccepted = useCallback(() => {
     if (status === 'loading') return
-    if (!lastSentCompileErrorCountRef.current) return
+    // "Compile-fix turn" = the user's message carried frontend-pushed
+    // compile errors, OR the agent engaged compilation itself via
+    // compile_project. The latter covers flows where the frontend had no
+    // errors to push (user never recompiled in the UI) and the agent
+    // discovered the errors with its own tool — otherwise no verification
+    // would fire there.
+    if (
+      !lastSentCompileErrorCountRef.current &&
+      !lastTurnUsedCompileProjectRef.current
+    ) {
+      return
+    }
     if (autoVerifyCountRef.current >= MAX_AUTO_VERIFY_PER_CONVERSATION) return
     autoVerifyCountRef.current += 1
     sendMessage(
-      '[自动验证] 补丁已应用。请调用 compile_project 触发重新编译：若仍有错误，请用 read_file_fragment 定位后继续修复并提交新 patch；若编译通过（errorCount 为 0），请简短确认修复成功。'
+      '[自动验证] 补丁已应用。请调用 compile_project 触发重新编译：若仍有错误，请用 read_file_fragment 定位后继续修复并提交新 patch；若编译通过（errorCount 为 0），请简短确认修复成功。',
+      { hidden: true }
     )
   }, [status, sendMessage])
 

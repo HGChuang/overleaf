@@ -158,14 +158,23 @@ describe('CopilotService (vendored agent core)', function () {
       streamFn,
     });
 
-    const events: string[] = [];
+    const events: any[] = [];
     const result = await service.chat('user-1', CHAT_CONTEXT, {
-      onEvent: (e: any) => events.push(e.type),
+      onEvent: (e: any) => events.push(e),
     });
 
     expect(result.message.content).to.equal('read confirmed');
-    expect(events).to.include('tool_start');
-    expect(events).to.include('tool_end');
+    const types = events.map(e => e.type);
+    expect(types).to.include('tool_start');
+    expect(types).to.include('tool_end');
+    // Workflow display (Claude Code-style steps): tool_start carries the
+    // capped args preview, tool_end a text result summary.
+    const start = events.find(e => e.type === 'tool_start');
+    expect(start?.toolName).to.equal('read_file');
+    expect(start?.args).to.deep.equal({ path: 'main.tex' });
+    const end = events.find(e => e.type === 'tool_end');
+    expect(end?.isError).to.equal(false);
+    expect(end?.resultSummary).to.be.a('string').and.to.include('hello world');
     const [, appended] = this.memoryStore.append.firstCall.args;
     const toolResultMsg = appended.find((m: any) => m.role === 'toolResult');
     expect(toolResultMsg?.toolCallId).to.equal('call_1');

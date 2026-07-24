@@ -27,10 +27,13 @@ export const ChatView: FC = () => {
 
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
+  // Pin to the bottom on every message update — `messages` changes identity
+  // on each streamed delta, so this also tracks the timeline as it grows
+  // (length/status alone only fired on message count / turn boundaries).
   useEffect(() => {
     const el = scrollRef.current
     if (el) el.scrollTop = el.scrollHeight
-  }, [messages.length, status])
+  }, [messages, status])
 
   const loading = status === 'loading'
 

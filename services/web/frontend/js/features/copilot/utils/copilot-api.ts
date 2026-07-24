@@ -98,8 +98,19 @@ export function copilotChat(
 // `error` carries the envelope error plus its HTTP status.
 export type CopilotSseEvent =
   | { type: 'text_delta'; delta: string }
-  | { type: 'tool_start'; toolCallId: string; toolName: string }
-  | { type: 'tool_end'; toolCallId: string; toolName: string; isError: boolean }
+  | {
+      type: 'tool_start'
+      toolCallId: string
+      toolName: string
+      args?: Record<string, unknown>
+    }
+  | {
+      type: 'tool_end'
+      toolCallId: string
+      toolName: string
+      isError: boolean
+      resultSummary?: string
+    }
   | { type: 'done'; data: ChatResponseData }
   | { type: 'error'; code: string; message: string; status?: number }
 
@@ -142,6 +153,10 @@ function toSseEvent(frame: SseFrame): CopilotSseEvent | null {
         type: 'tool_start',
         toolCallId: String(payload?.toolCallId || ''),
         toolName: String(payload?.toolName || ''),
+        args:
+          payload?.args && typeof payload.args === 'object'
+            ? (payload.args as Record<string, unknown>)
+            : undefined,
       }
     case 'tool_end':
       return {
@@ -149,6 +164,10 @@ function toSseEvent(frame: SseFrame): CopilotSseEvent | null {
         toolCallId: String(payload?.toolCallId || ''),
         toolName: String(payload?.toolName || ''),
         isError: Boolean(payload?.isError),
+        resultSummary:
+          typeof payload?.resultSummary === 'string'
+            ? payload.resultSummary
+            : undefined,
       }
     case 'done':
       return { type: 'done', data: payload as ChatResponseData }

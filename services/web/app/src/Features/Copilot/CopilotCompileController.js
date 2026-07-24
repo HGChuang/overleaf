@@ -50,14 +50,19 @@ module.exports = {
       }
 
       // Compile as the project owner (CompileManager drops the userId itself
-      // when per-user compiles are disabled).
+      // when per-user compiles are disabled). forceCompile makes latexmk run
+      // *latex even when the project is unchanged since the last compile —
+      // otherwise it no-ops (clsi deletes the previous output.log during
+      // sync) and there is no fresh log to parse.
       const ownerId = project.owner_ref ? project.owner_ref.toString() : null
       const {
         status,
         clsiServerId,
         buildId,
         limits,
-      } = await CompileManager.promises.compile(projectId, ownerId, {})
+      } = await CompileManager.promises.compile(projectId, ownerId, {
+        forceCompile: true,
+      })
 
       if (!LOG_STATUSES.has(status) || !buildId) {
         // Compile infra unavailable / rate-limited / validation failure — the

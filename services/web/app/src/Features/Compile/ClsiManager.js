@@ -751,6 +751,12 @@ function _finaliseRequest(projectId, options, project, docs, files) {
   if (options.fileLineErrors) {
     flags = ['-file-line-error']
   }
+  if (options.forceCompile) {
+    // Force latexmk to run *latex at least once, even when its fdb considers
+    // the targets up-to-date or failed in a previous run — a no-op produces
+    // no fresh output.log (clsi deletes the previous one during sync).
+    flags = [...(flags || []), '-g']
+  }
 
   return {
     compile: {

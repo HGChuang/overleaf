@@ -60,6 +60,28 @@ export interface Patch {
   hunks: PatchHunk[]
 }
 
+// One tool invocation in the agent's workflow, rendered Claude Code-style as
+// a step row (name + salient args, spinner/✓/✗, indented result preview).
+// `args` is the shallow, per-value-capped preview shipped by the llm service
+// (raw args/results never leave the server).
+export interface CopilotToolStep {
+  id: string
+  name: string
+  args?: Record<string, unknown>
+  status: 'running' | 'success' | 'error'
+  resultSummary?: string
+  durationMs?: number
+}
+
+// One entry in an assistant turn's chronological transcript. Text segments
+// are split at tool-call boundaries (text arriving after a tool call starts a
+// NEW segment), so rendering the items in order reproduces the agent's real
+// interleaving — instead of the old "all text on top, all steps below" that
+// let an upper block keep growing after lower blocks had appeared.
+export type CopilotTimelineItem =
+  | { kind: 'text'; id: string; text: string }
+  | { kind: 'tool'; id: string; step: CopilotToolStep }
+
 export interface CopilotMessage {
   role: 'user' | 'assistant' | 'system'
   content: string
@@ -67,8 +89,18 @@ export interface CopilotMessage {
   suggestedActions?: ActionItem[]
   // internal: whether this message is currently loading a response
   pending?: boolean
-  // internal: name of the tool the agent is currently running (SSE mode)
-  toolActivity?: string
+  // internal: the assistant turn as an APPEND-ONLY chronological transcript
+  // (SSE mode): text segments and tool steps interleaved in arrival order.
+  // Frozen onto the completed message — it is the single source of truth for
+  // what the turn showed. The terminal `done` payload's `content` is LOSSY
+  // (last text segment only, or a generic patch intro), so it is only ever
+  // appended to the timeline, never swapped in for it.
+  timeline?: CopilotTimelineItem[]
+  // internal: never render this message in the chat view. Used for the
+  // automatic post-accept verification turn — its instruction text is a
+  // trigger for the agent, not content for the user (the assistant reply
+  // that follows it renders normally).
+  hidden?: boolean
 }
 
 // One structured compile error, parsed from the user's last failed compile
