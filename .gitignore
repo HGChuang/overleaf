@@ -4,3 +4,8 @@
 # user defined files
 .env
 docker-compose.override.yml
+# Copilot eval harness outputs
+services/llm/eval
+COPILOT_IMPROVEMENT_LOG.md
+
+COPILOT_ROADMAP.md
