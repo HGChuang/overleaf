@@ -134,6 +134,7 @@ services:
       - ../services/llm/app.ts:/overleaf/services/llm/app.ts
       - ../services/llm/config:/overleaf/services/llm/config
       - ../services/llm/test:/overleaf/services/llm/test
+      - ../services/llm/eval:/overleaf/services/llm/eval
       - ../services/llm/tsconfig.json:/overleaf/services/llm/tsconfig.json
 
 

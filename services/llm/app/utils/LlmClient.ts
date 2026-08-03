@@ -72,7 +72,11 @@ export class LlmClient {
 
   async listModels() {
     try {
-      const resp = await this.client.get('/v1/models');
+      // baseUrl is the full versioned API root (OpenAI SDK convention, same as
+      // the agent path): e.g. https://api.openai.com/v1,
+      // https://ark.cn-beijing.volces.com/api/coding/v3. Do NOT prepend a
+      // hardcoded /v1 here — gateways like Volcengine Ark 404 on /v3/v1/...
+      const resp = await this.client.get('/models');
       return resp.data.data.map((model: any) => ({
         id: model.id,
         object: model.object,
@@ -87,7 +91,7 @@ export class LlmClient {
     try {
       const max_tokens = 5000, temperature = 0.7;
       const data = { model, messages, max_tokens, temperature };
-      const response = await this._postWithRetry('/v1/chat/completions', data);
+      const response = await this._postWithRetry('/chat/completions', data);
       return response;
     } catch (error: any) {
       throw new Error(`completion error: ${error.message}`);
@@ -99,7 +103,7 @@ export class LlmClient {
       const max_tokens = 50, temperature = 0, top_p = 1, max_completion_tokens = 50;
       const stop = ["</COMPLETION>", ",", "，"];
       const data = { model, messages, temperature, top_p, stop, max_completion_tokens };
-      const response = await this._postWithRetry('/v1/chat/completions', data);
+      const response = await this._postWithRetry('/chat/completions', data);
       return response;
     } catch (error: any) {
       throw new Error(`chat error: ${error.message}`);

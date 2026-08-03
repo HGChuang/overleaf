@@ -505,7 +505,7 @@ export default function LlmUsageTable() {
                 value={form.baseUrl} 
                 onChange={(e) => setForm({ ...form, baseUrl: e.target.value })} 
                 style={{ width: '100%', padding: 6 }} 
-                placeholder="example:https://api.openai.com" 
+                placeholder="example: https://api.openai.com/v1"
               />
             </div>
 

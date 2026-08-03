@@ -17,7 +17,10 @@
     "format": "prettier --list-different $PWD/'**/*.ts'",
     "format:fix": "prettier --write $PWD/'**/*.ts'",
     "lint:fix": "eslint --fix .",
-    "types:check": "tsc --noEmit"
+    "types:check": "tsc --noEmit",
+    "eval": "docker exec develop-llm-1 npx tsx eval/cli.ts",
+    "eval:validate": "docker exec develop-llm-1 npx tsx eval/validateFixtures.ts",
+    "eval:verify-graders": "docker exec develop-llm-1 npx tsx eval/verifyGraders.ts"
   },
   "version": "1.0.0",
   "directories": {
