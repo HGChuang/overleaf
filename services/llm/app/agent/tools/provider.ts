@@ -27,7 +27,7 @@ export function buildToolPool(context = {}, deps: ToolPoolDeps = {}) {
   return [
     ...buildProjectTools(context),
     ...buildTodoTools(),
-    ...buildEditTools(),
+    ...buildEditTools(context),
     ...(deps.webClient ? buildCompileTools(context, { webClient: deps.webClient }) : []),
   ];
 }

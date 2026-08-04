@@ -295,6 +295,12 @@ describe('CopilotService (vendored agent core)', function () {
   it('closes the compile-fix loop: verify → still failing → patch → clean', async function () {
     const VERIFY_CONTEXT = {
       ...CHAT_CONTEXT,
+      // The submit_patch dry-run validates oldText against the real stub file,
+      // so the stub document must literally contain the `\bad` being replaced.
+      project: {
+        ...CHAT_CONTEXT.project,
+        files: [{ path: 'main.tex', content: '\\section{Intro} hello world\n\\bad\n' }],
+      },
       message: { role: 'user', content: '[自动验证] 补丁已应用。' },
     };
     const compileProject = sinon.stub();

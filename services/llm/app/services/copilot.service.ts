@@ -30,6 +30,7 @@ import {
 } from '../agent/compact.js';
 import {
   extractSubmittedPatch,
+  computeRejectedSubmitPatchIds,
   mapMessagesForView,
   patchIntroContent,
   toPatchBlock,
@@ -518,7 +519,7 @@ export class CopilotService {
     // `summary` rides as `patch.title` inside the card (see `toPatchBlock`).
     // Rendering the summary in BOTH `content` and `patch.title` showed it
     // twice in the chat.
-    const patchRaw = extractSubmittedPatch(messages);
+    const patchRaw = extractSubmittedPatch(messages, computeRejectedSubmitPatchIds(messages));
     if (patchRaw) {
       const patch = toPatchBlock(patchRaw, 0);
       if (patch) {

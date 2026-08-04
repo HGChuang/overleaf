@@ -37,15 +37,34 @@ export function toPatchHunk(entry: unknown): PatchHunk {
   };
 }
 
+// Ids of submit_patch tool calls the server REJECTED (dry-run validation):
+// the tool result is either flagged isError (thrown rejections) or carries
+// details.dryRunRejected (the terminating 3rd rejection). A rejected patch must
+// never surface as the user's patch card — the model was told to fix and
+// resubmit, and if it gave up, the honest UI is "no patch", not a broken one.
+export function computeRejectedSubmitPatchIds(messages: AgentMessage[]): Set<string> {
+  const rejected = new Set<string>();
+  for (const m of messages) {
+    if (m?.role !== 'toolResult') continue;
+    const tr = m as { toolName?: string; toolCallId?: string; isError?: boolean; details?: Record<string, unknown> };
+    if (tr.toolName !== 'submit_patch' || !tr.toolCallId) continue;
+    if (tr.isError || tr.details?.dryRunRejected === true) {
+      rejected.add(tr.toolCallId);
+    }
+  }
+  return rejected;
+}
+
 // Find the last `submit_patch` tool call in the message list and return the raw
 // {hunks, summary} the model passed (or null). Assistant messages carry tool
-// calls as content blocks ({type:'toolCall', name, arguments}).
-export function extractSubmittedPatch(messages: AgentMessage[]): RawPatch | null {
+// calls as content blocks ({type:'toolCall', name, arguments}). Calls whose id
+// is in `rejectedIds` (see computeRejectedSubmitPatchIds) are skipped.
+export function extractSubmittedPatch(messages: AgentMessage[], rejectedIds?: Set<string>): RawPatch | null {
   for (let i = messages.length - 1; i >= 0; i--) {
     const m = messages[i];
     if (m?.role !== 'assistant' || !Array.isArray(m.content)) continue;
     const sp = m.content.find(
-      b => b.type === 'toolCall' && b.name === 'submit_patch'
+      b => b.type === 'toolCall' && b.name === 'submit_patch' && !rejectedIds?.has(b.id)
     );
     if (!sp || sp.type !== 'toolCall') continue;
     const args = (sp.arguments || {}) as Record<string, unknown>;
@@ -119,6 +138,7 @@ function unwrapUserEnvelope(content: unknown): unknown {
 // submit_patch call so the inline-diff card survives a page reload.
 export function mapMessagesForView(messages: AgentMessage[]) {
   if (!Array.isArray(messages)) return [];
+  const rejectedPatchIds = computeRejectedSubmitPatchIds(messages);
   const view: Array<Record<string, unknown>> = [];
   for (const message of messages) {
     if (message.role === 'toolResult') {
@@ -132,7 +152,7 @@ export function mapMessagesForView(messages: AgentMessage[]) {
       continue;
     }
     // assistant message: text and/or a submit_patch tool call
-    const patch = toPatchBlock(extractSubmittedPatch([message]), view.length);
+    const patch = toPatchBlock(extractSubmittedPatch([message], rejectedPatchIds), view.length);
     const text = extractTextContent(message);
     if (patch) {
       view.push({
