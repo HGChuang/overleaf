@@ -217,7 +217,8 @@ describe('CopilotService (vendored agent core)', function () {
     const service = this.buildService(streamFn);
 
     await expect(service.chat('user-1', CHAT_CONTEXT)).to.be.rejectedWith('401 unauthorized');
-    expect(this.memoryStore.append).to.not.have.been.called;
+    // F22: even a failed turn persists what happened (was: append never called).
+    expect(this.memoryStore.append).to.have.been.called;
   });
 
   it('enforces the per-turn step budget', async function () {
@@ -245,7 +246,9 @@ describe('CopilotService (vendored agent core)', function () {
 
     await expect(service.chat('user-1', CHAT_CONTEXT)).to.be.rejectedWith(/step budget/);
     expect(calls).to.equal(25);
-    expect(this.memoryStore.append).to.not.have.been.called;
+    // F22: the stopped turn's work is persisted (was: append never called and
+    // the attempt vanished from history/transcripts).
+    expect(this.memoryStore.append).to.have.been.called;
   });
 
   it('maps a submit_patch tool call into a patch block', async function () {
@@ -393,6 +396,39 @@ describe('CopilotService (vendored agent core)', function () {
     await service.chat('user-1', CHAT_CONTEXT);
     expect(seenToolNames[0]).to.not.include('compile_project');
     expect(seenToolNames[0]).to.include('read_file');
+  });
+
+  it('F22: a step-budget-stopped turn still persists its messages', async function () {
+    // The model loops read_file forever → the 25-step budget stops the turn →
+    // COPILOT_STEP_LIMIT. The partial turn must land in the memory store
+    // (previously the throw skipped persistence → zero-message transcripts).
+    const streamFn = () =>
+      streamOf(
+        assistantMessage({
+          toolCalls: [
+            {
+              type: 'toolCall',
+              id: `call_${Math.random().toString(36).slice(2, 8)}`,
+              name: 'read_file',
+              arguments: { path: 'main.tex' },
+            },
+          ],
+          stopReason: 'toolUse',
+        })
+      );
+    const service = new CopilotService({
+      apiKeyMapper: this.apiKeyMapper,
+      clientRegistry: this.clientRegistry,
+      memoryStore: this.memoryStore,
+      longTermMemoryStore: this.longTermMemoryStore,
+      toolPoolFactory: buildToolPool,
+      streamFn,
+    });
+
+    await expect(service.chat('user-1', CHAT_CONTEXT)).to.be.rejectedWith(/step budget/);
+    expect(this.memoryStore.append).to.have.been.called;
+    const [, appended] = this.memoryStore.append.lastCall.args;
+    expect(appended.length).to.be.greaterThan(0);
   });
 
   it('R1/R2: 3rd dry-run rejection yields a synthesized closure message and an error tool_end event', async function () {

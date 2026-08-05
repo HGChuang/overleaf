@@ -418,35 +418,13 @@ export class CopilotService {
         }
       }
 
-      if (stoppedByBudget) {
-        throw new CopilotError(
-          'COPILOT_STEP_LIMIT',
-          'Copilot hit its step budget for this turn — please narrow the request or break it into smaller pieces.',
-          500
-        );
-      }
-      if (lastAssistant?.stopReason === 'error') {
-        throw new CopilotError(
-          'COPILOT_UPSTREAM_ERROR',
-          lastAssistant.errorMessage || 'model call failed',
-          500
-        );
-      }
-      if (lastAssistant?.stopReason === 'aborted' || signal?.aborted || timedOut) {
-        if (timedOut) {
-          throw timeout(
-            'copilot turn timed out — please narrow the request and try again'
-          );
-        }
-        throw new CopilotError('COPILOT_ABORTED', 'copilot turn aborted', 499);
-      }
-
       // Persist the new turn (user prompt + assistant + toolResult messages —
       // agent_end's newMessages covers all of them). After a reactive compact
       // the compacted history must REPLACE the stored one: append() would
       // merge the new turn into the old, still-oversized history and every
       // subsequent turn would prompt_too_long again.
-      if (newMessages.length > 0) {
+      const persistNewMessages = async (): Promise<void> => {
+        if (newMessages.length === 0) return;
         if (compacted) {
           await this.memoryStore.replace(threadId, [
             ...effectiveHistory,
@@ -455,7 +433,40 @@ export class CopilotService {
         } else {
           await this.memoryStore.append(threadId, newMessages);
         }
+      };
+
+      // F22: persist BEFORE the failure throws too — a budget-stopped /
+      // timed-out / provider-failed turn still did work, and skipping
+      // persistence here used to leave zero-message transcripts (eval
+      // attribution blind spot) and a next-turn history with no trace of
+      // the attempt (production).
+      if (stoppedByBudget) {
+        await persistNewMessages();
+        throw new CopilotError(
+          'COPILOT_STEP_LIMIT',
+          'Copilot hit its step budget for this turn — please narrow the request or break it into smaller pieces.',
+          500
+        );
       }
+      if (lastAssistant?.stopReason === 'error') {
+        await persistNewMessages();
+        throw new CopilotError(
+          'COPILOT_UPSTREAM_ERROR',
+          lastAssistant.errorMessage || 'model call failed',
+          500
+        );
+      }
+      if (lastAssistant?.stopReason === 'aborted' || signal?.aborted || timedOut) {
+        await persistNewMessages();
+        if (timedOut) {
+          throw timeout(
+            'copilot turn timed out — please narrow the request and try again'
+          );
+        }
+        throw new CopilotError('COPILOT_ABORTED', 'copilot turn aborted', 499);
+      }
+
+      await persistNewMessages();
     } finally {
       clearTimeout(timer);
       currentAgent = null;
