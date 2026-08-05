@@ -79,7 +79,8 @@ describe('submit_patch dry-run validation', function () {
     expect(message).to.include('Diverges after');
     expect(message).to.include('your continuation');
     expect(message).to.include('actual file');
-    expect(message).to.include('NOT submitted');
+    expect(message).to.include('NO hunks took effect');
+    expect(message).to.include('MUST include ALL hunks');
   });
 
   it('shows the no-prefix variant when nothing matches at all', async function () {

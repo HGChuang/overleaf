@@ -230,8 +230,10 @@ export function buildEditTools(context: any = {}) {
             `PATCH REJECTED by server-side validation (${totalFailures} failing hunk(s)):\n` +
               failures.join('\n') +
               truncated +
-              `\nThe patch was NOT submitted. Fix the failing hunks and call submit_patch again — ` +
-              `re-read the exact source with read_file / read_file_fragment first. ` +
+              `\nThe ENTIRE patch was rejected — NO hunks took effect, including any valid ones. ` +
+              `When you call submit_patch again you MUST include ALL hunks (every edit the user asked for), ` +
+              `with only the failing oldText fixed — never drop hunks or narrow the scope. ` +
+              `Re-read the exact source with read_file / read_file_fragment first. ` +
               `(rejection ${consecutiveRejections}/${MAX_DRY_RUN_REJECTIONS})`
           );
         }

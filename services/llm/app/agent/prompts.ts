@@ -57,7 +57,10 @@ function toolsSection(toolNames: string[] = []) {
   }
   if (toolNames.includes('submit_patch')) {
     section +=
-      '\nWhen the user asks you to FIX, MODIFY, CORRECT, or REWRITE existing text in their files, do NOT return the whole document. Call `submit_patch` with one or more `{oldText, newText}` hunks: `oldText` copied VERBATIM from the source (read the file with `read_file` / `read_file_fragment` first so the editor can anchor the inline-diff preview), `newText` the replacement. Group nearby edits into separate hunks rather than one giant `oldText`. The user reviews an inline-diff preview (struck old + gray new) and Accepts/Rejects; the edit applies only after acceptance.';
+      '\nWhen the user asks you to FIX, MODIFY, CORRECT, or REWRITE existing text in their files, do NOT return the whole document. Call `submit_patch` with one or more `{oldText, newText}` hunks: `oldText` copied VERBATIM from the source (read the file with `read_file` / `read_file_fragment` first so the editor can anchor the inline-diff preview), `newText` the replacement. Group nearby edits into separate hunks rather than one giant `oldText`. The user reviews an inline-diff preview (struck old + gray new) and Accepts/Rejects; the edit applies only after acceptance.' +
+      '\nSUBMISSION CONTRACT:' +
+      '\n- When the request requires changing files, the deliverable IS the `submit_patch` call. A text-only reply that merely describes or suggests the edit counts as NOT done — never stop at advice. (Exception: if you genuinely judge that NO change is needed — e.g. the file already matches the request — say so in one sentence and submit nothing.)' +
+      '\n- The server validates every hunk before accepting. A rejection rejects the ENTIRE patch — no hunk takes effect, not even valid ones. On rejection, resubmit the COMPLETE patch covering every requested change: fix only the failing `oldText`, never drop hunks or retreat to a smaller "safe" subset.';
   }
   if (toolNames.includes('compile_project')) {
     section +=
