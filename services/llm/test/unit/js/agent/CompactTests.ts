@@ -193,4 +193,30 @@ describe('capMessagesKeepInstructions (hard tail cap with pinned user messages)'
       expect(paired, `toolResult ${(out[i] as ToolResultMessage).toolCallId} paired`).to.equal(true);
     }
   });
+
+  it('R5: a degenerate max (1 / NaN) clamps instead of silently keeping everything', function () {
+    const msgs = longTurn(10);
+    const out1 = capMessagesKeepInstructions(msgs, 1);
+    expect(out1.length).to.be.at.most(2);
+    const outNaN = capMessagesKeepInstructions(msgs, Number('x'));
+    expect(outNaN.length).to.be.at.most(2);
+    // zero too
+    const out0 = capMessagesKeepInstructions(msgs, 0);
+    expect(out0.length).to.be.at.most(2);
+  });
+
+  it('R7: the snipCompact placeholder does not consume a pinned slot', function () {
+    const placeholder: AgentMessage = {
+      role: 'user',
+      content: '[snipped 40 messages from conversation middle]',
+      timestamp: Date.now(),
+    };
+    const msgs: AgentMessage[] = [userMessage('THE INSTRUCTION')];
+    for (let i = 0; i < 12; i++) msgs.push(assistantWithToolCall(`c${i}`), toolResult(`c${i}`));
+    msgs.splice(5, 0, placeholder);
+    const out = capMessagesKeepInstructions(msgs, 20);
+    const pinned = out.filter(m => m.role === 'user');
+    expect(pinned.some(m => m.content === 'THE INSTRUCTION')).to.equal(true);
+    expect(pinned.some(m => m === placeholder)).to.equal(false);
+  });
 });

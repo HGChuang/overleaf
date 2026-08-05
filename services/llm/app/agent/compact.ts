@@ -148,6 +148,11 @@ export function sanitizeToolPairing(messages: AgentMessage[]): AgentMessage[] {
   return result;
 }
 
+// The synthetic placeholder snipCompact injects when dropping the conversation
+// middle — role 'user', but NOT a real instruction: it must not consume a
+// pinned slot in capMessagesKeepInstructions (R7).
+const SNIP_PLACEHOLDER_RE = /^\[snipped \d+ messages from conversation middle\]$/;
+
 // L0 — instruction guard for the hard tail cap. A plain slice(-max) drops the
 // OLDEST messages first — in a long agent turn (many tool calls) that is the
 // user's INSTRUCTION, and the model then sees a context full of tool plumbing
@@ -161,12 +166,21 @@ export function capMessagesKeepInstructions(
   max: number,
   maxPinned = 10
 ): AgentMessage[] {
-  if (!Array.isArray(messages) || messages.length <= max) {
-    return messages || [];
+  if (!Array.isArray(messages)) {
+    return [];
   }
-  const pinnedBudget = Math.max(1, Math.min(maxPinned, max - 1));
-  const pinned = messages.filter(m => m?.role === 'user').slice(-pinnedBudget);
-  const rest = messages.filter(m => m?.role !== 'user').slice(-(max - pinned.length));
+  // R5: an env-misconfigured max (0/1/NaN) must not silently disable the cap —
+  // slice(-0) === slice(0) copies EVERYTHING. Clamp to a minimal working cap.
+  const capN = Number.isFinite(max) && max >= 2 ? Math.floor(max) : 2;
+  if (messages.length <= capN) {
+    return messages;
+  }
+  const isPinnable = (m: AgentMessage) =>
+    m?.role === 'user' &&
+    !(typeof m.content === 'string' && SNIP_PLACEHOLDER_RE.test(m.content));
+  const pinnedBudget = Math.max(1, Math.min(maxPinned, capN - 1));
+  const pinned = messages.filter(isPinnable).slice(-pinnedBudget);
+  const rest = messages.filter(m => !isPinnable(m)).slice(-(capN - pinned.length));
   const keep = new Set<AgentMessage>([...pinned, ...rest]);
   return messages.filter(m => keep.has(m));
 }

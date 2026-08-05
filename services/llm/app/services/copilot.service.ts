@@ -383,7 +383,14 @@ export class CopilotService {
               type: 'tool_end',
               toolCallId: event.toolCallId,
               toolName: event.toolName,
-              isError: event.isError,
+              // R2: the terminating dry-run rejection must return as a NORMAL
+              // result to carry `terminate`, so the loop reports isError=false
+              // — without this override the frontend renders the failed
+              // submit_patch step as a green ✓ success.
+              isError:
+                event.isError ||
+                (event.result as { details?: Record<string, unknown> } | undefined)?.details
+                  ?.dryRunRejected === true,
               resultSummary: summarizeToolResult(event.result),
             });
           }
@@ -532,6 +539,37 @@ export class CopilotService {
           suggestedActions: [],
         };
       }
+    }
+
+    // R1: the turn ended on the 3rd consecutive dry-run rejection — the
+    // terminate cut the turn before the model could say anything, so
+    // `finalContent` is empty or a stale "let me resubmit". Synthesize the
+    // user-facing closure server-side instead of showing nothing.
+    const terminatingRejection = [...messages].reverse().find(
+      m =>
+        m?.role === 'toolResult' &&
+        (m as { toolName?: string }).toolName === 'submit_patch' &&
+        ((m as { details?: Record<string, unknown> }).details?.dryRunRejected === true)
+    );
+    if (terminatingRejection) {
+      const body = extractTextContent(terminatingRejection);
+      const firstProblem =
+        body
+          .split('\n')
+          .map(l => l.trim())
+          .find(l => l.startsWith('hunk ')) ||
+        body.split('\n')[0] ||
+        '';
+      const clipped = firstProblem.length > 200 ? `${firstProblem.slice(0, 200)}…` : firstProblem;
+      const content =
+        `补丁连续几次都没能服务端校验通过，这次就没有改动被提交。` +
+        (clipped ? `最后一次的问题：${clipped}。` : '') +
+        `你可以把相关源码片段贴给我，我照着原文再试一次。`;
+      return {
+        conversationId,
+        message: createMessageResponse(content),
+        suggestedActions: [],
+      };
     }
 
     return {

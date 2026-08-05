@@ -394,4 +394,50 @@ describe('CopilotService (vendored agent core)', function () {
     expect(seenToolNames[0]).to.not.include('compile_project');
     expect(seenToolNames[0]).to.include('read_file');
   });
+
+  it('R1/R2: 3rd dry-run rejection yields a synthesized closure message and an error tool_end event', async function () {
+    // The model keeps resubmitting the same hallucinated oldText; after the
+    // 3rd consecutive rejection the turn terminates WITHOUT the model getting
+    // to speak — the service must synthesize the closure, and the SSE step
+    // must be flagged error (not a green ✓).
+    const streamFn = () =>
+      streamOf(
+        assistantMessage({
+          toolCalls: [
+            {
+              type: 'toolCall',
+              id: `call_${Math.random().toString(36).slice(2, 8)}`,
+              name: 'submit_patch',
+              arguments: {
+                hunks: [{ file: 'main.tex', line: 1, oldText: 'NOT IN THE FILE', newText: 'x' }],
+                summary: 'bad patch',
+              },
+            },
+          ],
+          stopReason: 'toolUse',
+        })
+      );
+    const service = new CopilotService({
+      apiKeyMapper: this.apiKeyMapper,
+      clientRegistry: this.clientRegistry,
+      memoryStore: this.memoryStore,
+      longTermMemoryStore: this.longTermMemoryStore,
+      toolPoolFactory: buildToolPool,
+      streamFn,
+    });
+
+    const events: any[] = [];
+    const res = await service.chat('user-1', CHAT_CONTEXT, { onEvent: e => events.push(e) });
+
+    // R1: synthesized user-facing closure instead of an empty/stale reply
+    expect(res.message.content).to.include('没能服务端校验通过');
+    expect(res.message.blocks?.some((b: any) => b.type === 'patch')).to.not.equal(true);
+
+    // R2: the terminating rejection's tool_end is flagged error
+    const submitEnds = events.filter(e => e.type === 'tool_end' && e.toolName === 'submit_patch');
+    expect(submitEnds).to.have.length(3);
+    expect(submitEnds[0].isError).to.equal(true); // thrown rejections
+    expect(submitEnds[1].isError).to.equal(true);
+    expect(submitEnds[2].isError).to.equal(true); // terminating one, via override
+  });
 });

@@ -91,27 +91,41 @@ describe('submit_patch dry-run validation', function () {
     expect(message).to.include('No prefix of your oldText occurs');
   });
 
-  it('rejects an unknown file and lists available paths', async function () {
+  it('rejects a truly unknown file and lists available paths', async function () {
     const tool = makeTool();
     const message = await expectRejection(
-      tool.execute('c4', { hunks: [hunk({ file: './main.tex' })] })
+      tool.execute('c4', { hunks: [hunk({ file: 'chapters/ghost.tex' })] })
     );
     expect(message).to.include('unknown file');
     expect(message).to.include('main.tex');
   });
 
-  it('treats file paths as case-sensitive (applier semantics)', async function () {
+  it('resolves trivial path variants (./, leading slash, case) to the real file', async function () {
     const tool = makeTool();
-    const message = await expectRejection(
-      tool.execute('c5', { hunks: [hunk({ file: 'Main.tex' })] })
-    );
-    expect(message).to.include('unknown file');
+    // The production apply path anchors by oldText search in the open doc —
+    // a variant that still names a real project file would apply fine and
+    // must not burn a rejection (R3).
+    for (const variant of ['./main.tex', '/main.tex', 'Main.tex', 'MAIN.TEX']) {
+      const result = await tool.execute(`c5-${variant}`, { hunks: [hunk({ file: variant })] });
+      expect(result.terminate, `variant ${variant} accepted`).to.equal(true);
+    }
   });
 
   it('tolerates a leading slash in the hunk file path', async function () {
     const tool = makeTool();
     const result = await tool.execute('c6', { hunks: [hunk({ file: '/main.tex' })] });
     expect(result.terminate).to.equal(true);
+  });
+
+  it('rejects hunks targeting a binary asset with a not-editable message (R6)', async function () {
+    const context = makeContext();
+    (context.project as any).fileList = ['main.tex', 'chapters/other.tex', 'figures/site_map.pdf'];
+    const tool = makeTool(context);
+    const message = await expectRejection(
+      tool.execute('c6b', { hunks: [hunk({ file: 'figures/site_map.pdf' })] })
+    );
+    expect(message).to.include('not an editable text file');
+    expect(message).to.not.include('unknown file');
   });
 
   it('accepts a pure insertion (empty oldText) on an existing file', async function () {
@@ -139,15 +153,28 @@ describe('submit_patch dry-run validation', function () {
     expect(message).to.include('wrong file?');
   });
 
-  it('accepts when the target cannot be resolved (no current file known)', async function () {
+  it('file:null with unresolvable default: accepts oldText found in exactly one file (R4)', async function () {
+    // Production parity: rootDocId is a Mongo ObjectId, never a path — the
+    // fallback can never resolve there, so validate project-wide instead.
     const context = makeContext();
     delete (context as any).context;
-    (context.project as any).rootDocId = null;
+    (context.project as any).rootDocId = '665f1a2b3c4d5e6f7a8b9c0d'; // Mongo id shape
     const tool = makeTool(context);
     const result = await tool.execute('c10', {
-      hunks: [hunk({ file: null, oldText: 'unverifiable text' })],
+      hunks: [hunk({ file: null, oldText: 'A entirely different file body.' })],
     });
     expect(result.terminate).to.equal(true);
+  });
+
+  it('file:null with unresolvable default: rejects oldText found in NO file (R4)', async function () {
+    const context = makeContext();
+    delete (context as any).context;
+    (context.project as any).rootDocId = '665f1a2b3c4d5e6f7a8b9c0d';
+    const tool = makeTool(context);
+    const message = await expectRejection(
+      tool.execute('c10b', { hunks: [hunk({ file: null, oldText: 'unverifiable text' })] })
+    );
+    expect(message).to.include('not found in ANY project file');
   });
 
   it('fails open when the context carries no project files', async function () {

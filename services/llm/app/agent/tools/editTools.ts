@@ -116,17 +116,39 @@ export function buildEditTools(context: any = {}) {
   const files: Array<{ path: string; content: string }> = Array.isArray(project.files)
     ? project.files
     : [];
-  // Exact-path map mirroring the applier's resolution (leading slash stripped,
-  // case-SENSITIVE) — deliberately NOT the case-insensitive fileMap used by the
-  // read tools: a patch that only resolves under tolerant lookup would still
-  // fail at accept time, so the dry-run must use the stricter semantics.
   const exactMap = new Map<string, string>();
   for (const f of files) {
     if (!f || !f.path) continue;
     exactMap.set(String(f.path).replace(/^\//, ''), f.content || '');
   }
+  // Path resolution tolerates trivial variants (`./x`, leading slash, case) —
+  // the production apply path anchors a hunk by oldText search in the open
+  // document and largely IGNORES hunk.file, so a variant that still names a
+  // real project file would apply fine and must not burn a rejection. Only a
+  // path matching NO text doc even after normalization is a true hallucination
+  // (and production would silently mis-apply it — worth rejecting).
+  const lowerIndex = new Map<string, string>();
+  for (const k of exactMap.keys()) {
+    lowerIndex.set(k.toLowerCase(), k);
+  }
+  const normalizeHunkPath = (p: string) => p.replace(/^\.\//, '').replace(/^\//, '');
+  const resolveExisting = (p: string): string | null => {
+    const clean = normalizeHunkPath(p);
+    if (exactMap.has(clean)) return clean;
+    return lowerIndex.get(clean.toLowerCase()) ?? null;
+  };
+  // Non-doc entities (images/PDFs/…) appear in fileList but not in files —
+  // naming one is not an "unknown file" hallucination, it's a category error
+  // the model can't fix by retrying, so the message must say so (R6).
+  const listedPaths = new Set<string>();
+  for (const p of Array.isArray(project.fileList) ? project.fileList : []) {
+    if (typeof p !== 'string') continue;
+    const clean = normalizeHunkPath(p);
+    listedPaths.add(clean);
+    listedPaths.add(clean.toLowerCase());
+  }
   const defaultFileRaw = context.context?.currentFile || project.rootDocId || null;
-  const defaultFile = defaultFileRaw ? String(defaultFileRaw).replace(/^\//, '') : null;
+  const defaultFile = defaultFileRaw ? normalizeHunkPath(String(defaultFileRaw)) : null;
 
   let consecutiveRejections = 0;
 
@@ -164,22 +186,45 @@ export function buildEditTools(context: any = {}) {
         for (let i = 0; i < hunks.length; i++) {
           const h = (hunks[i] || {}) as Record<string, unknown>;
           const fileRaw = typeof h.file === 'string' && h.file ? h.file : null;
-          const file = fileRaw ? fileRaw.replace(/^\//, '') : null;
-          const target = file || defaultFile;
+          const file = fileRaw ? resolveExisting(fileRaw) : null;
           const oldText = typeof h.oldText === 'string' ? h.oldText : '';
 
-          if (file && !exactMap.has(file)) {
+          if (fileRaw && !file) {
             totalFailures++;
             if (failures.length < MAX_FAILURES_PER_REPORT) {
-              const available = [...exactMap.keys()].slice(0, 20).join(', ');
-              failures.push(`hunk ${i}: unknown file "${fileRaw}" — available files: ${available}`);
+              const clean = normalizeHunkPath(fileRaw);
+              if (listedPaths.has(clean) || listedPaths.has(clean.toLowerCase())) {
+                failures.push(
+                  `hunk ${i}: "${fileRaw}" exists in the project but is not an editable text file ` +
+                  `(binary asset) — it cannot be patched. Tell the user instead of retrying.`
+                );
+              } else {
+                const available = [...exactMap.keys()].slice(0, 20).join(', ');
+                failures.push(`hunk ${i}: unknown file "${fileRaw}" — available files: ${available}`);
+              }
             }
             continue;
           }
+          const target = file || (defaultFile && exactMap.has(defaultFile) ? defaultFile : null);
           const content = target != null ? exactMap.get(target) : undefined;
-          // Target unresolvable (file:null hunk with no current file known):
-          // can't validate → accept this hunk.
-          if (content == null) continue;
+          if (content == null) {
+            // file:null hunk and the default file is unresolvable (in
+            // production rootDocId is a Mongo ObjectId — never a path; R4):
+            // fall back to a project-wide check — a verbatim oldText that
+            // occurs in exactly one text doc will anchor fine at apply time.
+            if (!oldText) continue;
+            const anywhere = [...exactMap.values()].some(c => c.includes(oldText));
+            if (!anywhere) {
+              totalFailures++;
+              if (failures.length < MAX_FAILURES_PER_REPORT) {
+                failures.push(
+                  `hunk ${i}: oldText not found in ANY project file. ` +
+                  `Re-read the source with read_file / read_file_fragment and copy oldText VERBATIM.`
+                );
+              }
+            }
+            continue;
+          }
           // Empty oldText = pure insertion at the line anchor — always legal.
           if (!oldText) continue;
           if (!content.includes(oldText)) {
@@ -209,7 +254,10 @@ export function buildEditTools(context: any = {}) {
             // 3rd consecutive rejection: end the turn instead of letting a
             // reject loop burn the step budget. Returned (not thrown) because
             // only a tool RESULT can carry terminate — marked via
-            // details.dryRunRejected so extractSubmittedPatch skips it.
+            // details.dryRunRejected so extractSubmittedPatch skips it. The
+            // model gets NO further turn to explain this to the user (the
+            // terminate cuts the turn), so the message here is for the record —
+            // the user-facing closure text is synthesized in mapResult (R1).
             return {
               content: [
                 {
@@ -218,8 +266,7 @@ export function buildEditTools(context: any = {}) {
                     `PATCH REJECTED by server-side validation (${totalFailures} failing hunk(s)):\n` +
                     failures.join('\n') +
                     truncated +
-                    `\nThis is the ${MAX_DRY_RUN_REJECTIONS}rd consecutive rejection — the turn ends now. ` +
-                    `Explain to the user what you tried and ask them to paste the relevant source lines.`,
+                    `\nThis is the ${MAX_DRY_RUN_REJECTIONS}rd consecutive rejection — the turn ends now with no patch delivered.`,
                 },
               ],
               details: { dryRunRejected: true } as unknown as Record<string, never>,
