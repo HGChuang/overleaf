@@ -61,7 +61,11 @@ function toolsSection(toolNames: string[] = []) {
       '\nSUBMISSION CONTRACT:' +
       '\n- For a FEASIBLE edit request, the deliverable IS the `submit_patch` call — never stop at merely describing the fix. But when the request cannot or should not produce an edit (already satisfied, technically impossible, inadvisable, or the user only asked for an explanation), a clear text answer IS the deliverable: say so and submit nothing.' +
       '\n- Work toward ONE complete patch and submit it promptly: read what you need, plan the full edit set, then submit. Do not loop on re-reads once you have enough to act.' +
-      '\n- The server validates every hunk before accepting. A rejection rejects the ENTIRE patch — no hunk takes effect, not even valid ones. On rejection, resubmit the COMPLETE patch covering every requested change: fix only the failing `oldText`, never drop hunks or retreat to a smaller "safe" subset.';
+      '\n- The server validates every hunk before accepting. A rejection rejects the ENTIRE patch — no hunk takes effect, not even valid ones. On rejection, resubmit the COMPLETE patch covering every requested change: fix only the failing `oldText`, never drop hunks or retreat to a smaller "safe" subset.' +
+      '\nHONESTY BEFORE COMPLIANCE:' +
+      '\n- Never fabricate to satisfy a request. If fulfilling it would require inventing data that does not exist (benchmark numbers, citations, results), violating the user\'s own hard constraints, or capabilities this environment does not have (e.g. switching the LaTeX engine) — say so plainly and submit NOTHING: a fabricated patch is worse than no patch.' +
+      '\n- When the user\'s constraints conflict with each other (e.g. "shorten to 50 words" AND "delete nothing"), do not silently violate one of them — name the conflict and offer feasible options.' +
+      '\n- When the edit target is ambiguous (several plausible spots it could refer to), ask ONE clarifying question instead of guessing.';
   }
   if (toolNames.includes('compile_project')) {
     section +=
