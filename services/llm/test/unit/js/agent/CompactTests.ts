@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import {
+  capMessagesKeepInstructions,
   lastReportedTotalTokens,
   microCompact,
   sanitizeToolPairing,
@@ -124,5 +125,72 @@ describe('compact helpers (agent-core message shapes)', function () {
     const messages: AgentMessage[] = [withUsage(100), userMessage('q'), withUsage(250)];
     expect(lastReportedTotalTokens(messages)).to.equal(250);
     expect(lastReportedTotalTokens([userMessage('q')])).to.equal(0);
+  });
+});
+
+describe('capMessagesKeepInstructions (hard tail cap with pinned user messages)', function () {
+  // Build a long agent turn: 1 instruction + N rounds of (assistant toolCall +
+  // toolResult), optionally followed by more user turns.
+  function longTurn(rounds: number, extraUserTurns = 0): AgentMessage[] {
+    const msgs: AgentMessage[] = [userMessage('THE INSTRUCTION')];
+    for (let i = 0; i < rounds; i++) {
+      msgs.push(assistantWithToolCall(`c${i}`), toolResult(`c${i}`));
+    }
+    for (let u = 0; u < extraUserTurns; u++) {
+      msgs.push(userMessage(`follow-up ${u}`));
+      msgs.push(assistantWithToolCall(`u${u}`), toolResult(`u${u}`));
+    }
+    return msgs;
+  }
+
+  it('is a no-op when the list fits within max', function () {
+    const msgs = longTurn(3);
+    expect(capMessagesKeepInstructions(msgs, 20)).to.equal(msgs);
+  });
+
+  it('keeps the instruction when a plain tail-slice would drop it', function () {
+    const msgs = longTurn(15); // 31 messages
+    const out = capMessagesKeepInstructions(msgs, 20);
+    expect(out.length).to.be.at.most(20);
+    expect(out.some(m => m.role === 'user' && m.content === 'THE INSTRUCTION')).to.equal(true);
+    // chronological order preserved (first element is the instruction)
+    expect(out[0].role).to.equal('user');
+    // tail preference: the most recent tool exchange survives
+    expect(out.some(m => m.role === 'toolResult' && m.toolCallId === 'c14')).to.equal(true);
+  });
+
+  it('pins every user message of a multi-user-turn conversation', function () {
+    const msgs = longTurn(12, 2); // instruction + follow-up 0/1
+    const out = capMessagesKeepInstructions(msgs, 20);
+    const users = out.filter(m => m.role === 'user').map(m => m.content);
+    expect(users).to.deep.equal(['THE INSTRUCTION', 'follow-up 0', 'follow-up 1']);
+  });
+
+  it('bounds pinned instructions with maxPinned', function () {
+    const msgs: AgentMessage[] = [];
+    for (let u = 0; u < 15; u++) msgs.push(userMessage(`q${u}`));
+    for (let i = 0; i < 15; i++) msgs.push(assistantWithToolCall(`c${i}`), toolResult(`c${i}`));
+    const out = capMessagesKeepInstructions(msgs, 20, 10);
+    expect(out.length).to.be.at.most(20);
+    const users = out.filter(m => m.role === 'user').map(m => m.content);
+    expect(users).to.have.length(10);
+    expect(users[0]).to.equal('q5'); // oldest pinned instruction evicted
+    expect(users[9]).to.equal('q14');
+  });
+
+  it('composes with sanitizeToolPairing without dangling tool messages', function () {
+    const msgs = longTurn(15);
+    const out = sanitizeToolPairing(capMessagesKeepInstructions(msgs, 20));
+    // every surviving toolResult must immediately follow its assistant call
+    for (let i = 0; i < out.length; i++) {
+      if (out[i].role !== 'toolResult') continue;
+      const prev = out[i - 1];
+      const paired =
+        prev?.role === 'assistant' &&
+        (prev as AssistantMessage).content.some(
+          b => b.type === 'toolCall' && b.id === (out[i] as ToolResultMessage).toolCallId
+        );
+      expect(paired, `toolResult ${(out[i] as ToolResultMessage).toolCallId} paired`).to.equal(true);
+    }
   });
 });

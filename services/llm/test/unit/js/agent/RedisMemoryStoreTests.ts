@@ -38,6 +38,9 @@ describe('RedisMemoryStore', function () {
   });
 
   it('keeps only the most recent messages up to the configured limit', async function () {
+    // With the instruction-pinning cap (capMessagesKeepInstructions), user
+    // messages are pinned up to min(maxPinned, max-1) = 1 slot at maxMessages=2;
+    // the oldest instructions are evicted first.
     await this.store.append('thread-2', [
       userMessage('one'),
       userMessage('two'),
@@ -45,7 +48,35 @@ describe('RedisMemoryStore', function () {
     ]);
 
     const messages = await this.store.load('thread-2');
-    expect(messages.map((m: AgentMessage) => m.content)).to.deep.equal(['two', 'three']);
+    expect(messages.map((m: AgentMessage) => m.content)).to.deep.equal(['three']);
+  });
+
+  it('pinning preserves the instruction a plain tail-slice would drop', async function () {
+    // [instruction, a1, a2, a3] with max=2: a plain slice(-2) keeps [a2, a3] and
+    // loses the task; pinning keeps [instruction, a3] instead.
+    const assistant = (text: string): AgentMessage => ({
+      role: 'assistant',
+      content: [{ type: 'text', text }],
+      api: 'openai-completions',
+      provider: 'test',
+      model: 'm',
+      usage: {
+        input: 0, output: 0, cacheRead: 0, cacheWrite: 0, totalTokens: 0,
+        cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, total: 0 },
+      },
+      stopReason: 'stop',
+      timestamp: Date.now(),
+    });
+    await this.store.append('thread-pin', [
+      userMessage('THE INSTRUCTION'),
+      assistant('a1'),
+      assistant('a2'),
+      assistant('a3'),
+    ]);
+
+    const messages = await this.store.load('thread-pin');
+    expect(messages.map((m: AgentMessage) => m.role)).to.deep.equal(['user', 'assistant']);
+    expect(messages[0].content).to.equal('THE INSTRUCTION');
   });
 
   it('drops orphaned tool results when loading', async function () {

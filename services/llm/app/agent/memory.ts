@@ -7,7 +7,12 @@
 import redis from '../../config/redis.js';
 import settings from '@overleaf/settings';
 import type { AgentMessage } from './core/types.js';
-import { microCompact, sanitizeToolPairing, snipCompact } from './compact.js';
+import {
+  capMessagesKeepInstructions,
+  microCompact,
+  sanitizeToolPairing,
+  snipCompact,
+} from './compact.js';
 
 const DEFAULT_SNIP_MAX = Number(settings.COPILOT_CONTEXT_SNIP_MAX || 50);
 const DEFAULT_MICRO_KEEP = Number(settings.COPILOT_CONTEXT_MICRO_KEEP || 3);
@@ -70,14 +75,16 @@ export class RedisMemoryStore {
   // The shared compaction pipeline: cheap layers first, then the hard cap,
   // then repair tool-call pairing. ORDER MATTERS: sanitizeToolPairing must
   // run AFTER every truncation step — snipCompact's middle-drop and the
-  // slice(-maxMessages) cap can both cut between an assistant message with
-  // toolCall blocks and its toolResults, and a list with such orphans is
-  // hard-rejected by OpenAI-compatible providers on the NEXT turn (poisoning
-  // the thread for the rest of its sliding TTL).
+  // tail cap can both cut between an assistant message with toolCall blocks
+  // and its toolResults, and a list with such orphans is hard-rejected by
+  // OpenAI-compatible providers on the NEXT turn (poisoning the thread for
+  // the rest of its sliding TTL). The hard cap pins user messages (see
+  // capMessagesKeepInstructions): a stored history without its instructions
+  // replays as task-less tool plumbing on the next turn.
   private _pipeline(messages: AgentMessage[]): AgentMessage[] {
     let next = microCompact(messages, this.microKeep); // L2: placeholder old tool results
     next = snipCompact(next, this.snipMax); // L1: keep head + tail, drop middle
-    next = next.slice(-this.maxMessages); // hard cap (backstop)
+    next = capMessagesKeepInstructions(next, this.maxMessages); // hard cap (backstop), instructions pinned
     return sanitizeToolPairing(next); // repair any orphaned tool messages
   }
 

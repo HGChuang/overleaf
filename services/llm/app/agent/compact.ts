@@ -148,6 +148,29 @@ export function sanitizeToolPairing(messages: AgentMessage[]): AgentMessage[] {
   return result;
 }
 
+// L0 — instruction guard for the hard tail cap. A plain slice(-max) drops the
+// OLDEST messages first — in a long agent turn (many tool calls) that is the
+// user's INSTRUCTION, and the model then sees a context full of tool plumbing
+// with no task in it and concludes "the user sent no query" (greeting /
+// advice-only replies; eval cluster-A attribution, 2026-08-04). User messages
+// are few and short, so pin them (bounded by maxPinned) and fill the remaining
+// budget with the most recent non-user messages. Chronological order is
+// preserved; run sanitizeToolPairing after this, as always after truncation.
+export function capMessagesKeepInstructions(
+  messages: AgentMessage[],
+  max: number,
+  maxPinned = 10
+): AgentMessage[] {
+  if (!Array.isArray(messages) || messages.length <= max) {
+    return messages || [];
+  }
+  const pinnedBudget = Math.max(1, Math.min(maxPinned, max - 1));
+  const pinned = messages.filter(m => m?.role === 'user').slice(-pinnedBudget);
+  const rest = messages.filter(m => m?.role !== 'user').slice(-(max - pinned.length));
+  const keep = new Set<AgentMessage>([...pinned, ...rest]);
+  return messages.filter(m => keep.has(m));
+}
+
 // The total token count the provider last reported for this context, scanning
 // from the end for the most recent assistant message with usage data. This is
 // the REAL context size (not a chars/4 estimate) — the trigger for the

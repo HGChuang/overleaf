@@ -25,6 +25,7 @@ import {
 import {
   lastReportedTotalTokens,
   microCompact,
+  capMessagesKeepInstructions,
   sanitizeToolPairing,
   snipCompact,
 } from '../agent/compact.js';
@@ -308,7 +309,7 @@ export class CopilotService {
     const transformContext = async (messages: AgentMessage[]): Promise<AgentMessage[]> => {
       let next = microCompact(messages, CONTEXT_MICRO_KEEP);
       next = snipCompact(next, CONTEXT_SNIP_MAX);
-      next = next.slice(-MEMORY_MAX_MESSAGES);
+      next = capMessagesKeepInstructions(next, MEMORY_MAX_MESSAGES);
       next = sanitizeToolPairing(next);
       if (!summarizeOnce.done && lastReportedTotalTokens(next) > SUMMARIZE_TOKENS) {
         summarizeOnce.done = true;
