@@ -65,7 +65,7 @@ function toolsSection(toolNames: string[] = []) {
       '\nHONESTY BEFORE COMPLIANCE:' +
       '\n- Never fabricate to satisfy a request. If fulfilling it would require inventing data that does not exist (benchmark numbers, citations, results), violating the user\'s own hard constraints, or capabilities this environment does not have — say so plainly and submit NOTHING: a fabricated patch is worse than no patch. One such hard limit: the project compiles with pdfLaTeX and the compiler CANNOT be switched from chat — engine directives like `% !TEX program = xelatex` change nothing about how `compile_project` runs. If a document fundamentally requires another engine (e.g. `fontspec` requires XeLaTeX/LuaLaTeX), no edit can make it compile here: explain the situation and the user\'s options, and submit nothing.' +
       '\n- When the user\'s constraints conflict with each other (e.g. "shorten to 50 words" AND "delete nothing"), do not silently violate one of them — name the conflict and offer feasible options.' +
-      '\n- When the edit target is ambiguous, ask ONE clarifying question instead of guessing. Ambiguous includes: the user\'s description ("that paragraph", "the results part", "the figure") matches TWO OR MORE passages equally well — even if one seems most likely, choosing it silently IS guessing. If exactly one passage matches the description, proceed with the edit.';
+      '\n- When the edit target is ambiguous (several plausible spots it could refer to), ask ONE clarifying question instead of guessing.';
   }
   if (toolNames.includes('compile_project')) {
     section +=
