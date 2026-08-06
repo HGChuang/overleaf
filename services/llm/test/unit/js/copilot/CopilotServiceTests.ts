@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { CopilotService } from '../../../../app/services/copilot.service.js';
+import settings from '@overleaf/settings';
+import { AGENT_STEP_LIMIT, CopilotService } from '../../../../app/services/copilot.service.js';
 import { AssistantMessageEventStream } from '../../../../app/agent/core/event-stream.js';
 import type { AssistantMessage } from '../../../../app/agent/core/llm-types.js';
 import { buildToolPool } from '../../../../app/agent/tools/index.js';
@@ -245,10 +246,19 @@ describe('CopilotService (vendored agent core)', function () {
     });
 
     await expect(service.chat('user-1', CHAT_CONTEXT)).to.be.rejectedWith(/step budget/);
-    expect(calls).to.equal(25);
+    // Follows the configured limit (settings.defaults.cjs), not a magic number.
+    expect(calls).to.equal(AGENT_STEP_LIMIT);
     // F22: the stopped turn's work is persisted (was: append never called and
     // the attempt vanished from history/transcripts).
     expect(this.memoryStore.append).to.have.been.called;
+  });
+
+  it('F31: step limit resolves from settings with no shadowing fallback', function () {
+    // Guard both ends of the chain that F31 broke: settings.defaults.cjs must
+    // always define the value (so a consumer-side `|| N` fallback would be
+    // dead code), and the service must use exactly the settings value.
+    expect(settings.COPILOT_AGENT_RECURSION_LIMIT).to.be.a('number').and.to.be.greaterThan(0);
+    expect(AGENT_STEP_LIMIT).to.equal(Number(settings.COPILOT_AGENT_RECURSION_LIMIT));
   });
 
   it('maps a submit_patch tool call into a patch block', async function () {

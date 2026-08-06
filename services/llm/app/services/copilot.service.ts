@@ -45,9 +45,12 @@ const CONTEXT_SNIP_MAX = Number(settings.COPILOT_CONTEXT_SNIP_MAX || 50);
 const CONTEXT_MICRO_KEEP = Number(settings.COPILOT_CONTEXT_MICRO_KEEP || 3);
 // Per-turn budget of assistant steps (model responses, incl. tool-calling
 // ones). The vendored loop has no built-in recursion limit, so the budget is
-// enforced via shouldStopAfterTurn. 25 comfortably fits the
-// diagnose-all-errors flow with headroom.
-const AGENT_STEP_LIMIT = Number(settings.COPILOT_AGENT_RECURSION_LIMIT || 25);
+// enforced via shouldStopAfterTurn. The value comes from settings as-is — do
+// NOT add an `|| N` fallback here: settings.defaults.cjs always defines it,
+// so a fallback is dead code that only pretends the value lives here (F31:
+// editing such a fallback changed nothing and voided an eval iteration).
+// Exported so the eval harness can record the resolved value in run.json.
+export const AGENT_STEP_LIMIT = Number(settings.COPILOT_AGENT_RECURSION_LIMIT);
 const LTMEM_ENABLED = settings.COPILOT_LTMEM_ENABLED !== 'false';
 // Usage-based proactive compaction: when the provider reports the last turn
 // consumed more than this many total tokens, summarize the older context once

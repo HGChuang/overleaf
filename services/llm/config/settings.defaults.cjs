@@ -8,7 +8,11 @@ const LLM_MEMORY_MAX_MESSAGES = Number(process.env.LLM_MEMORY_MAX_MESSAGES || 20
 const COPILOT_PANEL_ENABLED = process.env.COPILOT_PANEL_ENABLED !== 'false'
 const COPILOT_MAX_CONTEXT_BYTES = Number(process.env.COPILOT_MAX_CONTEXT_BYTES || 120000)
 const COPILOT_MAX_ATTACH_FILES = Number(process.env.COPILOT_MAX_ATTACH_FILES || 8)
-const COPILOT_AGENT_RECURSION_LIMIT = Number(process.env.COPILOT_AGENT_RECURSION_LIMIT || 25)
+// Per-turn agent step budget. THE single source of truth — consumers must use
+// this value as-is (F31: a second default in copilot.service.ts silently
+// shadowed it and voided an eval iteration). 40 covers audit-style full-sweep
+// tasks (iter6 hypothesis); the 300s turn timeout stays the circuit breaker.
+const COPILOT_AGENT_RECURSION_LIMIT = Number(process.env.COPILOT_AGENT_RECURSION_LIMIT || 40)
 const COPILOT_CONTEXT_SNIP_MAX = Number(process.env.COPILOT_CONTEXT_SNIP_MAX || 50)
 const COPILOT_CONTEXT_MICRO_KEEP = Number(process.env.COPILOT_CONTEXT_MICRO_KEEP || 3)
 const COPILOT_CONTEXT_SUMMARIZE_THRESHOLD = Number(process.env.COPILOT_CONTEXT_SUMMARIZE_THRESHOLD || 60000)
