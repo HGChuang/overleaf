@@ -26,6 +26,29 @@ function capContent(content: string, totalLines: number): string {
   );
 }
 
+// Word-count algorithm vendored from eval/graders/assertGrader.ts
+// (stripLatex + countWords) — KEEP IN SYNC with that file: eval graders judge
+// length constraints with exactly this math, so the number the tool reports
+// must equal the number the grader will compute. (app/ must not import from
+// eval/, hence the copy; a cross-check unit test pins the equivalence.)
+function stripLatexMarkup(text: string): string {
+  return text
+    .replace(/(?<!\\)%.*/g, ' ')
+    .replace(/\$\$[\s\S]*?\$\$/g, ' ')
+    .replace(/\\\[([\s\S]*?)\\\]/g, ' ')
+    .replace(/\$[^$\n]*\$/g, ' ')
+    .replace(/\\(?:begin|end)\{[^}]*\}/g, ' ')
+    .replace(/\\[a-zA-Z]+\*?/g, ' ')
+    .replace(/\\./g, ' ')
+    .replace(/[{}]/g, ' ');
+}
+
+function countWordsInText(text: string): number {
+  const latin = text.match(/[A-Za-z0-9]+(?:[’'\-][A-Za-z0-9]+)*/g) || [];
+  const cjk = text.match(/[\u3400-\u4dbf\u4e00-\u9fff]/g) || [];
+  return latin.length + cjk.length;
+}
+
 export function buildProjectTools(context: any = {}) {
   const project = context.project || {};
   const fileMap = buildFileMap(project.files);
@@ -139,5 +162,29 @@ export function buildProjectTools(context: any = {}) {
     },
   });
 
-  return [listProjectFiles, readFile, readFileFragmentTool, searchProject];
+  const countWordsTool = defineTool({
+    name: 'count_words',
+    description:
+      "Return the EXACT word count of a project file's readable text: LaTeX comments, math ($...$, display math), \\begin/\\end markers and command names are stripped first (brace contents are kept), then each latin/number token counts 1 and each CJK character counts 1. Use whenever the user's instruction carries a length constraint (\"shorten by 30%\", \"at most 120 words\"): call it BEFORE editing for the baseline and AFTER your patch is applied to verify the constraint is actually met — never estimate word counts by eye.",
+    parameters: {
+      type: 'object',
+      properties: {
+        path: { type: 'string', description: 'Project file path, e.g. main.tex or sections/intro.tex' },
+      },
+      required: ['path'],
+    },
+    handler: async ({ path }: { path: string }) => {
+      const content = lookupFile(fileMap, path);
+      if (content == null) {
+        return JSON.stringify({ found: false, message: `File not found: ${path}` });
+      }
+      return JSON.stringify({
+        found: true,
+        path,
+        wordCount: countWordsInText(stripLatexMarkup(content)),
+      });
+    },
+  });
+
+  return [listProjectFiles, readFile, readFileFragmentTool, searchProject, countWordsTool];
 }
