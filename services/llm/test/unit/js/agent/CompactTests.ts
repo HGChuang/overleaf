@@ -32,11 +32,11 @@ function assistantWithToolCall(id: string, text = ''): AssistantMessage {
   };
 }
 
-function toolResult(id: string, text = 'result'): ToolResultMessage {
+function toolResult(id: string, text = 'result', toolName = 'read_file'): ToolResultMessage {
   return {
     role: 'toolResult',
     toolCallId: id,
-    toolName: 'read_file',
+    toolName,
     content: [{ type: 'text', text }],
     isError: false,
     timestamp: Date.now(),
@@ -58,13 +58,13 @@ describe('compact helpers (agent-core message shapes)', function () {
     const big = 'x'.repeat(500);
     const messages: AgentMessage[] = [
       assistantWithToolCall('a1'),
-      toolResult('a1', big),
+      toolResult('a1', big, 'search_project'),
       assistantWithToolCall('a2'),
-      toolResult('a2', big),
+      toolResult('a2', big, 'search_project'),
       assistantWithToolCall('a3'),
-      toolResult('a3', big),
+      toolResult('a3', big, 'search_project'),
       assistantWithToolCall('a4'),
-      toolResult('a4', big),
+      toolResult('a4', big, 'search_project'),
     ];
     const out = microCompact(messages, 2);
     const first = out[1] as ToolResultMessage;
@@ -73,6 +73,33 @@ describe('compact helpers (agent-core message shapes)', function () {
     expect(last.content[0].type === 'text' && last.content[0].text).to.equal(big);
     // pairing identity preserved
     expect(first.toolCallId).to.equal('a1');
+  });
+
+  it('microCompact never blanks read_file / read_file_fragment results (evict→re-read loop fix)', function () {
+    const big = 'x'.repeat(500);
+    const messages: AgentMessage[] = [
+      assistantWithToolCall('a1'),
+      toolResult('a1', big, 'read_file'),
+      assistantWithToolCall('a2'),
+      toolResult('a2', big, 'read_file_fragment'),
+      assistantWithToolCall('a3'),
+      toolResult('a3', big, 'search_project'),
+      assistantWithToolCall('a4'),
+      toolResult('a4', big, 'search_project'),
+      assistantWithToolCall('a5'),
+      toolResult('a5', big, 'search_project'),
+    ];
+    const out = microCompact(messages, 2);
+    // Pinned reads keep their content even though they are the OLDEST results.
+    const read1 = out[1] as ToolResultMessage;
+    const read2 = out[3] as ToolResultMessage;
+    expect(read1.content[0].type === 'text' && read1.content[0].text).to.equal(big);
+    expect(read2.content[0].type === 'text' && read2.content[0].text).to.equal(big);
+    // Non-read old results are still blanked; keepRecent still applies to them.
+    const old = out[5] as ToolResultMessage;
+    expect(old.content[0].type === 'text' && old.content[0].text).to.contain('compacted');
+    const last = out[9] as ToolResultMessage;
+    expect(last.content[0].type === 'text' && last.content[0].text).to.equal(big);
   });
 
   it('sanitizeToolPairing keeps a fully-answered tool-call pair', function () {

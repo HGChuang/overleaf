@@ -60,6 +60,17 @@ export function snipCompact(messages: AgentMessage[], max = 50, keepHead = 3): A
 // placeholder, keeping only the most recent `keepRecent` intact. Bounds the
 // bulk that accumulates from repeated read_file outputs. Identity
 // (toolCallId / toolName / isError) is preserved so pairing still validates.
+//
+// EXEMPTION (eval iter7): file-read results are never blanked. Blanking them
+// was the trigger of the evict→re-read loop — the model reads a file, three
+// tool calls later the content is gone, so it reads it again (iter6 evidence:
+// number-consistency 80 read_file_fragment calls in one turn / 74 万 tokens;
+// 5-macro-unify 43 reads of a 5-file project). Pinning does not unbind growth:
+// message COUNT is still capped downstream (capMessagesKeepInstructions on the
+// live path, snipCompact on the store path), so a pinned read only survives
+// while its message survives the cap.
+const READ_RESULT_PIN_TOOLS = new Set(['read_file', 'read_file_fragment']);
+
 export function microCompact(messages: AgentMessage[], keepRecent = 3): AgentMessage[] {
   if (!Array.isArray(messages) || messages.length === 0) {
     return messages || [];
@@ -75,6 +86,9 @@ export function microCompact(messages: AgentMessage[], keepRecent = 3): AgentMes
   return messages.map((m, i) => {
     if (!isToolResultMessage(m) || keep.has(i)) {
       return m;
+    }
+    if (READ_RESULT_PIN_TOOLS.has(m.toolName)) {
+      return m; // pinned: never blank file reads
     }
     if (textOfToolResult(m).length <= 120) {
       return m; // already small, leave it
