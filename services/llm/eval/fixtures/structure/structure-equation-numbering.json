@@ -1,0 +1,32 @@
+{
+  "id": "structure-equation-numbering",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\section{Model}\nThe replica free energy is\n\\begin{equation*}\nf = -\\frac{1}{\\beta N} \\ln Z .\n\\end{equation*}\nIn the thermodynamic limit the overlap satisfies\n\\begin{equation*}\nq = \\frac{1}{N} \\sum_i s_i^{(1)} s_i^{(2)} .\n\\end{equation*}\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "给所有公式加上编号：把 equation* 环境都改成 equation 环境，公式内容不动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\begin\\{equation\\*\\}", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\begin\\{equation\\}", "op": "eq", "count": 2 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\section{Model}\nThe replica free energy is\n\\begin{equation}\nf = -\\frac{1}{\\beta N} \\ln Z .\n\\end{equation}\nIn the thermodynamic limit the overlap satisfies\n\\begin{equation}\nq = \\frac{1}{N} \\sum_i s_i^{(1)} s_i^{(2)} .\n\\end{equation}\n\\end{document}\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "id": "structure-dirty-pgfplots-data-edit",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\\usepackage{pgfplots}\n\\pgfplotsset{compat=1.18}\n\n\\title{Weak-Acid Titration Curves: Laboratory Report}\n\\author{Analytical Chemistry Teaching Lab}\n\\date{April 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Procedure}\nThree unknown monoprotic weak acids (A, B, C) were titrated\nwith standardised 0.0985~M NaOH at 25~$^\\circ$C. Each sample\nwas dissolved in 100~mL of deionised water, and the titrant\nwas added in 2~mL portions, then in 1~mL portions near the\nequivalence point. The pH was read after each addition once\nthe drift fell below 0.02 units per minute. The electrode was\nrecalibrated with pH 4.00 and pH 7.00 buffers between runs.\n\n\\section{Recorded data}\nTable~\\ref{tab:readings} reproduces the bench notebook\nreadings at selected titrant volumes; the complete series is\nplotted in Figure~\\ref{fig:curves}.\n\n\\begin{table}[ht]\n\\centering\n\\begin{tabular}{lccc}\n\\toprule\nNaOH volume (mL) & acid A pH & acid B pH & acid C pH \\\\\n\\midrule\n0.0  & 2.87 & 3.05 & 2.62 \\\\\n10.0 & 3.77 & 3.88 & 3.61 \\\\\n20.0 & 4.88 & 4.92 & 4.80 \\\\\n22.0 & 5.41 & 5.40 & 5.38 \\\\\n23.0 & 6.14 & 5.83 & 5.95 \\\\\n24.0 & 10.35 & 9.87 & 10.02 \\\\\n26.0 & 11.25 & 11.12 & 11.18 \\\\\n30.0 & 11.72 & 11.65 & 11.69 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Notebook readings at selected volumes.}\n\\label{tab:readings}\n\\end{table}\n\n\\begin{figure}[ht]\n\\centering\n\\begin{tikzpicture}\n\\begin{axis}[\n    width=0.85\\textwidth,\n    xlabel={NaOH volume (mL)},\n    ylabel={pH},\n    legend pos=south east,\n    grid=both]\n\\addplot[mark=*, color=blue] coordinates {(0,2.87) (2,3.12) (4,3.31) (6,3.47) (8,3.62) (10,3.77) (12,3.93) (14,4.10) (16,4.30) (18,4.55) (20,4.88) (21,5.10) (22,5.41) (23,61.4) (24,10.35) (25,10.92) (26,11.25) (28,11.55) (30,11.72)};\n\\addlegendentry{acid A}\n\\addplot[mark=square*, color=red] coordinates {(0,3.05) (2,3.28) (4,3.45) (6,3.60) (8,3.74) (10,3.88) (12,4.03) (14,4.19) (16,4.38) (18,4.61) (20,4.92) (21,5.12) (22,5.40) (23,5.83) (24,9.87) (25,10.71) (26,11.12) (28,11.46) (30,11.65)};\n\\addlegendentry{acid B}\n\\addplot[mark=triangle*, color=teal] coordinates {(0,2.62) (2,2.90) (4,3.11) (6,3.29) (8,3.45) (10,3.61) (12,3.78) (14,3.97) (16,4.18) (18,4.45) (20,4.80) (21,5.05) (22,5.38) (23,5.95) (24,10.02) (25,10.80) (26,11.18) (28,11.50) (30,11.69)};\n\\addlegendentry{acid C}\n\\end{axis}\n\\end{tikzpicture}\n\\caption{Titration curves for the three unknowns.}\n\\label{fig:curves}\n\\end{figure}\n\n\\section{Discussion}\nThe equivalence volumes cluster near 23.5~mL for all three\nsamples, which is consistent with the nominal 0.25~g masses\nweighed out at the bench. Half-equivalence readings place the\np$K_a$ of acid A near 4.9, acid B near 4.9, and acid C near\n4.8, so the three unknowns are likely close structural\nrelatives. Acid A shows the shallowest buffer region, which\nmatches its slightly stronger acidity.\n\n\\section{Sources of error}\nThe dominant uncertainty is the electrode settling time near\nthe equivalence point, where one titrant portion can swing\nthe reading by more than three pH units. Temperature drift\nwas below 0.5~$^\\circ$C over each run and was not corrected\nfor. Transcription between the bench notebook and this\nreport was double-checked except where noted during review.\n\n\\section{Conclusion}\nAll three samples behave as monoprotic weak acids with\ncomparable molecular weights and closely spaced p$K_a$\nvalues. Identification against the candidate list will use\nthe half-equivalence readings reported above.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "审稿复核时发现酸 A 那条曲线和附录数据表对不上：23.0 mL 这一点，实验记录本（Table 1 第 5 行）是 pH 6.14，pgfplots 坐标序列里写成了 61.4——录入时小数点错位，把整条曲线的纵轴都拉飞了。请把 acid A 那条 \\addplot 坐标序列里的这个点改成 (23,6.14)，坐标序列的其余数字、括号、空格与原文件逐字保持一致，另外两条曲线、数据表和文档其它内容一律不动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\addplot[mark=*, color=blue] coordinates {(0,2.87) (2,3.12) (4,3.31) (6,3.47) (8,3.62) (10,3.77) (12,3.93) (14,4.10) (16,4.30) (18,4.55) (20,4.88) (21,5.10) (22,5.41) (23,6.14) (24,10.35) (25,10.92) (26,11.25) (28,11.55) (30,11.72)};",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "(23,61.4)",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "(23,6.14)",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\addplot[mark=square*, color=red] coordinates {(0,3.05) (2,3.28) (4,3.45) (6,3.60) (8,3.74) (10,3.88) (12,4.03) (14,4.19) (16,4.38) (18,4.61) (20,4.92) (21,5.12) (22,5.40) (23,5.83) (24,9.87) (25,10.71) (26,11.12) (28,11.46) (30,11.65)};",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\addplot[mark=triangle*, color=teal] coordinates {(0,2.62) (2,2.90) (4,3.11) (6,3.29) (8,3.45) (10,3.61) (12,3.78) (14,3.97) (16,4.18) (18,4.45) (20,4.80) (21,5.05) (22,5.38) (23,5.95) (24,10.02) (25,10.80) (26,11.18) (28,11.50) (30,11.69)};",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "23.0 & 6.14 & 5.83 & 5.95 \\\\",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\\usepackage{pgfplots}\n\\pgfplotsset{compat=1.18}\n\n\\title{Weak-Acid Titration Curves: Laboratory Report}\n\\author{Analytical Chemistry Teaching Lab}\n\\date{April 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Procedure}\nThree unknown monoprotic weak acids (A, B, C) were titrated\nwith standardised 0.0985~M NaOH at 25~$^\\circ$C. Each sample\nwas dissolved in 100~mL of deionised water, and the titrant\nwas added in 2~mL portions, then in 1~mL portions near the\nequivalence point. The pH was read after each addition once\nthe drift fell below 0.02 units per minute. The electrode was\nrecalibrated with pH 4.00 and pH 7.00 buffers between runs.\n\n\\section{Recorded data}\nTable~\\ref{tab:readings} reproduces the bench notebook\nreadings at selected titrant volumes; the complete series is\nplotted in Figure~\\ref{fig:curves}.\n\n\\begin{table}[ht]\n\\centering\n\\begin{tabular}{lccc}\n\\toprule\nNaOH volume (mL) & acid A pH & acid B pH & acid C pH \\\\\n\\midrule\n0.0  & 2.87 & 3.05 & 2.62 \\\\\n10.0 & 3.77 & 3.88 & 3.61 \\\\\n20.0 & 4.88 & 4.92 & 4.80 \\\\\n22.0 & 5.41 & 5.40 & 5.38 \\\\\n23.0 & 6.14 & 5.83 & 5.95 \\\\\n24.0 & 10.35 & 9.87 & 10.02 \\\\\n26.0 & 11.25 & 11.12 & 11.18 \\\\\n30.0 & 11.72 & 11.65 & 11.69 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Notebook readings at selected volumes.}\n\\label{tab:readings}\n\\end{table}\n\n\\begin{figure}[ht]\n\\centering\n\\begin{tikzpicture}\n\\begin{axis}[\n    width=0.85\\textwidth,\n    xlabel={NaOH volume (mL)},\n    ylabel={pH},\n    legend pos=south east,\n    grid=both]\n\\addplot[mark=*, color=blue] coordinates {(0,2.87) (2,3.12) (4,3.31) (6,3.47) (8,3.62) (10,3.77) (12,3.93) (14,4.10) (16,4.30) (18,4.55) (20,4.88) (21,5.10) (22,5.41) (23,6.14) (24,10.35) (25,10.92) (26,11.25) (28,11.55) (30,11.72)};\n\\addlegendentry{acid A}\n\\addplot[mark=square*, color=red] coordinates {(0,3.05) (2,3.28) (4,3.45) (6,3.60) (8,3.74) (10,3.88) (12,4.03) (14,4.19) (16,4.38) (18,4.61) (20,4.92) (21,5.12) (22,5.40) (23,5.83) (24,9.87) (25,10.71) (26,11.12) (28,11.46) (30,11.65)};\n\\addlegendentry{acid B}\n\\addplot[mark=triangle*, color=teal] coordinates {(0,2.62) (2,2.90) (4,3.11) (6,3.29) (8,3.45) (10,3.61) (12,3.78) (14,3.97) (16,4.18) (18,4.45) (20,4.80) (21,5.05) (22,5.38) (23,5.95) (24,10.02) (25,10.80) (26,11.18) (28,11.50) (30,11.69)};\n\\addlegendentry{acid C}\n\\end{axis}\n\\end{tikzpicture}\n\\caption{Titration curves for the three unknowns.}\n\\label{fig:curves}\n\\end{figure}\n\n\\section{Discussion}\nThe equivalence volumes cluster near 23.5~mL for all three\nsamples, which is consistent with the nominal 0.25~g masses\nweighed out at the bench. Half-equivalence readings place the\np$K_a$ of acid A near 4.9, acid B near 4.9, and acid C near\n4.8, so the three unknowns are likely close structural\nrelatives. Acid A shows the shallowest buffer region, which\nmatches its slightly stronger acidity.\n\n\\section{Sources of error}\nThe dominant uncertainty is the electrode settling time near\nthe equivalence point, where one titrant portion can swing\nthe reading by more than three pH units. Temperature drift\nwas below 0.5~$^\\circ$C over each run and was not corrected\nfor. Transcription between the bench notebook and this\nreport was double-checked except where noted during review.\n\n\\section{Conclusion}\nAll three samples behave as monoprotic weak acids with\ncomparable molecular weights and closely spaced p$K_a$\nvalues. Identification against the candidate list will use\nthe half-equivalence readings reported above.\n\\end{document}\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "compile-align-without-amsmath",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Night-Time Cooling in a Dense Urban Core}\n\\author{C. Beaumont and Y. Ibarra}\n\\date{July 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nThe urban heat island effect keeps city centres warmer than their rural surroundings,\nand the contrast is strongest a few hours after sunset.\nWe analyse a three year record of tower measurements from a dense downtown district\nand quantify how quickly different land cover types release stored heat.\n\n\\section{Energy Balance}\nThe nocturnal cooling of an urban surface is governed by a simple balance.\nNet radiative loss is offset by the release of heat stored during the day\nand by anthropogenic emissions from traffic and air conditioning.\nWe write the surface energy budget as\n\\begin{align}\nQ^* + Q_F &= Q_H + Q_E + \\Delta Q_S \\\\\n\\Delta Q_S &= c_s \\frac{\\partial T_s}{\\partial t}\n\\end{align}\nwhere each term is averaged over the footprint of the tower.\n\n\\section{Measurements}\nThree towers sample roof level, street canyon, and park sites.\nTemperature and humidity are logged at one minute resolution\nand flux measurements are averaged over thirty minutes.\nWe discard intervals with instrument faults or heavy precipitation.\n\n\\section{Data Quality}\nSensors are intercompared in a side by side deployment every six months.\nDrift is corrected with a two point calibration against a reference sensor,\nand the corrected records agree to within a tenth of a degree.\nRoughly four percent of the record is lost to faults and power outages.\n\n\\section{Results}\nRoof level sites cool fastest after sunset,\nwhile street canyons remain warm well past midnight.\nThe park site tracks the rural reference within half a degree,\nconfirming the role of vegetation in night-time cooling.\nCooling rates are highest in the first two hours after sunset\nand slow markedly once the canopy layer decouples from the roof level.\n\n\\section{Policy Implications}\nThe results support cooling strategies that increase vegetation cover\nand reduce the thermal mass of paved surfaces in dense districts.\nTargeted planting along east-west canyons gives the largest benefit\nper tree in our simulations of the following summer.\n\n\\section{Conclusion}\nDense districts cool slowly because of storage and anthropogenic heat,\nand land cover composition explains most of the site-to-site variance.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "城市热岛这篇一编译就炸，帮我看看呗，实在找不到原因。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\title{Night-Time Cooling in a Dense Urban Core}\n\\author{C. Beaumont and Y. Ibarra}\n\\date{July 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nThe urban heat island effect keeps city centres warmer than their rural surroundings,\nand the contrast is strongest a few hours after sunset.\nWe analyse a three year record of tower measurements from a dense downtown district\nand quantify how quickly different land cover types release stored heat.\n\n\\section{Energy Balance}\nThe nocturnal cooling of an urban surface is governed by a simple balance.\nNet radiative loss is offset by the release of heat stored during the day\nand by anthropogenic emissions from traffic and air conditioning.\nWe write the surface energy budget as\n\\begin{align}\nQ^* + Q_F &= Q_H + Q_E + \\Delta Q_S \\\\\n\\Delta Q_S &= c_s \\frac{\\partial T_s}{\\partial t}\n\\end{align}\nwhere each term is averaged over the footprint of the tower.\n\n\\section{Measurements}\nThree towers sample roof level, street canyon, and park sites.\nTemperature and humidity are logged at one minute resolution\nand flux measurements are averaged over thirty minutes.\nWe discard intervals with instrument faults or heavy precipitation.\n\n\\section{Data Quality}\nSensors are intercompared in a side by side deployment every six months.\nDrift is corrected with a two point calibration against a reference sensor,\nand the corrected records agree to within a tenth of a degree.\nRoughly four percent of the record is lost to faults and power outages.\n\n\\section{Results}\nRoof level sites cool fastest after sunset,\nwhile street canyons remain warm well past midnight.\nThe park site tracks the rural reference within half a degree,\nconfirming the role of vegetation in night-time cooling.\nCooling rates are highest in the first two hours after sunset\nand slow markedly once the canopy layer decouples from the roof level.\n\n\\section{Policy Implications}\nThe results support cooling strategies that increase vegetation cover\nand reduce the thermal mass of paved surfaces in dense districts.\nTargeted planting along east-west canyons gives the largest benefit\nper tree in our simulations of the following summer.\n\n\\section{Conclusion}\nDense districts cool slowly because of storage and anthropogenic heat,\nand land cover composition explains most of the site-to-site variance.\n\\end{document}\n"
+      }
+    ]
+  }
+}

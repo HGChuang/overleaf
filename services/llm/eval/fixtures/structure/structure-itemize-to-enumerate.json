@@ -1,0 +1,33 @@
+{
+  "id": "structure-itemize-to-enumerate",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Contributions}\nOur pipeline for low-resource speech recognition makes three contributions:\n\\begin{itemize}\n\\item A self-supervised encoder pretrained on unlabeled audio.\n\\item A lightweight adapter that transfers the encoder to eight languages.\n\\item A decoding strategy that reduces word error rate by 12\\% relative.\n\\end{itemize}\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "把 itemize 列表改成 enumerate 编号列表，条目内容保持不变。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\begin\\{itemize\\}", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\begin\\{enumerate\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\item ", "op": "gte", "count": 3 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Contributions}\nOur pipeline for low-resource speech recognition makes three contributions:\n\\begin{enumerate}\n\\item A self-supervised encoder pretrained on unlabeled audio.\n\\item A lightweight adapter that transfers the encoder to eight languages.\n\\item A decoding strategy that reduces word error rate by 12\\% relative.\n\\end{enumerate}\n\\end{document}\n"
+      }
+    ]
+  }
+}

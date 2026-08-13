@@ -1,0 +1,79 @@
+{
+  "id": "structure-hard-notation-sync",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Notation}\n\\begin{tabular}{ll}\n\\hline\nSymbol & Meaning \\\\\n\\hline\n$\\alpha$ & regularization coefficient \\\\\n$\\beta$ & momentum coefficient \\\\\n$\\gamma$ & discount factor \\\\\n\\hline\n\\end{tabular}\n\\section{Algorithm}\nThe learning rate $\\alpha$ controls the update magnitude, and we decay $\\alpha$ every ten epochs.\nThe decay rate $\\beta$ multiplies the step size, while $\\gamma$ discounts future rewards.\nLater the momentum coefficient $\\beta$ smooths the gradient estimate.\nThe step size $\\delta$ bounds the line search.\n\\section{Discussion}\nTuning $\\alpha$ and $\\beta$ jointly matters most in practice.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "正文符号和 Notation 节的符号表对不上，请统一：① 正文里 $\\alpha$ 从头到尾是学习率，但符号表写成了 regularization coefficient——把符号表改成 learning rate；② 正文里 $\\beta$ 有两种含义（Algorithm 节前半是 decay rate、后半 momentum coefficient），冲突——把后半那个 momentum coefficient 改用新符号 $\\mu$，Discussion 节的 $\\beta$ 保持 decay rate 不动；③ 符号表补两行：$\\mu$（momentum coefficient）和正文已用但表里没有的 $\\delta$（step size）。其余正文一字不改。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\$\\\\alpha\\$ & learning rate",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "regularization coefficient",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\$\\\\beta\\$ & decay rate",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\$\\\\mu\\$ & momentum coefficient",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\$\\\\delta\\$ & step size",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "momentum coefficient \\$\\\\mu\\$",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "momentum coefficient \\$\\\\beta\\$",
+        "op": "eq",
+        "count": 0
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Notation}\n\\begin{tabular}{ll}\n\\hline\nSymbol & Meaning \\\\\n\\hline\n$\\alpha$ & learning rate \\\\\n$\\beta$ & decay rate \\\\\n$\\gamma$ & discount factor \\\\\n$\\mu$ & momentum coefficient \\\\\n$\\delta$ & step size \\\\\n\\hline\n\\end{tabular}\n\\section{Algorithm}\nThe learning rate $\\alpha$ controls the update magnitude, and we decay $\\alpha$ every ten epochs.\nThe decay rate $\\beta$ multiplies the step size, while $\\gamma$ discounts future rewards.\nLater the momentum coefficient $\\mu$ smooths the gradient estimate.\nThe step size $\\delta$ bounds the line search.\n\\section{Discussion}\nTuning $\\alpha$ and $\\beta$ jointly matters most in practice.\n\\end{document}\n"
+      }
+    ]
+  }
+}

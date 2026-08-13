@@ -1,0 +1,164 @@
+{
+  "id": "structure-fill-constraints-table-4way",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Minimum Wages and Employment in Border Counties: New Evidence}\n\\author{L.~Brandt and S.~Okoye}\n\\date{March 2026}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\nWe revisit the employment effects of minimum-wage increases using\ncounty-level panel data from paired border counties between 2011 and 2024.\nAcross four specifications we find small negative employment responses\nconcentrated in accommodation and food services.\nThe estimates are stable to sector fixed effects, region-specific trends,\nand an instrument based on lagged statutory exposure.\n\\end{abstract}\n\\section{Introduction}\nThe employment effect of the minimum wage remains one of the oldest\ndisputes in labor economics.\nCanonical case studies of paired counties reported near-zero effects,\nwhile panel-data estimates have often been negative and sizable.\nThis paper revisits the dispute with thirteen years of county-level data\nand a design that compares each treated county with its immediate neighbor.\nWe focus on the accommodation and food-services sector, where minimum-wage\nworkers are concentrated, while also reporting economy-wide responses.\nOur contribution is twofold.\nFirst, we extend the paired-county design through the 2024 recovery,\na period with large and frequent statutory increases.\nSecond, we provide an instrumental-variables estimate that uses lagged\nstatutory exposure in neighboring states as a source of plausibly\nexogenous variation.\nThe results point to employment responses that are negative but small,\nand considerably smaller than the older panel-data literature suggested.\n\\section{Data}\nWe assemble a quarterly county panel from 2011 to 2024.\nEmployment and earnings come from administrative records aggregated to\nthe county-sector level.\nMinimum-wage schedules are coded from state statutes and local ordinances,\nincluding scheduled increases that were later postponed.\nBorder pairs are defined as adjacent counties that straddle a state line\nand share a metropolitan labor market.\nAfter excluding pairs affected by a statewide reclassification in 2016,\nthe estimation sample covers 312 county pairs.\nDescriptive statistics confirm that treated and control counties moved\nin parallel before the first increase in our window.\nThe average statutory minimum rose by 42 percent over the sample period,\nwith substantial variation across pairs in both timing and level.\n\\section{Empirical Strategy}\nThe baseline specification regresses log sectoral employment on the log\nof the statutory minimum wage, with county-pair and quarter fixed effects.\nWe then add sector fixed effects interacted with time, region-specific\nlinear trends, and finally an instrument that exploits lagged exposure.\nStandard errors are clustered at the state level throughout.\nAll regressions are weighted by county-sector employment in 2011.\n\\section{Results}\nTable \\ref{tab:wage} collects the four headline specifications.\nThe baseline estimate implies that a ten percent increase in the minimum\nwage lowers sectoral employment by about 0.4 percent.\nThe estimate shrinks modestly as fixed effects and trends are added,\nand the instrumental-variables estimate is the smallest of the four.\nNone of the specifications produces an economy-wide response that is\nstatistically distinguishable from zero at conventional levels.\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{|l|c|c|c|}\n\\hline\nSpecification & Coefficient & Std.\\ error & $p$-value \\\\\n\\hline\nBaseline OLS & -0.042 & 0.011 & 0.002 \\\\\nWith sector fixed effects & -0.038 & 0.010 & 0.004 \\\\\nWith region trends & -0.031 & 0.009 & 0.006 \\\\\nIV with lagged exposure & -0.027 & 0.012 & 0.031 \\\\\n\\hline\n\\end{tabular}\n\\caption{Estimated effect of the minimum-wage reform on log employment.}\n\\label{tab:wage}\n\\end{table}\nEvent-study estimates show no pre-trend in the five years before the\nfirst increase, which supports the identifying assumption.\nEffects are concentrated in limited-service restaurants and are close\nto zero in retail and in manufacturing.\nTeen employment responds more strongly than prime-age employment,\nalthough the teen estimates are imprecise.\n\\section{Discussion}\nThe estimates reconcile part of the gap between case-study and\npanel-data findings: responses are negative but small, and they are\nconcentrated where theory predicts.\nTwo caveats deserve emphasis.\nFirst, county-level aggregation may mask displacement across neighboring\nsectors within a county.\nSecond, our window ends in 2024, and the effects of the largest scheduled\nincreases may not yet be fully realized.\n\\section{Conclusion}\nUsing thirteen years of paired-county data, we estimate minimum-wage\nemployment elasticities that are negative, small, and stable across\nspecifications.\nThe magnitudes imply that the increases observed in our window raised\nearnings for low-wage workers at modest employment cost.\nWhether the same holds for the substantially larger increases now\nscheduled in several states is a question for future work.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "结果章那张表再不改要被期刊 desk reject 了，帮我升级成正式格式，四条都要做到：1) 现在这种 \\hline 加竖线的老式画法全部去掉，改成 booktabs 三线表——\\toprule、\\midrule、\\bottomrule，tabular 列定义里的竖线也删掉，宏包没引的话自己引上；2) caption 现在在表底下，move it above the tabular（期刊规范要求表题在表上方）；3) 最后 add one more column「Sample size」，四行的值按现有行的顺序依次是 1842、2361、1207、1984；4) label 从 tab:wage 改成 tab:regresults，正文里的 \\ref 记得同步改。表里的系数、标准误、p 值这些旧数字一个都不许动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\usepackage\\{booktabs\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\hline",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\toprule",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\midrule",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\bottomrule",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{tabular\\}\\{lcccc\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{tabular\\}\\{\\|",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\caption\\{Estimated effect",
+          "\\\\begin\\{tabular\\}"
+        ]
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Sample size",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "1842",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "2361",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "1207",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "1984",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "-0.042",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "-0.027",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{tab:regresults\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{tab:wage\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\ref\\{tab:regresults\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\ref\\{tab:wage\\}",
+        "op": "eq",
+        "count": 0
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\\title{Minimum Wages and Employment in Border Counties: New Evidence}\n\\author{L.~Brandt and S.~Okoye}\n\\date{March 2026}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\nWe revisit the employment effects of minimum-wage increases using\ncounty-level panel data from paired border counties between 2011 and 2024.\nAcross four specifications we find small negative employment responses\nconcentrated in accommodation and food services.\nThe estimates are stable to sector fixed effects, region-specific trends,\nand an instrument based on lagged statutory exposure.\n\\end{abstract}\n\\section{Introduction}\nThe employment effect of the minimum wage remains one of the oldest\ndisputes in labor economics.\nCanonical case studies of paired counties reported near-zero effects,\nwhile panel-data estimates have often been negative and sizable.\nThis paper revisits the dispute with thirteen years of county-level data\nand a design that compares each treated county with its immediate neighbor.\nWe focus on the accommodation and food-services sector, where minimum-wage\nworkers are concentrated, while also reporting economy-wide responses.\nOur contribution is twofold.\nFirst, we extend the paired-county design through the 2024 recovery,\na period with large and frequent statutory increases.\nSecond, we provide an instrumental-variables estimate that uses lagged\nstatutory exposure in neighboring states as a source of plausibly\nexogenous variation.\nThe results point to employment responses that are negative but small,\nand considerably smaller than the older panel-data literature suggested.\n\\section{Data}\nWe assemble a quarterly county panel from 2011 to 2024.\nEmployment and earnings come from administrative records aggregated to\nthe county-sector level.\nMinimum-wage schedules are coded from state statutes and local ordinances,\nincluding scheduled increases that were later postponed.\nBorder pairs are defined as adjacent counties that straddle a state line\nand share a metropolitan labor market.\nAfter excluding pairs affected by a statewide reclassification in 2016,\nthe estimation sample covers 312 county pairs.\nDescriptive statistics confirm that treated and control counties moved\nin parallel before the first increase in our window.\nThe average statutory minimum rose by 42 percent over the sample period,\nwith substantial variation across pairs in both timing and level.\n\\section{Empirical Strategy}\nThe baseline specification regresses log sectoral employment on the log\nof the statutory minimum wage, with county-pair and quarter fixed effects.\nWe then add sector fixed effects interacted with time, region-specific\nlinear trends, and finally an instrument that exploits lagged exposure.\nStandard errors are clustered at the state level throughout.\nAll regressions are weighted by county-sector employment in 2011.\n\\section{Results}\nTable \\ref{tab:regresults} collects the four headline specifications.\nThe baseline estimate implies that a ten percent increase in the minimum\nwage lowers sectoral employment by about 0.4 percent.\nThe estimate shrinks modestly as fixed effects and trends are added,\nand the instrumental-variables estimate is the smallest of the four.\nNone of the specifications produces an economy-wide response that is\nstatistically distinguishable from zero at conventional levels.\n\\begin{table}[h]\n\\centering\n\\caption{Estimated effect of the minimum-wage reform on log employment.}\n\\label{tab:regresults}\n\\begin{tabular}{lcccc}\n\\toprule\nSpecification & Coefficient & Std.\\ error & $p$-value & Sample size \\\\\n\\midrule\nBaseline OLS & -0.042 & 0.011 & 0.002 & 1842 \\\\\nWith sector fixed effects & -0.038 & 0.010 & 0.004 & 2361 \\\\\nWith region trends & -0.031 & 0.009 & 0.006 & 1207 \\\\\nIV with lagged exposure & -0.027 & 0.012 & 0.031 & 1984 \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\nEvent-study estimates show no pre-trend in the five years before the\nfirst increase, which supports the identifying assumption.\nEffects are concentrated in limited-service restaurants and are close\nto zero in retail and in manufacturing.\nTeen employment responds more strongly than prime-age employment,\nalthough the teen estimates are imprecise.\n\\section{Discussion}\nThe estimates reconcile part of the gap between case-study and\npanel-data findings: responses are negative but small, and they are\nconcentrated where theory predicts.\nTwo caveats deserve emphasis.\nFirst, county-level aggregation may mask displacement across neighboring\nsectors within a county.\nSecond, our window ends in 2024, and the effects of the largest scheduled\nincreases may not yet be fully realized.\n\\section{Conclusion}\nUsing thirteen years of paired-county data, we estimate minimum-wage\nemployment elasticities that are negative, small, and stable across\nspecifications.\nThe magnitudes imply that the increases observed in our window raised\nearnings for low-wage workers at modest employment cost.\nWhether the same holds for the substantially larger increases now\nscheduled in several states is a question for future work.\n\\end{document}\n"
+      }
+    ]
+  }
+}

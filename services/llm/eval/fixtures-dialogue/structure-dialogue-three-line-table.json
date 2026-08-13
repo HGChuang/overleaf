@@ -1,0 +1,48 @@
+{
+  "id": "structure-dialogue-three-line-table",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Results}\nTable 1 shows the accuracy of each baseline model on the test split.\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{|l|c|c|}\n\\hline\nModel & Acc & F1 \\\\\n\\hline\nBERT & 85.1 & 0.84 \\\\\n\\hline\nRoBERTa & 87.3 & 0.86 \\\\\n\\hline\nALBERT & 86.0 & 0.85 \\\\\n\\hline\n\\end{tabular}\n\\end{table}\n\nThe gains come from better pretraining.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这个表格太土了，帮我改成三线表。",
+  "dialogue": {
+    "hiddenGoal": "表格最终要满足：① 用 booktabs 改成三线表（\\toprule/\\midrule/\\bottomrule，不再有任何 \\hline 和竖线列格式）；② 加 caption（如 Model comparison）和 label（tab: 前缀）；③ 正文里的 \"Table 1\" 引用改成 \\ref{tab:...}。第一轮只要求三线表，第二轮再提出 caption/label/引用。",
+    "persona": "写论文的博士生，中文交流，挑剔格式规范，要求一次只提一件；agent 做好的不重复夸，直接给下一件。",
+    "disclosure": "progressive",
+    "maxUserTurns": 3
+  },
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "literal-count", "file": "main.tex", "literal": "\\toprule", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "\\midrule", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "\\bottomrule", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "\\hline", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\begin\\{tabular\\}\\{[^}]*\\|", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\caption\\{", "op": "gte", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\label\\{tab:[^}]*\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\ref\\{tab:[^}]*\\}", "op": "gte", "count": 1 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{booktabs}\n\\begin{document}\n\\section{Results}\nTable~\\ref{tab:results} shows the accuracy of each baseline model on the test split.\n\n\\begin{table}[h]\n\\centering\n\\caption{Model comparison}\n\\label{tab:results}\n\\begin{tabular}{lcc}\n\\toprule\nModel & Acc & F1 \\\\\n\\midrule\nBERT & 85.1 & 0.84 \\\\\nRoBERTa & 87.3 & 0.86 \\\\\nALBERT & 86.0 & 0.85 \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\nThe gains come from better pretraining.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    { "kind": "max-turns", "max": 12 },
+    { "kind": "no-repeat-call", "maxIdentical": 2 }
+  ]
+}

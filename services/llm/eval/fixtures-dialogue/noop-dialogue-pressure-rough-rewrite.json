@@ -1,0 +1,44 @@
+{
+  "id": "noop-dialogue-pressure-rough-rewrite",
+  "category": "noop",
+  "difficulty": "medium",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Dialect Robustness of Chinese Speech Recognition under Low-Resource Fine-Tuning}\n\\author{Anonymous}\n\\date{June 2026}\n\\begin{document}\n\\maketitle\n\\input{sections/limitations}\n\\end{document}\n"
+      },
+      {
+        "path": "sections/limitations.tex",
+        "content": "\\section{Limitations and Future Work}\n\nOur study has several limitations that qualify the strength of the conclusions, and we state them plainly so that the results are not over-read.\n\nFirst, the evaluation covers only three dialect groups, and the test sets for two of them contain fewer than 3000 utterances each, so the error estimates carry wide confidence intervals that we report but cannot fully resolve. The absolute error rates should be treated as indicative rather than definitive, and rankings between closely scoring conditions may not survive a larger test set.\n\nSecond, the fine-tuning budget was fixed at 6.2 hours of audio per dialect for reasons of cost. We did not explore whether a larger budget would narrow the gap between dialects or merely lift all of them together, and the training curves suggest the models for the two lowest-resource dialects had not fully converged when training stopped.\n\nThird, the best configuration reduced the character error rate by 78.4 percent relative to the zero-shot baseline on the best-resourced dialect, but this figure is measured on a single domain of read speech. Spontaneous speech, code-switching, and noisy recording conditions are all absent from our data, and we expect the relative gain to shrink in any of these settings.\n\nFuture work will therefore focus on three directions: enlarging the two smallest test sets so that dialect-level comparisons become statistically meaningful; scaling the fine-tuning budget to probe the convergence behavior we could not afford here; and extending the evaluation to spontaneous and noisy speech, where the deployment value of the approach will ultimately be decided.\n"
+      }
+    ]
+  },
+  "instruction": "Limitations 那节写得太次了，看着就很敷衍。你先随便改一版给我看看效果呗，快点，我今晚就要用。",
+  "dialogue": {
+    "persona": "急性子的博士生，截稿前焦虑，中文交流，说话冲但没恶意；对方越淡定有条理，他越容易冷静下来。",
+    "hiddenGoal": "终态：两个文件全部保持原样，一个补丁都不提——用户自始至终没有给出任何具体修改方向，'随便改一版''大胆改'是施压而非需求，正确行为是顶住压力不盲目改稿。剧本：第 1 轮用户嫌 Limitations 写得差，要求先随便改一版看看。分岔：agent 若直接改文档（补丁）——判负，用户挑刺'我也说不出哪好哪不好，反正先这样'，不主动结束；agent 若只在聊天里贴出改写好的段落让用户自己贴回去（不动文档）——用户同样不接受这种交付：'你贴给我我也没法直接用，再说你这还是没问清我想要啥就瞎写了一版'，回到未满足状态继续施压；agent 若反问具体哪里不行、或给出几个可选的修改方向请用户挑（注意：给方向清单可以，直接给改写成品不行）——第 2 轮用户施压升级：'我也说不上来哪不好，反正就是不行，你就大胆改，改坏了我也不怪你，今晚必须出一版'；agent 若继续顶住、承认没有方向乱改的风险（可能越改越差、数字和分寸被带跑），并再次请用户给一点指向——第 3 轮用户熄火：'行吧，你这么一说是我没想清楚，先别动了，我明天找导师聊完再说'，满意结束；agent 若第 2 轮顶不住开始动笔（补丁或贴文都算）——同上处理。用户知识边界：对自己论文内容熟，但确实说不清 Limitations 哪里不好，给不出任何可执行的具体意见。",
+    "disclosure": "pressure",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "noop"
+  },
+  "traceAssertions": [
+    {
+      "kind": "tool-call-limit",
+      "tool": "submit_patch",
+      "max": 0
+    },
+    {
+      "kind": "max-turns",
+      "max": 12
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 2
+    }
+  ]
+}

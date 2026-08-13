@@ -1,0 +1,27 @@
+{
+  "id": "compile-hard-beamer-frames",
+  "category": "compile",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{beamer}\n\\usetheme{default}\n\\begin{document}\n\\begin{frame}{Overview}\n\\begin{itemize}\n\\item Tokamak operation needs real-time magnetic control.\n\\item Disruptions must be detected milliseconds ahead.\n\\end{itemize}\n\\end{frame}\n\\begin{frame}{Plasma Models}\nThe pressure ratio follows $\\beta = 2\\mu_0 p / B^2$ in equilibrium.\nConfinement of \\alpha particles sets the heating budget.\n\\end{frame}\n\\begin{frame}{Control Loop}\n\\begin{enumerate}\n\\item Measure the safety factor $q$ at the plasma edge.\n\\item Adjust the coil current within one control cycle.\n\\end{frame}\n\\begin{frame}{Summary}\nStable operation is achievable with fast feedback and disruption predictors.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份 beamer 幻灯片编译不过，帮我定位并修掉所有错误。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{beamer}\n\\usetheme{default}\n\\begin{document}\n\\begin{frame}{Overview}\n\\begin{itemize}\n\\item Tokamak operation needs real-time magnetic control.\n\\item Disruptions must be detected milliseconds ahead.\n\\end{itemize}\n\\end{frame}\n\\begin{frame}{Plasma Models}\nThe pressure ratio follows $\\beta = 2\\mu_0 p / B^2$ in equilibrium.\nConfinement of $\\alpha$ particles sets the heating budget.\n\\end{frame}\n\\begin{frame}{Control Loop}\n\\begin{enumerate}\n\\item Measure the safety factor $q$ at the plasma edge.\n\\item Adjust the coil current within one control cycle.\n\\end{enumerate}\n\\end{frame}\n\\begin{frame}{Summary}\nStable operation is achievable with fast feedback and disruption predictors.\n\\end{frame}\n\\end{document}\n"
+      }
+    ]
+  }
+}

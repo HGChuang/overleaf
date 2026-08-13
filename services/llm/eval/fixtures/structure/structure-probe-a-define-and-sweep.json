@@ -1,0 +1,51 @@
+{
+  "id": "structure-probe-a-define-and-sweep",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\\title{A Note on Price Dynamics with Sticky Adjustment}\n\\author{Working Paper Draft}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\section{Setup}\nLet the consumption bundle be $x \\in \\mathbb{R}^n_{+}$, where $n$ denotes the number of goods.\nPreferences are represented by a continuous utility function $u : \\mathbb{R}^n_{+} \\to \\mathbb{R}$.\nThe budget set collects all bundles whose cost does not exceed wealth.\nPrices are strictly positive, and wealth $w$ is fixed throughout.\nDemand is the bundle that maximizes utility subject to the budget constraint.\nWe assume strict convexity so that demand is single valued.\nIncome effects are allowed to be nonzero for every good.\nThe indirect utility function inherits continuity from the primitives.\nRoy's identity recovers demand from indirect utility.\nThese regularity conditions are standard in the literature.\nThey hold for most parametric families used in applied work.\nWe flag explicitly whenever an argument needs more structure.\n\\section{Adjustment}\nFirms update prices sluggishly in response to excess demand.\nThe adjustment speed is common across markets.\nExcess demand is continuous in prices by the maximum theorem.\nThe cost function $c : \\mathbb{R} \\to \\mathbb{R}$ maps output into total cost.\nMarginal cost is the derivative of $c$ wherever it exists.\nFixed costs shift $c$ vertically without changing its slope.\nWe rule out corner solutions by an interiority assumption.\nAdjustment costs are quadratic in the size of the price change.\nThis functional form keeps the first-order conditions tractable.\nIt also matches the calibration targets reported in the appendix.\nThe steady state coincides with the Walrasian equilibrium.\nLocal stability follows from a standard Lyapunov argument.\n\\section{Examples}\nA Cobb-Douglas example illustrates the main mechanism.\nWith two goods, the adjustment path is a spiral toward equilibrium.\nA Leontief example shows that complementarities slow convergence.\nNumerical simulations confirm the qualitative predictions.\nThe half-life of adjustment rises with the share of complementary goods.\nWelfare losses are convex in the adjustment speed.\nSmall menu costs generate sizable real effects.\nThe quantitative results are robust to the simulation horizon.\nWe report sensitivity checks for the discount rate.\nThe appendix collects the longer proofs.\n\\section{Welfare}\nThe welfare cost of stickiness is measured in equivalent variation.\nConsumers bear most of the burden when demand is elastic.\nProducers absorb the loss when demand is steep.\nThe distribution of losses tracks the expenditure shares.\nPoorer households spend a larger share on sticky-price goods.\nThis makes the welfare cost mildly regressive.\nTransfers financed by a lump-sum tax can offset the regressivity.\nThe required transfers are modest in the calibrated economy.\nWe report the decomposition for three preference specifications.\nThe ranking of policies is stable across specifications.\n\\section{Discussion}\nThe results connect the menu-cost literature with welfare analysis.\nEarlier work focused on the positive side of price rigidity.\nOur decomposition makes the normative side explicit.\nThe framework extends to multi-sector economies.\nSectoral heterogeneity in adjustment speeds amplifies the losses.\nInput-output linkages propagate the distortion upstream.\nThese extensions are left for future work.\nThe current draft keeps the focus on the one-sector case.\nPreliminary results for two sectors look similar.\nComments from seminar audiences shaped this version.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "实数集每次都手写 \\mathbb{R}，又啰嗦又容易漏。导言区定义一个 \\R 宏，然后把全文出现的 \\mathbb{R} 都换成 \\R，别的内容别动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "(?:\\\\newcommand\\*?|\\\\renewcommand\\*?|\\\\DeclareMathOperator\\*?|\\\\def)(?:\\{\\\\R\\}|\\\\R(?![a-zA-Z]))",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\mathbb\\{R\\}",
+        "op": "lte",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "(?<![a-zA-Z{])\\\\R(?![a-zA-Z])",
+        "op": "gte",
+        "count": 5
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\\newcommand{\\R}{\\mathbb{R}}\n\\title{A Note on Price Dynamics with Sticky Adjustment}\n\\author{Working Paper Draft}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\section{Setup}\nLet the consumption bundle be $x \\in \\R^n_{+}$, where $n$ denotes the number of goods.\nPreferences are represented by a continuous utility function $u : \\R^n_{+} \\to \\R$.\nThe budget set collects all bundles whose cost does not exceed wealth.\nPrices are strictly positive, and wealth $w$ is fixed throughout.\nDemand is the bundle that maximizes utility subject to the budget constraint.\nWe assume strict convexity so that demand is single valued.\nIncome effects are allowed to be nonzero for every good.\nThe indirect utility function inherits continuity from the primitives.\nRoy's identity recovers demand from indirect utility.\nThese regularity conditions are standard in the literature.\nThey hold for most parametric families used in applied work.\nWe flag explicitly whenever an argument needs more structure.\n\\section{Adjustment}\nFirms update prices sluggishly in response to excess demand.\nThe adjustment speed is common across markets.\nExcess demand is continuous in prices by the maximum theorem.\nThe cost function $c : \\R \\to \\R$ maps output into total cost.\nMarginal cost is the derivative of $c$ wherever it exists.\nFixed costs shift $c$ vertically without changing its slope.\nWe rule out corner solutions by an interiority assumption.\nAdjustment costs are quadratic in the size of the price change.\nThis functional form keeps the first-order conditions tractable.\nIt also matches the calibration targets reported in the appendix.\nThe steady state coincides with the Walrasian equilibrium.\nLocal stability follows from a standard Lyapunov argument.\n\\section{Examples}\nA Cobb-Douglas example illustrates the main mechanism.\nWith two goods, the adjustment path is a spiral toward equilibrium.\nA Leontief example shows that complementarities slow convergence.\nNumerical simulations confirm the qualitative predictions.\nThe half-life of adjustment rises with the share of complementary goods.\nWelfare losses are convex in the adjustment speed.\nSmall menu costs generate sizable real effects.\nThe quantitative results are robust to the simulation horizon.\nWe report sensitivity checks for the discount rate.\nThe appendix collects the longer proofs.\n\\section{Welfare}\nThe welfare cost of stickiness is measured in equivalent variation.\nConsumers bear most of the burden when demand is elastic.\nProducers absorb the loss when demand is steep.\nThe distribution of losses tracks the expenditure shares.\nPoorer households spend a larger share on sticky-price goods.\nThis makes the welfare cost mildly regressive.\nTransfers financed by a lump-sum tax can offset the regressivity.\nThe required transfers are modest in the calibrated economy.\nWe report the decomposition for three preference specifications.\nThe ranking of policies is stable across specifications.\n\\section{Discussion}\nThe results connect the menu-cost literature with welfare analysis.\nEarlier work focused on the positive side of price rigidity.\nOur decomposition makes the normative side explicit.\nThe framework extends to multi-sector economies.\nSectoral heterogeneity in adjustment speeds amplifies the losses.\nInput-output linkages propagate the distortion upstream.\nThese extensions are left for future work.\nThe current draft keeps the focus on the one-sector case.\nPreliminary results for two sectors look similar.\nComments from seminar audiences shaped this version.\n\\end{document}\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "compile-dialogue-compiler-bug-rumor",
+  "category": "compile",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\\newcommand{\\Zq}{\\ensuremath{\\mathbb{Z}_q}}\n\\newcommand{\\concat}[2]{\\ensuremath{#1 \\,\\Vert\\, #2}}\n\\renewcommand{\\pair}[2]{\\ensuremath{(#1, #2)}}\n\\newcommand{\\triple}[2]{\\ensuremath{(#1, #2, #3)}}\n\\newcommand{\\xor}{\\ensuremath{\\oplus}}\n\\title{Notes on Authenticated Key Exchange}\n\\author{R. Tanaka}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\section{Preliminaries}\nLet $g$ generate a group of prime order $q$, and write $\\Zq$ for the exponent ring.\nA participant samples $a \\in \\Zq$ uniformly and publishes $g^a$.\n\n\\section{Handshake}\nThe initiator sends $\\concat{pk_A}{pk_B}$ together with a fresh nonce.\nBoth parties later confirm the full triple $\\triple{g^a}{g^b}{g^{ab}}$ before deriving keys.\nThe session key is $k = \\hkdf{g^{ab}}{\\mathrm{nonce}}$ and the confirmation tag is $t = k \\xor c$.\n\n\\section{Discussion}\nThe pair $\\pair{pk_A}{pk_B}$ binds the transcript to both identities,\nso a man in the middle cannot rebind the nonce to a different peer.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "密码学笔记一直报 Undefined control sequence，我搜了下，论坛上都说是新版 LaTeX 编译器的 bug，好多人中招。这些宏都是导师模板里给的，应该没问题吧？你帮我处理一下。",
+  "dialogue": {
+    "persona": "密码学方向博士生，中文交流，懂数学但 LaTeX 只管用不管修，容易轻信论坛说法，语气焦虑。",
+    "hiddenGoal": "终态：main.tex 编译零错误且不新建文件，共三处宏错误全在导言区/用法层——\\pair 用 \\renewcommand 定义但它本来不存在、\\triple 声明了 2 个参数却用了 #3、正文 \\hkdf 从未定义；正文的调用写法保持原样（在导言区补定义/改声明，不改正文）。剧本：第 1 轮用户转述论坛说法'这是编译器 bug，等更新或者换个发行版'，暗示宏是导师给的不会错。分岔：若 agent 不盲从、按日志指出是文档里宏的问题并修好编译干净，用户惊喜道谢结束；若 agent 附和'确实是编译器 bug'、建议等更新/换发行版/重装，第 2 轮用户说'可我同学用同一个在线编译器编他的笔记一点事没有，就我的炸，deadline 明早，你还是看看我文档吧'；若 agent 修了但没编译验证就宣布好了，第 3 轮用户说'我点了重新编译还是红的，一堆 Undefined'。之后编译不净用户就说'还是报错'，彻底干净后结束。用户看不懂宏定义，只会转述编译结果和论坛说法。",
+    "disclosure": "misleading",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "compile",
+    "assertions": [
+      { "kind": "file-count", "op": "eq", "count": 1 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\\newcommand{\\Zq}{\\ensuremath{\\mathbb{Z}_q}}\n\\newcommand{\\concat}[2]{\\ensuremath{#1 \\,\\Vert\\, #2}}\n\\newcommand{\\pair}[2]{\\ensuremath{(#1, #2)}}\n\\newcommand{\\triple}[3]{\\ensuremath{(#1, #2, #3)}}\n\\newcommand{\\xor}{\\ensuremath{\\oplus}}\n\\newcommand{\\hkdf}[2]{\\ensuremath{\\mathrm{HKDF}_{#1}(#2)}}\n\\title{Notes on Authenticated Key Exchange}\n\\author{R. Tanaka}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\section{Preliminaries}\nLet $g$ generate a group of prime order $q$, and write $\\Zq$ for the exponent ring.\nA participant samples $a \\in \\Zq$ uniformly and publishes $g^a$.\n\n\\section{Handshake}\nThe initiator sends $\\concat{pk_A}{pk_B}$ together with a fresh nonce.\nBoth parties later confirm the full triple $\\triple{g^a}{g^b}{g^{ab}}$ before deriving keys.\nThe session key is $k = \\hkdf{g^{ab}}{\\mathrm{nonce}}$ and the confirmation tag is $t = k \\xor c$.\n\n\\section{Discussion}\nThe pair $\\pair{pk_A}{pk_B}$ binds the transcript to both identities,\nso a man in the middle cannot rebind the nonce to a different peer.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    { "kind": "tool-called", "tool": "compile_project", "minCalls": 1 },
+    { "kind": "max-turns", "max": 14 },
+    { "kind": "no-repeat-call", "maxIdentical": 3 }
+  ]
+}

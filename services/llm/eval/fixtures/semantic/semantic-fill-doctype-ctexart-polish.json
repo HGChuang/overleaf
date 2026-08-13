@@ -1,0 +1,47 @@
+{
+  "id": "semantic-fill-doctype-ctexart-polish",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{CJKutf8}\n\\begin{document}\n\\begin{CJK}{UTF8}{gbsn}\n\\title{合作社参与对农户收入的影响：来自两县412户的调查证据}\n\\author{王芳\\quad 李强}\n\\date{2026年3月}\n\\maketitle\n\\begin{abstract}\n合作社这个事儿现在挺火的，大家都说它能让农户多挣钱。咱们用两个县412户农户的调查数据看了看，发现入了社的农户一年确实能多挣差不多四千块钱，平均下来增收8.3\\%左右。合作社还帮着解决了卖难和买农资贵的问题。不过，年纪大的农户和地少的农户从中得到的好处好像没那么大。\n\\end{abstract}\n\\end{CJK}\n\\input{abstract-en}\n\\begin{CJK}{UTF8}{gbsn}\n\\section{引言}\n近二十年来，中国农村合作社的数量快速增长，其经济效应成为农业经济研究的重要议题。既有研究多基于省级面板数据，较少利用农户层面的微观调查证据。本文利用两县412户农户的调查数据，估计合作社参与对家庭农业收入的影响，并讨论效应的异质性。\n\\end{CJK}\n\\end{document}\n"
+      },
+      {
+        "path": "abstract-en.tex",
+        "content": "\\begin{abstract}\nDrawing on a survey of 412 farm households in two counties, this paper\nestimates the effect of cooperative membership on household farm\nincome. Member households earn about four thousand yuan more per year,\nan increase of 8.3\\% on average, with smaller gains for older and\nland-poor households.\n\\end{abstract}\n"
+      }
+    ]
+  },
+  "instruction": "这篇稿子的中文摘要写得太随意了（“这个事儿”“挺火”“咱们”“多挣差不多四千块钱”“好像没那么大”这种表达期刊肯定不接受），帮我润色成规范的书面学术中文。事实和数字（两个县、412 户、年增收约四千元、8.3\\%、老年和地少农户获益较小）都要保留，别加原文没有的内容。英文摘要和引言不用动。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 中文摘要改写为规范书面学术中文，口语表达（这个事儿/挺火/咱们/多挣差不多四千块钱/好像没那么大）全部清除，五个信息点（合作社增收主题 / 两县 412 户调查数据 / 年增收约四千元 / 平均增收 8.3% / 老年与地少农户获益较小）准确保留，无新增论断，abstract 环境与 CJK 结构完整，英文摘要与引言未动；4: 文体规范且 ≥4 个信息点准确，个别措辞仍可更精炼；3: 文体有改善但残留明显口语表达，或 1 个信息点（含数字）失真；2: 仅做表面替换，整体仍口语化，或丢失 ≥2 个信息点；1: 未润色，或虚构原文没有的内容，或动了英文摘要/引言",
+    "assertions": [
+      {
+        "kind": "unchanged-file",
+        "file": "abstract-en.tex"
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "412",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "8.3",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  }
+}

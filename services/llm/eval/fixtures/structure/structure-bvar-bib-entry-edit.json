@@ -1,0 +1,70 @@
+{
+  "id": "structure-bvar-bib-entry-edit",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Wage Coordination and Export Performance\\\\ in Small Open Economies}\n\\author{M.~Duarte}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe literature on small open economies has long associated\ncoordinated wage bargaining with disciplined cost growth\nand, through it, with export competitiveness.\n\\cite{hale2019} provides the sharpest statement of the\nsectoral mechanism: where export-sector unions set the pace,\nwage moderation follows the exposed sector's productivity\nrather than the sheltered sector's aspirations.\n\n\\section{Institutional Background}\nThe classic accounts of postwar wage moderation emphasise\nthe centralisation of bargaining \\cite{oconnor2015},\nbut centralisation alone does not explain why some\ndecentralised systems sustained coordination.\nRecent work stresses the informational role of pattern\nbargaining, in which a leading sector's settlement anchors\nexpectations across the economy \\cite{delacroix2021}.\n\n\\section{Discussion}\nTaken together, the sectoral and the informational accounts\nsuggest that coordination is a property of bargaining\nnetworks rather than of formal centralisation alone.\nThe export-performance consequences then depend on which\nsector occupies the pivotal position in the network.\n\n\\section{Conclusion}\nWage coordination in small open economies is best understood\nas an emergent property of intersectoral bargaining,\nand its export effects follow from the structure of the\nnetwork rather than from any single institutional trait.\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\\end{document}\n"
+      },
+      {
+        "path": "refs.bib",
+        "content": "@article{hale2019,\n  author  = {Hale, G.},\n  title   = {Sectoral Bargaining and Export Discipline in Small Open Economies},\n  journal = {Comparative Political Studies},\n  year    = {2019},\n  volume  = {52},\n  pages   = {311--342}\n}\n\n@book{oconnor2015,\n  author    = {O'Connor, F.},\n  title     = {Labour Market Institutions and the Politics of Wage Moderation},\n  publisher = {Oxford University Press},\n  year      = {2015}\n}\n\n@article{delacroix2021,\n  author  = {Delacroix, M. and Fontaine, R.},\n  title   = {Coordination Without Corporatism: Pattern Bargaining After Centralisation},\n  journal = {European Journal of Industrial Relations},\n  year    = {2021},\n  volume  = {27},\n  pages   = {55--74}\n}\n"
+      }
+    ]
+  },
+  "instruction": "核对文献的时候发现 hale2019 这条其实有两个作者：G. Hale 和 S. Marchetti，bib 里把第二作者漏了。请把 refs.bib 里这条的 author 字段改成 {Hale, G. and Marchetti, S.}，写法和其它条目保持「姓, 名首字母.」的 bib 格式。只动这一个字段，条目其它字段和 main.tex 都不用改。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "refs.bib",
+        "pattern": "author\\s*=\\s*\\{Hale, G\\. and Marchetti, S\\.\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "refs.bib",
+        "pattern": "author\\s*=\\s*\\{Hale, G\\.\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "refs.bib",
+        "literal": "Marchetti",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "refs.bib",
+        "pattern": "@(?:article|book)\\{",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Wage Coordination and Export Performance\\\\ in Small Open Economies}\n\\author{M.~Duarte}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe literature on small open economies has long associated\ncoordinated wage bargaining with disciplined cost growth\nand, through it, with export competitiveness.\n\\cite{hale2019} provides the sharpest statement of the\nsectoral mechanism: where export-sector unions set the pace,\nwage moderation follows the exposed sector's productivity\nrather than the sheltered sector's aspirations.\n\n\\section{Institutional Background}\nThe classic accounts of postwar wage moderation emphasise\nthe centralisation of bargaining \\cite{oconnor2015},\nbut centralisation alone does not explain why some\ndecentralised systems sustained coordination.\nRecent work stresses the informational role of pattern\nbargaining, in which a leading sector's settlement anchors\nexpectations across the economy \\cite{delacroix2021}.\n\n\\section{Discussion}\nTaken together, the sectoral and the informational accounts\nsuggest that coordination is a property of bargaining\nnetworks rather than of formal centralisation alone.\nThe export-performance consequences then depend on which\nsector occupies the pivotal position in the network.\n\n\\section{Conclusion}\nWage coordination in small open economies is best understood\nas an emergent property of intersectoral bargaining,\nand its export effects follow from the structure of the\nnetwork rather than from any single institutional trait.\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\\end{document}\n"
+      },
+      {
+        "path": "refs.bib",
+        "content": "@article{hale2019,\n  author  = {Hale, G. and Marchetti, S.},\n  title   = {Sectoral Bargaining and Export Discipline in Small Open Economies},\n  journal = {Comparative Political Studies},\n  year    = {2019},\n  volume  = {52},\n  pages   = {311--342}\n}\n\n@book{oconnor2015,\n  author    = {O'Connor, F.},\n  title     = {Labour Market Institutions and the Politics of Wage Moderation},\n  publisher = {Oxford University Press},\n  year      = {2015}\n}\n\n@article{delacroix2021,\n  author  = {Delacroix, M. and Fontaine, R.},\n  title   = {Coordination Without Corporatism: Pattern Bargaining After Centralisation},\n  journal = {European Journal of Industrial Relations},\n  year    = {2021},\n  volume  = {27},\n  pages   = {55--74}\n}\n"
+      }
+    ]
+  }
+}

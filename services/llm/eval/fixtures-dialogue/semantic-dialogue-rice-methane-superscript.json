@@ -1,0 +1,146 @@
+{
+  "id": "semantic-dialogue-rice-methane-superscript",
+  "category": "semantic",
+  "difficulty": "hard",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Alternate Wetting and Drying in the Mekong Delta:\\newline Yield, Water, and Methane across Six Sites}\n\\author{The Delta AWD Consortium}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\n\\input{abstract}\n\\end{abstract}\n\\section{Introduction}\nRice production in the Mekong Delta faces tightening dry-season water allocations and rising scrutiny of methane emissions.\nAlternate wetting and drying has been promoted as a water-saving practice, but adoption lags behind the evidence.\n\\section{Methods}\nWe coordinated a three-season trial across six sites spanning the upper and lower delta.\nExtension staff coached participating farmers on safe water-level thresholds.\n\\end{document}\n"
+      },
+      {
+        "path": "abstract.tex",
+        "content": "Rice is the dominant crop of the Mekong Delta, and its cultivation accounts for a large share of agricultural water use and of methane emissions from the region [1]. Alternate wetting and drying, in which fields are allowed to drain to a threshold below the soil surface before re-flooding, has been proposed as a practice that saves water without sacrificing yield [2]. We coordinated a randomised field trial across six sites in the delta over three consecutive growing seasons, comparing alternate wetting and drying with the farmers' usual practice of continuous flooding [3]. Seasonal irrigation water applied under the new practice fell by 28.4\\% relative to the control plots, and seasonal methane emissions, measured with automated chambers at four of the sites, fell by 31.7\\% [4]. Grain yield under alternate wetting and drying was lower by 2.1\\% on average across sites and seasons, and this difference was not statistically significant at the plot level. Grain quality, measured as milling recovery and chalkiness, showed no consistent pattern across treatments [5]. The water saving translated into lower pumping costs for farmers who paid for lift irrigation. We conclude that alternate wetting and drying offers large water and methane benefits at a small and statistically uncertain yield penalty, and that wider adoption is warranted where dry-season water is limited.\n"
+      }
+    ]
+  },
+  "instruction": "abstract.tex 这个摘要快两百词了，编辑部让狠狠压一版。三个数——28.4、31.7、2.1——一个不许动，都是主要结果。main.tex 不用管。",
+  "dialogue": {
+    "persona": "研究助理，中文交流，时间紧、说话直；编辑部和排版的要求逐条转达，自己不懂 LaTeX 细节，但认得出方括号标号有没有了、数字对不对。",
+    "hiddenGoal": "终态要求（三目标张力，全部同时成立）：① abstract.tex 压到 100 词以内（硬上限，上标标号也计入）；② 28.4、31.7、2.1 三个数字原样保留；③ 引用标号从方括号形式 [1]-[5] 全部改成上标，用 \\textsuperscript 排（如 \\textsuperscript{1}），方括号形式清零；④ 核心信息不丢：节水量、甲烷削减、产量小幅且不显著的代价、干季缺水地区值得推广的结论；⑤ main.tex 不动；⑥ 无虚构内容。剧本：第 1 轮只提压缩+保数字（instruction，不说词数）。第 2 轮分岔：若交付仍明显超 100 词——用户给硬指标：'字数跟编辑确认了：100 词硬上限，投稿系统超一词直接退。'若已压进 100 词——用户夸一句直接进入第 3 轮。第 3 轮（张力轮）：'编辑部排版意见：引用标号不要方括号那种，改成上标，用 \\textsuperscript 排；100 词的上限不变，三个数也不变。'分岔：agent 在 100 词内完成上标转换——用户满意结束；agent 因此超限——用户'系统退回了，超了，再砍几个词'；agent 动了三个数——用户点名要求恢复；agent 把标号做成脚注或参考文献列表——用户纠正'只要上标标号，别加脚注别加文献列表'。全部满足后用户回复'行，就这样'结束。用户知识边界：记得三个数字与编辑部两条要求（100 词、上标），给不了改写示范。",
+    "disclosure": "multi-goal",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "abstract.tex",
+    "passScore": 4,
+    "rubric": "5: ≤100 词（上标标号计入词数），语言地道、符合农学期刊摘要文体，28.4/31.7/2.1 三个数字原样，[1]-[5] 全部转为 \\textsuperscript 上标，节水/甲烷/产量代价/推广条件四个要点齐全，无虚构内容，main.tex 未动；4: ≤100 词、数字与上标全对，个别句式生硬或一次要信息有损；3: ≤115 词，或 1 处引用标号遗漏，或四个要点缺一；2: 明显超限（>115 词），或数字失真，或标号格式改错（脚注/文献列表）；1: 未压缩、改动数字、引用格式未转，或虚构内容",
+    "assertions": [
+      {
+        "kind": "word-count",
+        "file": "abstract.tex",
+        "op": "lte",
+        "count": 100
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "28.4",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "31.7",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "2.1",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "[1]",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "[2]",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "[3]",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "[4]",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "[5]",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "\\textsuperscript{1}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "\\textsuperscript{2}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "\\textsuperscript{3}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "\\textsuperscript{4}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "\\textsuperscript{5}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 14
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 2
+    }
+  ]
+}

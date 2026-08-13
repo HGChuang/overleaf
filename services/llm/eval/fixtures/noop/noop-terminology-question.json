@@ -1,0 +1,19 @@
+{
+  "id": "noop-terminology-question",
+  "category": "noop",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\n\\title{Graph Neural Networks for Band Gap Prediction in Perovskite Oxides}\n\\author{S.~Reyes and T.~Aldana}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Model and Training Details}\nWe represent each candidate perovskite oxide as a crystal graph and train\na message-passing neural network to predict its band gap. All models are\ntrained with the AdamW optimizer. We use a batch size of 128 structures\nand a peak learning rate of $3\\times10^{-4}$. The learning rate follows a\nlinear warmup schedule for the first 2000 optimization steps, after which\nit decays cosinely to zero over the remaining 48000 steps. Training runs\nfor 50 epochs on a single accelerator and takes roughly six hours.\n\n\\subsection{Hyperparameter Selection}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{ll}\n\\toprule\nHyperparameter & Value \\\\\n\\midrule\nBatch size & 128 \\\\\nPeak learning rate & $3\\times10^{-4}$ \\\\\nWarmup steps & 2000 \\\\\nTotal steps & 50000 \\\\\nWeight decay & 0.01 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Training hyperparameters used for all reported models.}\n\\label{tab:hyp}\n\\end{table}\n\nThe warmup phase is followed by cosine decay, which we found to give more\nstable convergence than a constant schedule across three random seeds.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "文中 warmup 是什么意思？为什么要用它？",
+  "grader": {
+    "type": "noop"
+  }
+}

@@ -1,0 +1,278 @@
+{
+  "id": "structure-dialogue-bridge-manual-multi",
+  "category": "structure",
+  "difficulty": "extreme",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{graphicx}\n\n\\title{Trail Bridge Inspection Manual}\n\\author{Bridgeworks Cooperative}\n\\date{2026 Edition}\n\n\\begin{document}\n\\maketitle\n\\tableofcontents\n\n\\input{chapters/overview}\n\\input{chapters/design}\n\\input{chapters/evaluation}\n\n\\appendix\n\n\\chapter{Inspection Log Template}\nA blank log sheet carries the fields crews actually fill in: date, crew,\nspan type, and a condition code per component.\nThe template is copied one page per bridge per visit.\n\n\\chapter{Torque Values}\nBolt checks use the torque table reproduced here from the hardware\nsupplier datasheet.\nValues assume dry threads unless the table row says otherwise.\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/overview.tex",
+        "content": "\\chapter{Program Overview}\nThe cooperative maintains forty-one trail bridges across three ranger\ndistricts, and every span gets a condition code twice a year.\n\\section{Scope of Inspections}\nA routine visit covers the deck, the stringers, the abutments, and the\nhardware that ties them together.\n\\subsection{Routine Visits}\nRoutine visits are visual and tactile: sound the timber, torque the\nbolts, photograph anything that changed.\n\\subsection{Triggered Visits}\nA flood, a windthrow, or a hiker report schedules a triggered visit\nwithin ten days.\n\\section{Condition Codes}\nCodes run from one to four, where one is sound and four closes the\nbridge until a crew signs off.\n\n\\begin{figure}[t]\n\\centering\n\\fbox{\\rule{0pt}{45pt}\\rule{110pt}{0pt}}\n\\caption{Condition codes assigned per component on the standard form.}\n\\label{fig:codes}\n\\end{figure}\n\nRecording the code per component, rather than per bridge, is what lets\nthe office spot a stringer that drifts across visits.\n"
+      },
+      {
+        "path": "chapters/design.tex",
+        "content": "\\chapter{Field Kit}\nThe kit fits in two crates and a torpedo level, and nothing in it needs\na power outlet.\n\\section{Hand Tools}\nA socket set, a scraper, a sounding hammer, and a moisture meter cover\nnearly every routine check.\n\\section{Consumables}\nFlagging tape, log sheets, and pencil refills live in the lid crate so a\ncrew can restock without unpacking.\n\n\\begin{table}[b]\n\\centering\n\\begin{tabular}{ll}\n\\hline\nItem & Quantity \\\\\n\\hline\nSocket set & 1 \\\\\nSounding hammer & 2 \\\\\nMoisture meter & 1 \\\\\nLog sheets & 40 \\\\\n\\hline\n\\end{tabular}\n\\caption{Standard crate contents for a two-person crew.}\n\\label{tab:kit}\n\\end{table}\n\nCrews sign the log sheet against this table before leaving the\ntrailhead, which keeps missing tools a trailhead problem.\n"
+      },
+      {
+        "path": "chapters/evaluation.tex",
+        "content": "\\chapter{Season Review}\nAt the end of the season the office compares condition codes across\nvisits and across districts.\n\\section{Trend Flags}\nA component that drops a code between spring and autumn visits gets a\nflag and a closer look the next spring.\n\\section{Reporting}\nThe district summary goes to the ranger office with the flagged\ncomponents listed first.\n\n\\begin{figure}[t]\n\\centering\n\\fbox{\\rule{0pt}{45pt}\\rule{110pt}{0pt}}\n\\caption{Flagged components by district at season close.}\n\\label{fig:flags}\n\\end{figure}\n\nThe summary is deliberately short: one page of flags, one page of\nphotographs, and the log sheets behind them.\n"
+      },
+      {
+        "path": "appendix.tex",
+        "content": "% Appendix material will be moved here from main.tex.\n"
+      },
+      {
+        "path": "symbols.tex",
+        "content": "% List of symbols will be written here.\n"
+      }
+    ]
+  },
+  "instruction": "这本步道桥检测手册要送印了，印厂给了排版清单，咱一项项来。先弄头两件事：目录现在连 subsection 都列进去了，太细，只留到 section 这一层（导言区加 \\setcounter{tocdepth}{1} 就行）；另外正文的节编号改成大写罗马数字（I、II、III 那种，导言区 \\renewcommand{\\thesection}{\\Roman{section}}）。都在 main.tex 导言区动，章节文件先别碰。",
+  "dialogue": {
+    "persona": "步道维护合作社的文书，中文交流，不懂 LaTeX 原理但手里有印厂清单、记得几个命令名（tocdepth、\\Roman、[H]、float、\\input、\\appendix）；只看目录页和 PDF 翻页验收，性子急，催得紧。",
+    "hiddenGoal": "终态（五条约束同时满足，全部可判分）：①main.tex 导言区有 \\setcounter{tocdepth}{1}（subsection 不进目录）；②导言区有 \\renewcommand{\\thesection}{\\Roman{section}}；③导言区 \\usepackage{float}，且三个浮动体（overview.tex 的 figure、design.tex 的 table、evaluation.tex 的 figure）全部改成 [H]，旧的 [t]/[b] 一个不剩；④main.tex 尾部两章附录（Inspection Log Template、Torque Values）整段搬进已存在的 appendix.tex，main.tex 里 \\appendix 声明保留、且 \\input{appendix} 紧跟其后，附录正文一个字不许留在 main.tex；⑤symbols.tex（已存在的空壳）写 \\chapter*{List of Symbols}，下一行 \\addcontentsline{toc}{chapter}{List of Symbols}，description 列三条符号（用户指定三条的符号字母：$C$、$T$、$n$，描述文案按手册内容写），main.tex 里 \\input{symbols} 放在 \\appendix 之前；⑥三章正文、caption、label、表格内容一字不改，仍编译通过。剧本（预算紧，六轮内收工）：第 1 轮开场白只提 ①②；确认做好后第 2 轮提 ③：用户说图和表老往页顶跑，要钉死在写出来的位置，用 [H]，别忘了 float 宏包；第 3 轮提 ④：附录两章搬进 appendix.tex 空壳，\\input 挂回去，\\appendix 声明留在 main.tex 别动；第 4 轮提 ⑤：符号表写进 symbols.tex 空壳、挂在附录前面，用户主动提醒它不编号、进不了目录，要手动加目录条目，并指定三条符号的字母——$C$（condition code）、$T$（torque）、$n$（flagged components 数），描述文案按手册内容写即可；第 5、6 轮用于逐项核对和返工。分岔：任一轮 agent 漏做或做错（比如旧 [t] 没清干净、附录正文还留在 main.tex、符号表漏了 addcontentsline、编号方案没生效），用户当轮指出具体问题要求返工、不进入下一项；若 agent 提前把后面轮的也做了，用户不责怪但会逐项核对；五条全落实且编译无错后用户确认结束。",
+    "disclosure": "multi-goal",
+    "maxUserTurns": 6
+  },
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\setcounter{tocdepth}{1}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\setcounter\\{tocdepth\\}",
+          "\\\\begin\\{document\\}"
+        ]
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\renewcommand{\\thesection}{\\Roman{section}}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\usepackage{float}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/overview.tex",
+        "literal": "\\begin{figure}[H]",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/overview.tex",
+        "literal": "\\begin{figure}[t]",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/design.tex",
+        "literal": "\\begin{table}[H]",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/design.tex",
+        "literal": "\\begin{table}[b]",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/evaluation.tex",
+        "literal": "\\begin{figure}[H]",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/evaluation.tex",
+        "literal": "\\begin{figure}[t]",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\appendix",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\input{appendix}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\appendix",
+          "\\\\input\\{appendix\\}"
+        ]
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Inspection Log Template",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Torque Values",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "appendix.tex",
+        "literal": "\\chapter{Inspection Log Template}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "appendix.tex",
+        "literal": "\\chapter{Torque Values}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\input{symbols}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\input\\{symbols\\}",
+          "\\\\appendix"
+        ]
+      },
+      {
+        "kind": "literal-count",
+        "file": "symbols.tex",
+        "literal": "\\chapter*{List of Symbols}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "symbols.tex",
+        "literal": "\\addcontentsline{toc}{chapter}{List of Symbols}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "symbols.tex",
+        "pattern": "\\$C\\$",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "symbols.tex",
+        "pattern": "\\$T\\$",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "symbols.tex",
+        "pattern": "\\$n\\$",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/overview.tex",
+        "literal": "condition code twice a year",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/design.tex",
+        "literal": "Crews sign the log sheet against this table",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/evaluation.tex",
+        "literal": "\\caption{Flagged components by district at season close.}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{graphicx}\n\\usepackage{float}\n\\setcounter{tocdepth}{1}\n\\renewcommand{\\thesection}{\\Roman{section}}\n\n\\title{Trail Bridge Inspection Manual}\n\\author{Bridgeworks Cooperative}\n\\date{2026 Edition}\n\n\\begin{document}\n\\maketitle\n\\tableofcontents\n\n\\input{chapters/overview}\n\\input{chapters/design}\n\\input{chapters/evaluation}\n\\input{symbols}\n\n\\appendix\n\\input{appendix}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/overview.tex",
+        "content": "\\chapter{Program Overview}\nThe cooperative maintains forty-one trail bridges across three ranger\ndistricts, and every span gets a condition code twice a year.\n\\section{Scope of Inspections}\nA routine visit covers the deck, the stringers, the abutments, and the\nhardware that ties them together.\n\\subsection{Routine Visits}\nRoutine visits are visual and tactile: sound the timber, torque the\nbolts, photograph anything that changed.\n\\subsection{Triggered Visits}\nA flood, a windthrow, or a hiker report schedules a triggered visit\nwithin ten days.\n\\section{Condition Codes}\nCodes run from one to four, where one is sound and four closes the\nbridge until a crew signs off.\n\n\\begin{figure}[H]\n\\centering\n\\fbox{\\rule{0pt}{45pt}\\rule{110pt}{0pt}}\n\\caption{Condition codes assigned per component on the standard form.}\n\\label{fig:codes}\n\\end{figure}\n\nRecording the code per component, rather than per bridge, is what lets\nthe office spot a stringer that drifts across visits.\n"
+      },
+      {
+        "path": "chapters/design.tex",
+        "content": "\\chapter{Field Kit}\nThe kit fits in two crates and a torpedo level, and nothing in it needs\na power outlet.\n\\section{Hand Tools}\nA socket set, a scraper, a sounding hammer, and a moisture meter cover\nnearly every routine check.\n\\section{Consumables}\nFlagging tape, log sheets, and pencil refills live in the lid crate so a\ncrew can restock without unpacking.\n\n\\begin{table}[H]\n\\centering\n\\begin{tabular}{ll}\n\\hline\nItem & Quantity \\\\\n\\hline\nSocket set & 1 \\\\\nSounding hammer & 2 \\\\\nMoisture meter & 1 \\\\\nLog sheets & 40 \\\\\n\\hline\n\\end{tabular}\n\\caption{Standard crate contents for a two-person crew.}\n\\label{tab:kit}\n\\end{table}\n\nCrews sign the log sheet against this table before leaving the\ntrailhead, which keeps missing tools a trailhead problem.\n"
+      },
+      {
+        "path": "chapters/evaluation.tex",
+        "content": "\\chapter{Season Review}\nAt the end of the season the office compares condition codes across\nvisits and across districts.\n\\section{Trend Flags}\nA component that drops a code between spring and autumn visits gets a\nflag and a closer look the next spring.\n\\section{Reporting}\nThe district summary goes to the ranger office with the flagged\ncomponents listed first.\n\n\\begin{figure}[H]\n\\centering\n\\fbox{\\rule{0pt}{45pt}\\rule{110pt}{0pt}}\n\\caption{Flagged components by district at season close.}\n\\label{fig:flags}\n\\end{figure}\n\nThe summary is deliberately short: one page of flags, one page of\nphotographs, and the log sheets behind them.\n"
+      },
+      {
+        "path": "appendix.tex",
+        "content": "\\chapter{Inspection Log Template}\nA blank log sheet carries the fields crews actually fill in: date, crew,\nspan type, and a condition code per component.\nThe template is copied one page per bridge per visit.\n\n\\chapter{Torque Values}\nBolt checks use the torque table reproduced here from the hardware\nsupplier datasheet.\nValues assume dry threads unless the table row says otherwise.\n"
+      },
+      {
+        "path": "symbols.tex",
+        "content": "\\chapter*{List of Symbols}\n\\addcontentsline{toc}{chapter}{List of Symbols}\n\\begin{description}\n\\item[$C$] condition code assigned to a bridge component\n\\item[$T$] torque applied to a bolt during a hardware check\n\\item[$n$] number of flagged components in a district\n\\end{description}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 10
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 3
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "structure-add-section-labels",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Introduction}\nType systems catch errors early, but gradual typing adds runtime cost.\n\\section{Preliminaries}\nWe assume familiarity with simply typed lambda calculus.\n\\section{Approach}\nWe insert checks only at module boundaries, guided by blame analysis.\n\\section{Conclusion}\nBoundary checks preserve most of the safety at a fraction of the cost.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "请给四个 section 各补一个语义化的 \\label{sec:...}（放在 \\section 行之后，例如 Introduction 对应 \\label{sec:introduction}），然后在 Conclusion 末尾加一句用 \\ref 回指 Approach 章节的英文句子（总结该方法贡献时引用它），其它内容不变。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{sec:",
+        "op": "gte",
+        "count": 4
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\ref\\{sec:",
+        "op": "gte",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Introduction}\n\\label{sec:introduction}\nType systems catch errors early, but gradual typing adds runtime cost.\n\\section{Preliminaries}\n\\label{sec:preliminaries}\nWe assume familiarity with simply typed lambda calculus.\n\\section{Approach}\n\\label{sec:approach}\nWe insert checks only at module boundaries, guided by blame analysis.\n\\section{Conclusion}\n\\label{sec:conclusion}\nBoundary checks preserve most of the safety at a fraction of the cost. As Section~\\ref{sec:approach} shows, confining checks to module boundaries is what makes this trade-off practical.\n\\end{document}\n"
+      }
+    ]
+  }
+}

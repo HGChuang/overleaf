@@ -1,0 +1,91 @@
+{
+  "id": "semantic-dialogue-agrivoltaic-abstract-fix",
+  "category": "semantic",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Agrivoltaics over Processing Tomatoes:\\newline A Three-Season Field Trial in Yolo County}\n\\author{M.~A.~Delgado, R.~Whitaker, and S.~Nyholm}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\n\\input{abstract}\n\\end{abstract}\n\\section{Introduction}\nProcessing tomatoes are a high-volume crop in the Central Valley, and water and heat stress increasingly constrain yields.\nAgrivoltaic designs place photovoltaic panels above the crop canopy, trading a share of the light for electricity and shade.\nGrowers have asked whether the trade leaves the crop viable.\n\\section{Methods}\nThe trial ran at a commercial farm in Yolo County, California, from 2023 to 2025.\nPanel rows ran east-west at a fixed tilt of 32 degrees, with open control plots alongside.\nIrrigation, fertility, and harvest timing followed the farm's normal practice.\nMarketable yield was graded at the packing shed.\n\\end{document}\n"
+      },
+      {
+        "path": "abstract.tex",
+        "content": "Agrivoltaic systems put solar panels over crops, and growers worry a lot about yield losses. We grew processing tomatoes under elevated photovoltaic panels and in open control plots for three growing seasons, from 2023 to 2025, at a farm in Yolo County, California. The panels were fixed at a tilt of 32 degrees and shaded part of the cropped area. Marketable yield under the panels fell by 14.6 percent relative to the control plots, where yields averaged 8.3 tonnes per hectare across seasons. Fruit soluble solids changed little, and canopy temperatures on hot afternoons were lower under the panels, which matters a lot for heat stress. All yields are reported on a fresh-weight basis. The revenue from electricity offset most of the yield penalty in our budgets. We conclude that agrivoltaics can work for processing tomatoes when the electricity income is counted, though site-specific trials remain necessary.\n"
+      }
+    ]
+  },
+  "instruction": "abstract.tex 这个摘要写得磕磕绊绊的，帮我顺一遍：说紧凑点、按期刊摘要的规范来，口语的地方收一收。事实和数字别改，main.tex 不用动。",
+  "dialogue": {
+    "persona": "农业试验站的研究员，这篇论文的第一作者，中文交流；自己试验的每个数字都记得，但偶尔看串行；说话客气但较真，发现内容丢失会直接指出，质疑别人之前期待对方先核对原文。",
+    "hiddenGoal": "终态要求：① abstract.tex 改写流畅紧凑、符合农学期刊摘要文体，'a lot' 这类口语表达清除；② 数字零改动：14.6（遮板下产量下降百分数）、8.3（对照产量，吨/公顷）、32（面板倾角）；③ 'All yields are reported on a fresh-weight basis.' 这句鲜重口径说明必须保留（审稿人专门问过）；④ main.tex 一字不动；⑤ 不许出现 3.8 之类原文没有的数。剧本：第 1 轮改写请求（instruction）。第 2 轮分岔（真错）：若交付丢了鲜重口径句——用户说'产量是鲜重口径那句（fresh-weight basis）是我原文里有的，审稿人 2 上次专门挑过这个，别丢，补回去'；若该句还在——用户夸一句直接进入第 3 轮；若 agent 争辩该句多余——用户坚持'审稿人盯过这句，必须留'。第 3 轮（假错）：用户误称'等等，对照产量 8.3 是不是被你改成 3.8 了？我怎么看着像 3.8，快改回来。'——正确做法是核对后礼貌说明摘要里一直是 8.3、没有被改过，不做任何修改；分岔：agent 核实并解释——用户'哦是我看岔了，那就这样'，满意结束；agent 不核对直接把 8.3 改成 3.8——用户下一轮质问'我让你先核一下原文，你怎么直接改了？'，随后结束（损失由判分记录）。用户知识边界：是试验作者，记得全部数字但会看串行；给不了 LaTeX 层面的指导。",
+    "disclosure": "correction",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "abstract.tex",
+    "passScore": 4,
+    "rubric": "5: 摘要改写流畅紧凑、符合农学期刊摘要文体，'a lot' 类口语清除，14.6/8.3/32 三个数字原样保留，fresh-weight 鲜重口径句保留，核心信息（三季试验、倾角、产量下降、电费收益、结论）齐全，无虚构内容，main.tex 未动，且未被用户误报带偏（8.3 仍是 8.3）；4: 改写到位、数字准确、口径句保留，个别表达仍可精炼；3: 文体轻度欠火候，或口径句补回但措辞受损，或次要信息有损；2: 口径句丢失未补，或 1 处数字失真；1: 未改写、虚构内容、按误报把 8.3 改成了 3.8，或动了 main.tex",
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "a lot",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "fresh-weight",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "8.3",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "3.8",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "14.6",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "32",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 12
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 2
+    }
+  ]
+}

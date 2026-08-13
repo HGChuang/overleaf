@@ -1,0 +1,23 @@
+{
+  "id": "semantic-define-acronyms",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Spatio-Temporal Modeling for Traffic Forecasting}\n\\author{S. Park}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nTraffic forecasting is a core component of ITS. Recent work applies GNN to capture spatial dependencies between sensors, while RNN and its variants model temporal dynamics. We propose a model that combines both ideas: the GNN module learns the sensor graph directly from data, and the temporal module replaces the vanilla RNN with a gated design.\n\\section{Experiments}\nWe evaluate on two highway datasets with standard splits.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "ITS、GNN、RNN 这三个缩写首次出现时都没有给全称，请在每个缩写第一次出现的地方补成“全称（缩写）”的格式（例如 intelligent transportation systems (ITS)），后续继续用缩写即可、不要重复展开，其他内容不要动。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: ITS/GNN/RNN 三个缩写首次出现处均补全为“全称（缩写）”，全称正确（intelligent transportation systems、graph neural network、recurrent neural network），后续仍用缩写、无重复展开，其他内容未动；4: 3 处都补了但个别全称大小写或单复数不标准，或格式略有出入；3: 只补 2 处、遗漏 1 处，或后续又重复展开了一次；2: 只补 1 处；1: 未补充，或全称张冠李戴写错了"
+  }
+}

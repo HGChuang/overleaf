@@ -1,0 +1,19 @@
+{
+  "id": "noop-compare-sections",
+  "category": "noop",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\n\\title{Effectiveness of a School-Based Intervention on Seasonal Influenza Absenteeism}\n\\author{R.~Osei, P.~Delgado, and H.~Virtanen}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Methods}\n\\subsection{Study Design and Population}\nWe conducted a cluster-randomized controlled trial during the 2024--2025\ninfluenza season. Forty-two primary schools in the metropolitan region\nwere randomized 1:1 to the intervention or control arm. The intervention\nconsisted of weekly hand-hygiene education sessions plus provision of\nalcohol-based hand sanitizer in all classrooms. The primary outcome was\nthe rate of influenza-like-illness (ILI) absenteeism, defined as absence\nepisodes with reported fever and cough per 1000 student-days.\n\n\\subsection{Statistical Analysis}\nWe estimated the incidence rate ratio (IRR) of ILI absenteeism between\narms using a negative binomial regression model with school-level random\neffects, adjusting for baseline absenteeism, school size, and neighborhood\ndeprivation index. All analyses followed the intention-to-treat\nprinciple. Two-sided $p<0.05$ was considered statistically significant.\n\n\\begin{figure}[t]\n\\centering\n\\fbox{\\rule[-2.6cm]{0pt}{5.2cm}\\rule{7.5cm}{0pt}}\n\\caption{Participant flow through the trial. Of 42 randomized schools, 40\ncompleted follow-up and were included in the primary analysis.}\n\\label{fig:flow}\n\\end{figure}\n\n\\section{Results}\nOf the 42 randomized schools, 40 completed the study (two control schools\nwithdrew). The ILI absenteeism rate was 4.1 episodes per 1000\nstudent-days in the intervention arm versus 5.8 in the control arm,\ncorresponding to an adjusted IRR of 0.71 (95\\% CI 0.56--0.90;\n$p=0.004$).\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lcc}\n\\toprule\nOutcome & Intervention & Control \\\\\n\\midrule\nILI absenteeism (per 1000 student-days) & 4.1 & 5.8 \\\\\nAll-cause absenteeism (per 1000 student-days) & 9.7 & 10.4 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Absenteeism rates by study arm.}\n\\label{tab:rates}\n\\end{table}\n\nA prespecified subgroup analysis suggested a larger effect in schools with\nbelow-median baseline absenteeism (IRR 0.61, 95\\% CI 0.44--0.85).\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Methods 里的实验设计和 Results 的结果对得上吗？帮我分析下。",
+  "grader": {
+    "type": "noop"
+  }
+}

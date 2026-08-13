@@ -1,0 +1,23 @@
+{
+  "id": "semantic-unify-terminology",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Latency-Aware Scheduling for Stream Processing}\n\\author{John Smith}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nStream processing systems must react to events in real time. In our design, the user submits a query graph and the client library compiles it into an execution plan. The customer can then monitor progress through a dashboard. When the workload spikes, the scheduler migrates operators so that the user experiences stable latency. A client may also attach priority hints to urgent streams. Our evaluation shows that customer-perceived tail latency improves by 40 percent, and user satisfaction scores rise accordingly. The client API remains backward compatible.\n\\section{Design}\nThe scheduler watches per-operator backlog and migrates stateful operators when the backlog exceeds a threshold.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "本文把同一个角色写成了 user / customer / client 三种叫法，请全部统一为 user（client library、client API 这类搭配也一并改成 user library、user API），保持语句通顺，不要改动技术内容、数字和其他术语。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: customer（2 处）与 client（3 处）全部统一为 user，搭配自然（user library/user API/customer-perceived → user-perceived 等），40 percent 等技术内容与数字原样保留，语句通顺；4: ≥4 处完成统一，仅 1 处遗漏，语义无损；3: 只统一 2-3 处、混用仍明显，或个别搭配生硬但语义未坏；2: 只改了 1 处，三种叫法依旧混用；1: 未修改，或把不指该角色的词也误改导致语义错乱"
+  }
+}

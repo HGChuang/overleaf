@@ -1,0 +1,156 @@
+{
+  "id": "semantic-dialogue-voice-policy-pivot",
+  "category": "semantic",
+  "difficulty": "extreme",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Stormwater Retention on Three Extensive Green Roofs:\\newline A Six-Year Record from the Harbour District}\n\\author{M.~Vega, S.~Lindqvist, and R.~Toma\\'{s}}\n\\date{February 2025}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nGreen roofs reduce the volume of stormwater that reaches urban drains during storm events.\nPlanners need retention figures from local roofs before they can credit green infrastructure in drainage models.\nThis report presents a six-year record from three extensive green roofs in the harbour district.\n\nEarlier studies in the region covered at most two growing seasons.\nShort records miss the rare storms that drive annual runoff totals.\nThe present campaign ran from March 2019 to November 2024 without interruption.\nThree roofs with different substrate depths allow a direct comparison of storage capacity.\n\nRetention performance reported elsewhere varies widely between studies.\nSubstrate depth, antecedent moisture, and storm intensity all modulate the outcome.\nFew records span more than three consecutive years.\nThe harbour district record presented here covers six consecutive years.\n\n\\section{Site and Roofs}\nRoof A covers 620~m$^{2}$ of the ferry terminal and holds 90~mm of mineral substrate.\nRoof B covers 410~m$^{2}$ of the warehouse annex and holds 120~mm of substrate.\nRoof C covers 280~m$^{2}$ of the customs house and holds 150~mm of substrate.\nSedum mats from the same nursery went onto all three roofs in October 2018.\n\nThe harbour district receives 812~mm of precipitation in an average year.\nSummer convective storms deliver the largest hourly intensities.\nWinter rain arrives in long, low-intensity spells.\nAll three roofs drain to the same combined sewer.\n\nEach roof was instrumented in February 2019, five months after planting.\nAccess for maintenance was agreed with the three building managers.\nNo fertiliser was applied to any roof during the study period.\n\n\\section{Methods}\nTipping-bucket gauges measured rainfall at one-minute resolution on each roof.\nThe logger scanned all channels every ten seconds and stored one-minute totals.\nDrainage lysimeters under each roof recorded outflow volumes continuously.\nStaff inspected the sensor heads every fortnight and cleared debris from the gutters.\n\nThe analysis separated storm events with a dry gap of six hours.\nThe team discarded any event with missing gauge or lysimeter records.\nRetention for each event equals rainfall minus outflow, divided by rainfall.\nThe quality screen removed 41 of the 612 recorded events.\n\nRainfall records were compared against the municipal gauge at the ferry terminal.\nAgreement within five percent was required for each calendar month.\nMonths failing the check were excluded from the seasonal totals.\n\n\\section{Results}\nThe three roofs retained 63~\\% of the total rainfall over the six-year record.\nRoof C, with the deepest substrate, retained 71~\\% of annual rainfall.\nRoof A, the shallowest, retained 52~\\%.\nSummer events saw the highest retention at 78~\\%, while winter events fell to 41~\\%.\n\nPeak outflow lagged peak rainfall by 47 minutes on average.\nThe longest dry spell emptied the substrate to 8~\\% of its storage capacity.\nEvents above 25~mm overwhelmed all three roofs regardless of season.\nThe 2022 drought year still produced 23 events larger than 10~mm.\n\nAntecedent dry days raised retention markedly for events below 10~mm.\nThe effect vanished for events above 25~mm.\nRoof B tracked Roof C within three percentage points in every season except winter.\nNo roof showed a declining trend in retention over the six years.\n\n\\section{Conclusion}\nThe six-year record shows that substrate depth controls retention more than any seasonal factor.\nEven the shallowest roof retained more than half of the annual rainfall.\nDrainage models for the harbour district can now use locally measured retention curves.\nThe monitoring package cost less than one resurfacing of a conventional roof.\n\nFuture work should extend the record through a wider range of storm seasons.\nThe same package could be replicated on the planned residential blocks at a modest cost.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "我们这篇屋顶蓄水的稿子通篇主动句，'the logger scanned''the team discarded'这种，投的期刊要求客观语体，你帮我把全文都改成被动句，能 was/were 的就 was/were。数字、年份、小节标题一个不许动。",
+  "dialogue": {
+    "persona": "环境工程方向博士后，帮课题组改稿；中文交流，指令干脆；一会儿听期刊的一会儿听导师的，改主意不解释太多；验收会逐节抽查语态和句子。",
+    "hiddenGoal": "终态（以第三轮折中方案为准）：① Methods 一节整体被动语态，开头第一句是用户给的原文 'All field procedures described in this section were carried out between March 2019 and November 2024.'（一个字符不差）；② Introduction、Site and Roofs、Results、Conclusion 四节恢复成最初的原文措辞（主动句、一字不差）；③ 全文不得出现 we；④ 所有数字（63~\\%、71~\\%、52~\\%、78~\\%、41~\\%、812~mm、47 minutes 等）、小节标题、文档结构不动；⑤ 编译通过，仍是单文件。剧本：第 1 轮（instruction）用户要求全文被动。分岔一：agent 完成——用户第 2 轮改主意：'导师说现在期刊早不兴全被动了，全改回主动，措辞照最开始那版来就行。'分岔二：agent 漏了某节没改——用户指出那一节让补改，完成后照样进第 2 轮。第 3 轮再改：'我跟导师各让一步，折中：Methods 一节用被动，开头加一句我给你写好的——All field procedures described in this section were carried out between March 2019 and November 2024.——就放在 Methods 第一句；其他四节全部主动，就用最初的原文，一个字别差；另外全文别让我看到 we。'之后用户逐节验收：Methods 里混主动句、其他四节残留被动句、总起句没加或改了字、出现 we、数字变动——一次指出一处让返工；全部达标回'行了，就这样'结束。用户知识边界：分得清主动被动，记得哪节该什么语态，背不下全文但会抽查关键句和数字。",
+    "disclosure": "change-of-mind",
+    "maxUserTurns": 7
+  },
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 以第三轮折中方案为准——Methods 全节一致被动且开头总起句逐字为 'All field procedures described in this section were carried out between March 2019 and November 2024.'；Introduction、Site and Roofs、Results、Conclusion 四节恢复原文（逐字或仅极个别标点差异）；全文无 we；所有数字与小节标题原样；无全被动/全主动轮的混杂残留；4: Methods 基本被动，个别一句漏改或总起句位置略偏，其余达标；3: Methods 被动但未加总起句，或某一非 Methods 节残留被动句两处以内；2: 多节语态混杂，或出现 we，或数字有改动；1: 未按折中方案执行，或大面积重写丢失原文信息",
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "All field procedures described in this section were carried out between March 2019 and November 2024.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "The logger scanned all channels every ten seconds and stored one-minute totals.",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "The analysis separated storm events with a dry gap of six hours.",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "This report presents a six-year record from three extensive green roofs in the harbour district.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "All three roofs drain to the same combined sewer.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "The three roofs retained 63~\\% of the total rainfall over the six-year record.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "The six-year record shows that substrate depth controls retention more than any seasonal factor.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "71~\\%",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "52~\\%",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "78~\\%",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "41~\\%",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "812~mm",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "47 minutes",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\b[Ww]e\\b",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "word-count",
+        "file": "main.tex",
+        "op": "gte",
+        "count": 615
+      },
+      {
+        "kind": "word-count",
+        "file": "main.tex",
+        "op": "lte",
+        "count": 720
+      },
+      {
+        "kind": "file-count",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 16
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 3
+    }
+  ]
+}

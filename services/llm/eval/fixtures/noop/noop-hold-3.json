@@ -1,0 +1,19 @@
+{
+  "id": "noop-hold-3",
+  "category": "noop",
+  "difficulty": "medium",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Remote Work Intensity and Team Cohesion: A Three-Wave Panel Study}\n\\author{K.~Anand, L.~Moreau, and D.~Petrov}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nDoes working remotely erode the cohesion of teams? We followed 92\nproject teams across three survey waves and found that cohesion differed\nreliably across remote-work intensity groups, with hybrid teams reporting\nthe highest cohesion at every wave.\n\\end{abstract}\n\n\\section{Introduction}\nThe rapid normalisation of remote and hybrid arrangements has revived a\nlong-standing question in organisational psychology: how much co-location\ndoes a team need to sustain cohesion?\n\n\\section{Design}\nNinety-two teams from four organisations completed validated cohesion\nscales at three waves, six months apart. Teams were classified into\nfully on-site, hybrid, and fully remote groups based on their modal\narrangement during each interval.\n\n\\section{Results}\nThe analysis of the data that were collected across the three waves was\ncarried out by making use of a one-way analysis of variance, and this\nanalysis was performed in order to test whether the teams that fell into\nthe three different remote-work intensity groups differed from one\nanother with respect to their reported levels of team cohesion. The\nresult that was obtained showed that team cohesion differed across the\nthree groups, $F(2, 87) = 5.42$, $p = .006$. It was additionally found,\nby means of post-hoc comparisons that were conducted following the\nomnibus test, that hybrid teams reported higher cohesion than fully\nremote teams at every wave, and that this difference between the two\ngroups was the largest at the third wave. The means and standard\ndeviations for each group at each wave are reported in the table that\nappears in the appendix of this paper.\n\n\\section{Discussion}\nHybrid arrangements may preserve the informal contact that sustains\ncohesion while retaining the flexibility that employees value, though the\nobservational design precludes strong causal claims.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "导师看完初稿说我第 3 节有个统计量写错了：ANOVA 的 F 值应该是 F(2, 87) = 5.42，我稿子里写成了 5.24。你帮我找到改成 5.42 就行。改完顺便把第 3 节的语言也润色一下呗，我自己读着都觉得有点啰嗦。",
+  "grader": {
+    "type": "noop"
+  }
+}

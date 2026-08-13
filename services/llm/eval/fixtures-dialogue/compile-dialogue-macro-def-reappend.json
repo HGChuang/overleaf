@@ -1,0 +1,43 @@
+{
+  "id": "compile-dialogue-macro-def-reappend",
+  "category": "compile",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\newcommand{\\gap}[1]{|#1 - #2|}\n\\renewcommand{\\valfun}[1]{V(#1)}\n\\title{Inventory Replenishment with Demand Learning}\n\\author{R. Caceres and M. Abiodun}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nRetailers replenish stock under demand that drifts with season and trend.\nWe study replenishment rules that learn the demand rate online\nand bound the cost of being wrong.\n\n\\section{Model}\nEach period opens with on-hand stock $s$ and a demand draw.\nThe one-period optimality gap of a candidate rule is written\n$\\gap{c}{h}$ for holding cost $h$ and underage cost $c$.\nThe value function $\\valfun{s}$ aggregates discounted cost\nover the planning horizon.\n\n\\section{Learning Rule}\nThe demand rate is updated by Bayesian tracking,\nand the order-up-to level follows the posterior quantile.\nThe rule needs only the running mean and variance of demand.\n\n\\section{Results}\nOn synthetic series the learned rule closes most of the gap\nto the clairvoyant benchmark within one selling season.\nPerformance degrades gracefully when the demand drift is misspecified.\n\n\\section{Conclusion}\nDemand learning is a cheap upgrade to classical replenishment,\nand its benefit is largest where seasons turn quickly.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "库存这篇我在开头自己定义了两个小宏，结果一编译就报错，帮我看看宏哪儿写错了。",
+  "dialogue": {
+    "hiddenGoal": "终态分两段。第一段：修好两处宏定义错误（\\gap 只声明了 1 个参数却在定义体里用了 #2，属于非法参数号；\\valfun 用 \\renewcommand 重定义了一个根本没定义过的命令），编译零错误，不新建文件。若修完仍报错，用户说'还是不行，宏那片还红着'；编译干净后进入第二段：用户说'对了，仿真设置那节我忘了粘进来，你帮我加到 Conclusion 前面'，并原样粘贴这段内容：\\section{Simulation Setup} 开头、两三句正文、中间夹了一行重复的 \\newcommand{\\gap}[2]{|#1 - #2|}（用户从旧导言区原样拷的，不知道会和现有定义冲突）、结尾一句用到 $\\gap{\\pi}{b}$。agent 必须把这一节加进文档，同时妥善处理那行重复宏定义（删掉或改成 \\renewcommand 都行），让编译保持零错误。若加完报错，用户说'加了那节又编不过了，你看下'；最终编译干净且 Simulation Setup 一节在文档里，用户满意结束。",
+    "persona": "供应链方向博士生，中文交流，会照着书抄宏但不懂参数个数的规则，报错只看个大概，粘贴内容时不会自己清理。",
+    "disclosure": "progressive",
+    "maxUserTurns": 6
+  },
+  "grader": {
+    "type": "compile",
+    "assertions": [
+      { "kind": "file-count", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "\\section{Simulation Setup}", "op": "gte", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "\\newcommand{\\gap}", "op": "lte", "count": 1 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\newcommand{\\gap}[2]{|#1 - #2|}\n\\newcommand{\\valfun}[1]{V(#1)}\n\\title{Inventory Replenishment with Demand Learning}\n\\author{R. Caceres and M. Abiodun}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nRetailers replenish stock under demand that drifts with season and trend.\nWe study replenishment rules that learn the demand rate online\nand bound the cost of being wrong.\n\n\\section{Model}\nEach period opens with on-hand stock $s$ and a demand draw.\nThe one-period optimality gap of a candidate rule is written\n$\\gap{c}{h}$ for holding cost $h$ and underage cost $c$.\nThe value function $\\valfun{s}$ aggregates discounted cost\nover the planning horizon.\n\n\\section{Learning Rule}\nThe demand rate is updated by Bayesian tracking,\nand the order-up-to level follows the posterior quantile.\nThe rule needs only the running mean and variance of demand.\n\n\\section{Results}\nOn synthetic series the learned rule closes most of the gap\nto the clairvoyant benchmark within one selling season.\nPerformance degrades gracefully when the demand drift is misspecified.\n\n\\section{Simulation Setup}\nWe benchmark the learned rule against a base-stock policy\nover five hundred simulated seasons.\n% \\gap is already defined in the preamble; the duplicate definition\n% from the pasted snippet is intentionally not repeated here.\nDemand is Poisson with a Gamma-mixed rate,\nand the gap $\\gap{\\pi}{b}$ of each rule is reported alongside cost.\n\n\\section{Conclusion}\nDemand learning is a cheap upgrade to classical replenishment,\nand its benefit is largest where seasons turn quickly.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    { "kind": "tool-called", "tool": "compile_project", "minCalls": 1 },
+    { "kind": "max-turns", "max": 14 },
+    { "kind": "no-repeat-call", "maxIdentical": 3 }
+  ]
+}

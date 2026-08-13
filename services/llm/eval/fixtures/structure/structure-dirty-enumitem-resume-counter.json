@@ -1,0 +1,65 @@
+{
+  "id": "structure-dirty-enumitem-resume-counter",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Sourdough Starter: Daily Feeding Schedule}\n\\author{}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section*{Morning}\n\\begin{enumerate}\n\\item Weigh out 50 g of ripe starter into a clean jar.\n\\item Add 50 g of bread flour and 50 g of lukewarm water.\n\\item Stir until no dry flour remains.\n\\item Cover loosely and leave at room temperature.\n\\end{enumerate}\n\nThe starter should double within six to eight hours. If the\nkitchen is cooler than 20 degrees, allow extra time before\nthe evening feeding; a rubber band around the jar makes the\nrise easy to track.\n\n\\section*{Evening}\n\\begin{enumerate}\n\\item Discard all but 50 g of the starter.\n\\item Add 50 g of bread flour and 50 g of lukewarm water.\n\\item Stir, cover loosely, and leave overnight.\n\\end{enumerate}\n\n\\section*{Notes}\nThe schedule repeats daily. A healthy starter smells fruity\nand shows bubbles on the surface and along the sides of the\njar. If a grey liquid collects on top, pour it off and feed\ntwice daily for a few days.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "晚间喂养的步骤应该接着上午的编号往下走（上午到第 4 步，晚间应从第 5 步开始），但现在两个 enumerate 各自从 1 重新编号了。请用 enumitem 宏包的 resume 选项修正：加载 enumitem，并给晚间那个 enumerate 加上 resume 参数。不要用 \\setcounter 手动编号，列表文字和其它内容一律不动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\usepackage(\\[[^\\]]*\\])?\\{enumitem\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\begin{enumerate}[resume]",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{enumerate\\}",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\item Discard all but 50 g of the starter.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\item Weigh out 50 g of ripe starter into a clean jar.",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{enumitem}\n\n\\title{Sourdough Starter: Daily Feeding Schedule}\n\\author{}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section*{Morning}\n\\begin{enumerate}\n\\item Weigh out 50 g of ripe starter into a clean jar.\n\\item Add 50 g of bread flour and 50 g of lukewarm water.\n\\item Stir until no dry flour remains.\n\\item Cover loosely and leave at room temperature.\n\\end{enumerate}\n\nThe starter should double within six to eight hours. If the\nkitchen is cooler than 20 degrees, allow extra time before\nthe evening feeding; a rubber band around the jar makes the\nrise easy to track.\n\n\\section*{Evening}\n\\begin{enumerate}[resume]\n\\item Discard all but 50 g of the starter.\n\\item Add 50 g of bread flour and 50 g of lukewarm water.\n\\item Stir, cover loosely, and leave overnight.\n\\end{enumerate}\n\n\\section*{Notes}\nThe schedule repeats daily. A healthy starter smells fruity\nand shows bubbles on the surface and along the sides of the\njar. If a grey liquid collects on top, pour it off and feed\ntwice daily for a few days.\n\\end{document}\n"
+      }
+    ]
+  }
+}

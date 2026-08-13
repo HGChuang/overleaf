@@ -1,0 +1,23 @@
+{
+  "id": "semantic-person-unify",
+  "category": "semantic",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Efficient Neural Rendering for Dynamic Scenes}\n\\author{Render Team}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nI propose a new sampling strategy for dynamic neural radiance fields. In our framework, we model scene motion with a deformation network. One can observe that the rendering cost grows with scene complexity. I reduce this cost by caching static features between frames. Our experiments show that we achieve real-time rendering on a single GPU.\n\\section{Method}\nThe deformation network maps observation-space points into a canonical space.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这段文字第一人称用得乱七八糟，一会儿 I 一会儿 we 还夹了个 one，请统一为 we 视角（I → we，One can observe → We observe 之类），相应动词形式一起调整，语义保持不变。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: I（2 处）与 One can observe（1 处）共 3 处全部统一为 we 视角，动词形式正确（propose/observe/reduce），全文人称一致，语义不变；4: ≥2 处统一，仅 1 处遗漏，无新的主谓不一致；3: 部分统一但仍残留 1-2 处 I/one，或动词形式未跟着调整；2: 只改 1 处；1: 未修改，或改出主谓不一致等新语法错误"
+  }
+}

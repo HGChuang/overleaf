@@ -1,0 +1,51 @@
+{
+  "id": "structure-bvar-rename-incl-comment",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amssymb}\n\\usepackage{booktabs}\n\\newcommand{\\twh}{\\ensuremath{\\mathrm{TWh}}}\n\n\\title{Electricity Generation and Industrial Output:\nEvidence from Regional Panels, 2000--2024}\n\\author{N.~Beaumont and Y.~Karimova}\n\\date{August 2026}\n\n\\begin{document}\n\\maketitle\n\n% referee 2 asked about units; keep \\twh rather than siunitx for this revision\n\\section{Stylised Facts}\nRegional electricity generation rose from 214 \\twh\\ in 2000 to\n389 \\twh\\ in 2024, with the fastest growth in the coastal regions.\nPeak demand tracked generation closely, reaching 61 \\twh\\ of\nannualised consumption in the final sample year.\n\n\\section{Data}\nWe combine the system operator's generation ledger, reported in\n\\twh, with the statistical office's regional accounts.\nBoth series are deflated and seasonally adjusted where applicable.\n\n\\section{Discussion}\nEach additional \\twh\\ of annual generation per region is associated\nwith a 0.14 percent increase in industrial gross value added,\nthough the estimate is imprecise for the smallest regions.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "全文把宏 \\twh 重命名为 \\TWh：导言区的 \\newcommand 定义和正文里每一处使用都要同步改掉。另外，评审意见那行注释里也提到了这个宏，那处同样改掉（评审已经处理完毕）——注释本身保留，只改宏名。其余内容一律不动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\twh",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\TWh",
+        "op": "eq",
+        "count": 7
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "% referee 2 asked about units; keep \\TWh rather than siunitx for this revision",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amssymb}\n\\usepackage{booktabs}\n\\newcommand{\\TWh}{\\ensuremath{\\mathrm{TWh}}}\n\n\\title{Electricity Generation and Industrial Output:\nEvidence from Regional Panels, 2000--2024}\n\\author{N.~Beaumont and Y.~Karimova}\n\\date{August 2026}\n\n\\begin{document}\n\\maketitle\n\n% referee 2 asked about units; keep \\TWh rather than siunitx for this revision\n\\section{Stylised Facts}\nRegional electricity generation rose from 214 \\TWh\\ in 2000 to\n389 \\TWh\\ in 2024, with the fastest growth in the coastal regions.\nPeak demand tracked generation closely, reaching 61 \\TWh\\ of\nannualised consumption in the final sample year.\n\n\\section{Data}\nWe combine the system operator's generation ledger, reported in\n\\TWh, with the statistical office's regional accounts.\nBoth series are deflated and seasonally adjusted where applicable.\n\n\\section{Discussion}\nEach additional \\TWh\\ of annual generation per region is associated\nwith a 0.14 percent increase in industrial gross value added,\nthough the estimate is imprecise for the smallest regions.\n\\end{document}\n"
+      }
+    ]
+  }
+}

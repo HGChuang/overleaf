@@ -1,0 +1,70 @@
+{
+  "id": "structure-fill-multifile-bib-syntax-fix",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{After Unipolarity: Regional Orders\\\\and the Division of Labour Among Great Powers}\n\\author{K.~Abdelal}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe end of the unipolar moment has revived older questions\nabout how order is produced in a decentralised system.\nThe classic statement remains \\cite{keohane1984}:\nregimes created under hegemony can outlive it\nbecause they lower transaction costs and provide information.\n\n\\section{Two Logics of Regional Order}\nTwo-level games explain why regional arrangements\nare so hard to sustain domestically \\cite{putnam1988}.\nYet the distributional conflicts inside states\nare only half of the story;\nthe control of international agendas shapes\nwhich domestic coalitions can form in the first place\n\\cite{milner1997}.\n\n\\section{Conclusion}\nA division of labour among great powers is possible,\nbut it requires regimes that survive\nthe power transition that created them.\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\\end{document}\n"
+      },
+      {
+        "path": "refs.bib",
+        "content": "@article{putnam1988,\n  author  = {Putnam, Robert D.},\n  title   = {Diplomacy and Domestic Politics: The Logic of Two-Level Games},\n  journal = {International Organization},\n  year    = {1988},\n  volume  = {42},\n  pages   = {427--460}\n}\n\n@book{keohane1984,\n  author    = {Keohane, Robert O.}\n  title     = {After Hegemony: Cooperation and Discord in the World Political Economy},\n  publisher = {Princeton University Press},\n  year      = {1984}\n}\n\n@book{milner1997,\n  author    = {Milner, Helen V.},\n  title     = {Interests, Institutions, and Information: Domestic Politics and International Relations},\n  publisher = {Princeton University Press},\n  year      = {1997}\n}\n"
+      }
+    ]
+  },
+  "instruction": "refs.bib 有条目坏了，我本地跑 bibtex 一直报 I was expecting a comma。找出缺逗号的地方补上。只动 refs.bib，别的文件别改。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "refs.bib",
+        "pattern": "author\\s*=\\s*\\{Keohane, Robert O\\.\\},",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "refs.bib",
+        "literal": "author    = {Keohane, Robert O.}\n  title",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "refs.bib",
+        "literal": "Keohane, Robert O.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "refs.bib",
+        "pattern": "@(?:article|book)\\{",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{After Unipolarity: Regional Orders\\\\and the Division of Labour Among Great Powers}\n\\author{K.~Abdelal}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe end of the unipolar moment has revived older questions\nabout how order is produced in a decentralised system.\nThe classic statement remains \\cite{keohane1984}:\nregimes created under hegemony can outlive it\nbecause they lower transaction costs and provide information.\n\n\\section{Two Logics of Regional Order}\nTwo-level games explain why regional arrangements\nare so hard to sustain domestically \\cite{putnam1988}.\nYet the distributional conflicts inside states\nare only half of the story;\nthe control of international agendas shapes\nwhich domestic coalitions can form in the first place\n\\cite{milner1997}.\n\n\\section{Conclusion}\nA division of labour among great powers is possible,\nbut it requires regimes that survive\nthe power transition that created them.\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\\end{document}\n"
+      },
+      {
+        "path": "refs.bib",
+        "content": "@article{putnam1988,\n  author  = {Putnam, Robert D.},\n  title   = {Diplomacy and Domestic Politics: The Logic of Two-Level Games},\n  journal = {International Organization},\n  year    = {1988},\n  volume  = {42},\n  pages   = {427--460}\n}\n\n@book{keohane1984,\n  author    = {Keohane, Robert O.},\n  title     = {After Hegemony: Cooperation and Discord in the World Political Economy},\n  publisher = {Princeton University Press},\n  year      = {1984}\n}\n\n@book{milner1997,\n  author    = {Milner, Helen V.},\n  title     = {Interests, Institutions, and Information: Domestic Politics and International Relations},\n  publisher = {Princeton University Press},\n  year      = {1997}\n}\n"
+      }
+    ]
+  }
+}

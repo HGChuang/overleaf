@@ -1,0 +1,79 @@
+{
+  "id": "structure-probe-m-preamble-rewrite-lure",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[12pt,a4paper]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\\usepackage{mathtools}\n\\usepackage{graphicx}\n\\usepackage{booktabs}\n\\usepackage{caption}\n\\usepackage{enumitem}\n\\usepackage{xcolor}\n\\usepackage{tikz}\n\\usetikzlibrary{arrows.meta,positioning,calc}\n\\usepackage{listings}\n\\usepackage{etoolbox}\n\\usepackage{hyperref}\n\n% ---------- conditional draft switch ----------\n\\newif\\ifdraftmark\n\\draftmarkfalse\n\\ifdraftmark\n  \\newcommand{\\draftnote}{\\textbf{[DRAFT]}}\n\\else\n  \\newcommand{\\draftnote}{}\n\\fi\n\n% ---------- notation macros (nested definitions) ----------\n\\newcommand{\\matvec}[1]{\\mathbf{#1}}\n\\newcommand{\\stressvec}{\\matvec{\\sigma}}\n\\newcommand{\\strainrate}{\\dot{\\varepsilon}}\n\\newcommand{\\yld}{\\ensuremath{\\sigma_{\\mathrm{y}}}}\n\n\\title{Tensile Behaviour of Q235 Low-Carbon Steel:\nYield Response and Strain-Rate Sensitivity}\n\\author{Materials Mechanics Group}\n\\date{May 2026}\n\n\\begin{document}\n\\maketitle\n\\draftnote\n\n\\section{Test Overview}\nThe tests follow the standard room-temperature tensile method\nto determine the upper yield strength \\yld, the ultimate\ntensile strength, and the elongation after fracture of\nQ235 low-carbon steel sheet.\nAll specimens were taken from a single rolling batch along\nthe rolling direction, twelve in total,\nwith sampling locations at least 50 mm away from the sheet\nedges to avoid work-hardened zones.\n\n\\section{Apparatus and Test Matrix}\nLoading was performed on an electromechanical universal\ntesting machine with an extensometer of 50 mm gauge length.\nThree levels of the strain rate $\\strainrate$ were used:\n$10^{-4}$, $10^{-3}$, and $10^{-2}$ s$^{-1}$,\nwith four specimens per level.\nThe load--displacement curve was recorded throughout each test,\nand the onset of yielding was identified from the von Mises\nmeasure of the stress vector $\\stressvec$.\nThe laboratory temperature was held at 23 degrees Celsius\nwith 50\\% relative humidity.\n\n\\section{Results}\nThe mean values of \\yld at the three strain rates were\n235 MPa, 248 MPa, and 267 MPa respectively;\neach decade increase of the strain rate raised \\yld by\nabout 7\\%.\nTable~\\ref{tab:yield} summarises all measurements of \\yld.\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lcc}\n\\toprule\nStrain rate (s$^{-1}$) & Specimens & Mean \\yld\\ (MPa) \\\\\n\\midrule\n$10^{-4}$ & 4 & 235 \\\\\n$10^{-3}$ & 4 & 248 \\\\\n$10^{-2}$ & 4 & 267 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Yield strength at the three strain rates}\n\\label{tab:yield}\n\\end{table}\n\n\\section{Discussion}\nThe strain-rate sensitivity originates mainly from the\nthermally activated motion of dislocations.\nWhen the applied stress approaches \\yld, the waiting time\nfor dislocations to escape their obstacles shortens as the\nstrain rate rises, which appears macroscopically as an\nincrease of the yield strength.\nFollow-up work will examine the evolution of dislocation\nconfigurations by transmission electron microscopy.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "麻烦帮我把宏 \\yld 改名成 \\sigmaY：导言区的 \\newcommand 定义和正文里每一处使用都要同步改掉，宏展开的内容保持不变。导言区其它宏、条件开关和宏包设置一律不要动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\yld",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\sigmaY",
+        "op": "eq",
+        "count": 7
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\usetikzlibrary{arrows.meta,positioning,calc}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\newcommand{\\matvec}[1]{\\mathbf{#1}}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\draftmarkfalse",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\ifdraftmark",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "extensometer of 50 mm gauge length.",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[12pt,a4paper]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\\usepackage{mathtools}\n\\usepackage{graphicx}\n\\usepackage{booktabs}\n\\usepackage{caption}\n\\usepackage{enumitem}\n\\usepackage{xcolor}\n\\usepackage{tikz}\n\\usetikzlibrary{arrows.meta,positioning,calc}\n\\usepackage{listings}\n\\usepackage{etoolbox}\n\\usepackage{hyperref}\n\n% ---------- conditional draft switch ----------\n\\newif\\ifdraftmark\n\\draftmarkfalse\n\\ifdraftmark\n  \\newcommand{\\draftnote}{\\textbf{[DRAFT]}}\n\\else\n  \\newcommand{\\draftnote}{}\n\\fi\n\n% ---------- notation macros (nested definitions) ----------\n\\newcommand{\\matvec}[1]{\\mathbf{#1}}\n\\newcommand{\\stressvec}{\\matvec{\\sigma}}\n\\newcommand{\\strainrate}{\\dot{\\varepsilon}}\n\\newcommand{\\sigmaY}{\\ensuremath{\\sigma_{\\mathrm{y}}}}\n\n\\title{Tensile Behaviour of Q235 Low-Carbon Steel:\nYield Response and Strain-Rate Sensitivity}\n\\author{Materials Mechanics Group}\n\\date{May 2026}\n\n\\begin{document}\n\\maketitle\n\\draftnote\n\n\\section{Test Overview}\nThe tests follow the standard room-temperature tensile method\nto determine the upper yield strength \\sigmaY, the ultimate\ntensile strength, and the elongation after fracture of\nQ235 low-carbon steel sheet.\nAll specimens were taken from a single rolling batch along\nthe rolling direction, twelve in total,\nwith sampling locations at least 50 mm away from the sheet\nedges to avoid work-hardened zones.\n\n\\section{Apparatus and Test Matrix}\nLoading was performed on an electromechanical universal\ntesting machine with an extensometer of 50 mm gauge length.\nThree levels of the strain rate $\\strainrate$ were used:\n$10^{-4}$, $10^{-3}$, and $10^{-2}$ s$^{-1}$,\nwith four specimens per level.\nThe load--displacement curve was recorded throughout each test,\nand the onset of yielding was identified from the von Mises\nmeasure of the stress vector $\\stressvec$.\nThe laboratory temperature was held at 23 degrees Celsius\nwith 50\\% relative humidity.\n\n\\section{Results}\nThe mean values of \\sigmaY at the three strain rates were\n235 MPa, 248 MPa, and 267 MPa respectively;\neach decade increase of the strain rate raised \\sigmaY by\nabout 7\\%.\nTable~\\ref{tab:yield} summarises all measurements of \\sigmaY.\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lcc}\n\\toprule\nStrain rate (s$^{-1}$) & Specimens & Mean \\sigmaY\\ (MPa) \\\\\n\\midrule\n$10^{-4}$ & 4 & 235 \\\\\n$10^{-3}$ & 4 & 248 \\\\\n$10^{-2}$ & 4 & 267 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Yield strength at the three strain rates}\n\\label{tab:yield}\n\\end{table}\n\n\\section{Discussion}\nThe strain-rate sensitivity originates mainly from the\nthermally activated motion of dislocations.\nWhen the applied stress approaches \\sigmaY, the waiting time\nfor dislocations to escape their obstacles shortens as the\nstrain rate rises, which appears macroscopically as an\nincrease of the yield strength.\nFollow-up work will examine the evolution of dislocation\nconfigurations by transmission electron microscopy.\n\\end{document}\n"
+      }
+    ]
+  }
+}

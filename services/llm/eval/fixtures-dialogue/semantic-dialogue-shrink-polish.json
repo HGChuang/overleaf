@@ -1,0 +1,39 @@
+{
+  "id": "semantic-dialogue-shrink-polish",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\\begin{document}\n\\title{Cache-Aware Batching for Embedding Retrieval}\n\\maketitle\n\\begin{abstract}\nIn this paper, a cache-aware batching strategy for large-scale embedding retrieval is presented. The retrieval latency is dominated by redundant index lookups, and it is shown that cache hit rates are degraded by naive batching. A two-level scheduling policy is proposed, in which queries are grouped by shard affinity before dispatch. The method was evaluated on three production workloads with 5-fold cross-validation, and a p95 latency reduction of 37 percent was achieved while a recall of 96.2 percent was maintained. It is also demonstrated that memory usage is kept within a fixed budget, and no degradation of tail accuracy is observed.\n\\end{abstract}\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "摘要写得太长了，帮我压缩一下，里面的数字一个都不许动。",
+  "dialogue": {
+    "hiddenGoal": "摘要最终要满足：① 压缩到 85 词以内（按可读文本计）；② 被动语态全部改成主动语态；③ 三个数字 5-fold、37、96.2 原样保留；④ 核心信息（缓存感知批处理策略、两级调度、三个工作负载上的延迟与召回结果）不丢失。第一轮用户只说压缩，后续轮次再逐步提出词数硬指标和主动语态要求。",
+    "persona": "赶投稿截止日的研究生，中文交流，说话直接，一次只提一个要求；agent 交付达标才提下一个要求，不达标就指出具体问题。",
+    "disclosure": "progressive",
+    "maxUserTurns": 3
+  },
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 摘要明显精简且≤85词，全部为主动语态，三个数字（5-fold、37、96.2）原样保留，核心信息（缓存感知批处理、两级调度、延迟降低37%、召回96.2%）无损，语句地道；4: ≤85词且数字全保留，个别被动语态残留或个别次要信息有损；3: 压缩或语态只完成其一，或语句生硬；2: 压缩严重不达标（>100词）或被动语态大面积残留；1: 未压缩、虚构原文没有的内容，或数字被改",
+    "assertions": [
+      { "kind": "word-count", "file": "main.tex", "op": "lte", "count": 85 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "5-fold", "op": "gte", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "96.2", "op": "gte", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "37", "op": "gte", "count": 1 }
+    ]
+  },
+  "traceAssertions": [
+    { "kind": "max-turns", "max": 12 },
+    { "kind": "no-repeat-call", "maxIdentical": 2 }
+  ]
+}

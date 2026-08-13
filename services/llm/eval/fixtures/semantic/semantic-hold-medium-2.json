@@ -1,0 +1,46 @@
+{
+  "id": "semantic-hold-medium-2",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Effects of a Nurse-Led Repositioning and Mobility Bundle on\nPressure Injury Incidence in Intensive Care}\n\\author{R.~Calloway, J.~Mbeki, and S.~Lindstr\\\"om}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nPressure injuries acquired during an intensive care stay prolong recovery,\nincrease costs, and are largely preventable. We evaluated a nurse-led\nbundle combining scheduled repositioning, early mobilisation, and\nstructured bedside handoffs on the incidence of HAPI in two adult\nintensive care units over eighteen months. The bundle was associated with\na reduction in HAPI incidence from 14.2\\% to 8.6\\% of admissions, and the\neffect was sustained across both units. Structured handoffs and twice-daily\nmobility targets were the components most consistently linked to injury-free\nstays.\n\\end{abstract}\n\n\\section{Introduction}\nCritically ill patients are among the most vulnerable to skin breakdown:\nsedation, vasopressor support, and prolonged immobility all compromise\ntissue perfusion. HAPI remain a persistent quality problem worldwide, and\nthey are tracked as a nursing-sensitive outcome in most reporting systems.\nMulticomponent bundles have shown promise, but adherence data are rarely\nreported alongside incidence.\n\n\\section{The Bundle}\nThe bundle had three components. First, repositioning was scheduled every\ntwo hours and documented on a bedside flowsheet. Second, an early mobility\nprotocol began within 48 hours of admission: passive and active ROM\nexercises twice daily, progressing to sitting at the edge of the bed and\nmarching in place as tolerance improved. ROM targets were individualised\nby the bedside nurse in consultation with physiotherapy. Third, bedside\nhandoffs at each shift change were restructured around SBAR so that skin\nstatus and mobility plans were communicated explicitly; SBAR completion\nwas audited weekly on a random sample of charts.\n\n\\section{Outcomes and Measurement}\nThe primary outcome was unit-acquired pressure injury of any stage,\nconfirmed by two wound-care nurses. Secondary outcomes included ADL at\ndischarge, length of stay, and ventilator-free days. ADL scores were\nextracted from routine nursing assessments rather than collected\nprospectively.\n\n\\section{Discussion}\nThe reduction in injury incidence was largest among patients with the\nlongest stays, where cumulative exposure to immobility is greatest. The\nbundle required no new equipment, and its cost was limited to training\ntime, which argues for transferability to units with similar staffing.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "科里要把这篇投护理期刊。通读一遍：里面有几个专业缩写头一回露面时没给全称，审稿人肯定会挑这个。把每个缩写在全文第一次出现的地方补成「英文全称（缩写）」，第二次起继续用缩写、不要重复展开。注意第一次出现未必在正文开头，摘要里的也算数。除补全称外不要动任何别的文字。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 四个缩写全部在全文首次出现处正确展开为「全称（缩写）」——HAPI（摘要首次出现，hospital-acquired pressure injury/injuries）、ROM（The Bundle 节，range of motion）、SBAR（同节，Situation, Background, Assessment, Recommendation）、ADL（Outcomes 节，activities of daily living），后续出现保持缩写未重复展开，其余文字原样；4: 三处完全正确，一处有小瑕疵（位置偏一处、格式略不规范或全称拼写小错）；3: 两处正确，或把后续出现也重复展开了但全称本身正确；2: 只有一处正确，或多处展开位置错误；1: 未展开，或编造了错误的全称",
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "[Hh]ospital-[Aa]cquired [Pp]ressure [Ii]njur",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "[Rr]ange of [Mm]otion",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "[Aa]ctivities of [Dd]aily [Ll]iving",
+        "op": "gte",
+        "count": 1
+      }
+    ]
+  }
+}

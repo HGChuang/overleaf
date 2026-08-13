@@ -1,0 +1,23 @@
+{
+  "id": "semantic-grammar-fix",
+  "category": "semantic",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Rough Volatility Models for Option Pricing}\n\\author{Alex Wang}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nOption pricing models has evolved rapidly in the last decade. The rough volatility model capture the scaling behavior of real markets. In the past, classical models fails to reproduce the volatility smile. Our method do not require a large dataset for calibration. These result shows that the implied volatility surface can be fitted with few parameters.\n\\section{Model}\nWe model the volatility process with a fractional Brownian motion.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Introduction 里 5 句话都有明显语法错误，覆盖主谓一致、时态、单复数几类，请逐一修复成正确英文，只改语法错误，不换措辞、不改意思，Model 一节不要动。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 5 句语法错误全部修复（has→have、capture→captures、fails→failed 或对应时态修正、do→does、result shows→results show），措辞与原意不变，未引入新错误，未动 Model 节；4: ≥4 句修复，仅 1 处小错残留，无新错误；3: 修复 3 句，或修复时改动了原措辞但未改变意思；2: 只修复 1-2 句，多数错误仍在；1: 未修复，或引入新的语法错误/改变原意"
+  }
+}

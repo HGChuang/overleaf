@@ -1,0 +1,100 @@
+{
+  "id": "structure-dirty-siunitx-v3-migrate",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{siunitx}\n\\sisetup{per-mode=symbol}\n\n\\title{Block C Irrigation and Spray Log --- 2025 Season}\n\\author{Vineyard Operations}\n\\date{October 2025}\n\n\\begin{document}\n\\maketitle\n\n\\section{Block details}\nBlock C covers 3.2 ha of north-facing rows planted in 2011.\nThe soil is a gravel loam over clay, and the drip line runs\nemitters rated at \\SI{850}{\\milli\\litre} per hour at nominal\npressure. The block is divided into four irrigation sectors\nthat can be valved independently from the shed.\n\n\\section{Irrigation schedule}\nFrom fruit set to veraison the vines received\n\\SI{2.4}{\\litre} per vine per event, twice weekly, with the\ninterval shortened during the August heat spell. Cumulative\napplied water for the season reached \\SI{35}{\\milli\\metre},\nabout a quarter below the ten-year mean, which kept canopy\nvigour in check without measurable stress.\n\n\\section{Spray log}\nSulphur applications ran at fortnight intervals through\nJune and July. Spray pressure at the boom was held at\n180 \\si{\\kilo\\pascal}, and the wettable sulphur was mixed at\n40 \\si{\\milli\\gram\\per\\litre} of tank volume. No phytotoxicity\nwas observed on the treated rows, and coverage was checked\nwith water-sensitive cards at every second pass.\n\n\\section{Harvest}\nPicking ran over four mornings in the second week of\nSeptember. Yields averaged\n\\SI{1.8e3}{\\kilo\\gram\\per\\hectare}, in line with the block\naverage, and fruit arrived at the weighbridge cool enough\nthat no sulphur additions were needed at receival.\n\n\\section{Notes for next season}\nThe sector valves on the lower rows are weeping and should\nbe replaced before budburst. The schedule above is otherwise\nworth repeating unchanged.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "模板仓库的 siunitx 已经升到 v3，旧命令 \\SI 和 \\si 都算废弃写法，这份日志还全是旧命令。请把正文里所有 \\SI 统一换成 \\qty、所有 \\si 统一换成 \\unit。花括号里的数值参数和单位参数逐字保留——像 1.8e3 这种指数写法、\\per 连接的组合单位、\\milli\\litre 这类单位命令都原样不动，只换命令名本身。导言区的 \\sisetup 保持原样，其它文字一律不改。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\SI\\{",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\si\\{",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\qty\\{",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\unit\\{",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\qty{850}{\\milli\\litre}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\qty{2.4}{\\litre}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\qty{35}{\\milli\\metre}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\qty{1.8e3}{\\kilo\\gram\\per\\hectare}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\unit{\\kilo\\pascal}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\unit{\\milli\\gram\\per\\litre}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{siunitx}\n\\sisetup{per-mode=symbol}\n\n\\title{Block C Irrigation and Spray Log --- 2025 Season}\n\\author{Vineyard Operations}\n\\date{October 2025}\n\n\\begin{document}\n\\maketitle\n\n\\section{Block details}\nBlock C covers 3.2 ha of north-facing rows planted in 2011.\nThe soil is a gravel loam over clay, and the drip line runs\nemitters rated at \\qty{850}{\\milli\\litre} per hour at nominal\npressure. The block is divided into four irrigation sectors\nthat can be valved independently from the shed.\n\n\\section{Irrigation schedule}\nFrom fruit set to veraison the vines received\n\\qty{2.4}{\\litre} per vine per event, twice weekly, with the\ninterval shortened during the August heat spell. Cumulative\napplied water for the season reached \\qty{35}{\\milli\\metre},\nabout a quarter below the ten-year mean, which kept canopy\nvigour in check without measurable stress.\n\n\\section{Spray log}\nSulphur applications ran at fortnight intervals through\nJune and July. Spray pressure at the boom was held at\n180 \\unit{\\kilo\\pascal}, and the wettable sulphur was mixed at\n40 \\unit{\\milli\\gram\\per\\litre} of tank volume. No phytotoxicity\nwas observed on the treated rows, and coverage was checked\nwith water-sensitive cards at every second pass.\n\n\\section{Harvest}\nPicking ran over four mornings in the second week of\nSeptember. Yields averaged\n\\qty{1.8e3}{\\kilo\\gram\\per\\hectare}, in line with the block\naverage, and fruit arrived at the weighbridge cool enough\nthat no sulphur additions were needed at receival.\n\n\\section{Notes for next season}\nThe sector valves on the lower rows are weeping and should\nbe replaced before budburst. The schedule above is otherwise\nworth repeating unchanged.\n\\end{document}\n"
+      }
+    ]
+  }
+}

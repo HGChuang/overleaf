@@ -1,0 +1,34 @@
+{
+  "id": "structure-merge-subsections",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Background}\nProgram synthesis has a long history in the programming languages community.\n\\subsection{Prior Work}\nEarly systems studied the problem first from a deductive perspective, deriving programs from specifications.\n\\subsection{Prior Work (Cont.)}\nLater approaches approach it differently, searching large candidate spaces with statistical guidance.\n\\section{Our Approach}\nWe combine both views.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "把两个 subsection 合并成一个，标题保留 Prior Work，两段正文都保留、顺序不变。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\subsection\\{", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "studied the problem first", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "approach it differently", "op": "eq", "count": 1 },
+      { "kind": "order", "file": "main.tex", "patterns": ["studied the problem first", "approach it differently"] }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Background}\nProgram synthesis has a long history in the programming languages community.\n\\subsection{Prior Work}\nEarly systems studied the problem first from a deductive perspective, deriving programs from specifications.\nLater approaches approach it differently, searching large candidate spaces with statistical guidance.\n\\section{Our Approach}\nWe combine both views.\n\\end{document}\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "compile-unmatched-brace",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Wall-Resolved Large Eddy Simulation of Channel Flow}\n\\author{B. Okafor and M. Virtanen}\n\\date{February 2026}\n\\begin{document}\n\\maketitle\n\\section{Grid Convergence}\nThree nested grids are used to assess the discretisation error of the solver.\nOnce the friction Reynolds number } exceeds the calibration range of the subgrid model,\nthe predicted skin friction drifts systematically away from the direct numerical\nsimulation data used as a reference.\nRefining the grid near the wall restores agreement to within two percent.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "CFD 这篇突然编不过，报 Too many 开头的错，帮我找一下在哪儿呗。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Wall-Resolved Large Eddy Simulation of Channel Flow}\n\\author{B. Okafor and M. Virtanen}\n\\date{February 2026}\n\\begin{document}\n\\maketitle\n\\section{Grid Convergence}\nThree nested grids are used to assess the discretisation error of the solver.\nOnce the friction Reynolds number exceeds the calibration range of the subgrid model,\nthe predicted skin friction drifts systematically away from the direct numerical\nsimulation data used as a reference.\nRefining the grid near the wall restores agreement to within two percent.\n\\end{document}\n"
+      }
+    ]
+  }
+}

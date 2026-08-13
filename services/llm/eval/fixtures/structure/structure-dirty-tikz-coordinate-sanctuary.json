@@ -1,0 +1,107 @@
+{
+  "id": "structure-dirty-tikz-coordinate-sanctuary",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{tikz}\n\\usetikzlibrary{patterns,decorations.pathmorphing}\n\n\\title{Lecture Notes: The Damped Oscillator}\n\\author{Phys 221 Course Team}\n\\date{Spring 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setup}\nConsider a block of mass $m$ attached to a light spring on a\nfrictionless rail. We write $x$ for the displacement of the\nblock from its equilibrium position. The restoring force is\n$-kx$, where $k$ is the spring constant, and the dashpot adds\na viscous force proportional to the velocity. Newton's second\nlaw then gives\n\\begin{equation}\nm \\frac{d^2 x}{dt^2} = -kx - c \\frac{dx}{dt},\n\\label{eq:motion}\n\\end{equation}\nwhere $c$ is the damping coefficient.\n\n\\section{Schematic}\nFigure~\\ref{fig:schematic} shows the arrangement. The named\ncoordinates used by the drawing code are internal to the\nfigure and are not mathematical symbols.\n\n\\begin{figure}[h]\n\\centering\n\\begin{tikzpicture}[scale=1.1]\n\\coordinate (wall) at (0,0);\n\\coordinate (x) at (3.5,0);\n\\fill[pattern=north east lines] (-0.2,-0.6) rectangle (0,0.6);\n\\draw[thick] (wall) -- (0.6,0);\n\\draw[decorate,decoration={coil,segment length=4pt}] (0.6,0) -- (2.7,0);\n\\draw[fill=gray!30] (2.7,-0.35) rectangle (x);\n\\draw[->,thick] (x) ++(0,0.55) -- ++(0.9,0) node[midway,above] {$v$};\n\\node[below=8pt] at (x) {block};\n\\draw[<->] (wall) ++(0,-0.9) -- ++(3.5,0) node[midway,below] {rest length};\n\\end{tikzpicture}\n\\caption{Spring--dashpot schematic.}\n\\label{fig:schematic}\n\\end{figure}\n\n\\section{Energy decay}\nMultiplying \\eqref{eq:motion} through by $dx/dt$ and\nintegrating over one cycle shows that the total energy\n\\begin{equation*}\nE = \\frac{1}{2} m \\dot{x}^2 + \\frac{1}{2} k x^2\n\\end{equation*}\ndecreases monotonically whenever $c > 0$. For light damping\nthe amplitude envelope decays as $x_{\\max}(t) = x_0 e^{-ct/2m}$.\n\n\\section{Summary}\nThe sign of the damping term controls whether $x$ relaxes to\nzero or grows without bound; a passive mechanical system\nalways has $c \\ge 0$.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份讲义里位移符号一直用 x，但它和示意图源码里的坐标名 (x) 撞了，学生对着源码做练习时很容易混淆。请把正文数学内容里的变量 x 全部改成 \\xi：行内公式、equation 环境里的微分方程、$\\dot{x}$、$x_{\\max}$、$x_0$ 等每一处都要换。只做符号替换，空格、换行、标点等其它字符一律保持原样。特别注意：tikzpicture 环境是绘图源码，里面的坐标点名 (x) 不是数学符号，整个环境（包括 (x)、(wall)、所有坐标和选项）必须逐字保留，一个字符都不能改。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\begin{tikzpicture}[scale=1.1]\n\\coordinate (wall) at (0,0);\n\\coordinate (x) at (3.5,0);\n\\fill[pattern=north east lines] (-0.2,-0.6) rectangle (0,0.6);\n\\draw[thick] (wall) -- (0.6,0);\n\\draw[decorate,decoration={coil,segment length=4pt}] (0.6,0) -- (2.7,0);\n\\draw[fill=gray!30] (2.7,-0.35) rectangle (x);\n\\draw[->,thick] (x) ++(0,0.55) -- ++(0.9,0) node[midway,above] {$v$};\n\\node[below=8pt] at (x) {block};\n\\draw[<->] (wall) ++(0,-0.9) -- ++(3.5,0) node[midway,below] {rest length};\n\\end{tikzpicture}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "(x)",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "$x$",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "$-kx$",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "m \\frac{d^2 \\xi}{dt^2} = -k\\xi - c \\frac{d\\xi}{dt},",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "$d\\xi/dt$",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\dot{\\xi}^2",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "k \\xi^2",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\xi_{\\max}(t) = \\xi_0",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\dot{x}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "$x_{\\max}",
+        "op": "eq",
+        "count": 0
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{tikz}\n\\usetikzlibrary{patterns,decorations.pathmorphing}\n\n\\title{Lecture Notes: The Damped Oscillator}\n\\author{Phys 221 Course Team}\n\\date{Spring 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setup}\nConsider a block of mass $m$ attached to a light spring on a\nfrictionless rail. We write $\\xi$ for the displacement of the\nblock from its equilibrium position. The restoring force is\n$-k\\xi$, where $k$ is the spring constant, and the dashpot adds\na viscous force proportional to the velocity. Newton's second\nlaw then gives\n\\begin{equation}\nm \\frac{d^2 \\xi}{dt^2} = -k\\xi - c \\frac{d\\xi}{dt},\n\\label{eq:motion}\n\\end{equation}\nwhere $c$ is the damping coefficient.\n\n\\section{Schematic}\nFigure~\\ref{fig:schematic} shows the arrangement. The named\ncoordinates used by the drawing code are internal to the\nfigure and are not mathematical symbols.\n\n\\begin{figure}[h]\n\\centering\n\\begin{tikzpicture}[scale=1.1]\n\\coordinate (wall) at (0,0);\n\\coordinate (x) at (3.5,0);\n\\fill[pattern=north east lines] (-0.2,-0.6) rectangle (0,0.6);\n\\draw[thick] (wall) -- (0.6,0);\n\\draw[decorate,decoration={coil,segment length=4pt}] (0.6,0) -- (2.7,0);\n\\draw[fill=gray!30] (2.7,-0.35) rectangle (x);\n\\draw[->,thick] (x) ++(0,0.55) -- ++(0.9,0) node[midway,above] {$v$};\n\\node[below=8pt] at (x) {block};\n\\draw[<->] (wall) ++(0,-0.9) -- ++(3.5,0) node[midway,below] {rest length};\n\\end{tikzpicture}\n\\caption{Spring--dashpot schematic.}\n\\label{fig:schematic}\n\\end{figure}\n\n\\section{Energy decay}\nMultiplying \\eqref{eq:motion} through by $d\\xi/dt$ and\nintegrating over one cycle shows that the total energy\n\\begin{equation*}\nE = \\frac{1}{2} m \\dot{\\xi}^2 + \\frac{1}{2} k \\xi^2\n\\end{equation*}\ndecreases monotonically whenever $c > 0$. For light damping\nthe amplitude envelope decays as $\\xi_{\\max}(t) = \\xi_0 e^{-ct/2m}$.\n\n\\section{Summary}\nThe sign of the damping term controls whether $\\xi$ relaxes to\nzero or grows without bound; a passive mechanical system\nalways has $c \\ge 0$.\n\\end{document}\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "compile-dirty-footnote-in-caption",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\n\\title{Recovery of a Restored Reed Bed After the 2023 Dieback Event}\n\\author{M. Lindqvist and P. Okafor}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe Hjalmaren pilot wetland was replanted in spring 2021 as part of\nthe shoreline restoration programme. A partial dieback of the reed\nstand in the hot summer of 2023 raised concerns that the planting\nstock had failed, and this note summarises the follow-up monitoring\nthrough the 2025 season.\n\n\\section{Methods}\nStem density was recorded in late June of each year along the three\npermanent transects established at planting. Each transect was sampled\nat ten stations, and all rooted stems within a 0.25~m$^2$ quadrat were\ncounted. Water level and conductivity were logged continuously at the\ninlet weir.\n\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{5cm}\\rule{8cm}{0pt}}\n\\caption{Stem density of \\emph{Phragmites australis}\\footnote{Counted\nalong three 25~m transects with ten quadrats each.} recovered to\npre-dieback levels by the 2025 season.}\n\\label{fig:density}\n\\end{figure}\n\n\\section{Results}\nMean stem density fell from 214 stems/m$^2$ in 2022 to 96 stems/m$^2$\nafter the dieback, then rose to 187 stems/m$^2$ in 2024 and\n231 stems/m$^2$ in 2025 (Figure~\\ref{fig:density}). Recovery was\nfastest at the shallow end of each transect, where rhizome mortality\nhad been lowest. Conductivity stayed below the tolerance threshold\nthroughout, so salinity intrusion is not implicated in the dieback.\n\n\\section{Discussion}\nThe trajectory supports the hypothesis that the 2023 event was heat\nstress rather than planting failure. We recommend continuing the\ntransect monitoring for two more seasons and extending the quadrat\ngrid to the western cell, which was replanted a year later.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "投稿前的终稿检查，突然发现这份稿件编译失败了，报错信息好像跟 caption 有关，但我看不懂 LaTeX 的报错。麻烦帮我修到能正常编译，谢谢！",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\n\\title{Recovery of a Restored Reed Bed After the 2023 Dieback Event}\n\\author{M. Lindqvist and P. Okafor}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe Hjalmaren pilot wetland was replanted in spring 2021 as part of\nthe shoreline restoration programme. A partial dieback of the reed\nstand in the hot summer of 2023 raised concerns that the planting\nstock had failed, and this note summarises the follow-up monitoring\nthrough the 2025 season.\n\n\\section{Methods}\nStem density was recorded in late June of each year along the three\npermanent transects established at planting. Each transect was sampled\nat ten stations, and all rooted stems within a 0.25~m$^2$ quadrat were\ncounted. Water level and conductivity were logged continuously at the\ninlet weir.\n\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{5cm}\\rule{8cm}{0pt}}\n\\caption[Stem density of \\emph{Phragmites australis} recovered to\npre-dieback levels by the 2025 season.]{Stem density of\n\\emph{Phragmites australis}\\footnote{Counted along three 25~m\ntransects with ten quadrats each.} recovered to pre-dieback levels by\nthe 2025 season.}\n\\label{fig:density}\n\\end{figure}\n\n\\section{Results}\nMean stem density fell from 214 stems/m$^2$ in 2022 to 96 stems/m$^2$\nafter the dieback, then rose to 187 stems/m$^2$ in 2024 and\n231 stems/m$^2$ in 2025 (Figure~\\ref{fig:density}). Recovery was\nfastest at the shallow end of each transect, where rhizome mortality\nhad been lowest. Conductivity stayed below the tolerance threshold\nthroughout, so salinity intrusion is not implicated in the dieback.\n\n\\section{Discussion}\nThe trajectory supports the hypothesis that the 2023 event was heat\nstress rather than planting failure. We recommend continuing the\ntransect monitoring for two more seasons and extending the quadrat\ngrid to the western cell, which was replanted a year later.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

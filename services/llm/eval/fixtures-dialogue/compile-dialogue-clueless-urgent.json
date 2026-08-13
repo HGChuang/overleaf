@@ -1,0 +1,55 @@
+{
+  "id": "compile-dialogue-clueless-urgent",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Who Joins a Community Garden?\\\\A Survey of Four Neighbourhood Sites}\n\\author{P.~Ndlovu}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\n\\section{Background}\nCommunity gardens in the city have doubled in number since 2018,\nand most now keep a \\textb{waiting list} of would-be members.\nWho ends up on these lists, and who actually gets a plot,\nhas so far escaped systematic study.\n\nWe surveyed members and applicants at four garden sites\nbetween March and May 2026.\nThe questionnaire covered gardening experience,\nhousehold composition, motivation, and distance from home to the site.\n\n\\section{Main Findings}\nThree patterns recur across all four sites:\n\\begin{enumerate}\n\\item members with prior gardening experience\nare admitted from the waiting list about twice as fast;\n\\item households within a ten-minute walk\nmake up most of the active membership;\n\\item applicants who joined a working bee before applying\nare rarely turned away.\n\n\\section{Discussion}\nThe admission advantage of experienced gardeners\nsuggests that informal skill signals\nshape who gets access to scarce plots.\nWorking bees double as a screening device,\nwhich may deter applicants with less free time.\n\n\\section{Next Steps}\nA follow-up wave in the autumn will revisit the same sites\nand interview applicants who withdrew from the waiting lists.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "我这个社区花园的调查报告突然编译不过了，急死我了，下午要交。我啥也看不懂，你快帮我弄好，能出 PDF 就行。",
+  "dialogue": {
+    "persona": "社区园艺项目的志愿者，中文交流，完全不懂 LaTeX，连报错界面在哪都说不准，只会催。",
+    "hiddenGoal": "终态：两处编译错误全部修复（\\textb{waiting list} 应为 \\textbf、enumerate 环境缺 \\end{enumerate}），编译零错误，保持单文件，正文内容不删不改意思。第 1 轮用户只说编译不过、下午要交、催着快修；若 agent 修好，用户说'好了好了，太感谢了'满意结束；若 agent 只修一处仍有错，第 2 轮用户说'还是不行，还是一堆红字，你再看看呗'；若 agent 追问细节（报错写啥、哪一行），用户说'我真不懂这些，你自己打开文件看吧，反正就是编不过'；若 agent 第二次还没修净，第 3 轮用户几乎崩溃：'怎么还不好，我要交不上了'。用户全程给不了任何技术线索，只能转述编译还红不红。",
+    "disclosure": "vague",
+    "maxUserTurns": 3
+  },
+  "grader": {
+    "type": "compile",
+    "assertions": [
+      {
+        "kind": "file-count",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Who Joins a Community Garden?\\\\A Survey of Four Neighbourhood Sites}\n\\author{P.~Ndlovu}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\n\\section{Background}\nCommunity gardens in the city have doubled in number since 2018,\nand most now keep a \\textbf{waiting list} of would-be members.\nWho ends up on these lists, and who actually gets a plot,\nhas so far escaped systematic study.\n\nWe surveyed members and applicants at four garden sites\nbetween March and May 2026.\nThe questionnaire covered gardening experience,\nhousehold composition, motivation, and distance from home to the site.\n\n\\section{Main Findings}\nThree patterns recur across all four sites:\n\\begin{enumerate}\n\\item members with prior gardening experience\nare admitted from the waiting list about twice as fast;\n\\item households within a ten-minute walk\nmake up most of the active membership;\n\\item applicants who joined a working bee before applying\nare rarely turned away.\n\\end{enumerate}\n\n\\section{Discussion}\nThe admission advantage of experienced gardeners\nsuggests that informal skill signals\nshape who gets access to scarce plots.\nWorking bees double as a screening device,\nwhich may deter applicants with less free time.\n\n\\section{Next Steps}\nA follow-up wave in the autumn will revisit the same sites\nand interview applicants who withdrew from the waiting lists.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "tool-called",
+      "tool": "compile_project",
+      "minCalls": 1
+    },
+    {
+      "kind": "max-turns",
+      "max": 14
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 3
+    }
+  ]
+}

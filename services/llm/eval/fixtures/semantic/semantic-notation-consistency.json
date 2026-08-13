@@ -1,0 +1,23 @@
+{
+  "id": "semantic-notation-consistency",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\title{Contrastive Objectives for Recommendation}\n\\author{T. Molina}\n\\begin{document}\n\\maketitle\n\\section{Method}\nWe optimize the loss $L = L_{rec} + \\lambda L_{cl}$, where $L_{rec}$ is the rating reconstruction term and $L_{cl}$ is the contrastive term. In ablations we set $\\mathcal{L} = L_{rec}$ to isolate the effect of contrastive learning. Minimizing $L$ aligns user and item embeddings in a shared space. The gradient of $\\mathcal{L}$ with respect to the user embedding has a closed form. Empirically, training with $L$ converges within twenty epochs.\n\\section{Experiments}\nWe report recall and NDCG on three public datasets.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "文中总损失函数的符号一会儿写成 $L$ 一会儿写成 $\\mathcal{L}$，前后共 5 处，请全部统一为 $\\mathcal{L}$；注意 $L_{rec}$ 和 $L_{cl}$ 是不同的损失项，必须保持原样，只改总损失符号本身，不要动其他文字。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 5 处总损失符号（含定义式 $L = L_{rec} + \\lambda L_{cl}$ 中的 L）全部统一为 $\\mathcal{L}$，$L_{rec}$ 与 $L_{cl}$ 原样保留，公式语义不变，其他文字未动；4: ≥4 处统一，仅 1 处遗漏，下标项未被误改；3: 只统一 2-3 处，或误改了 1 个下标项；2: 只改 1 处，混用依旧；1: 未修改，或把 $L_{rec}$/$L_{cl}$ 也替换导致公式含义错乱"
+  }
+}

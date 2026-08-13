@@ -1,0 +1,23 @@
+{
+  "id": "semantic-polish-chinese",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{CJKutf8}\n\\title{Knowledge Graph Completion Notes}\n\\author{Zhang San}\n\\begin{document}\n\\maketitle\n\\begin{CJK}{UTF8}{gbsn}\n\\section{引言}\n知识图谱这个东西现在到处都在用，搜索引擎、问答系统都靠它。但是呢，现实中的图谱总是缺胳膊少腿，好多三元组都丢了，所以补全任务就特别重要。以前的做法是把实体和关系塞进一个向量空间里算来算去，效果还行。后来大家发现图神经网络挺管用，能把邻居的信息揉到一起。我们觉得这些方法各有各的毛病：有的算得太慢，有的遇到没见过的实体就抓瞎。本文把主流方法梳理了一遍，还做了对比实验，看看到底谁更靠谱。\n\\end{CJK}\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这段引言写得太口语了（“这个东西”“缺胳膊少腿”“算来算去”“抓瞎”“谁更靠谱”这类表达），请润色为规范的中文学术书面语，原意不变，知识图谱、三元组、补全、图神经网络等术语保持准确，CJK 环境和文档结构不要动。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 口语化表达（这个东西/缺胳膊少腿/算来算去/效果还行/挺管用/揉到一起/抓瞎/梳理了一遍/谁更靠谱）≥6 处改为学术书面语，术语准确、原意完整（两类缺陷：速度慢、无法处理未见过实体），行文流畅，CJK 环境保留；4: ≥4 处改为书面语，原意保留，个别措辞仍可更正式；3: 仅 2-3 处修改、口语残留明显，或轻微偏离原意；2: 只改 1 处，或改写后语句不通顺；1: 未修改、改丢关键信息，或破坏 CJK 环境导致编译失败"
+  }
+}

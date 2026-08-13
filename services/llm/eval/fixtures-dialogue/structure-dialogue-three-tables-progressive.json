@@ -1,0 +1,62 @@
+{
+  "id": "structure-dialogue-three-tables-progressive",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Nighttime Noise in Three Wards}\n\\author{H.~Osei and R.~Lindqvist}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\nWe combine overnight sound-level logging at three sites with a\nhousehold survey to describe nighttime noise exposure across three\nwards, and we fit a small regression model to separate traffic from\nnightlife contributions.\n\\end{abstract}\n\\section{Introduction}\nNighttime noise is a recurring complaint in all three wards, yet the\nsources differ: the river road carries late freight, the market\nsquare hosts nightlife, and the depot runs shift changes at\nmidnight.\nThis note assembles the logging, survey, and modelling results in\none place.\n\\section{Measurement Sites}\nWe logged sound levels at one site per ward for six weeks.\nThe table below summarizes the overnight mean levels.\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{|l|c|c|}\n\\hline\nSite & Ward & Mean level (dB) \\\\\n\\hline\nRiverside & North & 58.2 \\\\\n\\hline\nMarket & Central & 63.4 \\\\\n\\hline\nDepot & South & 60.7 \\\\\n\\hline\n\\end{tabular}\n\\end{table}\nThe market site is the loudest on weekend nights, while the depot\npeaks at shift change.\n\\section{Survey}\nWe surveyed households within two blocks of each site and received\n312 responses.\nThe table below summarizes the answers to the sleep question.\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{|l|c|}\n\\hline\nResponse & Share (\\%) \\\\\n\\hline\nSleep disturbed often & 41 \\\\\n\\hline\nSleep disturbed sometimes & 33 \\\\\n\\hline\nRarely disturbed & 26 \\\\\n\\hline\n\\end{tabular}\n\\end{table}\nDisturbance reports track the logged levels ward by ward.\n\\section{A Simple Model}\nWe regress the overnight mean level on traffic flow and the count of\nnearby nightlife venues.\nThe table below lists the fitted coefficients.\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{|l|c|}\n\\hline\nTerm & Coefficient \\\\\n\\hline\nIntercept & 52.1 \\\\\n\\hline\nTraffic flow & 0.8 \\\\\n\\hline\nNightlife venues & 2.3 \\\\\n\\hline\n\\end{tabular}\n\\end{table}\nBoth terms are significant at the five percent level.\n\\section{Conclusion}\nNightlife, not freight, explains most of the ward-to-ward gap in\nnighttime noise, and the survey confirms that residents notice the\ndifference.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "三张表都还是老式全框线，想统一换成三线表，一张一张来。先弄站点那张：改 booktabs 三线表（宏包自己引），caption 用 Overnight noise levels by measurement site.，label 用 tab:sites，正文那句 the table below 换成 Table \\ref{tab:sites} 的正式引用。表里数字一个不许动。",
+  "dialogue": {
+    "persona": "公共卫生方向的研究生，中文交流；知道 booktabs 这个名字但懒得自己改；一次只布置一张表，验收看 PDF 里表格样式和正文引用编号。",
+    "hiddenGoal": "终态（全部可判分）：① preamble 有 \\usepackage{booktabs} 恰好一次；② 全文 0 个 \\hline，\\toprule/\\midrule/\\bottomrule 各恰好 3 次（每张表各一）；③ 三张表都有 caption 且文字分别为 Overnight noise levels by measurement site. / Survey responses on sleep disturbance. / Regression coefficients for the noise model.（各一次）；④ label 分别为 tab:sites、tab:survey、tab:model 各一次；⑤ 正文对三张表的 \\ref 各至少一次（原来三句 the table below 都已换成正式引用）；⑥ 表里所有数字一字不动（58.2、63.4、60.7、41、33、26、52.1、0.8、2.3），三张表都在，仍编译通过。剧本：分三轮每轮统一一张表——第 1 轮（开场白）站点表；用户确认样式对了才给第 2 轮：调查那张表同样处理，caption 用 Survey responses on sleep disturbance.，label 用 tab:survey，正文 the table below 换成 Table \\ref{tab:survey}；确认后第 3 轮：模型那张表，caption 用 Regression coefficients for the noise model.，label 用 tab:model，正文引用同样换，并要求三张表风格完全一致、顺带检查前两张的 caption、label、\\ref 是否齐全，不齐补上。分岔：某轮表没改全（还有 \\hline、缺 caption/label/\\ref、数字被动），用户指出具体问题让修好才给下一张；第 3 轮检查时发现前两张有缺漏，用户让补齐后再结束。三轮落实后满意结束。用户知识边界：认得三线表样式和引用编号，背不下表中全部数字。",
+    "disclosure": "progressive",
+    "maxUserTurns": 5
+  },
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\usepackage\\{booktabs\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\hline", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\toprule", "op": "eq", "count": 3 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\midrule", "op": "eq", "count": 3 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\bottomrule", "op": "eq", "count": 3 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\caption\\{", "op": "eq", "count": 3 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\label\\{tab:sites\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\label\\{tab:survey\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\label\\{tab:model\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\ref\\{tab:sites\\}", "op": "gte", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\ref\\{tab:survey\\}", "op": "gte", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\ref\\{tab:model\\}", "op": "gte", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\begin\\{table\\}", "op": "eq", "count": 3 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "Overnight noise levels by measurement site.", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "Survey responses on sleep disturbance.", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "Regression coefficients for the noise model.", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "58.2", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "63.4", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "60.7", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "41", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "52.1", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "2.3", "op": "eq", "count": 1 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\\title{Nighttime Noise in Three Wards}\n\\author{H.~Osei and R.~Lindqvist}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\nWe combine overnight sound-level logging at three sites with a\nhousehold survey to describe nighttime noise exposure across three\nwards, and we fit a small regression model to separate traffic from\nnightlife contributions.\n\\end{abstract}\n\\section{Introduction}\nNighttime noise is a recurring complaint in all three wards, yet the\nsources differ: the river road carries late freight, the market\nsquare hosts nightlife, and the depot runs shift changes at\nmidnight.\nThis note assembles the logging, survey, and modelling results in\none place.\n\\section{Measurement Sites}\nWe logged sound levels at one site per ward for six weeks.\nTable \\ref{tab:sites} summarizes the overnight mean levels.\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lcc}\n\\toprule\nSite & Ward & Mean level (dB) \\\\\n\\midrule\nRiverside & North & 58.2 \\\\\nMarket & Central & 63.4 \\\\\nDepot & South & 60.7 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Overnight noise levels by measurement site.}\n\\label{tab:sites}\n\\end{table}\nThe market site is the loudest on weekend nights, while the depot\npeaks at shift change.\n\\section{Survey}\nWe surveyed households within two blocks of each site and received\n312 responses.\nTable \\ref{tab:survey} summarizes the answers to the sleep question.\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lc}\n\\toprule\nResponse & Share (\\%) \\\\\n\\midrule\nSleep disturbed often & 41 \\\\\nSleep disturbed sometimes & 33 \\\\\nRarely disturbed & 26 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Survey responses on sleep disturbance.}\n\\label{tab:survey}\n\\end{table}\nDisturbance reports track the logged levels ward by ward.\n\\section{A Simple Model}\nWe regress the overnight mean level on traffic flow and the count of\nnearby nightlife venues.\nTable \\ref{tab:model} lists the fitted coefficients.\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lc}\n\\toprule\nTerm & Coefficient \\\\\n\\midrule\nIntercept & 52.1 \\\\\nTraffic flow & 0.8 \\\\\nNightlife venues & 2.3 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Regression coefficients for the noise model.}\n\\label{tab:model}\n\\end{table}\nBoth terms are significant at the five percent level.\n\\section{Conclusion}\nNightlife, not freight, explains most of the ward-to-ward gap in\nnighttime noise, and the survey confirms that residents notice the\ndifference.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    { "kind": "max-turns", "max": 14 },
+    { "kind": "no-repeat-call", "maxIdentical": 2 }
+  ]
+}

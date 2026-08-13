@@ -1,0 +1,62 @@
+{
+  "id": "compile-dirty-two-complete-mains",
+  "category": "compile",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\n\\title{Storm-Season Shoreline Retreat on a Gravel Barrier:\nFour Winters of Profile Surveys}\n\\author{R.~Calloway, M.~Iversen, and T.~Aldana}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nRepeated profile surveys across four storm seasons show that the\ngravel barrier retreats in discrete steps tied to threshold wave\nconditions rather than smoothly through the winter.\nA simple relaxation model reproduces the inter-survey envelope\nonce the storm-season resetting of the crest is included.\n\\end{abstract}\n\n\\section{Study Area}\nThe barrier extends 3.8~km along an exposed fetch and fronts a\nlow brackish lagoon. The crest sits 3.1 to 3.6~m above mean sea\nlevel, and the beach face is dominated by poorly sorted gravel\nwith occasional cobble lag deposits.\n\n\\section{Survey Methods}\nFifteen fixed profiles were surveyed with RTK-GNSS at the end of\neach storm season from 2022--2023 onward, with additional\npost-event surveys after the two largest storms of the record.\nElevations are tied to the national vertical datum and are\nrepeatable to within 3~cm on the unvegetated face.\nThe 2025--2026 winter added a fourth full storm season to the series.\n\n\\section{Volume Change Model}\nWe model the elevation envelope $h(t)$ of the active berm as\n\\begin{equation}\nh(t) = h_0 e^{-kt}^2\n\\end{equation}\nwhere $h_0$ is the post-storm crest height, $k$ is a seasonal\nrelaxation coefficient estimated by least squares, and $t$ counts\ndays since the last threshold exceedance.\nThe residual field $\\mathf{R}^{2}$ is summarised per profile in\nthe appendix and stays below 0.04~m$^2$ for all but two profiles.\n\n\\section{Retreat Thresholds}\nStepwise retreat occurred when the six-hour significant wave\nheight exceeded 2.4~m with water levels above the 80th percentile.\nBetween such events the face accreted slowly, recovering roughly\na third of the storm-season loss by late summer.\n\n\\section{Discussion}\nThe four-season record supports a threshold-driven retreat model\nrather than a continuous diffusion of the profile.\nManagement implications concern mainly the timing of crest\nreprofiling works, which our results suggest should follow the\nfirst threshold exceedance of the season rather than a fixed date.\n\n\\section{Conclusion}\nFour winters of surveys show a gravel barrier that stores storm\nimpacts as discrete steps. The relaxation model with a seasonal\nreset reproduces the observed envelope and gives a practical\ncriterion for intervention windows.\n\n\\end{document}\n"
+      },
+      {
+        "path": "old_main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\n\\title{Beach Profile Response to a Single Storm Event:\nPilot Measurements at Calloway Barrier}\n\\author{R.~Calloway and P.~Ndhlovu}\n\\date{October 2022}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nA pilot survey of one gravel barrier before and after a single\nstorm event documents the magnitude of crest lowering and face\ncutback that a threshold exceedance can produce.\n\\end{abstract}\n\n\\section{Study Area}\nThe barrier extends 3.8~km along an exposed fetch and fronts a\nlow brackish lagoon. This pilot study covered the central six\nprofiles only, spanning the most exposed reach of the barrier.\n\n\\section{Survey Methods}\nSix profiles were surveyed with RTK-GNSS one week before the\nforecast storm and again within three days of its passage.\nElevations are tied to the national vertical datum.\n\n\\section{Volume Change Model}\nWe model the elevation envelope $h(t)$ of the active berm as\n\\begin{equation}\nh(t) = (h_0 e^{-kt})^2\n\\end{equation}\nwhere $h_0$ is the post-storm crest height and $k$ is a\nrelaxation coefficient.\nThe residual field $\\mathbf{R}^{2}$ stayed below 0.05~m$^2$ for\nall six profiles in this pilot.\n\n\\section{Event Response}\nThe storm lowered the crest by up to 0.6~m and cut the face back\nby 1.8~m on the most exposed profiles, with the largest changes\nconcentrated above mean sea level.\n\n\\section{Conclusion}\nEven a single threshold exceedance produces stepwise change, which\nmotivated the multi-season programme now underway.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "你好，我这个海岸地貌的项目编译一直失败。main.tex 是当前在写的稿子，old_main.tex 是早先发表那篇试点研究的存档稿，标题作者都不同，只作参考，千万别动。麻烦帮我修到能编译，谢谢！",
+  "grader": {
+    "type": "compile",
+    "assertions": [
+      {
+        "kind": "unchanged-file",
+        "file": "old_main.tex"
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Storm-Season Shoreline Retreat on a Gravel Barrier:",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\author{R.~Calloway, M.~Iversen, and T.~Aldana}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "The 2025--2026 winter added a fourth full storm season to the series.",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\n\\title{Storm-Season Shoreline Retreat on a Gravel Barrier:\nFour Winters of Profile Surveys}\n\\author{R.~Calloway, M.~Iversen, and T.~Aldana}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nRepeated profile surveys across four storm seasons show that the\ngravel barrier retreats in discrete steps tied to threshold wave\nconditions rather than smoothly through the winter.\nA simple relaxation model reproduces the inter-survey envelope\nonce the storm-season resetting of the crest is included.\n\\end{abstract}\n\n\\section{Study Area}\nThe barrier extends 3.8~km along an exposed fetch and fronts a\nlow brackish lagoon. The crest sits 3.1 to 3.6~m above mean sea\nlevel, and the beach face is dominated by poorly sorted gravel\nwith occasional cobble lag deposits.\n\n\\section{Survey Methods}\nFifteen fixed profiles were surveyed with RTK-GNSS at the end of\neach storm season from 2022--2023 onward, with additional\npost-event surveys after the two largest storms of the record.\nElevations are tied to the national vertical datum and are\nrepeatable to within 3~cm on the unvegetated face.\nThe 2025--2026 winter added a fourth full storm season to the series.\n\n\\section{Volume Change Model}\nWe model the elevation envelope $h(t)$ of the active berm as\n\\begin{equation}\nh(t) = (h_0 e^{-kt})^2\n\\end{equation}\nwhere $h_0$ is the post-storm crest height, $k$ is a seasonal\nrelaxation coefficient estimated by least squares, and $t$ counts\ndays since the last threshold exceedance.\nThe residual field $\\mathbf{R}^{2}$ is summarised per profile in\nthe appendix and stays below 0.04~m$^2$ for all but two profiles.\n\n\\section{Retreat Thresholds}\nStepwise retreat occurred when the six-hour significant wave\nheight exceeded 2.4~m with water levels above the 80th percentile.\nBetween such events the face accreted slowly, recovering roughly\na third of the storm-season loss by late summer.\n\n\\section{Discussion}\nThe four-season record supports a threshold-driven retreat model\nrather than a continuous diffusion of the profile.\nManagement implications concern mainly the timing of crest\nreprofiling works, which our results suggest should follow the\nfirst threshold exceedance of the season rather than a fixed date.\n\n\\section{Conclusion}\nFour winters of surveys show a gravel barrier that stores storm\nimpacts as discrete steps. The relaxation model with a seasonal\nreset reproduces the observed envelope and gives a practical\ncriterion for intervention windows.\n\n\\end{document}\n"
+      },
+      {
+        "path": "old_main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\n\\title{Beach Profile Response to a Single Storm Event:\nPilot Measurements at Calloway Barrier}\n\\author{R.~Calloway and P.~Ndhlovu}\n\\date{October 2022}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nA pilot survey of one gravel barrier before and after a single\nstorm event documents the magnitude of crest lowering and face\ncutback that a threshold exceedance can produce.\n\\end{abstract}\n\n\\section{Study Area}\nThe barrier extends 3.8~km along an exposed fetch and fronts a\nlow brackish lagoon. This pilot study covered the central six\nprofiles only, spanning the most exposed reach of the barrier.\n\n\\section{Survey Methods}\nSix profiles were surveyed with RTK-GNSS one week before the\nforecast storm and again within three days of its passage.\nElevations are tied to the national vertical datum.\n\n\\section{Volume Change Model}\nWe model the elevation envelope $h(t)$ of the active berm as\n\\begin{equation}\nh(t) = (h_0 e^{-kt})^2\n\\end{equation}\nwhere $h_0$ is the post-storm crest height and $k$ is a\nrelaxation coefficient.\nThe residual field $\\mathbf{R}^{2}$ stayed below 0.05~m$^2$ for\nall six profiles in this pilot.\n\n\\section{Event Response}\nThe storm lowered the crest by up to 0.6~m and cut the face back\nby 1.8~m on the most exposed profiles, with the largest changes\nconcentrated above mean sea level.\n\n\\section{Conclusion}\nEven a single threshold exceedance produces stepwise change, which\nmotivated the multi-season programme now underway.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

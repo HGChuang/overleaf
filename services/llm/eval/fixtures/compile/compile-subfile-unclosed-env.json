@@ -1,0 +1,43 @@
+{
+  "id": "compile-subfile-unclosed-env",
+  "category": "compile",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Site-Strip Models for Phylogenetic Rate Heterogeneity}\n\\author{T. Aaltonen}\n\\date{June 2026}\n\\begin{document}\n\\maketitle\n\\input{chapters/background}\n\\input{chapters/methods}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/background.tex",
+        "content": "\\section{Background}\nPhylogenetic inference assumes that sites in an alignment\nshare a common tree but may evolve at different rates.\nThe standard approach multiplies each site likelihood\nby a rate drawn from a discretised gamma distribution,\nwhich averages over rate variation without assigning rates to sites.\n\nSite-strip models take a different view.\nThey partition the alignment into contiguous strips\nand allow each strip its own rate multiplier,\nso recombination breakpoints and structural boundaries\ncan be accommodated without changing the topology.\n\nThe idea is related to hidden Markov models along the alignment,\nbut the strip formulation keeps the number of parameters small\nand makes posterior rates easy to interpret.\n\nEarly applications to viral genomes showed\nthat strip rates recover known recombination hotspots\nand improve marginal likelihoods relative to the gamma model.\n"
+      },
+      {
+        "path": "chapters/methods.tex",
+        "content": "\\section{Methods}\nOur inference pipeline proceeds in three stages:\n\\begin{enumerate}\n\\item Align the sequences with a codon-aware aligner and trim unreliable columns.\n\\item Estimate the strip boundaries by a changepoint scan over site log-likelihoods.\n\\item Sample rates and topologies jointly with a Metropolis-coupled chain.\n\\section{Evaluation}\nWe simulate alignments under known strip structures\nand measure how often the true boundaries are recovered.\nRecovery is above ninety percent when strips are longer than two hundred sites,\nand it degrades gracefully as strips shorten.\n\nOn empirical alignments the model selects between three and seven strips,\nand the inferred boundaries align closely with annotated protein domains.\n\n\\section{Implementation}\nThe sampler is implemented as an extension of an open phylogenetics library\nand runs on a single multicore workstation.\nA typical analysis of forty taxa and twelve thousand sites\ncompletes overnight with four coupled chains.\n"
+      }
+    ]
+  },
+  "instruction": "系统发育这个多文件项目编译失败，帮忙修一下，应该在某个章节文件里。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Site-Strip Models for Phylogenetic Rate Heterogeneity}\n\\author{T. Aaltonen}\n\\date{June 2026}\n\\begin{document}\n\\maketitle\n\\input{chapters/background}\n\\input{chapters/methods}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/background.tex",
+        "content": "\\section{Background}\nPhylogenetic inference assumes that sites in an alignment\nshare a common tree but may evolve at different rates.\nThe standard approach multiplies each site likelihood\nby a rate drawn from a discretised gamma distribution,\nwhich averages over rate variation without assigning rates to sites.\n\nSite-strip models take a different view.\nThey partition the alignment into contiguous strips\nand allow each strip its own rate multiplier,\nso recombination breakpoints and structural boundaries\ncan be accommodated without changing the topology.\n\nThe idea is related to hidden Markov models along the alignment,\nbut the strip formulation keeps the number of parameters small\nand makes posterior rates easy to interpret.\n\nEarly applications to viral genomes showed\nthat strip rates recover known recombination hotspots\nand improve marginal likelihoods relative to the gamma model.\n"
+      },
+      {
+        "path": "chapters/methods.tex",
+        "content": "\\section{Methods}\nOur inference pipeline proceeds in three stages:\n\\begin{enumerate}\n\\item Align the sequences with a codon-aware aligner and trim unreliable columns.\n\\item Estimate the strip boundaries by a changepoint scan over site log-likelihoods.\n\\item Sample rates and topologies jointly with a Metropolis-coupled chain.\n\\end{enumerate}\n\\section{Evaluation}\nWe simulate alignments under known strip structures\nand measure how often the true boundaries are recovered.\nRecovery is above ninety percent when strips are longer than two hundred sites,\nand it degrades gracefully as strips shorten.\n\nOn empirical alignments the model selects between three and seven strips,\nand the inferred boundaries align closely with annotated protein domains.\n\n\\section{Implementation}\nThe sampler is implemented as an extension of an open phylogenetics library\nand runs on a single multicore workstation.\nA typical analysis of forty taxa and twelve thousand sites\ncompletes overnight with four coupled chains.\n"
+      }
+    ]
+  }
+}

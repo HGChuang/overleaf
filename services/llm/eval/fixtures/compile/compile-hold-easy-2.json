@@ -1,0 +1,27 @@
+{
+  "id": "compile-hold-easy-2",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\title{Pitch Drift in Unaccompanied Choir Singing}\n\\author{K. Virtanen}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setup}\nWe recorded twelve semi-professional choirs performing an eight-part\nmotet without instrumental accompaniment.\nEach performance was annotated with a reference pitch track\nsampled every 10~ms from the soprano line,\nand all onsets were checked by two independent listeners.\n\n\\section{Observation}\nAcross all takes the modal drift was flat by roughly a quarter tone\nover the full duration of the piece.\nThe clearest exception appeared in bar 34,\nwhere the altos enter on G♯4 against a sustained pedal in the basses\nand overshoot the target by about 35 cents on first attack.\n\n\\section{Discussion}\nThe overshoot correlates with the vowel of the entering syllable\nand with the rehearsal density of the preceding phrase.\nConductors can counteract the effect by cueing the entry early\nand by rehearsing bar 34 from the bass pedal upward.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "你好。我的声学报告编译失败，我不明白为什么。昨天它是好的，我改了只有一小段文字。请你帮我修理，非常感谢。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\title{Pitch Drift in Unaccompanied Choir Singing}\n\\author{K. Virtanen}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setup}\nWe recorded twelve semi-professional choirs performing an eight-part\nmotet without instrumental accompaniment.\nEach performance was annotated with a reference pitch track\nsampled every 10~ms from the soprano line,\nand all onsets were checked by two independent listeners.\n\n\\section{Observation}\nAcross all takes the modal drift was flat by roughly a quarter tone\nover the full duration of the piece.\nThe clearest exception appeared in bar 34,\nwhere the altos enter on $G\\sharp 4$ against a sustained pedal in the basses\nand overshoot the target by about 35 cents on first attack.\n\n\\section{Discussion}\nThe overshoot correlates with the vowel of the entering syllable\nand with the rehearsal density of the preceding phrase.\nConductors can counteract the effect by cueing the entry early\nand by rehearsing bar 34 from the bass pedal upward.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

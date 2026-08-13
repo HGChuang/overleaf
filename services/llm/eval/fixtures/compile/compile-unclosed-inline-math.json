@@ -1,0 +1,27 @@
+{
+  "id": "compile-unclosed-inline-math",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Adaptive Thresholds for Network Intrusion Detection}\n\\author{R. Kowalska}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\section{Scoring}\nEach flow receives an anomaly score from an isolation forest trained on the previous day.\nThe thresholds $\\lambda$, $\\mu$ and $\\sigma control when an alert is raised,\nand they are re-estimated every hour from the traffic observed so far.\n\nAlerts that cross the highest threshold are escalated to an analyst immediately,\nwhile marginal cases are aggregated into a hourly digest for later review.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "入侵检测这篇编译报错了，说是缺了个符号，我自己找半天没找到，帮帮忙。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Adaptive Thresholds for Network Intrusion Detection}\n\\author{R. Kowalska}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\section{Scoring}\nEach flow receives an anomaly score from an isolation forest trained on the previous day.\nThe thresholds $\\lambda$, $\\mu$ and $\\sigma$ control when an alert is raised,\nand they are re-estimated every hour from the traffic observed so far.\n\nAlerts that cross the highest threshold are escalated to an analyst immediately,\nwhile marginal cases are aggregated into a hourly digest for later review.\n\\end{document}\n"
+      }
+    ]
+  }
+}

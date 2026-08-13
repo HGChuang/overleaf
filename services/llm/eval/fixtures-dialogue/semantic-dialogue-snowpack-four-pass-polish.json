@@ -1,0 +1,258 @@
+{
+  "id": "semantic-dialogue-snowpack-four-pass-polish",
+  "category": "semantic",
+  "difficulty": "extreme",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Low-Cost Time-Lapse Cameras for Snowpack Monitoring:\\newline Eleven Melt Seasons in the Kyrgyz Tien Shan}\n\\author{D.~A.~Rysbekova, P.~J.~Whitfield, and L.~Moreau}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nSnowpack observations in high Central Asia are sparse, and it's hard to plan reservoir releases without them.\nWe deployed a network of 38 cameras across one headwater catchment and followed the snowpack for 11 melt seasons.\nThe cameras recorded snow depth daily at a fraction of the cost of telemetry stations.\nSnow-depth retrievals matched manual surveys within a few centimetres for most of the season.\nMelt-out dates at the upper site came pretty much two weeks earlier over the record.\nThe network shows that time-lapse photography can carry routine monitoring in remote terrain.\n\\end{abstract}\n\n\\section{Introduction}\nSeasonal snow is the main water store for the rivers of Central Asia.\nIrrigation calendars and reservoir rule curves both depend on the timing of the melt.\nYet the observation network above 2,500 m is thin and getting thinner.\nAutomatic stations with weighing lysimeters and ultrasonic rangers are costly to install and to keep running.\nTelemetry fails when solar panels ice over or when masts are buried.\nPark rangers don't visit the high basins between November and April.\nManual snow courses still exist, but they are spaced a month apart and miss storm cycles.\nThe data gap is a big deal for the agencies that schedule spring releases.\nSatellite products help, though clouds and steep terrain limit their use in narrow valleys.\nA cheap complement comes from consumer cameras, since time lapse imagery needs no telemetry.\nA camera with a battery and a memory card can run for a full winter without service.\nStakes placed in the field of view give a scale for snow depth.\nRepeat photographs also document snow-cover extent on the surrounding slopes.\nSeveral research groups have shown the approach in the Alps and the Rockies.\nThose installations were mostly single cameras near roads or huts.\nWhether a large network can survive a Central Asian winter was less clear.\nThis paper reports on more than a decade of camera observations in one Kyrgyz headwater catchment.\nWe describe the network design, the field protocol, and the retrieval method.\nWe compare the retrievals with manual surveys and with a conventional station.\nWe close with costs, failure modes, and recommendations for operators.\n\n\\section{Snow and Climate Context}\nWinter precipitation at the outlet gauge averages 410 millimetres.\nThe wettest winters in the record brought late spring storms.\nThe driest winters still left a continuous pack at the upper sites.\nSnow cover at the camera sites lasts from late October to June.\nThe pack at the lower sites ripens within days of the last storm.\nThe upper pack can stay cold through April.\nRain-on-snow events occur most often in March.\nThe 2018 event flooded the lower meadows for a week.\nSummer snowfall is common above 3,000 m.\nThese events reset the surface but melt within days.\nThe basin loses its seasonal cover completely by early July.\nGlacier melt sustains flow through the late summer.\nThe agency separates snowmelt and glacier melt in its forecasts.\nThe camera record covers only the seasonal pack.\nWinters with thin early snow show the deepest ground frost.\nHerders report harder spring forage after such winters.\nThe climate context here is continental and dry.\nInterannual variability is large, which motivates long records.\n\n\\section{Study Area}\nThe study catchment drains the northern slope of the Terskey Ala-Too range.\nThe instrumented area lies between 2,480 m and 3,120 m above sea level.\nThe main camera basin is a very open glacial trough with gentle side slopes.\nThe gauge hut stands at 2,860 m beside a moraine lake.\nThe catchment channel runs 4.1 km from the glacier snout to the lake outlet.\nWinter precipitation falls mostly as snow between October and May.\nSummer storms bring rain at lower elevations and wet snow near the divide.\nVegetation is alpine meadow with juniper shrubs on the stony slopes.\nA herding track crosses the basin and is used from June to September.\nThe nearest roadhead is a half day away by four-wheel drive.\nPower and network coverage end at the valley mouth.\nThe regional water agency maintains a staffed gauge at the lake outlet.\nThe gauge record begins in 1964 and continues today.\nSnow courses on the side slopes were measured monthly until 1991 and resumed in 2015.\nThe basin was chosen because the camera views stay free of avalanche paths.\nTwo small hanging glaciers feed the upper tributaries.\nRock glaciers line the shaded side of the trough.\nThe frozen ground under the meadows thaws through June.\nThe lake outlet marks the lowest point of the instrumented area.\nSlopes above the meadow bench are mostly free of trees.\nAvalanche paths were mapped from archival photographs before siting.\nNo camera looks across a mapped path.\n\n\\section{Camera Network}\nThe network grew from a pilot pair of cameras to 38 stations over four years.\nSites were chosen for open views of the meadow and the drift zones.\nEach station pairs a camera with a two-metre painted stake.\nThe stakes carry decimetre bands that the retrieval code reads directly.\nCameras store one image per hour on industrial memory cards.\nA ten-watt solar panel charges a small lithium battery through winter.\nThe housings are steel boxes with a glass port and a silica gel cartridge.\nA desiccant cartridge won't stop fogging if the seal is damaged.\nMounting posts are angled steel driven a metre into the ground.\nGuy wires keep the posts steady in valley winds.\nThe cameras use a fixed focus and a fixed exposure programme.\nA time-lapse interval of one hour was chosen as a compromise between storage and resolution.\nThe timelapse mode also records a calibration frame at noon each day.\nThe time-lapse schedule was shortened to thirty minutes during the melt weeks.\nEach site visit follows a fixed loop of the basin.\nThe loop takes two long days on foot in spring conditions.\nThe cameras run a sort of sleep mode between frames.\nSites near the herding track are checked more often.\nA snow pillow at the central site provides an independent reference.\nThe pillow signal is logged every fifteen minutes and transmitted in summer.\nCamera clocks drift, so the timestamps are corrected against the logger at each visit.\nStation names follow the tributary and the altitude.\nThe full station list sits in the project archive.\n\n\\section{Field Protocol}\nVisits begin with a condition check of the housing and the post.\nThe team cleans the glass port and replaces the desiccant.\nMemory cards are swapped and sealed in labelled envelopes.\nBattery voltage and panel current are read with a handheld meter.\nThe stake is brushed down and photographed from the camera position.\nSnow depth at the stake is read by eye and written in the field book.\nA second reading is taken at a marked point two metres away.\nDuring the first winter the team didn't carry spare desiccant, and three housings fogged.\nSpare cartridges joined the standard kit after that season.\nThe field book also records wildlife sign and any human disturbance.\nPhotos of the stake are compared with the camera frame on the same day.\nAny tilt or shift of the post triggers a re-levelling entry.\nAnd the loop resumes at the next station without delay.\nRe-levelling uses a hand level and a reference mark on the post.\nThe protocol fits on a single laminated card.\nNew field staff learn it in one season.\nThe agency audit team repeated the protocol independently in 2022.\nTheir readings matched the project values within two centimetres.\nVisit dates shift around storms and river crossings.\n\n\\section{Power and Housings}\nThe power budget assumes six winter months with weak sun.\nA panel tilt of sixty degrees sheds snow well at this latitude.\nThe charge controller sleeps between charge cycles.\nThe battery box sits below the camera box to keep the centre of mass low.\nCondensation is the main enemy inside the housing.\nA warm front after a cold spell will fog any imperfect seal.\nThe glass port isn't coated, so frost can form on the inside face.\nA thin film of glycerol on the glass reduced frosting in bench tests.\nField results with the film were mixed, and the practice was dropped.\nThe housing gasket is really just a strip of closed-cell foam.\nGaskets are replaced every second season.\nSpare housings are stocked at the valley office.\nA full swap takes under an hour with hand tools.\nCable glands are checked at every visit.\nThe electrical design has no microprocessor beyond the camera itself.\nThere is nothing to reboot and nothing to crash.\nFailure modes are mechanical or chemical, not digital.\nThis simplicity is deliberate.\n\n\\section{Image Processing}\nImages arrive in batches after each visit.\nA first pass discards frames that are dark, fogged, or blocked by ice.\nThe reject rate averages nine percent across the record.\nNight frames are dropped by timestamp.\nA reference frame per station defines the stake position and the ground line.\nThe retrieval code finds the coloured bands on the stake.\nSnow depth is read from the highest visible band.\nOblique views are corrected with a fixed projective transform per station.\nThe transform is recomputed after any re-levelling.\nThe code flags frames where the stake is partly buried.\nCondensation and melt water on the lens mimic a rising snow line and fool the band detector.\nA sharpness test on the band edges could potentially catch those cases.\nThe test was added in the seventh season.\nBut false rejects rose, and the threshold was relaxed again.\nFoggy frames are flagged by a contrast measure on the upper third of the image.\nThe whole pipeline runs on a laptop in the valley office.\nProcessing one season of one station takes about twenty minutes.\nThe code is plain Python with open libraries.\nNo machine learning is used anywhere in the chain.\nOperators can inspect every retrieval against the source frame.\nA contact sheet per station and month supports quick review.\nRetrievals that fail inspection are marked missing rather than guessed.\nThe archive keeps both the raw frames and the flag files.\n\n\\section{Snow-Depth Retrieval}\nThe retrieval error grows when the stake is nearly buried.\nDeep drifts hide all but the top band.\nThe very deep winter of 2021 buried five stakes completely.\nThose gaps are filled from the nearest surviving station with a scaling factor.\nThe scaling factor comes from the overlap of earlier seasons.\nFilled values are flagged and never mixed with direct readings.\nA fresh snowfall on a bare stake may possibly read as shallow snow when the bands are icy.\nField checks caught this only once.\nWind scour around the post can also bias single-stake readings.\nThe two-metre setback stake controls for the worst of the scour.\nWhere the two stakes disagree by more than a band, the frame is inspected by hand.\nDaily values are the median of the hourly retrievals.\nThe median filter suppresses reading noise from blowing snow.\nSmoothing beyond that was avoided.\nThe record keeps the hourly values alongside the daily series.\nBoth series are public.\nStake visibility after storms is checked against the dashboard.\nNew snow on the stake is cleared only during visits.\n\n\\section{Comparison with Manual Surveys}\nThe agency snow course crosses the basin once a month from February to May.\nThe course has nine points along a fixed line.\nCourse days give the only fully independent check on the cameras.\nAcross 41 shared days the median difference was under two centimetres.\nThe largest differences came during drift events.\nCamera readings ran high on windward points and low in the lee of shrubs.\nThe correlation between the camera series and the course means reached 0.87.\nThe reference pillow at the central site tracked the cameras within its own uncertainty.\nAs noted earlier, the pillow signal is logged every fifteen minutes.\nThe snow-pillow conversion to water equivalent uses the agency density curve.\nThe 38 cameras bracket the course line on both sides of the channel.\nSpatial spread matters more than point accuracy during melt.\nThe cameras caught a rain-on-snow event that the monthly course missed.\nThat event shows up as a sharp rise and fall over five days.\nCourse values for the same fortnight look flat.\nThe agency now uses the camera series to time its course days.\nJoint field days began in the ninth season.\nThe comparison will continue for the life of the network.\nResidual bias shows no trend over the record.\nThe methods agree well enough for operations.\n\n\\section{Melt-Out Timing}\nMelt-out is defined here as the first day with a bare stake.\nThe date is read from the daily series with no smoothing.\nMelt-out at the upper stations might potentially shift earlier as springs warm.\nThe record shows an earlier drift of about nine days at the highest sites.\nLower sites show a weaker move.\nAnd the spread between upper and lower melt-out dates has widened.\nThe widening matters for the scheduling of the first irrigation releases.\nThe meltwater pulses arrive at the outlet gauge within two days of stake melt-out.\nThe lag is stable across the record.\nThe time-lapse frames also capture the first emergence of the meadow.\nGreen-up follows melt-out by about a week at the lower sites.\nThe cameras thus give both hydrologic and ecological dates.\nThe meltwater volumes at the outlet are not modelled here.\nThe timing record alone is the contribution of this paper.\nThe agency publishes the melt-out dates in its spring bulletin.\nBulletin users include the irrigation districts and the hydropower operator.\nDates are released within a week of retrieval.\nA public dashboard shows the current season against the record.\nThe widest spread came after the warmest spring.\nNarrow spreads follow cold late springs.\n\n\\section{Data Gaps and Failures}\nThe network lost nine camera-winters to hardware faults across the record.\nTwo housings flooded when gaskets failed in a wet autumn.\nOne post was flattened by an avalanche outside the mapped paths.\nMemory cards failed three times without warning.\nA camera at 2,860 m recorded nothing for one full winter after a connector corroded.\nSolar panels iced over during one very cold snap.\nThe gaps cluster in the middle winters when the network was young.\nLater seasons lost fewer camera-winters.\nSpares on the shelf cut the average outage to one visit cycle.\nA failed station still yields its stored cards at the next visit.\nOnly the battery fires caused total data loss.\nTwo batteries failed with scorch marks on the controller board.\nThe cause was never settled.\nCharging hardware was changed as a precaution.\nNo recurrence has been seen since the change.\nGap months can't be reconstructed from satellites alone.\nFilled values from neighbouring stations cover the short gaps.\nLong gaps stay missing in the public series.\n\n\\section{Costs and Labour}\nA full station costs about 340 dollars in parts at 2024 prices.\nThe camera itself is the cheapest part.\nThe housing, post, and panel dominate the bill.\nAssembly takes a technician half a day.\nField days are the real expense.\nThe spring loop ties up two staff for a week with travel.\nSummer and autumn loops are shorter.\nTotal labour comes to about 24 field days per year.\nThe telemetry station at the outlet cost more than the whole camera network.\nIts annual service contract exceeds the camera budget several times over.\nThe running costs are pretty much transport and wages, and we reckon the network pays for itself in avoided helicopter time.\nThe agency accounts treat the cameras as consumables.\nBut replacement cycles have been longer than expected.\nA single conventional station in the same terrain would need annual helicopter support.\nThe cameras need none.\nBudget lines for years six to eleven are confirmed.\nTransport is by four-wheel drive to the roadhead and then on foot.\nPack animals carry the spring loads.\nThe budget carries no telemetry fees.\n\n\\section{Discussion}\nThe network shows that consumer cameras can carry routine snow monitoring in remote terrain.\nThe approach trades precision at a point for coverage across a basin.\nFor agency scheduling, coverage is what matters.\nThe record is long enough to speak to drift in melt-out dates.\nIt is still short against the climatic record of the outlet gauge.\nThe cameras do not measure water equivalent directly.\nDensity remains the weak link for volume estimates.\nThe agency density curve is old and borrowed from a neighbouring range.\nA dedicated density programme would strengthen the product.\nThe network also ignores the glacierised headwaters, where cameras are hard to keep.\nWe don't see a way to run cameras on the ice itself.\nCrevasse movement would destroy a post in one season.\nThe routing of melt water under the snowpack remains unobserved.\nThe timelapse archive has found uses beyond the original brief.\nTeachers use the frames in schools downstream.\nHerders check the corridor conditions from the dashboard.\nAs mentioned above, the archive keeps every raw frame.\nThe meltwater timing result rests on the outlet gauge, which has its own gaps.\nA second gauge higher in the basin would help.\nFunding for that gauge is uncertain.\nThe next priority is a density programme shared with the agency.\nThe camera method itself needs no further justification.\n\n\\section{Recommendations}\nOperators should start with a pilot pair before committing to a network.\nSite choice matters more than camera model.\nOpen views of meadow and drift zones give the most useful records.\nPosts and housings deserve more budget than the cameras themselves.\nSpares on the shelf keep outages to one visit cycle.\nA laminated protocol keeps field work consistent across staff turnover.\nIndependent audits build trust in the series.\nAs mentioned above, the agency audit in 2022 matched the project values closely.\nRetrieval code should stay simple and inspectable.\nEvery automated value should be reviewable against its source frame.\nMissing data should be published as missing.\nDensity measurements should join the protocol when funds allow.\nMelt-out dates should be released within a week.\nThe dashboard should show the current season against the full record.\n\n\\section{Conclusion}\nA network of consumer cameras has tracked the snowpack of a Tien Shan headwater for 11 melt seasons.\nThe retrievals match manual courses within a few centimetres for most of the season.\nThe system survives winters that defeat telemetry.\nThe costs sit far below those of conventional stations.\nThe method is cheap, and it's simple enough to duplicate in neighbouring basins.\nThe main weaknesses are density, the glacierised headwaters, and rare total losses.\nNone of these undermines the timing product.\nIn conclusion, the method is ready for operational use.\nThe agency has adopted the melt-out dates in its spring bulletin.\nThe irrigation districts plan against the camera record.\nThe archive remains open to any group that wants the frames.\nA second basin joins the network next season.\nThe same protocol will apply there unchanged.\nLong records beat clever instruments in this terrain.\nCheap cameras, kept honest by field discipline, deliver such records.\nThe method suits basins without power or coverage.\nThe limiting factor is field access, not technology.\nThe record will run for as long as the agency finds it useful.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这篇相机测雪的长文档你帮我顺一遍语气：通篇的缩略形式（don't、it's 这类）都展开成完整形式，口语短语清掉，写得正式一点，准备投稿。数字、术语、章节结构都别动。",
+  "dialogue": {
+    "persona": "中亚水文机构的技术官员，中文交流，说话有条理；会逐行读源码找缩略形式和套话，记得关键数字，但不自己动手改；每轮先验收上一轮，再追加新活儿。",
+    "hiddenGoal": "终态要求（四轮约束累积，全都不能丢）：① 语气：全文缩略形式展开（don't/can't/won't/didn't/isn't/it's），口语短语清除（pretty much/a big deal/we reckon/sort of）；② 句式：双重推测简化（may possibly/might potentially/could potentially 留一个情态词），very/really 删除，句首 And/But 消除；③ 术语统一：time-lapse（带连字符，文里混着 timelapse 和 time lapse 两种错法）、meltwater（一个词，有处写成 melt water）、snow pillow（两个词不带连字符，有处写成 snow-pillow）；④ 衔接：As mentioned above、As noted earlier、In conclusion 这类空转承接句删除或换成有内容的衔接；⑤ 数字一个不动：2,860 m（2 处）、38（3 处）、0.87、4.1 km、11 melt seasons（2 处）；⑥ 章节结构不动，保持可编译。剧本：第 1 轮只提语气（instruction）。第 2 轮：先验收——若还有缩略形式残留，用户点名（'我翻到 Discussion 还有 don't'）；然后追加句式要求，强调前面语气的要求继续有效。第 3 轮：先验收句式（若 very 或句首 And/But 残留则点名），再追加术语统一，逐个说出三种错法。第 4 轮：追加衔接要求，并提醒前三轮要求都算数。第 5 轮抽验：'我抽了两个数，2,860 和 0.87，原样还在吧？再确认 time-lapse 全文统一了。'分岔：任一轮 agent 改丢了早期约束或动了数字——用户点名要求恢复；agent 若大改结构或增删章节——用户要求还原。全部达标后用户回复'行，就这样'结束。用户知识边界：记得关键数字和三种术语错法，能读源码找毛病，给不了改写示范。",
+    "disclosure": "progressive",
+    "maxUserTurns": 6
+  },
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 四轮要求全部落实——语气正式统一（所有缩略形式展开、口语短语清除）；句式收紧（双重推测简化、very/really 删除、句首 And/But 消除）；术语统一（time-lapse/meltwater/snow pillow 三种规范形贯穿全文）；空洞承接句（As mentioned above/As noted earlier/In conclusion）替换为有内容的衔接或删除；数字（2,860/38/0.87/4.1/11 melt seasons）与章节结构零改动，行文地道；4: 四轮要求大体落实，个别句式生硬或 1-2 处衔接仍空泛；3: 某一轮要求明显未落实（如术语仍混用、句首 And/But 残留），或 1 个数字被误改；2: 只完成前两轮，或多处数字/结构受损；1: 几乎未改，或虚构原文没有的内容",
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "don't",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "can't",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "won't",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "didn't",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "isn't",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "it's",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "pretty much",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "a big deal",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "we reckon",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "sort of",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "may possibly",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "might potentially",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "could potentially",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "really ",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\bvery ",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "(^|\\n)(And|But) ",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "timelapse",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "time lapse",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "melt water",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "snow-pillow",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "time-lapse",
+        "op": "gte",
+        "count": 7
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "meltwater",
+        "op": "gte",
+        "count": 5
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "snow pillow",
+        "op": "gte",
+        "count": 2
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "As mentioned above",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "As noted earlier",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "In conclusion",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "2,860",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "38",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "0.87",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "4.1",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "11",
+        "op": "eq",
+        "count": 2
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 16
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 3
+    }
+  ]
+}

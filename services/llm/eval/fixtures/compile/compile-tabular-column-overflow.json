@@ -1,0 +1,27 @@
+{
+  "id": "compile-tabular-column-overflow",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Perception Benchmarks for Urban Autonomous Driving}\n\\author{O. Farrell and K. Taniguchi}\n\\date{March 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nReliable perception remains the bottleneck for urban autonomous driving.\nWe benchmark three detector families on a new night-time dataset\nand report detection quality separately for each weather condition.\n\n\\section{Related Work}\nPublic driving benchmarks have driven rapid progress in daytime perception,\nbut their night-time slices are usually too small for reliable conclusions.\nRecent synthetic data approaches narrow the gap,\nthough the sim-to-real transfer remains imperfect in adverse weather.\n\n\\section{Dataset}\nThe dataset contains forty thousand annotated frames\ncollected over six months of fleet operation in two cities.\nAnnotations cover vehicles, pedestrians, cyclists, and traffic signals.\nEvery frame is labelled with the weather and illumination condition\nrecorded by the vehicle at capture time.\n\n\\section{Metrics}\nWe report mean average precision at the standard overlap threshold.\nFor safety critical classes we also report recall at a fixed false positive rate,\nsince missed pedestrians matter far more than spurious detections.\n\n\\section{Results}\nDetection quality degrades sharply in rain and at night.\n\\begin{center}\n\\begin{tabular}{ll}\n\\hline\nCondition & mAP \\\\\n\\hline\nClear day & 0.91 \\\\\nOvercast day & 0.88 \\\\\nNight, dry & 0.79 \\\\\nNight, rain & 0.71 & 0.66 \\\\\nFog & 0.63 \\\\\n\\hline\n\\end{tabular}\n\\end{center}\nThe gap between clear day and night rain exceeds twenty points\nfor every detector family we evaluated.\n\n\\section{Analysis}\nSensor fusion with radar closes roughly half of the gap,\nbut lidar dropout remains the dominant failure mode in heavy rain.\nTemporal aggregation helps in fog,\nwhere single frames often lack usable structure.\nEnsembling the three detector families adds a further point\nat the cost of doubling the inference budget.\n\n\\section{Limitations}\nThe dataset covers two cities in a single climate zone,\nand the labelling of distant pedestrians is noisy at night.\nResults should not be extrapolated to snow or dust conditions.\n\n\\section{Conclusion}\nNight-time rain is still far from solved for camera based stacks.\nWe release the dataset and the evaluation code to support reproducible progress.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "自动驾驶 benchmark 这篇编译失败，表格好像有问题但我眼拙看不出来，帮忙瞅瞅。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Perception Benchmarks for Urban Autonomous Driving}\n\\author{O. Farrell and K. Taniguchi}\n\\date{March 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nReliable perception remains the bottleneck for urban autonomous driving.\nWe benchmark three detector families on a new night-time dataset\nand report detection quality separately for each weather condition.\n\n\\section{Related Work}\nPublic driving benchmarks have driven rapid progress in daytime perception,\nbut their night-time slices are usually too small for reliable conclusions.\nRecent synthetic data approaches narrow the gap,\nthough the sim-to-real transfer remains imperfect in adverse weather.\n\n\\section{Dataset}\nThe dataset contains forty thousand annotated frames\ncollected over six months of fleet operation in two cities.\nAnnotations cover vehicles, pedestrians, cyclists, and traffic signals.\nEvery frame is labelled with the weather and illumination condition\nrecorded by the vehicle at capture time.\n\n\\section{Metrics}\nWe report mean average precision at the standard overlap threshold.\nFor safety critical classes we also report recall at a fixed false positive rate,\nsince missed pedestrians matter far more than spurious detections.\n\n\\section{Results}\nDetection quality degrades sharply in rain and at night.\n\\begin{center}\n\\begin{tabular}{ll}\n\\hline\nCondition & mAP \\\\\n\\hline\nClear day & 0.91 \\\\\nOvercast day & 0.88 \\\\\nNight, dry & 0.79 \\\\\nNight, rain & 0.71 \\\\\nFog & 0.63 \\\\\n\\hline\n\\end{tabular}\n\\end{center}\nThe gap between clear day and night rain exceeds twenty points\nfor every detector family we evaluated.\n\n\\section{Analysis}\nSensor fusion with radar closes roughly half of the gap,\nbut lidar dropout remains the dominant failure mode in heavy rain.\nTemporal aggregation helps in fog,\nwhere single frames often lack usable structure.\nEnsembling the three detector families adds a further point\nat the cost of doubling the inference budget.\n\n\\section{Limitations}\nThe dataset covers two cities in a single climate zone,\nand the labelling of distant pedestrians is noisy at night.\nResults should not be extrapolated to snow or dust conditions.\n\n\\section{Conclusion}\nNight-time rain is still far from solved for camera based stacks.\nWe release the dataset and the evaluation code to support reproducible progress.\n\\end{document}\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "id": "compile-probe-f-samename-two-dirs",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage{amsmath}\n\n\\title{Uncertainty in Runoff Simulation for a Mountainous Catchment under the Xinanjiang Model}\n\\author{L.~Wang and M.~Chen}\n\\date{May 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nRainfall-runoff models of mountainous catchments are sensitive to\nparameter estimates derived from short records. We quantify the\nuncertainty of Xinanjiang model simulations for the upper Jinhua basin\nusing a generalised likelihood framework, and we identify which\nparameters dominate the predictive variance during flood events.\n\\end{abstract}\n\n\\input{sections/intro}\n\\input{sections/model}\n\\input{chapters/calibration}\n\\input{chapters/model}\n\n\\end{document}\n"
+      },
+      {
+        "path": "sections/intro.tex",
+        "content": "\\section{Introduction}\nFlood forecasting in mountainous basins relies on conceptual\nrainfall-runoff models whose parameters cannot be measured directly.\nThe Xinanjiang model, developed for humid and semi-humid regions of\nChina, remains a standard tool for such basins because its saturation\nexcess mechanism reproduces the observed nonlinearity of the runoff\nresponse with few parameters.\n\nDespite its widespread use, the model is routinely calibrated against\nshort streamflow records, and the resulting parameter sets are known to\nbe only weakly identifiable. Very different parameter combinations may\nreproduce the calibration record equally well while diverging in\nprediction.\n\nThis paper quantifies the predictive uncertainty of the model for the\nupper Jinhua basin, a 230~km$^2$ catchment in Zhejiang province.\nSection~2 reviews the model structure, Section~3 describes the\ncalibration strategy, and Section~4 presents the formulation used in\nthe uncertainty analysis.\n"
+      },
+      {
+        "path": "sections/model.tex",
+        "content": "\\section{Model Overview}\nThe Xinanjiang model partitions the catchment into a tension water\nstorage and a free water storage. Evapotranspiration depletes the\ntension water storage first, and runoff is generated only where the\ntension water capacity is satisfied.\n\nThe spatial variability of the tension water capacity is represented by\na distribution curve with shape parameter $b$. For $b = 0$ the capacity\nis uniform over the catchment, while larger values of $b$ concentrate\nstorage in a small fraction of the area. Typical calibrated values for\nhumid catchments lie between 0.1 and 0.4.\n\nFree water is routed through three linear reservoirs representing\nsurface flow, interflow, and groundwater flow. The recession constants\nof the three reservoirs control the shape of the simulated hydrograph\nrecession.\n"
+      },
+      {
+        "path": "chapters/calibration.tex",
+        "content": "\\section{Calibration}\nDaily streamflow records from 2010 to 2020 at the basin outlet were\nsplit into a calibration period (2010--2016) and a validation period\n(2017--2020). Parameters were sampled with a Latin hypercube design of\n20{,}000 points within ranges reported by previous studies of humid\ncatchments.\n\nEach sampled parameter set was scored with the Nash--Sutcliffe\nefficiency computed on daily flows. Parameter sets above the informal\nthreshold of 0.75 were retained as behavioural, yielding 1{,}340\nbehavioural sets out of the 20{,}000 samples.\n\nThe behavioural sets reproduce the calibration record well, but their\npredictions diverge markedly during the largest validation events,\nwhich motivates the variance decomposition presented in the next\nsection.\n"
+      },
+      {
+        "path": "chapters/model.tex",
+        "content": "\\section{Model Formulation}\nFor the uncertainty analysis we write the model in state-space form.\nLet $S_t$ denote the tension water storage at time step $t$, and let\n$P_t$ and $E_t$ denote precipitation and potential evapotranspiration.\nThe storage balance is\n\\begin{equation}\nS_{t+1} = S_t + P_t - R_t - E_t \\, f(S_t),\n\\end{equation}\nwhere $R_t$ is the generated runoff and $f(S_t)$ is the depletion\nfunction implied by the distribution curve.\n\nThe simulated discharge at the outlet is $Q_t = \\alpha Q_{t-1} +\n\\beta R_t + \\gamma B_t where $\\alpha$ is the combined recession\ncoefficient, $\\beta$ maps generated runoff to discharge, and $B_t$ is\nthe baseflow contribution from the groundwater reservoir.\n\nThe variance of the predictive distribution is decomposed with a\nfirst-order sensitivity index computed from the behavioural ensemble.\n"
+      }
+    ]
+  },
+  "instruction": "help！编译又挂了，log 指向 model 那个文件，可我把 model 翻了个遍也没看出毛病。快帮我修到能编译，下午要给导师过目。",
+  "grader": {
+    "type": "compile",
+    "assertions": [
+      {
+        "kind": "unchanged-file",
+        "file": "sections/model.tex"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage{amsmath}\n\n\\title{Uncertainty in Runoff Simulation for a Mountainous Catchment under the Xinanjiang Model}\n\\author{L.~Wang and M.~Chen}\n\\date{May 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nRainfall-runoff models of mountainous catchments are sensitive to\nparameter estimates derived from short records. We quantify the\nuncertainty of Xinanjiang model simulations for the upper Jinhua basin\nusing a generalised likelihood framework, and we identify which\nparameters dominate the predictive variance during flood events.\n\\end{abstract}\n\n\\input{sections/intro}\n\\input{sections/model}\n\\input{chapters/calibration}\n\\input{chapters/model}\n\n\\end{document}\n"
+      },
+      {
+        "path": "sections/intro.tex",
+        "content": "\\section{Introduction}\nFlood forecasting in mountainous basins relies on conceptual\nrainfall-runoff models whose parameters cannot be measured directly.\nThe Xinanjiang model, developed for humid and semi-humid regions of\nChina, remains a standard tool for such basins because its saturation\nexcess mechanism reproduces the observed nonlinearity of the runoff\nresponse with few parameters.\n\nDespite its widespread use, the model is routinely calibrated against\nshort streamflow records, and the resulting parameter sets are known to\nbe only weakly identifiable. Very different parameter combinations may\nreproduce the calibration record equally well while diverging in\nprediction.\n\nThis paper quantifies the predictive uncertainty of the model for the\nupper Jinhua basin, a 230~km$^2$ catchment in Zhejiang province.\nSection~2 reviews the model structure, Section~3 describes the\ncalibration strategy, and Section~4 presents the formulation used in\nthe uncertainty analysis.\n"
+      },
+      {
+        "path": "sections/model.tex",
+        "content": "\\section{Model Overview}\nThe Xinanjiang model partitions the catchment into a tension water\nstorage and a free water storage. Evapotranspiration depletes the\ntension water storage first, and runoff is generated only where the\ntension water capacity is satisfied.\n\nThe spatial variability of the tension water capacity is represented by\na distribution curve with shape parameter $b$. For $b = 0$ the capacity\nis uniform over the catchment, while larger values of $b$ concentrate\nstorage in a small fraction of the area. Typical calibrated values for\nhumid catchments lie between 0.1 and 0.4.\n\nFree water is routed through three linear reservoirs representing\nsurface flow, interflow, and groundwater flow. The recession constants\nof the three reservoirs control the shape of the simulated hydrograph\nrecession.\n"
+      },
+      {
+        "path": "chapters/calibration.tex",
+        "content": "\\section{Calibration}\nDaily streamflow records from 2010 to 2020 at the basin outlet were\nsplit into a calibration period (2010--2016) and a validation period\n(2017--2020). Parameters were sampled with a Latin hypercube design of\n20{,}000 points within ranges reported by previous studies of humid\ncatchments.\n\nEach sampled parameter set was scored with the Nash--Sutcliffe\nefficiency computed on daily flows. Parameter sets above the informal\nthreshold of 0.75 were retained as behavioural, yielding 1{,}340\nbehavioural sets out of the 20{,}000 samples.\n\nThe behavioural sets reproduce the calibration record well, but their\npredictions diverge markedly during the largest validation events,\nwhich motivates the variance decomposition presented in the next\nsection.\n"
+      },
+      {
+        "path": "chapters/model.tex",
+        "content": "\\section{Model Formulation}\nFor the uncertainty analysis we write the model in state-space form.\nLet $S_t$ denote the tension water storage at time step $t$, and let\n$P_t$ and $E_t$ denote precipitation and potential evapotranspiration.\nThe storage balance is\n\\begin{equation}\nS_{t+1} = S_t + P_t - R_t - E_t \\, f(S_t),\n\\end{equation}\nwhere $R_t$ is the generated runoff and $f(S_t)$ is the depletion\nfunction implied by the distribution curve.\n\nThe simulated discharge at the outlet is $Q_t = \\alpha Q_{t-1} +\n\\beta R_t + \\gamma B_t$ where $\\alpha$ is the combined recession\ncoefficient, $\\beta$ maps generated runoff to discharge, and $B_t$ is\nthe baseflow contribution from the groundwater reservoir.\n\nThe variance of the predictive distribution is decomposed with a\nfirst-order sensitivity index computed from the behavioural ensemble.\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "id": "structure-hard-label-prefix-multifile",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{report}\n\\begin{document}\n\\input{chapters/methods}\n\\input{chapters/evaluation}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/methods.tex",
+        "content": "\\chapter{Methods}\n\\section{Test Setup}\n\\label{sec:setup}\nThe rig applies cyclic loads at 5 Hz.\n\\begin{figure}\n\\centering\n\\rule{5cm}{3cm}\n\\caption{Loading rig}\n\\label{fig:rig}\n\\end{figure}\n\\begin{equation}\nda/dN = C \\Delta K^m\n\\label{equation:paris}\n\\end{equation}\n\\begin{table}\n\\centering\n\\caption{Crack growth rates}\n\\label{results}\n\\begin{tabular}{lc}\n\\hline\nSpecimen & Rate (mm/cycle) \\\\\n\\hline\nS1 & 0.002 \\\\\n\\hline\n\\end{tabular}\n\\end{table}\n"
+      },
+      {
+        "path": "chapters/evaluation.tex",
+        "content": "\\chapter{Evaluation}\nThe setup of Section~\\ref{sec:setup} is used for all specimens.\nThe rig in Figure~\\ref{fig:rig} applies the spectrum.\nGrowth follows Equation~\\ref{equation:paris}, and Table~\\ref{results} lists the fitted rates.\n"
+      }
+    ]
+  },
+  "instruction": "项目 label 命名不规范：methods.tex 里 \\label{equation:paris} 和 \\label{results} 缺类型前缀。统一规范为 eq:/tab: 前缀（即改成 \\label{eq:paris} 和 \\label{tab:results}），evaluation.tex 里对应的 \\ref 引用同步更新；其余 label 和内容不动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "chapters/methods.tex",
+        "pattern": "\\\\label\\{eq:paris\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/methods.tex",
+        "pattern": "\\\\label\\{tab:results\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/methods.tex",
+        "pattern": "\\\\label\\{equation:paris\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/methods.tex",
+        "pattern": "\\\\label\\{results\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/evaluation.tex",
+        "pattern": "\\\\ref\\{eq:paris\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/evaluation.tex",
+        "pattern": "\\\\ref\\{tab:results\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/evaluation.tex",
+        "pattern": "\\\\ref\\{equation:paris\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/evaluation.tex",
+        "pattern": "\\\\ref\\{results\\}",
+        "op": "eq",
+        "count": 0
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{report}\n\\begin{document}\n\\input{chapters/methods}\n\\input{chapters/evaluation}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/methods.tex",
+        "content": "\\chapter{Methods}\n\\section{Test Setup}\n\\label{sec:setup}\nThe rig applies cyclic loads at 5 Hz.\n\\begin{figure}\n\\centering\n\\rule{5cm}{3cm}\n\\caption{Loading rig}\n\\label{fig:rig}\n\\end{figure}\n\\begin{equation}\nda/dN = C \\Delta K^m\n\\label{eq:paris}\n\\end{equation}\n\\begin{table}\n\\centering\n\\caption{Crack growth rates}\n\\label{tab:results}\n\\begin{tabular}{lc}\n\\hline\nSpecimen & Rate (mm/cycle) \\\\\n\\hline\nS1 & 0.002 \\\\\n\\hline\n\\end{tabular}\n\\end{table}\n"
+      },
+      {
+        "path": "chapters/evaluation.tex",
+        "content": "\\chapter{Evaluation}\nThe setup of Section~\\ref{sec:setup} is used for all specimens.\nThe rig in Figure~\\ref{fig:rig} applies the spectrum.\nGrowth follows Equation~\\ref{eq:paris}, and Table~\\ref{tab:results} lists the fitted rates.\n"
+      }
+    ]
+  }
+}

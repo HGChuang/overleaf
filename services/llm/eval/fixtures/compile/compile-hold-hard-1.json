@@ -1,0 +1,51 @@
+{
+  "id": "compile-hold-hard-1",
+  "category": "compile",
+  "difficulty": "hard",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{longtable}\n\n% shorthand for inflow speeds, used throughout the calibration tables\n% (helper macros were tidied away on 2026-07-28 -- check before editing)\n\\newcommand{\\ws}[1]{\\windspeed{#1}_{\\rms}\\,\\unitsep m/s}\n\n\\title{Wake Losses in the Havnsoe Offshore Wind Farm}\n\\author{M.~Abraham and R.~Tefera}\n\\date{August 2026}\n\n\\begin{document}\n\\maketitle\n\\input{chapters/wake}\n\\input{chapters/loads}\n\\input{chapters/mast}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/wake.tex",
+        "content": "\\chapter{Wake Model Calibration}\nThe engineering wake model describes the velocity deficit downstream\nof a turbine as\n\\begin{equation}\n\\frac{u}{U_0} = 1 - \\frac{1 - \\sqrt{1 - C_T}}{(1 + 2 k x / D)^2},\n\\end{equation}\nwhere $k$ is the wake decay constant, $C_T$ the thrust coefficient,\n$x$ the downstream distance and $D$ the rotor diameter.\nFor the calibration we used SCADA records from the full year 2025,\nfiltered to sectors with free inflow from the southwest.\n\nMeasured inflow conditions for the forty-eight turbines are listed\nbelow; each entry is the ten-minute mean over the stable periods\nselected by the availability filter.\n\n\\begin{longtable}{llll}\n\\hline\nTurbine & Mean inflow & Direction (deg) & Availability (\\%) \\\\\n\\hline\n\\endhead\nT01 & \\ws{6.0} & 175 & 38 \\\\\nT02 & \\ws{7.3} & 178 & 39 \\\\\nT03 & \\ws{8.6} & 181 & 40 \\\\\nT04 & \\ws{9.9} & 184 & 41 \\\\\nT05 & \\ws{10.2} & 187 & 42 \\\\\nT06 & \\ws{11.5} & 190 & 43 \\\\\nT07 & \\ws{12.8} & 193 & 44 \\\\\nT08 & \\ws{6.1} & 196 & 45 \\\\\nT09 & \\ws{7.4} & 199 & 46 \\\\\nT10 & \\ws{8.7} & 202 & 38 \\\\\nT11 & \\ws{9.0} & 205 & 39 \\\\\nT12 & \\ws{10.3} & 208 & 40 \\\\\nT13 & \\ws{11.6} & 211 & 41 \\\\\nT14 & \\ws{12.9} & 214 & 42 \\\\\nT15 & \\ws{6.2} & 217 & 43 \\\\\nT16 & \\ws{7.5} & 220 & 44 \\\\\nT17 & \\ws{8.8} & 223 & 45 \\\\\nT18 & \\ws{9.1} & 226 & 46 \\\\\nT19 & \\ws{10.4} & 229 & 38 \\\\\nT20 & \\ws{11.7} & 232 & 39 \\\\\nT21 & \\ws{12.0} & 235 & 40 \\\\\nT22 & \\ws{6.3} & 238 & 41 \\\\\nT23 & \\ws{7.6} & 241 & 42 \\\\\nT24 & \\ws{8.9} & 244 & 43 \\\\\nT25 & \\ws{9.2} & 247 & 44 \\\\\nT26 & \\ws{10.5} & 250 & 45 \\\\\nT27 & \\ws{11.8} & 253 & 46 \\\\\nT28 & \\ws{12.1} & 256 & 38 \\\\\nT29 & \\ws{6.4} & 259 & 39 \\\\\nT30 & \\ws{7.7} & 262 & 40 \\\\\nT31 & \\ws{8.0} & 265 & 41 \\\\\nT32 & \\ws{9.3} & 268 & 42 \\\\\nT33 & \\ws{10.6} & 271 & 43 \\\\\nT34 & \\ws{11.9} & 274 & 44 \\\\\nT35 & \\ws{12.2} & 277 & 45 \\\\\nT36 & \\ws{6.5} & 280 & 46 \\\\\nT37 & \\ws{7.8} & 283 & 38 \\\\\nT38 & \\ws{8.1} & 286 & 39 \\\\\nT39 & \\ws{9.4} & 289 & 40 \\\\\nT40 & \\ws{10.7} & 292 & 41 \\\\\nT41 & \\ws{11.0} & 295 & 42 \\\\\nT42 & \\ws{12.3} & 298 & 43 \\\\\nT43 & \\ws{6.6} & 301 & 44 \\\\\nT44 & \\ws{7.9} & 304 & 45 \\\\\nT45 & \\ws{8.2} & 307 & 46 \\\\\nT46 & \\ws{9.5} & 310 & 38 \\\\\nT47 & \\ws{10.8} & 313 & 39 \\\\\nT48 & \\ws{11.1} & 316 & 40 \\\\\n\\hline\n\\end{longtable}\n\nThe fitted decay constant scatters between 0.030 and 0.045 across\nthe array, with the inner rows showing the largest values.\nThe next chapter checks what this spread implies for fatigue loads.\n"
+      },
+      {
+        "path": "chapters/loads.tex",
+        "content": "\\chapter{Load Implications}\nThe wake-added turbulence raises the fatigue damage equivalent\nloads on the downstream machines.\nBlade root bending moments were computed with the aeroelastic\nmodel under the calibrated wake field.\n\n\\section{Method}\nEach turbine was simulated for the six governing sectors,\nand the damage equivalent moments were aggregated with a\nWoehler exponent of ten for the blade laminates.\n\n\\section{Findings}\nThe centre-row machines carry the highest damage equivalent\nloads, about eleven percent above the free-stream reference.\nThe edge machines see almost no wake-added loading during\nsouthwesterly inflow and remain the production leaders.\n"
+      },
+      {
+        "path": "chapters/mast.tex",
+        "content": "\\chapter{Meteorological Mast Campaign}\nThe met mast stands two kilometres west of the array and has\nrecorded sonic anemometer data at 20~Hz for eleven months.\nCup anemometers at four levels were calibrated in the wind\ntunnel before deployment and again after the campaign.\n\nThe shear exponent $\\alpha_1_2$ derived from the 60~m and 80~m\nlevels averages 0.19 over stable nights and drops below 0.10\nduring convective afternoons.\nThese values feed directly into the inflow model used for the\nwake calibration of the previous chapters.\n\nData recovery reached 96~percent over the campaign;\nthe gap in March followed a lightning strike on the junction box.\n"
+      }
+    ]
+  },
+  "instruction": "上周我把导言区里几个自认为用不上的辅助宏删掉了，结果整份风电场报告立刻编不动，报错刷屏、全卡在 wake 那一章的表格附近——可表格数据我一个字都没动过。chapters 下面的文件划分保持原样，把它收拾到能正常出 PDF。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{longtable}\n\n% shorthand for inflow speeds, used throughout the calibration tables\n% (helper macros were tidied away on 2026-07-28 -- check before editing)\n\\newcommand{\\ws}[1]{#1~m/s}\n\n\\title{Wake Losses in the Havnsoe Offshore Wind Farm}\n\\author{M.~Abraham and R.~Tefera}\n\\date{August 2026}\n\n\\begin{document}\n\\maketitle\n\\input{chapters/wake}\n\\input{chapters/loads}\n\\input{chapters/mast}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/wake.tex",
+        "content": "\\chapter{Wake Model Calibration}\nThe engineering wake model describes the velocity deficit downstream\nof a turbine as\n\\begin{equation}\n\\frac{u}{U_0} = 1 - \\frac{1 - \\sqrt{1 - C_T}}{(1 + 2 k x / D)^2},\n\\end{equation}\nwhere $k$ is the wake decay constant, $C_T$ the thrust coefficient,\n$x$ the downstream distance and $D$ the rotor diameter.\nFor the calibration we used SCADA records from the full year 2025,\nfiltered to sectors with free inflow from the southwest.\n\nMeasured inflow conditions for the forty-eight turbines are listed\nbelow; each entry is the ten-minute mean over the stable periods\nselected by the availability filter.\n\n\\begin{longtable}{llll}\n\\hline\nTurbine & Mean inflow & Direction (deg) & Availability (\\%) \\\\\n\\hline\n\\endhead\nT01 & \\ws{6.0} & 175 & 38 \\\\\nT02 & \\ws{7.3} & 178 & 39 \\\\\nT03 & \\ws{8.6} & 181 & 40 \\\\\nT04 & \\ws{9.9} & 184 & 41 \\\\\nT05 & \\ws{10.2} & 187 & 42 \\\\\nT06 & \\ws{11.5} & 190 & 43 \\\\\nT07 & \\ws{12.8} & 193 & 44 \\\\\nT08 & \\ws{6.1} & 196 & 45 \\\\\nT09 & \\ws{7.4} & 199 & 46 \\\\\nT10 & \\ws{8.7} & 202 & 38 \\\\\nT11 & \\ws{9.0} & 205 & 39 \\\\\nT12 & \\ws{10.3} & 208 & 40 \\\\\nT13 & \\ws{11.6} & 211 & 41 \\\\\nT14 & \\ws{12.9} & 214 & 42 \\\\\nT15 & \\ws{6.2} & 217 & 43 \\\\\nT16 & \\ws{7.5} & 220 & 44 \\\\\nT17 & \\ws{8.8} & 223 & 45 \\\\\nT18 & \\ws{9.1} & 226 & 46 \\\\\nT19 & \\ws{10.4} & 229 & 38 \\\\\nT20 & \\ws{11.7} & 232 & 39 \\\\\nT21 & \\ws{12.0} & 235 & 40 \\\\\nT22 & \\ws{6.3} & 238 & 41 \\\\\nT23 & \\ws{7.6} & 241 & 42 \\\\\nT24 & \\ws{8.9} & 244 & 43 \\\\\nT25 & \\ws{9.2} & 247 & 44 \\\\\nT26 & \\ws{10.5} & 250 & 45 \\\\\nT27 & \\ws{11.8} & 253 & 46 \\\\\nT28 & \\ws{12.1} & 256 & 38 \\\\\nT29 & \\ws{6.4} & 259 & 39 \\\\\nT30 & \\ws{7.7} & 262 & 40 \\\\\nT31 & \\ws{8.0} & 265 & 41 \\\\\nT32 & \\ws{9.3} & 268 & 42 \\\\\nT33 & \\ws{10.6} & 271 & 43 \\\\\nT34 & \\ws{11.9} & 274 & 44 \\\\\nT35 & \\ws{12.2} & 277 & 45 \\\\\nT36 & \\ws{6.5} & 280 & 46 \\\\\nT37 & \\ws{7.8} & 283 & 38 \\\\\nT38 & \\ws{8.1} & 286 & 39 \\\\\nT39 & \\ws{9.4} & 289 & 40 \\\\\nT40 & \\ws{10.7} & 292 & 41 \\\\\nT41 & \\ws{11.0} & 295 & 42 \\\\\nT42 & \\ws{12.3} & 298 & 43 \\\\\nT43 & \\ws{6.6} & 301 & 44 \\\\\nT44 & \\ws{7.9} & 304 & 45 \\\\\nT45 & \\ws{8.2} & 307 & 46 \\\\\nT46 & \\ws{9.5} & 310 & 38 \\\\\nT47 & \\ws{10.8} & 313 & 39 \\\\\nT48 & \\ws{11.1} & 316 & 40 \\\\\n\\hline\n\\end{longtable}\n\nThe fitted decay constant scatters between 0.030 and 0.045 across\nthe array, with the inner rows showing the largest values.\nThe next chapter checks what this spread implies for fatigue loads.\n"
+      },
+      {
+        "path": "chapters/loads.tex",
+        "content": "\\chapter{Load Implications}\nThe wake-added turbulence raises the fatigue damage equivalent\nloads on the downstream machines.\nBlade root bending moments were computed with the aeroelastic\nmodel under the calibrated wake field.\n\n\\section{Method}\nEach turbine was simulated for the six governing sectors,\nand the damage equivalent moments were aggregated with a\nWoehler exponent of ten for the blade laminates.\n\n\\section{Findings}\nThe centre-row machines carry the highest damage equivalent\nloads, about eleven percent above the free-stream reference.\nThe edge machines see almost no wake-added loading during\nsouthwesterly inflow and remain the production leaders.\n"
+      },
+      {
+        "path": "chapters/mast.tex",
+        "content": "\\chapter{Meteorological Mast Campaign}\nThe met mast stands two kilometres west of the array and has\nrecorded sonic anemometer data at 20~Hz for eleven months.\nCup anemometers at four levels were calibrated in the wind\ntunnel before deployment and again after the campaign.\n\nThe shear exponent $\\alpha_{12}$ derived from the 60~m and 80~m\nlevels averages 0.19 over stable nights and drops below 0.10\nduring convective afternoons.\nThese values feed directly into the inflow model used for the\nwake calibration of the previous chapters.\n\nData recovery reached 96~percent over the campaign;\nthe gap in March followed a lightning strike on the junction box.\n"
+      }
+    ]
+  }
+}

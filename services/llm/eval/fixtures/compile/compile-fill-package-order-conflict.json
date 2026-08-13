@@ -1,0 +1,27 @@
+{
+  "id": "compile-fill-package-order-conflict",
+  "category": "compile",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath,amssymb}\n\\usepackage{graphicx}\n\\usepackage{booktabs}\n\\usepackage{amsthm}\n\\newtheorem{proposition}{Proposition}\n\\usepackage{cleveref}\n% keep hyperref last in the preamble\n\\usepackage{hyperref}\n\n\\title{Evaluation of a Scale-Aware Mixing Length\\\\for the Stable Boundary Layer}\n\\author{T.~Brandsma and E.~Kallio}\n\\date{July 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\n\\label{sec:intro}\nStable boundary layers remain the weak point of\nnumerical weather prediction,\nand mixing-length closures are the usual suspect\nwhen near-surface temperatures drift.\n\\Cref{sec:method} describes the tower dataset and the\nscale-aware formulation we test.\n\n\\section{Data and Method}\n\\label{sec:method}\nWe use one year of 10 Hz turbulence measurements\nfrom a 60 m tower over flat terrain.\nThe scale-aware mixing length is derived from the\nlocal gradient Richardson number,\nas summarised in \\cref{prop:length}.\n\n\\begin{proposition}\n\\label{prop:length}\nUnder horizontally homogeneous conditions the scale-aware\nlength approaches the Monin--Obukhov limit\nas stability increases.\n\\end{proposition}\n\n\\section{Results}\n\\label{sec:results}\nThe closure removes the warm bias below 10 m\nin strongly stable cases,\nas anticipated from \\cref{prop:length}.\n\\Cref{sec:intro} motivated the focus on the lowest levels;\n\\cref{sec:method} shows the gain is not an artefact\nof the stability function.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份边界层气象的稿子突然编不过了，报错说是 cleveref 的问题。导言区语法我翻来覆去检查过没毛病啊？帮我看看怎么回事，修到能编译。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath,amssymb}\n\\usepackage{graphicx}\n\\usepackage{booktabs}\n\\usepackage{amsthm}\n\\newtheorem{proposition}{Proposition}\n\\usepackage{hyperref}\n\\usepackage{cleveref}\n% keep hyperref last in the preamble\n\n\\title{Evaluation of a Scale-Aware Mixing Length\\\\for the Stable Boundary Layer}\n\\author{T.~Brandsma and E.~Kallio}\n\\date{July 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\n\\label{sec:intro}\nStable boundary layers remain the weak point of\nnumerical weather prediction,\nand mixing-length closures are the usual suspect\nwhen near-surface temperatures drift.\n\\Cref{sec:method} describes the tower dataset and the\nscale-aware formulation we test.\n\n\\section{Data and Method}\n\\label{sec:method}\nWe use one year of 10 Hz turbulence measurements\nfrom a 60 m tower over flat terrain.\nThe scale-aware mixing length is derived from the\nlocal gradient Richardson number,\nas summarised in \\cref{prop:length}.\n\n\\begin{proposition}\n\\label{prop:length}\nUnder horizontally homogeneous conditions the scale-aware\nlength approaches the Monin--Obukhov limit\nas stability increases.\n\\end{proposition}\n\n\\section{Results}\n\\label{sec:results}\nThe closure removes the warm bias below 10 m\nin strongly stable cases,\nas anticipated from \\cref{prop:length}.\n\\Cref{sec:intro} motivated the focus on the lowest levels;\n\\cref{sec:method} shows the gain is not an artefact\nof the stability function.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

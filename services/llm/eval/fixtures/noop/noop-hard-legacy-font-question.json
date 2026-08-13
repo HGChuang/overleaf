@@ -1,0 +1,19 @@
+{
+  "id": "noop-hard-legacy-font-question",
+  "category": "noop",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Historical Notes}\nEarly printers used {\\it italic type} for emphasis and {\\bf bold letterforms} for headings. Monospace excerpts appear as {\\tt punched-card fragments} in the appendix.\nModern practice prefers command forms, but the older two-letter switches remain part of the language and appear throughout legacy manuscripts.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "审稿人说我的字体命令过时了，具体是指哪些地方？问题严重吗，会不会影响编译？",
+  "grader": {
+    "type": "noop"
+  }
+}

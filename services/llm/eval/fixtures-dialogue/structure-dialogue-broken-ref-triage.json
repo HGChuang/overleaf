@@ -1,0 +1,138 @@
+{
+  "id": "structure-dialogue-broken-ref-triage",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{booktabs}\n\n\\title{Rebalancing a Municipal Bike-Share System\\\\with Overflow-Aware Dispatch}\n\\author{L.~Osei and D.~Ferreira}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nMunicipal bike-share systems live and die by availability: a rider who\nfinds an empty dock at origin or a full dock at destination remembers\nthe failure, not the hundred successful trips. Rebalancing---moving\nbikes from where they accumulate to where they are needed---is the\nlargest operating cost after fleet depreciation, and the hardest to\nplan because demand shifts with weather, events, and season.\n\nThis paper reports on a dispatch pilot run with the city operator over\none full season. Our evaluation, summarised in Section~\\ref{sec:eval},\ncovers four districts and 310 stations. The central idea is to make the\ndispatch rule aware of \\emph{overflow}: a station that cannot accept\nreturned bikes is not merely useless, it pushes riders to neighbouring\nstations and can cascade a shortage across a whole district.\n\n\\section{Data}\nThe pilot used the operator's trip records and five-minute dock\ntelemetry for the period March to November 2025. Trip records carry\norigin, destination, and timestamps; the telemetry feed carries the\ncount of available bikes and free docks per station.\n\n\\begin{table}\n\\centering\n\\begin{tabular}{lrrr}\n\\toprule\nDistrict & Stations & Daily trips & Vans assigned \\\\\n\\midrule\nRiverside & 96 & 18{,}400 & 6 \\\\\nOld Town & 74 & 12{,}900 & 4 \\\\\nUniversity & 88 & 15{,}700 & 5 \\\\\nNorth Market & 52 & 9{,}300 & 3 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Pilot scope by district: stations, mean daily trips, and the\nrebalancing vans assigned during the pilot.}\n\\label{tab:datasets}\n\\end{table}\n\nTable~\\ref{tab:datasets} summarises the pilot scope. The four districts\nwere chosen to span the demand regimes the operator cares about: a\ncommuter corridor, a nightlife district, a campus, and a market area\nwith weekend peaks.\n\n\\section{Method}\nThe dispatch rule scores every station every fifteen minutes. Stations\nprojected to empty or to fill within the next hour enter the pickup or\ndropoff list, and the van routes are built by a savings heuristic over\nthe two lists. The rule is deliberately simple: the operator required\nthat dispatchers be able to recompute a route by hand when the tablet\nsystem fails.\n\nOverflow awareness enters through the projection. A station's projected\ndock count is capped at its capacity, and excess arrivals are\nredirected to the two nearest stations with free docks, weighted by\nwalking distance. This single change accounts for most of the gain over\nthe operator's legacy threshold rule.\n\n\\section{Evaluation}\\label{sec:evaluation}\nThe pilot ran from March to November 2025 with six vans during the\nmorning peak and four in the evening. We compare against the same weeks\nof the previous year under the legacy rule, using availability-weighted\nrider minutes lost as the primary metric.\n\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{5cm}\\rule{11cm}{0pt}}\n\\caption{Rebalancing throughput per van shift across the four\ndistricts, grouped by week.}\n\\end{figure}\n\nFigure~\\ref{fig:throughput} shows throughput per van shift. Riverside\nbenefits most in the morning peak, while the University district\ndominates evening demand. Rider minutes lost fell by 23\\% overall and\nby 31\\% during the morning peak; empty-dock events at the twenty\nbusiest stations fell by half.\n\nTwo effects explain the gap between districts. First, overflow cascades\nare rare where station density is high, so the new rule adds little in\nOld Town. Second, campus demand is spiky around class changes, which\nrewards the fifteen-minute re-scoring cadence.\n\n\\section{Discussion}\nThe pilot confirms that overflow awareness, not routing cleverness,\ncarries most of the benefit. The operator has adopted the rule for the\nfull network, and the dispatch tablet software now recomputes the\nprojection whenever a station reports full.\n\nThe main limitation is the single-season window: a winter with heavy\nrain could shift the balance between districts, and the redirect model\nassumes riders accept a two-station walk, which colder weather may\nbreak.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "编译出来引用有 ?? 帮我修修。我自己看到的是三处：Introduction 里指 Evaluation 那节的那处、Evaluation 里指吞吐量图的那处，还有 Data 里指表格那处我看着也悬。修的时候规矩：label 名字一个都不许动，以 label 为准改 \\ref；要是 \\ref 指的 label 压根不存在，就按 \\ref 里的名字把 label 补上。",
+  "dialogue": {
+    "persona": "交通数据方向研究生，中文交流，懂 LaTeX 交叉引用机制；细心但会看错，报故障时把自己怀疑的全报上来，被纠正能听进去。",
+    "hiddenGoal": "终态（全部引用配对，方向按用户规矩）：① \\ref{sec:eval} 改成 \\ref{sec:evaluation}，label 不动；② Evaluation 的 figure 补上 \\label{fig:throughput}，\\ref{fig:throughput} 不动；③ 用户第 2 轮贴的 Sensitivity 段落（含 equation 环境）插到 Discussion 之前，其中公式 label 从 eq:udpate 改成 eq:update（这是用户第 3 轮自己点名的，承认是他贴错的），\\ref{eq:update} 不动；④ tab:datasets 的 \\label 和 \\ref 原样保留——它本来就是好的，动一个字都算错；⑤ 全文 \\label 共 4 个、\\ref 共 4 处，编译通过。剧本：第 1 轮（instruction）报 3 处疑点加修理规矩。agent 交付后第 2 轮：\"对了，这段新写的敏感度分析帮我插到 Discussion 前面。\"然后原样贴出整段（不许改写）：\"\\paragraph{Sensitivity.} When the relocation threshold in Equation~\\ref{eq:update} is widened from 300~m to 500~m, the van utilisation gain shrinks by roughly a third, and the benefit concentrates in the Riverside corridor. The dispatch rule updates the station score as \\begin{equation} u_{t+1} = u_t + \\alpha\\,(d_t - s_t), \\label{eq:udpate} \\end{equation} where $d_t$ and $s_t$ are the projected demand and supply at station level and $\\alpha$ is the step size tuned during the pilot.\"第 3 轮：\"我数了下现在一共 4 个 ??：新贴那段里公式引用也是 ??——那是我贴的时候 label 打错了，udpate 拼错，label 改成 eq:update，ref 别动；另外表格那个到底坏没坏？\"分岔：若 agent 动了 tab:datasets（改名或删了重加），用户说\"表格引用怎么反而坏了，本来是对的\"；若 agent 第 1 轮改了 label 而不是 ref，用户说\"规矩说了 label 不动\"；若 agent 解释表格本来就是好的（label 和 ref 本来就是配对的），用户接受不追问；若 agent 没修新贴段落里的公式引用，用户第 3 轮已点名，催促照做。全修好用户确认结束。知识边界：用户会看 PDF 里的 ??，会数个数，但不知道错在哪几处，更没注意到自己贴的段落里也有错。",
+    "disclosure": "correction",
+    "maxUserTurns": 5
+  },
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\ref{sec:eval}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\ref{sec:evaluation}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{sec:evaluation}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{fig:throughput}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\ref{fig:throughput}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{eq:update}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\ref{eq:update}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "eq:udpate",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{tab:datasets}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\ref{tab:datasets}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\ref\\{",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\paragraph\\{Sensitivity",
+          "\\\\section\\{Discussion\\}"
+        ]
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{booktabs}\n\n\\title{Rebalancing a Municipal Bike-Share System\\\\with Overflow-Aware Dispatch}\n\\author{L.~Osei and D.~Ferreira}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nMunicipal bike-share systems live and die by availability: a rider who\nfinds an empty dock at origin or a full dock at destination remembers\nthe failure, not the hundred successful trips. Rebalancing---moving\nbikes from where they accumulate to where they are needed---is the\nlargest operating cost after fleet depreciation, and the hardest to\nplan because demand shifts with weather, events, and season.\n\nThis paper reports on a dispatch pilot run with the city operator over\none full season. Our evaluation, summarised in\nSection~\\ref{sec:evaluation}, covers four districts and 310 stations.\nThe central idea is to make the dispatch rule aware of\n\\emph{overflow}: a station that cannot accept returned bikes is not\nmerely useless, it pushes riders to neighbouring stations and can\ncascade a shortage across a whole district.\n\n\\section{Data}\nThe pilot used the operator's trip records and five-minute dock\ntelemetry for the period March to November 2025. Trip records carry\norigin, destination, and timestamps; the telemetry feed carries the\ncount of available bikes and free docks per station.\n\n\\begin{table}\n\\centering\n\\begin{tabular}{lrrr}\n\\toprule\nDistrict & Stations & Daily trips & Vans assigned \\\\\n\\midrule\nRiverside & 96 & 18{,}400 & 6 \\\\\nOld Town & 74 & 12{,}900 & 4 \\\\\nUniversity & 88 & 15{,}700 & 5 \\\\\nNorth Market & 52 & 9{,}300 & 3 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Pilot scope by district: stations, mean daily trips, and the\nrebalancing vans assigned during the pilot.}\n\\label{tab:datasets}\n\\end{table}\n\nTable~\\ref{tab:datasets} summarises the pilot scope. The four districts\nwere chosen to span the demand regimes the operator cares about: a\ncommuter corridor, a nightlife district, a campus, and a market area\nwith weekend peaks.\n\n\\section{Method}\nThe dispatch rule scores every station every fifteen minutes. Stations\nprojected to empty or to fill within the next hour enter the pickup or\ndropoff list, and the van routes are built by a savings heuristic over\nthe two lists. The rule is deliberately simple: the operator required\nthat dispatchers be able to recompute a route by hand when the tablet\nsystem fails.\n\nOverflow awareness enters through the projection. A station's projected\ndock count is capped at its capacity, and excess arrivals are\nredirected to the two nearest stations with free docks, weighted by\nwalking distance. This single change accounts for most of the gain over\nthe operator's legacy threshold rule.\n\n\\section{Evaluation}\\label{sec:evaluation}\nThe pilot ran from March to November 2025 with six vans during the\nmorning peak and four in the evening. We compare against the same weeks\nof the previous year under the legacy rule, using availability-weighted\nrider minutes lost as the primary metric.\n\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{5cm}\\rule{11cm}{0pt}}\n\\caption{Rebalancing throughput per van shift across the four\ndistricts, grouped by week.}\n\\label{fig:throughput}\n\\end{figure}\n\nFigure~\\ref{fig:throughput} shows throughput per van shift. Riverside\nbenefits most in the morning peak, while the University district\ndominates evening demand. Rider minutes lost fell by 23\\% overall and\nby 31\\% during the morning peak; empty-dock events at the twenty\nbusiest stations fell by half.\n\nTwo effects explain the gap between districts. First, overflow cascades\nare rare where station density is high, so the new rule adds little in\nOld Town. Second, campus demand is spiky around class changes, which\nrewards the fifteen-minute re-scoring cadence.\n\n\\paragraph{Sensitivity.} When the relocation threshold in\nEquation~\\ref{eq:update} is widened from 300~m to 500~m, the van\nutilisation gain shrinks by roughly a third, and the benefit\nconcentrates in the Riverside corridor. The dispatch rule updates the\nstation score as\n\\begin{equation}\nu_{t+1} = u_t + \\alpha\\,(d_t - s_t),\n\\label{eq:update}\n\\end{equation}\nwhere $d_t$ and $s_t$ are the projected demand and supply at station\nlevel and $\\alpha$ is the step size tuned during the pilot.\n\n\\section{Discussion}\nThe pilot confirms that overflow awareness, not routing cleverness,\ncarries most of the benefit. The operator has adopted the rule for the\nfull network, and the dispatch tablet software now recomputes the\nprojection whenever a station reports full.\n\nThe main limitation is the single-season window: a winter with heavy\nrain could shift the balance between districts, and the redirect model\nassumes riders accept a two-station walk, which colder weather may\nbreak.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 14
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 2
+    }
+  ]
+}

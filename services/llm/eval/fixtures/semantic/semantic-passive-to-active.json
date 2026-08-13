@@ -1,0 +1,23 @@
+{
+  "id": "semantic-passive-to-active",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Batch Correction for Single-Cell RNA Sequencing}\n\\author{Maria Chen}\n\\begin{document}\n\\maketitle\n\\section{Methods}\nRaw reads were aligned to the reference genome with STAR. Cells with fewer than 200 detected genes were discarded. Count matrices were normalized by total counts and log-transformed. Highly variable genes were selected with the dispersion-based method. Batch effects were corrected with our proposed algorithm, and clustering was performed on the corrected embedding.\n\\section{Results}\nOur method removes batch effects while preserving biological variation.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Methods 一节全是被动语态，请把这一节至少 4 个被动句改成以 we 为主语的主动句（例如 Raw reads were aligned to the reference genome with STAR → We aligned raw reads to the reference genome with STAR），方法步骤与参数（STAR、200 个基因、dispersion-based 方法等）保持准确，Results 一节不要动。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: Methods 中 ≥4 个被动句改为 we 主语的主动句，五个步骤（比对/过滤/归一化/选高变基因/批次校正与聚类）及参数完整准确，Results 未动；4: 4 句改为主动但其中 1 句仍残留被动或搭配略生硬，步骤信息无损；3: 仅 2-3 句改为主动，或改写时漏掉某个步骤细节（如 200 genes 阈值）；2: 只改 1 句，其余保持被动；1: 未修改，或改错方法含义/破坏文档结构"
+  }
+}

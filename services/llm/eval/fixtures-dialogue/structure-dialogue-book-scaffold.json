@@ -1,0 +1,150 @@
+{
+  "id": "structure-dialogue-book-scaffold",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{book}\n\\usepackage[margin=1in]{geometry}\n\\title{Tide Pool Notes}\n\\author{M.~Okafor}\n\\date{2026}\n\\begin{document}\n\\maketitle\n\n\\chapter{Preface}\nThese notes grew out of five winters of low-tide walking around the\nGower coast. They are written for students who already know the common\nfamilies and want practice reading shores rather than specimens.\n\n\\tableofcontents\n\n\\chapter{Shorelines}\nRocky ledges reward patience: the same pool visited at neap tide and at\nsprings is two different places.\n\\section{Rocky Ledges}\nLook first at the splash zone, then at the mid-shore gutters, and only\nthen at the showier anemones.\n\\section{Sand Flats}\nRipple marks point to the last ebb, and the shortest trails often lead\nto the richest burrows.\n\n\\chapter{Finding Species}\nA shore walk is a starting point, not an answer; a tentative name still\nhas to survive comparison with a full description.\n\\section{Working a Grid}\nPace the transect in order and never skip a square you cannot search\nproperly on this visit.\n\n\\chapter{Taking Notes}\nA notebook works by accumulation, so one smudged page can send the\nwhole season's record down the wrong branch.\n\\section{Waterproof Ink}\nThe classic pitfall is writing up a soaked page as if it were legible.\n\n\\chapter{Closing the Season}\nCataloguing finds, label conventions, and the museum handover close the\nseason's work.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这本小书的稿子还没按 book 类的规矩搭架子，咱一步步来。第一步先弄两件事：\\begin{document} 后面、\\maketitle 前面加个 \\frontmatter；另外目录 \\tableofcontents 现在位置不对，挪到 Preface 前面去。",
+  "dialogue": {
+    "persona": "自费出版小书的博物爱好者，中文交流，懂一点 LaTeX 但只认识自己要的几个命令名；一次只提一两件事，确认做好了才说下一件。",
+    "hiddenGoal": "终态：\\frontmatter 在 \\begin{document} 之后、\\maketitle 之前；\\tableofcontents 在 Preface 之前；Preface 用 \\chapter*{Preface} 且下一行有 \\addcontentsline{toc}{chapter}{Preface}；\\mainmatter 在 \\chapter{Shorelines} 之前；Taking Notes 降级为 Finding Species 章下的 \\section{Taking Notes}，其下 Waterproof Ink 保持 \\section 不动；\\frontmatter 和 \\mainmatter 各恰好出现一次；各章各节正文一字不改。剧本：需求分三轮给——第 1 轮（开场白）只要 \\frontmatter 加位和目录挪到 Preface 前；确认做好后第 2 轮：Preface 不该占正文章编号，改成 \\chapter* 并补 \\addcontentsline 让它照进目录；确认后第 3 轮：\\mainmatter 加到 Shorelines 前，另外 Taking Notes 其实是 Finding Species 那章的一节，降级成 \\section，Waterproof Ink 保持 \\section，正文别动。若 agent 某轮做错了（比如目录没挪、编号章没摘星、正文被改），用户指出具体问题让返工，不进入下一轮；若 agent 提前把后面轮的也做了，用户不责怪但会逐项核对；三轮都落实后确认结束。",
+    "disclosure": "progressive",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\frontmatter",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\mainmatter",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\frontmatter",
+          "\\\\maketitle"
+        ]
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\tableofcontents",
+          "\\\\chapter\\*\\{Preface\\}"
+        ]
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\chapter\\*\\{Preface\\}",
+          "\\\\mainmatter"
+        ]
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\mainmatter",
+          "\\\\chapter\\{Shorelines\\}"
+        ]
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\chapter\\{Preface\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\chapter\\*\\{Preface\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\addcontentsline{toc}{chapter}{Preface}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\chapter\\{Taking Notes\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\section\\{Taking Notes\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\chapter\\{Finding Species\\}",
+          "\\\\section\\{Taking Notes\\}"
+        ]
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\section\\{Taking Notes\\}",
+          "\\\\section\\{Waterproof Ink\\}"
+        ]
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "These notes grew out of five winters",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{book}\n\\usepackage[margin=1in]{geometry}\n\\title{Tide Pool Notes}\n\\author{M.~Okafor}\n\\date{2026}\n\\begin{document}\n\\frontmatter\n\\maketitle\n\n\\tableofcontents\n\n\\chapter*{Preface}\n\\addcontentsline{toc}{chapter}{Preface}\nThese notes grew out of five winters of low-tide walking around the\nGower coast. They are written for students who already know the common\nfamilies and want practice reading shores rather than specimens.\n\n\\mainmatter\n\n\\chapter{Shorelines}\nRocky ledges reward patience: the same pool visited at neap tide and at\nsprings is two different places.\n\\section{Rocky Ledges}\nLook first at the splash zone, then at the mid-shore gutters, and only\nthen at the showier anemones.\n\\section{Sand Flats}\nRipple marks point to the last ebb, and the shortest trails often lead\nto the richest burrows.\n\n\\chapter{Finding Species}\nA shore walk is a starting point, not an answer; a tentative name still\nhas to survive comparison with a full description.\n\\section{Working a Grid}\nPace the transect in order and never skip a square you cannot search\nproperly on this visit.\n\\section{Taking Notes}\nA notebook works by accumulation, so one smudged page can send the\nwhole season's record down the wrong branch.\n\\section{Waterproof Ink}\nThe classic pitfall is writing up a soaked page as if it were legible.\n\n\\chapter{Closing the Season}\nCataloguing finds, label conventions, and the museum handover close the\nseason's work.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 12
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 2
+    }
+  ]
+}

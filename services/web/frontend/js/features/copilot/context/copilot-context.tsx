@@ -35,7 +35,10 @@ const MAX_COMPILE_ERRORS = 20
 const MAX_COMPILE_ERROR_MESSAGE = 300
 // Loop bound for the self-healing cycle: at most this many automatic
 // post-accept verification turns per conversation.
-const MAX_AUTO_VERIFY_PER_CONVERSATION = 3
+// 3 → 10 (2026-08-07): hard multi-error fixes kept dying at the verify
+// budget — 3 rounds only covers simple cascades. The eval mirror is
+// MAX_VERIFY_TURNS in services/llm/eval/contextBuilder.ts (keep in sync).
+const MAX_AUTO_VERIFY_PER_CONVERSATION = 10
 
 export interface CopilotSelection {
   file: string | null

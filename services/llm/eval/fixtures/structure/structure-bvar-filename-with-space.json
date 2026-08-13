@@ -1,0 +1,68 @@
+{
+  "id": "structure-bvar-filename-with-space",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\n\\title{Volatile Aroma Development in Alpine Cheese During Ripening:\nA Sensory and Chemical Study}\n\\author{C.~Brunner, E.~Salis, and F.~Moreau}\n\\date{July 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Ripening Protocol}\nWheels were ripened at 12 degrees Celsius and 92 percent relative\nhumidity, turned weekly, and brushed with a brine smear.\nSampling for sensory and chemical analysis took place at 30, 60,\n90, and 180 days.\n\n\\appendix\n\\input{appendix A}\n\\input{appendix-b}\n\n\\end{document}\n"
+      },
+      {
+        "path": "appendix A.tex",
+        "content": "\\section{Sensory Panel}\nThe panel consisted of 9 trained assessors.\nPanellists were selected according to their performance in\ntriangular tests and completed forty hours of training on the\ndescriptive vocabulary before the first session.\nEach attribute was rated on a 15-centimetre unstructured line scale,\nanchored at both ends.\n"
+      },
+      {
+        "path": "appendix-b.tex",
+        "content": "\\section{Chemical Methods}\nVolatile compounds were extracted by solid-phase microextraction\nand analysed by gas chromatography coupled to mass spectrometry.\nPeak identification rested on retention indices and library\nspectra, and quantification used the internal-standard method\nwith 2-methyl-3-heptanone.\n"
+      }
+    ]
+  },
+  "instruction": "附录 A（就是文件名里带空格的那个 appendix A.tex）里评审团的人数写错了：实际是 11 名训练过的评审员，请把那句改正。附录 B 不用动，主文件也不用动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "appendix A.tex",
+        "literal": "The panel consisted of 11 trained assessors.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "appendix A.tex",
+        "literal": "The panel consisted of 9 trained assessors.",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "appendix-b.tex"
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\n\\title{Volatile Aroma Development in Alpine Cheese During Ripening:\nA Sensory and Chemical Study}\n\\author{C.~Brunner, E.~Salis, and F.~Moreau}\n\\date{July 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Ripening Protocol}\nWheels were ripened at 12 degrees Celsius and 92 percent relative\nhumidity, turned weekly, and brushed with a brine smear.\nSampling for sensory and chemical analysis took place at 30, 60,\n90, and 180 days.\n\n\\appendix\n\\input{appendix A}\n\\input{appendix-b}\n\n\\end{document}\n"
+      },
+      {
+        "path": "appendix A.tex",
+        "content": "\\section{Sensory Panel}\nThe panel consisted of 11 trained assessors.\nPanellists were selected according to their performance in\ntriangular tests and completed forty hours of training on the\ndescriptive vocabulary before the first session.\nEach attribute was rated on a 15-centimetre unstructured line scale,\nanchored at both ends.\n"
+      },
+      {
+        "path": "appendix-b.tex",
+        "content": "\\section{Chemical Methods}\nVolatile compounds were extracted by solid-phase microextraction\nand analysed by gas chromatography coupled to mass spectrometry.\nPeak identification rested on retention indices and library\nspectra, and quantification used the internal-standard method\nwith 2-methyl-3-heptanone.\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "id": "structure-probe-f-partially-satisfied",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{TinySet: Admission Control for Small-Object Caches at the Edge}\n\\author{R.~Petrova, J.~Lindgren, and M.~Osei}\n\\date{July 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nEdge caches that serve small objects waste much of their capacity on\nitems requested only once. We describe an admission control scheme\nthat filters one-hit wonders with a compact counting structure, and\nwe evaluate it on production traces from three points of presence.\n\\end{abstract}\n\n\\section{Introduction}\n\\label{sec:intro}\nA large fraction of objects requested at the edge are fetched exactly\nonce during any measurement window. Admitting such objects into a\nsmall cache displaces content that would have been reused, and the\nresulting miss traffic falls on links that are often the bottleneck\nof the whole delivery path.\n\nAdmission control addresses this problem at the moment an object is\nfirst requested. Rather than caching every missed object, the cache\nadmits only objects that have demonstrated some likelihood of reuse.\nThe design space is wide, and Section~\\ref{sec:eval} later compares\nseveral points in it on production traces.\n\nPrior schemes either remember too much about past requests or react\ntoo slowly to shifting popularity. The scheme described here keeps a\nfixed-size probabilistic sketch whose error behaviour is independent\nof the trace length, a property we exploit heavily in what follows.\n\n\\section{Design}\nThe cache front-end maintains a counting sketch of recent request\nkeys. On a miss, the front-end consults the sketch and admits the\nobject only if its estimated count exceeds a threshold. The sketch is\naged periodically by halving all counters, which bounds the memory of\nthe estimator without any explicit eviction bookkeeping.\n\nThe threshold is not free: a higher threshold filters more one-hit\nwonders but also delays the admission of objects whose popularity is\ngenuinely rising. We expose the threshold as a single knob and derive\na default from the miss-ratio curves of the training traces.\n\nTwo implementation details matter at line rate. First, sketch updates\nmust complete within the per-packet budget of the front-end pipeline.\nSecond, the halving pass must not stall lookups, so aging is performed\nincrementally across ordinary requests rather than in a batch.\n\n\\section{Evaluation}\n\\label{sec:eval}\nWe replay three production traces, totalling 41 days of requests,\nthrough a simulator that reproduces the front-end pipeline exactly.\nThe baseline admits every missed object; the comparison schemes cover\nthe two dominant prior designs. All schemes are given the same memory\nbudget, including the memory our sketch consumes.\n\nThe proposed scheme reduces byte miss ratio by 31 percent relative to\nthe baseline at the median, and by 18 percent relative to the stronger\nprior design. Gains concentrate in the traces with the heaviest tail\nof single-request objects, as the design discussion anticipated.\n\nSensitivity to the threshold is modest within a factor of two of the\nderived default, which supports the claim that the knob need not be\nretuned per deployment. The incremental aging pass adds no measurable\nlookup latency at the 95th percentile.\n\n\\section{Conclusion}\nFiltering at admission is a cheap and effective lever for small-object\ncaches, and a fixed-size sketch makes the filter practical at line\nrate. The remaining question is how admission control interacts with\nprefetching policies that already shape edge traffic, which we leave\nto future work.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "请检查本文四个 section 的 \\label 配置：每个 section 都应带一个 \\label{sec:...}，语义化命名，紧跟 \\section 命令的下一行。已经配好的不要动——正文里已有 \\ref 依赖现有命名，改名会把引用弄断；缺的补上即可。除补充缺失的 label 外不要改动任何内容。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{sec:",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{sec:intro}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{sec:eval}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\section\\{Design\\}\\n\\\\label\\{sec:",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\section\\{Conclusion\\}\\n\\\\label\\{sec:",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\ref{sec:eval}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{TinySet: Admission Control for Small-Object Caches at the Edge}\n\\author{R.~Petrova, J.~Lindgren, and M.~Osei}\n\\date{July 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nEdge caches that serve small objects waste much of their capacity on\nitems requested only once. We describe an admission control scheme\nthat filters one-hit wonders with a compact counting structure, and\nwe evaluate it on production traces from three points of presence.\n\\end{abstract}\n\n\\section{Introduction}\n\\label{sec:intro}\nA large fraction of objects requested at the edge are fetched exactly\nonce during any measurement window. Admitting such objects into a\nsmall cache displaces content that would have been reused, and the\nresulting miss traffic falls on links that are often the bottleneck\nof the whole delivery path.\n\nAdmission control addresses this problem at the moment an object is\nfirst requested. Rather than caching every missed object, the cache\nadmits only objects that have demonstrated some likelihood of reuse.\nThe design space is wide, and Section~\\ref{sec:eval} later compares\nseveral points in it on production traces.\n\nPrior schemes either remember too much about past requests or react\ntoo slowly to shifting popularity. The scheme described here keeps a\nfixed-size probabilistic sketch whose error behaviour is independent\nof the trace length, a property we exploit heavily in what follows.\n\n\\section{Design}\n\\label{sec:design}\nThe cache front-end maintains a counting sketch of recent request\nkeys. On a miss, the front-end consults the sketch and admits the\nobject only if its estimated count exceeds a threshold. The sketch is\naged periodically by halving all counters, which bounds the memory of\nthe estimator without any explicit eviction bookkeeping.\n\nThe threshold is not free: a higher threshold filters more one-hit\nwonders but also delays the admission of objects whose popularity is\ngenuinely rising. We expose the threshold as a single knob and derive\na default from the miss-ratio curves of the training traces.\n\nTwo implementation details matter at line rate. First, sketch updates\nmust complete within the per-packet budget of the front-end pipeline.\nSecond, the halving pass must not stall lookups, so aging is performed\nincrementally across ordinary requests rather than in a batch.\n\n\\section{Evaluation}\n\\label{sec:eval}\nWe replay three production traces, totalling 41 days of requests,\nthrough a simulator that reproduces the front-end pipeline exactly.\nThe baseline admits every missed object; the comparison schemes cover\nthe two dominant prior designs. All schemes are given the same memory\nbudget, including the memory our sketch consumes.\n\nThe proposed scheme reduces byte miss ratio by 31 percent relative to\nthe baseline at the median, and by 18 percent relative to the stronger\nprior design. Gains concentrate in the traces with the heaviest tail\nof single-request objects, as the design discussion anticipated.\n\nSensitivity to the threshold is modest within a factor of two of the\nderived default, which supports the claim that the knob need not be\nretuned per deployment. The incremental aging pass adds no measurable\nlookup latency at the 95th percentile.\n\n\\section{Conclusion}\n\\label{sec:conclusion}\nFiltering at admission is a cheap and effective lever for small-object\ncaches, and a fixed-size sketch makes the filter practical at line\nrate. The remaining question is how admission control interacts with\nprefetching policies that already shape edge traffic, which we leave\nto future work.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

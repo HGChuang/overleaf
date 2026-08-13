@@ -1,0 +1,86 @@
+{
+  "id": "structure-fill-doctype-ieeetran-float",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[conference]{IEEEtran}\n\\title{Wide-Area Damping Control for Interconnected Microgrids}\n\\author{\n\\IEEEauthorblockN{K. Adeyemi}\n\\IEEEauthorblockA{Department of Electrical Engineering\\\\\nUniversity of Lagos\\\\\nLagos, Nigeria\\\\\nk.adeyemi@example.edu}\n}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\nThis paper studies wide-area damping control for clusters of\ninterconnected microgrids and reports a field trial on a three-feeder\ntest network.\n\\end{abstract}\n\\begin{IEEEkeywords}\nmicrogrids, damping control, wide-area measurements, legacy SCADA, renewable curtailment\n\\end{IEEEkeywords}\n\n\\section{Introduction}\nClusters of interconnected microgrids oscillate against each other when\ninverter-dominated interfaces exchange power over weak ties. Damping\nthese inter-area modes requires measurements from across the cluster.\n\n\\section{Test Network}\nFig.~\\ref{fig:architecture} shows the measurement architecture across\nthe three feeders of the test network.\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{7cm}{0pt}}\n\\caption{Wide-area measurement architecture across the three feeders.}\n\\label{fig:architecture}\n\\end{figure}\nThe control loop closes once per damping cycle; the timing budget is\nsummarised in Fig.~\\ref{fig:timing}.\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{7cm}{0pt}}\n\\caption{Control-loop timing budget for one damping cycle.}\n\\label{fig:timing}\n\\end{figure}\nBoth figures span the full text width and overflow a single column.\n\n\\section{Conclusion}\nA two-level controller with wide-area feedback damped the dominant\ninter-area mode within two cycles in all trials.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "IEEEtran 双栏模板里这两张图太宽了，单栏 figure 放不下，把两个 figure 环境都改成跨栏的 figure*（\\begin 和 \\end 成对改），图内容、caption 和 label 都不动。另外 \\IEEEkeywords 里的 legacy SCADA 已经过时，删掉，并在关键词里补上 renewable integration。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{figure\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\end\\{figure\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{figure\\*\\}",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\end\\{figure\\*\\}",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "legacy SCADA",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "renewable integration",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{IEEEkeywords\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Wide-area measurement architecture",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[conference]{IEEEtran}\n\\title{Wide-Area Damping Control for Interconnected Microgrids}\n\\author{\n\\IEEEauthorblockN{K. Adeyemi}\n\\IEEEauthorblockA{Department of Electrical Engineering\\\\\nUniversity of Lagos\\\\\nLagos, Nigeria\\\\\nk.adeyemi@example.edu}\n}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\nThis paper studies wide-area damping control for clusters of\ninterconnected microgrids and reports a field trial on a three-feeder\ntest network.\n\\end{abstract}\n\\begin{IEEEkeywords}\nmicrogrids, damping control, wide-area measurements, renewable curtailment, renewable integration\n\\end{IEEEkeywords}\n\n\\section{Introduction}\nClusters of interconnected microgrids oscillate against each other when\ninverter-dominated interfaces exchange power over weak ties. Damping\nthese inter-area modes requires measurements from across the cluster.\n\n\\section{Test Network}\nFig.~\\ref{fig:architecture} shows the measurement architecture across\nthe three feeders of the test network.\n\\begin{figure*}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{7cm}{0pt}}\n\\caption{Wide-area measurement architecture across the three feeders.}\n\\label{fig:architecture}\n\\end{figure*}\nThe control loop closes once per damping cycle; the timing budget is\nsummarised in Fig.~\\ref{fig:timing}.\n\\begin{figure*}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{7cm}{0pt}}\n\\caption{Control-loop timing budget for one damping cycle.}\n\\label{fig:timing}\n\\end{figure*}\nBoth figures span the full text width and overflow a single column.\n\n\\section{Conclusion}\nA two-level controller with wide-area feedback damped the dominant\ninter-area mode within two cycles in all trials.\n\\end{document}\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "id": "structure-bvar-whole-math-env",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\n\\title{Fourier Analysis for Communications: Week 3}\n\\author{Course Team}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{The Channel Model}\nWe model the received waveform as a scaled, delayed, and\nnoisy copy of the transmitted symbol waveform. Writing\n$s(t)$ for the transmitted signal and $h(t)$ for the\nimpulse response of the channel, the derivation of the\nreceived signal, its transform, and its average power runs\nas follows:\n\\begin{align*}\ns(t) &= A \\cos(2\\pi f_c t + \\phi) + n(t) \\\\\n\\hat{s}(t) &= s(t) * h(t) \\\\\n&= \\int_{-\\infty}^{\\infty} s(\\tau) h(t - \\tau) \\, d\\tau \\\\\nS(f) &= \\int_{-\\infty}^{\\infty} s(t) e^{-j 2\\pi f t} \\, dt \\\\\n|S(f)|^2 &= S(f) \\, S^{*}(f) \\\\\nP &= \\frac{1}{T} \\int_0^T |s(t)|^2 \\, dt\n\\end{align*}\nEach line follows from the previous one by the convolution\ntheorem or by Parseval's identity, and the last line defines\nthe average power over one symbol period.\n\n\\section{Why One Derivation}\nThe six lines above are a single logical chain, and the\nexercises will ask you to reproduce them in order. Skipping\nthe convolution step is the most common error: the received\nwaveform is not the product of $s(t)$ and $h(t)$, whatever\nthe notation in some older handouts suggests. The transform\nline is where the Fourier machinery enters, and the power\nline is where the symbol period $T$ finally appears.\n\n\\section{Common Errors}\nDo not confuse the dummy variable of integration with the\ntime variable of the output: mixing $\\tau$ and $t$ in the\nconvolution integral corrupts every later line. And do not\ndrop the complex conjugate in the energy spectrum; the\nspectrum is real by construction, but only because the\nconjugate is there.\n\n\\section{Reading}\nThe course text covers convolution in chapter 4 and the\nenergy spectrum in chapter 5. The notation $S^{*}(f)$ for\nthe conjugate is the author's, and we keep it here for\nconsistency with the exercises.\n\n\\section{Exercises}\nFor the tutorial, verify the power line for the case where\n$s(t)$ is a single rectangular pulse of unit height, and\ncompute the relative error committed by truncating the\nFourier integral at the tenth harmonic. Then redo the\nconvolution line for a channel whose impulse response is\na pure delay of half a symbol period, and check that the\npower line is unchanged, as Parseval's identity demands.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "助教留言：The Channel Model 里那个 align* 六行推导是一个整体，只能占一个公式编号——把 \\begin{align*}...\\end{align*} 整个换成 \\begin{equation} 套 \\begin{split} 的结构。中间六行公式体一个字符都不许动：对齐的 &、行尾的 \\\\、细空格 \\, 全部原样保留，上下文也不动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{align\\*\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\end\\{align\\*\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{split\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\end\\{split\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{equation\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\end\\{equation\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "s(t) &= A \\cos(2\\pi f_c t + \\phi) + n(t) \\\\\n\\hat{s}(t) &= s(t) * h(t) \\\\\n&= \\int_{-\\infty}^{\\infty} s(\\tau) h(t - \\tau) \\, d\\tau \\\\\nS(f) &= \\int_{-\\infty}^{\\infty} s(t) e^{-j 2\\pi f t} \\, dt \\\\\n|S(f)|^2 &= S(f) \\, S^{*}(f) \\\\\nP &= \\frac{1}{T} \\int_0^T |s(t)|^2 \\, dt",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "P &= \\frac{1}{T} \\int_0^T |s(t)|^2 \\, dt \\\\",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "&= \\int_{-\\infty}^{\\infty} s(\\tau) h(t - \\tau) \\, d\\tau \\\\",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\n\\title{Fourier Analysis for Communications: Week 3}\n\\author{Course Team}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{The Channel Model}\nWe model the received waveform as a scaled, delayed, and\nnoisy copy of the transmitted symbol waveform. Writing\n$s(t)$ for the transmitted signal and $h(t)$ for the\nimpulse response of the channel, the derivation of the\nreceived signal, its transform, and its average power runs\nas follows:\n\\begin{equation}\n\\begin{split}\ns(t) &= A \\cos(2\\pi f_c t + \\phi) + n(t) \\\\\n\\hat{s}(t) &= s(t) * h(t) \\\\\n&= \\int_{-\\infty}^{\\infty} s(\\tau) h(t - \\tau) \\, d\\tau \\\\\nS(f) &= \\int_{-\\infty}^{\\infty} s(t) e^{-j 2\\pi f t} \\, dt \\\\\n|S(f)|^2 &= S(f) \\, S^{*}(f) \\\\\nP &= \\frac{1}{T} \\int_0^T |s(t)|^2 \\, dt\n\\end{split}\n\\end{equation}\nEach line follows from the previous one by the convolution\ntheorem or by Parseval's identity, and the last line defines\nthe average power over one symbol period.\n\n\\section{Why One Derivation}\nThe six lines above are a single logical chain, and the\nexercises will ask you to reproduce them in order. Skipping\nthe convolution step is the most common error: the received\nwaveform is not the product of $s(t)$ and $h(t)$, whatever\nthe notation in some older handouts suggests. The transform\nline is where the Fourier machinery enters, and the power\nline is where the symbol period $T$ finally appears.\n\n\\section{Common Errors}\nDo not confuse the dummy variable of integration with the\ntime variable of the output: mixing $\\tau$ and $t$ in the\nconvolution integral corrupts every later line. And do not\ndrop the complex conjugate in the energy spectrum; the\nspectrum is real by construction, but only because the\nconjugate is there.\n\n\\section{Reading}\nThe course text covers convolution in chapter 4 and the\nenergy spectrum in chapter 5. The notation $S^{*}(f)$ for\nthe conjugate is the author's, and we keep it here for\nconsistency with the exercises.\n\n\\section{Exercises}\nFor the tutorial, verify the power line for the case where\n$s(t)$ is a single rectangular pulse of unit height, and\ncompute the relative error committed by truncating the\nFourier integral at the tenth harmonic. Then redo the\nconvolution line for a channel whose impulse response is\na pure delay of half a symbol period, and check that the\npower line is unchanged, as Parseval's identity demands.\n\\end{document}\n"
+      }
+    ]
+  }
+}

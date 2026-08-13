@@ -1,0 +1,23 @@
+{
+  "id": "semantic-fill-eninstr-en-doc-polish",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Recovery of a Kelp Forest After the 2024 Marine Heatwave}\n\\author{R. Calloway and P. Ndlovu}\n\\date{June 2026}\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nSo basically, the huge marine heatwave in the summer of 2024 totally\nwrecked the kelp forest we've been monitoring since 2019. We kept going\nback every month for two full years and counted kelp plants and fish\nalong eight fixed transects. Right after the heatwave the kelp pretty\nmuch collapsed, which was awful to watch. But here's the cool part:\nafter about 18 months the kelp started bouncing back way faster than\nanyone had expected, and by month 24 the canopy cover was back to\nroughly 85\\% of what it was before the heatwave. The fish took their\ntime, though --- their numbers recovered much more slowly. We reckon\nthe fast comeback happened because the heatwave didn't wipe out the\nunderstory turf like everyone assumed, so the young kelp still had\nsomething to grow back from.\n\\end{abstract}\n\n\\section{Introduction}\nMarine heatwaves are increasing in frequency and duration, and their\nconsequences for foundation species remain poorly resolved. Kelp\nforests are among the most productive coastal ecosystems, yet several\nrecent events have shown how quickly a canopy can be lost when\ntemperature anomalies persist for weeks.\n\n\\section{Monitoring Design}\nEight permanent transects were established in 2019 across two sites on\nthe northern headland. Divers recorded kelp stipe counts, canopy cover\nand fish abundance on each transect at monthly intervals, weather\npermitting, from January 2023 to December 2025.\n\n\\section{Outlook}\nThe monitoring programme continues, and a full analysis of the fish\ncommunity data will follow in a companion paper.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "The abstract reads like a field blog, not a journal article. Please polish it into formal academic prose suitable for submission. Every fact and number has to survive the edit, and don't introduce any new claims or citations. The rest of the paper is fine — abstract only.",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 摘要改写为正式学术英文，口吻与期刊文体一致，九个信息点（2024 热浪 / 自 2019 年起监测 / 每月调查持续两年 / 八条固定样带 / 热浪后海藻林崩溃 / 约 18 个月后开始恢复 / 第 24 个月冠层恢复至约 85% / 鱼类恢复更慢 / 林下 turf 未被摧毁是快速恢复的原因）全部准确保留，无新增论断，abstract 环境完整；4: 文体正式且 ≥7 个信息点准确，个别措辞仍可更精炼或有轻微语法瑕疵；3: 文体有改善但残留明显口语表达，或丢失 1-2 个信息点（数字错误也算丢失）；2: 仅做表面替换（如删几个口语词），整体仍是博客口吻，或丢失 ≥3 个信息点；1: 未改写，或改写出原文没有的新论断/虚构引用"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "id": "structure-dialogue-figure-captions-progressive",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Introduction}\nVisual SLAM systems accumulate redundant keyframes over long\ntrajectories, and map size grows linearly with operation time.\nWe propose an adaptive compression scheme that prunes keyframes\naccording to their marginal contribution to localisation accuracy,\nso that the map stays bounded while place recognition keeps working.\n\n\\section{System Overview}\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{6cm}{0pt}}\n\\caption{Pipeline of the adaptive map-compression module.}\n\\label{fig:pipeline}\n\\end{figure}\nFigure~\\ref{fig:pipeline} summarises the pipeline: incoming keyframes\nare scored, clustered, and either retained or merged into an existing\nmap node.\nThe scorer runs on keyframe insertion, so compression adds no latency\nto the tracking thread.\n\n\\section{Experiments}\nWe evaluate on four indoor sequences with repeated loop closures,\nsubsampling each trajectory to simulate weeks of operation.\nThe figure below reports the tracking time per frame as the\ncompression ratio increases.\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{6cm}{0pt}}\n\\end{figure}\nTracking time falls monotonically until the ratio reaches the point\nwhere relocalisation failures begin to dominate the budget.\n\n\\section{Results}\nA second figure breaks down the contribution of each module to the\nfinal localisation error.\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{6cm}{0pt}}\n\\end{figure}\nRemoving the clustering stage hurts most, while the scoring heuristic\naccounts for the remaining gap over the uncompressed map.\n\n\\section{Conclusion}\nAdaptive compression keeps map growth bounded without measurable loss\nof localisation accuracy on indoor sequences.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "实验和结果那两节有图光秃秃的连句图注都没有，帮我补上 caption：一张画的是运行时间随压缩率变化的曲线，一张是每个模块对最终误差贡献的消融图，caption 按这个意思写就行，别编具体数字。",
+  "dialogue": {
+    "persona": "机器人实验室的博士生，中文交流，赶会议投稿；图还是占位符之后要换真图，所以只关心结构全不全，不关心图内容。",
+    "hiddenGoal": "终态（全部可判分）：① 三个 figure 环境都保留，且每个都有 \\caption（共 3 个；新补的两个 caption 内容分别对应“运行时间随压缩率变化”和“各模块对误差的贡献”，措辞不限、不许编数字）；② 每个 figure 都有 fig: 前缀的 \\label（共 3 个，已有的 fig:pipeline 保持不动）；③ 正文里 “The figure below” 和 “A second figure” 这两处口语指法消失，改成 “Figure~\\ref{...}” 形式引用对应图的 label，全文 \\ref{fig: 至少 3 处；④ 仍编译通过。剧本：第 1 轮（instruction）只要 caption。agent 做完后第 2 轮说“每张图再补上 label，统一 fig: 开头，名字起得能看懂就行，已有那个别动”。agent 做完后第 3 轮说“正文里 The figure below、A second figure 这种说法太口语了，改成 Figure~\\ref{...} 正经引用对应的图”。分岔：若 agent 第 1 轮就把 label 甚至引用顺手做了，用户不重复提，直接跳到还没做的需求；若某轮漏了一张图，用户说“还有一张也没弄”；若 agent 把已有的 fig:pipeline 那个 caption 或 label 改坏了，用户会说“原来那张图的引用怎么坏了”。用户不知道 label 具体叫什么，只看 PDF 里引用显示成 Figure 2 这种编号。三轮做完用户满意结束。",
+    "disclosure": "progressive",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{figure\\}",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\fbox",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\caption\\{",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{fig:",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{fig:pipeline}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "The figure below",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "A second figure",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "Figure~\\\\ref\\{fig:",
+        "op": "gte",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\ref\\{fig:",
+        "op": "gte",
+        "count": 3
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Introduction}\nVisual SLAM systems accumulate redundant keyframes over long\ntrajectories, and map size grows linearly with operation time.\nWe propose an adaptive compression scheme that prunes keyframes\naccording to their marginal contribution to localisation accuracy,\nso that the map stays bounded while place recognition keeps working.\n\n\\section{System Overview}\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{6cm}{0pt}}\n\\caption{Pipeline of the adaptive map-compression module.}\n\\label{fig:pipeline}\n\\end{figure}\nFigure~\\ref{fig:pipeline} summarises the pipeline: incoming keyframes\nare scored, clustered, and either retained or merged into an existing\nmap node.\nThe scorer runs on keyframe insertion, so compression adds no latency\nto the tracking thread.\n\n\\section{Experiments}\nWe evaluate on four indoor sequences with repeated loop closures,\nsubsampling each trajectory to simulate weeks of operation.\nFigure~\\ref{fig:runtime} reports the tracking time per frame as the\ncompression ratio increases.\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{6cm}{0pt}}\n\\caption{Tracking time per frame as the map compression ratio increases.}\n\\label{fig:runtime}\n\\end{figure}\nTracking time falls monotonically until the ratio reaches the point\nwhere relocalisation failures begin to dominate the budget.\n\n\\section{Results}\nFigure~\\ref{fig:ablation} breaks down the contribution of each module\nto the final localisation error.\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{6cm}{0pt}}\n\\caption{Contribution of each module to the final localisation error.}\n\\label{fig:ablation}\n\\end{figure}\nRemoving the clustering stage hurts most, while the scoring heuristic\naccounts for the remaining gap over the uncompressed map.\n\n\\section{Conclusion}\nAdaptive compression keeps map growth bounded without measurable loss\nof localisation accuracy on indoor sequences.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 14
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 2
+    }
+  ]
+}

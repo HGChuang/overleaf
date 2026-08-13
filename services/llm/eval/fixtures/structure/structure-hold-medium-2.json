@@ -1,0 +1,86 @@
+{
+  "id": "structure-hold-medium-2",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\\usepackage{amsmath,amssymb}\n\n\\title{Pricing Notes for a Pure Endowment Block}\n\\author{Product and Valuation Team}\n\\date{July 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section*{Setting}\n\nThe block covers lives aged~40 at issue, with benefits payable\nonly on survival to the end of each term layer. Throughout these\nnotes the five-year layer is priced off the discount--survival\nfactor $v^{5}\\,{}_{5}p_{40}$.\n\n\\section*{Layer Quotes}\n\nFor the ten-year layer the same building block is\n$v^{10}\\,{}_{10}p_{40}$, and the reinsurers quote it separately\nfrom the shorter terms. The fifteen-year tranche appears in the\ntreaty slip as $v^{15}\\,{}_{15}p_{40}$, while the internal\ncapital model writes the twenty-year leg as\n$v^{20}\\,{}_{20}p_{40}$.\n\n\\section*{Sensitivity Shelf}\n\nA legacy sensitivity run for lives aged~35 keeps the old\nnotation on purpose: the seven-year factor\n$v^{7}\\,{}_{7}p_{35}$ is still cited verbatim by the retiracy\ntreaty, so it is left exactly as written.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "定价底稿里 40 岁保单的折现—存活因子全是手工长式，每个期限敲一遍，改一处利率假设要逐条重敲。在导言区定义一个带期限参数的宏 \\dscf，展开式为 v^{#1}\\,{}_{#1}p_{40}，然后把正文里 5/10/15/20 年期的长式全部换成 \\dscf{5} 这类调用。敏感性测算那节 35 岁的因子沿用的是再保条约里的旧写法，维持原样，不要卷进这次归整。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\newcommand\\{\\\\dscf\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\dscf\\{",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "v\\^\\{5\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "v\\^\\{10\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "v\\^\\{15\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "v\\^\\{20\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "v\\^\\{7\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "{}_{7}p_{35}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\\usepackage{amsmath,amssymb}\n\\newcommand{\\dscf}[1]{v^{#1}\\,{}_{#1}p_{40}}\n\n\\title{Pricing Notes for a Pure Endowment Block}\n\\author{Product and Valuation Team}\n\\date{July 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section*{Setting}\n\nThe block covers lives aged~40 at issue, with benefits payable\nonly on survival to the end of each term layer. Throughout these\nnotes the five-year layer is priced off the discount--survival\nfactor $\\dscf{5}$.\n\n\\section*{Layer Quotes}\n\nFor the ten-year layer the same building block is\n$\\dscf{10}$, and the reinsurers quote it separately\nfrom the shorter terms. The fifteen-year tranche appears in the\ntreaty slip as $\\dscf{15}$, while the internal\ncapital model writes the twenty-year leg as\n$\\dscf{20}$.\n\n\\section*{Sensitivity Shelf}\n\nA legacy sensitivity run for lives aged~35 keeps the old\nnotation on purpose: the seven-year factor\n$v^{7}\\,{}_{7}p_{35}$ is still cited verbatim by the retiracy\ntreaty, so it is left exactly as written.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

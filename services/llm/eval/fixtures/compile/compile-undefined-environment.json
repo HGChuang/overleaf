@@ -1,0 +1,27 @@
+{
+  "id": "compile-undefined-environment",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Batch Effects in Single-Cell RNA Sequencing}\n\\author{I. Petrenko}\n\\date{February 2026}\n\\begin{document}\n\\maketitle\n\\section{Normalisation}\nLibrary size varies by orders of magnitude across cells in the same experiment.\n\\begin{mybox}\nWe therefore normalise counts with size factors estimated from pooled cells,\nand we regress out technical covariates before any clustering is attempted.\n\\end{mybox}\nDownstream embeddings change noticeably when this step is skipped,\nand batch structure can be mistaken for biological signal.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "单细胞测序这篇 LaTeX 编不过，我自己定义了个框框结果直接炸了，帮我修修吧。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Batch Effects in Single-Cell RNA Sequencing}\n\\author{I. Petrenko}\n\\date{February 2026}\n\\begin{document}\n\\maketitle\n\\section{Normalisation}\nLibrary size varies by orders of magnitude across cells in the same experiment.\n\\begin{quote}\nWe therefore normalise counts with size factors estimated from pooled cells,\nand we regress out technical covariates before any clustering is attempted.\n\\end{quote}\nDownstream embeddings change noticeably when this step is skipped,\nand batch structure can be mistaken for biological signal.\n\\end{document}\n"
+      }
+    ]
+  }
+}

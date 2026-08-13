@@ -1,0 +1,27 @@
+{
+  "id": "compile-fill-eninstr-compile-easy",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Field Report: Traverses Across the Kettle Moraine Outwash Plain}\n\\author{D. Whitfield}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\n\\section{Overview}\nBetween 14 and 18 April we walked three north--south traverses across\nthe outwash plain, logging exposures, gravel bars and kettle lakes.\nWeather was dry throughout, and access was unrestricted.\n\n\\section{Observations}\n\\subsecton{Gravel Bars}\nThe bars east of the esker ridge are armoured with cobble lags over\ncoarse sand. Imbrication indicates palaeoflow toward the south-west.\n\n\\subsection{Kettle Lakes}\nSix kettle lakes were visited; all are groundwater-fed, with marl\nbenches exposed along the northern shores.\n\n\\section{Samples}\nTwelve sediment samples were bagged for grain-size analysis and will be\nsubmitted to the laboratory next week.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Hey — this field report suddenly stopped compiling and I honestly can't spot why. It's just a short article, nothing fancy. Can you find what's broken and fix it so it builds again?",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Field Report: Traverses Across the Kettle Moraine Outwash Plain}\n\\author{D. Whitfield}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\n\\section{Overview}\nBetween 14 and 18 April we walked three north--south traverses across\nthe outwash plain, logging exposures, gravel bars and kettle lakes.\nWeather was dry throughout, and access was unrestricted.\n\n\\section{Observations}\n\\subsection{Gravel Bars}\nThe bars east of the esker ridge are armoured with cobble lags over\ncoarse sand. Imbrication indicates palaeoflow toward the south-west.\n\n\\subsection{Kettle Lakes}\nSix kettle lakes were visited; all are groundwater-fed, with marl\nbenches exposed along the northern shores.\n\n\\section{Samples}\nTwelve sediment samples were bagged for grain-size analysis and will be\nsubmitted to the laboratory next week.\n\\end{document}\n"
+      }
+    ]
+  }
+}

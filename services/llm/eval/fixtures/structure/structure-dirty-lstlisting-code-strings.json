@@ -1,0 +1,101 @@
+{
+  "id": "structure-dirty-lstlisting-code-strings",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\\usepackage{listings}\n\n\\title{Pollinator Visitation in Restored Meadow Strips}\n\\author{L.~Brandt, O.~Ferreira, and K.~Sato}\n\\date{May 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Overview}\nVisitation was recorded in ten restored strips over twelve weeks;\nTable~\\ref{table:visitation} summarises the pooled counts.\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lc}\n\\toprule\nVisitor group & Visits recorded \\\\\n\\midrule\nBumble bees & 1{,}214 \\\\\nSolitary bees & 986 \\\\\nHoverflies & 743 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Pooled pollinator visits across all strips.}\n\\label{table:visitation}\n\\end{table}\n\n\\input{chapters/analysis}\n\n\\appendix\n\\section{Processing Script}\nThe stub generator below produced the table skeletons used during\ndrafting; it is reproduced exactly as run.\n\n\\begin{lstlisting}\n# Build the LaTeX stub for each results table.\ndef table_stub(key):\n    return (\"\\\\begin{table}\\n\"\n            \"\\\\label{table:\" + key + \"}\\n\"\n            \"\\\\end{table}\")\n\nfor key in [\"visitation\", \"abundance\", \"traits\"]:\n    print(table_stub(key))\n\nnote = \"see Table \\\\ref{table:visitation} for the raw counts\"\n\\end{lstlisting}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/analysis.tex",
+        "content": "\\section{Strip-Level Analysis}\nCounts per strip appear in Table~\\ref{table:abundance}, and the\ntrait means used in the mixture model appear in\nTable~\\ref{table:traits}; site covariates are listed in\nTable~\\ref{tab:site}. Cross-checks against\nTable~\\ref{table:visitation} found no transcription drift.\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lc}\n\\toprule\nStrip & Visits per hour \\\\\n\\midrule\nNorth 1 & 14.2 \\\\\nNorth 2 & 12.8 \\\\\nSouth 1 & 15.6 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Visitation rates by strip.}\n\\label{table:abundance}\n\\end{table}\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lc}\n\\toprule\nTrait & Mean \\\\\n\\midrule\nCorolla depth (mm) & 8.4 \\\\\nNectar sugar (\\%) & 31.2 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Floral trait means for the three dominant forbs.}\n\\label{table:traits}\n\\end{table}\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lc}\n\\toprule\nSite & Area (ha) \\\\\n\\midrule\nNorth & 2.6 \\\\\nSouth & 3.1 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Surveyed sites and their restored areas.}\n\\label{tab:site}\n\\end{table}\n\nComposition differences between strips were modest and tracked\nthe forb gradient described above.\n"
+      }
+    ]
+  },
+  "instruction": "这个生态学项目里表格交叉引用的前缀不统一：约定是 tab: 开头，但有几处写成了 table:。请把正文 LaTeX 里的 \\label 和 \\ref 全部统一成 tab: 前缀。附录那段代码清单是当初生成表格骨架的脚本的存档，逐字保留，不要动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "(?<!\\\\)\\\\label\\{table:",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "(?<!\\\\)\\\\ref\\{table:",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/analysis.tex",
+        "pattern": "(?<!\\\\)\\\\label\\{table:",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/analysis.tex",
+        "pattern": "(?<!\\\\)\\\\ref\\{table:",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{tab:visitation}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\ref{tab:visitation}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/analysis.tex",
+        "literal": "\\label{tab:",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/analysis.tex",
+        "literal": "\\ref{tab:",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\begin{lstlisting}\n# Build the LaTeX stub for each results table.\ndef table_stub(key):\n    return (\"\\\\begin{table}\\n\"\n            \"\\\\label{table:\" + key + \"}\\n\"\n            \"\\\\end{table}\")\n\nfor key in [\"visitation\", \"abundance\", \"traits\"]:\n    print(table_stub(key))\n\nnote = \"see Table \\\\ref{table:visitation} for the raw counts\"\n\\end{lstlisting}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\\usepackage{listings}\n\n\\title{Pollinator Visitation in Restored Meadow Strips}\n\\author{L.~Brandt, O.~Ferreira, and K.~Sato}\n\\date{May 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Overview}\nVisitation was recorded in ten restored strips over twelve weeks;\nTable~\\ref{tab:visitation} summarises the pooled counts.\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lc}\n\\toprule\nVisitor group & Visits recorded \\\\\n\\midrule\nBumble bees & 1{,}214 \\\\\nSolitary bees & 986 \\\\\nHoverflies & 743 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Pooled pollinator visits across all strips.}\n\\label{tab:visitation}\n\\end{table}\n\n\\input{chapters/analysis}\n\n\\appendix\n\\section{Processing Script}\nThe stub generator below produced the table skeletons used during\ndrafting; it is reproduced exactly as run.\n\n\\begin{lstlisting}\n# Build the LaTeX stub for each results table.\ndef table_stub(key):\n    return (\"\\\\begin{table}\\n\"\n            \"\\\\label{table:\" + key + \"}\\n\"\n            \"\\\\end{table}\")\n\nfor key in [\"visitation\", \"abundance\", \"traits\"]:\n    print(table_stub(key))\n\nnote = \"see Table \\\\ref{table:visitation} for the raw counts\"\n\\end{lstlisting}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/analysis.tex",
+        "content": "\\section{Strip-Level Analysis}\nCounts per strip appear in Table~\\ref{tab:abundance}, and the\ntrait means used in the mixture model appear in\nTable~\\ref{tab:traits}; site covariates are listed in\nTable~\\ref{tab:site}. Cross-checks against\nTable~\\ref{tab:visitation} found no transcription drift.\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lc}\n\\toprule\nStrip & Visits per hour \\\\\n\\midrule\nNorth 1 & 14.2 \\\\\nNorth 2 & 12.8 \\\\\nSouth 1 & 15.6 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Visitation rates by strip.}\n\\label{tab:abundance}\n\\end{table}\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lc}\n\\toprule\nTrait & Mean \\\\\n\\midrule\nCorolla depth (mm) & 8.4 \\\\\nNectar sugar (\\%) & 31.2 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Floral trait means for the three dominant forbs.}\n\\label{tab:traits}\n\\end{table}\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lc}\n\\toprule\nSite & Area (ha) \\\\\n\\midrule\nNorth & 2.6 \\\\\nSouth & 3.1 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Surveyed sites and their restored areas.}\n\\label{tab:site}\n\\end{table}\n\nComposition differences between strips were modest and tracked\nthe forb gradient described above.\n"
+      }
+    ]
+  }
+}

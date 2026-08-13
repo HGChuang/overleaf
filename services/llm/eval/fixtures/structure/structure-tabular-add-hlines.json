@@ -1,0 +1,31 @@
+{
+  "id": "structure-tabular-add-hlines",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Timing}\n\\begin{tabular}{lc}\nStage & Time (s) \\\\\nPreprocessing & 3.2 \\\\\nTraining & 41.7 \\\\\nEvaluation & 2.5 \\\\\n\\end{tabular}\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "给这个表格加上横线：表头上方、表头下方、每行数据之后都加 \\hline（共 5 条，含表格底部）。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\hline", "op": "eq", "count": 5 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Timing}\n\\begin{tabular}{lc}\n\\hline\nStage & Time (s) \\\\\n\\hline\nPreprocessing & 3.2 \\\\\n\\hline\nTraining & 41.7 \\\\\n\\hline\nEvaluation & 2.5 \\\\\n\\hline\n\\end{tabular}\n\\end{document}\n"
+      }
+    ]
+  }
+}

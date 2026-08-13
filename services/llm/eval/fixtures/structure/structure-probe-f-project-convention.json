@@ -1,0 +1,70 @@
+{
+  "id": "structure-probe-f-project-convention",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\n\\title{Pressure Drop Estimates for a Retrofitted Cooling-Water Loop}\n\\author{Process Engineering Group, North Plant}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe north plant cooling-water loop was commissioned in 1998 and has\nbeen retrofitted twice, most recently in 2024 when two parallel plate\nheat exchangers replaced the original shell-and-tube units. Operators\nreport that the loop now runs closer to its pressure limit than the\ndesign documents suggest, and the present note re-estimates the\nfrictional pressure drop with measured roughness values.\n\nFlow in the main header is turbulent throughout the operating\nenvelope. The Reynolds number is evaluated from\n\\begin{equation}\nRe = \\frac{\\rho u D}{\\mu}\n\\end{equation}\nwith properties taken at the bulk temperature. Measured values during\nthe May campaign span $Re = 4.1\\times 10^{4}$ to $9.6\\times 10^{4}$,\ncomfortably above the transition region.\n\n\\section{Model}\nThe frictional pressure drop follows the Darcy--Weisbach relation\n\\begin{equation}\n\\Delta p = f \\frac{L}{D} \\frac{\\rho u^2}{2}\n\\end{equation}\nwhere $f$ is the Darcy friction factor, $L$ the equivalent length\nincluding fittings, and $D$ the header diameter. Equivalent lengths\nfor the retrofit were taken from the 2024 as-built drawings, with the\ncoefficient method used for bends and the full-bore value for the port\nlosses of the new plate exchangers.\n\nSurface roughness was measured on four spool pieces removed during\nthe 2025 outage. The values cluster around $0.12$ mm, well above the\ndrawn-tube figure assumed in the original design basis.\n\n% TODO: Blasius screening correlation to be added here (group agreed 2026-06).\n\n\\section{Field Data}\nSuperficial velocity is obtained from the metered volumetric flow as\n\\begin{gather}\nu = \\frac{Q}{A}\n\\end{gather}\nusing the inside cross-section of the main header. Flow readings were\nlogged at one-minute intervals over the campaign and averaged per\nshift; the shift averages are the basis for all estimates reported\nhere.\n\nThe measured header pressure drop at the metered flows sits ten to\nfifteen percent above the value predicted with the original roughness\nassumption, which motivated the remeasurement described above.\n\n\\section{Conclusion}\nRevised estimates with measured roughness close most of the gap\nbetween predicted and observed pressure drop. The remaining\ndiscrepancies lie within meter uncertainty and do not justify further\nderating of the loop.\n\\end{document}\n"
+      },
+      {
+        "path": "NOTES.md",
+        "content": "# 维护笔记（工艺组内部）\n\n- 编译只用 pdflatex，别换引擎；别加新宏包，服务器镜像不全。\n- 参考文献暂用 thebibliography 手写，等项目结题再统一收进 BibTeX。\n- **公式环境约定（2026-03 起生效）**：新写的公式一律用 gather 环境，哪怕只有一行也用 gather，不要再开 equation。已有的 equation 环境先原样保留，等 Q3 统一迁移时一起处理。\n- 图片一律插 PDF，PNG 不收；表格的 caption 放表格上方。\n"
+      }
+    ]
+  },
+  "instruction": "您好，麻烦帮个忙：请在 Model 一节末尾补充 Blasius 光滑管摩阻关联式 f = 0.3164·Re^{-1/4}，单独成行展示。用哪种公式环境，请按我们项目的内部约定来——仓库根目录的 NOTES.md 里写着，动手前先读一下。除 main.tex 这一处补充外，其它内容和文件都不要动。谢谢！",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{gather\\}",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{equation\\}",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{gather\\}[\\s\\S]{0,300}?0\\.3164",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\section\\{Model\\}[\\s\\S]{0,2000}?0\\.3164[\\s\\S]{0,2000}?\\\\section\\{Field Data\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "NOTES.md"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\n\\title{Pressure Drop Estimates for a Retrofitted Cooling-Water Loop}\n\\author{Process Engineering Group, North Plant}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe north plant cooling-water loop was commissioned in 1998 and has\nbeen retrofitted twice, most recently in 2024 when two parallel plate\nheat exchangers replaced the original shell-and-tube units. Operators\nreport that the loop now runs closer to its pressure limit than the\ndesign documents suggest, and the present note re-estimates the\nfrictional pressure drop with measured roughness values.\n\nFlow in the main header is turbulent throughout the operating\nenvelope. The Reynolds number is evaluated from\n\\begin{equation}\nRe = \\frac{\\rho u D}{\\mu}\n\\end{equation}\nwith properties taken at the bulk temperature. Measured values during\nthe May campaign span $Re = 4.1\\times 10^{4}$ to $9.6\\times 10^{4}$,\ncomfortably above the transition region.\n\n\\section{Model}\nThe frictional pressure drop follows the Darcy--Weisbach relation\n\\begin{equation}\n\\Delta p = f \\frac{L}{D} \\frac{\\rho u^2}{2}\n\\end{equation}\nwhere $f$ is the Darcy friction factor, $L$ the equivalent length\nincluding fittings, and $D$ the header diameter. Equivalent lengths\nfor the retrofit were taken from the 2024 as-built drawings, with the\ncoefficient method used for bends and the full-bore value for the port\nlosses of the new plate exchangers.\n\nSurface roughness was measured on four spool pieces removed during\nthe 2025 outage. The values cluster around $0.12$ mm, well above the\ndrawn-tube figure assumed in the original design basis.\n\nFor the screening bound we adopt the Blasius correlation for\nsmooth tubes,\n\\begin{gather}\nf = 0.3164\\, Re^{-1/4}\n\\end{gather}\nwhich holds for turbulent flow in smooth tubes up to about\n$Re \\approx 10^{5}$ and therefore covers the whole May envelope.\n\n\\section{Field Data}\nSuperficial velocity is obtained from the metered volumetric flow as\n\\begin{gather}\nu = \\frac{Q}{A}\n\\end{gather}\nusing the inside cross-section of the main header. Flow readings were\nlogged at one-minute intervals over the campaign and averaged per\nshift; the shift averages are the basis for all estimates reported\nhere.\n\nThe measured header pressure drop at the metered flows sits ten to\nfifteen percent above the value predicted with the original roughness\nassumption, which motivated the remeasurement described above.\n\n\\section{Conclusion}\nRevised estimates with measured roughness close most of the gap\nbetween predicted and observed pressure drop. The remaining\ndiscrepancies lie within meter uncertainty and do not justify further\nderating of the loop.\n\\end{document}\n"
+      },
+      {
+        "path": "NOTES.md",
+        "content": "# 维护笔记（工艺组内部）\n\n- 编译只用 pdflatex，别换引擎；别加新宏包，服务器镜像不全。\n- 参考文献暂用 thebibliography 手写，等项目结题再统一收进 BibTeX。\n- **公式环境约定（2026-03 起生效）**：新写的公式一律用 gather 环境，哪怕只有一行也用 gather，不要再开 equation。已有的 equation 环境先原样保留，等 Q3 统一迁移时一起处理。\n- 图片一律插 PDF，PNG 不收；表格的 caption 放表格上方。\n"
+      }
+    ]
+  }
+}

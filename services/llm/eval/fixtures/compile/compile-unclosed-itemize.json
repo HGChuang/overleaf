@@ -1,0 +1,27 @@
+{
+  "id": "compile-unclosed-itemize",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Weak Instruments in Applied Econometrics}\n\\author{D. Nakamura}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\section{Motivation}\nInstrumental variables recover causal effects when the treatment of interest is endogenous.\nThe main threats to a credible design are well known:\n\\begin{itemize}\n\\item instruments that move the outcome through channels other than the treatment;\n\\item first stages that are too weak to shift the treatment in a meaningful way;\n\\item heterogeneous effects that complicate the interpretation of the estimand.\n\\section{Empirical Strategy}\nWe report first stage F statistics for every specification we estimate,\nand we rotate across candidate instruments as a robustness exercise.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这篇计量的稿子编不过，愁死我了，好像就是加了个列表之后开始报错的，帮我瞧瞧到底咋回事。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Weak Instruments in Applied Econometrics}\n\\author{D. Nakamura}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\section{Motivation}\nInstrumental variables recover causal effects when the treatment of interest is endogenous.\nThe main threats to a credible design are well known:\n\\begin{itemize}\n\\item instruments that move the outcome through channels other than the treatment;\n\\item first stages that are too weak to shift the treatment in a meaningful way;\n\\item heterogeneous effects that complicate the interpretation of the estimand.\n\\end{itemize}\n\\section{Empirical Strategy}\nWe report first stage F statistics for every specification we estimate,\nand we rotate across candidate instruments as a robustness exercise.\n\\end{document}\n"
+      }
+    ]
+  }
+}

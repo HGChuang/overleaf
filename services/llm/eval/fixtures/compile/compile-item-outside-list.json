@@ -1,0 +1,27 @@
+{
+  "id": "compile-item-outside-list",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Drift Limits for Soft-Storey Buildings}\n\\author{V. Anagnostou}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\section{Observed Damage}\nPost-earthquake reconnaissance repeatedly identifies the same failure pattern.\n\\item Soft storeys concentrate the drift demand in a single level,\nwhich exhausts the local ductility supply of the columns long before the rest\nof the structure is damaged.\nRedundant lateral systems redistribute the demand across floors\nand prevent the formation of a single storey mechanism.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "地震工程这篇，编译报什么 Lonely item 是啥意思？完全看不懂，求修。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Drift Limits for Soft-Storey Buildings}\n\\author{V. Anagnostou}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\section{Observed Damage}\nPost-earthquake reconnaissance repeatedly identifies the same failure pattern.\nSoft storeys concentrate the drift demand in a single level,\nwhich exhausts the local ductility supply of the columns long before the rest\nof the structure is damaged.\nRedundant lateral systems redistribute the demand across floors\nand prevent the formation of a single storey mechanism.\n\\end{document}\n"
+      }
+    ]
+  }
+}

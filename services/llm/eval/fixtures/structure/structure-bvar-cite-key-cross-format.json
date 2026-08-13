@@ -1,0 +1,80 @@
+{
+  "id": "structure-bvar-cite-key-cross-format",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Urban Wetland Buffers and Stormwater Retention:\\\\ Evidence from a Paired-Catchment Study}\n\\author{K.~Agyeman and L.~Moreau}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nUrban wetlands are increasingly promoted as nature-based\nsolutions for stormwater management, yet catchment-scale\nevidence for their retention performance remains thin.\n\\cite{smith2020} report attenuation of peak flows downstream\nof restored wetland buffers, and their design has become a\nreference point for municipal programmes.\n\n\\section{Study Design}\nWe instrumented two adjacent urban catchments that differ\nonly in the presence of a restored wetland buffer and\nmonitored discharge through two full storm seasons.\nFollowing \\cite{smith2020}, retention was quantified as the\nreduction in peak discharge relative to the control\ncatchment for matched storm events.\n\n\\section{Results}\nAcross twenty-two matched events, the wetland catchment\nshowed lower peaks and longer recessions than the control.\nThe retention effect grew with storm magnitude up to the\ndesign event and declined for the largest storms,\na pattern consistent with the bypass behaviour described\nby \\cite{smith2020}.\n\n\\section{Discussion}\nThe catchment-scale retention we observe complements the\nlaboratory sediment measurements of \\cite{smith2020b}:\ntogether they indicate that restored buffers influence both\nthe timing of discharge and the export of suspended solids.\nDesign guidance should therefore treat hydrologic and\nwater-quality benefits as coupled outcomes.\n\n\\section{Conclusion}\nPaired-catchment monitoring confirms that a restored urban\nwetland buffer measurably retards stormflow, with the\nlargest relative benefits in moderate events.\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\\end{document}\n"
+      },
+      {
+        "path": "refs.bib",
+        "content": "@article{smith2020,\n  author  = {Smith, J. and Alvarez, P.},\n  title   = {Wetland Buffers and Peak Flow Attenuation in Urban Catchments},\n  journal = {Journal of Hydrology},\n  year    = {2020},\n  volume  = {588},\n  pages   = {112--129}\n}\n\n@article{smith2020b,\n  author  = {Smith, J. and Osei, D.},\n  title   = {Sediment Trapping Efficiency of Restored Urban Wetlands},\n  journal = {Ecological Engineering},\n  year    = {2020},\n  volume  = {143},\n  pages   = {71--83}\n}\n"
+      }
+    ]
+  },
+  "instruction": "Smith 2020 年其实发了两篇，我们正文引的一直是 Journal of Hydrology 那篇。现在文献库要加另一篇做区分，引用键得带后缀：把正文里所有 \\cite{smith2020} 改成 \\cite{smith2020a}，refs.bib 里对应条目的 key 同步改成 smith2020a。smith2020b 那篇和它的引用别碰。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\cite{smith2020}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\cite{smith2020a}",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\cite{smith2020b}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "refs.bib",
+        "literal": "{smith2020,",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "refs.bib",
+        "literal": "{smith2020a,",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "refs.bib",
+        "literal": "{smith2020b,",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Urban Wetland Buffers and Stormwater Retention:\\\\ Evidence from a Paired-Catchment Study}\n\\author{K.~Agyeman and L.~Moreau}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nUrban wetlands are increasingly promoted as nature-based\nsolutions for stormwater management, yet catchment-scale\nevidence for their retention performance remains thin.\n\\cite{smith2020a} report attenuation of peak flows downstream\nof restored wetland buffers, and their design has become a\nreference point for municipal programmes.\n\n\\section{Study Design}\nWe instrumented two adjacent urban catchments that differ\nonly in the presence of a restored wetland buffer and\nmonitored discharge through two full storm seasons.\nFollowing \\cite{smith2020a}, retention was quantified as the\nreduction in peak discharge relative to the control\ncatchment for matched storm events.\n\n\\section{Results}\nAcross twenty-two matched events, the wetland catchment\nshowed lower peaks and longer recessions than the control.\nThe retention effect grew with storm magnitude up to the\ndesign event and declined for the largest storms,\na pattern consistent with the bypass behaviour described\nby \\cite{smith2020a}.\n\n\\section{Discussion}\nThe catchment-scale retention we observe complements the\nlaboratory sediment measurements of \\cite{smith2020b}:\ntogether they indicate that restored buffers influence both\nthe timing of discharge and the export of suspended solids.\nDesign guidance should therefore treat hydrologic and\nwater-quality benefits as coupled outcomes.\n\n\\section{Conclusion}\nPaired-catchment monitoring confirms that a restored urban\nwetland buffer measurably retards stormflow, with the\nlargest relative benefits in moderate events.\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\\end{document}\n"
+      },
+      {
+        "path": "refs.bib",
+        "content": "@article{smith2020a,\n  author  = {Smith, J. and Alvarez, P.},\n  title   = {Wetland Buffers and Peak Flow Attenuation in Urban Catchments},\n  journal = {Journal of Hydrology},\n  year    = {2020},\n  volume  = {588},\n  pages   = {112--129}\n}\n\n@article{smith2020b,\n  author  = {Smith, J. and Osei, D.},\n  title   = {Sediment Trapping Efficiency of Restored Urban Wetlands},\n  journal = {Ecological Engineering},\n  year    = {2020},\n  volume  = {143},\n  pages   = {71--83}\n}\n"
+      }
+    ]
+  }
+}

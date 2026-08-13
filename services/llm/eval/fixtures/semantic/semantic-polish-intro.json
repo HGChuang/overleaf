@@ -1,0 +1,23 @@
+{
+  "id": "semantic-polish-intro",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Momentum Contrast for Visual Representations}\n\\author{Jane Doe}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nIn recent years contrastive learning is kinda popular in computer vision. Lots of researchers use it to pretrain models without labels, and it works pretty well. The idea is simple: you take an image, make two different versions of it, and push the model to treat them as the same thing while telling it that other images are different. People have found this trick gives features that transfer nicely to downstream tasks like detection and segmentation. But there are still annoying problems. The batch size thing is a big deal because small batches make the results much worse, and training takes forever. Also, nobody really knows why some augmentations help a lot and others do nothing. In this paper we look at these issues and propose a new framework. Our method uses a memory bank with a momentum encoder so small batches work fine, and we study which augmentations matter most. Experiments show our approach beats previous methods on several benchmarks while using less compute.\n\\section{Related Work}\nContrastive methods learn representations by attracting positive pairs and repelling negative pairs.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "请把 Introduction 一节润色为正式学术英语风格：去掉口语化表达（kinda、pretty well、a big deal、takes forever、nobody really knows、annoying 等），句式更严谨流畅，但不得改变原意、不得增删技术主张或虚构数据，Related Work 一节不要动。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 口语化表达（kinda/pretty well/a big deal/takes forever/nobody really knows/annoying 等）全部替换为正式学术措辞，原意与技术主张（memory bank 与 momentum encoder、augmentation 研究、结果更优且算力更低）完整保留，行文流畅达投稿水准，未改动 Related Work；4: 口语化表达清除 ≥4 处，原意保留，个别句子仍稍欠正式或有小瑕疵，未动其他节；3: 仅 2-3 处润色、口语残留明显，或轻微改变原意但未虚构数据；2: 只做了个别词替换，整体仍口语化，或误删了某个技术主张；1: 几乎未修改，或引入虚构数据/改变核心结论/破坏文档结构"
+  }
+}

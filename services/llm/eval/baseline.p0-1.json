@@ -1,0 +1,1106 @@
+{
+  "updatedAt": "2026-08-05T16:55:09.585Z",
+  "trials": 3,
+  "tasks": {
+    "compile-align-without-amsmath": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-ampersand-outside-tabular": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-beamer-unclosed-frame": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-display-math-blank-line": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-env-name-mismatch": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-error-in-included-chapter": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-errors-two-chapters": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-frac-in-text": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-hash-in-text": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-input-missing-file": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-item-outside-list": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-mathbb-without-amssymb": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-missing-begin-document": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-missing-documentclass": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-missing-dollar": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-missing-end-document": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-missing-image-file": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-multi-error-3": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-multi-error-5-long": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-multi-error-math-tabular": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-nested-math-delimiters": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-newcommand-bad-args": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-percent-swallows-brace": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-report-chapter-math": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-report-multifile-2err": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-subfile-unclosed-env": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-superscript-in-text": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-tabular-column-overflow": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-unclosed-inline-math": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-unclosed-itemize": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-undefined-command": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-undefined-environment": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-underscore-in-text": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-unmatched-brace": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-usepackage-not-found": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-already-satisfied": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-bib-advice": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-compare-sections": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-explain-equation": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-review-opinion": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-seductive-improve": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-terminology-question": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-translate-question": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-add-limitations": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-define-acronyms": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-expand-conclusion": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-grammar-fix": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-hedge-claims": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-long-doc-terminology": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-notation-consistency": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-passive-to-active": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-person-unify": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-polish-chinese": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-polish-intro": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-polish-only-chapter2": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-reduce-redundancy": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-related-work-compare": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-rewrite-captions": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-shorten-abstract": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-structure-abstract": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-tense-unify": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-translate-abstract": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-translate-abstract-file": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-translate-conclusion-zh-en": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-translate-en-to-zh": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-unify-terminology": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-write-abstract": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-write-acknowledgment": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-write-captions": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-write-conclusion": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-add-section-labels": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-align-single-to-equation": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-captions-above-tables": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-date-format-unify": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-demote-subsections": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-description-to-itemize": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-equation-numbering": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-equation-to-split": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "structure-extract-newcommand": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-figure-add-captions": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-figure-to-figure-star": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-href-urls": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-itemize-to-enumerate": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-label-prefix-normalize": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "structure-long-doc-multi-edit": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-merge-subsections": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-move-section-between-files": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-multifile-preamble-extract": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-multifile-rename-label": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-quotes-to-latex": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-rename-labels": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-rename-macro": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-section-reorder": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-split-section": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-table-add-row": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-tabular-add-column": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-tabular-add-hlines": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-tabular-to-booktabs": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-textbf-to-emph": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-title-case-headings": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-hard-beamer-frames": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-hard-cascade-chapters": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-hard-figure-chain": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-hard-macro-preamble-args": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-hard-tabular-mixed": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-hard-already-booktabs": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-hard-legacy-font-question": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-hard-abstract-constraints": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-hard-translate-keep-math": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "structure-hard-eqref-unify-missing-labels": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-hard-label-prefix-multifile": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-hard-macro-unify-multifile": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "structure-hard-notation-sync": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-hard-promote-then-move": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-hard-review-response": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-hard-table-transpose": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-bvar-caret-underscore-math": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-bvar-graphics-case-sensitive": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-bvar-macro-def-hash": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-bvar-path-deep-nesting": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-bvar-preamble-multiline": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-dirty-alignat-column-arg": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-dirty-cases-env-brace": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-dirty-footnote-in-caption": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-dirty-fullwidth-math-chars": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "compile-dirty-hyperref-url-underscore": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-dirty-instr-wrong-chapter-hint": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-dirty-lstlisting-unclosed": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-dirty-pmatrix-row-terminator": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-dirty-tikz-missing-semicolon": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-dirty-two-complete-mains": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-dirty-verb-in-footnote": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-fill-doctype-ieeetran-author": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-fill-eninstr-compile-easy": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-fill-longdoc-compile-5err": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-fill-multifile-6-chapter-report": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-fill-multifile-subfiles-package": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-fill-package-order-conflict": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-fill-renewcommand-clash": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-probe-a-ask-then-do-bait": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-probe-f-deep-buried-file": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-probe-f-samename-two-dirs": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-probe-f-stale-header-comment": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "compile-probe-m-cascade-verify-2rounds": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-dirty-instr-contradiction-freeze": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-dirty-instr-impossible-engine": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "noop-dirty-noop-fabricate-benchmark": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "noop-fill-eninstr-noop-question": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-fill-longdoc-noop-review": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-fill-multifile-noop-crosscheck": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-fill-noop-already-booktabs-2": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-fill-noop-latex-concept": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-fill-noop-prediction": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-fill-noop-show-translation": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-fill-noop-vague-referent": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "noop-fill-noop-wrong-premise": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-probe-f-multifile-noop": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-probe-m-noop-contradictory": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "noop-probe-m-noop-fabricate-citation": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "noop-probe-m-noop-image-resolution": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "noop-probe-m-noop-run-experiment": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-dirty-instr-undercount": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-fill-constraints-abstract-5hard": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-fill-constraints-shrink-30pct": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "semantic-fill-doctype-beamer-rewrite": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-fill-doctype-ctexart-polish": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-fill-eninstr-en-doc-polish": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-fill-eninstr-mixed-doc-translate": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-fill-longdoc-abstract-synthesis": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "semantic-fill-longdoc-caption-rewrite-8": {
+      "passRate": 0.3333333333333333,
+      "stability": "flaky"
+    },
+    "semantic-fill-longdoc-number-consistency": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "semantic-fill-longdoc-passive-sweep": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "semantic-fill-longdoc-terminology-20x": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-fill-mixedinstr-code-switch": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-probe-a-explain-then-patch": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-probe-f-crossfile-symbol-audit": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "semantic-probe-f-nonmain-key-info": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "semantic-probe-g-list-reorder-semantics": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-amp-escape-in-newtext": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-anchor-insert": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-bib-entry-edit": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-cite-key-cross-format": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "structure-bvar-cjk-oldtext": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-comment-vs-code-twin": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-commented-old-table": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-dollar-escape": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-eqnarray-to-align": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-filename-with-space": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-graphics-ext-choice": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-identical-block-two-files": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-label-inside-caption": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "structure-bvar-long-paragraph-quote": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-math-dense-oldtext": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-nested-braces": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-optional-arg-brackets": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-path-subdir-normal": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-percent-escape": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-rename-incl-comment": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-same-line-two-hunks": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-similar-filenames": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-siunitx-cmd-args": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-six-hunks": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-tabular-whitespace": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-tilde-nbsp": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-two-phase-same-region": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-url-special-chars": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-verbatim-sanctuary": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-bvar-whole-math-env": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-amsthm-newtheorem": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-backup-file-twin": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-bib-duplicate-key": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-bib-url-underscore": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-cite-undefined-key": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-comment-dead-table-lure": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-comment-todo-pointer": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-ctex-redundant-cjkenv": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-doc-cjk-halfwidth-punct": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-doc-curly-quotes": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-doc-formfeed-whitespace": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-enumitem-resume-counter": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-instr-distractor-chitchat": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-instr-typo-tolerance": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-lstlisting-code-strings": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-pgfplots-data-edit": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-siunitx-v3-migrate": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-tikz-coordinate-sanctuary": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-dirty-verbatim-error-showcase": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "structure-fill-constraints-table-4way": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-doctype-beamer-itemize": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-doctype-book-frontmatter": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-doctype-ctexart-punct": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-doctype-ieeetran-float": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-doctype-moderncv-resume": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "structure-fill-eninstr-en-doc-structure": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-longdoc-5-scattered-edits": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-longdoc-dead-macro-audit": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "structure-fill-longdoc-distant-figure-swap": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-longdoc-label-audit": {
+      "passRate": 0,
+      "stability": "stable-fail"
+    },
+    "structure-fill-longdoc-proofs-to-appendix": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-longdoc-section-swap": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "structure-fill-longdoc-split-to-input": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-multifile-5-macro-unify": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-multifile-bib-add-citation": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-multifile-bib-syntax-fix": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-multifile-natbib-citep": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-multifile-sty-extract": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-steps-conditional-exists": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-fill-steps-define-sweep-purge": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "structure-fill-steps-review-5-comments": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "structure-probe-a-add-and-remove": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-a-conditional-branch": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-a-define-and-sweep": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-a-five-subtasks": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-a-range-scoped-rename": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-a-two-files-two-edits": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-f-decoy-old-version": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-f-figures-dir-crossref": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-f-mainfile-not-root": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-f-orphan-file": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-f-partially-satisfied": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-f-project-convention": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-g-align-ampersand-keep": {
+      "passRate": 0.6666666666666666,
+      "stability": "flaky"
+    },
+    "structure-probe-g-bib-key-rename-sync": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-g-caption-label-swap-fix": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-g-delete-label-paragraph": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-g-duplicate-label-warning": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-g-eqstar-dangling-ref": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-g-figure-swap-captions": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-g-hardcoded-eq-number": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-g-number-precision-scope": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-g-ref-to-deleted-section": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-g-table-col-swap": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-m-eight-hunks-one-patch": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-m-preamble-rewrite-lure": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    },
+    "structure-probe-m-pure-append": {
+      "passRate": 1,
+      "stability": "stable-pass"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "id": "semantic-hold-hard-2",
+  "category": "semantic",
+  "difficulty": "hard",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\n\\title{Low-Loss Silicon Nitride Waveguides for Chip-Scale Nonlinear Photonics}\n\\author{H.~Vestergaard, P.~Nakamura, and R.~Osei}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nSilicon nitride has become the material platform of choice for\nchip-scale nonlinear photonics because its propagation loss can be pushed\nfar below that of doped silicon while tolerating high optical intensities.\nWe report a damascene fabrication flow with thermal annealing that yields\na waveguide loss of 0.4~dB/cm at 1550~nm across 4-inch wafers, and we\ndemonstrate Kerr frequency-comb generation with record-low pump power for\nthis foundry class.\n\\end{abstract}\n\n\\section{Introduction}\nIntegrated nonlinear photonics converts modest pump powers into broad\noptical bandwidths, but only when the confinement is strong and the\nattenuation of the guiding medium is small. In practice the waveguide\nloss of the platform sets the effective interaction length: every decibel\nper centimetre shortens the distance over which a pump photon can\nparticipate in four-wave mixing. For silicon-on-insulator the two-photon\nabsorption ceiling compounds the problem, whereas silicon nitride is free\nof it, and so the transmission loss of the nitride platform has become\nthe figure of merit that device papers compete on. A propagation loss\nbelow 1~dB/m, once a laboratory curiosity, is now reported by several\ngroups using either thick-film deposition with subtractive etching or\ndamascene processes borrowed from copper interconnect technology.\n\nThe push toward foundry compatibility adds a second constraint: whatever\nannealing and planarisation steps are used to reach a low waveguide loss\nmust survive statistical process control across full wafers, not only on\nhero dies. This paper reports such a flow and characterises the resulting\npropagation loss from the wafer centre to the edge, because a median\nvalue without a spatial map is of limited use to process engineers. We\nalso compare against published foundry figures and demonstrate Kerr comb\ngeneration whose threshold follows directly from the measured values.\n\n\\section{Fabrication Flow}\nWaveguides were patterned in a 800~nm silicon nitride film deposited by\nlow-pressure chemical vapour deposition on a 15~$\\mu$m thermal oxide\nundercladding. The damascene variant embeds the nitride core in a\nplanarised silica trench, which reduces sidewall roughness scattering;\nscattering is the dominant contribution to waveguide loss in films of\nthis thickness. After etch-back, wafers were annealed at 1200~$^{\\circ}$C\nfor three hours in nitrogen to drive out hydrogen-related absorption near\n1520~nm. The propagation loss before and after annealing was compared on\nidentical test structures, and the absorption shoulder was suppressed by\na factor of four, consistent with earlier reports on thick nitride.\n\nWafer handling followed the standard foundry cassette protocol, and every\nlithography step used the same reticle so that geometry effects could be\nseparated from process drift. Film thickness was mapped by ellipsometry\non a 49-point grid before and after planarisation, and the thickness\nrange across a wafer was held to 18~nm. Chips were singulated by deep\netching rather than dicing so that facet quality did not contribute an\nunpredictable waveguide loss penalty at the coupling interface. Inverse\ntapers terminated each waveguide, and the resulting insertion loss per\nfacet was 1.1~dB when measured against a lensed fibre with a\n2.5~$\\mu$m mode-field diameter.\n\n\\section{Loss Characterisation}\nCutback measurements used spiral test structures of 1, 3, 5, and 10~cm on\nevery reticle of two wafers. Because the transmission loss of short\nspirals is dominated by facet variability, the linear fit was weighted by\nspiral length, and outliers beyond three standard deviations were\nre-measured. The extracted propagation loss at 1550~nm was\n0.4~dB/cm at the wafer centre and 0.6~dB/cm at the edge, a gradient we\nattribute to film-thickness nonuniformity rather than to etch chemistry.\nAt 1310~nm the propagation loss was slightly lower, 0.3~dB/cm, as\nexpected once the hydrogen shoulder has been removed.\n\nThe wafer map deserves comment. Propagation loss increased monotonically\nfrom centre to edge on both wafers, and the spatial correlation with the\nellipsometry thickness map was strong, with a Pearson coefficient of 0.8.\nThis reproducible gradient allowed the foundry to compensate the mask\nbias in the following run. We also tracked the waveguide loss of narrow\n(1.2~$\\mu$m) and wide (2.8~$\\mu$m) cores separately. Wide cores confine\nthe mode away from the sidewalls and showed 25\\% lower values, confirming\nthat sidewall scattering still accounts for roughly half of the measured\npropagation loss even after planarisation. The insertion loss of the\ntaper was independent of core width within measurement error.\n\n\\section{Comparison with Foundry Processes}\nTable~\\ref{tab:platforms} places our results beside published foundry\nfigures. The waveguide loss we report is not the lowest ever measured in\nnitride, but it is reached with a process module that is already\nqualified for multi-project wafer runs.\n\n\\begin{table}[t]\n\\centering\n\\caption{Reported attenuation of integrated platforms near 1550~nm.}\n\\label{tab:platforms}\n\\begin{tabular}{lcc}\n\\toprule\nPlatform & Waveguide loss (dB/cm) & Foundry access \\\\\n\\midrule\nSilicon-on-insulator & 1.5 & yes \\\\\nThin silicon nitride & 0.2 & yes \\\\\nThick silicon nitride (this work) & 0.4 & yes \\\\\nThin-film lithium niobate & 0.3 & limited \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\nWe note that transmission loss figures quoted without a wavelength, a\ncore geometry, or an anneal state are difficult to compare, and we\nencourage authors to report all three.\n\nA further caution concerns measurement methodology. Cutback values can\ndiverge from resonator-derived ones when the facet contribution is\nmis-estimated, and ring resonators conflate coupling-region scattering\nwith the propagation loss of the bend. Where both methods have been\napplied to the same platform, agreement within 20\\% is typical, and our\nown resonator quality factors are consistent with the cutback values\nreported here.\n\n\\section{Nonlinear Demonstration}\nMicroresonators with a free spectral range of 100~GHz were fabricated on\nthe same wafers. The intrinsic quality factor of $1.8\\times10^{6}$\ncorresponds closely to the value predicted from the measured waveguide\nloss, indicating that coupling ideality is high. Pumping at 1560~nm with\n90~mW on chip generated a coherent Kerr comb spanning 60~nm; the comb\nline power was flat within 6~dB across the central 40 lines. The\nthreshold we measure is consistent with the propagation loss reported\nabove and with the simulated nonlinear parameter of\n1.1~W$^{-1}$m$^{-1}$. Supercontinuum generation in straight waveguides\nfurther confirmed that the transmission loss at the short-wavelength edge\nof the telecom band does not degrade the broadening.\n\nThe devices survived ten thermal cycles between room temperature and\n80~$^{\\circ}$C without measurable drift in resonance wavelengths, and\ncomb initiation remained repeatable after cycling. Packaging with a\npigtail fibre array raised the total link penalty to 3.4~dB, of which\nthe on-chip contribution is the smaller part.\n\n\\section{Conclusion}\nA damascene nitride flow with high-temperature annealing delivers a\nwaveguide loss of 0.4~dB/cm with wafer-scale uniformity and full foundry\ncompatibility. The propagation loss achieved here supports Kerr comb\ngeneration at pump powers compatible with integrated laser sources, and\nthe remaining budget is dominated by sidewall scattering, which points to\noptimised etch chemistry as the next lever.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这篇硅光稿子要投出去了。读一遍你会发现，propagation loss / waveguide loss / transmission loss 这三个说法指的是同一个指标（波导单位长度损耗），在摘要、正文、图注和表格里来回混用，是几位作者分头写的后遗症。请全文统一成 propagation loss：句首出现就大写 Propagation loss，复数就写 propagation losses，搭配保持自然。注意两点：insertion loss 是耦合插入损耗，是另一个指标，千万别动；除术语统一之外，其余内容一个字都不能改。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 全文 waveguide loss / transmission loss（含大写形态与表格表头 Waveguide loss (dB/cm)）全部清零并统一为 propagation loss，单复数与大小写自然（如 the propagation loss、propagation losses、Propagation loss），insertion loss 两处原样保留，其余文字（含数值、dB/cm 写法、表格数据）一字未动；4: 仅 1 处旧说法遗漏或个别搭配略生硬（如冠词使用），insertion loss 未误伤；3: 2-3 处旧说法残留，或统一时误动了 insertion loss 之一，或对无关文字有轻微顺手修改；2: 只统一了一半左右，或误伤 insertion loss 两处，或改动了数值/表格数据；1: 基本未改，或大面积重写、改写语义",
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "[Ww]aveguide [Ll]oss",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "[Tt]ransmission [Ll]oss",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "[Pp]ropagation [Ll]oss",
+        "op": "gte",
+        "count": 10
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "[Ii]nsertion [Ll]oss",
+        "op": "eq",
+        "count": 2
+      }
+    ]
+  }
+}

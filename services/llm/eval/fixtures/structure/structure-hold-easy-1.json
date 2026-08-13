@@ -1,0 +1,72 @@
+{
+  "id": "structure-hold-easy-1",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.6cm]{geometry}\n\n\\title{Programme Notes: An Evening with the Bach Circle}\n\\author{Consort of the Residenz}\n\\date{October 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section*{About Tonight's Programme}\n\nWe open with the Partita No.~2 in D~minor, whose closing Chaconne,\n{\\sc bwv}~1004, has been called a cathedral in sound. The reading\ntonight follows the Neue Bach-Ausgabe text throughout.\n\nThe Double Concerto in D~minor, BWV 1043, brings our two leaders\ninto dialogue over the continuo line. Later we cross the channel\nfor the ``Hunt'' Quartet, KV 387, dedicated to Haydn and played\nhere in the Peters urtext.\n\nThe second half turns to Haydn himself: the E~flat major Sonata,\n{\\sc hob}.~XVI:49, in the slow-movement ordering favoured by our\ncontinuo group. We close with Beethoven's bagatelle WoO 80,\n``F\\\"ur Elise'', in the arrangement prepared for the BBC\nPhilharmonic's 2024 tour.\n\n\\section*{Performers}\n\nThe Consort of the Residenz plays on period instruments tuned to\nA = 415~Hz. Tonight's leaders are E.~Markwardt and J.~Okonkwo,\nwith continuo realised by the house duo.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份音乐会导赏月底付印，出版社体例要求作品目录编号一律排成小型大写字母。通读 main.tex，把五处编号统一改成 \\textsc{...} 的写法，宏参数用小写（形如 \\textsc{bwv}），编号数字照旧。现在混着两种不规范写法：直接打大写字母的，和老式 {\\sc ...} 字体开关，两种都要归一。正文其余文字维持原样，BBC 这类普通缩写不在体例范围内。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\textsc\\{",
+        "op": "eq",
+        "count": 5
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "{\\sc",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "BWV",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "KV",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "WoO",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "BBC",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.6cm]{geometry}\n\n\\title{Programme Notes: An Evening with the Bach Circle}\n\\author{Consort of the Residenz}\n\\date{October 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section*{About Tonight's Programme}\n\nWe open with the Partita No.~2 in D~minor, whose closing Chaconne,\n\\textsc{bwv}~1004, has been called a cathedral in sound. The reading\ntonight follows the Neue Bach-Ausgabe text throughout.\n\nThe Double Concerto in D~minor, \\textsc{bwv}~1043, brings our two leaders\ninto dialogue over the continuo line. Later we cross the channel\nfor the ``Hunt'' Quartet, \\textsc{kv}~387, dedicated to Haydn and played\nhere in the Peters urtext.\n\nThe second half turns to Haydn himself: the E~flat major Sonata,\n\\textsc{hob}.~XVI:49, in the slow-movement ordering favoured by our\ncontinuo group. We close with Beethoven's bagatelle \\textsc{woo}~80,\n``F\\\"ur Elise'', in the arrangement prepared for the BBC\nPhilharmonic's 2024 tour.\n\n\\section*{Performers}\n\nThe Consort of the Residenz plays on period instruments tuned to\nA = 415~Hz. Tonight's leaders are E.~Markwardt and J.~Okonkwo,\nwith continuo realised by the house duo.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

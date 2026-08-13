@@ -1,0 +1,55 @@
+{
+  "id": "compile-bvar-graphics-case-sensitive",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{graphicx}\n\n\\title{Canopy Light Interception and Fruit Composition\\\\ in a Hillside Vineyard}\n\\author{E.~Branco and R.~Vasquez}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nCanopy management in steep vineyards aims to balance light\ninterception against the risk of sunburn on exposed clusters.\nWe report a season of canopy imagery and fruit composition\nmeasurements from a single hillside block.\n\n\\section{Site and Measurements}\nThe block is planted on a twelve percent slope with rows\noriented across the contour.\nCanopy images were acquired at veraison and again three weeks\nlater, and fruit samples were collected from marked vines\nat harvest.\n\n\\section{Canopy Structure}\nThe mid-season canopy map summarises the interception gradient\nbetween the upper and the lower parts of the slope.\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.6\\textwidth]{figures/canopy_ndvi.png}\n\\caption{Mid-season canopy greenness map of the study block.}\n\\end{figure}\nInterception at the top of the slope exceeded that at the\nbottom by a wide margin throughout the measurement period.\n\n\\section{Fruit Composition}\nBerries from the more exposed upper rows ripened earlier\nand showed higher sugar accumulation at harvest,\nwhile acidity remained similar across the slope positions.\n\n\\section{Conclusion}\nA single vigour map explains most of the harvest gradient\nand can guide selective picking in future seasons.\n\\end{document}\n"
+      },
+      {
+        "path": "figures/canopy_ndvi.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 200 150] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.55 0.65 0.45 rg\n10 10 180 130 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f\n0000000009 00000 n\n0000000058 00000 n\n0000000115 00000 n\n0000000219 00000 n\ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      }
+    ]
+  },
+  "instruction": "编译报 File `figures/canopy_ndvi.png' not found，可我明明把图传到 figures 目录里了，文件列表里就能看到！你帮我把引用修对让编译通过。图得留在文档里，别给我把图删了或者注释掉。",
+  "grader": {
+    "type": "compile",
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\includegraphics",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "%[^\\n]*\\\\includegraphics",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "figures/canopy_ndvi.pdf"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{graphicx}\n\n\\title{Canopy Light Interception and Fruit Composition\\\\ in a Hillside Vineyard}\n\\author{E.~Branco and R.~Vasquez}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nCanopy management in steep vineyards aims to balance light\ninterception against the risk of sunburn on exposed clusters.\nWe report a season of canopy imagery and fruit composition\nmeasurements from a single hillside block.\n\n\\section{Site and Measurements}\nThe block is planted on a twelve percent slope with rows\noriented across the contour.\nCanopy images were acquired at veraison and again three weeks\nlater, and fruit samples were collected from marked vines\nat harvest.\n\n\\section{Canopy Structure}\nThe mid-season canopy map summarises the interception gradient\nbetween the upper and the lower parts of the slope.\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.6\\textwidth]{figures/canopy_ndvi.pdf}\n\\caption{Mid-season canopy greenness map of the study block.}\n\\end{figure}\nInterception at the top of the slope exceeded that at the\nbottom by a wide margin throughout the measurement period.\n\n\\section{Fruit Composition}\nBerries from the more exposed upper rows ripened earlier\nand showed higher sugar accumulation at harvest,\nwhile acidity remained similar across the slope positions.\n\n\\section{Conclusion}\nA single vigour map explains most of the harvest gradient\nand can guide selective picking in future seasons.\n\\end{document}\n"
+      },
+      {
+        "path": "figures/canopy_ndvi.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 200 150] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.55 0.65 0.45 rg\n10 10 180 130 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f\n0000000009 00000 n\n0000000058 00000 n\n0000000115 00000 n\n0000000219 00000 n\ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      }
+    ]
+  }
+}

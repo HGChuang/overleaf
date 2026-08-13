@@ -1,0 +1,32 @@
+{
+  "id": "noop-probe-f-multifile-noop",
+  "category": "noop",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\n\\title{Soil Acidification and Microbial Community Shifts under Long-Term Tea Cultivation}\n\\author{Y.~Abe and F.~Nakamura}\n\\date{April 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nLong-term tea cultivation acidifies the rhizosphere through root\nexudation and ammonium-based fertilisation. We sampled soils from\nchronosequences of 5, 18, and 34 years of cultivation and measured pH,\nexchangeable aluminium, and bacterial community composition.\n\\end{abstract}\n\n\\input{chapters/ch1}\n\\input{chapters/ch2}\n\\input{chapters/ch3}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/ch1.tex",
+        "content": "\\section{Introduction}\nTea is among the most widely consumed beverages worldwide, and the\narea under tea cultivation has expanded steadily in subtropical Asia.\nTea plants preferentially absorb ammonium, and the nitrification of\nammonium-based fertilisers releases protons into the rhizosphere.\n\nRepeated surveys report that soils in a tea garden acidify faster than\nadjacent forest or cropland soils. The consequences for the tea garden\nsoil microbiome are less well documented: acidification reshapes\nbacterial community composition, but the trajectory across decades of\ncultivation is rarely measured directly.\n\nHere we use a chronosequence approach, sampling three tea garden sites\nof 5, 18, and 34 years of continuous cultivation together with an\nadjacent uncultivated reference plot, to quantify how soil chemistry\nand the bacterial community co-vary with cultivation age.\n"
+      },
+      {
+        "path": "chapters/ch2.tex",
+        "content": "\\section{Materials and Methods}\nThe study tea plantation is located in the western hills of Shizuoka\nPrefecture. Within the tea plantation we selected blocks planted in\n1991, 2008, and 2020, sharing the same parent material and slope\naspect. An adjacent secondary forest served as the reference.\n\nIn each block of the tea plantation, five composite samples of the top\n0--15~cm mineral soil were collected along a diagonal transect in\nOctober 2025. Soil pH was measured in a 1:2.5 soil-to-water slurry,\nand exchangeable aluminium was extracted with 1~M KCl and titrated.\n\nBacterial community composition was profiled by sequencing the V4\nregion of the 16S rRNA gene. Soil organic matter was determined by\nloss on ignition at 550~$^\\circ$C. Statistical differences among\ncultivation ages were tested with a permutational analysis of variance.\n"
+      },
+      {
+        "path": "chapters/ch3.tex",
+        "content": "\\section{Results and Discussion}\nSoil pH declined from 5.6 in the reference plot to 4.1 in the oldest\ntea garden block, while exchangeable aluminium increased nearly\nfourfold. Soil organic matter showed no monotonic trend with\ncultivation age.\n\nBacterial diversity in the tea plantation decreased with cultivation\nage, driven mainly by the loss of acid-sensitive taxa. The relative\nabundance of Acidobacteria rose from 12\\% in the youngest tea garden\nto 29\\% in the oldest, mirroring the pattern reported for other\nacidified plantation soils.\n\nThe co-variation of chemistry and community composition suggests that\nthe pH decline in the tea plantation, rather than fertiliser input per\nse, is the dominant filter on the bacterial community. Liming trials\nin the oldest tea garden are planned to test this interpretation.\n"
+      }
+    ]
+  },
+  "instruction": "这三章的术语统一么？比如茶园的叫法啥的，帮我在核对一遍，告诉我就行。",
+  "grader": {
+    "type": "noop"
+  },
+  "solution": null
+}

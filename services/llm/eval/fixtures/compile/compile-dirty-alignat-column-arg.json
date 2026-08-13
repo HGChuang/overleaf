@@ -1,0 +1,27 @@
+{
+  "id": "compile-dirty-alignat-column-arg",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\\usepackage{amsmath}\n\n\\title{Handout 5: OLS Algebra Refresher}\n\\author{ECON 410 --- Econometrics I}\n\\date{November 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setup}\nWe observe $n$ pairs $(X_t, Y_t)$ and fit the simple regression\n$Y_t = \\beta_0 + \\beta_1 X_t + u_t$ by least squares. This handout\ncollects the algebraic identities you will need for the midterm; the\nderivations follow the same steps as in Lecture 9.\n\n\\section{Estimator Identities}\nThe slope and intercept estimators satisfy the pair of normal\nequations, and solving them gives the familiar closed forms. The\nresidual variance and the standard error of the slope then follow\ndirectly from the residuals $\\hat{u}_t = Y_t - \\hat{\\beta}_0 -\n\\hat{\\beta}_1 X_t$.\n\n\\begin{alignat}{2}\n\\hat{\\beta}_1 &= \\frac{\\sum_{t=1}^{n} (X_t - \\bar{X})(Y_t - \\bar{Y})}\n                    {\\sum_{t=1}^{n} (X_t - \\bar{X})^2}\n& \\hat{\\beta}_0 &= \\bar{Y} - \\hat{\\beta}_1 \\bar{X} \\\\\n\\hat{\\sigma}^2 &= \\frac{1}{n-2} \\sum_{t=1}^{n} \\hat{u}_t^{\\,2}\n& s_{\\hat{\\beta}_1} &= \\sqrt{\\hat{\\sigma}^2 \\big/ \\textstyle\\sum_{t=1}^{n} (X_t - \\bar{X})^2} \\\\\nR^2 &= 1 - \\frac{\\sum_{t=1}^{n} \\hat{u}_t^{\\,2}}{\\sum_{t=1}^{n} (Y_t - \\bar{Y})^2}\n& F &= \\frac{R^2 / 1}{(1 - R^2)/(n-2)}\n& n &= 142\n\\end{alignat}\n\n\\section{Reading the Output}\nThe regression table in the statistical package reports each\ncoefficient with its standard error, the $t$ ratio, and the\n$p$ value. The residual degrees of freedom $n - 2$ enter every\ninference quantity, so check that the reported sample size matches the\nnumber of usable observations after any missing values are dropped.\n\n\\section{Common Pitfalls}\nDo not confuse the standard error of the regression $\\hat{\\sigma}$\nwith the standard error of the slope; the latter divides by the spread\nof the regressor. A wider spread of $X$ around its mean lowers the\nvariance of $\\hat{\\beta}_1$, which is why experimental designs spread\nthe treatment values as widely as ethics and budget allow.\n\n\\section{Practice}\nRecompute every quantity above for the advertising data set on the\ncourse page, and verify that the $F$ statistic equals the square of\nthe $t$ ratio on the slope coefficient in simple regression.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份 handout compile 不过，报错好像出在推导的 align 那块，帮我 fix 一下，thanks！",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\\usepackage{amsmath}\n\n\\title{Handout 5: OLS Algebra Refresher}\n\\author{ECON 410 --- Econometrics I}\n\\date{November 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setup}\nWe observe $n$ pairs $(X_t, Y_t)$ and fit the simple regression\n$Y_t = \\beta_0 + \\beta_1 X_t + u_t$ by least squares. This handout\ncollects the algebraic identities you will need for the midterm; the\nderivations follow the same steps as in Lecture 9.\n\n\\section{Estimator Identities}\nThe slope and intercept estimators satisfy the pair of normal\nequations, and solving them gives the familiar closed forms. The\nresidual variance and the standard error of the slope then follow\ndirectly from the residuals $\\hat{u}_t = Y_t - \\hat{\\beta}_0 -\n\\hat{\\beta}_1 X_t$.\n\n\\begin{alignat}{3}\n\\hat{\\beta}_1 &= \\frac{\\sum_{t=1}^{n} (X_t - \\bar{X})(Y_t - \\bar{Y})}\n                    {\\sum_{t=1}^{n} (X_t - \\bar{X})^2}\n& \\hat{\\beta}_0 &= \\bar{Y} - \\hat{\\beta}_1 \\bar{X} \\\\\n\\hat{\\sigma}^2 &= \\frac{1}{n-2} \\sum_{t=1}^{n} \\hat{u}_t^{\\,2}\n& s_{\\hat{\\beta}_1} &= \\sqrt{\\hat{\\sigma}^2 \\big/ \\textstyle\\sum_{t=1}^{n} (X_t - \\bar{X})^2} \\\\\nR^2 &= 1 - \\frac{\\sum_{t=1}^{n} \\hat{u}_t^{\\,2}}{\\sum_{t=1}^{n} (Y_t - \\bar{Y})^2}\n& F &= \\frac{R^2 / 1}{(1 - R^2)/(n-2)}\n& n &= 142\n\\end{alignat}\n\n\\section{Reading the Output}\nThe regression table in the statistical package reports each\ncoefficient with its standard error, the $t$ ratio, and the\n$p$ value. The residual degrees of freedom $n - 2$ enter every\ninference quantity, so check that the reported sample size matches the\nnumber of usable observations after any missing values are dropped.\n\n\\section{Common Pitfalls}\nDo not confuse the standard error of the regression $\\hat{\\sigma}$\nwith the standard error of the slope; the latter divides by the spread\nof the regressor. A wider spread of $X$ around its mean lowers the\nvariance of $\\hat{\\beta}_1$, which is why experimental designs spread\nthe treatment values as widely as ethics and budget allow.\n\n\\section{Practice}\nRecompute every quantity above for the advertising data set on the\ncourse page, and verify that the $F$ statistic equals the square of\nthe $t$ ratio on the slope coefficient in simple regression.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

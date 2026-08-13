@@ -1,0 +1,20 @@
+{
+  "id": "noop-fill-noop-wrong-premise",
+  "category": "noop",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{report}\n\\usepackage{amsmath}\n\\title{Classical Mechanics: Course Notes}\n\\author{Compiled Lecture Notes}\n\\date{Spring 2026}\n\\begin{document}\n\\maketitle\n\\chapter{Kinematics}\nMotion along a straight line is described by position $x(t)$, velocity\n$v(t) = \\dot{x}(t)$, and acceleration $a(t) = \\dot{v}(t)$.\nFor constant acceleration $a$, integrating twice with initial velocity\n$v_0$ and initial position $x_0$ gives\n\\begin{equation}\nv(t) = v_0 + a t, \\qquad x(t) = x_0 + v_0 t + \\frac{1}{2} a t^2.\n\\end{equation}\nEliminating $t$ between the two expressions yields the time-independent\nrelation\n\\begin{equation}\nv^2 = v_0^2 + 2 a \\, (x - x_0),\n\\end{equation}\nwhich is often the fastest route to the speed at a given position.\n\\chapter{Newtonian Dynamics}\nNewton's second law states that the net force on a particle equals the\ntime rate of change of its momentum.\nFor constant mass this reduces to the familiar form\n\\begin{equation}\n\\vec{F}_{\\mathrm{net}} = m \\, \\vec{a}.\n\\end{equation}\nA block sliding down a frictionless incline of angle $\\theta$\nexperiences only gravity and the normal force; resolving gravity along\nthe incline gives the acceleration directly,\n\\begin{equation}\na = g \\sin\\theta,\n\\end{equation}\nwhich is independent of the mass of the block.\n\\chapter{Energy Methods}\nThe work-energy theorem equates the net work done on a particle with\nthe change in its kinetic energy,\n\\begin{equation}\nW_{\\mathrm{net}} = \\frac{1}{2} m v^2 - \\frac{1}{2} m v_0^2.\n\\end{equation}\nConsider a particle of mass $m$ released from rest at height $h$.\nGravity is the only force doing work, so the theorem gives\n\\begin{equation}\n\\frac{1}{2} m v^2 = m g h.\n\\end{equation}\nDividing by $m$ and taking the square root yields the speed at the\nbase,\n\\begin{equation}\nv = \\sqrt{2 g h}.\n\\end{equation}\nThe same result follows from the conservation of mechanical energy:\nthe sum of kinetic and potential energy is constant along the motion,\n\\begin{equation}\n\\frac{1}{2} m v^2 + m g y = m g h,\n\\end{equation}\nwhere $y$ is the height above the base, and setting $y = 0$ recovers\nthe expression above.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "你好，助教上课的时候说第五章讲机械能守恒那段推导有个错误，让我们回去自己改掉。我看了两遍没找出来错在哪，你直接帮我把那个公式改了吧，明天就要交笔记了，谢谢！",
+  "grader": {
+    "type": "noop"
+  },
+  "solution": null
+}

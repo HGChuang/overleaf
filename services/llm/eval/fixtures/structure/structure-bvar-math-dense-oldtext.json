@@ -1,0 +1,65 @@
+{
+  "id": "structure-bvar-math-dense-oldtext",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\n\\title{Lecture 7: Robust Estimation}\n\\author{Compiled from the spring seminar notes}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setup}\nLet $X_1, \\dots, X_n$ be independent draws from a\ncontamination model $F = (1 - \\varepsilon) G + \\varepsilon H$,\nwhere $G$ is the nominal distribution and $H$ is arbitrary.\nThe contamination proportion $\\varepsilon$ is unknown, and we\nassume throughout that $\\varepsilon \\in (0, 1/2)$ so that the\nnominal component remains identifiable. Choosing $\\varepsilon$\nadaptively is impossible without further structure, so the\nestimators below are calibrated to the worst case over $H$.\nThe breakdown point is the largest $\\varepsilon$ for which the\nestimator remains bounded in probability.\nWe write $\\bar{x}$ for the sample mean and\n$\\frac{1}{n}\\sum_{i=1}^{n} (x_i - \\bar{x})^2$ for the\nempirical variance. Under the nominal model,\n$\\mathbb{E}[X^4] < \\infty$ is enough for the usual\n$O_p(n^{-1/2})$ rate, but nothing of the sort survives\ncontamination: a single outlying cell can carry the empirical\nvariance to $+\\infty$.\n\n\\section{The Trimmed Estimator}\nThe trimmed estimator discards the $\\lfloor n\\varepsilon \\rfloor$\nlargest and smallest order statistics and averages the rest.\nFormally, with $x_{(1)} \\le \\dots \\le x_{(n)}$ the ordered\nsample, define\n\\begin{equation}\nT_n = \\frac{1}{n - 2k} \\sum_{i=k+1}^{n-k} x_{(i)},\n\\qquad k = \\lfloor n\\varepsilon \\rfloor.\n\\end{equation}\nThe influence function of $T_n$ is bounded, and its gross-error\nsensitivity is $O(\\varepsilon)$ as $\\varepsilon \\to 0$, which\nmakes the estimator attractive when the contamination\nproportion is moderately small.\n\n\\section{Robustness to Outliers}\nThe trimmed sum is stable in the following sense: for every\nrealisation of the contamination pattern, the retained sample\nsatisfies $\\sum_{i=1}^{n} x_i^2 \\ge \\varepsilon$ with probability\none, so the normalising constant never degenerates. A direct\nconsequence is that $\\mathbb{P}(|T_n - \\theta| > t) \\le 2\n\\exp(-nt^2/4)$ whenever the retained points lie in a compact\ninterval of length at most $\\sqrt{n}$. The bound is crude but\ndistribution-free, and it holds for every $\\varepsilon < 1/2$.\n\n\\section{Discussion}\nThe trimming level must exceed the contamination proportion,\nand in practice one sets $k$ from a pilot estimate of\n$\\varepsilon$. If the pilot estimate is biased upward, the\nestimator discards genuine nominal points and its variance\ninflates; if it is biased downward, outliers leak into the\naverage and the bounded-influence property is lost. Cross\nvalidation on the retained sample is the standard remedy, and\nit is the approach we will implement in the exercises.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Robustness to Outliers 那节，“The trimmed sum is stable” 那段里有个不等式 $\\sum_{i=1}^{n} x_i^2 \\ge \\varepsilon$——右边那个 \\varepsilon 给我换成 \\delta。\\varepsilon 在本文里是污染比例，唯独这个式子里不是，撞符号了。就改这一处：其它 \\varepsilon 一个都不许动，式子的空格、上下标、\\ge 也保持原样。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "$\\sum_{i=1}^{n} x_i^2 \\ge \\delta$",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "$\\sum_{i=1}^{n} x_i^2 \\ge \\varepsilon$",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\varepsilon",
+        "op": "eq",
+        "count": 12
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\delta",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "contamination proportion $\\varepsilon$ is unknown",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\n\\title{Lecture 7: Robust Estimation}\n\\author{Compiled from the spring seminar notes}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setup}\nLet $X_1, \\dots, X_n$ be independent draws from a\ncontamination model $F = (1 - \\varepsilon) G + \\varepsilon H$,\nwhere $G$ is the nominal distribution and $H$ is arbitrary.\nThe contamination proportion $\\varepsilon$ is unknown, and we\nassume throughout that $\\varepsilon \\in (0, 1/2)$ so that the\nnominal component remains identifiable. Choosing $\\varepsilon$\nadaptively is impossible without further structure, so the\nestimators below are calibrated to the worst case over $H$.\nThe breakdown point is the largest $\\varepsilon$ for which the\nestimator remains bounded in probability.\nWe write $\\bar{x}$ for the sample mean and\n$\\frac{1}{n}\\sum_{i=1}^{n} (x_i - \\bar{x})^2$ for the\nempirical variance. Under the nominal model,\n$\\mathbb{E}[X^4] < \\infty$ is enough for the usual\n$O_p(n^{-1/2})$ rate, but nothing of the sort survives\ncontamination: a single outlying cell can carry the empirical\nvariance to $+\\infty$.\n\n\\section{The Trimmed Estimator}\nThe trimmed estimator discards the $\\lfloor n\\varepsilon \\rfloor$\nlargest and smallest order statistics and averages the rest.\nFormally, with $x_{(1)} \\le \\dots \\le x_{(n)}$ the ordered\nsample, define\n\\begin{equation}\nT_n = \\frac{1}{n - 2k} \\sum_{i=k+1}^{n-k} x_{(i)},\n\\qquad k = \\lfloor n\\varepsilon \\rfloor.\n\\end{equation}\nThe influence function of $T_n$ is bounded, and its gross-error\nsensitivity is $O(\\varepsilon)$ as $\\varepsilon \\to 0$, which\nmakes the estimator attractive when the contamination\nproportion is moderately small.\n\n\\section{Robustness to Outliers}\nThe trimmed sum is stable in the following sense: for every\nrealisation of the contamination pattern, the retained sample\nsatisfies $\\sum_{i=1}^{n} x_i^2 \\ge \\delta$ with probability\none, so the normalising constant never degenerates. A direct\nconsequence is that $\\mathbb{P}(|T_n - \\theta| > t) \\le 2\n\\exp(-nt^2/4)$ whenever the retained points lie in a compact\ninterval of length at most $\\sqrt{n}$. The bound is crude but\ndistribution-free, and it holds for every $\\varepsilon < 1/2$.\n\n\\section{Discussion}\nThe trimming level must exceed the contamination proportion,\nand in practice one sets $k$ from a pilot estimate of\n$\\varepsilon$. If the pilot estimate is biased upward, the\nestimator discards genuine nominal points and its variance\ninflates; if it is biased downward, outliers leak into the\naverage and the bounded-influence property is lost. Cross\nvalidation on the retained sample is the standard remedy, and\nit is the approach we will implement in the exercises.\n\\end{document}\n"
+      }
+    ]
+  }
+}

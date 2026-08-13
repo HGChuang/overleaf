@@ -1,0 +1,80 @@
+{
+  "id": "structure-probe-f-decoy-old-version",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[12pt]{report}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{setspace}\n\n\\title{Horse Fairs and Frontier Markets on the Sichuan--Tibet Corridor, 1750--1850}\n\\author{M.~Halloway}\n\\date{April 2026}\n\n\\begin{document}\n\\maketitle\n\\onehalfspacing\n\n\\input{chapters/intro}\n\\input{chapters/methods}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/intro.tex",
+        "content": "% Introduction chapter -- revised March 2026, replaces the 2025 draft.\n\\section{Background}\nThe horse fairs of the Sichuan--Tibet corridor occupied a peculiar\nposition in the commercial geography of highland Asia. Neither purely\nperiodic markets nor permanent entrepots, they assembled for ten to\ntwenty days each autumn, drawing tea merchants from the Sichuan basin,\npastoralists from the Khams highlands, and brokers who moved between\nthe two worlds with fluency in both commercial idioms.\n\nImperial administrators regarded the fairs with ambivalence. The tea\nand horse trade had been a state monopoly in earlier centuries, and the\nrevival of private dealing in the mid-eighteenth century forced\nofficials to choose between suppression and accommodation. County\narchives show that most chose accommodation, taxing the fairs rather\nthan banning them, and in doing so created a paper trail of surprising\ndensity.\n\nPrices at the fairs were quoted in tea bricks rather than silver, a\npractice that complicates comparison with lowland markets. A prime\ngelding in 1780 fetched forty bricks of first-grade Ya'an tea; by 1820\nthe same animal cost sixty-five, a shift that contemporaries attributed\nto declining tea quality as much as to horse scarcity.\n\n\\section{Research Questions}\nThis study asks three questions. First, how did the geography of the\nfair network change between 1750 and 1850, and what does that movement\nreveal about the shifting balance between state and private commerce?\nSecond, who bore the risk in horse--tea exchange, and how did contract\npractice allocate losses when animals died in transit? Third, why did\ntea-brick pricing persist long after silver had become common in other\nhighland trades?\n\nThese questions situate the fairs within a broader debate about\nfrontier institutions. Rather than treating the borderlands as a zone\nof failed state penetration, the study follows recent work that reads\nfrontier markets as sites of institutional creativity, where officials,\nmerchants, and pastoralists improvised arrangements that none could\nhave imposed alone.\n"
+      },
+      {
+        "path": "chapters/introduction_old.tex",
+        "content": "% Draft of the introduction, September 2025.\n% Largely superseded; kept until the revised chapter is finalised.\n\\section{Background}\nThe horse fairs of the Sichuan--Tibet corridor occupied a peculiar\nposition in the commercial geography of highland Asia. Neither purely\nperiodic markets nor permanent entrepots, they assembled for ten to\ntwenty days each autumn, drawing tea merchants from the Sichuan basin,\npastoralists from the Khams highlands, and brokers who moved between\nthe two worlds with fluency in both commercial idioms.\n\nImperial administrators regarded the fairs with ambivalence. The tea\nand horse trade had been a state monopoly in earlier centuries, and the\nrevival of private dealing in the mid-eighteenth century forced\nofficials to choose between suppression and accommodation. County\narchives show that most chose accommodation, taxing the fairs rather\nthan banning them, and in doing so created a paper trail of\nconsiderable density.\n\n\\section{Aims of the Study}\nThis study asks how the geography of the fair network changed between\n1750 and 1850, and what that movement reveals about the shifting\nbalance between state and private commerce. It also asks who bore the\nrisk in horse--tea exchange, and how contract practice allocated losses\nwhen animals died in transit.\n\nPrices at the fairs were quoted in tea bricks rather than silver. A\nprime gelding in 1780 fetched forty bricks of first-grade Ya'an tea;\nby 1820 the same animal cost sixty-five, a shift contemporaries blamed\non declining tea quality as much as on horse scarcity.\n\n\\section{Chapter Overview}\nChapter Two describes the archival base. Chapter Three reconstructs the\nfair network from tax registers. Chapter Four analyses contract\npractice, and Chapter Five concludes.\n"
+      },
+      {
+        "path": "chapters/methods.tex",
+        "content": "\\section{Sources and Methods}\nThe evidentiary base of this study is the tax archive of three counties\nthrough which the principal fair circuits passed. Registers of the fair\ntax survive for most years between 1748 and 1852, recording the number\nof horses presented, the tax assessed per head, and the surname and\nnative place of each seller.\n\nThese registers are supplemented by two bodies of material. The first\nis a run of guild account books from a Ya'an tea firm, covering\n1801--1840, which record purchases of horses for the caravan trade.\nThe second is the collected correspondence of a circuit intendant\nwhose district included two of the three counties, preserved in the\nprovincial archive.\n\nQuantitative material is used sparingly. The registers undercount\nprivate sales concluded away from the fairground, and no attempt is\nmade to extrapolate total trade volume from taxed volume. Where the\naccount books and the registers disagree, the disagreement is reported\nrather than harmonised.\n"
+      }
+    ]
+  },
+  "instruction": "intro 的 section 到现在都没加 label，reviewer 那边等着引用章节编号，麻烦今天弄好：给在用的那版 intro 里每个 section 各补一个 \\label{sec:...}，紧跟 \\section 那一行的下面，命名语义化（比如 Background 就叫 sec:background）。只许动这一个文件，项目里其它文件一概别碰。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "chapters/intro.tex",
+        "pattern": "\\\\section\\{Background\\}\\n\\\\label\\{sec:",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/intro.tex",
+        "pattern": "\\\\section\\{Research Questions\\}\\n\\\\label\\{sec:",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "chapters/introduction_old.tex"
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "chapters/methods.tex"
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[12pt]{report}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{setspace}\n\n\\title{Horse Fairs and Frontier Markets on the Sichuan--Tibet Corridor, 1750--1850}\n\\author{M.~Halloway}\n\\date{April 2026}\n\n\\begin{document}\n\\maketitle\n\\onehalfspacing\n\n\\input{chapters/intro}\n\\input{chapters/methods}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/intro.tex",
+        "content": "% Introduction chapter -- revised March 2026, replaces the 2025 draft.\n\\section{Background}\n\\label{sec:background}\nThe horse fairs of the Sichuan--Tibet corridor occupied a peculiar\nposition in the commercial geography of highland Asia. Neither purely\nperiodic markets nor permanent entrepots, they assembled for ten to\ntwenty days each autumn, drawing tea merchants from the Sichuan basin,\npastoralists from the Khams highlands, and brokers who moved between\nthe two worlds with fluency in both commercial idioms.\n\nImperial administrators regarded the fairs with ambivalence. The tea\nand horse trade had been a state monopoly in earlier centuries, and the\nrevival of private dealing in the mid-eighteenth century forced\nofficials to choose between suppression and accommodation. County\narchives show that most chose accommodation, taxing the fairs rather\nthan banning them, and in doing so created a paper trail of surprising\ndensity.\n\nPrices at the fairs were quoted in tea bricks rather than silver, a\npractice that complicates comparison with lowland markets. A prime\ngelding in 1780 fetched forty bricks of first-grade Ya'an tea; by 1820\nthe same animal cost sixty-five, a shift that contemporaries attributed\nto declining tea quality as much as to horse scarcity.\n\n\\section{Research Questions}\n\\label{sec:research-questions}\nThis study asks three questions. First, how did the geography of the\nfair network change between 1750 and 1850, and what does that movement\nreveal about the shifting balance between state and private commerce?\nSecond, who bore the risk in horse--tea exchange, and how did contract\npractice allocate losses when animals died in transit? Third, why did\ntea-brick pricing persist long after silver had become common in other\nhighland trades?\n\nThese questions situate the fairs within a broader debate about\nfrontier institutions. Rather than treating the borderlands as a zone\nof failed state penetration, the study follows recent work that reads\nfrontier markets as sites of institutional creativity, where officials,\nmerchants, and pastoralists improvised arrangements that none could\nhave imposed alone.\n"
+      },
+      {
+        "path": "chapters/introduction_old.tex",
+        "content": "% Draft of the introduction, September 2025.\n% Largely superseded; kept until the revised chapter is finalised.\n\\section{Background}\nThe horse fairs of the Sichuan--Tibet corridor occupied a peculiar\nposition in the commercial geography of highland Asia. Neither purely\nperiodic markets nor permanent entrepots, they assembled for ten to\ntwenty days each autumn, drawing tea merchants from the Sichuan basin,\npastoralists from the Khams highlands, and brokers who moved between\nthe two worlds with fluency in both commercial idioms.\n\nImperial administrators regarded the fairs with ambivalence. The tea\nand horse trade had been a state monopoly in earlier centuries, and the\nrevival of private dealing in the mid-eighteenth century forced\nofficials to choose between suppression and accommodation. County\narchives show that most chose accommodation, taxing the fairs rather\nthan banning them, and in doing so created a paper trail of\nconsiderable density.\n\n\\section{Aims of the Study}\nThis study asks how the geography of the fair network changed between\n1750 and 1850, and what that movement reveals about the shifting\nbalance between state and private commerce. It also asks who bore the\nrisk in horse--tea exchange, and how contract practice allocated losses\nwhen animals died in transit.\n\nPrices at the fairs were quoted in tea bricks rather than silver. A\nprime gelding in 1780 fetched forty bricks of first-grade Ya'an tea;\nby 1820 the same animal cost sixty-five, a shift contemporaries blamed\non declining tea quality as much as on horse scarcity.\n\n\\section{Chapter Overview}\nChapter Two describes the archival base. Chapter Three reconstructs the\nfair network from tax registers. Chapter Four analyses contract\npractice, and Chapter Five concludes.\n"
+      },
+      {
+        "path": "chapters/methods.tex",
+        "content": "\\section{Sources and Methods}\nThe evidentiary base of this study is the tax archive of three counties\nthrough which the principal fair circuits passed. Registers of the fair\ntax survive for most years between 1748 and 1852, recording the number\nof horses presented, the tax assessed per head, and the surname and\nnative place of each seller.\n\nThese registers are supplemented by two bodies of material. The first\nis a run of guild account books from a Ya'an tea firm, covering\n1801--1840, which record purchases of horses for the caravan trade.\nThe second is the collected correspondence of a circuit intendant\nwhose district included two of the three counties, preserved in the\nprovincial archive.\n\nQuantitative material is used sparingly. The registers undercount\nprivate sales concluded away from the fairground, and no attempt is\nmade to extrapolate total trade volume from taxed volume. Where the\naccount books and the registers disagree, the disagreement is reported\nrather than harmonised.\n"
+      }
+    ]
+  }
+}

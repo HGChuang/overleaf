@@ -1,0 +1,86 @@
+{
+  "id": "structure-fill-doctype-ctexart-punct",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage{amsmath}\n\\usepackage{CJKutf8}\n\\title{Pendulum Lab Report}\n\\author{Li Na}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\begin{CJK}{UTF8}{gbsn}\n\\section{实验目的}\n本实验测量重力加速度,装置简单,易于重复:改变摆长并记录周期,用线性拟合求出重力加速度;最后与标准值比较,分析误差来源。\n\\section{实验原理}\n单摆周期满足 $T=2\\pi\\sqrt{L/g}$,因而 $g=4\\pi^2 L/T^2$。摆角小于 $5^\\circ$ 时小角近似成立,系统误差可以忽略.实验中摆角始终保持在 $3^\\circ$ 以内。\n\\section{数据处理}\n测得摆长 $L=0.985$ m,周期 $T=1.994$ s,代入得 $g\\approx 9.78$ m/s$^2$,与标准值 9.80 m/s$^2$ 的相对误差约 0.2\\%,拟合质量良好。The linear fit has slope 4.03 and intercept 0.01, i.e., the model describes the data well.\n\\end{CJK}\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "实验报告里中文句子的标点半角全角混用，看着很难受。把 CJK 环境里中文句子的半角逗号、句号、冒号、分号全部改成对应的全角标点（，。：；），紧跟在公式后面、属于中文句子的标点也要改。三类不许动：① 最后那句英文里的标点；② 数学公式内部；③ 小数点（0.985、9.78 这类）。已经是全角的标点保持原样。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "，",
+        "op": "eq",
+        "count": 10
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "。",
+        "op": "eq",
+        "count": 5
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "：",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "；",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": ",",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "i.e.,",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "0.985",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "9.78",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage{amsmath}\n\\usepackage{CJKutf8}\n\\title{Pendulum Lab Report}\n\\author{Li Na}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\\begin{CJK}{UTF8}{gbsn}\n\\section{实验目的}\n本实验测量重力加速度，装置简单，易于重复：改变摆长并记录周期，用线性拟合求出重力加速度；最后与标准值比较，分析误差来源。\n\\section{实验原理}\n单摆周期满足 $T=2\\pi\\sqrt{L/g}$，因而 $g=4\\pi^2 L/T^2$。摆角小于 $5^\\circ$ 时小角近似成立，系统误差可以忽略。实验中摆角始终保持在 $3^\\circ$ 以内。\n\\section{数据处理}\n测得摆长 $L=0.985$ m，周期 $T=1.994$ s，代入得 $g\\approx 9.78$ m/s$^2$，与标准值 9.80 m/s$^2$ 的相对误差约 0.2\\%，拟合质量良好。The linear fit has slope 4.03 and intercept 0.01, i.e., the model describes the data well.\n\\end{CJK}\n\\end{document}\n"
+      }
+    ]
+  }
+}

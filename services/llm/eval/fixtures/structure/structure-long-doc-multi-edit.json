@@ -1,0 +1,79 @@
+{
+  "id": "structure-long-doc-multi-edit",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\section{Introduction}\nTraffic forecasting underpins modern mobility platforms.\nAccurate predictions let dispatchers rebalance fleets before congestion forms.\nGraph neural networks model road topology naturally.\nYet most benchmarks ignore sensor dropout.\nWe argue robustness is the \\textbf{primary bottleneck} for deployment.\nThis paper studies forecasting under missing data.\n\\section{Related Work}\nEarly work used Kalman filters and ARIMA variants.\nRecent work adopts spatio-temporal graph convolutions.\n\\subsection{Deep Models}\nAttention-based forecasters dominate recent leaderboards.\nDiffusion-based forecasters report sharpness gains.\n\\subsection{Robustness}\nDropout during training improves resilience mildly.\n\\section{Preliminaries}\nA road network is a directed graph $\\mathcal{G} = (\\mathcal{V}, \\mathcal{E})$.\nEach node carries a multivariate series $\\mathbf{x}_v^{(t)}$.\nThe task predicts the next $H$ steps for all nodes.\n\\section{Method}\nOur model has three components:\n\\begin{itemize}\n\\item A masked encoder with learnable sensor embeddings.\n\\item A temporal attention block with causal masking.\n\\item A reconstruction head trained with huber loss.\n\\end{itemize}\nThe \\textbf{masking schedule} is the key design choice.\nWe sample masks per batch, not per epoch.\n\\section{Experiments}\nWe evaluate on two public datasets.\n\\begin{itemize}\n\\item METR-LA: 207 sensors over four months.\n\\item PEMS-BAY: 325 sensors over six months.\n\\end{itemize}\nMetrics are MAE, RMSE, and MAPE at 15/30/60 minutes.\nBaselines include DCRNN, STGCN, and Graph WaveNet.\nOur model leads under 50\\% sensor dropout.\nThe margin is \\textbf{most pronounced} at long horizons.\n\\section{Conclusion}\nMask-aware training materially improves robustness.\nFuture work extends the study to streaming settings.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份稿子要做三处统一修改：① 全文 3 处 \\textbf{...} 改成 \\emph{...}；② 两个 itemize 列表都改成 enumerate；③ Related Work 下的 subsection \"Deep Models\" 降级为 subsubsection（另一个 subsection 不动）。三件事一次做完。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\textbf\\{",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\emph\\{",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{itemize\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{enumerate\\}",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\subsection\\{Deep Models\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\subsubsection\\{Deep Models\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\subsection\\{Robustness\\}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\section{Introduction}\nTraffic forecasting underpins modern mobility platforms.\nAccurate predictions let dispatchers rebalance fleets before congestion forms.\nGraph neural networks model road topology naturally.\nYet most benchmarks ignore sensor dropout.\nWe argue robustness is the \\emph{primary bottleneck} for deployment.\nThis paper studies forecasting under missing data.\n\\section{Related Work}\nEarly work used Kalman filters and ARIMA variants.\nRecent work adopts spatio-temporal graph convolutions.\n\\subsubsection{Deep Models}\nAttention-based forecasters dominate recent leaderboards.\nDiffusion-based forecasters report sharpness gains.\n\\subsection{Robustness}\nDropout during training improves resilience mildly.\n\\section{Preliminaries}\nA road network is a directed graph $\\mathcal{G} = (\\mathcal{V}, \\mathcal{E})$.\nEach node carries a multivariate series $\\mathbf{x}_v^{(t)}$.\nThe task predicts the next $H$ steps for all nodes.\n\\section{Method}\nOur model has three components:\n\\begin{enumerate}\n\\item A masked encoder with learnable sensor embeddings.\n\\item A temporal attention block with causal masking.\n\\item A reconstruction head trained with huber loss.\n\\end{enumerate}\nThe \\emph{masking schedule} is the key design choice.\nWe sample masks per batch, not per epoch.\n\\section{Experiments}\nWe evaluate on two public datasets.\n\\begin{enumerate}\n\\item METR-LA: 207 sensors over four months.\n\\item PEMS-BAY: 325 sensors over six months.\n\\end{enumerate}\nMetrics are MAE, RMSE, and MAPE at 15/30/60 minutes.\nBaselines include DCRNN, STGCN, and Graph WaveNet.\nOur model leads under 50\\% sensor dropout.\nThe margin is \\emph{most pronounced} at long horizons.\n\\section{Conclusion}\nMask-aware training materially improves robustness.\nFuture work extends the study to streaming settings.\n\\end{document}\n"
+      }
+    ]
+  }
+}

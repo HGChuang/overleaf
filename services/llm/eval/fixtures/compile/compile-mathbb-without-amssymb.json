@@ -1,0 +1,27 @@
+{
+  "id": "compile-mathbb-without-amssymb",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Sample Complexity of Kernel Ridge Regression}\n\\author{F. Ilves and C. Marlowe}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\section{Setting}\nLet the covariates take values in $\\mathbb{R}^d$ with uniformly bounded norm.\nThe excess risk of the ridge estimator decays at a rate governed by the effective\ndimension of the kernel at the chosen regularisation level.\nOur upper bound matches the minimax lower bound up to logarithmic factors,\nand it recovers the classical parametric rate for finite dimensional kernels.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "机器学习理论笔记编不过，空心 R 那个命令死活不认，求帮忙看看。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amssymb}\n\\title{Sample Complexity of Kernel Ridge Regression}\n\\author{F. Ilves and C. Marlowe}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\section{Setting}\nLet the covariates take values in $\\mathbb{R}^d$ with uniformly bounded norm.\nThe excess risk of the ridge estimator decays at a rate governed by the effective\ndimension of the kernel at the chosen regularisation level.\nOur upper bound matches the minimax lower bound up to logarithmic factors,\nand it recovers the classical parametric rate for finite dimensional kernels.\n\\end{document}\n"
+      }
+    ]
+  }
+}

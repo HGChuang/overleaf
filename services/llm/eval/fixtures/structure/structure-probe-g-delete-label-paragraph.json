@@ -1,0 +1,81 @@
+{
+  "id": "structure-probe-g-delete-label-paragraph",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{report}\n\\usepackage{amsmath}\n\\title{Notes on Relativistic Energy}\n\\author{M. Alvarez}\n\\date{Spring term}\n\\begin{document}\n\\maketitle\n\\tableofcontents\n\\input{chapters/intro}\n\\input{chapters/energy}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/intro.tex",
+        "content": "\\chapter{Motivation}\nSpecial relativity reshapes how we account for energy in high-energy\nprocesses. The relation of Equation~\\eqref{eq:mass-energy} tells us that\na body's rest mass is itself a store of energy, and this single fact\nunderlies everything from nuclear binding energies to collider\nkinematics.\n\nHistorically the relation emerged from the 1905 paper on the\nelectrodynamics of moving bodies, and it was quickly recognised as the\nmost far-reaching consequence of the theory. In these notes we derive\nthe relation from the energy--momentum four-vector and then look at two\nstandard applications: binding energies and pair production thresholds.\n"
+      },
+      {
+        "path": "chapters/energy.tex",
+        "content": "\\chapter{Energy and Mass}\n\\section{The equivalence relation}\n\\label{sec:energy}\nStarting from the four-momentum of a free particle and imposing the\nMinkowski norm, the rest-frame energy of the particle reduces to the\ncelebrated\n\\begin{equation}\nE_0 = m c^2\n\\end{equation}\n\\label{eq:mass-energy} This paragraph merely restates the same point in\ndifferent words: mass and energy are two names for the same underlying\nquantity, a fact that the equation above already expresses with complete\nprecision, and adding further prose here only dilutes the argument\nwithout giving the reader anything new to work with.\n\n\\section{Binding energy}\nWhen nucleons bind into a nucleus, the total mass drops slightly and the\ndeficit is released as binding energy, exactly as\nEquation~\\eqref{eq:mass-energy} requires. Measuring the mass defect of\na nucleus is therefore a direct measurement of its binding energy, and\nsectors of nuclear physics quote the two interchangeably.\n\n\\section{Pair production}\nA photon with enough energy can materialise into an electron--positron\npair, and the threshold energy is set entirely by the rest energies of\nthe produced particles. Below threshold the process is kinematically\nforbidden, no matter how intense the photon beam is.\n"
+      }
+    ]
+  },
+  "instruction": "导师说 equivalence relation 那一节里公式后面紧跟着的那段话纯属同义反复，让我删掉。麻烦把这段冗余文字删干净，公式本身保留原样；别的章节有指回这个公式的交叉引用，删的时候留意别让引用悬空。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "chapters/energy.tex",
+        "literal": "merely restates the same point",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/energy.tex",
+        "pattern": "\\\\label\\{eq:mass-energy\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/intro.tex",
+        "pattern": "\\\\eqref\\{eq:mass-energy\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/energy.tex",
+        "pattern": "\\\\eqref\\{eq:mass-energy\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/energy.tex",
+        "literal": "E_0 = m c^2",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{report}\n\\usepackage{amsmath}\n\\title{Notes on Relativistic Energy}\n\\author{M. Alvarez}\n\\date{Spring term}\n\\begin{document}\n\\maketitle\n\\tableofcontents\n\\input{chapters/intro}\n\\input{chapters/energy}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/intro.tex",
+        "content": "\\chapter{Motivation}\nSpecial relativity reshapes how we account for energy in high-energy\nprocesses. The relation of Equation~\\eqref{eq:mass-energy} tells us that\na body's rest mass is itself a store of energy, and this single fact\nunderlies everything from nuclear binding energies to collider\nkinematics.\n\nHistorically the relation emerged from the 1905 paper on the\nelectrodynamics of moving bodies, and it was quickly recognised as the\nmost far-reaching consequence of the theory. In these notes we derive\nthe relation from the energy--momentum four-vector and then look at two\nstandard applications: binding energies and pair production thresholds.\n"
+      },
+      {
+        "path": "chapters/energy.tex",
+        "content": "\\chapter{Energy and Mass}\n\\section{The equivalence relation}\n\\label{sec:energy}\nStarting from the four-momentum of a free particle and imposing the\nMinkowski norm, the rest-frame energy of the particle reduces to the\ncelebrated\n\\begin{equation}\n\\label{eq:mass-energy}\nE_0 = m c^2\n\\end{equation}\n\n\\section{Binding energy}\nWhen nucleons bind into a nucleus, the total mass drops slightly and the\ndeficit is released as binding energy, exactly as\nEquation~\\eqref{eq:mass-energy} requires. Measuring the mass defect of\na nucleus is therefore a direct measurement of its binding energy, and\nsectors of nuclear physics quote the two interchangeably.\n\n\\section{Pair production}\nA photon with enough energy can materialise into an electron--positron\npair, and the threshold energy is set entirely by the rest energies of\nthe produced particles. Below threshold the process is kinematically\nforbidden, no matter how intense the photon beam is.\n"
+      }
+    ]
+  }
+}

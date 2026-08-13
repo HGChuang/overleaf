@@ -1,0 +1,27 @@
+{
+  "id": "compile-hold-medium-2",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\title{Three-Dimensional Structural Restoration\\\\\nof a Fault-Propagation Fold in a Foreland Basin}\n\\author{R. Calloway and I. Mensah}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setting}\nThe study anticline sits in the distal foreland of the orogen,\nwhere Mesozoic strata rest on a gently dipping basement unconformity.\nSeismic interpretation ties the fold to a blind thrust that dies out\nupsection within the shale interval.\n\n\\section{Model Construction}\nThe reservoir interval lies at a true vertical depth of\n\\SI{3.4}{\\kilo\\metre}, and the vertical effective stress at that\nlevel reaches \\SI{42}{\\mega\\pascal}.\nBedding on the forelimb dips \\ang{58} toward the southeast,\nwhile the backlimb dips \\ang{35} in the same direction.\nThe sealing shale is \\SI{260}{\\metre} thick at the crest\nand thins toward the flanks.\nGeothermal modelling sets the reservoir temperature at\n\\SI{95}{\\degreeCelsius}.\n\n\\section{Restoration}\nThe restored section shortens by \\SI{1.8}{\\kilo\\metre} across the\nfold, equivalent to roughly 12\\% line-length shortening.\nFault heave measured on the interpretation grid is largest near the\nfold hinge and decreases toward the lateral tip line.\n\n\\section{Validation}\nLine-length balancing closes within 3\\% across all restored sections.\nArea-depth analysis predicts a detachment depth consistent with the\nbright reflector package imaged beneath the forelimb.\nResidual misfit concentrates where the seismic volume loses\ncoherence beneath the crestal fault shadow.\n\n\\section{Implications}\nThe restoration constrains the timing of trap formation relative to\ncharge, and it provides boundary conditions for the geomechanical\nmodel of fracture intensity on the forelimb.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Hello. I upload my manuscript about the fold model but it is not compiling now. Too many errors on the screen and I am lost. My supervisor think maybe one package is missing. Please repair it so the PDF can build. Thank you very much.",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage{siunitx}\n\\title{Three-Dimensional Structural Restoration\\\\\nof a Fault-Propagation Fold in a Foreland Basin}\n\\author{R. Calloway and I. Mensah}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setting}\nThe study anticline sits in the distal foreland of the orogen,\nwhere Mesozoic strata rest on a gently dipping basement unconformity.\nSeismic interpretation ties the fold to a blind thrust that dies out\nupsection within the shale interval.\n\n\\section{Model Construction}\nThe reservoir interval lies at a true vertical depth of\n\\SI{3.4}{\\kilo\\metre}, and the vertical effective stress at that\nlevel reaches \\SI{42}{\\mega\\pascal}.\nBedding on the forelimb dips \\ang{58} toward the southeast,\nwhile the backlimb dips \\ang{35} in the same direction.\nThe sealing shale is \\SI{260}{\\metre} thick at the crest\nand thins toward the flanks.\nGeothermal modelling sets the reservoir temperature at\n\\SI{95}{\\degreeCelsius}.\n\n\\section{Restoration}\nThe restored section shortens by \\SI{1.8}{\\kilo\\metre} across the\nfold, equivalent to roughly 12\\% line-length shortening.\nFault heave measured on the interpretation grid is largest near the\nfold hinge and decreases toward the lateral tip line.\n\n\\section{Validation}\nLine-length balancing closes within 3\\% across all restored sections.\nArea-depth analysis predicts a detachment depth consistent with the\nbright reflector package imaged beneath the forelimb.\nResidual misfit concentrates where the seismic volume loses\ncoherence beneath the crestal fault shadow.\n\n\\section{Implications}\nThe restoration constrains the timing of trap formation relative to\ncharge, and it provides boundary conditions for the geomechanical\nmodel of fracture intensity on the forelimb.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

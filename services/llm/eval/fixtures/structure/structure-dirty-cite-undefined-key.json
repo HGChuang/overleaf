@@ -1,0 +1,80 @@
+{
+  "id": "structure-dirty-cite-undefined-key",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Form-Focused Instruction After the Communicative Turn}\n\\author{M. Alderson}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe communicative turn in language teaching pushed explicit\ngrammar instruction to the margins of the classroom, and for\na time methodologists debated whether form-focused teaching\nhad any place at all \\cite{doughty2003}.\n\n\\section{The case for explicit instruction}\nThe empirical record assembled over two decades suggests\nthat some attention to form is not merely compatible with\ncommunicative teaching but necessary for durable accuracy\n\\cite{ellis2009}. An influential defence of explicit rule\nteaching argues that grammar instruction works best when\nlearners are led to notice forms in use before the rules are\nstated \\cite{thornbury2006}.\n\n\\section{From rules to resources}\nMore recent pedagogical grammars treat rules as provisional\ngeneralisations rather than as prescriptions, a position\ndeveloped at length in the standard teacher-training text\n\\cite{larsen2011}.\n\n\\section{Conclusion}\nThe debate is no longer whether to teach grammar but how to\nsequence noticing, rule statement and practice within a\ncommunicative syllabus.\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\\end{document}\n"
+      },
+      {
+        "path": "refs.bib",
+        "content": "@article{doughty2003,\n  author  = {Doughty, C.},\n  title   = {Instructed SLA: Constraints, Compensation, and Enhancement},\n  journal = {Studies in Second Language Acquisition},\n  year    = {2003},\n  volume  = {25},\n  pages   = {201--224}\n}\n\n@book{ellis2009,\n  author    = {Ellis, R.},\n  title     = {The Study of Second Language Acquisition},\n  publisher = {Oxford University Press},\n  year      = {2009}\n}\n\n@book{larsen2011,\n  author    = {Larsen-Freeman, D. and Anderson, M.},\n  title     = {Techniques and Principles in Language Teaching},\n  publisher = {Oxford University Press},\n  year      = {2011}\n}\n"
+      }
+    ]
+  },
+  "instruction": "第二节末尾的 \\cite{thornbury2006} 在 refs.bib 里没有对应条目，参考文献会印出 [?]。我手头没有这篇文献的完整书目信息，两种修法任选其一：(1) 如果你了解这部文献（Thornbury 谈语法教学的那本），在 refs.bib 里补一条完整条目，字段格式与现有条目一致，key 就用 thornbury2006；(2) 把 \\cite{thornbury2006} 从句子里删掉，句子其余文字保持原样。不管选哪种，都在原来引用所在位置的上一行加一行注释，以「% cite-fix:」开头并注明 added-entry 或 removed-cite，方便合作者核对。文档其它内容一律不动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "%\\s*cite-fix:\\s*(added-entry|removed-cite)",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "grammar instruction works best when",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\cite{doughty2003}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\cite{ellis2009}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\cite{larsen2011}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "refs.bib",
+        "pattern": "@\\w+\\{",
+        "op": "gte",
+        "count": 3
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Form-Focused Instruction After the Communicative Turn}\n\\author{M. Alderson}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe communicative turn in language teaching pushed explicit\ngrammar instruction to the margins of the classroom, and for\na time methodologists debated whether form-focused teaching\nhad any place at all \\cite{doughty2003}.\n\n\\section{The case for explicit instruction}\nThe empirical record assembled over two decades suggests\nthat some attention to form is not merely compatible with\ncommunicative teaching but necessary for durable accuracy\n\\cite{ellis2009}. An influential defence of explicit rule\nteaching argues that grammar instruction works best when\nlearners are led to notice forms in use before the rules are\n% cite-fix: added-entry\nstated \\cite{thornbury2006}.\n\n\\section{From rules to resources}\nMore recent pedagogical grammars treat rules as provisional\ngeneralisations rather than as prescriptions, a position\ndeveloped at length in the standard teacher-training text\n\\cite{larsen2011}.\n\n\\section{Conclusion}\nThe debate is no longer whether to teach grammar but how to\nsequence noticing, rule statement and practice within a\ncommunicative syllabus.\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\\end{document}\n"
+      },
+      {
+        "path": "refs.bib",
+        "content": "@article{doughty2003,\n  author  = {Doughty, C.},\n  title   = {Instructed SLA: Constraints, Compensation, and Enhancement},\n  journal = {Studies in Second Language Acquisition},\n  year    = {2003},\n  volume  = {25},\n  pages   = {201--224}\n}\n\n@book{ellis2009,\n  author    = {Ellis, R.},\n  title     = {The Study of Second Language Acquisition},\n  publisher = {Oxford University Press},\n  year      = {2009}\n}\n\n@book{larsen2011,\n  author    = {Larsen-Freeman, D. and Anderson, M.},\n  title     = {Techniques and Principles in Language Teaching},\n  publisher = {Oxford University Press},\n  year      = {2011}\n}\n\n@book{thornbury2006,\n  author    = {Thornbury, S.},\n  title     = {How to Teach Grammar},\n  publisher = {Pearson Education},\n  year      = {2006}\n}\n"
+      }
+    ]
+  }
+}

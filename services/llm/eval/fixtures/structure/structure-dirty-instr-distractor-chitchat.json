@@ -1,0 +1,108 @@
+{
+  "id": "structure-dirty-instr-distractor-chitchat",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{A Reattributed Panel Painting from the Workshop\nof the Master of the Brunswick Diptych}\n\\author{H. Vermeulen}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\n\\label{introduction}\nA small oak panel in the storerooms of the municipal museum\nhas long been catalogued as an anonymous fifteenth-century\ncopy after a lost original.\nRecent dendrochronological dating of the panel support,\ntogether with the pigment study summarised in\nSection~\\ref{sec:tech}, now permits a firmer attribution.\nThis article presents the documentary and technical evidence\nand proposes a place for the panel within the workshop's\noutput.\n\n\\input{chapters/analysis}\n\n\\section{Provenance}\n\\label{chap:prov}\nThe panel first appears in the inventory of a guild chapel\nin 1623, where it is described as an image of Saint Anne.\nAs noted in Section~\\ref{introduction}, the municipal museum\nacquired the piece with the bequest of 1891, and the early\ninventory entries are reprinted in the appendix.\nNothing in the seventeenth-century records contradicts a\ncontinuous local history.\n\n\\section{Conclusion}\n\\label{sec:concl}\nThe combined evidence of the documentary record in\nSection~\\ref{chap:prov} and the technical findings argues\nfor an origin within the workshop rather than the master's\nown hand.\nA fuller catalogue of the workshop's panels is in\npreparation.\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/analysis.tex",
+        "content": "\\section{Technical Analysis}\n\\label{sec:tech}\nInfrared reflectography reveals an underdrawing in a dry\nmedium, with hatching that follows the workshop's habitual\nleft-to-right strokes.\nThe pigment layer contains the expensive ultramarine that,\nin the dated works discussed in Section~\\ref{introduction},\nis reserved for the mantle of the Virgin.\nDendrochronology gives a felling date after 1482, consistent\nwith the chapel inventory rather than with the early\nnineteenth-century copy that earlier catalogues proposed.\nThe craquelure pattern, finally, matches that of the two\nsigned workshop pieces in the Berlin gallery.\n"
+      }
+    ]
+  },
+  "instruction": "宝，救命，下周五就截稿了我还在调格式。对了你刷到那个热搜没，说 AI 五年之内要取代所有作家，气得我昨晚跟导师争了一宿——哎跑题了跑题了，说正事：帮我把文档里所有 section 的 \\label 统一成 sec: 前缀的规范写法：没前缀的加上前缀（\\label{introduction} 改成 \\label{sec:introduction}），用了别的旧前缀的也换成 sec: 开头（\\label{chap:prov} 改成 \\label{sec:prov}）；本来已经是 sec: 开头的就保持原样别动。正文里所有对应的 \\ref 都要同步更新，别漏。改完跟我唠唠你觉得 AI 到底能不能取代作家哈哈。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{sec:introduction}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{sec:prov}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{introduction}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{chap:prov}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Section~\\ref{sec:introduction}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Section~\\ref{sec:prov}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/analysis.tex",
+        "literal": "Section~\\ref{sec:introduction}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/analysis.tex",
+        "literal": "\\label{sec:tech}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{sec:concl}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{sec:sec:",
+        "op": "eq",
+        "count": 0
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{A Reattributed Panel Painting from the Workshop\nof the Master of the Brunswick Diptych}\n\\author{H. Vermeulen}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\n\\label{sec:introduction}\nA small oak panel in the storerooms of the municipal museum\nhas long been catalogued as an anonymous fifteenth-century\ncopy after a lost original.\nRecent dendrochronological dating of the panel support,\ntogether with the pigment study summarised in\nSection~\\ref{sec:tech}, now permits a firmer attribution.\nThis article presents the documentary and technical evidence\nand proposes a place for the panel within the workshop's\noutput.\n\n\\input{chapters/analysis}\n\n\\section{Provenance}\n\\label{sec:prov}\nThe panel first appears in the inventory of a guild chapel\nin 1623, where it is described as an image of Saint Anne.\nAs noted in Section~\\ref{sec:introduction}, the municipal museum\nacquired the piece with the bequest of 1891, and the early\ninventory entries are reprinted in the appendix.\nNothing in the seventeenth-century records contradicts a\ncontinuous local history.\n\n\\section{Conclusion}\n\\label{sec:concl}\nThe combined evidence of the documentary record in\nSection~\\ref{sec:prov} and the technical findings argues\nfor an origin within the workshop rather than the master's\nown hand.\nA fuller catalogue of the workshop's panels is in\npreparation.\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/analysis.tex",
+        "content": "\\section{Technical Analysis}\n\\label{sec:tech}\nInfrared reflectography reveals an underdrawing in a dry\nmedium, with hatching that follows the workshop's habitual\nleft-to-right strokes.\nThe pigment layer contains the expensive ultramarine that,\nin the dated works discussed in Section~\\ref{sec:introduction},\nis reserved for the mantle of the Virgin.\nDendrochronology gives a felling date after 1482, consistent\nwith the chapel inventory rather than with the early\nnineteenth-century copy that earlier catalogues proposed.\nThe craquelure pattern, finally, matches that of the two\nsigned workshop pieces in the Berlin gallery.\n"
+      }
+    ]
+  }
+}

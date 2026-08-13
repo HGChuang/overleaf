@@ -1,0 +1,65 @@
+{
+  "id": "structure-probe-a-range-scoped-rename",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Point-of-Care Ultrasound in Rural Triage: A Pilot Study}\n\\author{Rural Health Imaging Consortium}\n\\date{February 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nRural clinics often lack access to formal radiology services.\nPoint-of-care ultrasound can close part of that gap.\nHandheld devices have become affordable for small clinics.\nTheir image quality in triage settings remains poorly documented.\nThis pilot study evaluated one handheld device across four clinics.\nEach clinic used the device for twelve weeks.\nNurses with limited scanning experience performed the examinations.\nA telemedicine link provided remote supervision when needed.\n\\section{Methods}\nFour rural clinics joined the pilot between March and June.\nEach clinic received the same handheld device and protocol.\nNurses completed a two-day training course before the study.\nScans were reviewed remotely within twenty-four hours.\nImage quality was scored on a five-point scale by two radiologists.\nDisagreements were resolved in a joint reading session.\nThe first figure shows the device used in all four clinics.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{The handheld ultrasound device used in all four clinics.}\n\\label{fig:device}\n\\end{figure}\nPatient consent covered scanning, storage, and remote review.\nThe protocol was approved by the consortium ethics board.\n\\section{Results}\nA total of 412 scans were performed during the pilot.\nAbdominal scans made up the largest share.\nThe second figure summarizes B-mode image quality by clinic.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{B-mode image quality scores by clinic.}\n\\label{fig:bmode}\n\\end{figure}\nDoppler examinations succeeded in most attempted cases.\nThe third figure reports Doppler signal quality across patient positions.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{Doppler signal quality across patient positions.}\n\\label{fig:doppler}\n\\end{figure}\nA thyroid substudy ran at two of the four clinics.\nThe fourth figure shows strain measurements for that cohort.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{Strain measurements for the thyroid cohort.}\n\\label{fig:strain}\n\\end{figure}\nFollow-up imaging was scheduled for all abnormal findings.\nThe fifth figure tracks follow-up completion at thirty days.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{Follow-up completion rates at thirty days.}\n\\label{fig:followup}\n\\end{figure}\nClinics with prior scanning experience scored highest.\nRemote review changed the initial read in 9 percent of cases.\n\\section{Discussion}\nHandheld ultrasound proved workable in routine rural triage.\nTraining time was the main bottleneck reported by nurses.\nImage quality improved steadily over the twelve weeks.\nTelemedicine supervision was used less than expected.\nThe consortium will extend the pilot to eight more clinics.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{1.5cm}\\rule{1.5cm}{0pt}}\n\\caption{Clinic network emblem.}\n\\end{figure}\n\\section{Conclusion}\nPoint-of-care ultrasound is feasible in nurse-led rural triage.\nStructured training and remote review support safe adoption.\nA larger rollout will test sustainability over a full year.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "论文里 figure 的 label 我想统一口径：把第 2 张图起的 \\label 从 fig:xxx 的形式改成 fig:result-xxx（比如 fig:bmode 改成 fig:result-bmode），第 1 张图的 label 保持不动。其余内容一律别动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "fig:result-",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "fig:(?!result-)",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "fig:device",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "fig:result-bmode",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{",
+        "op": "eq",
+        "count": 5
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Point-of-Care Ultrasound in Rural Triage: A Pilot Study}\n\\author{Rural Health Imaging Consortium}\n\\date{February 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nRural clinics often lack access to formal radiology services.\nPoint-of-care ultrasound can close part of that gap.\nHandheld devices have become affordable for small clinics.\nTheir image quality in triage settings remains poorly documented.\nThis pilot study evaluated one handheld device across four clinics.\nEach clinic used the device for twelve weeks.\nNurses with limited scanning experience performed the examinations.\nA telemedicine link provided remote supervision when needed.\n\\section{Methods}\nFour rural clinics joined the pilot between March and June.\nEach clinic received the same handheld device and protocol.\nNurses completed a two-day training course before the study.\nScans were reviewed remotely within twenty-four hours.\nImage quality was scored on a five-point scale by two radiologists.\nDisagreements were resolved in a joint reading session.\nThe first figure shows the device used in all four clinics.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{The handheld ultrasound device used in all four clinics.}\n\\label{fig:device}\n\\end{figure}\nPatient consent covered scanning, storage, and remote review.\nThe protocol was approved by the consortium ethics board.\n\\section{Results}\nA total of 412 scans were performed during the pilot.\nAbdominal scans made up the largest share.\nThe second figure summarizes B-mode image quality by clinic.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{B-mode image quality scores by clinic.}\n\\label{fig:result-bmode}\n\\end{figure}\nDoppler examinations succeeded in most attempted cases.\nThe third figure reports Doppler signal quality across patient positions.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{Doppler signal quality across patient positions.}\n\\label{fig:result-doppler}\n\\end{figure}\nA thyroid substudy ran at two of the four clinics.\nThe fourth figure shows strain measurements for that cohort.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{Strain measurements for the thyroid cohort.}\n\\label{fig:result-strain}\n\\end{figure}\nFollow-up imaging was scheduled for all abnormal findings.\nThe fifth figure tracks follow-up completion at thirty days.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{Follow-up completion rates at thirty days.}\n\\label{fig:result-followup}\n\\end{figure}\nClinics with prior scanning experience scored highest.\nRemote review changed the initial read in 9 percent of cases.\n\\section{Discussion}\nHandheld ultrasound proved workable in routine rural triage.\nTraining time was the main bottleneck reported by nurses.\nImage quality improved steadily over the twelve weeks.\nTelemedicine supervision was used less than expected.\nThe consortium will extend the pilot to eight more clinics.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{1.5cm}\\rule{1.5cm}{0pt}}\n\\caption{Clinic network emblem.}\n\\end{figure}\n\\section{Conclusion}\nPoint-of-care ultrasound is feasible in nurse-led rural triage.\nStructured training and remote review support safe adoption.\nA larger rollout will test sustainability over a full year.\n\\end{document}\n"
+      }
+    ]
+  }
+}

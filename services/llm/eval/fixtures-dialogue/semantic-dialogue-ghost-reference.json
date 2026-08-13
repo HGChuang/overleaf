@@ -1,0 +1,93 @@
+{
+  "id": "semantic-dialogue-ghost-reference",
+  "category": "semantic",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Overwinter Survival of Mason Bees in Urban Nesting Blocks}\n\\author{H.~Brunet and A.~Castaneda}\n\\date{February 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nNesting blocks were deployed on four garage walls across the city and checked monthly from October to April.\nFigure~\\ref{fig:boxes} shows the block layout.\nSurvival varied strongly with wall orientation and winter moisture.\n\\end{abstract}\n\nSurvival outcomes are summarized in Section~\\ref{sec:winter}.\n\n\\input{sections/method}\n\\input{sections/results}\n\n\\end{document}\n"
+      },
+      {
+        "path": "sections/method.tex",
+        "content": "\\section{Deployment}\nFour wooden nesting blocks were mounted on garage walls in the Riverside and Hillcrest districts.\nEach block held sixty paper tubes of two diameters.\nBlocks were inspected on the first weekend of each month from October to April.\nSection~\\ref{sec:winter} summarizes emergence outcomes by orientation.\n\n\\begin{figure}[t]\n\\centering\n\\fbox{\\parbox{0.72\\linewidth}{\\centering Sketch of the four nesting blocks A--D, their height above ground, and the orientation of the entrance holes.}}\n\\caption{Layout of the four nesting blocks on the garage walls.}\n\\label{fig:boxes}\n\\end{figure}\n\nTubes were weighed at installation and again at the April opening.\nEmergence was scored by counting opened mud caps over three weeks in spring.\n"
+      },
+      {
+        "path": "sections/results.tex",
+        "content": "\\section{Overwinter Survival}\nOverall, 71 percent of the 240 tubes produced at least one emerged adult.\nSouth-facing blocks outperformed north-facing ones by a wide margin.\nMoist winters reduced survival in the blocks closest to the ground.\n\nThe pattern held in both districts.\nBlocks shaded by the chestnut tree emerged about nine days later than exposed blocks.\nPredation by woodpeckers was observed at two sites and affected fewer than ten tubes.\n"
+      }
+    ]
+  },
+  "instruction": "编译完日志里蹦了两条 Reference undefined 的警告，一个说 sec:winter 没定义，一个说 fig:boxes 没定义，这两处引用是不是坏了？帮我修好。",
+  "dialogue": {
+    "persona": "城市生态方向博士后，中文交流，LaTeX 半懂，引用键名是合作者定的规矩不敢动；验收靠重新编译看警告消没消。",
+    "hiddenGoal": "真相与终态：sec:winter 真坏——main.tex 和 sections/method.tex 各有一处 \\ref{sec:winter}，但全文没有 \\label{sec:winter}；fig:boxes 假坏——\\label{fig:boxes} 就在 sections/method.tex 的 figure 环境里，定义完好（用户只在 main.tex 里搜过没找到就当坏了，日志里 fig:boxes 那条只是 .aux 还没建好的一过性警告，重编译就消）。终态：① sections/results.tex 的 \\section{Overwinter Survival} 标题处补上 \\label{sec:winter}，引用键名一律不改；② main.tex、sections/method.tex 一个字符不动，fig:boxes 不做任何'修复'；③ 其余文字不动；④ 编译通过。剧本：第 1 轮用户报两条警告让修。分岔一：agent 查证后补好 sec:winter 的 label、并解释 fig:boxes 没坏——用户追问'fig:boxes 真不用动？我看 main.tex 里没 label 啊'，agent 说明 label 在 method.tex 里，用户满意结束。分岔二：agent 给 fig:boxes 也补了 label 或动了 method.tex——用户：'fig:boxes 我找人复查了，method.tex 里有 label，别画蛇添足，把多余改动撤掉'。分岔三：agent 只修不解释——用户问'那 fig:boxes 到底坏没坏？'。分岔四：agent 改 \\ref 键名或删引用——用户喝止'键名不许改，合作者的稿子都按这个键引的，把 label 补上就行'。仍未达标再指一轮，达标结束。用户知识边界：会看编译警告、记得两个键名，不懂 \\label 和 \\ref 的机制，只会在 main.tex 里搜字符串。",
+    "disclosure": "correction",
+    "maxUserTurns": 5
+  },
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "sections/results.tex",
+    "passScore": 4,
+    "rubric": "5: 在 \\section{Overwinter Survival} 标题处补上 \\label{sec:winter}，引用键名未改、正文句子与数字未动，且未对本来就定义良好的 fig:boxes 做任何多余'修复'，无虚构内容；4: label 补对但夹带轻微无关的格式改动；3: label 补了但位置不当（如挂到错误的节）或轻微改动了正文措辞；2: 通过改 \\ref 键名或删除引用来消除警告，或对 fig:boxes 相关文字做了多余修改；1: 未修复真错误，或虚构内容",
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "sections/results.tex",
+        "literal": "\\label{sec:winter}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "sections/results.tex",
+        "patterns": [
+          "\\\\section\\{Overwinter Survival\\}",
+          "\\\\label\\{sec:winter\\}"
+        ]
+      },
+      {
+        "kind": "literal-count",
+        "file": "sections/results.tex",
+        "literal": "\\section{Overwinter Survival}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "sections/results.tex",
+        "literal": "71 percent of the 240 tubes",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "sections/method.tex",
+        "literal": "\\label{fig:boxes}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "sections/method.tex"
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 12
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 2
+    }
+  ]
+}

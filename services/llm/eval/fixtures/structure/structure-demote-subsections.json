@@ -1,0 +1,32 @@
+{
+  "id": "structure-demote-subsections",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Method}\n\\subsection{Encoder}\nA convolutional encoder maps frames to embeddings.\n\\subsection{Decoder}\nAn autoregressive decoder emits tokens.\n\\subsection{Training}\nWe train for 50 epochs.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这一节不需要 subsection 层级：把 3 个 subsection 全部降为 subsubsection，标题文字不变。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\subsection\\{", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\subsubsection\\{", "op": "eq", "count": 3 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Method}\n\\subsubsection{Encoder}\nA convolutional encoder maps frames to embeddings.\n\\subsubsection{Decoder}\nAn autoregressive decoder emits tokens.\n\\subsubsection{Training}\nWe train for 50 epochs.\n\\end{document}\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "structure-quotes-to-latex",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Analysis}\nReviewers called the approach \"elegant but fragile\" and questioned whether the gains were \"practically meaningful\". The authors of the baseline describe their own heuristic as \"good enough for now\".\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "正文 3 处英文直双引号（\"...\"）不符合 LaTeX 排版规范，改成 ``...'' 的形式，引号内文字不变。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "count", "file": "main.tex", "pattern": "\"", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "``", "op": "eq", "count": 3 },
+      { "kind": "count", "file": "main.tex", "pattern": "''", "op": "eq", "count": 3 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Analysis}\nReviewers called the approach ``elegant but fragile'' and questioned whether the gains were ``practically meaningful''. The authors of the baseline describe their own heuristic as ``good enough for now''.\n\\end{document}\n"
+      }
+    ]
+  }
+}

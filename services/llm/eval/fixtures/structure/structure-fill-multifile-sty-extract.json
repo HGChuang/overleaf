@@ -1,0 +1,120 @@
+{
+  "id": "structure-fill-multifile-sty-extract",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath,amssymb}\n\\usepackage{amsthm}\n\n\\newtheorem{theorem}{Theorem}\n\\newtheorem{lemma}{Lemma}\n\n\\newcommand{\\seq}[1]{(#1)_{n=1}^{\\infty}}\n\\newcommand{\\abs}[1]{\\lvert #1 \\rvert}\n\\newcommand{\\norm}[1]{\\lVert #1 \\rVert}\n\\newcommand{\\ball}[2]{B_{#2}(#1)}\n\n\\title{Real Analysis Notes: Compactness and Continuity}\n\\author{Lecture notes --- M. Haddad}\n\\date{Spring 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Preliminaries}\nThroughout, $\\seq{x_k}$ denotes a sequence in a metric space $(X, d)$,\nand $\\ball{a}{r}$ denotes the open ball of radius $r$ centred at $a$.\n\n\\input{sections/continuity}\n\n\\end{document}\n"
+      },
+      {
+        "path": "mymath.sty",
+        "content": "\\NeedsTeXFormat{LaTeX2e}\n\\ProvidesPackage{mymath}[2026/08/01 Shared math macros for the analysis notes]\n\n\\RequirePackage{amsmath}\n\\RequirePackage{amssymb}\n\n\\endinput\n"
+      },
+      {
+        "path": "sections/continuity.tex",
+        "content": "\\section{Continuity}\nA function $f: X \\to Y$ is continuous at $a$ if for every $\\varepsilon > 0$\nthere is a $\\delta > 0$ such that $x \\in \\ball{a}{\\delta}$ implies\n$\\abs{f(x) - f(a)} < \\varepsilon$.\n\n\\begin{theorem}\nIf $f$ is continuous on a compact set $K$, then $f$ is uniformly\ncontinuous on $K$.\n\\end{theorem}\n\n\\begin{proof}\nSuppose not. Then for some $\\varepsilon_0 > 0$ and every $n$ there are points\n$x_n, y_n \\in K$ with $d(x_n, y_n) < 1/n$ but\n$\\abs{f(x_n) - f(y_n)} \\ge \\varepsilon_0$.\nCompactness gives a convergent subsequence of $\\seq{x_n}$, and the\ntriangle inequality forces $\\seq{y_n}$ to the same limit, contradicting\nthe bound on $\\abs{f(x_n) - f(y_n)}$.\n\\end{proof}\n\nThe same argument with $\\norm{\\,\\cdot\\,}$ in place of the metric shows\nthat any continuous linear map between normed spaces is bounded.\n"
+      }
+    ]
+  },
+  "instruction": "main.tex 导言区有四个我自己定义的宏：\\seq、\\abs、\\norm、\\ball。我想把它们 extract 到 mymath.sty 里，这样其他笔记也能 reuse：四个 \\newcommand 原样搬到 \\RequirePackage 之后、\\endinput 之前，main.tex 里删掉原来的四行，加上 \\usepackage{mymath}。宏的写法一个字都不要改，sections/continuity.tex 也不用动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\newcommand\\{\\\\(?:seq|abs|norm|ball)\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\usepackage\\{mymath\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "mymath.sty",
+        "pattern": "\\\\newcommand\\{\\\\seq\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "mymath.sty",
+        "pattern": "\\\\newcommand\\{\\\\abs\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "mymath.sty",
+        "pattern": "\\\\newcommand\\{\\\\norm\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "mymath.sty",
+        "pattern": "\\\\newcommand\\{\\\\ball\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "mymath.sty",
+        "literal": "\\newcommand{\\seq}[1]{(#1)_{n=1}^{\\infty}}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "mymath.sty",
+        "literal": "\\newcommand{\\abs}[1]{\\lvert #1 \\rvert}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "mymath.sty",
+        "literal": "\\newcommand{\\norm}[1]{\\lVert #1 \\rVert}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "mymath.sty",
+        "literal": "\\newcommand{\\ball}[2]{B_{#2}(#1)}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "sections/continuity.tex"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath,amssymb}\n\\usepackage{amsthm}\n\\usepackage{mymath}\n\n\\newtheorem{theorem}{Theorem}\n\\newtheorem{lemma}{Lemma}\n\n\\title{Real Analysis Notes: Compactness and Continuity}\n\\author{Lecture notes --- M. Haddad}\n\\date{Spring 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Preliminaries}\nThroughout, $\\seq{x_k}$ denotes a sequence in a metric space $(X, d)$,\nand $\\ball{a}{r}$ denotes the open ball of radius $r$ centred at $a$.\n\n\\input{sections/continuity}\n\n\\end{document}\n"
+      },
+      {
+        "path": "mymath.sty",
+        "content": "\\NeedsTeXFormat{LaTeX2e}\n\\ProvidesPackage{mymath}[2026/08/01 Shared math macros for the analysis notes]\n\n\\RequirePackage{amsmath}\n\\RequirePackage{amssymb}\n\n\\newcommand{\\seq}[1]{(#1)_{n=1}^{\\infty}}\n\\newcommand{\\abs}[1]{\\lvert #1 \\rvert}\n\\newcommand{\\norm}[1]{\\lVert #1 \\rVert}\n\\newcommand{\\ball}[2]{B_{#2}(#1)}\n\n\\endinput\n"
+      },
+      {
+        "path": "sections/continuity.tex",
+        "content": "\\section{Continuity}\nA function $f: X \\to Y$ is continuous at $a$ if for every $\\varepsilon > 0$\nthere is a $\\delta > 0$ such that $x \\in \\ball{a}{\\delta}$ implies\n$\\abs{f(x) - f(a)} < \\varepsilon$.\n\n\\begin{theorem}\nIf $f$ is continuous on a compact set $K$, then $f$ is uniformly\ncontinuous on $K$.\n\\end{theorem}\n\n\\begin{proof}\nSuppose not. Then for some $\\varepsilon_0 > 0$ and every $n$ there are points\n$x_n, y_n \\in K$ with $d(x_n, y_n) < 1/n$ but\n$\\abs{f(x_n) - f(y_n)} \\ge \\varepsilon_0$.\nCompactness gives a convergent subsequence of $\\seq{x_n}$, and the\ntriangle inequality forces $\\seq{y_n}$ to the same limit, contradicting\nthe bound on $\\abs{f(x_n) - f(y_n)}$.\n\\end{proof}\n\nThe same argument with $\\norm{\\,\\cdot\\,}$ in place of the metric shows\nthat any continuous linear map between normed spaces is bounded.\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "semantic-tense-unify",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Interface Engineering for Solid-State Electrolytes}\n\\author{Li Wei}\n\\begin{document}\n\\maketitle\n\\section{Methods}\nWe synthesized the electrolyte powder by ball milling. The powder is pressed into pellets at 300 MPa. We coated the interface with a thin buffer layer. Symmetric cells are assembled in an argon glovebox. We measured the impedance every hour for 24 hours. The critical current density is determined by stepping the applied current.\n\\section{Results}\nThe buffer layer reduces interfacial resistance and suppresses dendrite growth.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Methods 一节时态混乱，一会儿过去时一会儿现在时，请把这一节统一为一般现在时（方法流程描述的常规时态），只调整动词时态形式，不要改动工艺参数（300 MPa、24 小时等）和其他句子成分，Results 一节不要动。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 过去时动词 synthesized/coated/measured 全部改为一般现在时，全节时态一致，300 MPa、24 hours 等参数与句子其余成分零改动，Results 未动；4: ≥2 处过去时改为现在时，仅 1 处遗漏或动词形式略误，语义不变；3: 部分统一但仍有时态混杂，或改动了个别非时态词汇；2: 只改 1 处，混杂依旧明显；1: 未修改，或改错动词形式/改变方法含义"
+  }
+}

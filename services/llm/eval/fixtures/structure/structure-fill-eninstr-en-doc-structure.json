@@ -1,0 +1,65 @@
+{
+  "id": "structure-fill-eninstr-en-doc-structure",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Mortuary Practices in the Upper Valley: A Preliminary Report}\n\\author{H. Osei and L. Marchetti}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\n\\label{intro}\nThe upper valley survey recorded forty-two burial contexts across six\nsites. As Section~\\ref{conclusion} argues, the sample is small but\ninstructive.\n\n\\section{Related Work}\n\\label{sec:related}\nEarlier reports treated the valley as a single cultural horizon.\nRecent compositional studies of grave goods suggest at least two\ndistinct traditions.\n\n\\section{Field Methods}\n\\label{methods}\nEach context was excavated in ten-centimetre spits and recorded\nphotographically; Section~\\ref{sec-results} gives the resulting counts.\nSoil samples were floated for botanical remains on site.\n\n\\section{Results}\n\\label{sec-results}\nThirty-one contexts contained ceramic offerings, and eleven contained\nworked bone. Counts follow the conventions described in\nSection~\\ref{methods}.\n\n\\section{Conclusion}\n\\label{conclusion}\nThe valley shows a two-phase mortuary sequence rather than one\nlong-lived tradition. Further radiocarbon work is planned for the\ncoming season.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "House style requires every section label to carry the sec: prefix. Four labels in this paper are non-compliant: intro, methods, sec-results and conclusion. Please rename them to sec:intro, sec:methods, sec:results and sec:conclusion respectively, and update every \\ref that points at them so the cross-references keep working. The label sec:related is already compliant — leave it alone, and don't touch anything else.",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{sec:(intro|methods|results|conclusion)\\}",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{(intro|methods|sec-results|conclusion)\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\ref\\{(intro|methods|sec-results|conclusion)\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\ref\\{sec:(intro|methods|results|conclusion)\\}",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{sec:related\\}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Mortuary Practices in the Upper Valley: A Preliminary Report}\n\\author{H. Osei and L. Marchetti}\n\\date{May 2026}\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\n\\label{sec:intro}\nThe upper valley survey recorded forty-two burial contexts across six\nsites. As Section~\\ref{sec:conclusion} argues, the sample is small but\ninstructive.\n\n\\section{Related Work}\n\\label{sec:related}\nEarlier reports treated the valley as a single cultural horizon.\nRecent compositional studies of grave goods suggest at least two\ndistinct traditions.\n\n\\section{Field Methods}\n\\label{sec:methods}\nEach context was excavated in ten-centimetre spits and recorded\nphotographically; Section~\\ref{sec:results} gives the resulting counts.\nSoil samples were floated for botanical remains on site.\n\n\\section{Results}\n\\label{sec:results}\nThirty-one contexts contained ceramic offerings, and eleven contained\nworked bone. Counts follow the conventions described in\nSection~\\ref{sec:methods}.\n\n\\section{Conclusion}\n\\label{sec:conclusion}\nThe valley shows a two-phase mortuary sequence rather than one\nlong-lived tradition. Further radiocarbon work is planned for the\ncoming season.\n\\end{document}\n"
+      }
+    ]
+  }
+}

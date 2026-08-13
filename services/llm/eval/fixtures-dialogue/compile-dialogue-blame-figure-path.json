@@ -1,0 +1,86 @@
+{
+  "id": "compile-dialogue-blame-figure-path",
+  "category": "compile",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{report}\n\\usepackage[margin=1in]{geometry}\n\\title{Pluvial Flood Hotspots in a Coastal City:\\\\A Drainage Capacity Audit}\n\\author{M.~Okafor and H.~Lindqvist}\n\\date{June 2026}\n\\begin{document}\n\\maketitle\n\\tableofcontents\n\\input{chapters/background}\n\\input{chapters/model}\n\\input{chapters/results}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/background.tex",
+        "content": "\\chapter{Background}\nThe city drains through a combined sewer network\nlaid out mostly before 1960.\nCloudburst events in the last decade have repeatedly\noverwhelmed the older trunk lines,\nand basement flooding claims have tripled since 2015.\n\nThe municipal archive indexes every sensor\nby a compound key such as gauge_station,\nwhich field crews write on the inspection forms.\n"
+      },
+      {
+        "path": "chapters/model.tex",
+        "content": "\\chapter{Model}\nPeak discharge at each inlet is estimated\nwith the rational method $Q = C\\,i\\,A for each subcatchment,\nwith runoff coefficients taken from the city design manual.\n\nThe network is then routed as a directed graph,\nand every node is checked against its capacity\nfor the two-year and ten-year design storms.\n"
+      },
+      {
+        "path": "chapters/results.tex",
+        "content": "\\chapter{Results}\nSixteen inlets fall below capacity for the ten-year storm.\n\\begin{center}\n\\begin{tabular}{ll}\n\\hline\nDistrict & Inlets below capacity \\\\\n\\hline\nOld harbour & 5 \\\\\nRailway quarter & 4 & urgent \\\\\nGarden suburb & 3 \\\\\n\\hline\n\\end{tabular}\n\\end{center}\nThe old harbour district alone accounts for nearly a third\nof the modelled basement flooding volume.\n"
+      }
+    ]
+  },
+  "instruction": "城市内涝这份报告突然编不过了，章节都拆在 chapters/ 文件夹里。我怀疑是图片的事——我昨天把 figures 文件夹改名叫 figs 了，估计路径全断了。你帮我把编译修好吧，能出 PDF 就行。",
+  "dialogue": {
+    "persona": "市政排水咨询公司的文员，中文交流，LaTeX 只会照模板打字，坚信自己昨天改文件夹名的操作是罪魁祸首，只认编译通不通。",
+    "hiddenGoal": "终态：三处编译错误全部修复（chapters/background.tex 正文里的 gauge_station 下划线未转义、chapters/model.tex 行内公式 $Q = C\\,i\\,A 缺右定界符 $、chapters/results.tex 表格 Railway quarter 行多出一列），编译零错误；保持 4 个文件和 \\input 结构不变。文档里其实根本没有任何插图，用户的图片路径理论与故障无关。第 1 轮用户咬定是自己把 figures 文件夹改名导致路径断了，让 agent 去修路径；若 agent 检查后发现文档没有插图、转而修真正的错误，第 2 轮用户说'没有图？不可能吧……反正我这边还是红的，你再看看'；若 agent 只修了一部分，用户说'还报错，报错写的啥我看不懂，你继续'；若 agent 索要日志，用户只会说'一堆英文红字，看不懂，反正编不过'；若 agent 一直纠结图片路径不去看日志，用户会说'路径你随便试试呗，不行就算了，按你的法子来'。编译干净通过，用户满意结束。用户给不了任何行号或错误类型。",
+    "disclosure": "misleading",
+    "maxUserTurns": 5
+  },
+  "grader": {
+    "type": "compile",
+    "assertions": [
+      {
+        "kind": "file-count",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\input{chapters/results}",
+        "op": "gte",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{report}\n\\usepackage[margin=1in]{geometry}\n\\title{Pluvial Flood Hotspots in a Coastal City:\\\\A Drainage Capacity Audit}\n\\author{M.~Okafor and H.~Lindqvist}\n\\date{June 2026}\n\\begin{document}\n\\maketitle\n\\tableofcontents\n\\input{chapters/background}\n\\input{chapters/model}\n\\input{chapters/results}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/background.tex",
+        "content": "\\chapter{Background}\nThe city drains through a combined sewer network\nlaid out mostly before 1960.\nCloudburst events in the last decade have repeatedly\noverwhelmed the older trunk lines,\nand basement flooding claims have tripled since 2015.\n\nThe municipal archive indexes every sensor\nby a compound key such as gauge\\_station,\nwhich field crews write on the inspection forms.\n"
+      },
+      {
+        "path": "chapters/model.tex",
+        "content": "\\chapter{Model}\nPeak discharge at each inlet is estimated\nwith the rational method $Q = C\\,i\\,A$ for each subcatchment,\nwith runoff coefficients taken from the city design manual.\n\nThe network is then routed as a directed graph,\nand every node is checked against its capacity\nfor the two-year and ten-year design storms.\n"
+      },
+      {
+        "path": "chapters/results.tex",
+        "content": "\\chapter{Results}\nSixteen inlets fall below capacity for the ten-year storm.\n\\begin{center}\n\\begin{tabular}{ll}\n\\hline\nDistrict & Inlets below capacity \\\\\n\\hline\nOld harbour & 5 \\\\\nRailway quarter & 4 \\\\\nGarden suburb & 3 \\\\\n\\hline\n\\end{tabular}\n\\end{center}\nThe old harbour district alone accounts for nearly a third\nof the modelled basement flooding volume.\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "tool-called",
+      "tool": "compile_project",
+      "minCalls": 1
+    },
+    {
+      "kind": "max-turns",
+      "max": 14
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 3
+    }
+  ]
+}

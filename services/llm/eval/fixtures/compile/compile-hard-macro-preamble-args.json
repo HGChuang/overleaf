@@ -1,0 +1,27 @@
+{
+  "id": "compile-hard-macro-preamble-args",
+  "category": "compile",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\\newcommand{\\R}{\\ensuremath{\\mathbb{R}}}\n\\newcommand{\\norm}[1]{\\ensuremath{\\lVert #1 \\rVert}}\n\\newcommand{\\inner}[2]{\\ensuremath{\\langle #1, #2 \\rangle}}\n\\newcommand{\\triple}[2]{\\ensuremath{(#1, #2, #3)}}\n\\newcommand{\\proj}[2]{\\ensuremath{\\mathrm{proj}_{#1}\\, #2}}\n\\newcommand{\\set}[1]{\\ensuremath{\\{ #1 \\}}}\n\\title{Notes on Hilbert Spaces}\n\\begin{document}\n\\maketitle\nLet $u, v \\in \\R^n$ with $\\inner{u}{v} = 0$ and $\\norm{u} = 1$.\nThe basis pair \\inner{e_1}{e_2} spans the plane, and the full triple \\triple{e_1}{e_2}{e_3} spans $\\R^3$.\nThe stress \\stress{250} exceeds the design limit, so the projection \\proj{u}{v} is recomputed.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "导言区自定义了一堆宏，现在编译炸了。修好所有宏相关的错误，正文的用法不要改。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\\newcommand{\\R}{\\ensuremath{\\mathbb{R}}}\n\\newcommand{\\norm}[1]{\\ensuremath{\\lVert #1 \\rVert}}\n\\newcommand{\\inner}[2]{\\ensuremath{\\langle #1, #2 \\rangle}}\n\\newcommand{\\triple}[3]{\\ensuremath{(#1, #2, #3)}}\n\\newcommand{\\proj}[2]{\\ensuremath{\\mathrm{proj}_{#1}\\, #2}}\n\\newcommand{\\set}[1]{\\ensuremath{\\{ #1 \\}}}\n\\newcommand{\\stress}[1]{\\ensuremath{\\sigma = #1\\,\\mathrm{MPa}}}\n\\title{Notes on Hilbert Spaces}\n\\begin{document}\n\\maketitle\nLet $u, v \\in \\R^n$ with $\\inner{u}{v} = 0$ and $\\norm{u} = 1$.\nThe basis pair \\inner{e_1}{e_2} spans the plane, and the full triple \\triple{e_1}{e_2}{e_3} spans $\\R^3$.\nThe stress \\stress{250} exceeds the design limit, so the projection \\proj{u}{v} is recomputed.\n\\end{document}\n"
+      }
+    ]
+  }
+}

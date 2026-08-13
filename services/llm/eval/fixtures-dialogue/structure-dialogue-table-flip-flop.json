@@ -1,0 +1,208 @@
+{
+  "id": "structure-dialogue-table-flip-flop",
+  "category": "structure",
+  "difficulty": "extreme",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Late-Stage Pruning for Extractive\\\\Question Answering}\n\\author{R.~Halvorsen and T.~Achebe}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\nWe study whether extractive question-answering models can be pruned\nafter fine-tuning without task-aware distillation.\nAcross four configurations we find that moderate sparsity preserves\nanswer quality while delivering meaningful wall-clock speedups.\nThe gains are stable across pruning criteria, and a simple magnitude\nbaseline is surprisingly competitive at low sparsity.\n\\end{abstract}\n\\section{Introduction}\nExtractive question answering remains a workload with tight latency\nbudgets: answers must be returned before the reader loses patience,\nand serving cost scales with model size.\nPost-hoc pruning is attractive because it avoids retraining from\nscratch, but it is often reported to degrade exact-match accuracy on\nspan-extraction tasks.\nThis paper asks how far late-stage pruning can be pushed when the\npruning decision is made after task fine-tuning rather than before.\nWe compare four configurations that share a single fine-tuned encoder\nand differ only in the pruning criterion applied to its weights.\nOur results show that answer quality degrades gracefully up to\nmoderate sparsity, and that the choice of criterion matters mostly at\nhigh sparsity, where structured signals begin to dominate.\n\\section{Pruning Setup}\nAll methods prune the same fine-tuned encoder to the same target\nsparsity.\nMagnitude pruning removes the weights with the smallest absolute\nvalues.\nMovement pruning scores weights by their displacement during\nfine-tuning, which retains connections that the task objective moved\naway from zero.\nSoft movement pruning applies a differentiable relaxation of the same\ncriterion during a short additional calibration pass.\nStructured pruning removes entire attention heads according to the\nsame movement scores.\nWe report wall-clock speedup measured on a single core with batch\nsize one, relative to the dense baseline.\n\\section{Experiments}\nWe fine-tune a pretrained encoder on SQuAD v1.1 and prune after the\nfinal epoch, without further distillation.\nAll numbers are averaged over three seeds.\nTable \\ref{tab:prune} collects the four configurations.\nThe dense baseline anchors the comparison, and each pruned variant\ntrades a small amount of answer quality for lower latency.\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{|l|c|c|c|}\n\\hline\nMethod & F1 & EM & Speedup \\\\\n\\hline\nDense baseline & 87.3 & 79.1 & 1.0$\\times$ \\\\\n\\hline\nMagnitude pruning & 86.1 & 77.8 & 1.6$\\times$ \\\\\n\\hline\nMovement pruning & 86.8 & 78.5 & 1.7$\\times$ \\\\\n\\hline\nSoft movement pruning & 87.0 & 78.9 & 1.7$\\times$ \\\\\n\\hline\n\\end{tabular}\n\\caption{Answer quality and wall-clock speedup on SQuAD v1.1 after late-stage pruning.}\n\\label{tab:prune}\n\\end{table}\nThe gap between criteria is small at moderate sparsity, which matches\nthe intuition that fine-tuning has already concentrated task-relevant\nmass on a few connections.\nSpeedups track the fraction of remaining nonzero weights almost\nlinearly in this regime.\n\\section{Analysis}\nPruning the attention projections accounts for most of the latency\ngain, while the feed-forward blocks tolerate noticeably less sparsity\nbefore exact match begins to slip.\nErrors after pruning are concentrated on questions whose answers\nrequire resolving coreference across sentences, suggesting that the\npruned connections carry long-range information disproportionately.\nWe also observe that calibration passes longer than a few hundred\nsteps yield no further benefit, which keeps the overall procedure\ncheap.\n\\section{Conclusion}\nLate-stage pruning preserves answer quality up to moderate sparsity\nand delivers near-linear latency gains in that regime.\nMovement-based criteria are worth their modest calibration cost once\nsparsity is pushed further, while magnitude pruning is a strong\ndefault when calibration is not an option.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "实验那张表帮我弄成三线表，现在横线竖线全框起来太土了：改用 booktabs，顶线粗、中间细、底线粗，tabular 列定义里的竖线也删掉，宏包没引自己引一下。表里的数字一个都不许动。",
+  "dialogue": {
+    "persona": "急性子的 NLP 博士生，中文交流；导师意见和期刊格式审查来回打架，改主意很干脆、不解释原因；只认得表格长什么样，不管 LaTeX 命令名。",
+    "hiddenGoal": "终态（全部可判分）：① 表格是 booktabs 三线表：\\toprule/\\midrule/\\bottomrule 各一次，全文无 \\hline，tabular 列定义为 {lccc} 且无竖线，preamble 有 \\usepackage{booktabs}；② 列结构恢复成四列 Method / F1 / EM / Speedup——第 2 轮的合并列已撤销，全文不存在 “F1 / EM” 或 “87.3 / 79.1” 这类合并写法；③ 在 Soft movement pruning 行后新增一行 Structured pruning & 85.9 & 77.4 & 2.3$\\times$；④ 原有四行数字一字不动，caption 与 \\label{tab:prune} 不动，正文 \\ref{tab:prune} 保留，仍编译通过。剧本：第 1 轮（instruction）只要三线表。agent 完成后第 2 轮用户改主意：“我想了下，F1 和 EM 分两列太占地方，合并成一列，表头写 F1 / EM，单元格写成 87.3 / 79.1 这种；线条也别要三线表了，横线竖线全加回来，跟以前一样全框起来看着清楚”。agent 完成后第 3 轮用户再改主意：“期刊格式审查退回来了，必须三线表——横线竖线全去掉改回 booktabs 那种，合并的列也拆回 F1、EM 两列；另外再补一行：Structured pruning，F1 是 85.9，EM 是 77.4，Speedup 是 2.3 倍，放在 Soft movement pruning 那一行后面”。分岔：agent 某轮没做全（比如还有 \\hline、行没加、数字动了），用户直接指出缺的部分让补上，剧本方向不变；终态判据只看最终文件。第 3 轮做完用户满意结束。",
+    "disclosure": "change-of-mind",
+    "maxUserTurns": 6
+  },
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\usepackage\\{booktabs\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\hline",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\toprule",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\midrule",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\bottomrule",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{tabular\\}\\{lccc\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{tabular\\}\\{\\|",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "F1 / EM",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "87.3 / 79.1",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "87.3",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "79.1",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "86.1",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "77.8",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "86.8",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "78.5",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "87.0",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "78.9",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Structured pruning & 85.9 & 77.4 & 2.3",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "Soft movement pruning & 87",
+          "Structured pruning & 85"
+        ]
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\caption{Answer quality and wall-clock speedup on SQuAD v1.1 after late-stage pruning.}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "$\\times$",
+        "op": "eq",
+        "count": 5
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{tab:prune\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\ref\\{tab:prune\\}",
+        "op": "gte",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\\title{Late-Stage Pruning for Extractive\\\\Question Answering}\n\\author{R.~Halvorsen and T.~Achebe}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\nWe study whether extractive question-answering models can be pruned\nafter fine-tuning without task-aware distillation.\nAcross four configurations we find that moderate sparsity preserves\nanswer quality while delivering meaningful wall-clock speedups.\nThe gains are stable across pruning criteria, and a simple magnitude\nbaseline is surprisingly competitive at low sparsity.\n\\end{abstract}\n\\section{Introduction}\nExtractive question answering remains a workload with tight latency\nbudgets: answers must be returned before the reader loses patience,\nand serving cost scales with model size.\nPost-hoc pruning is attractive because it avoids retraining from\nscratch, but it is often reported to degrade exact-match accuracy on\nspan-extraction tasks.\nThis paper asks how far late-stage pruning can be pushed when the\npruning decision is made after task fine-tuning rather than before.\nWe compare four configurations that share a single fine-tuned encoder\nand differ only in the pruning criterion applied to its weights.\nOur results show that answer quality degrades gracefully up to\nmoderate sparsity, and that the choice of criterion matters mostly at\nhigh sparsity, where structured signals begin to dominate.\n\\section{Pruning Setup}\nAll methods prune the same fine-tuned encoder to the same target\nsparsity.\nMagnitude pruning removes the weights with the smallest absolute\nvalues.\nMovement pruning scores weights by their displacement during\nfine-tuning, which retains connections that the task objective moved\naway from zero.\nSoft movement pruning applies a differentiable relaxation of the same\ncriterion during a short additional calibration pass.\nStructured pruning removes entire attention heads according to the\nsame movement scores.\nWe report wall-clock speedup measured on a single core with batch\nsize one, relative to the dense baseline.\n\\section{Experiments}\nWe fine-tune a pretrained encoder on SQuAD v1.1 and prune after the\nfinal epoch, without further distillation.\nAll numbers are averaged over three seeds.\nTable \\ref{tab:prune} collects the four configurations.\nThe dense baseline anchors the comparison, and each pruned variant\ntrades a small amount of answer quality for lower latency.\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lccc}\n\\toprule\nMethod & F1 & EM & Speedup \\\\\n\\midrule\nDense baseline & 87.3 & 79.1 & 1.0$\\times$ \\\\\nMagnitude pruning & 86.1 & 77.8 & 1.6$\\times$ \\\\\nMovement pruning & 86.8 & 78.5 & 1.7$\\times$ \\\\\nSoft movement pruning & 87.0 & 78.9 & 1.7$\\times$ \\\\\nStructured pruning & 85.9 & 77.4 & 2.3$\\times$ \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Answer quality and wall-clock speedup on SQuAD v1.1 after late-stage pruning.}\n\\label{tab:prune}\n\\end{table}\nThe gap between criteria is small at moderate sparsity, which matches\nthe intuition that fine-tuning has already concentrated task-relevant\nmass on a few connections.\nSpeedups track the fraction of remaining nonzero weights almost\nlinearly in this regime.\n\\section{Analysis}\nPruning the attention projections accounts for most of the latency\ngain, while the feed-forward blocks tolerate noticeably less sparsity\nbefore exact match begins to slip.\nErrors after pruning are concentrated on questions whose answers\nrequire resolving coreference across sentences, suggesting that the\npruned connections carry long-range information disproportionately.\nWe also observe that calibration passes longer than a few hundred\nsteps yield no further benefit, which keeps the overall procedure\ncheap.\n\\section{Conclusion}\nLate-stage pruning preserves answer quality up to moderate sparsity\nand delivers near-linear latency gains in that regime.\nMovement-based criteria are worth their modest calibration cost once\nsparsity is pushed further, while magnitude pruning is a strong\ndefault when calibration is not an option.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 16
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 3
+    }
+  ]
+}

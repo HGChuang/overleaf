@@ -1,0 +1,72 @@
+{
+  "id": "structure-probe-g-align-ampersand-keep",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\title{Summary Statistics --- Tutorial Notes}\n\\author{Dr. R. Osei}\n\\date{Week 3}\n\\begin{document}\n\\maketitle\n\n\\section{Why we summarise}\nRaw data vectors are unwieldy: a column of two hundred numbers tells\nyou very little until you compress it. In this course we compress a\nsample into two numbers --- a centre and a spread --- and we do so with\nestimators whose sampling properties are known exactly. Once you trust\nthe estimators, you can compare groups, build intervals and test\nhypotheses without ever looking at the raw column again.\n\nThat compression comes at a price: every summary throws information\naway. The art is to choose summaries whose discarded information does\nnot matter for the question at hand. For location questions the mean\nand median are the canonical choices; for spread questions the variance\nand the interquartile range play the same role.\n\n\\section{Sample mean and variance}\nGiven a sample $x_1, \\dots, x_n$ of size $n$, the three quantities\nbelow are the ones you will compute most often in this course. At the\nmoment each is printed on its own line, which wastes half a page every\ntime these notes are photocopied for the tutorial group.\n\\begin{align}\n\\bar{x} &= \\frac{1}{n} \\sum_{i=1}^{n} x_i \\\\\ns^2 &= \\frac{1}{n-1} \\sum_{i=1}^{n} (x_i - \\bar{x})^2 \\\\\ns &= \\sqrt{s^2}\n\\end{align}\nThe divisor $n-1$ in the sample variance is Bessel's correction; it\nmakes the estimator unbiased for the population variance. The sample\nstandard deviation is defined as the positive root of the variance, so\nthe three displays form a dependency chain: mean first, then variance,\nthen standard deviation. Keep that order in mind when you compute by\nhand, because each quantity feeds the next.\n\n\\section{Worked example}\nFor the sample $2, 4, 4, 4, 5, 5, 7, 9$ the mean is $5$ and the sample\nvariance is $4.57$ to two decimal places. You will verify these numbers\nin the exercises; the point here is that each display above corresponds\nto one concrete arithmetic step, and a slip in the first step silently\npoisons the other two.\n\nNotice how little arithmetic the chain actually needs once the mean is\nknown: eight subtractions, eight squares, one sum, one division and one\nsquare root. Students who report a negative variance have almost always\nforgotten the squares, not the division.\n\n\\section{Reporting conventions}\nAlways report the standard deviation with the same units as the raw\ndata, and state the sample size next to it. A standard deviation without\nan $n$ next to it is ambiguous between a descriptive statistic and a\nstandard error, and markers are instructed to deduct a mark for the\nambiguity even if the number itself is right.\n\n\\section{Exercises}\nCompute the three quantities for each sample given in the workbook.\nReport the standard deviation to two decimal places and state the units\nexplicitly. For the last two samples, repeat the calculation with the\npopulation divisor $n$ instead of $n-1$ and comment on how much the\nanswer moves as the sample size grows.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这三行统计公式每次印讲义都占掉半页纸。把 align 里的三行合并成两行：第一行并排放样本均值和样本方差两个公式，第二行放标准差，用双列 align 排版。三个 &= 对齐符一个都不能少，公式内容一个字符都不许改。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "&=",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "&",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\\\\\",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{align\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\sqrt{s^2}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\frac{1}{n-1}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\title{Summary Statistics --- Tutorial Notes}\n\\author{Dr. R. Osei}\n\\date{Week 3}\n\\begin{document}\n\\maketitle\n\n\\section{Why we summarise}\nRaw data vectors are unwieldy: a column of two hundred numbers tells\nyou very little until you compress it. In this course we compress a\nsample into two numbers --- a centre and a spread --- and we do so with\nestimators whose sampling properties are known exactly. Once you trust\nthe estimators, you can compare groups, build intervals and test\nhypotheses without ever looking at the raw column again.\n\nThat compression comes at a price: every summary throws information\naway. The art is to choose summaries whose discarded information does\nnot matter for the question at hand. For location questions the mean\nand median are the canonical choices; for spread questions the variance\nand the interquartile range play the same role.\n\n\\section{Sample mean and variance}\nGiven a sample $x_1, \\dots, x_n$ of size $n$, the three quantities\nbelow are the ones you will compute most often in this course. At the\nmoment each is printed on its own line, which wastes half a page every\ntime these notes are photocopied for the tutorial group.\n\\begin{align}\n\\bar{x} &= \\frac{1}{n} \\sum_{i=1}^{n} x_i, &\ns^2 &= \\frac{1}{n-1} \\sum_{i=1}^{n} (x_i - \\bar{x})^2, \\\\\ns &= \\sqrt{s^2}\n\\end{align}\nThe divisor $n-1$ in the sample variance is Bessel's correction; it\nmakes the estimator unbiased for the population variance. The sample\nstandard deviation is defined as the positive root of the variance, so\nthe three displays form a dependency chain: mean first, then variance,\nthen standard deviation. Keep that order in mind when you compute by\nhand, because each quantity feeds the next.\n\n\\section{Worked example}\nFor the sample $2, 4, 4, 4, 5, 5, 7, 9$ the mean is $5$ and the sample\nvariance is $4.57$ to two decimal places. You will verify these numbers\nin the exercises; the point here is that each display above corresponds\nto one concrete arithmetic step, and a slip in the first step silently\npoisons the other two.\n\nNotice how little arithmetic the chain actually needs once the mean is\nknown: eight subtractions, eight squares, one sum, one division and one\nsquare root. Students who report a negative variance have almost always\nforgotten the squares, not the division.\n\n\\section{Reporting conventions}\nAlways report the standard deviation with the same units as the raw\ndata, and state the sample size next to it. A standard deviation without\nan $n$ next to it is ambiguous between a descriptive statistic and a\nstandard error, and markers are instructed to deduct a mark for the\nambiguity even if the number itself is right.\n\n\\section{Exercises}\nCompute the three quantities for each sample given in the workbook.\nReport the standard deviation to two decimal places and state the units\nexplicitly. For the last two samples, repeat the calculation with the\npopulation divisor $n$ instead of $n-1$ and comment on how much the\nanswer moves as the sample size grows.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

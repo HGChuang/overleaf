@@ -1,0 +1,112 @@
+{
+  "id": "structure-probe-f-figures-dir-crossref",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{graphicx}\n\n\\title{Precipitation Response of a Mg--Zn--Ca Alloy to Equal-Channel Angular Pressing}\n\\author{D.~Ferreira and T.~Aldossary}\n\\date{May 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nMagnesium alloys containing zinc and calcium are candidates for\nresorbable implant applications, but their strength remains modest in\nthe as-cast condition. Severe plastic deformation by equal-channel\nangular pressing (ECAP) refines the grain structure and redistributes\nthe second phase, and the present note reports the precipitation\nresponse of one such alloy after four passes.\n\n\\section{Methods}\nBillets of the as-cast alloy were machined to 12 mm diameter and\npressed at 473 K through a 120-degree die, route Bc, for four passes.\nThe complete processing sequence, including the intermediate\nhomogenisation step, is laid out in the flow sheet below.\n\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.6\\textwidth]{figures/flowchart.pdf}\n\\caption{Processing route: casting, homogenisation, and four ECAP passes.}\n\\end{figure}\n\n\\section{Results}\nThe grain structure after four passes is strongly refined, with a\nbimodal distribution of fine equiaxed grains surrounding elongated\ndeformed regions. The distribution of the Ca-rich phase is visible in\nthe micrograph.\n\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.55\\textwidth]{figures/sem.pdf}\n\\caption{Backscattered electron micrograph after four passes.}\n\\end{figure}\n\nPhase identification relied on diffraction. The as-cast pattern shows\nthe expected Ca2Mg6Zn3 peaks; after pressing, the peaks broaden but no\nnew phase appears, indicating redistribution of the intermetallic\nrather than dissolution.\n\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.7\\textwidth]{figures/xrd.pdf}\n\\caption{X-ray diffraction patterns before and after pressing.}\n\\end{figure}\n\n\\section{Conclusion}\nFour ECAP passes refine the microstructure and redistribute the\nCa-rich phase without forming new intermetallics. Aging treatments\ntailored to this redistributed state are the subject of ongoing work.\n\\end{document}\n"
+      },
+      {
+        "path": "figures/flowchart.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 200 150] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.70 0.75 0.85 rg\n10 10 180 130 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000219 00000 n \ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      },
+      {
+        "path": "figures/sem.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 220 160] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.35 0.35 0.38 rg\n10 10 200 140 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000219 00000 n \ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      },
+      {
+        "path": "figures/xrd.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 240 140] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.45 0.50 0.70 rg\n10 10 220 120 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000219 00000 n \ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      },
+      {
+        "path": "figures/schematic.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 200 150] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.75 0.40 0.35 rg\n10 10 180 130 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000219 00000 n \ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      },
+      {
+        "path": "figures/setup.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 210 155] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.45 0.60 0.45 rg\n10 10 190 135 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000219 00000 n \ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      }
+    ]
+  },
+  "instruction": "正文引用的图还没有 label，没法做交叉引用。给这些图各补一个 \\label{fig:...}，放在 \\caption 下面一行，命名语义化。figures/ 里没被引用的文件不用管，也别为它们新建环境。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{fig:",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "figures/flowchart\\.pdf\\}[\\s\\S]{0,120}?\\\\label\\{fig:",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "figures/sem\\.pdf\\}[\\s\\S]{0,120}?\\\\label\\{fig:",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "figures/xrd\\.pdf\\}[\\s\\S]{0,120}?\\\\label\\{fig:",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "figures/schematic",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "figures/setup",
+        "op": "eq",
+        "count": 0
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{graphicx}\n\n\\title{Precipitation Response of a Mg--Zn--Ca Alloy to Equal-Channel Angular Pressing}\n\\author{D.~Ferreira and T.~Aldossary}\n\\date{May 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nMagnesium alloys containing zinc and calcium are candidates for\nresorbable implant applications, but their strength remains modest in\nthe as-cast condition. Severe plastic deformation by equal-channel\nangular pressing (ECAP) refines the grain structure and redistributes\nthe second phase, and the present note reports the precipitation\nresponse of one such alloy after four passes.\n\n\\section{Methods}\nBillets of the as-cast alloy were machined to 12 mm diameter and\npressed at 473 K through a 120-degree die, route Bc, for four passes.\nThe complete processing sequence, including the intermediate\nhomogenisation step, is laid out in the flow sheet below.\n\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.6\\textwidth]{figures/flowchart.pdf}\n\\caption{Processing route: casting, homogenisation, and four ECAP passes.}\n\\label{fig:processing-route}\n\\end{figure}\n\n\\section{Results}\nThe grain structure after four passes is strongly refined, with a\nbimodal distribution of fine equiaxed grains surrounding elongated\ndeformed regions. The distribution of the Ca-rich phase is visible in\nthe micrograph.\n\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.55\\textwidth]{figures/sem.pdf}\n\\caption{Backscattered electron micrograph after four passes.}\n\\label{fig:sem-micrograph}\n\\end{figure}\n\nPhase identification relied on diffraction. The as-cast pattern shows\nthe expected Ca2Mg6Zn3 peaks; after pressing, the peaks broaden but no\nnew phase appears, indicating redistribution of the intermetallic\nrather than dissolution.\n\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.7\\textwidth]{figures/xrd.pdf}\n\\caption{X-ray diffraction patterns before and after pressing.}\n\\label{fig:xrd-patterns}\n\\end{figure}\n\n\\section{Conclusion}\nFour ECAP passes refine the microstructure and redistribute the\nCa-rich phase without forming new intermetallics. Aging treatments\ntailored to this redistributed state are the subject of ongoing work.\n\\end{document}\n"
+      },
+      {
+        "path": "figures/flowchart.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 200 150] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.70 0.75 0.85 rg\n10 10 180 130 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000219 00000 n \ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      },
+      {
+        "path": "figures/sem.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 220 160] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.35 0.35 0.38 rg\n10 10 200 140 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000219 00000 n \ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      },
+      {
+        "path": "figures/xrd.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 240 140] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.45 0.50 0.70 rg\n10 10 220 120 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000219 00000 n \ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      },
+      {
+        "path": "figures/schematic.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 200 150] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.75 0.40 0.35 rg\n10 10 180 130 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000219 00000 n \ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      },
+      {
+        "path": "figures/setup.pdf",
+        "content": "%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 210 155] /Resources << >> /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 37 >>\nstream\n0.45 0.60 0.45 rg\n10 10 190 135 re\nf\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000219 00000 n \ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n305\n%%EOF\n"
+      }
+    ]
+  }
+}

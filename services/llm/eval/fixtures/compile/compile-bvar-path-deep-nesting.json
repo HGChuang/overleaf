@@ -1,0 +1,77 @@
+{
+  "id": "compile-bvar-path-deep-nesting",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage{amsmath,amssymb}\n\n\\title{Reynolds Stress Budgets in a Pressure-Gradient\\\\ Turbulent Boundary Layer}\n\\author{Thesis draft --- M.~Herrera}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\tableofcontents\n\n\\input{chapters/intro}\n\\input{chapters/part1/chapter1}\n\\input{chapters/part2/chapter2}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/intro.tex",
+        "content": "\\chapter{Introduction}\nThe adverse-pressure-gradient turbulent boundary layer is the\ncanonical flow for studying how pressure forces redistribute\nturbulent kinetic energy among the Reynolds stresses.\nWind-tunnel campaigns over the past two decades have mapped the\nresponse of the outer layer to increasingly strong gradients,\nyet the budget terms themselves remain sparsely documented.\n\nThis thesis reanalyses three stations from a recent campaign\nand assembles the full stress budgets at each station.\n"
+      },
+      {
+        "path": "chapters/part1/chapter1.tex",
+        "content": "\\chapter{Climbing-Wall Scaling of the Reynolds Stresses}\nThe pressure-gradient parameter enters the stress budgets through\nthe production and pressure--strain terms.\nThe sections below summarise the equilibrium estimates first\nand then assemble the measured budget terms.\n\n\\input{chapters/part1/section2}\n"
+      },
+      {
+        "path": "chapters/part1/section2.tex",
+        "content": "\\section{Equilibrium Estimates}\nAt station three the boundary layer is close to equilibrium,\nand the wake strength is nearly constant across the traverse.\nThe Clauser parameter $\\betta = 1.6$ at this station indicates a\nmoderate adverse pressure gradient, and the stress profiles\ncollapse reasonably well on outer variables.\n\nA local-equilibrium argument then closes the budget:\nproduction balances dissipation in the overlap layer,\nand the remaining terms are estimated from the measured profiles.\n"
+      },
+      {
+        "path": "chapters/part2/chapter2.tex",
+        "content": "\\chapter{Measured Budget Terms}\nThe measured production and dissipation profiles agree with the\nequilibrium estimate to within the calibration uncertainty.\nThe pressure--strain term is inferred as the closing entry\nand shows the expected transfer toward the wall-normal component.\n\nThese results support the climbing-wall scaling over the\ncentral portion of the layer and motivate the finer\nnear-wall measurements proposed in the final chapter.\n"
+      }
+    ]
+  },
+  "instruction": "毕业论文又编不过了！log 里说什么 undefined control sequence，我把 main.tex 翻来覆去翻烂了也没找出毛病。赶紧修到能编译，其它文件一个字都不许动，过两天要送审了。",
+  "grader": {
+    "type": "compile",
+    "assertions": [
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "chapters/intro.tex"
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "chapters/part1/chapter1.tex"
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "chapters/part2/chapter2.tex"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage{amsmath,amssymb}\n\n\\title{Reynolds Stress Budgets in a Pressure-Gradient\\\\ Turbulent Boundary Layer}\n\\author{Thesis draft --- M.~Herrera}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\tableofcontents\n\n\\input{chapters/intro}\n\\input{chapters/part1/chapter1}\n\\input{chapters/part2/chapter2}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/intro.tex",
+        "content": "\\chapter{Introduction}\nThe adverse-pressure-gradient turbulent boundary layer is the\ncanonical flow for studying how pressure forces redistribute\nturbulent kinetic energy among the Reynolds stresses.\nWind-tunnel campaigns over the past two decades have mapped the\nresponse of the outer layer to increasingly strong gradients,\nyet the budget terms themselves remain sparsely documented.\n\nThis thesis reanalyses three stations from a recent campaign\nand assembles the full stress budgets at each station.\n"
+      },
+      {
+        "path": "chapters/part1/chapter1.tex",
+        "content": "\\chapter{Climbing-Wall Scaling of the Reynolds Stresses}\nThe pressure-gradient parameter enters the stress budgets through\nthe production and pressure--strain terms.\nThe sections below summarise the equilibrium estimates first\nand then assemble the measured budget terms.\n\n\\input{chapters/part1/section2}\n"
+      },
+      {
+        "path": "chapters/part1/section2.tex",
+        "content": "\\section{Equilibrium Estimates}\nAt station three the boundary layer is close to equilibrium,\nand the wake strength is nearly constant across the traverse.\nThe Clauser parameter $\\beta = 1.6$ at this station indicates a\nmoderate adverse pressure gradient, and the stress profiles\ncollapse reasonably well on outer variables.\n\nA local-equilibrium argument then closes the budget:\nproduction balances dissipation in the overlap layer,\nand the remaining terms are estimated from the measured profiles.\n"
+      },
+      {
+        "path": "chapters/part2/chapter2.tex",
+        "content": "\\chapter{Measured Budget Terms}\nThe measured production and dissipation profiles agree with the\nequilibrium estimate to within the calibration uncertainty.\nThe pressure--strain term is inferred as the closing entry\nand shows the expected transfer toward the wall-normal component.\n\nThese results support the climbing-wall scaling over the\ncentral portion of the layer and motivate the finer\nnear-wall measurements proposed in the final chapter.\n"
+      }
+    ]
+  }
+}

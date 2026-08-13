@@ -1,0 +1,96 @@
+{
+  "id": "structure-hard-promote-then-move",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{report}\n\\begin{document}\n\\input{chapters/design}\n\\input{chapters/procedure}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/design.tex",
+        "content": "\\chapter{Design}\nThe frame is a welded truss of S355 steel.\n\\section{Load Cases}\nDead load, live load, and wind are combined per the design code.\n"
+      },
+      {
+        "path": "chapters/procedure.tex",
+        "content": "\\chapter{Procedure}\n\\section{Overview}\nSpecimens are prepared, instrumented, and tested in sequence.\n\\subsection{Data Collection}\nStrain gauges are sampled at 1 kHz for each load step.\n\\subsection{Calibration}\n\\label{sec:calib}\nLoad cells are calibrated with reference weights before each session; before each session.\n\\section{Reporting}\nResults are archived with their calibration records; see Section~\\ref{sec:calib}.\n"
+      }
+    ]
+  },
+  "instruction": "结构调整三步走：① 把 procedure.tex 里 Data Collection 和 Calibration 两个 subsection 升级为 section；② 升级后的 \\section{Calibration}（含其 \\label 与正文整段）整体移动到 design.tex 末尾，procedure.tex 不再保留该节；③ 移过去之后把该节 label 从 \\label{sec:calib} 改成 \\label{sec:calibration}，procedure.tex 里 Reporting 节那处 \\ref{sec:calib} 引用同步改为 \\ref{sec:calibration}。其余内容一字不改。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "chapters/procedure.tex",
+        "pattern": "\\\\section\\{Data Collection\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/procedure.tex",
+        "pattern": "\\\\subsection\\{",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/procedure.tex",
+        "pattern": "Calibration",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/design.tex",
+        "pattern": "\\\\section\\{Calibration\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/design.tex",
+        "pattern": "\\\\label\\{sec:calibration\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/procedure.tex",
+        "pattern": "\\\\ref\\{sec:calibration\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "chapters/design.tex",
+        "patterns": [
+          "\\\\section\\{Load Cases\\}",
+          "\\\\section\\{Calibration\\}"
+        ]
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{report}\n\\begin{document}\n\\input{chapters/design}\n\\input{chapters/procedure}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/design.tex",
+        "content": "\\chapter{Design}\nThe frame is a welded truss of S355 steel.\n\\section{Load Cases}\nDead load, live load, and wind are combined per the design code.\n\\section{Calibration}\n\\label{sec:calibration}\nLoad cells are calibrated with reference weights before each session; before each session.\n"
+      },
+      {
+        "path": "chapters/procedure.tex",
+        "content": "\\chapter{Procedure}\n\\section{Overview}\nSpecimens are prepared, instrumented, and tested in sequence.\n\\section{Data Collection}\nStrain gauges are sampled at 1 kHz for each load step.\n\\section{Reporting}\nResults are archived with their calibration records; see Section~\\ref{sec:calibration}.\n"
+      }
+    ]
+  }
+}

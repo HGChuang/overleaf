@@ -1,0 +1,72 @@
+{
+  "id": "structure-bvar-tabular-whitespace",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\n\\title{Winter Wheat Variety Trial, Harvest Year 2025}\n\\author{Field Crops Unit, Northmoor Station}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Design}\nThe trial was laid out as a randomised complete block with\nfour replicates on a silty clay loam at Northmoor. Plots were\ndrilled on 12 October 2024 at 350 seeds per square metre,\nand the preceding crop was oilseed rape. Nitrogen was applied\nin three splits totalling 190 kg per hectare, and growth\nregulators were used uniformly across the trial. Three\ncultivars were entered: Ailsa, Maris, and Kew. Harvest was\ntaken on 18 August 2025 with a plot combine, and yields are\nreported at 15\\% moisture.\n\n\\section{Results}\nTable \\ref{tab:yield} summarises the agronomic measurements.\nProtein was determined by near-infrared spectroscopy on\ncleaned grain, and lodging was scored visually two weeks\nbefore harvest as the percentage of the plot area affected.\n\n\\begin{table}[h]\n\\centering\n\\caption{Yield and grain quality by cultivar (means of four\nreplicates).}\n\\label{tab:yield}\n\\begin{tabular}{lccc}\n\\toprule\nCultivar & Yield (t/ha) & Protein (\\%) & Lodging (\\%) \\\\\n\\midrule\nAilsa    & 8.41         & 12.3         & 4.7          \\\\\nMaris    & 7.98         & 13.1         & 3.9          \\\\\nKew      & 8.07         & 12.8         & 5.2          \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\nAilsa combined the highest yield with the weakest straw,\nalthough its lodging score remained acceptable in this\nseason. Maris yielded significantly less than Ailsa but\nretained the protein advantage for which it is grown, and\nits straw strength was the best of the three. Kew was\nintermediate on every measure and remains a useful check\nagainst which the milling trade can benchmark new entries.\n\n\\section{Weather}\nThe season was kinder than the two preceding ones. Autumn\nestablishment was rapid, winter kill was negligible, and a\ndry, bright June filled the grain evenly. The only stress\ncame late: ten days of humid weather in mid-July encouraged\n\\textit{Fusarium} in the unsprayed guard plots, but the\ntrial itself had received its full fungicide programme and\nno disease scores were taken. Rainfall for the growing\nseason totalled 412 mm against a thirty-year mean of 445 mm.\n\n\\section{Implications}\nOn this evidence Ailsa should remain the first-choice feed\nwheat for the district, with Maris retained where a milling\npremium is available. Kew's consistency across seasons\ncontinues to justify its place in the recommended list\ntrials. A second year of data will be required before the\nprotein penalty observed in Ailsa can be attributed to the\ncultivar rather than to the season.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Maris 的产量复测出来了，是 8.12——把表里那个 7.98 改成 8.12。表格列与列之间是用空格对齐的，改完对齐必须原样，一个空格都不许多也不能少；其它行、其它列、表格以外一律不动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Maris    & 8.12         & 13.1         & 3.9          \\\\",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Maris    & 7.98         & 13.1         & 3.9          \\\\",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "7.98",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Kew      & 8.07         & 12.8         & 5.2          \\\\",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Ailsa    & 8.41         & 12.3         & 4.7          \\\\",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Cultivar & Yield (t/ha) & Protein (\\%) & Lodging (\\%) \\\\",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\n\\title{Winter Wheat Variety Trial, Harvest Year 2025}\n\\author{Field Crops Unit, Northmoor Station}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Design}\nThe trial was laid out as a randomised complete block with\nfour replicates on a silty clay loam at Northmoor. Plots were\ndrilled on 12 October 2024 at 350 seeds per square metre,\nand the preceding crop was oilseed rape. Nitrogen was applied\nin three splits totalling 190 kg per hectare, and growth\nregulators were used uniformly across the trial. Three\ncultivars were entered: Ailsa, Maris, and Kew. Harvest was\ntaken on 18 August 2025 with a plot combine, and yields are\nreported at 15\\% moisture.\n\n\\section{Results}\nTable \\ref{tab:yield} summarises the agronomic measurements.\nProtein was determined by near-infrared spectroscopy on\ncleaned grain, and lodging was scored visually two weeks\nbefore harvest as the percentage of the plot area affected.\n\n\\begin{table}[h]\n\\centering\n\\caption{Yield and grain quality by cultivar (means of four\nreplicates).}\n\\label{tab:yield}\n\\begin{tabular}{lccc}\n\\toprule\nCultivar & Yield (t/ha) & Protein (\\%) & Lodging (\\%) \\\\\n\\midrule\nAilsa    & 8.41         & 12.3         & 4.7          \\\\\nMaris    & 8.12         & 13.1         & 3.9          \\\\\nKew      & 8.07         & 12.8         & 5.2          \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\nAilsa combined the highest yield with the weakest straw,\nalthough its lodging score remained acceptable in this\nseason. Maris yielded significantly less than Ailsa but\nretained the protein advantage for which it is grown, and\nits straw strength was the best of the three. Kew was\nintermediate on every measure and remains a useful check\nagainst which the milling trade can benchmark new entries.\n\n\\section{Weather}\nThe season was kinder than the two preceding ones. Autumn\nestablishment was rapid, winter kill was negligible, and a\ndry, bright June filled the grain evenly. The only stress\ncame late: ten days of humid weather in mid-July encouraged\n\\textit{Fusarium} in the unsprayed guard plots, but the\ntrial itself had received its full fungicide programme and\nno disease scores were taken. Rainfall for the growing\nseason totalled 412 mm against a thirty-year mean of 445 mm.\n\n\\section{Implications}\nOn this evidence Ailsa should remain the first-choice feed\nwheat for the district, with Maris retained where a milling\npremium is available. Kew's consistency across seasons\ncontinues to justify its place in the recommended list\ntrials. A second year of data will be required before the\nprotein penalty observed in Ailsa can be attributed to the\ncultivar rather than to the season.\n\\end{document}\n"
+      }
+    ]
+  }
+}

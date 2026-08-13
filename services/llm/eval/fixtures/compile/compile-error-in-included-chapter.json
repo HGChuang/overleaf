@@ -1,0 +1,43 @@
+{
+  "id": "compile-error-in-included-chapter",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Low-Resource Neural Machine Translation with Monolingual Data}\n\\author{A. Quintero}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\input{chapters/intro}\n\\input{chapters/model}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/intro.tex",
+        "content": "\\section{Introduction}\nNeural machine translation quality drops sharply\nwhen parallel sentences are scarce.\nWe study how far monolingual text in the target language\ncan close the gap for a language pair with only ninety thousand parallel sentences.\n"
+      },
+      {
+        "path": "chapters/model.tex",
+        "content": "\\section{Model}\nThe encoder produces hidden states $h_1$, $h_2$ and $h_3 for each source token,\nwhich the decoder attends over while generating the translation.\n\nWe initialise both sides from a multilingual pretrained model\nand fine-tune on a mix of parallel and back-translated data.\nThe back-translation weight is annealed over the first half of training.\n"
+      }
+    ]
+  },
+  "instruction": "机器翻译这个项目编不过，main 里 \\input 了几个章节文件，帮我定位下问题修好。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Low-Resource Neural Machine Translation with Monolingual Data}\n\\author{A. Quintero}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\input{chapters/intro}\n\\input{chapters/model}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/intro.tex",
+        "content": "\\section{Introduction}\nNeural machine translation quality drops sharply\nwhen parallel sentences are scarce.\nWe study how far monolingual text in the target language\ncan close the gap for a language pair with only ninety thousand parallel sentences.\n"
+      },
+      {
+        "path": "chapters/model.tex",
+        "content": "\\section{Model}\nThe encoder produces hidden states $h_1$, $h_2$ and $h_3$ for each source token,\nwhich the decoder attends over while generating the translation.\n\nWe initialise both sides from a multilingual pretrained model\nand fine-tune on a mix of parallel and back-translated data.\nThe back-translation weight is annealed over the first half of training.\n"
+      }
+    ]
+  }
+}

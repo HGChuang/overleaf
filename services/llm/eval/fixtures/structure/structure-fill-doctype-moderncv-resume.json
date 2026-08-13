@@ -1,0 +1,86 @@
+{
+  "id": "structure-fill-doctype-moderncv-resume",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt,a4paper,sans]{moderncv}\n\\moderncvstyle{classic}\n\\moderncvcolor{blue}\n\\usepackage[scale=0.78]{geometry}\n\\name{Maria}{Ferrero}\n\\title{Curriculum Vitae}\n\\address{48 Canal Street}{Delft}{Netherlands}\n\\phone[mobile]{+31~6~1234~5678}\n\\email{maria.ferrero@example.org}\n\\begin{document}\n\\makecvtitle\n\n\\section{Education}\n\\cventry{Sept 2012 -- Jun 2016}{B.Sc. in Earth Sciences}{Utrecht University}{Utrecht}{}{}\n\\cventry{2016.09--2018.08}{M.Sc. in Hydrology}{Delft University of Technology}{Delft}{}{Thesis: groundwater recharge under urbanization.}\n\n\\section{Experience}\n\\cventry{2018.10--2021.12}{Hydrological Analyst}{Deltares}{Delft}{}{Built regional groundwater models for two provinces.}\n\\cventry{Jan. 2022 -- May 2024}{Senior Hydrologist}{WaterBoard Rijnland}{Leiden}{}{Led the salinization monitoring programme.}\n\n\\section{Skills}\n\\cvitem{Modelling}{MODFLOW, Python scripting}\n\\cvitem{Languages}{Dutch (native), English (fluent)}\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "简历要投了，帮我把日期格式统一：所有 \\cventry 的日期参数统一写成 YYYY.MM--YYYY.MM 的形式，至今的写 YYYY.MM--present。现在 Sept 2012 -- Jun 2016 和 Jan. 2022 -- May 2024 这两处不合规，另外两处已经是规范格式、保持不动。再加一段最新工作经历：2024 年 6 月至今，在 AquaNova Consulting 任 Principal Hydrologist，地点 Rotterdam，职责一句话（牵头三个城市的洪水风险评估），加在 Experience 现有条目之后。已有的四段经历文字别动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Sept 2012",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Jan. 2022",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "2012.09--2016.06",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "2022.01--2024.05",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "2016.09--2018.08",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "2018.10--2021.12",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\cventry",
+        "op": "eq",
+        "count": 5
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\cventry{2024.06--present}{Principal Hydrologist}{AquaNova Consulting}{Rotterdam}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt,a4paper,sans]{moderncv}\n\\moderncvstyle{classic}\n\\moderncvcolor{blue}\n\\usepackage[scale=0.78]{geometry}\n\\name{Maria}{Ferrero}\n\\title{Curriculum Vitae}\n\\address{48 Canal Street}{Delft}{Netherlands}\n\\phone[mobile]{+31~6~1234~5678}\n\\email{maria.ferrero@example.org}\n\\begin{document}\n\\makecvtitle\n\n\\section{Education}\n\\cventry{2012.09--2016.06}{B.Sc. in Earth Sciences}{Utrecht University}{Utrecht}{}{}\n\\cventry{2016.09--2018.08}{M.Sc. in Hydrology}{Delft University of Technology}{Delft}{}{Thesis: groundwater recharge under urbanization.}\n\n\\section{Experience}\n\\cventry{2018.10--2021.12}{Hydrological Analyst}{Deltares}{Delft}{}{Built regional groundwater models for two provinces.}\n\\cventry{2022.01--2024.05}{Senior Hydrologist}{WaterBoard Rijnland}{Leiden}{}{Led the salinization monitoring programme.}\n\\cventry{2024.06--present}{Principal Hydrologist}{AquaNova Consulting}{Rotterdam}{}{Leads flood-risk assessment for three municipalities.}\n\n\\section{Skills}\n\\cvitem{Modelling}{MODFLOW, Python scripting}\n\\cvitem{Languages}{Dutch (native), English (fluent)}\n\\end{document}\n"
+      }
+    ]
+  }
+}

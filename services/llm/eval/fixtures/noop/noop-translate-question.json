@@ -1,0 +1,19 @@
+{
+  "id": "noop-translate-question",
+  "category": "noop",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Edge Effects Amplify Pollinator Decline in Fragmented Tropical Forests}\n\\author{C.~Mendoza, T.~Fitzgerald, and A.~Diallo}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nHabitat fragmentation is a leading driver of biodiversity loss, yet its\nindirect effects on species interactions remain poorly quantified. We\nsurveyed pollinator communities across 37 forest fragments in the\nAtlantic Forest of Brazil, spanning three orders of magnitude in fragment\nsize, and measured visitation rates to a standardized array of flowering\nplants. Pollinator abundance declined by 62\\% and species richness by\n45\\% from forest interiors to edges, with the steepest declines occurring\nwithin the first 100 m of forest edge. Small fragments ($<$10 ha) were\ndominated by a single generalist bee species and exhibited visitation\nrates comparable to open pasture. Structural equation models indicate\nthat edge effects on pollinators are mediated primarily through changes\nin floral resource availability rather than microclimate. Our results\nimply that conservation planning based on fragment area alone may\nsubstantially underestimate functional pollinator loss, and that\nbuffer-zone management around fragment edges offers a cost-effective\nmitigation strategy.\n\\end{abstract}\n\n\\section{Introduction}\nTropical forests hold the majority of terrestrial species, yet they are\nincreasingly reduced to fragments embedded in agricultural matrices. When\na continuous forest is broken up, the resulting fragments experience\naltered microclimates, increased hunting pressure, and shifts in species\ncomposition along their edges. While the consequences of fragmentation\nfor plants and vertebrates are well documented, far less is known about\nhow fragmentation restructures the mutualistic interactions---such as\npollination---on which forest regeneration depends. Here we quantify how\npollinator communities and their visitation rates change from forest\ninteriors to edges across a fragmentation gradient in the Brazilian\nAtlantic Forest.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这个摘要的中文意思是什么？给我翻译一下看看。",
+  "grader": {
+    "type": "noop"
+  }
+}

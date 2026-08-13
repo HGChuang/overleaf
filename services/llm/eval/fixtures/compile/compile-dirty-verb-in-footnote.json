@@ -1,0 +1,49 @@
+{
+  "id": "compile-dirty-verb-in-footnote",
+  "category": "compile",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage[margin=2.5cm]{geometry}\n\n\\title{Northgate Telemetry Agent\\\\ Operator Manual}\n\\author{Platform Operations Group}\n\\date{Version 2.3 --- July 2026}\n\n\\begin{document}\n\\maketitle\n\\tableofcontents\n\n\\input{chapters/install.tex}\n\\input{chapters/usage.tex}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/install.tex",
+        "content": "\\chapter{Installation}\n\n\\section{Prerequisites}\nThe agent runs on any Linux host with a systemd-based service manager\nand outbound HTTPS access to the collection endpoint. A dedicated\nservice account is recommended; the package post-install script\ncreates the account and the state directory if they do not exist.\nDisk usage is modest: the binary is 18~MB and the default local\nbuffer grows to at most 512~MB before oldest batches are dropped.\n\n\\section{Package Install}\nOn Debian-derived hosts install the downloaded package with the\nsystem package manager and then enable the unit. The installer does\nnot start the service automatically because a valid enrolment token\nmust be present first. The token file is provisioned by the\nconfiguration management tooling and must be readable only by the\nservice account.\n\n\\section{Configuration}\nThe unit file passes the listen address through an environment\nvariable. The service reads its listen address from\\footnote{\\verb|bind_host| in the unit file, default \\verb|127.0.0.1:9464|.}\nthe environment at startup, and a mismatch with the firewall rule is\nthe most common cause of a silent install. After editing the unit\nfile, reload the manager configuration and restart the service.\n\n\\section{Verification}\nA successful install answers on its diagnostics port within five\nseconds of startup. Check the journal for the enrolment line, then\nconfirm that the first batch was accepted by the collector. If the\njournal shows repeated backoff messages, the enrolment token is\nexpired or the outbound proxy is intercepting the connection.\n"
+      },
+      {
+        "path": "chapters/usage.tex",
+        "content": "\\chapter{Daily Operation}\n\n\\section{Dashboards}\nThe fleet overview dashboard aggregates the heartbeat stream and\nmarks any host silent for more than two collection intervals. The\nper-host drill-down shows queue depth, batch latency, and the last\nhundred diagnostic lines as shipped by the agent.\n\n\\section{Upgrades}\nUpgrades follow the monthly train. The package manager replaces the\nbinary in place and restarts the unit; the local buffer survives\nrestarts, so no batches are lost during a normal upgrade. Hosts that\nmiss two consecutive trains are flagged on the fleet overview and\nshould be updated by hand during the next maintenance window.\n\n\\section{Troubleshooting}\nIf a host stops reporting, first check that the service is enabled\nand running, then check the diagnostics port locally. A full local\nbuffer with an idle network usually means the collector endpoint is\nrejecting batches; the agent logs the rejection reason once per\nminute. Contact the on-call rotation with the host name and the last\nrejection line if the cause is not obvious.\n\n\\section{Decommissioning}\nBefore a host is retired, disable the unit, remove the package, and\ndelete the state directory. The enrolment token must be revoked in\nthe directory service so that the host identity cannot be reused by\na replacement machine with a recycled name.\n"
+      }
+    ]
+  },
+  "instruction": "这份运维手册 compile 不通过，报错信息看不懂，好像提到什么 verb。我检查了好几边也没找到问题出在哪，邦忙修一下吧，usage 那章已经校对定稿了别动它。",
+  "grader": {
+    "type": "compile",
+    "assertions": [
+      {
+        "kind": "unchanged-file",
+        "file": "chapters/usage.tex"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage[margin=2.5cm]{geometry}\n\n\\title{Northgate Telemetry Agent\\\\ Operator Manual}\n\\author{Platform Operations Group}\n\\date{Version 2.3 --- July 2026}\n\n\\begin{document}\n\\maketitle\n\\tableofcontents\n\n\\input{chapters/install.tex}\n\\input{chapters/usage.tex}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/install.tex",
+        "content": "\\chapter{Installation}\n\n\\section{Prerequisites}\nThe agent runs on any Linux host with a systemd-based service manager\nand outbound HTTPS access to the collection endpoint. A dedicated\nservice account is recommended; the package post-install script\ncreates the account and the state directory if they do not exist.\nDisk usage is modest: the binary is 18~MB and the default local\nbuffer grows to at most 512~MB before oldest batches are dropped.\n\n\\section{Package Install}\nOn Debian-derived hosts install the downloaded package with the\nsystem package manager and then enable the unit. The installer does\nnot start the service automatically because a valid enrolment token\nmust be present first. The token file is provisioned by the\nconfiguration management tooling and must be readable only by the\nservice account.\n\n\\section{Configuration}\nThe unit file passes the listen address through an environment\nvariable. The service reads its listen address from\\footnote{\\texttt{bind\\_host} in the unit file, default \\texttt{127.0.0.1:9464}.}\nthe environment at startup, and a mismatch with the firewall rule is\nthe most common cause of a silent install. After editing the unit\nfile, reload the manager configuration and restart the service.\n\n\\section{Verification}\nA successful install answers on its diagnostics port within five\nseconds of startup. Check the journal for the enrolment line, then\nconfirm that the first batch was accepted by the collector. If the\njournal shows repeated backoff messages, the enrolment token is\nexpired or the outbound proxy is intercepting the connection.\n"
+      },
+      {
+        "path": "chapters/usage.tex",
+        "content": "\\chapter{Daily Operation}\n\n\\section{Dashboards}\nThe fleet overview dashboard aggregates the heartbeat stream and\nmarks any host silent for more than two collection intervals. The\nper-host drill-down shows queue depth, batch latency, and the last\nhundred diagnostic lines as shipped by the agent.\n\n\\section{Upgrades}\nUpgrades follow the monthly train. The package manager replaces the\nbinary in place and restarts the unit; the local buffer survives\nrestarts, so no batches are lost during a normal upgrade. Hosts that\nmiss two consecutive trains are flagged on the fleet overview and\nshould be updated by hand during the next maintenance window.\n\n\\section{Troubleshooting}\nIf a host stops reporting, first check that the service is enabled\nand running, then check the diagnostics port locally. A full local\nbuffer with an idle network usually means the collector endpoint is\nrejecting batches; the agent logs the rejection reason once per\nminute. Contact the on-call rotation with the host name and the last\nrejection line if the cause is not obvious.\n\n\\section{Decommissioning}\nBefore a host is retired, disable the unit, remove the package, and\ndelete the state directory. The enrolment token must be revoked in\nthe directory service so that the host identity cannot be reused by\na replacement machine with a recycled name.\n"
+      }
+    ]
+  }
+}

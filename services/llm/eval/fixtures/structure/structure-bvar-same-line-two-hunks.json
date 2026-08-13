@@ -1,0 +1,65 @@
+{
+  "id": "structure-bvar-same-line-two-hunks",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Commutation and the Decline of Labour Services\\\\ in Thirteenth-Century England}\n\\author{H.~Pemberton}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe commutation of labour services into money payments was\nlong treated as a symptom of the commercialisation of the\nEnglish countryside in the decades after 1180.\nRecent work on manorial accounts has shifted the debate from\ngrand chronology toward the bargaining position of tenants.\n\n\\section{Bargaining Over Services}\nCustomary tenants owed a mixture of week-work and boon-work\nwhose burden varied considerably from manor to manor.\nThe tenant could instead commute the obligation into a money payment known as \"scutage\", assessed in-lieu of service and recorded in the pipe rolls of the exchequer.\nThe spread of such arrangements was uneven:\ncommutation advanced fastest on the demesne-poor manors of the\neast, where lords had greater need of cash than of labour.\n\n\\section{The Evidence of the Accounts}\nManorial accounts reveal the pace of commutation only\nindirectly, since many lords continued to record services\nas if they had been rendered in kind.\nWhere the account lists both the service owed and the payment\nreceived, the historian can track the substitution year by year.\n\n\\section{Discussion}\nCommutation should be read as a negotiation rather than a\nsecular drift: tenants purchased predictability, while lords\nconverted uncertain labour into revenue that could be spent\nor lent elsewhere in the estate economy.\n\n\\section{Conclusion}\nThe evidence assembled here supports a bargaining account of\ncommutation and cautions against treating the decline of\nlabour services as an automatic consequence of monetisation.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "帮我把这段里那局话改两处：一是 scutage 两边的直引号换成 LaTeX 引号（`...' 那种），二是 in-lieu 中间的连字符去掉写成 in lieu。都在同一行上，其它一概别动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\"scutage\"",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "`scutage'",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "in-lieu",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "in lieu",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "pipe rolls of the exchequer",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Commutation and the Decline of Labour Services\\\\ in Thirteenth-Century England}\n\\author{H.~Pemberton}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nThe commutation of labour services into money payments was\nlong treated as a symptom of the commercialisation of the\nEnglish countryside in the decades after 1180.\nRecent work on manorial accounts has shifted the debate from\ngrand chronology toward the bargaining position of tenants.\n\n\\section{Bargaining Over Services}\nCustomary tenants owed a mixture of week-work and boon-work\nwhose burden varied considerably from manor to manor.\nThe tenant could instead commute the obligation into a money payment known as `scutage', assessed in lieu of service and recorded in the pipe rolls of the exchequer.\nThe spread of such arrangements was uneven:\ncommutation advanced fastest on the demesne-poor manors of the\neast, where lords had greater need of cash than of labour.\n\n\\section{The Evidence of the Accounts}\nManorial accounts reveal the pace of commutation only\nindirectly, since many lords continued to record services\nas if they had been rendered in kind.\nWhere the account lists both the service owed and the payment\nreceived, the historian can track the substitution year by year.\n\n\\section{Discussion}\nCommutation should be read as a negotiation rather than a\nsecular drift: tenants purchased predictability, while lords\nconverted uncertain labour into revenue that could be spent\nor lent elsewhere in the estate economy.\n\n\\section{Conclusion}\nThe evidence assembled here supports a bargaining account of\ncommutation and cautions against treating the decline of\nlabour services as an automatic consequence of monetisation.\n\\end{document}\n"
+      }
+    ]
+  }
+}

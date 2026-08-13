@@ -1,0 +1,34 @@
+{
+  "id": "structure-split-section",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Methods and Results}\nWe formalize query routing as a bandit problem. Each arm corresponds to a candidate index structure, and rewards are measured latencies. The explorer uses Thompson sampling with a Gaussian prior.\nWe now turn to the empirical evaluation of the proposed scheme.\nOn the TPC-H workload the router converges within 200 queries. Mean latency drops 31\\% against the static baseline. Tail latency improves most on join-heavy queries.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这个章节把方法和实验结果混在一起了。请以 \"We now turn to the empirical evaluation of the proposed scheme.\" 这一句为分界：该句之前的部分标题改为 \\section{Methods}（替换掉原来的 Methods and Results），从该句开始的内容归入新建的 \\section{Results}，所有正文句子一字不动、顺序不变。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\section\\{Methods\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\section\\{Results\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\section\\{Methods and Results\\}", "op": "eq", "count": 0 },
+      { "kind": "order", "file": "main.tex", "patterns": ["\\\\section\\{Methods\\}", "\\\\section\\{Results\\}"] }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Methods}\nWe formalize query routing as a bandit problem. Each arm corresponds to a candidate index structure, and rewards are measured latencies. The explorer uses Thompson sampling with a Gaussian prior.\n\\section{Results}\nWe now turn to the empirical evaluation of the proposed scheme.\nOn the TPC-H workload the router converges within 200 queries. Mean latency drops 31\\% against the static baseline. Tail latency improves most on join-heavy queries.\n\\end{document}\n"
+      }
+    ]
+  }
+}

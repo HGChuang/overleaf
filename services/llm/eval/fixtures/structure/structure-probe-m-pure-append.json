@@ -1,0 +1,67 @@
+{
+  "id": "structure-probe-m-pure-append",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{The Bridge of My Hometown}\n\\author{Wanzhou Lin}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{The Bridge in Memory}\nThe stone bridge of my hometown spans a narrow river,\nits body laid from blue-grey slabs, its balustrade carved\nwith lotus patterns worn smooth by the years.\nAs a child I would sit beneath its arch and watch the fishing\nboats pass through, the boatwomen's work songs drifting far\nalong the water.\nOn summer nights the neighbours would gather at the bridgehead\nto enjoy the cool air, talking of the harvest and of relatives\nin distant towns.\n\n\\section{The Bridge Gone}\nWhen I returned the year before last, the stone bridge was gone.\nIn its place stood a flat concrete crossing:\nwide, level, and silent.\nThe river still runs its course, but no one sits at the\nbridgehead any more, and the work songs beneath the arch\nhave vanished together with those summer-evening chats.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "在 \\end{document} 之前追加一个附录：先写 \\appendix，再加一节 \\section{Supplementary Material}，节里就写一句「Supplementary material to be compiled.」。正文一个字都别动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\appendix",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\section{Supplementary Material}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Supplementary material to be compiled.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\appendix",
+          "\\\\section\\{Supplementary Material\\}"
+        ]
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\appendix",
+          "\\\\end\\{document\\}"
+        ]
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{The Bridge of My Hometown}\n\\author{Wanzhou Lin}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{The Bridge in Memory}\nThe stone bridge of my hometown spans a narrow river,\nits body laid from blue-grey slabs, its balustrade carved\nwith lotus patterns worn smooth by the years.\nAs a child I would sit beneath its arch and watch the fishing\nboats pass through, the boatwomen's work songs drifting far\nalong the water.\nOn summer nights the neighbours would gather at the bridgehead\nto enjoy the cool air, talking of the harvest and of relatives\nin distant towns.\n\n\\section{The Bridge Gone}\nWhen I returned the year before last, the stone bridge was gone.\nIn its place stood a flat concrete crossing:\nwide, level, and silent.\nThe river still runs its course, but no one sits at the\nbridgehead any more, and the work songs beneath the arch\nhave vanished together with those summer-evening chats.\n\n\\appendix\n\\section{Supplementary Material}\nSupplementary material to be compiled.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

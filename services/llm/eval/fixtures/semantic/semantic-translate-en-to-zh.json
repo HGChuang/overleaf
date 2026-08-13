@@ -1,0 +1,23 @@
+{
+  "id": "semantic-translate-en-to-zh",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{CJKutf8}\n\\title{Personalized Federated Learning with Local Adaptation}\n\\author{Anon}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\nFederated learning trains a shared model across decentralized devices without exchanging raw data. However, statistical heterogeneity across clients degrades the performance of the global model on individual devices. We propose a personalized federated learning algorithm that adapts the global model to each client through a lightweight local adaptation layer. Experiments on four benchmarks show that our method improves average client accuracy by 6 percent over strong baselines while keeping communication costs unchanged.\n\\end{abstract}\n\\section{Introduction}\nFederated learning enables collaborative model training under privacy constraints.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "文档已经加载了 CJKutf8 宏包。请把这段英文摘要翻译成通顺的中文学术语言，译文放在 \\begin{CJK}{UTF8}{gbsn} 环境里（保持在 abstract 结构内），术语要规范（联邦学习、个性化、统计异质性、通信开销），四个基准、提升 6%、通信开销不变这些数字与结论不得改动。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 摘要完整译为通顺中文学术语言，四个信息点（去中心化训练不交换原始数据/统计异质性损害全局模型/轻量本地适配层实现个性化/四基准平均准确率提升 6% 且通信开销不变）全部准确，译文正确置于 CJK 环境内，术语规范；4: 译文基本通顺且 ≥3 个信息点准确，个别术语欠规范，CJK 环境使用正确；3: 译文可读但漏 1 个信息点或数字有误；2: 生硬直译难懂，或漏 ≥2 个信息点；1: 未翻译、译文未放入 CJK 环境导致编译失败，或虚构内容"
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "id": "structure-probe-a-conditional-branch",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage{booktabs}\n\\title{Candidate Alloys for a Pedestrian Bridge Deck: Screening Report}\n\\author{Materials Selection Group}\n\\date{July 2026}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\nFour candidate alloys were screened for a pedestrian bridge deck.\nDensity, modulus, yield strength, elongation, conductivity, and cost were measured.\nSteel remains the baseline against which all candidates are judged.\nTitanium leads on strength but fails the cost screen.\nBrass offers a middle path for decorative elements.\n\\end{abstract}\n\\section{Introduction}\nThe pedestrian bridge at Riverside Park needs a new deck structure.\nThe existing timber deck has reached the end of its service life.\nThe city asked for a metal replacement with a forty-year design life.\nFour candidate alloys were shortlisted by the materials selection group.\nThe shortlist came out of a broader screening of twelve alloys.\nScreening criteria included strength, stiffness, weight, and cost.\nCorrosion resistance was assessed in a parallel study.\nThis report covers the mechanical and economic measurements only.\nThe deck panels are simply supported between steel stringers.\nPanel spans reach 1.8 m in the longest bays.\nPedestrian loading follows the municipal bridge code.\nOccasional maintenance vehicles add a concentrated wheel load.\nWeight matters because the existing stringers stay in place.\nHeavier panels would force stringer strengthening.\nStiffness governs the vibration comfort of pedestrians.\nYield strength governs the ultimate capacity checks.\nThermal conductivity matters for surface temperature in summer.\nBarefoot use is common near the park playground.\nCost is normalized against structural steel as the baseline.\nThe city procurement office caps the normalized cost at 2.0.\nAny candidate above that cap needs a written waiver.\nThe screening results feed directly into the concept design review.\n\\section{Specimens}\nAll four alloys were sourced as hot-rolled plate.\nPlate thickness was 12 mm across the board.\nCoupons were cut by waterjet to avoid a heat-affected zone.\nTensile coupons followed the lab flat-coupon standard.\nThree coupons per alloy were tested.\nDensity was measured by the Archimedes method.\nEach density value is the average of three weighings.\nThe steel came from the same mill as the original stringers.\nThe aluminum was a 5083 marine-grade plate.\nThe titanium was grade 5, chosen for its strength.\nThe brass was a naval brass plate.\nSurface finish was kept as-rolled for all coupons.\nCoupons were degreased before testing.\nAmbient temperature in the lab stayed near 21 degrees.\nHumidity was not controlled but stayed moderate.\nAll measurements were taken within one week.\nThe same technician ran every test.\nCalibration records for the instruments are on file.\n\\section{Test Methods}\nTensile testing followed the lab standard operating procedure.\nCrosshead speed was 2 mm per minute up to yield.\nExtensometer readings captured the elastic modulus.\nYield strength was read at the 0.2 percent offset.\nElongation was measured over a 50 mm gauge length.\nFractured coupons were photographed for the record.\nThermal conductivity came from a guarded hot plate rig.\nDiscs of 50 mm diameter were machined for that rig.\nEach conductivity value is the average of two discs.\nCost index values came from current supplier quotes.\nQuotes were normalized to the steel quote per kilogram.\nFabrication cost differences were not included at this stage.\nThey will enter the comparison at concept design.\nTest data were logged straight into the lab database.\nOutliers were checked against the raw curves.\nNo data points were discarded.\nThe modulus values agreed with handbook values within 6 percent.\nThe yield values sat slightly below handbook values.\nThat gap is typical for hot-rolled plate.\nFull stress-strain curves are archived with this report.\nThe rig uncertainty was estimated at plus or minus 4 percent.\nUncertainty bars are omitted from the summary table for readability.\n\\section{Quality Assurance}\nAll instruments held valid calibration certificates.\nThe tensile frame was verified with reference blocks.\nThe hot plate rig passed its daily check before each session.\nRaw data were backed up at the end of each day.\nA second engineer spot-checked the database entries.\nTwo entries were corrected after that review.\nBoth corrections involved transposed digits in elongation values.\nThe corrected values appear in the summary table.\nNo other anomalies were found.\nThe review log is archived with the raw data.\nSupplier quotes were confirmed in writing.\nQuote validity extends through the end of the year.\nCurrency fluctuations within that window are ignored.\nThe screening protocol itself was audited last year.\n\\section{Results}\nAll measurements passed the quality checks described above.\nThe four alloys spanned a wide range of properties.\nTitanium was the strongest and the most expensive by far.\nAluminum was the lightest and the best conductor.\nThe table below collects the measured values.\n\\begin{table}[h]\n\\centering\n\\caption{Measured properties of the four candidate alloys. Density in g/cm$^3$, modulus in GPa, yield strength in MPa, elongation in percent, conductivity in W/(m K), cost normalized to steel.}\n\\label{tab:properties}\n\\begin{tabular}{lcccccc}\n\\toprule\nMaterial & Density & Modulus & Yield & Elongation & Conductivity & Cost \\\\\n\\midrule\nSteel & 7.85 & 200 & 250 & 18 & 50 & 1.0 \\\\\nAluminum & 2.70 & 69 & 95 & 12 & 167 & 1.4 \\\\\nTitanium & 4.51 & 116 & 880 & 10 & 22 & 6.8 \\\\\nBrass & 8.73 & 110 & 340 & 25 & 120 & 1.9 \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\nThe values in the table feed the scoring matrix used at concept design.\nRaw curves and quote sheets are archived with this report.\nAny rerun requested by the review panel can reuse the same coupons.\n\\section{Discussion}\nSteel remains the reference point for every criterion.\nIts low cost keeps it competitive despite its weight.\nAluminum saves about two thirds of the weight per panel.\nIts lower modulus raises a vibration concern at long spans.\nA deeper panel section could recover the lost stiffness.\nThat change would eat into the weight saving.\nTitanium clears every mechanical bar with room to spare.\nIts cost index sits far above the procurement cap.\nA waiver for titanium is unlikely to survive review.\nBrass lands between aluminum and steel on most axes.\nIts conductivity is high enough to stay cool in summer sun.\nIts strength is adequate for the governing load case.\nThe decorative railing already uses a brass finish.\nMatching the deck alloy would simplify detailing.\nGalvanic pairing with the steel stringers needs checking.\nIsolation pads would handle that risk.\nDrainage details will differ across the alloys.\nStanding water on the deck shortens coating life.\nThe next stage should model panel vibration explicitly.\nFatigue from pedestrian traffic deserves a dedicated check.\nThe corrosion study will report next quarter.\nIts results could reorder the ranking.\nFor now the scoring matrix favors aluminum and brass.\nSteel stays in the running on cost grounds alone.\n\\section{Conclusion}\nFour alloys were screened on six measured criteria.\nThe measurements passed all quality checks.\nTitanium leads on strength and fails on cost.\nAluminum leads on weight and conductivity.\nBrass offers the best balance for this application.\nSteel remains the fallback on cost.\nThe scoring matrix will rank the candidates at concept design.\nPanel vibration and fatigue checks come next.\nThe review panel meets in September.\nThis report is the main input to that meeting.\nThe final selection is due at the autumn review.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "results 那章的合金表太宽了，指标全挤在一行，打印出来肯定顶到页边。这样处理：你先数数它的数据列（材料名那列不算），超过 5 列就把整张表转置——指标变行、材料变列，首列表头写成 Property；要是没超过，就保持行列不变，在表末尾加一列算每种材料的均值。两种情况只做一种，别多也别少。caption、label 和三线表样式都保留，数字一个都不许抄错。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{tabular\\}\\{lcccc\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Property & Steel & Aluminum & Titanium & Brass",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Material & Density & Modulus & Yield & Elongation & Conductivity & Cost",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Density & 7.85 & 2.70 & 4.51 & 8.73",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Modulus & 200 & 69 & 116 & 110",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Yield & 250 & 95 & 880 & 340",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Elongation & 18 & 12 & 10 & 25",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Conductivity & 50 & 167 & 22 & 120",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Cost & 1.0 & 1.4 & 6.8 & 1.9",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "(^|[^a-zA-Z])[Mm]ean([^a-zA-Z]|$)|均值",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\toprule",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{tab:properties\\}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage{booktabs}\n\\title{Candidate Alloys for a Pedestrian Bridge Deck: Screening Report}\n\\author{Materials Selection Group}\n\\date{July 2026}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\nFour candidate alloys were screened for a pedestrian bridge deck.\nDensity, modulus, yield strength, elongation, conductivity, and cost were measured.\nSteel remains the baseline against which all candidates are judged.\nTitanium leads on strength but fails the cost screen.\nBrass offers a middle path for decorative elements.\n\\end{abstract}\n\\section{Introduction}\nThe pedestrian bridge at Riverside Park needs a new deck structure.\nThe existing timber deck has reached the end of its service life.\nThe city asked for a metal replacement with a forty-year design life.\nFour candidate alloys were shortlisted by the materials selection group.\nThe shortlist came out of a broader screening of twelve alloys.\nScreening criteria included strength, stiffness, weight, and cost.\nCorrosion resistance was assessed in a parallel study.\nThis report covers the mechanical and economic measurements only.\nThe deck panels are simply supported between steel stringers.\nPanel spans reach 1.8 m in the longest bays.\nPedestrian loading follows the municipal bridge code.\nOccasional maintenance vehicles add a concentrated wheel load.\nWeight matters because the existing stringers stay in place.\nHeavier panels would force stringer strengthening.\nStiffness governs the vibration comfort of pedestrians.\nYield strength governs the ultimate capacity checks.\nThermal conductivity matters for surface temperature in summer.\nBarefoot use is common near the park playground.\nCost is normalized against structural steel as the baseline.\nThe city procurement office caps the normalized cost at 2.0.\nAny candidate above that cap needs a written waiver.\nThe screening results feed directly into the concept design review.\n\\section{Specimens}\nAll four alloys were sourced as hot-rolled plate.\nPlate thickness was 12 mm across the board.\nCoupons were cut by waterjet to avoid a heat-affected zone.\nTensile coupons followed the lab flat-coupon standard.\nThree coupons per alloy were tested.\nDensity was measured by the Archimedes method.\nEach density value is the average of three weighings.\nThe steel came from the same mill as the original stringers.\nThe aluminum was a 5083 marine-grade plate.\nThe titanium was grade 5, chosen for its strength.\nThe brass was a naval brass plate.\nSurface finish was kept as-rolled for all coupons.\nCoupons were degreased before testing.\nAmbient temperature in the lab stayed near 21 degrees.\nHumidity was not controlled but stayed moderate.\nAll measurements were taken within one week.\nThe same technician ran every test.\nCalibration records for the instruments are on file.\n\\section{Test Methods}\nTensile testing followed the lab standard operating procedure.\nCrosshead speed was 2 mm per minute up to yield.\nExtensometer readings captured the elastic modulus.\nYield strength was read at the 0.2 percent offset.\nElongation was measured over a 50 mm gauge length.\nFractured coupons were photographed for the record.\nThermal conductivity came from a guarded hot plate rig.\nDiscs of 50 mm diameter were machined for that rig.\nEach conductivity value is the average of two discs.\nCost index values came from current supplier quotes.\nQuotes were normalized to the steel quote per kilogram.\nFabrication cost differences were not included at this stage.\nThey will enter the comparison at concept design.\nTest data were logged straight into the lab database.\nOutliers were checked against the raw curves.\nNo data points were discarded.\nThe modulus values agreed with handbook values within 6 percent.\nThe yield values sat slightly below handbook values.\nThat gap is typical for hot-rolled plate.\nFull stress-strain curves are archived with this report.\nThe rig uncertainty was estimated at plus or minus 4 percent.\nUncertainty bars are omitted from the summary table for readability.\n\\section{Quality Assurance}\nAll instruments held valid calibration certificates.\nThe tensile frame was verified with reference blocks.\nThe hot plate rig passed its daily check before each session.\nRaw data were backed up at the end of each day.\nA second engineer spot-checked the database entries.\nTwo entries were corrected after that review.\nBoth corrections involved transposed digits in elongation values.\nThe corrected values appear in the summary table.\nNo other anomalies were found.\nThe review log is archived with the raw data.\nSupplier quotes were confirmed in writing.\nQuote validity extends through the end of the year.\nCurrency fluctuations within that window are ignored.\nThe screening protocol itself was audited last year.\n\\section{Results}\nAll measurements passed the quality checks described above.\nThe four alloys spanned a wide range of properties.\nTitanium was the strongest and the most expensive by far.\nAluminum was the lightest and the best conductor.\nThe table below collects the measured values.\n\\begin{table}[h]\n\\centering\n\\caption{Measured properties of the four candidate alloys. Density in g/cm$^3$, modulus in GPa, yield strength in MPa, elongation in percent, conductivity in W/(m K), cost normalized to steel.}\n\\label{tab:properties}\n\\begin{tabular}{lcccc}\n\\toprule\nProperty & Steel & Aluminum & Titanium & Brass \\\\\n\\midrule\nDensity & 7.85 & 2.70 & 4.51 & 8.73 \\\\\nModulus & 200 & 69 & 116 & 110 \\\\\nYield & 250 & 95 & 880 & 340 \\\\\nElongation & 18 & 12 & 10 & 25 \\\\\nConductivity & 50 & 167 & 22 & 120 \\\\\nCost & 1.0 & 1.4 & 6.8 & 1.9 \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\nThe values in the table feed the scoring matrix used at concept design.\nRaw curves and quote sheets are archived with this report.\nAny rerun requested by the review panel can reuse the same coupons.\n\\section{Discussion}\nSteel remains the reference point for every criterion.\nIts low cost keeps it competitive despite its weight.\nAluminum saves about two thirds of the weight per panel.\nIts lower modulus raises a vibration concern at long spans.\nA deeper panel section could recover the lost stiffness.\nThat change would eat into the weight saving.\nTitanium clears every mechanical bar with room to spare.\nIts cost index sits far above the procurement cap.\nA waiver for titanium is unlikely to survive review.\nBrass lands between aluminum and steel on most axes.\nIts conductivity is high enough to stay cool in summer sun.\nIts strength is adequate for the governing load case.\nThe decorative railing already uses a brass finish.\nMatching the deck alloy would simplify detailing.\nGalvanic pairing with the steel stringers needs checking.\nIsolation pads would handle that risk.\nDrainage details will differ across the alloys.\nStanding water on the deck shortens coating life.\nThe next stage should model panel vibration explicitly.\nFatigue from pedestrian traffic deserves a dedicated check.\nThe corrosion study will report next quarter.\nIts results could reorder the ranking.\nFor now the scoring matrix favors aluminum and brass.\nSteel stays in the running on cost grounds alone.\n\\section{Conclusion}\nFour alloys were screened on six measured criteria.\nThe measurements passed all quality checks.\nTitanium leads on strength and fails on cost.\nAluminum leads on weight and conductivity.\nBrass offers the best balance for this application.\nSteel remains the fallback on cost.\nThe scoring matrix will rank the candidates at concept design.\nPanel vibration and fatigue checks come next.\nThe review panel meets in September.\nThis report is the main input to that meeting.\nThe final selection is due at the autumn review.\n\\end{document}\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "id": "structure-hold-easy-2",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.2cm]{geometry}\n\n\\title{Station Card: Garde Manger}\n\\author{Bistro Aurelia --- Kitchen Office}\n\\date{September 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section*{Opening Checks}\n\nTick off each line before the first cover is seated.\n\n\\begin{itemize}\n\\item Sanitise the board and swap in a fresh towel.\n\\item Temper the duck terrine twenty minutes before service.\n\\item Check the aspic tray for a clean set.\n\\item Log the fridge temperature on the HACCP sheet.\n\\end{itemize}\n\n\\section*{Closing Checks}\n\nInitials go on the sheet once everything below is done.\n\n\\begin{itemize}\n\\item Wrap and date the p\\^at\\'e en cro\\^ute.\n\\item Break down the slicer and oil the blade guard.\n\\item Soak the terrine moulds in cold water, never hot.\n\\item Wipe the marble slab and cover it for the night.\n\\end{itemize}\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份岗位卡要过塑贴到明档后面，默认行距太松，一张卡排不下。后厨体例是清单紧凑、条目符号用一字线。给文档加载 enumitem 宏包，并在两个 itemize 环境的 \\begin 行各加一对方括号参数：label={--} 和 itemsep=0pt，两个列表都要带齐这两款。条目文字、顺序和其余排版维持现状。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\usepackage(\\[[^\\]]*\\])?\\{enumitem\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{itemize\\}\\[",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{itemize\\}(?!\\[)",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "label=\\{--\\}",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "itemsep=0pt",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\item Log the fridge temperature on the HACCP sheet.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\item Soak the terrine moulds in cold water, never hot.",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.2cm]{geometry}\n\\usepackage{enumitem}\n\n\\title{Station Card: Garde Manger}\n\\author{Bistro Aurelia --- Kitchen Office}\n\\date{September 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section*{Opening Checks}\n\nTick off each line before the first cover is seated.\n\n\\begin{itemize}[label={--}, itemsep=0pt]\n\\item Sanitise the board and swap in a fresh towel.\n\\item Temper the duck terrine twenty minutes before service.\n\\item Check the aspic tray for a clean set.\n\\item Log the fridge temperature on the HACCP sheet.\n\\end{itemize}\n\n\\section*{Closing Checks}\n\nInitials go on the sheet once everything below is done.\n\n\\begin{itemize}[label={--}, itemsep=0pt]\n\\item Wrap and date the p\\^at\\'e en cro\\^ute.\n\\item Break down the slicer and oil the blade guard.\n\\item Soak the terrine moulds in cold water, never hot.\n\\item Wipe the marble slab and cover it for the night.\n\\end{itemize}\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

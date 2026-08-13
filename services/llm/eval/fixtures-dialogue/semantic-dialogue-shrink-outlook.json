@@ -1,0 +1,47 @@
+{
+  "id": "semantic-dialogue-shrink-outlook",
+  "category": "semantic",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{CJKutf8}\n\\usepackage[margin=1in]{geometry}\n\\begin{document}\n\\begin{CJK}{UTF8}{gbsn}\n\\input{body}\n\\end{CJK}\n\\end{document}\n"
+      },
+      {
+        "path": "body.tex",
+        "content": "\\section{快递进村的共配困境}\n农村寄递物流是打通城乡循环的最后一公里，也是最难盈利的一环。这些村庄大多散布在丘陵与河谷之间，常住人口不多却居住分散，快递车辆跑一趟油费高企。自 2021 年本省启动快递进村试点以来，覆盖的行政村数量逐年增加，但真正实现天天有班车的比例始终不高。难点不在路，而在件量：上行农产品件少，下行工业品件多，双向货源长期不对等，许多网点卡在盈亏平衡线上迟迟无法稳定运营。\n\n本研究选取三个已实现稳定通邮的乡镇作为案例，通过访谈与问卷梳理运营的全过程。问卷覆盖两个乡镇共 128 个自然村，回收有效问卷 107 份；访谈对象包括邮政所工作人员、村级站点负责人、快递企业区域经理与不同年龄段的村民代表。调查显示，村级站点的日均到件量为 46 件，而上行件往往不足一成。多数亏损集中在末端配送环节，邮快合作、交邮融合的做法接受度最高。\n\n研究发现，快递进村能否持续，关键取决于共配机制而非补贴数额。目前每单 1.2 元的进村补贴标准已两年未作调整，受访站点普遍认为补贴固然重要，但更关键的是有人持续整合货源。案例乡镇的经验表明，由邮政所牵头、多家企业共享末端的共配模式，比单纯提高补贴更能支撑站点走完淡旺季的全周期。\n"
+      }
+    ]
+  },
+  "instruction": "body.tex 里这一节写得太啰嗦了，评审意见原话是 redundant。三段每一段都给我压缩三成左右，别只压一两句应付，也别只挑一段压。其它地方保持原意、语句通顺就行。main.tex 不许动。",
+  "dialogue": {
+    "hiddenGoal": "终态：① body.tex 三段每一段都明显压缩约三成（含新增的展望句在内，全文可读词数落在 270-360 之间）；② 所有数字一个不动：2021、128、107、46、1.2；③ main.tex 一字未动；④ 段末（或全文末尾）多出一句展望，内容是以后想研究共配模式如何复制到更多县，只一句、不引入新数字；⑤ 语句通顺、核心信息（背景难点、数据与发现、共配机制结论）不丢。剧本：第 1 轮用户只要求压缩三成。第 2 轮用户补硬约束：里面的数字一个都不许动——2021 年、128 个村、107 份、46 件、1.2 元，动了数据全废。第 3 轮用户追加：最后帮我补一句展望，就一句，说以后想看看共配模式怎么复制到别的县；总长度还得守住，别因为加这句又超回去。分岔：若 agent 第 1 轮只认真压了一两段，用户第 2 轮先说“另外两段也要压，别应付”再给数字约束；若 agent 改了某个数字，用户点名“你把 X 改了，按原文恢复”；若 agent 加展望后总长反弹超标，用户说“太长了，再收一收，展望留一句就够”；若 agent 三轮全做到位，用户回复“可以了，就这样”。用户的知识边界：能记住这五个关键数字、看得出哪段没压，但说不清具体词数，只凭“还太啰嗦/差不多了”判断长度。",
+    "persona": "县域经济方向的青年讲师，中文交流，性格急、说话直，一次只提一个要求；agent 达标才提下一个，不达标就指出具体问题。",
+    "disclosure": "multi-goal",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "body.tex",
+    "passScore": 4,
+    "rubric": "5: 三段每一段都明显精简（约三成），文末有一句且不超一句关于共配模式复制的展望（不含新数字），所有数字（2021、128、107、46、1.2）原样保留，核心信息（背景难点、数据与发现、共配机制结论）无损，语句通顺自然，main.tex 未动；4: 每段都有压缩且总长大致达标，展望句符合要求，个别段落压缩略不足或略过度；3: 只认真压缩了部分段落，或展望缺失/超一句，或语句生硬、次要信息有损；2: 压缩比例严重偏离（几乎没压或砍半以上），或数字被改动；1: 未压缩、改写跑题、虚构原文没有的内容，或动了 main.tex",
+    "assertions": [
+      { "kind": "word-count", "file": "body.tex", "op": "lte", "count": 360 },
+      { "kind": "word-count", "file": "body.tex", "op": "gte", "count": 270 },
+      { "kind": "literal-count", "file": "body.tex", "literal": "2021", "op": "gte", "count": 1 },
+      { "kind": "literal-count", "file": "body.tex", "literal": "128", "op": "gte", "count": 1 },
+      { "kind": "literal-count", "file": "body.tex", "literal": "107", "op": "gte", "count": 1 },
+      { "kind": "literal-count", "file": "body.tex", "literal": "46", "op": "gte", "count": 1 },
+      { "kind": "literal-count", "file": "body.tex", "literal": "1.2", "op": "gte", "count": 1 },
+      { "kind": "unchanged-file", "file": "main.tex" }
+    ]
+  },
+  "traceAssertions": [
+    { "kind": "max-turns", "max": 12 },
+    { "kind": "no-repeat-call", "maxIdentical": 2 }
+  ]
+}

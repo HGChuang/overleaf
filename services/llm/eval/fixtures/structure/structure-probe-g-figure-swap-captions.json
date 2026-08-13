@@ -1,0 +1,66 @@
+{
+  "id": "structure-probe-g-figure-swap-captions",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{graphicx}\n\\title{Digital Access and Response Behaviour in Household Surveys}\n\\author{L. Ferreira and P. Ndiaye}\n\\date{}\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nHousehold surveys increasingly mix face-to-face and online response\nmodes, and the mix changes who answers quickly and who answers at all.\nThis note reports two descriptive results from the 2025 wave of the\nregional household panel: how response latency relates to education,\nand how internet adoption differs across the four survey regions.\n\n\\section{Fieldwork}\nInterviewers visited 1{,}240 households between March and June 2025.\nEach household could complete the questionnaire on paper, by phone, or\nonline; the mode was recorded together with the time between first\ncontact and completed interview, which we call the response latency.\n\n\\section{Results}\nFigure~\\ref{fig:latency} plots the response latency of each completed\ninterview against the respondent's years of education, and\nFigure~\\ref{fig:adoption} summarises household internet adoption in the\nfour survey regions.\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.75\\linewidth]{example-image-a}\n\\caption{Scatter plot of response latency against years of education.}\n\\label{fig:latency}\n\\end{figure}\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.75\\linewidth]{example-image-b}\n\\caption{Bar chart of household internet adoption by region.}\n\\label{fig:adoption}\n\\end{figure}\nTwo patterns stand out. Latency falls steadily with education up to\nsixteen years of schooling and then flattens, which is consistent with\nthe online mode being taken up mainly by the more educated households.\nAdoption, meanwhile, is near-universal in the metropolitan region but\ndrops below half of households in the northern districts, so mode mix\nthere remains dominated by paper and phone.\n\n\\section{Discussion}\nThe regional gap in adoption matters for survey design: offering an\nonline-first protocol in the northern districts would lengthen fieldwork\nrather than shorten it. We therefore keep the mixed-mode design for the\n2026 wave and revisit the question once the adoption curve catches up.\n\n\\section{Conclusion}\nResponse latency is strongly patterned by education, and internet\nadoption remains uneven across regions. Both facts argue for keeping\nthe mixed-mode protocol and for weighting the online subsample in any\npooled analysis.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "审稿人说 internet adoption 的 bar chart 才是主结果，应该排在前面。swap 一下两个 figure 环境的先后顺序：adoption 那张在前、latency 那张在后，caption 和 label 必须跟着各自的图走，正文的 \\ref 引用不用动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "example-image-b",
+          "example-image-a"
+        ]
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "example-image-b\\}\\s*\\\\caption\\{Bar chart",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "example-image-a\\}\\s*\\\\caption\\{Scatter plot",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\caption\\{Bar chart[^}]*\\}\\s*\\\\label\\{fig:adoption\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\caption\\{Scatter plot[^}]*\\}\\s*\\\\label\\{fig:latency\\}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{graphicx}\n\\title{Digital Access and Response Behaviour in Household Surveys}\n\\author{L. Ferreira and P. Ndiaye}\n\\date{}\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nHousehold surveys increasingly mix face-to-face and online response\nmodes, and the mix changes who answers quickly and who answers at all.\nThis note reports two descriptive results from the 2025 wave of the\nregional household panel: how response latency relates to education,\nand how internet adoption differs across the four survey regions.\n\n\\section{Fieldwork}\nInterviewers visited 1{,}240 households between March and June 2025.\nEach household could complete the questionnaire on paper, by phone, or\nonline; the mode was recorded together with the time between first\ncontact and completed interview, which we call the response latency.\n\n\\section{Results}\nFigure~\\ref{fig:latency} plots the response latency of each completed\ninterview against the respondent's years of education, and\nFigure~\\ref{fig:adoption} summarises household internet adoption in the\nfour survey regions.\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.75\\linewidth]{example-image-b}\n\\caption{Bar chart of household internet adoption by region.}\n\\label{fig:adoption}\n\\end{figure}\n\\begin{figure}\n\\centering\n\\includegraphics[width=0.75\\linewidth]{example-image-a}\n\\caption{Scatter plot of response latency against years of education.}\n\\label{fig:latency}\n\\end{figure}\nTwo patterns stand out. Latency falls steadily with education up to\nsixteen years of schooling and then flattens, which is consistent with\nthe online mode being taken up mainly by the more educated households.\nAdoption, meanwhile, is near-universal in the metropolitan region but\ndrops below half of households in the northern districts, so mode mix\nthere remains dominated by paper and phone.\n\n\\section{Discussion}\nThe regional gap in adoption matters for survey design: offering an\nonline-first protocol in the northern districts would lengthen fieldwork\nrather than shorten it. We therefore keep the mixed-mode design for the\n2026 wave and revisit the question once the adoption curve catches up.\n\n\\section{Conclusion}\nResponse latency is strongly patterned by education, and internet\nadoption remains uneven across regions. Both facts argue for keeping\nthe mixed-mode protocol and for weighting the online subsample in any\npooled analysis.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

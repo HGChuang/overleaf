@@ -1,0 +1,49 @@
+{
+  "id": "structure-fill-steps-define-sweep-purge",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\input{macros}\n\\title{Search for Dark Photon Production in Association with a $Z$ Boson}\n\\author{Analysis Note, Internal Draft}\n\\date{June 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nSearches for dark photons produced in association with a \\Zboson{} boson\nare a cornerstone of the hidden-sector programme at the LHC.\nThe signature considered in this note pairs a leptonically decaying\n\\Zboson{} boson with large missing transverse momentum, denoted $p_T^{miss}$\nin what follows.\nThe analysis builds on the 2024 dataset, corresponding to an integrated\nluminosity of $\\lumi = 96~\\invfb$.\nCompared with the earlier iteration, the signal regions have been\nredesigned to improve sensitivity to low-mass dark photons.\n\\section{Event Selection}\nEvents are recorded by a suite of triggers requiring either two leptons\nor one lepton together with substantial imbalance in the transverse\nmomentum budget.\nThe two highest-$p_T$ leptons are required to have transverse momentum\nabove 30 and 20~GeV and to form an invariant mass within 15~GeV of the\n\\Zboson{} boson mass.\nTo suppress top-quark and multi-jet backgrounds, events are required to\nsatisfy $\\ptmiss > 150~\\mathrm{GeV}$.\nAdditional vetoes remove events containing a third lepton or a\n$b$-tagged jet.\nThe residual imbalance requirement $\\ptmiss / p_{T}(\\Zboson) > 0.6$\nfurther rejects mismeasured multi-jet events.\n\\section{Background Estimation}\nThe dominant background, events in which a \\Zboson{} boson recoils\nagainst a jet that is poorly measured, is estimated from a control\nregion inverting the imbalance requirement.\nA second control region at low $p_{\\mathrm{T}}^{\\mathrm{miss}}$,\nbetween 50 and 150~GeV, is used to normalize the diboson contribution.\nTransfer factors from the control regions to the signal regions are\ntaken from simulation and corrected for lepton reconstruction\nefficiencies measured in data.\nSystematic uncertainties on the transfer factors range from 6 to\n14 percent, dominated by the jet energy scale.\n\\section{Results}\nThe observed $\\ptmiss$ distribution agrees with the background-only\nhypothesis across all signal regions.\nThe largest local excess, 2.1 standard deviations, appears in the bin\nwith $\\ptmiss$ between 250 and 300~GeV and is compatible with the\ntrial factor of the search.\nExclusion limits at 95 percent confidence level are set on the dark\nphoton coupling as a function of its mass.\nThe limits improve on the previous iteration by up to 35 percent for\nmasses below 40~GeV.\n\\section{Conclusion}\nA search for dark photons produced in association with a \\Zboson{}\nboson has been performed using the 2024 dataset.\nNo significant excess is observed in events with the largest $p_T^{miss}$,\nand the resulting limits tighten the constraints on low-mass dark photons.\nThe 2025 dataset, expected to double the integrated luminosity, will\nextend the reach of the analysis into unexplored coupling space.\n\\end{document}\n"
+      },
+      {
+        "path": "macros.tex",
+        "content": "% Macros for the dark-photon analysis note.\n\\newcommand{\\ptmiss}{p_{\\mathrm{T}}^{\\mathrm{miss}}}\n\\newcommand{\\lumi}{\\ensuremath{\\mathcal{L}_{\\mathrm{int}}}}\n\\newcommand{\\invfb}{\\ensuremath{\\mathrm{fb}^{-1}}}\n\\newcommand{\\Zboson}{\\ensuremath{Z}}\n"
+      }
+    ]
+  },
+  "instruction": "Our analysis-note style guide now requires one canonical macro for missing transverse momentum, and this note is inconsistent about it: macros.tex defines a legacy \\ptmiss, and main.tex mixes \\ptmiss calls with hand-written math forms like $p_T^{miss}$ and $p_{\\mathrm{T}}^{\\mathrm{miss}}$. Please do all three steps: (1) add \\newcommand{\\met}{p_{\\mathrm{T}}^{\\mathrm{miss}}} to macros.tex; (2) sweep main.tex so that every math-mode occurrence of the quantity uses \\met — the legacy macro calls and the hand-written forms alike; (3) once nothing references it any more, remove the old \\ptmiss definition from macros.tex. The other macros (\\lumi, \\invfb, \\Zboson) and every physics number in the note stay exactly as they are.",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "count", "file": "macros.tex", "pattern": "\\\\newcommand\\{\\\\met\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "macros.tex", "pattern": "ptmiss", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "ptmiss", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\met(?![a-zA-Z])", "op": "eq", "count": 7 },
+      { "kind": "count", "file": "main.tex", "pattern": "p_T\\^\\{miss\\}", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "p_\\{\\\\mathrm\\{T\\}\\}\\^\\{\\\\mathrm\\{miss\\}\\}", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "macros.tex", "pattern": "\\\\newcommand\\{\\\\lumi\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "macros.tex", "pattern": "\\\\newcommand\\{\\\\Zboson\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\Zboson", "op": "eq", "count": 6 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "96~\\invfb", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "150~\\mathrm{GeV}", "op": "eq", "count": 1 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\input{macros}\n\\title{Search for Dark Photon Production in Association with a $Z$ Boson}\n\\author{Analysis Note, Internal Draft}\n\\date{June 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nSearches for dark photons produced in association with a \\Zboson{} boson\nare a cornerstone of the hidden-sector programme at the LHC.\nThe signature considered in this note pairs a leptonically decaying\n\\Zboson{} boson with large missing transverse momentum, denoted $\\met$\nin what follows.\nThe analysis builds on the 2024 dataset, corresponding to an integrated\nluminosity of $\\lumi = 96~\\invfb$.\nCompared with the earlier iteration, the signal regions have been\nredesigned to improve sensitivity to low-mass dark photons.\n\\section{Event Selection}\nEvents are recorded by a suite of triggers requiring either two leptons\nor one lepton together with substantial imbalance in the transverse\nmomentum budget.\nThe two highest-$p_T$ leptons are required to have transverse momentum\nabove 30 and 20~GeV and to form an invariant mass within 15~GeV of the\n\\Zboson{} boson mass.\nTo suppress top-quark and multi-jet backgrounds, events are required to\nsatisfy $\\met > 150~\\mathrm{GeV}$.\nAdditional vetoes remove events containing a third lepton or a\n$b$-tagged jet.\nThe residual imbalance requirement $\\met / p_{T}(\\Zboson) > 0.6$\nfurther rejects mismeasured multi-jet events.\n\\section{Background Estimation}\nThe dominant background, events in which a \\Zboson{} boson recoils\nagainst a jet that is poorly measured, is estimated from a control\nregion inverting the imbalance requirement.\nA second control region at low $\\met$,\nbetween 50 and 150~GeV, is used to normalize the diboson contribution.\nTransfer factors from the control regions to the signal regions are\ntaken from simulation and corrected for lepton reconstruction\nefficiencies measured in data.\nSystematic uncertainties on the transfer factors range from 6 to\n14 percent, dominated by the jet energy scale.\n\\section{Results}\nThe observed $\\met$ distribution agrees with the background-only\nhypothesis across all signal regions.\nThe largest local excess, 2.1 standard deviations, appears in the bin\nwith $\\met$ between 250 and 300~GeV and is compatible with the\ntrial factor of the search.\nExclusion limits at 95 percent confidence level are set on the dark\nphoton coupling as a function of its mass.\nThe limits improve on the previous iteration by up to 35 percent for\nmasses below 40~GeV.\n\\section{Conclusion}\nA search for dark photons produced in association with a \\Zboson{}\nboson has been performed using the 2024 dataset.\nNo significant excess is observed in events with the largest $\\met$,\nand the resulting limits tighten the constraints on low-mass dark photons.\nThe 2025 dataset, expected to double the integrated luminosity, will\nextend the reach of the analysis into unexplored coupling space.\n\\end{document}\n"
+      },
+      {
+        "path": "macros.tex",
+        "content": "% Macros for the dark-photon analysis note.\n\\newcommand{\\met}{p_{\\mathrm{T}}^{\\mathrm{miss}}}\n\\newcommand{\\lumi}{\\ensuremath{\\mathcal{L}_{\\mathrm{int}}}}\n\\newcommand{\\invfb}{\\ensuremath{\\mathrm{fb}^{-1}}}\n\\newcommand{\\Zboson}{\\ensuremath{Z}}\n"
+      }
+    ]
+  }
+}

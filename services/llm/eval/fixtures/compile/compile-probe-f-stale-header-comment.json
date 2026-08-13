@@ -1,0 +1,27 @@
+{
+  "id": "compile-probe-f-stale-header-comment",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "% ============================================================\n% main.tex -- CIVE 542 design report, group 7\n% compile error fixed 2026-06-12, all good now -- do not edit\n% ============================================================\n\\documentclass[11pt]{article}\n\\usepackage{amsmath}\n\n\\title{Shear Design of a Reinforced Concrete Beam with Recycled Coarse Aggregate}\n\\author{CIVE 542 Design Report --- Group 7}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Design Basis}\nThe beam is simply supported over a clear span of 5.4~m and carries a\nfactored uniformly distributed load of 42~kN/m including self-weight.\nThe concrete mixture replaces 30\\% of the natural coarse aggregate\nwith recycled concrete aggregate of saturated surface-dry density\n2{,}410~kg/m$^3$.\n\n\\section{Section Properties}\nThe effective depth is $d = 512$~mm, the web width is $b_w = 250$~mm,\nand the specified cylinder strength is $f'_c = 32$~MPa. The concrete\nshear resistance follows\n\\begin{equation}\nV_c = 0.17 \\, \\lambda \\sqrt{f'_c} \\, b_w d,\n\\end{equation}\nwith $\\lambda = 0.85$ accounting for the lower density of the recycled\naggregate mixture.\n\n\\section{Stirrup Design}\nThe required stirrup spacing is governed by the following checks:\n\\begin{itemize}\n\\item shear demand at the critical section located $d$ from the support face;\n\\item maximum spacing limit for moderate shear, $s \\le d/2$;\n\\item minimum shear reinforcement ratio $\\rho_{w,\\min} = 0.08 \\sqrt{f'_c} / f_y$.\n\n\\section{Detailing}\nClosed stirrups with 135-degree hooks are used throughout the shear\nspan, and the first stirrup is placed at $s/2$ from the support face.\nThe longitudinal bars are anchored at the supports with standard hooks,\nand the development length is checked against the code expression for\nrecycled aggregate concrete.\n\n\\section{Conclusion}\nThe section satisfies the shear demand with two-legged 10~mm stirrups\nat 200~mm spacing in the end regions and 250~mm spacing at midspan.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "你好，麻烦帮我看一下这份课程设计报告为什么编译失败，修到能编译就好，谢谢啦！",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "% ============================================================\n% main.tex -- CIVE 542 design report, group 7\n% compile error fixed 2026-06-12, all good now -- do not edit\n% ============================================================\n\\documentclass[11pt]{article}\n\\usepackage{amsmath}\n\n\\title{Shear Design of a Reinforced Concrete Beam with Recycled Coarse Aggregate}\n\\author{CIVE 542 Design Report --- Group 7}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Design Basis}\nThe beam is simply supported over a clear span of 5.4~m and carries a\nfactored uniformly distributed load of 42~kN/m including self-weight.\nThe concrete mixture replaces 30\\% of the natural coarse aggregate\nwith recycled concrete aggregate of saturated surface-dry density\n2{,}410~kg/m$^3$.\n\n\\section{Section Properties}\nThe effective depth is $d = 512$~mm, the web width is $b_w = 250$~mm,\nand the specified cylinder strength is $f'_c = 32$~MPa. The concrete\nshear resistance follows\n\\begin{equation}\nV_c = 0.17 \\, \\lambda \\sqrt{f'_c} \\, b_w d,\n\\end{equation}\nwith $\\lambda = 0.85$ accounting for the lower density of the recycled\naggregate mixture.\n\n\\section{Stirrup Design}\nThe required stirrup spacing is governed by the following checks:\n\\begin{itemize}\n\\item shear demand at the critical section located $d$ from the support face;\n\\item maximum spacing limit for moderate shear, $s \\le d/2$;\n\\item minimum shear reinforcement ratio $\\rho_{w,\\min} = 0.08 \\sqrt{f'_c} / f_y$.\n\\end{itemize}\n\n\\section{Detailing}\nClosed stirrups with 135-degree hooks are used throughout the shear\nspan, and the first stirrup is placed at $s/2$ from the support face.\nThe longitudinal bars are anchored at the supports with standard hooks,\nand the development length is checked against the code expression for\nrecycled aggregate concrete.\n\n\\section{Conclusion}\nThe section satisfies the shear demand with two-legged 10~mm stirrups\nat 200~mm spacing in the end regions and 250~mm spacing at midspan.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

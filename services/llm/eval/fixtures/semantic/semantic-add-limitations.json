@@ -1,0 +1,23 @@
+{
+  "id": "semantic-add-limitations",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Stability of Perovskite Solar Cells under Humidity}\n\\author{Anon}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nPerovskite solar cells reach high efficiencies but degrade quickly in humid air. We add a hydrophobic interlayer that slows moisture ingress.\n\\section{Results}\nWith the interlayer, cells retain 90 percent of their initial efficiency after 500 hours at 65 percent relative humidity, versus 60 percent for control devices. The interlayer adds one solution-processing step.\n\\section{Discussion}\nThe interlayer improves moisture stability without sacrificing efficiency. Its effect on thermal stability remains untested, and our aging tests stopped at 500 hours.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Discussion 里对局限的讨论太少了，请补一段局限性讨论（2-4 句）：基于正文里的真实信息（热稳定性未测试、老化实验只做到 500 小时、只考察了单一湿度应力、工艺上多了一步），说明这些局限对结论适用范围的约束。禁止编造正文没有的实验结果或数字。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 补充 2-4 句局限性讨论，≥3 个局限均来自正文真实信息（热稳定性未测/500 小时老化上限/单一湿度应力/额外工艺步骤），并说明对结论适用范围的约束，无任何虚构实验或数字；4: ≥2 个真实局限讨论到位，表述客观，无虚构；3: 只讨论了 1 个真实局限，或写出“样本量小”这类正文未提及的泛泛局限；2: 泛泛而谈、与正文信息无关；1: 未补充，或虚构实验数据"
+  }
+}

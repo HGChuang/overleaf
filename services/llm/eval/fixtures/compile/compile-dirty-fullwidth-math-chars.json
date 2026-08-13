@@ -1,0 +1,71 @@
+{
+  "id": "compile-dirty-fullwidth-math-chars",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\n\\title{Problem Set 4: Work, Energy, and Momentum}\n\\author{PHYS 121 Course Staff}\n\\date{Autumn 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Work by a Constant Force}\n% note for TAs: the sign ＝ marks a definition in problem 2, keep it\nA sled of mass $m$ is pulled across level snow by a rope that\nmakes an angle $\\theta$ with the horizontal.\nThe work done by the rope over a displacement $d$ is\n\\begin{equation}\nW ＝ F d \\cos\\theta\n\\end{equation}\nand this relation sets the sign convention used below.\n\n\\section{Work--Energy Theorem}\nFor any system, the net work equals the change in kinetic energy,\n$\\Delta K = K_f − K_i$.\nA 62~kg skier descends a 40~m slope and arrives at the bottom\nmoving at 14~m/s; estimate the work done by friction.\n\n\\section{Kinematics Review}\nFor motion with constant acceleration $a$ along a straight line,\n\\begin{equation}\nv^2 ＝ v_0^2 + 2 a d\n\\end{equation}\nwhich follows from eliminating time between the two standard\nkinematic relations.\n\n\\section{Momentum}\nA 1200~kg car travelling at 22~m/s brakes to rest over 55~m.\nCompute the average retarding force and compare it with the\ncar's weight.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份物理习题集编译报错，初步怀疑是从网页复制公式时混进了奇怪的字符，帮我修到编译通过。只做必要的最小改动，注释和其余内容保持原样。",
+  "grader": {
+    "type": "compile",
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "＝",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "−",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "W = F d \\cos\\theta",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\Delta K = K_f - K_i",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "v^2 = v_0^2 + 2 a d",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "% note for TAs: the sign ＝ marks a definition in problem 2, keep it",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\n\\title{Problem Set 4: Work, Energy, and Momentum}\n\\author{PHYS 121 Course Staff}\n\\date{Autumn 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Work by a Constant Force}\n% note for TAs: the sign ＝ marks a definition in problem 2, keep it\nA sled of mass $m$ is pulled across level snow by a rope that\nmakes an angle $\\theta$ with the horizontal.\nThe work done by the rope over a displacement $d$ is\n\\begin{equation}\nW = F d \\cos\\theta\n\\end{equation}\nand this relation sets the sign convention used below.\n\n\\section{Work--Energy Theorem}\nFor any system, the net work equals the change in kinetic energy,\n$\\Delta K = K_f - K_i$.\nA 62~kg skier descends a 40~m slope and arrives at the bottom\nmoving at 14~m/s; estimate the work done by friction.\n\n\\section{Kinematics Review}\nFor motion with constant acceleration $a$ along a straight line,\n\\begin{equation}\nv^2 = v_0^2 + 2 a d\n\\end{equation}\nwhich follows from eliminating time between the two standard\nkinematic relations.\n\n\\section{Momentum}\nA 1200~kg car travelling at 22~m/s brakes to rest over 55~m.\nCompute the average retarding force and compare it with the\ncar's weight.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

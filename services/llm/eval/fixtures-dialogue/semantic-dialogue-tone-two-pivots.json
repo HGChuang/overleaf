@@ -1,0 +1,45 @@
+{
+  "id": "semantic-dialogue-tone-two-pivots",
+  "category": "semantic",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Second Arctic Winter School on\\\\Glacier Monitoring with Autonomous Drones}\n\\author{Organising Committee, Troms\\o\\ Geophysics Unit}\n\\date{October 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Announcement}\nIt is hereby announced that the Second Arctic Winter School on Glacier\nMonitoring with Autonomous Drones will take place in Troms\\o, Norway,\nfrom 8--13 February 2027. The school is organised by the Troms\\o\\\nGeophysics Unit in cooperation with the University Centre in Svalbard.\nThe school will host 24 participants for one week of lectures, field\ndemonstrations, and data-analysis practicals.\n\n\\section{Programme}\nThe programme covers three themes: autonomous flight planning for\nglacier surveying, photogrammetric and thermal processing of drone\nimagery, and the interpretation of surface-velocity fields. Morning\nsessions are devoted to lectures, and afternoon sessions are reserved\nfor supervised practical work. Two field days are scheduled on the\nLyngen peninsula, weather permitting, and all flight operations are\nconducted by certified instructors. Each participant will process a\ncomplete survey data set and will present a short report on the final\nday.\n\n\\section{Who Should Apply}\nThe school addresses doctoral students and early-career researchers in\nglaciology, geomatics, geophysics, and aerospace engineering. Prior\nexperience with drone operations is not required, but applicants should\nbe comfortable with quantitative data analysis in at least one\nprogramming language. Participants are expected to bring their own\nlaptops; all other equipment is provided by the organisers.\n\n\\section{Travel and Accommodation}\nParticipants will be accommodated in single rooms at a partner hotel\nin central Troms\\o, within walking distance of the lecture venue.\nBreakfast and dinner will be taken at the hotel, and lunches will be\nserved at the institute on teaching days and packed for the field\ndays. Troms\\o\\ is served by direct flights from several European\nhubs, and the organising committee will provide detailed travel\nadvice to admitted participants. Participants should note that\nFebruary conditions in northern Norway require appropriate clothing;\na detailed packing list will be circulated with the admission\nletters, and insulated overalls for the field days will be provided\nby the organisers.\n\n\\section{Admission and Fees}\nProspective participants are invited to submit a curriculum vitae and\na statement of purpose of at most one page. The registration fee is\n340 EUR and covers accommodation, meals, local transport, and\ninsurance for the field days. Travel to Troms\\o\\ is not covered.\nAdmitted applicants shall be required to confirm their participation\nwithin two weeks of notification. A small number of fee waivers is\navailable for applicants from institutions that cannot cover the\nregistration cost.\n\n\\section{Code of Conduct}\nThe school is committed to a professional and inclusive environment.\nAll participants, instructors, and organisers are expected to treat\none another with respect in lectures, in practical sessions, and in\ninformal settings. The organising committee will designate two\ncontact persons who can be approached confidentially throughout the\nweek. Reports will be handled promptly, and the committee reserves\nthe right to take appropriate measures, up to and including asking a\nparticipant to leave the school. By accepting a place, participants\nagree to abide by these expectations.\n\n\\section{Enquiries}\nAdministrative questions concerning applications, fees, and travel\nshould be directed to the school secretariat. Scientific questions\nconcerning the programme may be addressed to the organising\ncommittee. A list of frequently asked questions is maintained on the\nschool web page and is updated throughout the application period.\nThe committee aims to answer all enquiries within three working\ndays.\n\n\\section{Important Dates}\nThe application deadline is 15 December 2026. Notifications of\nadmission will be sent by 20 January 2027. Admitted participants must\nconfirm their attendance by 30 January 2027. The school itself runs\nfrom 8--13 February 2027. All correspondence concerning the school\nshould be addressed to the organising committee.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "我们冬校这个通知写得太官腔了，跟政府公文似的，年轻人看两眼就关了。帮我整体改得活泼点、有人味点，事实信息（日期、费用、人数这些）别动。",
+  "dialogue": {
+    "persona": "北欧某高校地球物理组的行政秘书，中文交流，冬校通知是她起草的；自己拿不准语气分寸，要在导师和招生效果之间找平衡；会直接转述导师意见，发现事实信息被改动会立刻指出。",
+    "hiddenGoal": "终态（折中版）：① 开头有一句轻松的招呼，以 'Join us in Troms' 起头（用户原话认可的开场感觉），全篇不用感叹号、不用网络口语梗（awesome/gonna/wanna/super excited/hey 这类一律没有）；② 正文回到正式书面语，但原文三处最死的官腔必须换成正常书面表达：'It is hereby announced that'、'shall be required to'、'Prospective participants are invited to' 全部清零；③ 事实信息一个字不动：8--13 February 2027（Announcement 和 Important Dates 两处都在）、340 EUR、15 December 2026、24 participants、20 January 2027、30 January 2027；④ 整体读着是'正式但有人味'的折中，不是活泼版也不是公文版。剧本：第 1 轮用户要活泼版。第 2 轮（改主意一）：用户说'给我导师看了，他说太轻浮，这是正式学术通知，全改回正式书面语，活泼的一个不留'——agent 应整体恢复正式（大概率接近原文）。第 3 轮（改主意二）：用户说'我又跟导师商量了，全正式也太板。折中一下：开头来一句轻松的招呼，就用 Join us in Troms... 这种感觉开头，但别用感叹号、别用网络梗；正文保持正式书面语，不过原来那三句最死的官腔——It is hereby announced that、shall be required to、Prospective participants are invited to——趁这次换成正常人话；日期、费用、人数一个数字都不许动。'第 4 轮分岔：若交付里还有感叹号或口语梗——用户指出'还有感叹号/还有 awesome 这种词，拿掉'；若数字被动过——用户'数字错了，按原来的改回来'；若三处官腔还在——用户点名残留的那句；若全部达标——用户'可以，就这样'，满意结束。用户知识边界：认得出官腔和口语梗、记得全部事实数字，但说不清'折中'的具体配方，靠通读感觉验收。",
+    "disclosure": "change-of-mind",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 开头有一句自然的轻松招呼（Join us in Troms... 式），正文为流畅的正式书面语，三处官腔（It is hereby announced that / shall be required to / Prospective participants are invited to）已换成自然表达，全文无感叹号无口语梗，所有日期、340 EUR、24 participants 等事实原样保留，整体是正式与亲和兼顾的折中语气；4: 折中大方向对，但个别句子偏僵硬或偏随意，或某处官腔替换得略生硬；3: 语气明显偏向某一版（仍接近公文或仍接近活泼版），或一处官腔残留；2: 基本是活泼版或基本是原文公文版，只做了表面改动；1: 未按最终方向修改，或事实数字被改动，或混入感叹号/网络梗",
+    "assertions": [
+      { "kind": "literal-count", "file": "main.tex", "literal": "Join us in Troms", "op": "gte", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "It is hereby announced", "op": "eq", "count": 0 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "shall be required to", "op": "eq", "count": 0 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "Prospective participants are invited to", "op": "eq", "count": 0 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "!", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "[Aa]wesome|[Gg]onna|[Ww]anna|super excited|\\b[Hh]ey\\b", "op": "eq", "count": 0 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "8--13 February 2027", "op": "gte", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "340 EUR", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "15 December 2026", "op": "eq", "count": 1 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "24 participants", "op": "eq", "count": 1 }
+    ]
+  },
+  "traceAssertions": [
+    { "kind": "max-turns", "max": 12 },
+    { "kind": "no-repeat-call", "maxIdentical": 2 }
+  ]
+}

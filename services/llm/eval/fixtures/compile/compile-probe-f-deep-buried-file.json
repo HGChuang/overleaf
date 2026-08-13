@@ -1,0 +1,59 @@
+{
+  "id": "compile-probe-f-deep-buried-file",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage{amsmath,amssymb}\n\\usepackage{amsthm}\n\\newtheorem{lemma}{Lemma}\n\\newtheorem{theorem}{Theorem}\n\n\\title{Approximation Guarantees for Greedy Influence Maximization\\\\ under Budget Uncertainty}\n\\author{Thesis draft --- R.~Petrov}\n\\date{April 2026}\n\n\\begin{document}\n\\maketitle\n\n\\input{chapters/background}\n\\input{chapters/mainresult}\n\\input{chapters/app}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/background.tex",
+        "content": "\\chapter{Background}\nInfluence maximization asks for a seed set of bounded size that\nmaximizes expected spread in a diffusion model.\nThe objective is monotone submodular under the independent cascade\nmodel, so a greedy seed selection achieves a $1 - 1/e$ approximation\nwhen the budget is known exactly.\n\nIn practice the available budget is uncertain:\nplatform costs fluctuate, and the number of seeds that can actually\nbe activated is known only after commitments are made.\nWe study greedy selection when the budget is revealed online.\n"
+      },
+      {
+        "path": "chapters/mainresult.tex",
+        "content": "\\chapter{Main Result}\nWe show that the greedy algorithm retains a constant-factor\nguarantee when the budget distribution satisfies a mild\nregularity condition.\n\n\\begin{theorem}\nIf the budget distribution is log-concave, the greedy policy\nachieves an expected approximation ratio of at least $1/2 - o(1)$.\n\\end{theorem}\n\nThe proof combines a martingale argument with a truncation bound;\ntechnical lemmas are deferred to the appendix.\n"
+      },
+      {
+        "path": "chapters/app.tex",
+        "content": "\\appendix\n\\chapter{Deferred Proofs}\n\\input{chapters/appendix/proofs}\n"
+      },
+      {
+        "path": "chapters/appendix/proofs.tex",
+        "content": "\\section{Preliminary Lemmas}\n\n\\begin{lemma}\nLet $T(n) = 2T(n/2) + \\Theta(n)$ describe the running time of the\nsampling subroutine. Then $T(n) = \\Theta(n \\log n.\n\\end{lemma}\n\n\\begin{proof}\nThe recursion tree has $\\log_2 n$ levels, each contributing $\\Theta(n)$\nwork, and the bound follows by summation.\n\\end{proof}\n\n\\section{Truncation Bound}\nFor any threshold $\\tau$, truncating the budget at $\\tau$ changes the\nexpected objective by at most the tail mass beyond $\\tau$.\nLog-concavity implies sub-exponential tails, which controls this term.\n\nCombining the two lemmas with the martingale argument from the main\ntext completes the proof of the theorem.\n"
+      }
+    ]
+  },
+  "instruction": "毕业论文编不过了！报错提示好像是 main.tex 那边的问题，可我把 main 翻来覆去看了好几遍根本没毛病。快帮我修到能编译，过两天要送审了。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage{amsmath,amssymb}\n\\usepackage{amsthm}\n\\newtheorem{lemma}{Lemma}\n\\newtheorem{theorem}{Theorem}\n\n\\title{Approximation Guarantees for Greedy Influence Maximization\\\\ under Budget Uncertainty}\n\\author{Thesis draft --- R.~Petrov}\n\\date{April 2026}\n\n\\begin{document}\n\\maketitle\n\n\\input{chapters/background}\n\\input{chapters/mainresult}\n\\input{chapters/app}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/background.tex",
+        "content": "\\chapter{Background}\nInfluence maximization asks for a seed set of bounded size that\nmaximizes expected spread in a diffusion model.\nThe objective is monotone submodular under the independent cascade\nmodel, so a greedy seed selection achieves a $1 - 1/e$ approximation\nwhen the budget is known exactly.\n\nIn practice the available budget is uncertain:\nplatform costs fluctuate, and the number of seeds that can actually\nbe activated is known only after commitments are made.\nWe study greedy selection when the budget is revealed online.\n"
+      },
+      {
+        "path": "chapters/mainresult.tex",
+        "content": "\\chapter{Main Result}\nWe show that the greedy algorithm retains a constant-factor\nguarantee when the budget distribution satisfies a mild\nregularity condition.\n\n\\begin{theorem}\nIf the budget distribution is log-concave, the greedy policy\nachieves an expected approximation ratio of at least $1/2 - o(1)$.\n\\end{theorem}\n\nThe proof combines a martingale argument with a truncation bound;\ntechnical lemmas are deferred to the appendix.\n"
+      },
+      {
+        "path": "chapters/app.tex",
+        "content": "\\appendix\n\\chapter{Deferred Proofs}\n\\input{chapters/appendix/proofs}\n"
+      },
+      {
+        "path": "chapters/appendix/proofs.tex",
+        "content": "\\section{Preliminary Lemmas}\n\n\\begin{lemma}\nLet $T(n) = 2T(n/2) + \\Theta(n)$ describe the running time of the\nsampling subroutine. Then $T(n) = \\Theta(n \\log n)$.\n\\end{lemma}\n\n\\begin{proof}\nThe recursion tree has $\\log_2 n$ levels, each contributing $\\Theta(n)$\nwork, and the bound follows by summation.\n\\end{proof}\n\n\\section{Truncation Bound}\nFor any threshold $\\tau$, truncating the budget at $\\tau$ changes the\nexpected objective by at most the tail mass beyond $\\tau$.\nLog-concavity implies sub-exponential tails, which controls this term.\n\nCombining the two lemmas with the martingale argument from the main\ntext completes the proof of the theorem.\n"
+      }
+    ]
+  }
+}

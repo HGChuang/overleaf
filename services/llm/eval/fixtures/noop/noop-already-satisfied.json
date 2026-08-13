@@ -1,0 +1,19 @@
+{
+  "id": "noop-already-satisfied",
+  "category": "noop",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Register Allocation Through Iterated Coalescing Revisited}\n\\author{D.~Ivanova and K.~Sato}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nRegister allocation remains one of the most consequential phases of an\noptimizing compiler: a poor allocation turns hot loops into sequences of\nloads and stores, while a good one keeps values in registers across entire\nloop nests. Since Chaitin's formulation of allocation as graph coloring,\nand the coalescing refinements of Briggs and of George and Appel, the\nproblem has been considered largely solved for desktop targets. In this\npaper we revisit iterated register coalescing in the context of deeply\npipelined embedded cores, where spill latency is dominated by a small,\nmulti-ported scratchpad rather than by cache.\n\n\\section{Background on Static Single Assignment Form}\nA program is in static single assignment (SSA) form when every variable is\nassigned at exactly one program point. Join points carry $\\phi$-functions\nthat select among the definitions reaching them. SSA form simplifies\nliveness analysis and makes the interference graph chordal, which in turn\npermits coloring heuristics to behave predictably. Our allocator operates\non SSA directly and eliminates $\\phi$-functions only after coloring.\n\n\\section{Register Allocation via Graph Coloring}\nWe follow the classic pipeline: build the interference graph, then iterate\nsimplify, coalesce, freeze, and potential-spill until the graph is empty\nor an actual spill is forced. Coalescing removes copy instructions when\nsource and target do not interfere; iterated coalescing alternates\nconservative coalescing with simplification so that copies removed early\ndo not prevent later coloring opportunities.\n\n\\section{Handling of Spill Code Placement}\nWhen the graph cannot be colored with $k$ registers, a live range must be\nspilled. We rank candidates by spill cost per unit of interference degree,\nwhere cost is estimated from loop-nest depth and scratchpad access\nlatency. Short live ranges with cheap re-computation are rematerialized\ninstead of being stored.\n\n\\section{Experimental Evaluation on Embedded Benchmarks}\nWe implemented the allocator in a research backend and evaluated it on 28\nprograms from two embedded benchmark suites. Against a linear-scan\nbaseline, iterated coalescing reduces dynamic spill traffic by 41\\% on\naverage and improves run time by 4.2\\% on average, with the largest gains\non signal-processing kernels whose inner loops are register-bound.\n\n\\section{Related Work}\nChaitin introduced coloring-based allocation; Briggs added conservative\ncoalescing; George and Appel proposed iterated coalescing. Linear scan\nremains the standard alternative for just-in-time and embedded compilers\nwhere allocation time matters more than allocation quality.\n\n\\section{Conclusion and Future Work}\nIterated coalescing, long considered a desktop technique, pays off on\nmodern embedded cores when the spill cost model reflects scratchpad\nlatency. Future work includes a tighter integration of coalescing with\ninstruction scheduling and an empirical study of allocation-sensitive\nvectorization.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "帮我把所有 section 标题统一成 Title Case 风格。",
+  "grader": {
+    "type": "noop"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "id": "structure-dirty-doc-formfeed-whitespace",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Field Report: Moraine Deposits of the East Valley Transect}\n\\author{K.~Alvarez and P.~Osei}\n\\date{October 2025}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setting}\nThe east valley transect crosses three  distinct moraine belts, each\nmapped on foot during the September campaign. The outermost belt,\nshown in figure 1, is a broad ridge of unsorted till standing about\ntwelve metres above the valley floor.\n\f\n\\section{Moraine Belts}\nThe middle belt is narrower and steeper, and its crest, marked in\nfigure 2, carries large granite erratics up to three metres across.\nBetween the middle and inner belts lies a  wide outwash plain crossed\nby meltwater channels that were still active during the survey.\n\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{5cm}{0pt}}\n\\caption{The outermost moraine belt seen from the south}\n\\label{fig:ridge}\n\\end{figure}\n\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{5cm}{0pt}}\n\\caption{Granite erratics on the crest of the middle belt}\n\\label{fig:erratics}\n\\end{figure}\n\f\n\\section{Dating}\nOrganic material beneath the inner belt gives a maximum age for its\ndeposition, and the relative sequence of the three belts is clear\nfrom their cross-cutting relations. The innermost deposit, drawn in\nfigure 3, is a small delta built into a former ice-dammed lake.\n\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{5cm}{0pt}}\n\\caption{The inner delta deposit at the valley head}\n\\label{fig:delta}\n\\end{figure}\n\f\n\\section{Conclusions}\n\tThe three belts record at least two readvances of the east valley\nglacier, and the  relative ages are consistent with the regional\nchronology. Further dating of the outwash plain is planned for the\nnext field season.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份田野报告是旧手稿转录的，里面单独成行的分页控制字符（^L）、句子中间的双空格、结论段开头的 tab 缩进都是原稿保留的版式标记，必须一个字符不动地原样保留。要做的编辑只有一件：3 处写死的小写图号引用改成自动引用——「figure 1」改成 Figure~\\ref{fig:ridge}，「figure 2」改成 Figure~\\ref{fig:erratics}，「figure 3」改成 Figure~\\ref{fig:delta}，label 都已定义好不要新增，其余文字一律不碰。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\f",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "three  distinct moraine belts",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "a  wide outwash plain",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\tThe three belts record",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Figure~\\ref{fig:ridge}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Figure~\\ref{fig:erratics}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Figure~\\ref{fig:delta}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "figure [0-9]",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{fig:",
+        "op": "eq",
+        "count": 3
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Field Report: Moraine Deposits of the East Valley Transect}\n\\author{K.~Alvarez and P.~Osei}\n\\date{October 2025}\n\n\\begin{document}\n\\maketitle\n\n\\section{Setting}\nThe east valley transect crosses three  distinct moraine belts, each\nmapped on foot during the September campaign. The outermost belt,\nshown in Figure~\\ref{fig:ridge}, is a broad ridge of unsorted till standing about\ntwelve metres above the valley floor.\n\f\n\\section{Moraine Belts}\nThe middle belt is narrower and steeper, and its crest, marked in\nFigure~\\ref{fig:erratics}, carries large granite erratics up to three metres across.\nBetween the middle and inner belts lies a  wide outwash plain crossed\nby meltwater channels that were still active during the survey.\n\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{5cm}{0pt}}\n\\caption{The outermost moraine belt seen from the south}\n\\label{fig:ridge}\n\\end{figure}\n\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{5cm}{0pt}}\n\\caption{Granite erratics on the crest of the middle belt}\n\\label{fig:erratics}\n\\end{figure}\n\f\n\\section{Dating}\nOrganic material beneath the inner belt gives a maximum age for its\ndeposition, and the relative sequence of the three belts is clear\nfrom their cross-cutting relations. The innermost deposit, drawn in\nFigure~\\ref{fig:delta}, is a small delta built into a former ice-dammed lake.\n\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{5cm}{0pt}}\n\\caption{The inner delta deposit at the valley head}\n\\label{fig:delta}\n\\end{figure}\n\f\n\\section{Conclusions}\n\tThe three belts record at least two readvances of the east valley\nglacier, and the  relative ages are consistent with the regional\nchronology. Further dating of the outwash plain is planned for the\nnext field season.\n\\end{document}\n"
+      }
+    ]
+  }
+}

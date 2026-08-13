@@ -1,0 +1,20 @@
+{
+  "id": "noop-fill-noop-latex-concept",
+  "category": "noop",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\title{Notes on First-Order Linear Differential Equations}\n\\author{Course Notes, Week 5}\n\\date{}\n\\begin{document}\n\\maketitle\n\\section{The Standard Form}\nA first-order linear ordinary differential equation can always be\nwritten in the standard form\n\\begin{equation}\ny' + p(x)\\, y = q(x)\n\\end{equation}\nwhere $p$ and $q$ are continuous functions on the interval of interest.\nThe equation is called homogeneous when $q(x) = 0$.\n\\section{Integrating Factor}\nMultiplying both sides by the integrating factor $\\mu(x) = e^{\\int p(x)\\,dx}$\nturns the left-hand side into an exact derivative, and the solution\nfollows by integration:\n\\begin{align}\n\\bigl(e^{\\int p}\\, y\\bigr)' &= e^{\\int p}\\, q \\\\\ne^{\\int p}\\, y &= \\int e^{\\int p}\\, q\\, dx + C\n\\end{align}\nDividing through by the integrating factor gives the general solution.\n\\section{An Initial-Value Problem}\nFor the initial condition $y(x_0) = y_0$, the solution can be written\nin closed form as\n\\begin{equation}\ny(x) = y_0\\, e^{-\\int_{x_0}^{x} p(t)\\,dt}\n+ \\int_{x_0}^{x} q(s)\\, e^{-\\int_{s}^{x} p(t)\\,dt}\\, ds\n\\end{equation}\nwhich is sometimes called the variation-of-parameters formula.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "问个小白问题哈，LaTeX 里 align 和 equation 到底有啥区别？我看这笔记里两种都用了，一直没搞懂啥时候该用哪个。",
+  "grader": {
+    "type": "noop"
+  },
+  "solution": null
+}

@@ -1,0 +1,79 @@
+{
+  "id": "structure-dirty-instr-typo-tolerance",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Seasonal Price Spreads in Regional Onion Markets}\n\\author{R. Okafor}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\n\\label{intro}\nSeasonal price spreads in staple vegetable markets remain\npoorly documented for the region.\nThis note assembles three harvest cycles of wholesale prices\nand asks how much of the spread storage can explain.\n\n\\section{Model}\n\\label{model}\nThe storage arbitrage condition equates the price difference\nbetween harvest and lean seasons with the cost of storage,\ncredit, and expected spoilage.\nSection~\\ref{results} confronts this benchmark with the data.\n\n\\section{Results}\n\\label{results}\nMeasured spreads exceed the storage-cost benchmark in seven\nof nine market years.\nAs anticipated in Section~\\ref{model}, the excess is largest\nwhere rural credit is thinnest.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "在吗在吗，投稿系统把稿子退回来了，说 label 命名不合规范。麻烦把正文里的 \\lable 统一加上 sec: 前缀——比如 \\lable{model} 改成 \\lable{sec:model}——一共三处，对应的 \\ref 也记得一起改，谢啦！",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{sec:intro}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{sec:model}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{sec:results}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\ref{sec:model}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\ref{sec:results}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\ref\\{",
+        "op": "eq",
+        "count": 2
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Seasonal Price Spreads in Regional Onion Markets}\n\\author{R. Okafor}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\n\\label{sec:intro}\nSeasonal price spreads in staple vegetable markets remain\npoorly documented for the region.\nThis note assembles three harvest cycles of wholesale prices\nand asks how much of the spread storage can explain.\n\n\\section{Model}\n\\label{sec:model}\nThe storage arbitrage condition equates the price difference\nbetween harvest and lean seasons with the cost of storage,\ncredit, and expected spoilage.\nSection~\\ref{sec:results} confronts this benchmark with the data.\n\n\\section{Results}\n\\label{sec:results}\nMeasured spreads exceed the storage-cost benchmark in seven\nof nine market years.\nAs anticipated in Section~\\ref{sec:model}, the excess is largest\nwhere rural credit is thinnest.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

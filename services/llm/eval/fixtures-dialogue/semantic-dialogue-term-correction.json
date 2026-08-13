@@ -1,0 +1,39 @@
+{
+  "id": "semantic-dialogue-term-correction",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Approach}\nWe present a study of parameter-efficient adaptation for speech models. First, we finetune the encoder on in-domain data while the decoder stays frozen. The fine tuning of the decoder then follows a curriculum schedule over three stages. Finally, the whole model is fine-tuned jointly for two epochs. Results improve by 4.2 points on average across five benchmarks.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这一段帮我润色一下，准备投稿用。",
+  "dialogue": {
+    "hiddenGoal": "段落最终要满足：① 语言润色到投稿水准（语法、简洁、学术语气）；② 术语写法统一为 fine-tune 系列（finetune、fine tuning 一律改成带连字符的 fine-tune/fine-tuned/fine-tuning）；③ 数字 4.2 和 five/three/two 等量信息保留。第一轮只要求润色；若交付里术语仍混用，第二轮明确指出统一要求。若首轮已全满足，直接满意结束。",
+    "persona": "谨慎的副教授，中文交流，对术语规范较真但不啰嗦；先收货检查，发现术语混用才指出来，不说 Agent 没问到的额外需求。",
+    "disclosure": "correction",
+    "maxUserTurns": 3
+  },
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 润色后语句地道、学术语气，术语全部统一为 fine-tune 连字符写法（无 finetune/fine tuning 残留），数字与量级信息（4.2、five、three、two）无损；4: 术语统一且数字保留，润色有个别生硬处；3: 术语基本统一但有个别残留，或润色改动过猛偏离原意；2: 术语仍明显混用，或信息有损；1: 未润色、虚构内容，或数字被改",
+    "assertions": [
+      { "kind": "literal-count", "file": "main.tex", "literal": "finetune", "op": "eq", "count": 0 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "fine tuning", "op": "eq", "count": 0 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "fine-tun", "op": "gte", "count": 3 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "4.2", "op": "gte", "count": 1 }
+    ]
+  },
+  "traceAssertions": [
+    { "kind": "max-turns", "max": 12 },
+    { "kind": "no-repeat-call", "maxIdentical": 2 }
+  ]
+}

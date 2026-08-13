@@ -1,0 +1,100 @@
+{
+  "id": "structure-bvar-long-paragraph-quote",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{booktabs}\n\n\\title{Wage Floors and Employment Retention:\\\\\nEvidence from a Regional Mandate}\n\\author{L.~Beaumont, C.~Okafor, and M.~Hale}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nWe study a regional wage-floor mandate that bound only firms\nabove a size threshold, and we estimate its effect on the\ntwelve-month employment retention of low-wage workers. Using\na difference-in-differences design that exploits the threshold,\nwe find that the mandate raised retention by 4.2 percentage\npoints without measurable effects on hiring or on hours.\nEvent-study estimates are flat before the reform, and the\neffect is concentrated in establishments that reported binding\nfloors ex ante. We read the pattern as evidence of monopsonistic\ncompetition in local labour markets.\n\\end{abstract}\n\n\\section{Introduction}\nDo wage floors destroy jobs? The canonical competitive model\nsays they must, yet a long empirical tradition has struggled\nto find the predicted losses. This paper studies a setting in\nwhich the mandate bound some firms and not others, so that\nthe counterfactual is observed rather than assumed.\nOur setting is the Northern Province wage-floor reform of\n2019. The reform applied to private establishments with fifty\nor more employees and raised the minimum hourly wage for the\nbottom decile by roughly a fifth. Establishments below the\nthreshold were explicitly exempt, and enforcement records show\nthat compliance among covered firms was near universal.\nWe link the establishment register to quarterly payroll\nfilings and follow every low-wage worker for three years.\nThe linked panel lets us measure retention, hiring, hours,\nand earnings at the worker level, and the size threshold\nsupplies a comparison group whose trends we verify directly.\nThree findings emerge. First, retention among low-wage\nworkers rose sharply in covered establishments relative to\nexempt ones. Second, we detect no offsetting margin: hiring\nheld steady, hours moved little, and separations fell rather\nthan rose. Third, the effect is largest precisely where\npre-reform wage dispersion suggests monopsony power.\nThe remainder of the paper proceeds as follows. Section 2\ndescribes the reform and its enforcement. Section 3 presents\nthe data. Section 4 lays out the empirical strategy, Section 5\nreports the estimates, and Section 6 discusses interpretation.\n\n\\section{Institutional Background}\nThe reform was announced in March 2019 and took effect the\nfollowing January. Coverage was defined by establishment size\nin the reference quarter, so firms could not shrink below the\nthreshold to avoid the mandate once the baseline was fixed.\nEnforcement combined automatic payroll audits with a worker\nhotline. Administrative penalties were rare in practice,\nbecause the audit trail made underpayment easy to detect and\ncostly to defend. Surveys fielded by the statistical office\nindicate that covered establishments raised base pay for the\naffected decile within two quarters of the effective date.\n\n\\section{Data}\nOur analysis file links three administrative sources. The\nestablishment register provides size, sector, and location.\nQuarterly payroll filings provide earnings, hours, and tenure\nfor every employee. The reform roster records coverage status\nand the audit history of each establishment.\nWe restrict the sample to private establishments that filed\nin every quarter from 2017 to 2021, and we define low-wage\nworkers as those in the bottom decile of the pre-reform\nestablishment wage distribution. The final panel covers\n41{,}206 worker-quarter observations in the balanced sample,\nof which 40{,}884 remain after the control variables are\nmerged. Summary statistics appear in the online appendix.\n\n\\section{Empirical Strategy}\nWe estimate the event-study specification\n\\begin{equation}\ny_{it} = \\alpha_i + \\lambda_t\n+ \\sum_{k \\neq -1} \\beta_k \\, D_i \\times \\mathbf{1}[t - t_0 = k]\n+ X_{it}'\\gamma + u_{it},\n\\end{equation}\nwhere $D_i$ marks covered establishments and the coefficients\n$\\beta_k$ trace the dynamic effect relative to the quarter\nbefore the reform. Our preferred specification aggregates the\npost-reform coefficients into a single estimate\n\\begin{equation}\ny_{it} = \\alpha_i + \\lambda_t + \\beta_1 \\, D_i \\times Post_t\n+ X_{it}'\\gamma + u_{it},\n\\end{equation}\nwith standard errors clustered by establishment. The\nidentifying assumption is that exempt establishments trace\nthe counterfactual path of covered ones, an assumption we\nprobe with pre-trend tests and with placebo thresholds.\n\n\\section{Results}\nTable \\ref{tab:main} reports the headline estimates. Column\n(1) includes no controls, column (2) adds firm controls, and\ncolumn (3) adds worker controls; the point estimate is stable\nacross the three columns, which reassures us that selection\non observables is limited.\n\n\\begin{table}[t]\n\\centering\n\\caption{Effect of the mandate on twelve-month retention}\n\\label{tab:main}\n\\begin{tabular}{lccc}\n\\toprule\n & (1) & (2) & (3) \\\\\n\\midrule\nTreated $\\times$ Post & 0.38 & 0.40 & 0.42 \\\\\n & (0.09) & (0.10) & (0.11) \\\\\nFirm controls & No & Yes & Yes \\\\\nWorker controls & No & No & Yes \\\\\n\\midrule\nObservations & 41{,}206 & 41{,}206 & 40{,}884 \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\nHiring rates, average hours, and separation hazards are\nreported in the appendix; none of these margins moves enough\nto account for the retention gain. Placebo thresholds at\nforty and sixty employees produce estimates near zero, and\nthe pre-reform event-study coefficients are jointly\ninsignificant in every specification we have tried.\n\n\\section{Discussion}\nThe magnitude of the estimate deserves emphasis. Because the\nreform bound only firms above the size threshold, the coefficient\n$\\beta_1 = 0.42$ (s.e.\\ 0.11) in column (3) of Table \\ref{tab:main}\nis interpretable as the causal effect of the mandate on the\nprobability that a low-wage worker retains employment for at\nleast twelve months. The implied payroll increase of 7\\% is\nan order of magnitude smaller than a competitive spot-market\nmodel would predict, and the gap---already visible in the raw\nevent-study traces---points toward monopsonistic wage setting\nrather than toward efficient bargaining. For the average\ntreated establishment with 1{,}980 worker-months at risk, the\nestimate translates into roughly eighty additional worker-years.\n\nA competing account emphasises labour--labour substitution:\nperhaps covered establishments retained low-wage workers\nonly because they dismissed their close substitutes. The\noccupation-level estimates do not support this account, since\nretention rose within every occupation cell we can form,\nincluding the cells with the closest available substitutes.\nA second competing account credits the simultaneous training\nsubsidy. The subsidy, however, was available to covered and\nexempt establishments on identical terms, so it cannot explain\nthe differential retention we estimate at the threshold.\nWe caution that the estimate is local to the bottom decile\nand to a mandate of moderate size. Larger floors, or floors\nthat bind higher in the wage distribution, could well have\ndifferent effects, and our design is silent about both.\n\n\\section{Conclusion}\nA size-contingent wage floor raised the twelve-month retention\nof low-wage workers by about four percentage points, with no\nmeasurable offset on hiring, hours, or separations. The\npattern fits a monopsonistic labour market better than a\ncompetitive one, and it suggests that moderate wage floors\ncan redistribute earnings toward low-wage workers without\ndestroying their jobs. We leave the analysis of larger\nmandates, and of floors that bind higher in the distribution,\nto future work as further reforms unfold.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Discussion 这节第一段（以 “The magnitude of the estimate deserves emphasis” 开头、以 “eighty additional worker-years.” 收尾的那一整段）写得太绕，我已经重写好了一版。请把这一整段完整替换成下面这段新文字：新段落逐字使用、一个标点都不要改，段前段后的空行保持原样，文档其它部分一字不动。\n\nThe estimate is economically large, not merely statistically\ndetectable. Because the reform bound only firms above the size\nthreshold, the coefficient $\\beta_1 = 0.42$ in column (3) of\nTable \\ref{tab:main} measures the causal effect of the mandate\non twelve-month employment retention for low-wage workers.\nTwo features of the design strengthen this reading: the\nevent-study traces are flat before the reform date, and the\neffect is concentrated in establishments that reported binding\nwage floors ex ante. We therefore interpret the mandate as\ncompressing wage differentials without destroying jobs, a\npattern consistent with monopsonistic competition in local\nlabour markets.",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "compressing wage differentials without destroying jobs",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "event-study traces are flat before the reform date",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "$\\beta_1 = 0.42$ in column (3) of",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "The implied payroll increase",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "1{,}980",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "eighty additional worker-years",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Our preferred specification",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\section{Discussion}\nThe estimate is economically",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "labour markets.\n\nA competing account",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\section\\{",
+        "op": "eq",
+        "count": 7
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{booktabs}\n\n\\title{Wage Floors and Employment Retention:\\\\\nEvidence from a Regional Mandate}\n\\author{L.~Beaumont, C.~Okafor, and M.~Hale}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nWe study a regional wage-floor mandate that bound only firms\nabove a size threshold, and we estimate its effect on the\ntwelve-month employment retention of low-wage workers. Using\na difference-in-differences design that exploits the threshold,\nwe find that the mandate raised retention by 4.2 percentage\npoints without measurable effects on hiring or on hours.\nEvent-study estimates are flat before the reform, and the\neffect is concentrated in establishments that reported binding\nfloors ex ante. We read the pattern as evidence of monopsonistic\ncompetition in local labour markets.\n\\end{abstract}\n\n\\section{Introduction}\nDo wage floors destroy jobs? The canonical competitive model\nsays they must, yet a long empirical tradition has struggled\nto find the predicted losses. This paper studies a setting in\nwhich the mandate bound some firms and not others, so that\nthe counterfactual is observed rather than assumed.\nOur setting is the Northern Province wage-floor reform of\n2019. The reform applied to private establishments with fifty\nor more employees and raised the minimum hourly wage for the\nbottom decile by roughly a fifth. Establishments below the\nthreshold were explicitly exempt, and enforcement records show\nthat compliance among covered firms was near universal.\nWe link the establishment register to quarterly payroll\nfilings and follow every low-wage worker for three years.\nThe linked panel lets us measure retention, hiring, hours,\nand earnings at the worker level, and the size threshold\nsupplies a comparison group whose trends we verify directly.\nThree findings emerge. First, retention among low-wage\nworkers rose sharply in covered establishments relative to\nexempt ones. Second, we detect no offsetting margin: hiring\nheld steady, hours moved little, and separations fell rather\nthan rose. Third, the effect is largest precisely where\npre-reform wage dispersion suggests monopsony power.\nThe remainder of the paper proceeds as follows. Section 2\ndescribes the reform and its enforcement. Section 3 presents\nthe data. Section 4 lays out the empirical strategy, Section 5\nreports the estimates, and Section 6 discusses interpretation.\n\n\\section{Institutional Background}\nThe reform was announced in March 2019 and took effect the\nfollowing January. Coverage was defined by establishment size\nin the reference quarter, so firms could not shrink below the\nthreshold to avoid the mandate once the baseline was fixed.\nEnforcement combined automatic payroll audits with a worker\nhotline. Administrative penalties were rare in practice,\nbecause the audit trail made underpayment easy to detect and\ncostly to defend. Surveys fielded by the statistical office\nindicate that covered establishments raised base pay for the\naffected decile within two quarters of the effective date.\n\n\\section{Data}\nOur analysis file links three administrative sources. The\nestablishment register provides size, sector, and location.\nQuarterly payroll filings provide earnings, hours, and tenure\nfor every employee. The reform roster records coverage status\nand the audit history of each establishment.\nWe restrict the sample to private establishments that filed\nin every quarter from 2017 to 2021, and we define low-wage\nworkers as those in the bottom decile of the pre-reform\nestablishment wage distribution. The final panel covers\n41{,}206 worker-quarter observations in the balanced sample,\nof which 40{,}884 remain after the control variables are\nmerged. Summary statistics appear in the online appendix.\n\n\\section{Empirical Strategy}\nWe estimate the event-study specification\n\\begin{equation}\ny_{it} = \\alpha_i + \\lambda_t\n+ \\sum_{k \\neq -1} \\beta_k \\, D_i \\times \\mathbf{1}[t - t_0 = k]\n+ X_{it}'\\gamma + u_{it},\n\\end{equation}\nwhere $D_i$ marks covered establishments and the coefficients\n$\\beta_k$ trace the dynamic effect relative to the quarter\nbefore the reform. Our preferred specification aggregates the\npost-reform coefficients into a single estimate\n\\begin{equation}\ny_{it} = \\alpha_i + \\lambda_t + \\beta_1 \\, D_i \\times Post_t\n+ X_{it}'\\gamma + u_{it},\n\\end{equation}\nwith standard errors clustered by establishment. The\nidentifying assumption is that exempt establishments trace\nthe counterfactual path of covered ones, an assumption we\nprobe with pre-trend tests and with placebo thresholds.\n\n\\section{Results}\nTable \\ref{tab:main} reports the headline estimates. Column\n(1) includes no controls, column (2) adds firm controls, and\ncolumn (3) adds worker controls; the point estimate is stable\nacross the three columns, which reassures us that selection\non observables is limited.\n\n\\begin{table}[t]\n\\centering\n\\caption{Effect of the mandate on twelve-month retention}\n\\label{tab:main}\n\\begin{tabular}{lccc}\n\\toprule\n & (1) & (2) & (3) \\\\\n\\midrule\nTreated $\\times$ Post & 0.38 & 0.40 & 0.42 \\\\\n & (0.09) & (0.10) & (0.11) \\\\\nFirm controls & No & Yes & Yes \\\\\nWorker controls & No & No & Yes \\\\\n\\midrule\nObservations & 41{,}206 & 41{,}206 & 40{,}884 \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\nHiring rates, average hours, and separation hazards are\nreported in the appendix; none of these margins moves enough\nto account for the retention gain. Placebo thresholds at\nforty and sixty employees produce estimates near zero, and\nthe pre-reform event-study coefficients are jointly\ninsignificant in every specification we have tried.\n\n\\section{Discussion}\nThe estimate is economically large, not merely statistically\ndetectable. Because the reform bound only firms above the size\nthreshold, the coefficient $\\beta_1 = 0.42$ in column (3) of\nTable \\ref{tab:main} measures the causal effect of the mandate\non twelve-month employment retention for low-wage workers.\nTwo features of the design strengthen this reading: the\nevent-study traces are flat before the reform date, and the\neffect is concentrated in establishments that reported binding\nwage floors ex ante. We therefore interpret the mandate as\ncompressing wage differentials without destroying jobs, a\npattern consistent with monopsonistic competition in local\nlabour markets.\n\nA competing account emphasises labour--labour substitution:\nperhaps covered establishments retained low-wage workers\nonly because they dismissed their close substitutes. The\noccupation-level estimates do not support this account, since\nretention rose within every occupation cell we can form,\nincluding the cells with the closest available substitutes.\nA second competing account credits the simultaneous training\nsubsidy. The subsidy, however, was available to covered and\nexempt establishments on identical terms, so it cannot explain\nthe differential retention we estimate at the threshold.\nWe caution that the estimate is local to the bottom decile\nand to a mandate of moderate size. Larger floors, or floors\nthat bind higher in the wage distribution, could well have\ndifferent effects, and our design is silent about both.\n\n\\section{Conclusion}\nA size-contingent wage floor raised the twelve-month retention\nof low-wage workers by about four percentage points, with no\nmeasurable offset on hiring, hours, or separations. The\npattern fits a monopsonistic labour market better than a\ncompetitive one, and it suggests that moderate wage floors\ncan redistribute earnings toward low-wage workers without\ndestroying their jobs. We leave the analysis of larger\nmandates, and of floors that bind higher in the distribution,\nto future work as further reforms unfold.\n\\end{document}\n"
+      }
+    ]
+  }
+}

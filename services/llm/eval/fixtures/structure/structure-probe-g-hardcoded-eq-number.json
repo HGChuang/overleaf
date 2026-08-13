@@ -1,0 +1,67 @@
+{
+  "id": "structure-probe-g-hardcoded-eq-number",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\title{Steady One-Dimensional Flow --- Tutorial Notes}\n\\author{Thermofluids III, Problem Set 4}\n\\date{}\n\\begin{document}\n\\maketitle\n\n\\section{Setup}\nWe consider a rigid control volume with one inlet and one outlet. The\nflow is steady, so every inventory derivative vanishes and each balance\nreduces to an algebraic relation between the two stations. Station 1 is\nthe inlet, station 2 the outlet, and all specific quantities are per\nunit mass.\n\nBefore writing any balances, fix the sign convention: heat transfer\ninto the control volume is positive, shaft work done by the fluid is\npositive, and velocities are taken positive from inlet to outlet. Most\nsign errors in this problem set trace back to mixing conventions\nhalfway through a calculation.\n\n\\section{Governing relations}\nFor steady one-dimensional flow through a control volume, mass\nconservation reads\n\\begin{equation}\n\\label{eq:continuity}\n\\dot{m} = \\rho_1 A_1 V_1 = \\rho_2 A_2 V_2\n\\end{equation}\nand the momentum balance between the inlet and outlet stations gives\n\\begin{equation}\n\\label{eq:momentum}\np_1 A_1 - p_2 A_2 = \\dot{m} \\left( V_2 - V_1 \\right)\n\\end{equation}\nwhile the steady-flow energy equation, including heat transfer and\nshaft work, is\n\\begin{equation}\n\\label{eq:energy}\n\\dot{Q} - \\dot{W}_s = \\dot{m} \\left( h_2 - h_1 + \\frac{V_2^{2} - V_1^{2}}{2} \\right)\n\\end{equation}\nAs equation (3) shows, the shaft work term couples directly to the\nenthalpy rise across the machine, which is why turbines and compressors\nare always analysed with the energy equation rather than the momentum\nequation alone.\n\n\\section{Which balance to use}\nContinuity is almost never the binding constraint; it merely fixes the\nmass flux once the geometry and one state are known. The momentum\nequation earns its keep when pressure forces dominate, as in nozzles and\ndiffusers with negligible heat transfer. For anything with a shaft or a\nheating coil, go straight to the energy equation and treat the momentum\nbalance as a consistency check.\n\nA common exam mistake is to apply Bernoulli's equation across a pump or\nturbine. Bernoulli assumes no shaft work, so it is silently invalid\nacross any machine; the energy equation above is the correct\ngeneralisation and reduces to Bernoulli only when both the work and the\nheat terms vanish.\n\n\\section{Worked problem}\nAir enters an adiabatic compressor at a low velocity and leaves at a\nhigher pressure with a negligible change in kinetic energy. With the\nkinetic term dropped, the energy equation collapses to a balance\nbetween shaft work input and enthalpy rise, and the exit temperature\nfollows directly from the ideal-gas relation for enthalpy.\n\n\\section{Further reading}\nThe derivation of the steady-flow energy equation from the transient\nfirst law is given in the course textbook, chapter 5; the same chapter\ncovers the lost-work decomposition that we skipped here.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "讲义的公式顺序不对：能量方程是主角，应该最先给。把第三个公式（steady-flow energy，带 \\dot{Q} 那个）整块挪到第一个公式前面，其余两个公式保持原有先后顺序。挪完编号会自动重排，所以正文那句写死的 equation (3) 必须改成 \\eqref 动态引用（公式的 label 已经打好了），不许再出现写死的编号。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "equation (3)",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\eqref\\{eq:energy\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "h_2 - h_1",
+          "\\\\rho_1 A_1"
+        ]
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\rho_1 A_1",
+          "p_1 A_1"
+        ]
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{equation\\}",
+        "op": "eq",
+        "count": 3
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\title{Steady One-Dimensional Flow --- Tutorial Notes}\n\\author{Thermofluids III, Problem Set 4}\n\\date{}\n\\begin{document}\n\\maketitle\n\n\\section{Setup}\nWe consider a rigid control volume with one inlet and one outlet. The\nflow is steady, so every inventory derivative vanishes and each balance\nreduces to an algebraic relation between the two stations. Station 1 is\nthe inlet, station 2 the outlet, and all specific quantities are per\nunit mass.\n\nBefore writing any balances, fix the sign convention: heat transfer\ninto the control volume is positive, shaft work done by the fluid is\npositive, and velocities are taken positive from inlet to outlet. Most\nsign errors in this problem set trace back to mixing conventions\nhalfway through a calculation.\n\n\\section{Governing relations}\nFor steady one-dimensional flow through a control volume, the\nsteady-flow energy equation, including heat transfer and shaft work, is\n\\begin{equation}\n\\label{eq:energy}\n\\dot{Q} - \\dot{W}_s = \\dot{m} \\left( h_2 - h_1 + \\frac{V_2^{2} - V_1^{2}}{2} \\right)\n\\end{equation}\nMass conservation reads\n\\begin{equation}\n\\label{eq:continuity}\n\\dot{m} = \\rho_1 A_1 V_1 = \\rho_2 A_2 V_2\n\\end{equation}\nand the momentum balance between the inlet and outlet stations gives\n\\begin{equation}\n\\label{eq:momentum}\np_1 A_1 - p_2 A_2 = \\dot{m} \\left( V_2 - V_1 \\right)\n\\end{equation}\nAs \\eqref{eq:energy} shows, the shaft work term couples directly to the\nenthalpy rise across the machine, which is why turbines and compressors\nare always analysed with the energy equation rather than the momentum\nequation alone.\n\n\\section{Which balance to use}\nContinuity is almost never the binding constraint; it merely fixes the\nmass flux once the geometry and one state are known. The momentum\nequation earns its keep when pressure forces dominate, as in nozzles and\ndiffusers with negligible heat transfer. For anything with a shaft or a\nheating coil, go straight to the energy equation and treat the momentum\nbalance as a consistency check.\n\nA common exam mistake is to apply Bernoulli's equation across a pump or\nturbine. Bernoulli assumes no shaft work, so it is silently invalid\nacross any machine; the energy equation above is the correct\ngeneralisation and reduces to Bernoulli only when both the work and the\nheat terms vanish.\n\n\\section{Worked problem}\nAir enters an adiabatic compressor at a low velocity and leaves at a\nhigher pressure with a negligible change in kinetic energy. With the\nkinetic term dropped, the energy equation collapses to a balance\nbetween shaft work input and enthalpy rise, and the exit temperature\nfollows directly from the ideal-gas relation for enthalpy.\n\n\\section{Further reading}\nThe derivation of the steady-flow energy equation from the transient\nfirst law is given in the course textbook, chapter 5; the same chapter\ncovers the lost-work decomposition that we skipped here.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

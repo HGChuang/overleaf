@@ -1,0 +1,46 @@
+{
+  "id": "structure-dialogue-section-change-mind",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Introduction}\nDemand for on-device inference keeps growing.\n\n\\section{Method}\nOur approach encodes queries with a dual-tower network.\n\nTraining uses a contrastive loss with in-batch negatives.\n\n\\section{Experiments}\nWe evaluate on three public benchmarks.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "把 Method 和 Experiments 两节对调一下。",
+  "dialogue": {
+    "hiddenGoal": "最终状态：① Introduction → Approach → Training → Experiments 的顺序；② 原 Method 节的前半（dual-tower 那句）归 Approach 节，后半（contrastive loss 那句）归 Training 节；③ 对调操作不得残留（Experiments 回到最后，Method 标题不存在）。剧本：第一轮让 agent 对调 Method/Experiments；agent 完成后用户改主意——撤回对调，改为把原 Method 节拆成 Approach 和 Training 两节。",
+    "persona": "犹豫的论文作者，中文交流，改主意时语气直接但不道歉式啰嗦；第二轮必须明确说'不要对调了'。",
+    "disclosure": "change-of-mind",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "order", "file": "main.tex", "patterns": ["\\\\section\\{Introduction\\}", "\\\\section\\{Approach\\}"] },
+      { "kind": "order", "file": "main.tex", "patterns": ["\\\\section\\{Approach\\}", "\\\\section\\{Training\\}"] },
+      { "kind": "order", "file": "main.tex", "patterns": ["\\\\section\\{Training\\}", "\\\\section\\{Experiments\\}"] },
+      { "kind": "literal-count", "file": "main.tex", "literal": "\\section{", "op": "eq", "count": 4 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "\\section{Method}", "op": "eq", "count": 0 },
+      { "kind": "order", "file": "main.tex", "patterns": ["dual-tower", "contrastive"] }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Introduction}\nDemand for on-device inference keeps growing.\n\n\\section{Approach}\nOur approach encodes queries with a dual-tower network.\n\n\\section{Training}\nTraining uses a contrastive loss with in-batch negatives.\n\n\\section{Experiments}\nWe evaluate on three public benchmarks.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    { "kind": "max-turns", "max": 12 },
+    { "kind": "no-repeat-call", "maxIdentical": 2 }
+  ]
+}

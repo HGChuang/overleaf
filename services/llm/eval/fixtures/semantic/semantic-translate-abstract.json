@@ -1,0 +1,23 @@
+{
+  "id": "semantic-translate-abstract",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{CJKutf8}\n\\title{Differentially Private Empirical Risk Minimization Revisited}\n\\author{Anon}\n\\begin{document}\n\\maketitle\n\\begin{CJK}{UTF8}{gbsn}\n\\begin{abstract}\n本文研究差分隐私经验风险最小化问题。现有方法直接在梯度上加噪，导致模型精度显著下降。我们提出一种自适应裁剪策略，根据训练进程动态调整裁剪阈值，从而降低注入噪声的规模。在三个公开数据集上的实验表明，我们的方法在相同隐私预算下将测试精度提高了 5 到 8 个百分点。\n\\end{abstract}\n\\end{CJK}\n\\section{Introduction}\nPrivacy-preserving machine learning trains models without leaking information about individual training examples.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "请把这段中文摘要翻译成地道的学术英文。译完后正文里就没有中文了，可以把 CJKutf8 宏包和 CJK 环境一并去掉，abstract 结构保留。术语要准确（差分隐私 = differential privacy，经验风险最小化 = empirical risk minimization），数字信息（三个数据集、5 到 8 个百分点）不能译错或丢失。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 摘要完整译为地道学术英文，四个信息点（研究差分隐私 ERM 问题/现有方法梯度加噪致精度下降/自适应裁剪动态调阈值/三数据集上同隐私预算提升 5-8 个百分点）全部准确保留，术语正确，abstract 结构完整，无残留中文；4: 译文通顺且 ≥3 个信息点准确，个别措辞不够地道或术语小瑕疵；3: 译文可懂但丢失 1 个关键信息点，或数字出错但其余尚可；2: 逐字硬译、语句不通，或丢失 ≥2 个信息点；1: 未翻译，或译文虚构原文没有的内容"
+  }
+}

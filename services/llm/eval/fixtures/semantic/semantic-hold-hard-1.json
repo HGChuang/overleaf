@@ -1,0 +1,86 @@
+{
+  "id": "semantic-hold-hard-1",
+  "category": "semantic",
+  "difficulty": "hard",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Short-Window Forecasting of Pyroclastic Density Currents at\nMount Rinar: Tremor Precursors and Hazard Communication}\n\\author{S.~Okafor, M.~Tedesco, and L.~Haran}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nPyroclastic density currents are the deadliest products of explosive\neruptions, yet their onset remains difficult to anticipate more than a\nfew days in advance. At Mount Rinar we show that a sustained rise in\nvolcanic tremor amplitude preceded the three most recent current-forming\nepisodes by two to four days, and we outline how this signal is now used\nin the provincial civil protection bulletin.\n\\end{abstract}\n\n\\section{Introduction}\nMount Rinar is an andesitic stratovolcano whose northern and eastern\nflanks are incised by steep drainages that funnel pyroclastic density\ncurrents toward settled land. Forecasting efforts have historically\nfocused on deformation and gas emissions, with mixed success.\n\n\\section{Monitoring Network and Precursory Signals}\nThe observatory operates twelve broadband seismic stations on the\nedifice. Since 2019, each current-forming episode has been preceded by a\nslow, persistent increase in tremor amplitude lasting several days,\nwithout a corresponding increase in deformation.\n\n\\section{Plain-Language Summary for the Civil Protection Bulletin}\n\\input{bulletin}\n\n\\section{Conclusions}\nTremor-based short-window forecasts are now issued weekly to provincial\nauthorities. The approach does not predict eruption size, and false\nalarms remain possible, but the lead time is sufficient to stage\nevacuation transport for the most exposed settlements.\n\n\\end{document}\n"
+      },
+      {
+        "path": "bulletin.tex",
+        "content": "We think the volcano may be entering a more restless phase, and the unrest could continue for some time. Over the past weeks our instruments have recorded a slow but persistent increase in volcanic tremor, which might reflect magma movement at shallow depth. If the unrest escalates into an eruption, pyroclastic density currents could potentially descend the northern and eastern valleys, and these currents may travel as far as 6 km from the vent. Under current conditions the most exposed settlements are those within this distance, where roughly 1,300 residents live. Evacuation of these settlements could perhaps be completed within 48 hours if transport is organised in advance. Residents outside the valley floors are probably not at immediate risk, although ashfall might still affect air quality downwind. We may update this assessment as new data arrive, and further changes might be announced at short notice.\n"
+      }
+    ]
+  },
+  "instruction": "bulletin.tex 这段通俗摘要要发给省民防公报，现在的写法全是模棱两可的口气，而且太长太散，公报版面对格式卡得很死。重写它，硬性要求：① 恰好 4 句，一句不多一句不少；② 总词数控制在 80 到 100 词之间（含两端）；③ 三个数字必须原样保留：6 km、1,300、48 hours；④ pyroclastic density current 这个术语至少出现一次（单复数均可）；⑤ 所有不确定语气词一律删掉（may、might、could、possibly、potentially、perhaps），改成面向公众的肯定式指导表述；⑥ 只改 bulletin.tex，main.tex 不许动。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "bulletin.tex",
+    "passScore": 4,
+    "rubric": "5: 重写后语言清晰流畅、是面向公众的公报口吻（肯定、可执行、无学究腔），信息忠实原文（火山趋于活跃、碎屑密度流可能沿北/东谷地下泄至 6 km、约 1,300 名居民暴露、提前组织运输可在 48 hours 内完成疏散、谷外居民暂无直接风险），无虚构新事实（如不编造地名、日期、新监测数据）；4: 语言基本通顺规范，个别句式生硬或次要信息（如 ashfall 提醒）省略，核心信息无损；3: 语言可读但口吻偏学术或偏口语，或次要信息有失真；2: 语病较多，或核心事实（风险对象、距离、人数、时间窗）被歪曲；1: 语言混乱，或虚构原文没有的事实",
+    "assertions": [
+      {
+        "kind": "word-count",
+        "file": "bulletin.tex",
+        "op": "gte",
+        "count": 80
+      },
+      {
+        "kind": "word-count",
+        "file": "bulletin.tex",
+        "op": "lte",
+        "count": 100
+      },
+      {
+        "kind": "sentence-count",
+        "file": "bulletin.tex",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "literal-count",
+        "file": "bulletin.tex",
+        "literal": "6 km",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "bulletin.tex",
+        "literal": "1,300",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "bulletin.tex",
+        "literal": "48 hours",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "bulletin.tex",
+        "pattern": "[Pp]yroclastic [Dd]ensity [Cc]urrent",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "bulletin.tex",
+        "pattern": "\\b([Mm]ay|[Mm]ight|[Pp]ossibly|[Pp]otentially|[Pp]erhaps|[Cc]ould)\\b",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      }
+    ]
+  }
+}

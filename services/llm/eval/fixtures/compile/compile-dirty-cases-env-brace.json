@@ -1,0 +1,27 @@
+{
+  "id": "compile-dirty-cases-env-brace",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage{amsmath}\n\n\\title{Tutorial Sheet 3: Piecewise Tax Schedules}\n\\author{Public Economics 302 --- Teaching Team}\n\\date{September 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{A Two-Bracket Schedule}\nSuppose taxable income $x$ (in dollars) is taxed at a marginal rate of\n10\\% in the first bracket and 22\\% above the threshold. The total tax\nliability is the continuous piecewise function\n\\[\nT(x) =\n\\begin{cases}\n0.10\\,x, & 0 < x \\le 30{,}000, & \\text{bracket I} \\\\\n3{,}000 + 0.22\\,(x - 30{,}000), & x > 30{,}000\n\\end{cases}\n\\]\nwhere the second line adds the tax already due on the first\n30{,}000 dollars to the marginal amount above the threshold.\n\n\\section{Average Versus Marginal Rates}\nThe average rate $T(x)/x$ rises smoothly towards 22\\% as income grows,\nwhile the marginal rate jumps at the bracket boundary. Sketch both\nschedules on the same axes and mark the kink at $x = 30{,}000$.\n\n\\section{Exercise}\nExtend the schedule with a third bracket of 35\\% above\n90{,}000 dollars, write down the new piecewise function, and compute\nthe tax due on an income of 120{,}000 dollars.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "打扰啦，这份讲义里的分段税函数一编译就报错，我看不出哪里写岔了，能帮我修一下吗？谢谢！",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage{amsmath}\n\n\\title{Tutorial Sheet 3: Piecewise Tax Schedules}\n\\author{Public Economics 302 --- Teaching Team}\n\\date{September 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{A Two-Bracket Schedule}\nSuppose taxable income $x$ (in dollars) is taxed at a marginal rate of\n10\\% in the first bracket and 22\\% above the threshold. The total tax\nliability is the continuous piecewise function\n\\[\nT(x) =\n\\begin{cases}\n0.10\\,x, & 0 < x \\le 30{,}000 \\quad \\text{(bracket I)} \\\\\n3{,}000 + 0.22\\,(x - 30{,}000), & x > 30{,}000\n\\end{cases}\n\\]\nwhere the second line adds the tax already due on the first\n30{,}000 dollars to the marginal amount above the threshold.\n\n\\section{Average Versus Marginal Rates}\nThe average rate $T(x)/x$ rises smoothly towards 22\\% as income grows,\nwhile the marginal rate jumps at the bracket boundary. Sketch both\nschedules on the same axes and mark the kink at $x = 30{,}000$.\n\n\\section{Exercise}\nExtend the schedule with a third bracket of 35\\% above\n90{,}000 dollars, write down the new piecewise function, and compute\nthe tax due on an income of 120{,}000 dollars.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

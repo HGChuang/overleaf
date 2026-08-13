@@ -1,0 +1,27 @@
+{
+  "id": "compile-multi-error-math-tabular",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Feeder Aggregation Error in Distribution Grid State Estimation}\n\\author{J. Baranski}\n\\date{February 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nDistribution grids increasingly rely on aggregated load models\nbecause individual smart meter streams are too noisy to use directly.\nWe quantify how the estimation error grows with the depth of aggregation.\n\n\\section{Error Growth}\nUnder mild independence assumptions the mismatch scales like \\sqrt{2}$\neach time the aggregation depth doubles,\nso shallow aggregation trees are strongly preferred.\nThis scaling is confirmed on three European feeders with real metering.\n\n\\section{Feeder Characteristics}\nThe three study feeders differ in length and customer mix.\n\\begin{center}\n\\begin{tabular}{ll}\n\\hline\nFeeder & Length (km) \\\\\n\\hline\nFeeder A & 3.4 \\\\\nFeeder B & 1.9 & 0.8 \\\\\nFeeder C & 5.2 \\\\\n\\hline\n\\end{tabular}\n\\end{center}\nFeeder C is the longest and shows the largest estimation error at depth four.\n\n\\section{Mitigation}\nPlacing a small number of additional sensors at intermediate nodes\nhalves the error growth rate in all three feeders.\nThe optimal placement follows the betweenness centrality of the feeder graph.\n\n\\section{Conclusion}\nAggregation depth is a first-order design parameter for state estimation,\nand a handful of well placed sensors compensates most of the penalty.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "智能电网报告编译崩了，貌似不止一处错，求全部修好，着急交稿。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Feeder Aggregation Error in Distribution Grid State Estimation}\n\\author{J. Baranski}\n\\date{February 2026}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nDistribution grids increasingly rely on aggregated load models\nbecause individual smart meter streams are too noisy to use directly.\nWe quantify how the estimation error grows with the depth of aggregation.\n\n\\section{Error Growth}\nUnder mild independence assumptions the mismatch scales like $\\sqrt{2}$\neach time the aggregation depth doubles,\nso shallow aggregation trees are strongly preferred.\nThis scaling is confirmed on three European feeders with real metering.\n\n\\section{Feeder Characteristics}\nThe three study feeders differ in length and customer mix.\n\\begin{center}\n\\begin{tabular}{ll}\n\\hline\nFeeder & Length (km) \\\\\n\\hline\nFeeder A & 3.4 \\\\\nFeeder B & 1.9 \\\\\nFeeder C & 5.2 \\\\\n\\hline\n\\end{tabular}\n\\end{center}\nFeeder C is the longest and shows the largest estimation error at depth four.\n\n\\section{Mitigation}\nPlacing a small number of additional sensors at intermediate nodes\nhalves the error growth rate in all three feeders.\nThe optimal placement follows the betweenness centrality of the feeder graph.\n\n\\section{Conclusion}\nAggregation depth is a first-order design parameter for state estimation,\nand a handful of well placed sensors compensates most of the penalty.\n\\end{document}\n"
+      }
+    ]
+  }
+}

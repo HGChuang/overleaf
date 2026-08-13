@@ -1,0 +1,135 @@
+{
+  "id": "semantic-dialogue-keywords-six-final",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Coastal Erosion and Dune Restoration on the North Norfolk Coast:\\newline A Three-Year Survey of Foredune Recovery}\n\\author{P.~Nash and E.~Whittaker}\n\\date{May 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nForedunes at three sites between Holkham and Blakeney were surveyed each spring from 2023 to 2025.\nAerial surveys mapped crest position and bare-sand patches at four-centimetre resolution.\nMarram planting raised the mean crest height by 0.4~m at the most exposed site.\nSand fencing cut pedestrian trampling by half within one season.\n\\end{abstract}\n\n\\noindent\\textbf{Keywords:} coastal erosion; dune restoration; UAV photogrammetry; sediment transport; vegetation succession\n\n\\section{Introduction}\nForedunes protect the grazing marshes behind the North Norfolk coast from storm surge.\nThe winter storms of 2020 and 2021 breached the dune line at two of the three study sites.\nThe National Trust asked for a baseline survey before committing to a planting programme.\nThis report summarises three years of survey work at the three sites.\n\n\\section{Findings}\nCrest heights recovered fastest where marram planting followed the first winter.\nThe most exposed site gained 0.4~m of mean crest height over the three years.\nBare-sand patches shrank by two thirds at the sheltered site without any planting.\nTrampling pressure fell by half where sand fencing guided visitors to signed crossings.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "摘要下头那行关键词，把 UAV photogrammetry 换成 drone surveying，其他先别动。",
+  "dialogue": {
+    "persona": "海岸地理方向硕士生，中文交流，不太懂 LaTeX，只会盯着关键词那行看；改主意快，但定了稿就不许再动。",
+    "hiddenGoal": "终态（以第三轮定稿为准）：① 关键词行恰好 6 个词，内容与顺序固定：drone surveying; dune restoration; sediment transport; vegetation succession; storm resilience; citizen science，分号隔开，沿用原来的 Keywords 行格式；② UAV photogrammetry 与 coastal erosion 全文清零；③ 关键词行以外一字不动（标题、摘要、正文、数字原样）；④ 编译通过。剧本：第 1 轮（instruction）只换 UAV photogrammetry 为 drone surveying。分岔一：agent 照做——用户第 2 轮追加：'关键词还得调：加 storm resilience 和 citizen science 两个，另外 coastal erosion 删了，跟标题重了。'分岔二：agent 顺手改了正文或别处——用户喝止'就动关键词那行，别的别碰'，返工后照样进第 2 轮。第 3 轮定稿：'导师看了，关键词就定 6 个，顺序也定死：drone surveying; dune restoration; sediment transport; vegetation succession; storm resilience; citizen science，一个不多一个不少，就按这个顺序。'之后用户验收：少词、多词、顺序错、旧词残留、正文被动——指出让返工；达标回'好，定稿了'结束。用户知识边界：记得最终 6 个词和顺序，认得两个被删的词，不懂 LaTeX 命令，只看关键词那行的文字。",
+    "disclosure": "change-of-mind",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 关键词行定稿恰好 6 词，内容与顺序全对（drone surveying; dune restoration; sediment transport; vegetation succession; storm resilience; citizen science），沿用原 Keywords 行格式，UAV photogrammetry 与 coastal erosion 全文清零，关键词行以外一字不动；4: 6 词正确但分隔符或行格式轻微变动，其余未动；3: 顺序错一处，或一个旧词残留，或关键词行以外有轻微改动；2: 多词/少词，或正文被顺手润色；1: 未按定稿执行或编译被破坏",
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "drone surveying; dune restoration; sediment transport; vegetation succession; storm resilience; citizen science",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "drone surveying",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "dune restoration",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "sediment transport",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "vegetation succession",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "storm resilience",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "citizen science",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "UAV photogrammetry",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "coastal erosion",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "0.4~m",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Crest heights recovered fastest where marram planting followed the first winter.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "word-count",
+        "file": "main.tex",
+        "op": "gte",
+        "count": 206
+      },
+      {
+        "kind": "word-count",
+        "file": "main.tex",
+        "op": "lte",
+        "count": 212
+      },
+      {
+        "kind": "file-count",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 12
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 2
+    }
+  ]
+}

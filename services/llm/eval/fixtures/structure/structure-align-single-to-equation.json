@@ -1,0 +1,33 @@
+{
+  "id": "structure-align-single-to-equation",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\section{Derivation}\nThe log partition function of the model is\n\\begin{align}\nZ = \\sum_{\\mathbf{s}} \\exp\\left( -\\beta E(\\mathbf{s}) \\right) .\n\\end{align}\nTaking derivatives yields the specific heat\n\\begin{align}\nC = \\beta^2 \\left( \\langle E^2 \\rangle - \\langle E \\rangle^2 \\right) .\n\\end{align}\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这两个 align 环境都只有一行公式、没有 & 对齐点，用 align 是杀鸡用牛刀且会影响编号习惯。把它们都改成 equation 环境，公式内容不动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\begin\\{align\\}", "op": "eq", "count": 0 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\begin\\{equation\\}", "op": "eq", "count": 2 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\end\\{align\\}", "op": "eq", "count": 0 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\section{Derivation}\nThe log partition function of the model is\n\\begin{equation}\nZ = \\sum_{\\mathbf{s}} \\exp\\left( -\\beta E(\\mathbf{s}) \\right) .\n\\end{equation}\nTaking derivatives yields the specific heat\n\\begin{equation}\nC = \\beta^2 \\left( \\langle E^2 \\rangle - \\langle E \\rangle^2 \\right) .\n\\end{equation}\n\\end{document}\n"
+      }
+    ]
+  }
+}

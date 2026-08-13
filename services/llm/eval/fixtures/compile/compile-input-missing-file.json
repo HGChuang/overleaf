@@ -1,0 +1,35 @@
+{
+  "id": "compile-input-missing-file",
+  "category": "compile",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Docking-Guided Optimisation of Kinase Inhibitors}\n\\author{E. Salgado and R. Whitfield}\n\\date{June 2026}\n\\begin{document}\n\\maketitle\n\\input{chapters/background}\n\\input{chapters/methods}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/background.tex",
+        "content": "\\section{Background}\nKinase inhibitors remain a cornerstone of targeted cancer therapy,\nbut acquired resistance limits the duration of the clinical response.\nStructure-guided optimisation aims to improve selectivity early in a campaign,\nbefore expensive synthesis commitments are made.\n\n\\section{Compound Series}\nOur starting series shows potent activity against the target kinase\nand measurable off-target activity against two closely related kinases.\nThe selectivity window must improve substantially\nbefore a candidate can advance to tolerability studies.\n"
+      }
+    ]
+  },
+  "instruction": "这个分子对接的项目编译不过，提示缺文件。注意别给我新建任何文件，就在现有文件的基础上把编译修通就行。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Docking-Guided Optimisation of Kinase Inhibitors}\n\\author{E. Salgado and R. Whitfield}\n\\date{June 2026}\n\\begin{document}\n\\maketitle\n\\input{chapters/background}\n% methods chapter not yet drafted\n% \\input{chapters/methods}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/background.tex",
+        "content": "\\section{Background}\nKinase inhibitors remain a cornerstone of targeted cancer therapy,\nbut acquired resistance limits the duration of the clinical response.\nStructure-guided optimisation aims to improve selectivity early in a campaign,\nbefore expensive synthesis commitments are made.\n\n\\section{Compound Series}\nOur starting series shows potent activity against the target kinase\nand measurable off-target activity against two closely related kinases.\nThe selectivity window must improve substantially\nbefore a candidate can advance to tolerability studies.\n"
+      }
+    ]
+  }
+}

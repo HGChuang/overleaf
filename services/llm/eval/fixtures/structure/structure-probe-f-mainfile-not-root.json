@@ -1,0 +1,102 @@
+{
+  "id": "structure-probe-f-mainfile-not-root",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "thesis/main.tex",
+    "files": [
+      {
+        "path": "README.md",
+        "content": "# 论文仓库：cuq-thesis\n\n正文在 thesis/ 目录下，入口文件是 thesis/main.tex，用 pdflatex 编译。\n\n根目录的 main.tex 是 2025 年会议摘要的一页旧稿，仅存档，不再维护，编译和修改都与它无关。\n"
+      },
+      {
+        "path": "main.tex",
+        "content": "% AGU 2025 abstract one-pager -- ARCHIVED COPY, do not edit.\n% The maintained thesis lives under thesis/; see README.md.\n\\documentclass[10pt]{article}\n\\usepackage[margin=0.8in]{geometry}\n\\begin{document}\n\\section*{Monsoon Runoff Response in the Upper Cuq Basin}\nObserved run-off in the upper basin declined by about 12\\% between\n1980 and 2020, while interannual run-off variability increased over\nthe post-2000 record.\n\\end{document}\n"
+      },
+      {
+        "path": "thesis/main.tex",
+        "content": "\\documentclass[12pt]{report}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Monsoon-Driven Runoff Variability in the Upper Cuq Basin}\n\\author{A.~R.~Delgado}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\input{chapters/background}\n\\input{chapters/results}\n\n\\end{document}\n"
+      },
+      {
+        "path": "thesis/chapters/background.tex",
+        "content": "\\section{Climatic Setting}\nThe upper Cuq basin drains 4{,}300 km$^2$ of monsoon-influenced\nterrain between 1{,}900 and 4{,}100 m elevation. Annual precipitation\ndecreases from 900 mm at the basin outlet to below 500 mm at the\nheadwaters, and roughly seventy percent falls between June and\nSeptember. The seasonal concentration of rainfall makes the run-off\nregime strongly monsoonal, with a single sustained high-flow period\nrather than the double peak seen in snowmelt-dominated basins.\n\nStreamflow has been gauged at the basin outlet since 1962. The record\nshows a marked regime shift around 2000: mean annual run-off declined\nby roughly twelve percent relative to the 1962--1999 average, while\nthe coefficient of variation of monthly flows increased. Whether the\ndecline reflects precipitation change, land-use intensification in the\nmid-basin, or increased abstraction for the terrace schemes remains\nunsettled, and the three hypotheses are revisited in the results\nchapter.\n\nEarlier work on the basin treated the monsoon onset date as the\ndominant control on annual water yield. More recent analyses suggest\nthat run-off generation is more sensitive to the intra-seasonal\ndistribution of storms than to onset timing, a distinction that\nmatters for the interpretation of the post-2000 record.\n"
+      },
+      {
+        "path": "thesis/chapters/results.tex",
+        "content": "\\section{Trend Analysis}\nTrends were assessed with the Mann--Kendall test applied to annual\nand seasonal aggregates, with pre-whitening to limit the influence of\nserial correlation. Annual discharge shows a significant negative\ntrend over 1962--2020 ($p < 0.05$), driven almost entirely by the\nmonsoon months; the dry-season flow shows no significant trend in\neither direction.\n\nDecomposition into run-off per unit precipitation sharpens the\npicture. The ratio declines steeply after 2000, indicating that the\nflow reduction exceeds what the precipitation decline alone would\npredict. This non-proportional response is consistent with a growing\nabstraction signal, although the abstraction records needed to confirm\nthis directly are fragmentary before 2010.\n\nA change-point analysis on the run-off ratio series places the most\nprobable break in 2001, in agreement with the expansion dates of the\ntwo largest terrace schemes. The coincidence is suggestive rather than\nconclusive, and the limitations of the abstraction record are\ndiscussed in the following chapter.\n"
+      }
+    ]
+  },
+  "instruction": "论文里 runoff 的写法不统一，章节里还留着好多带连字符的 run-off，看着很乱。帮我把正文所有章节统一改成不带连字符的 runoff，一个都别漏。只动正文用到的章节文件，入口文件、根目录的旧稿、README 这些都别碰。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "thesis/chapters/background.tex",
+        "literal": "run-off",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "thesis/chapters/background.tex",
+        "literal": "runoff",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "literal-count",
+        "file": "thesis/chapters/results.tex",
+        "literal": "run-off",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "thesis/chapters/results.tex",
+        "literal": "runoff",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "thesis/main.tex"
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "README.md"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "README.md",
+        "content": "# 论文仓库：cuq-thesis\n\n正文在 thesis/ 目录下，入口文件是 thesis/main.tex，用 pdflatex 编译。\n\n根目录的 main.tex 是 2025 年会议摘要的一页旧稿，仅存档，不再维护，编译和修改都与它无关。\n"
+      },
+      {
+        "path": "main.tex",
+        "content": "% AGU 2025 abstract one-pager -- ARCHIVED COPY, do not edit.\n% The maintained thesis lives under thesis/; see README.md.\n\\documentclass[10pt]{article}\n\\usepackage[margin=0.8in]{geometry}\n\\begin{document}\n\\section*{Monsoon Runoff Response in the Upper Cuq Basin}\nObserved run-off in the upper basin declined by about 12\\% between\n1980 and 2020, while interannual run-off variability increased over\nthe post-2000 record.\n\\end{document}\n"
+      },
+      {
+        "path": "thesis/main.tex",
+        "content": "\\documentclass[12pt]{report}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Monsoon-Driven Runoff Variability in the Upper Cuq Basin}\n\\author{A.~R.~Delgado}\n\\date{June 2026}\n\n\\begin{document}\n\\maketitle\n\n\\input{chapters/background}\n\\input{chapters/results}\n\n\\end{document}\n"
+      },
+      {
+        "path": "thesis/chapters/background.tex",
+        "content": "\\section{Climatic Setting}\nThe upper Cuq basin drains 4{,}300 km$^2$ of monsoon-influenced\nterrain between 1{,}900 and 4{,}100 m elevation. Annual precipitation\ndecreases from 900 mm at the basin outlet to below 500 mm at the\nheadwaters, and roughly seventy percent falls between June and\nSeptember. The seasonal concentration of rainfall makes the runoff\nregime strongly monsoonal, with a single sustained high-flow period\nrather than the double peak seen in snowmelt-dominated basins.\n\nStreamflow has been gauged at the basin outlet since 1962. The record\nshows a marked regime shift around 2000: mean annual runoff declined\nby roughly twelve percent relative to the 1962--1999 average, while\nthe coefficient of variation of monthly flows increased. Whether the\ndecline reflects precipitation change, land-use intensification in the\nmid-basin, or increased abstraction for the terrace schemes remains\nunsettled, and the three hypotheses are revisited in the results\nchapter.\n\nEarlier work on the basin treated the monsoon onset date as the\ndominant control on annual water yield. More recent analyses suggest\nthat runoff generation is more sensitive to the intra-seasonal\ndistribution of storms than to onset timing, a distinction that\nmatters for the interpretation of the post-2000 record.\n"
+      },
+      {
+        "path": "thesis/chapters/results.tex",
+        "content": "\\section{Trend Analysis}\nTrends were assessed with the Mann--Kendall test applied to annual\nand seasonal aggregates, with pre-whitening to limit the influence of\nserial correlation. Annual discharge shows a significant negative\ntrend over 1962--2020 ($p < 0.05$), driven almost entirely by the\nmonsoon months; the dry-season flow shows no significant trend in\neither direction.\n\nDecomposition into runoff per unit precipitation sharpens the\npicture. The ratio declines steeply after 2000, indicating that the\nflow reduction exceeds what the precipitation decline alone would\npredict. This non-proportional response is consistent with a growing\nabstraction signal, although the abstraction records needed to confirm\nthis directly are fragmentary before 2010.\n\nA change-point analysis on the runoff ratio series places the most\nprobable break in 2001, in agreement with the expansion dates of the\ntwo largest terrace schemes. The coincidence is suggestive rather than\nconclusive, and the limitations of the abstraction record are\ndiscussed in the following chapter.\n"
+      }
+    ]
+  }
+}

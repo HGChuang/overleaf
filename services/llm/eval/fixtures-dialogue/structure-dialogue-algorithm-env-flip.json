@@ -1,0 +1,137 @@
+{
+  "id": "structure-dialogue-algorithm-env-flip",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{algorithmic}\n\\usepackage{algorithm}\n\n\\title{Cache Replacement Policies: Recitation Notes}\n\\author{R.~Halvorsen}\n\\date{Spring 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Why Replacement Matters}\nA cache earns its keep only when the line it evicts is colder than the\nline it keeps, so the eviction rule is the whole policy.\nThis recitation walks through the two classic rules and how to\nhand-simulate them on a four-line cache.\n\n\\section{Least Recently Used}\nLRU evicts the line whose last use is oldest.\nA timestamp per line is enough for a teaching implementation.\n\n\\begin{algorithm}[t]\n\\caption{LRU eviction}\n\\label{alg:lru}\n\\begin{algorithmic}\n\\STATE stamp every accessed line with the current time\n\\IF{the cache is full}\n\\STATE evict the line with the oldest timestamp\n\\ENDIF\n\\STATE insert the new line and stamp it\n\\end{algorithmic}\n\\end{algorithm}\n\n\\section{Least Frequently Used}\nLFU keeps a counter per line instead of a timestamp, so a line that was\nhot last week can survive a cold morning.\n\n\\begin{algorithm}[t]\n\\caption{LFU eviction}\n\\label{alg:lfu}\n\\begin{algorithmic}\n\\STATE increment the counter of the accessed line\n\\IF{the cache is full}\n\\STATE evict the line with the smallest counter\n\\ENDIF\n\\STATE insert the new line with counter one\n\\end{algorithmic}\n\\end{algorithm}\n\n\\section{Comparing the Two}\nLRU follows recency and LFU follows frequency; neither dominates on all\ntraces, which is why real caches approximate both.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份讲义里的两个算法块现在是用 algorithmic 排的，我想换成 algorithm2e 的样子：ruled 那种带横线的样式，还要带行号。宏包、环境、命令都换过去，caption 和 label 留着别动，里面步骤的英文一个字都别改。",
+  "dialogue": {
+    "persona": "计算机系助教，中文交流，自己写 LaTeX 但懒得折腾宏包，只认 PDF 出来的样子；说话直接，发现哪里不对就点哪里。",
+    "hiddenGoal": "终态（全部可判分）：①全文没有 algorithm2e 任何残留（宏包不引、其命令不用）；②\\usepackage{algorithmic} 恰好一次，\\usepackage{algorithm} 保留；③两个算法都是 \\begin{algorithmic}[1]（algorithmic 的行号开法），光 \\begin{algorithmic} 不带参数的一个不剩；④\\caption{LRU eviction}、\\caption{LFU eviction}、\\label{alg:lru}、\\label{alg:lfu} 原样保留；⑤六个 \\STATE 步骤文字一字不改；⑥仍编译通过。剧本：第 1 轮（开场白）要 agent 把两个算法从 algorithmic 换成 algorithm2e（ruled、带行号）；若 agent 换得干净，用户验收后进入第 2 轮；若 agent 换了宏包但步骤文字被改或 caption/label 丢了，用户指出具体问题让返工。第 2 轮（改主意）：用户说出版社模板跟 algorithm2e 冲突、编辑不让用，要整个改回 algorithmic，但行号必须留下——两个算法都加 [1]，其余照旧；若 agent 改回后还有 algorithm2e 残留（比如宏包没卸、\\KwData 之类没清）或忘了加行号，用户点出问题让返工；全部落实、编译无错后用户确认结束。",
+    "disclosure": "change-of-mind",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "algorithm2e",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\usepackage\\{algorithmic\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\usepackage\\{algorithm\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\begin{algorithmic}[1]",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{algorithmic\\}(?!\\[)",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\caption{LRU eviction}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\caption{LFU eviction}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{alg:lru}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{alg:lfu}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "evict the line with the oldest timestamp",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "increment the counter of the accessed line",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\STATE",
+        "op": "eq",
+        "count": 6
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{algorithm\\}",
+        "op": "eq",
+        "count": 2
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{algorithmic}\n\\usepackage{algorithm}\n\n\\title{Cache Replacement Policies: Recitation Notes}\n\\author{R.~Halvorsen}\n\\date{Spring 2026}\n\n\\begin{document}\n\\maketitle\n\n\\section{Why Replacement Matters}\nA cache earns its keep only when the line it evicts is colder than the\nline it keeps, so the eviction rule is the whole policy.\nThis recitation walks through the two classic rules and how to\nhand-simulate them on a four-line cache.\n\n\\section{Least Recently Used}\nLRU evicts the line whose last use is oldest.\nA timestamp per line is enough for a teaching implementation.\n\n\\begin{algorithm}[t]\n\\caption{LRU eviction}\n\\label{alg:lru}\n\\begin{algorithmic}[1]\n\\STATE stamp every accessed line with the current time\n\\IF{the cache is full}\n\\STATE evict the line with the oldest timestamp\n\\ENDIF\n\\STATE insert the new line and stamp it\n\\end{algorithmic}\n\\end{algorithm}\n\n\\section{Least Frequently Used}\nLFU keeps a counter per line instead of a timestamp, so a line that was\nhot last week can survive a cold morning.\n\n\\begin{algorithm}[t]\n\\caption{LFU eviction}\n\\label{alg:lfu}\n\\begin{algorithmic}[1]\n\\STATE increment the counter of the accessed line\n\\IF{the cache is full}\n\\STATE evict the line with the smallest counter\n\\ENDIF\n\\STATE insert the new line with counter one\n\\end{algorithmic}\n\\end{algorithm}\n\n\\section{Comparing the Two}\nLRU follows recency and LFU follows frequency; neither dominates on all\ntraces, which is why real caches approximate both.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 12
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 2
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "structure-multifile-rename-label",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\input{chapters/ch1}\n\\input{chapters/ch2}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/ch1.tex",
+        "content": "\\section{Model}\nWe minimize the contrastive objective\n\\begin{equation}\n\\label{eq:loss}\n\\mathcal{L} = -\\log \\frac{\\exp(s^+/\\tau)}{\\exp(s^+/\\tau) + \\exp(s^-/\\tau)} .\n\\end{equation}\nEquation~\\ref{eq:loss} is computed per anchor.\n"
+      },
+      {
+        "path": "chapters/ch2.tex",
+        "content": "\\section{Experiments}\nWe ablate the temperature in Eq.~\\ref{eq:loss} from 0.05 to 0.5.\nThe gradient of Eq.~\\ref{eq:loss} vanishes when negatives are too easy.\n"
+      }
+    ]
+  },
+  "instruction": "把公式标签 eq:loss 重命名为 eq:objective：\\label 定义在 ch1，\\ref 引用分布在 ch1 和 ch2，全部同步更新（共 4 处），其它内容不变。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "chapters/ch1.tex",
+        "pattern": "eq:loss\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/ch2.tex",
+        "pattern": "eq:loss\\}",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/ch1.tex",
+        "pattern": "eq:objective\\}",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "chapters/ch2.tex",
+        "pattern": "eq:objective\\}",
+        "op": "eq",
+        "count": 2
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\input{chapters/ch1}\n\\input{chapters/ch2}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/ch1.tex",
+        "content": "\\section{Model}\nWe minimize the contrastive objective\n\\begin{equation}\n\\label{eq:objective}\n\\mathcal{L} = -\\log \\frac{\\exp(s^+/\\tau)}{\\exp(s^+/\\tau) + \\exp(s^-/\\tau)} .\n\\end{equation}\nEquation~\\ref{eq:objective} is computed per anchor.\n"
+      },
+      {
+        "path": "chapters/ch2.tex",
+        "content": "\\section{Experiments}\nWe ablate the temperature in Eq.~\\ref{eq:objective} from 0.05 to 0.5.\nThe gradient of Eq.~\\ref{eq:objective} vanishes when negatives are too easy.\n"
+      }
+    ]
+  }
+}

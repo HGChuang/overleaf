@@ -1,0 +1,27 @@
+{
+  "id": "compile-frac-in-text",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\title{Slice Timing Correction in Functional MRI}\n\\author{K. Osei}\n\\date{February 2026}\n\\begin{document}\n\\maketitle\n\\section{Acquisition}\nFunctional scans sample each volume in an ascending interleaved order.\nRoughly \\frac{1}{2}$ of the slices are acquired before the repetition time midpoint,\nwhich biases the estimated onset of the haemodynamic response in event related designs.\nWe correct the per slice timing offset before fitting the general linear model.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "功能磁共振这篇突然红了，我就改了一句话，麻烦帮我看看 LaTeX 哪里崩了。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\title{Slice Timing Correction in Functional MRI}\n\\author{K. Osei}\n\\date{February 2026}\n\\begin{document}\n\\maketitle\n\\section{Acquisition}\nFunctional scans sample each volume in an ascending interleaved order.\nRoughly $\\frac{1}{2}$ of the slices are acquired before the repetition time midpoint,\nwhich biases the estimated onset of the haemodynamic response in event related designs.\nWe correct the per slice timing offset before fitting the general linear model.\n\\end{document}\n"
+      }
+    ]
+  }
+}

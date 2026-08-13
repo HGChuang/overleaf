@@ -1,0 +1,190 @@
+{
+  "id": "structure-dialogue-proofs-to-appendix",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\\usepackage{amsthm}\n\n\\newtheorem{theorem}{Theorem}\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{definition}[theorem]{Definition}\n\n\\title{Tight Convergence Rates for Bilevel\\\\Stochastic Optimization}\n\\author{C.~Vasquez and D.~Whitfield}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nWe study bilevel stochastic optimization when the lower-level problem\ncan only be solved approximately. We give a double-loop algorithm that\nfinds an $\\epsilon$-stationary point with $O(\\epsilon^{-2})$ stochastic\ngradient evaluations, and we prove a matching lower bound showing that\nthe dependence on $\\epsilon$ cannot be improved. The analysis\nintroduces a surrogate descent function that decouples the bias of the\nlower-level estimate from the variance of the hypergradient.\n\\end{abstract}\n\n\\section{Introduction}\nBilevel formulations are a workhorse model for meta-learning,\nhyperparameter search, and neural architecture design. In their\nclassical form, the lower-level solution is assumed to be computed\nexactly before each upper-level update. In most applications, however,\nthe lower-level problem is itself stochastic and high-dimensional: a\nmodel must be (approximately) retrained before a hyperparameter can be\nevaluated. The algorithm must then trade inner-loop accuracy against\nouter-loop progress, which couples optimization error with statistical\nerror.\n\nThis paper isolates that trade-off in the simplest nontrivial setting.\nThe lower-level objective is smooth and strongly convex, the\nupper-level objective is smooth but possibly nonconvex, and access to\nboth objectives is through a stochastic gradient oracle with bounded\nvariance. The goal is to find an $\\epsilon$-stationary point of the\nupper-level value function with as few oracle calls as possible.\n\nOur main result is a double-loop algorithm that needs\n$O(\\epsilon^{-2})$ oracle calls, where the inner loop runs\n$\\Theta(\\log(1/\\epsilon))$ steps per outer iteration. We complement\nthe upper bound with a lower bound of the same order, which shows that\nno algorithm interacting with the same oracle can do better by more\nthan logarithmic factors.\n\n\\section{Preliminaries}\nLet $f(x, y)$ denote the upper-level objective and $g(x, y)$ the\nlower-level objective, with $x \\in \\mathbb{R}^d$ the upper-level\nvariable and $y \\in \\mathbb{R}^p$ the lower-level variable. Write\n$y^*(x) = \\arg\\min_y g(x, y)$ and $F(x) = f(x, y^*(x))$. The oracle\nreturns, for any query point $(x, y)$, unbiased estimates of\n$\\nabla_x f$, $\\nabla_y f$, and $\\nabla_y g$ with variance at most\n$\\sigma^2$.\n\n\\begin{definition}[$\\epsilon$-stationarity]\nA point $x$ is $\\epsilon$-stationary for the bilevel problem if\n$\\| \\nabla F(x) \\| \\le \\epsilon$, where $F$ is the upper-level value\nfunction defined above.\n\\end{definition}\n\nWe assume that $g$ is $\\mu$-strongly convex in $y$ and that all\ngradients are $L$-Lipschitz in both variables. The approximate\nhypergradient obtained by backpropagating through $K$ inner steps is\ndenoted $\\widetilde{\\nabla} F(x)$; its bias decays exponentially in\n$K$ under the assumptions above.\n\n\\section{The Double-Loop Algorithm}\nThe algorithm alternates between $K$ steps of stochastic gradient\ndescent on the lower-level problem and one hypergradient step on the\nupper-level variable. The inner loop starts from the previous\nlower-level estimate, which warm-starts the optimization once the\nouter iterates stabilize.\n\n\\begin{theorem}[Upper bound]\\label{thm:upper}\nWith $K = \\Theta(\\log(1/\\epsilon))$ inner steps and step size\n$\\eta = \\Theta(1/L)$, the double-loop algorithm returns an\n$\\epsilon$-stationary point within $O(\\epsilon^{-2})$ oracle calls.\n\\end{theorem}\n\\begin{proof}\nWe decompose the optimality gap into the sum, over outer iterations,\nof the expected descent contributed by each hypergradient step minus\nthe bias injected by the inner loop. By the warm-start construction,\nthe lower-level error contracts by a constant factor per outer\niteration, so the cumulative bias is dominated by its first term.\nSumming the descent lemma over $T = O(\\epsilon^{-2})$ outer iterations\nand choosing the step size to balance the descent and bias terms gives\n$\\min_t \\| \\nabla F(x_t) \\|^2 \\le 4 (F(x_0) - F^*) / (\\eta T)$, which\nyields the stated oracle complexity once the inner-loop length is\nsubstituted.\n\\end{proof}\n\nThe analysis relies on a descent lemma that separates the curvature of\n$F$ from the bias of the hypergradient estimate.\n\n\\begin{lemma}[Descent]\\label{lem:descent}\nLet $x_{t+1} = x_t - \\eta \\widetilde{\\nabla} F(x_t)$ and let\n$\\delta_t = \\| \\widetilde{\\nabla} F(x_t) - \\nabla F(x_t) \\|^2$. Then\n\\[\nF(x_{t+1}) \\le F(x_t) - \\frac{\\eta}{2} \\| \\nabla F(x_t) \\|^2 + \\eta \\delta_t,\n\\]\nprovided $\\eta \\le 1/L$.\n\\end{lemma}\n\\begin{proof}\nBy the $L$-smoothness of $F$, the quadratic upper bound gives\n$F(x_{t+1}) \\le F(x_t) + \\langle \\nabla F(x_t), x_{t+1} - x_t \\rangle\n+ (L/2) \\| x_{t+1} - x_t \\|^2$. Substituting the update and expanding\nthe inner product as the sum of a descent term and a bias term,\n\\[\n\\langle \\nabla F(x_t), -\\widetilde{\\nabla} F(x_t) \\rangle\n= -\\| \\nabla F(x_t) \\|^2 + \\langle \\nabla F(x_t), \\nabla F(x_t) - \\widetilde{\\nabla} F(x_t) \\rangle,\n\\]\nand applying Young's inequality to the cross term with coefficient\n$1/2$ yields the claim whenever $\\eta \\le 1/L$.\n\\end{proof}\n\n\\section{Lower Bound}\nThe upper bound is matched by a lower bound that holds even when the\nlower-level problem is exactly quadratic.\n\n\\begin{theorem}[Lower bound]\\label{thm:lower}\nFor every algorithm interacting with the objectives through the\nstochastic gradient oracle, there exists an instance on which at least\n$\\Omega(\\epsilon^{-2})$ oracle calls are required to return an\n$\\epsilon$-stationary point.\n\\end{theorem}\n\\begin{proof}\nConsider a family of instances in which the lower-level problem is a\nfixed strongly convex quadratic and the upper-level objective is a\nstochastic quadratic whose mean gradient encodes one of $m$ possible\nlinear functions. In instance $I_j$, the gradient noise is Gaussian\nwith variance $\\sigma^2$ except along coordinate $j$, where the mean\ngradient is larger by $\\epsilon$ with $\\epsilon = \\sigma / \\sqrt{T}$.\nEach oracle call reveals one noisy gradient. A standard pinning\nargument shows that any algorithm that identifies the informative\ncoordinate with probability above $2/3$ must query the remaining\ncoordinates $\\Omega(\\sigma^2 / \\epsilon^2)$ times in expectation.\nSumming the resulting stationarity gap over the $m$ coordinates and\nchoosing $\\epsilon$ to balance the identification and optimization\nterms gives the stated lower bound, and an averaging argument over $j$\nyields the single hard instance.\n\\end{proof}\n\n\\section{Discussion}\nThe logarithmic inner-loop length in the upper bound is unavoidable\nwhen the lower-level estimate can only be refined by stochastic\ngradients, because the first inner step of each outer iteration runs\nwithout any curvature information. The remaining gap between the upper\nand lower bounds is a logarithmic factor in $1/\\epsilon$, which we\nconjecture can be removed by a more careful stability argument.\n\nSeveral extensions are natural. When the lower-level objective admits\na closed-form solution, the inner loop can be replaced by direct\nevaluation and the logarithmic factor disappears. When gradient noise\nis correlated across iterations, our analysis extends with only\nnotational changes. We leave the constrained setting, which requires\ncombining bilevel optimization with projection oracles, to future\nwork.\n\n\\section{Conclusion}\nWe have given matching upper and lower bounds for bilevel stochastic\noptimization, establishing that the price of an inexact lower level\nscales as $\\epsilon^{-2}$ up to logarithmic factors. The double-loop\nalgorithm is simple to implement given any stochastic inner solver,\nand the surrogate-descent technique decouples the optimization and\nstatistical difficulties in a way that we expect to transfer to other\nnested problems with inexact oracles.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这篇稿子三个证明堆在正文里太占版面了，帮我原样挪到文末附录：Conclusion 后面加 \\appendix 和 \\section{Omitted Proofs}\\label{app:proofs}，三个 proof 按正文里的顺序搬过去、内容一个字别改；正文原来放 proof 的位置各留一句 “The proof is deferred to Appendix~\\ref{app:proofs}.”，其他都别动。",
+  "dialogue": {
+    "persona": "投理论会的博士生，中文交流，导师意见一批一批地来；说话直接，agent 做对了不夸、直接给下一条；对 LaTeX 只懂基本命令。",
+    "hiddenGoal": "终态（全部可判分）：① 三个 proof 环境（thm:upper、lem:descent、thm:lower 对应的）整体挪到文末：Conclusion 之后有 \\appendix 和 \\section{Omitted Proofs}\\label{app:proofs}，proof 内容一字未改、顺序与正文定理顺序一致，正文里不再有任何 proof 环境；② 正文三处原 proof 位置各有一句 “The proof is deferred to Appendix~\\ref{app:proofs}.”；③ 附录里每个 proof 前面有一行粗体重述标记，依次是 \\noindent\\textbf{Theorem~\\ref{thm:upper}.}、\\noindent\\textbf{Lemma~\\ref{lem:descent}.}、\\noindent\\textbf{Theorem~\\ref{thm:lower}.}；④ Discussion 里 “Several extensions are natural.” 开头的那一段整段删除，Discussion 第一段保留；⑤ 其余内容（abstract、Preliminaries、定理 statement、Conclusion 等）不动，仍编译通过。剧本：第 1 轮只提①②（instruction 原话）；agent 完成后第 2 轮用户说“导师说附录里光秃秃的 proof 看不出对应哪个定理，每个 proof 前面加一行粗体重述，Theorem 的写 \\noindent\\textbf{Theorem~\\ref{...}.} 这种，lemma 那个对应写 Lemma，顺序跟正文一致”；agent 完成后第 3 轮用户说“页数超了，Discussion 里 Several extensions 开头那段整个删掉，其他都别动，前面改的保持住”。分岔：每轮若 agent 没改全，用户直接指出缺哪部分（“proof 没搬干净”“重述行没加”“那段还在”），改全了才给下一条；若 agent 某轮顺手把后面的需求也做了，用户跳过已完成的直接提剩下的。三轮都完成用户满意结束。",
+    "disclosure": "multi-goal",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{proof\\}",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{(theorem|lemma)\\}",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\appendix",
+          "\\\\begin\\{proof\\}"
+        ]
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\end\\{proof\\}[\\s\\S]*?\\\\appendix",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "deferred to Appendix",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\ref{app:proofs}",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\noindent\\\\textbf\\{",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Theorem~\\ref{thm:upper}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Lemma~\\ref{lem:descent}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Theorem~\\ref{thm:lower}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "\\\\section\\{Conclusion\\}",
+          "\\\\appendix"
+        ]
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\section{Omitted Proofs}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{app:proofs}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "Theorem~\\\\ref\\{thm:upper\\}",
+          "Lemma~\\\\ref\\{lem:descent\\}"
+        ]
+      },
+      {
+        "kind": "order",
+        "file": "main.tex",
+        "patterns": [
+          "Lemma~\\\\ref\\{lem:descent\\}",
+          "Theorem~\\\\ref\\{thm:lower\\}"
+        ]
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "We decompose the optimality gap into the sum, over outer iterations,",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "By the $L$-smoothness of $F$, the quadratic upper bound gives",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Consider a family of instances in which the lower-level problem is a",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Several extensions are natural",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "stability argument",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\\usepackage{amsthm}\n\n\\newtheorem{theorem}{Theorem}\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{definition}[theorem]{Definition}\n\n\\title{Tight Convergence Rates for Bilevel\\\\Stochastic Optimization}\n\\author{C.~Vasquez and D.~Whitfield}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nWe study bilevel stochastic optimization when the lower-level problem\ncan only be solved approximately. We give a double-loop algorithm that\nfinds an $\\epsilon$-stationary point with $O(\\epsilon^{-2})$ stochastic\ngradient evaluations, and we prove a matching lower bound showing that\nthe dependence on $\\epsilon$ cannot be improved. The analysis\nintroduces a surrogate descent function that decouples the bias of the\nlower-level estimate from the variance of the hypergradient.\n\\end{abstract}\n\n\\section{Introduction}\nBilevel formulations are a workhorse model for meta-learning,\nhyperparameter search, and neural architecture design. In their\nclassical form, the lower-level solution is assumed to be computed\nexactly before each upper-level update. In most applications, however,\nthe lower-level problem is itself stochastic and high-dimensional: a\nmodel must be (approximately) retrained before a hyperparameter can be\nevaluated. The algorithm must then trade inner-loop accuracy against\nouter-loop progress, which couples optimization error with statistical\nerror.\n\nThis paper isolates that trade-off in the simplest nontrivial setting.\nThe lower-level objective is smooth and strongly convex, the\nupper-level objective is smooth but possibly nonconvex, and access to\nboth objectives is through a stochastic gradient oracle with bounded\nvariance. The goal is to find an $\\epsilon$-stationary point of the\nupper-level value function with as few oracle calls as possible.\n\nOur main result is a double-loop algorithm that needs\n$O(\\epsilon^{-2})$ oracle calls, where the inner loop runs\n$\\Theta(\\log(1/\\epsilon))$ steps per outer iteration. We complement\nthe upper bound with a lower bound of the same order, which shows that\nno algorithm interacting with the same oracle can do better by more\nthan logarithmic factors.\n\n\\section{Preliminaries}\nLet $f(x, y)$ denote the upper-level objective and $g(x, y)$ the\nlower-level objective, with $x \\in \\mathbb{R}^d$ the upper-level\nvariable and $y \\in \\mathbb{R}^p$ the lower-level variable. Write\n$y^*(x) = \\arg\\min_y g(x, y)$ and $F(x) = f(x, y^*(x))$. The oracle\nreturns, for any query point $(x, y)$, unbiased estimates of\n$\\nabla_x f$, $\\nabla_y f$, and $\\nabla_y g$ with variance at most\n$\\sigma^2$.\n\n\\begin{definition}[$\\epsilon$-stationarity]\nA point $x$ is $\\epsilon$-stationary for the bilevel problem if\n$\\| \\nabla F(x) \\| \\le \\epsilon$, where $F$ is the upper-level value\nfunction defined above.\n\\end{definition}\n\nWe assume that $g$ is $\\mu$-strongly convex in $y$ and that all\ngradients are $L$-Lipschitz in both variables. The approximate\nhypergradient obtained by backpropagating through $K$ inner steps is\ndenoted $\\widetilde{\\nabla} F(x)$; its bias decays exponentially in\n$K$ under the assumptions above.\n\n\\section{The Double-Loop Algorithm}\nThe algorithm alternates between $K$ steps of stochastic gradient\ndescent on the lower-level problem and one hypergradient step on the\nupper-level variable. The inner loop starts from the previous\nlower-level estimate, which warm-starts the optimization once the\nouter iterates stabilize.\n\n\\begin{theorem}[Upper bound]\\label{thm:upper}\nWith $K = \\Theta(\\log(1/\\epsilon))$ inner steps and step size\n$\\eta = \\Theta(1/L)$, the double-loop algorithm returns an\n$\\epsilon$-stationary point within $O(\\epsilon^{-2})$ oracle calls.\n\\end{theorem}\nThe proof is deferred to Appendix~\\ref{app:proofs}.\n\nThe analysis relies on a descent lemma that separates the curvature of\n$F$ from the bias of the hypergradient estimate.\n\n\\begin{lemma}[Descent]\\label{lem:descent}\nLet $x_{t+1} = x_t - \\eta \\widetilde{\\nabla} F(x_t)$ and let\n$\\delta_t = \\| \\widetilde{\\nabla} F(x_t) - \\nabla F(x_t) \\|^2$. Then\n\\[\nF(x_{t+1}) \\le F(x_t) - \\frac{\\eta}{2} \\| \\nabla F(x_t) \\|^2 + \\eta \\delta_t,\n\\]\nprovided $\\eta \\le 1/L$.\n\\end{lemma}\nThe proof is deferred to Appendix~\\ref{app:proofs}.\n\n\\section{Lower Bound}\nThe upper bound is matched by a lower bound that holds even when the\nlower-level problem is exactly quadratic.\n\n\\begin{theorem}[Lower bound]\\label{thm:lower}\nFor every algorithm interacting with the objectives through the\nstochastic gradient oracle, there exists an instance on which at least\n$\\Omega(\\epsilon^{-2})$ oracle calls are required to return an\n$\\epsilon$-stationary point.\n\\end{theorem}\nThe proof is deferred to Appendix~\\ref{app:proofs}.\n\n\\section{Discussion}\nThe logarithmic inner-loop length in the upper bound is unavoidable\nwhen the lower-level estimate can only be refined by stochastic\ngradients, because the first inner step of each outer iteration runs\nwithout any curvature information. The remaining gap between the upper\nand lower bounds is a logarithmic factor in $1/\\epsilon$, which we\nconjecture can be removed by a more careful stability argument.\n\n\n\\section{Conclusion}\nWe have given matching upper and lower bounds for bilevel stochastic\noptimization, establishing that the price of an inexact lower level\nscales as $\\epsilon^{-2}$ up to logarithmic factors. The double-loop\nalgorithm is simple to implement given any stochastic inner solver,\nand the surrogate-descent technique decouples the optimization and\nstatistical difficulties in a way that we expect to transfer to other\nnested problems with inexact oracles.\n\n\\appendix\n\\section{Omitted Proofs}\\label{app:proofs}\n\n\\noindent\\textbf{Theorem~\\ref{thm:upper}.}\n\\begin{proof}\nWe decompose the optimality gap into the sum, over outer iterations,\nof the expected descent contributed by each hypergradient step minus\nthe bias injected by the inner loop. By the warm-start construction,\nthe lower-level error contracts by a constant factor per outer\niteration, so the cumulative bias is dominated by its first term.\nSumming the descent lemma over $T = O(\\epsilon^{-2})$ outer iterations\nand choosing the step size to balance the descent and bias terms gives\n$\\min_t \\| \\nabla F(x_t) \\|^2 \\le 4 (F(x_0) - F^*) / (\\eta T)$, which\nyields the stated oracle complexity once the inner-loop length is\nsubstituted.\n\\end{proof}\n\n\\noindent\\textbf{Lemma~\\ref{lem:descent}.}\n\\begin{proof}\nBy the $L$-smoothness of $F$, the quadratic upper bound gives\n$F(x_{t+1}) \\le F(x_t) + \\langle \\nabla F(x_t), x_{t+1} - x_t \\rangle\n+ (L/2) \\| x_{t+1} - x_t \\|^2$. Substituting the update and expanding\nthe inner product as the sum of a descent term and a bias term,\n\\[\n\\langle \\nabla F(x_t), -\\widetilde{\\nabla} F(x_t) \\rangle\n= -\\| \\nabla F(x_t) \\|^2 + \\langle \\nabla F(x_t), \\nabla F(x_t) - \\widetilde{\\nabla} F(x_t) \\rangle,\n\\]\nand applying Young's inequality to the cross term with coefficient\n$1/2$ yields the claim whenever $\\eta \\le 1/L$.\n\\end{proof}\n\n\\noindent\\textbf{Theorem~\\ref{thm:lower}.}\n\\begin{proof}\nConsider a family of instances in which the lower-level problem is a\nfixed strongly convex quadratic and the upper-level objective is a\nstochastic quadratic whose mean gradient encodes one of $m$ possible\nlinear functions. In instance $I_j$, the gradient noise is Gaussian\nwith variance $\\sigma^2$ except along coordinate $j$, where the mean\ngradient is larger by $\\epsilon$ with $\\epsilon = \\sigma / \\sqrt{T}$.\nEach oracle call reveals one noisy gradient. A standard pinning\nargument shows that any algorithm that identifies the informative\ncoordinate with probability above $2/3$ must query the remaining\ncoordinates $\\Omega(\\sigma^2 / \\epsilon^2)$ times in expectation.\nSumming the resulting stationarity gap over the $m$ coordinates and\nchoosing $\\epsilon$ to balance the identification and optimization\nterms gives the stated lower bound, and an averaging argument over $j$\nyields the single hard instance.\n\\end{proof}\n\\end{document}\n\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "max-turns",
+      "max": 16
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 2
+    }
+  ]
+}

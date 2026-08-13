@@ -1,0 +1,65 @@
+{
+  "id": "structure-tabular-to-booktabs",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Evaluation}\n\\begin{table}\n\\centering\n\\begin{tabular}{lcc}\n\\hline\nModel & mIoU & FPS \\\\\n\\hline\\hline\nSegFormer-B0 & 37.4 & 94 \\\\\nOurs & 41.2 & 88 \\\\\n\\hline\n\\end{tabular}\n\\caption{Segmentation results on the validation set.}\n\\end{table}\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "把表格改成 booktabs 三线表风格：加载 booktabs 宏包，用 \\toprule、\\midrule、\\bottomrule 替换所有 \\hline，表格数据和 caption 不变。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "booktabs",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\toprule",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\midrule",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\bottomrule",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\hline",
+        "op": "eq",
+        "count": 0
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{booktabs}\n\\begin{document}\n\\section{Evaluation}\n\\begin{table}\n\\centering\n\\begin{tabular}{lcc}\n\\toprule\nModel & mIoU & FPS \\\\\n\\midrule\nSegFormer-B0 & 37.4 & 94 \\\\\nOurs & 41.2 & 88 \\\\\n\\bottomrule\n\\end{tabular}\n\\caption{Segmentation results on the validation set.}\n\\end{table}\n\\end{document}\n"
+      }
+    ]
+  }
+}

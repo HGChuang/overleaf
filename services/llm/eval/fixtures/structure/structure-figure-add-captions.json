@@ -1,0 +1,34 @@
+{
+  "id": "structure-figure-add-captions",
+  "category": "structure",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Experiments}\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\end{figure}\nTraining curves for the three models are shown above.\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\end{figure}\nAblation results appear in the second figure.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "两个 figure 环境都缺 \\caption 和 \\label。给第一个加 \\caption{Training loss and validation accuracy over 100 epochs.} 和 \\label{fig:training}，给第二个加 \\caption{Ablation study on the four model components.} 和 \\label{fig:ablation}，都放在 \\centering 行之后。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\caption\\{", "op": "eq", "count": 2 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\label\\{fig:", "op": "eq", "count": 2 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\label\\{fig:training\\}", "op": "eq", "count": 1 },
+      { "kind": "count", "file": "main.tex", "pattern": "\\\\label\\{fig:ablation\\}", "op": "eq", "count": 1 }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\section{Experiments}\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{Training loss and validation accuracy over 100 epochs.}\n\\label{fig:training}\n\\end{figure}\nTraining curves for the three models are shown above.\n\\begin{figure}\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{5cm}{0pt}}\n\\caption{Ablation study on the four model components.}\n\\label{fig:ablation}\n\\end{figure}\nAblation results appear in the second figure.\n\\end{document}\n"
+      }
+    ]
+  }
+}

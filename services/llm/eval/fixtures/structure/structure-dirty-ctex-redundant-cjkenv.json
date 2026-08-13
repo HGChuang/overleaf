@@ -1,0 +1,86 @@
+{
+  "id": "structure-dirty-ctex-redundant-cjkenv",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{CJKutf8}\n\n\\title{Tone Merger in the Basin Dialects: Field Report}\n\\author{Field Survey Group}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{CJK}{UTF8}{gbsn}\n\\section{引言}\n近十年来，方言接触引起的音系合并现象受到广泛关注。沿河\n三个乡镇的口音变化尤为迅速，但系统的声学记录仍然缺乏。\n本报告汇总了 2025 年田野调查的主要发现，供后续研究参考。\n\\end{CJK}\n\n\\begin{CJK}{UTF8}{gbsn}\nThis report presents a field study of tone merger in three\ntownships along the river basin. All interviews were conducted\nbetween March and August 2025, and the recordings were annotated\nindependently by two trained transcribers.\n\\end{CJK}\n\n\\begin{CJK}{UTF8}{gbsn}\n\\section{调查方法}\n我们在每个乡镇各选取了二十名发音人，年龄跨度从十八岁到\n七十五岁。录音在安静的室内完成，每位发音人先朗读词表\n两遍，随后进行约半小时的自由谈话。\n\\end{CJK}\n\n\\begin{CJK}{UTF8}{gbsn}\n\\section{初步结果}\n三个乡镇的合并方向并不一致：上游乡镇以阳平并入上声为主，\n下游乡镇则表现为去声并入阴平。年龄分层数据显示，合并\n最先出现在二十岁以下的发音人群体中。\n\\end{CJK}\n\n\\begin{CJK}{UTF8}{gbsn}\n\\section{结语}\n后续工作将扩大样本量，并对自由谈话语料做完整的声学测量，\n以检验词表数据与口语数据之间的一致性。\n\\end{CJK}\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份中文稿件的正文段落都放在 CJK 环境里排版，这是对的；但「引言」和「调查方法」之间夹着的那段英文摘要是从英文模板里整段复制过来的，连外面的 CJK 环境也一起带过来了——纯英文不需要也不应该包在 CJK 环境里。请把那段英文外面的 \\begin{CJK}{UTF8}{gbsn} 和 \\end{CJK} 两行删掉，英文原文一字不动；中文段落的 CJK 环境必须全部保留。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{CJK\\}\\{UTF8\\}\\{gbsn\\}",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\end\\{CJK\\}",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\begin{CJK}{UTF8}{gbsn}\nThis report presents a field study",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "This report presents a field study of tone merger in three",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\begin{CJK}{UTF8}{gbsn}\n\\section{引言}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\begin{CJK}{UTF8}{gbsn}\n\\section{调查方法}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\begin{CJK}{UTF8}{gbsn}\n\\section{初步结果}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\begin{CJK}{UTF8}{gbsn}\n\\section{结语}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{CJKutf8}\n\n\\title{Tone Merger in the Basin Dialects: Field Report}\n\\author{Field Survey Group}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{CJK}{UTF8}{gbsn}\n\\section{引言}\n近十年来，方言接触引起的音系合并现象受到广泛关注。沿河\n三个乡镇的口音变化尤为迅速，但系统的声学记录仍然缺乏。\n本报告汇总了 2025 年田野调查的主要发现，供后续研究参考。\n\\end{CJK}\n\nThis report presents a field study of tone merger in three\ntownships along the river basin. All interviews were conducted\nbetween March and August 2025, and the recordings were annotated\nindependently by two trained transcribers.\n\n\\begin{CJK}{UTF8}{gbsn}\n\\section{调查方法}\n我们在每个乡镇各选取了二十名发音人，年龄跨度从十八岁到\n七十五岁。录音在安静的室内完成，每位发音人先朗读词表\n两遍，随后进行约半小时的自由谈话。\n\\end{CJK}\n\n\\begin{CJK}{UTF8}{gbsn}\n\\section{初步结果}\n三个乡镇的合并方向并不一致：上游乡镇以阳平并入上声为主，\n下游乡镇则表现为去声并入阴平。年龄分层数据显示，合并\n最先出现在二十岁以下的发音人群体中。\n\\end{CJK}\n\n\\begin{CJK}{UTF8}{gbsn}\n\\section{结语}\n后续工作将扩大样本量，并对自由谈话语料做完整的声学测量，\n以检验词表数据与口语数据之间的一致性。\n\\end{CJK}\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

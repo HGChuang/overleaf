@@ -1,0 +1,86 @@
+{
+  "id": "structure-dirty-doc-curly-quotes",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Voices from the Harbour: An Oral History of the North Quay Fleet}\n\\author{E.~Thornton}\n\\date{May 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nBetween 2019 and 2024 the project recorded forty-two interviews with\nretired fishermen, net-menders, and harbour workers of the North Quay.\nOne fisherman recalled “the whole quay smelled of tar and\nsalt” when describing the winter of 1968, and the phrase has\nbecome the unofficial title of the archive. This paper sketches the\nfleet's working rhythm, the slang of the quay, and the way the\nharbour has been remembered since the fish market closed.\n\\end{abstract}\n\n\\section{The Fleet}\nIn the harbour's busiest decade, the 1960s, some sixty boats worked\nout of the North Quay, most of them wooden trawlers built within a\nday's sail of the town. Crews spoke of ``grey-water days'' for the\nflat, overcast mornings when the catch came up slow, and the phrase\nstill surfaces in the interviews half a century later.\n\n\\section{They Called It “the Iron Beach”}\nThe concrete apron east of the market, poured in 1954, was known on\nthe quay as ``the iron beach'' because the winches rusted faster\nthere than anywhere else. Net-mending families' workshops lined its\nlandward edge, and the apron stayed in use until the market closed.\n\n\\section{Work and Weather}\nWinter trips were short and anxious. The harbourmaster's logbook for\nMarch 1961 recorded \\emph{“no catch worth landing”} after\nthe equinoctial gale, and several crews describe the same season in\nalmost the same words. By spring the boats were back on the banks,\nand the quay resumed its ordinary noise.\n\n\\section{Memory and Change}\nSince the market closed, the quay has been repaved and the sheds\nreplaced by flats, and younger residents' memories of the fleet are\nmostly second-hand. The interviews show how quickly a working\nlandscape becomes a story, and how the slang of the quay outlives\nthe work itself.\n\n\\section{Conclusion}\nThe archive preserves a vocabulary as much as a history. Phrases\ncoined for weather and work now carry the town's memory of the\nfleet, and the project continues to record while the last of the\nNorth Quay crews are still willing to talk.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这份口述史初稿是从 Word 里粘过来的，正文混了 3 处 Unicode 弯引号（“...”）：摘要里一处（引文跨源码两行）、第二个小节标题里一处、「Work and Weather」那节 \\emph 里一处。把这 3 处统一改成 LaTeX 规范的 ``...'' 写法（左引号两个反引号、右引号两个单引号），引号内的文字一个字母都不许动；文档里已有的规范 ``...'' 引号和所有撇号（'）保持原样。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "[\\u201C\\u201D]",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "``",
+        "op": "eq",
+        "count": 5
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "''",
+        "op": "eq",
+        "count": 5
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\"",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "the whole quay smelled of tar and",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "the Iron Beach",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "no catch worth landing",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "harbour's",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Voices from the Harbour: An Oral History of the North Quay Fleet}\n\\author{E.~Thornton}\n\\date{May 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nBetween 2019 and 2024 the project recorded forty-two interviews with\nretired fishermen, net-menders, and harbour workers of the North Quay.\nOne fisherman recalled ``the whole quay smelled of tar and\nsalt'' when describing the winter of 1968, and the phrase has\nbecome the unofficial title of the archive. This paper sketches the\nfleet's working rhythm, the slang of the quay, and the way the\nharbour has been remembered since the fish market closed.\n\\end{abstract}\n\n\\section{The Fleet}\nIn the harbour's busiest decade, the 1960s, some sixty boats worked\nout of the North Quay, most of them wooden trawlers built within a\nday's sail of the town. Crews spoke of ``grey-water days'' for the\nflat, overcast mornings when the catch came up slow, and the phrase\nstill surfaces in the interviews half a century later.\n\n\\section{They Called It ``the Iron Beach''}\nThe concrete apron east of the market, poured in 1954, was known on\nthe quay as ``the iron beach'' because the winches rusted faster\nthere than anywhere else. Net-mending families' workshops lined its\nlandward edge, and the apron stayed in use until the market closed.\n\n\\section{Work and Weather}\nWinter trips were short and anxious. The harbourmaster's logbook for\nMarch 1961 recorded \\emph{``no catch worth landing''} after\nthe equinoctial gale, and several crews describe the same season in\nalmost the same words. By spring the boats were back on the banks,\nand the quay resumed its ordinary noise.\n\n\\section{Memory and Change}\nSince the market closed, the quay has been repaved and the sheds\nreplaced by flats, and younger residents' memories of the fleet are\nmostly second-hand. The interviews show how quickly a working\nlandscape becomes a story, and how the slang of the quay outlives\nthe work itself.\n\n\\section{Conclusion}\nThe archive preserves a vocabulary as much as a history. Phrases\ncoined for weather and work now carry the town's memory of the\nfleet, and the project continues to record while the last of the\nNorth Quay crews are still willing to talk.\n\\end{document}\n"
+      }
+    ]
+  }
+}

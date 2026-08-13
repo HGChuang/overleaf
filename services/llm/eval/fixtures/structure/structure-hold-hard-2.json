@@ -1,0 +1,135 @@
+{
+  "id": "structure-hold-hard-2",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\\usepackage{booktabs}\n\n\\title{Barrel-Ageing Trials: Phenolic Panel at Spring Rackings}\n\\author{Cellar Team, Domaine de la Combe}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\nThe phenolic panel tracks the three trial lots through the\nsecond racking. Table~\\ref{tab:phenolic} reports the mean of\nduplicate measurements taken at the spring rackings, before any\nblending trials begin.\n\n\\begin{table}[htbp]\n\\centering\n\\caption{Mean phenolic measurements for the 2024 trial lots.}\n\\label{tab:phenolic}\n\\begin{tabular}{lcc}\n\\toprule\nLot & Anthocyanins (mg/L) & Tannin (g/L) \\\\\n\\midrule\nMerlot A & 412.5 & 2.4 \\\\\nMerlot B & 388 & 2.15 \\\\\nSyrah C & 455.25 & 2.8 \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\nBlending decisions for the final cuv\\'ee will be minuted after\nthe July tasting panel, once the malolactic notes are in.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "品鉴委员会要的送印版卡在表格规范上，就 main.tex 里那张表，四条一次到位。一、两个数值列改用 siunitx 的 S 列做小数点对齐，宏包没引就自己引，列格式写成 lSS。二、数值一律补齐到两位小数——455.25 与 2.15 已是两位，其余照此补齐。三、三个列标题各自套 \\textbf 加粗。四、列标题之上再加一层分组表头：第一格留空，二、三列合并居中排 Phenolic markers，并在该分组行下方压一条 \\cmidrule(lr){2-3} 局部横线。表题、\\label、样品名和正文段落维持原样。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\usepackage\\{siunitx\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{tabular\\}\\{l\\s*S\\s*S\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\multicolumn\\{2\\}\\{c\\}\\{Phenolic markers\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\cmidrule\\(lr\\)\\{2-3\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\textbf\\{Lot\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\textbf\\{Anthocyanins",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\textbf\\{Tannin",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "412.50",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "388.00",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "2.40",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "2.80",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "455.25",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "2.15",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "Mean phenolic measurements for the 2024 trial lots.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\label{tab:phenolic}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\\usepackage{booktabs}\n\\usepackage{siunitx}\n\n\\title{Barrel-Ageing Trials: Phenolic Panel at Spring Rackings}\n\\author{Cellar Team, Domaine de la Combe}\n\\date{March 2026}\n\n\\begin{document}\n\\maketitle\n\nThe phenolic panel tracks the three trial lots through the\nsecond racking. Table~\\ref{tab:phenolic} reports the mean of\nduplicate measurements taken at the spring rackings, before any\nblending trials begin.\n\n\\begin{table}[htbp]\n\\centering\n\\caption{Mean phenolic measurements for the 2024 trial lots.}\n\\label{tab:phenolic}\n\\begin{tabular}{lSS}\n\\toprule\n& \\multicolumn{2}{c}{Phenolic markers} \\\\\n\\cmidrule(lr){2-3}\n\\textbf{Lot} & \\textbf{Anthocyanins (mg/L)} & \\textbf{Tannin (g/L)} \\\\\n\\midrule\nMerlot A & 412.50 & 2.40 \\\\\nMerlot B & 388.00 & 2.15 \\\\\nSyrah C & 455.25 & 2.80 \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\nBlending decisions for the final cuv\\'ee will be minuted after\nthe July tasting panel, once the malolactic notes are in.\n\n\\end{document}\n"
+      }
+    ]
+  }
+}

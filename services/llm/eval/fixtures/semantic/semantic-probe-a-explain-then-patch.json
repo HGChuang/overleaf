@@ -1,0 +1,23 @@
+{
+  "id": "semantic-probe-a-explain-then-patch",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "resume.tex",
+    "files": [
+      {
+        "path": "resume.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\pagestyle{empty}\n\\begin{document}\n\\begin{center}\n{\\LARGE Daniel Reyes}\\\\[3pt]\nMechanical Engineering, B.S. candidate\\\\\ndreyes@example.edu \\quad (555) 014-2287 \\quad Portland, OR\n\\end{center}\n\\vspace{6pt}\n\\section*{Summary}\nSenior mechanical engineering student seeking a design or manufacturing role.\nHands-on experience with CAD, prototyping, and shop fabrication.\nComfortable working across design, testing, and documentation.\n\\section*{Education}\n\\textbf{Oregon State University}, B.S. Mechanical Engineering, expected June 2026\\\\\nGPA: 3.7/4.0, minor in Mathematics\\\\\nRelevant coursework: Thermodynamics, Fluid Mechanics, Machine Design,\\\\\nHeat Transfer, Control Systems, Finite Element Analysis\n\\section*{Experience}\n\\textbf{Mechanical Engineering Intern}, Meridian Auto Parts, Summer 2025\n\\begin{itemize}\n\\item Responsible for CAD modeling of bracket components in SolidWorks.\n\\item Helped with vibration testing of prototype mounts, cutting field failure rate by 12\\%.\n\\item Worked on thermal simulations in ANSYS across 3 product lines.\n\\item Did drawing updates and documentation for the assembly line.\n\\end{itemize}\n\\textbf{Machine Shop Assistant}, University Fabrication Lab, 2024--2025\n\\begin{itemize}\n\\item Assisted students with lathe and mill operation during open shop hours.\n\\item Responsible for training 5 new interns on lab safety procedures.\n\\item Helped organize the SAE student chapter workshop with 120+ attendees.\n\\end{itemize}\n\\textbf{Manufacturing Intern}, Cascade Precision, Summer 2024\n\\begin{itemize}\n\\item Worked on inspection reports for 200+ machined parts per week.\n\\item Helped the quality team gauge incoming aluminum stock.\n\\item Did data entry for the tool calibration log.\n\\end{itemize}\n\\section*{Projects}\n\\textbf{Senior Capstone: Low-Cost Prosthetic Knee}, 2025--2026\n\\begin{itemize}\n\\item Led a 4-person team from concept review to final prototype.\n\\item Machined 15 prototype joints on the manual mill and lathe.\n\\item Presented design results at the regional ASME showcase.\n\\end{itemize}\n\\section*{Certifications}\nFundamentals of Engineering (FE) exam, passed 2025\\\\\nSolidWorks CSWA, 2024\\\\\nOSHA 10-hour general industry, 2024\n\\section*{Skills}\nCAD: SolidWorks, Fusion 360, AutoCAD\\\\\nSimulation: ANSYS Mechanical, Abaqus\\\\\nProgramming: MATLAB, Python (NumPy, pandas)\\\\\nFabrication: manual mill and lathe, MIG welding, 3D printing\\\\\nLanguages: English (native), Spanish (conversational)\n\\section*{Awards}\nFirst place, ASME student design competition, 2025\\\\\nDean's list, six terms\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "简历的 bullet 写得太 weak 了。先 tell me 你的修改思路（一两句就够），然后直接动手改好：每条 experience bullet 改成强动作动词开头的过去时句式，responsible for / helped with / worked on / did / assisted 这类水词全部清掉，量化数字一个不许丢，第一人称不要出现。Experience 以外的部分都别动。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "resume.tex",
+    "passScore": 4,
+    "rubric": "5: Experience 三段共 10 条 bullet 全部改写为强动作动词开头的过去时句式，responsible for/helped with/worked on/did/assisted 等弱表述清零，量化数字（12\\%、3 条产品线、5 个新人、120+ 人、200+ 件）全部准确保留，无第一人称，Experience 以外内容未动，LaTeX 结构完好；4: ≥7 条 bullet 改写到位、弱词基本清除、数字保留，个别条目力度不足或 Experience 外有轻微误改；3: 仅 4-6 条 bullet 被改写，或改写中丢失 1 处量化数字；2: 只改写 1-3 条，弱表述大面积残留；1: 文件没有实质改动（只口头给了修改建议而简历原样），或丢失多处数字、破坏 LaTeX 结构"
+  }
+}

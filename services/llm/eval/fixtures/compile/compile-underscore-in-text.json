@@ -1,0 +1,27 @@
+{
+  "id": "compile-underscore-in-text",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{A Pipeline for Weekly Influenza Surveillance}\n\\author{G. Andersson and F. Diallo}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\section{Data Flow}\nEvery Friday the ingestion job pulls case extracts from the regional servers.\nIt first validates file_name$ against the published manifest\nand then updates user_id$ so that dashboards always read the newest snapshot.\nRecords that fail validation are quarantined for manual review,\nand the quarantine queue is summarised in the weekly bulletin.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "流感监测流水线的文档编不过，日志里一堆 Missing $，头秃，救救孩子。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{A Pipeline for Weekly Influenza Surveillance}\n\\author{G. Andersson and F. Diallo}\n\\date{April 2026}\n\\begin{document}\n\\maketitle\n\\section{Data Flow}\nEvery Friday the ingestion job pulls case extracts from the regional servers.\nIt first validates file\\_name against the published manifest\nand then updates user\\_id so that dashboards always read the newest snapshot.\nRecords that fail validation are quarantined for manual review,\nand the quarantine queue is summarised in the weekly bulletin.\n\\end{document}\n"
+      }
+    ]
+  }
+}

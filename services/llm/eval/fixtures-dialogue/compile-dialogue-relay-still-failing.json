@@ -1,0 +1,55 @@
+{
+  "id": "compile-dialogue-relay-still-failing",
+  "category": "compile",
+  "difficulty": "hard",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Rebalancing a Docked Bike-Share System\\\\under Morning Commute Demand}\n\\author{T.~Araya}\n\\date{March 2026}\n\\begin{document}\n\\maketitle\n\n\\section{Motivation}\nMorning demand concentrates on a handful of stations\nnear the two rail terminals.\nField counts show the empty-dock variance grows like \\sqrt{n}$ per zone,\nso larger zones need disproportionately more rebalancing trips.\n\n\\section{Data}\nWe use eight weeks of trip records\nfrom the operator's open data portal,\ncovering 214 stations and about 380 thousand trips.\nEach record carries start and end station, timestamps,\nand an anonymised user class.\n\n\\section{Station Ranking}\nStations are ranked by the expected number of empty docks\nat the morning peak.\nThe #1 ranked station sits outside the north terminal\nand empties on most weekdays by 7:40.\n\n\\begin{center}\n\\begin{tabular}{ll}\n\\hline\nZone & Stations \\\\\n\\hline\nTerminal belt & 18 \\\\\nRiverside & 11 & pilot \\\\\nUniversity & 9 \\\\\n\\hline\n\\end{tabular}\n\\end{center}\n\n\\section{Dispatch Rule}\nTrucks follow a savings heuristic\nseeded by the highest-ranked deficit stations.\nA rolling horizon re-plans the route every fifteen minutes\nusing live dock counts from the operator feed.\n\n\\section{Outlook}\nA pilot on the riverside zone is scheduled for the autumn.\nSuccess will be measured by the reduction\nin minutes during which top-ranked stations stand empty.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "共享单车调度这篇稿子编译挂了，我自己找不出哪错了。你帮我修到能出 PDF 就行，谢谢！",
+  "dialogue": {
+    "persona": "交通专业研究生，中文交流，赶组会，LaTeX 小白，看到报错只会说'还报错'，描述不出错误内容。",
+    "hiddenGoal": "终态：三处编译错误全部修复（正文 \\sqrt{n}$ 缺左定界符 $、正文 The #1 ranked station 的 # 未转义、表格 Riverside 行多出一列），编译零错误，保持单文件，不重写用户句子、改动尽量小。错误会修一个冒一个：第 1 轮用户只说'编译挂了帮我修'；若 agent 修了一处就交差，第 2 轮用户说'还报错啊，再查查看'，并追加约束'改动尽量小，别重写我的句子，导师要看修改痕迹的'；若还是有过错没修净，第 3 轮用户说'还是红的，到底有几处错啊，你一次找全行不行'；若 agent 一次性全修好，第 2 轮直接满意：'可以了可以了，救了我一命'。编译零错误且措辞基本保留，用户满意结束。用户全程只能转述编译还有没有错，给不出任何技术细节。",
+    "disclosure": "progressive",
+    "maxUserTurns": 4
+  },
+  "grader": {
+    "type": "compile",
+    "assertions": [
+      {
+        "kind": "file-count",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Rebalancing a Docked Bike-Share System\\\\under Morning Commute Demand}\n\\author{T.~Araya}\n\\date{March 2026}\n\\begin{document}\n\\maketitle\n\n\\section{Motivation}\nMorning demand concentrates on a handful of stations\nnear the two rail terminals.\nField counts show the empty-dock variance grows like $\\sqrt{n}$ per zone,\nso larger zones need disproportionately more rebalancing trips.\n\n\\section{Data}\nWe use eight weeks of trip records\nfrom the operator's open data portal,\ncovering 214 stations and about 380 thousand trips.\nEach record carries start and end station, timestamps,\nand an anonymised user class.\n\n\\section{Station Ranking}\nStations are ranked by the expected number of empty docks\nat the morning peak.\nThe \\#1 ranked station sits outside the north terminal\nand empties on most weekdays by 7:40.\n\n\\begin{center}\n\\begin{tabular}{ll}\n\\hline\nZone & Stations \\\\\n\\hline\nTerminal belt & 18 \\\\\nRiverside & 11 \\\\\nUniversity & 9 \\\\\n\\hline\n\\end{tabular}\n\\end{center}\n\n\\section{Dispatch Rule}\nTrucks follow a savings heuristic\nseeded by the highest-ranked deficit stations.\nA rolling horizon re-plans the route every fifteen minutes\nusing live dock counts from the operator feed.\n\n\\section{Outlook}\nA pilot on the riverside zone is scheduled for the autumn.\nSuccess will be measured by the reduction\nin minutes during which top-ranked stations stand empty.\n\\end{document}\n"
+      }
+    ]
+  },
+  "traceAssertions": [
+    {
+      "kind": "tool-called",
+      "tool": "compile_project",
+      "minCalls": 1
+    },
+    {
+      "kind": "max-turns",
+      "max": 14
+    },
+    {
+      "kind": "no-repeat-call",
+      "maxIdentical": 3
+    }
+  ]
+}

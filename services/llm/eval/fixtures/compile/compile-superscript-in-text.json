@@ -1,0 +1,27 @@
+{
+  "id": "compile-superscript-in-text",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Register Pressure in Unrolled Loop Nests}\n\\author{T. Bergmann}\n\\date{March 2026}\n\\begin{document}\n\\maketitle\n\\section{Cost Model}\nOur instruction scheduler estimates the live range of every temporary value.\nFor a square tile of side n the pressure grows like x^2 + y^2$ across the unrolled body,\nso we stop unrolling once the estimate exceeds the physical register count.\nThis simple heuristic spills noticeably fewer temporaries than the default strategy.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "编不过，求助！编译器优化这篇报告昨天还能正常出 PDF 的，不知道碰坏了什么。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Register Pressure in Unrolled Loop Nests}\n\\author{T. Bergmann}\n\\date{March 2026}\n\\begin{document}\n\\maketitle\n\\section{Cost Model}\nOur instruction scheduler estimates the live range of every temporary value.\nFor a square tile of side n the pressure grows like $x^2 + y^2$ across the unrolled body,\nso we stop unrolling once the estimate exceeds the physical register count.\nThis simple heuristic spills noticeably fewer temporaries than the default strategy.\n\\end{document}\n"
+      }
+    ]
+  }
+}

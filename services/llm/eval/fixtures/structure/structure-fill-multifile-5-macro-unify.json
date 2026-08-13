@@ -1,0 +1,188 @@
+{
+  "id": "structure-fill-multifile-5-macro-unify",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath,amssymb}\n\n\\title{Job Displacement and Re-employment:\\\\Evidence from Plant Closings, 2008--2019}\n\\author{PhD dissertation draft --- L.~Moreau}\n\\date{July 2026}\n\n\\begin{document}\n\\maketitle\n\\input{chapters/intro}\n\\input{chapters/model}\n\\input{chapters/estimation}\n\\input{chapters/robustness}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/intro.tex",
+        "content": "\\chapter{Introduction}\n\\newcommand{\\TE}{\\ensuremath{\\Delta}}\nThe earnings losses from job displacement are large and persistent.\nWe estimate that the average effect \\TE{} on annual earnings\nis negative for up to a decade after the layoff.\nThe long-run \\TE{} is driven by spells of non-employment\nrather than by lower wage rates,\nand the dispersion of \\TE{} across workers is substantial.\n"
+      },
+      {
+        "path": "chapters/model.tex",
+        "content": "\\chapter{Model}\n\\newcommand{\\urate}{\\ensuremath{u}}\nThe model links displacement losses to local labour market slack.\nWhen the aggregate rate \\urate{} is high,\ndisplaced workers queue longer,\nand the effect \\TE{} on earnings is amplified.\nWe allow \\urate{} to vary at the commuting-zone level.\n"
+      },
+      {
+        "path": "chapters/estimation.tex",
+        "content": "\\chapter{Estimation}\n\\newcommand{\\TEs}[1]{\\ensuremath{\\Delta_{#1}}}\nOur baseline estimate \\TEs{ols} compares displaced workers\nto a matched control group.\nThe instrumented estimate \\TEs{iv} exploits the timing\nof closings within multi-plant firms.\nBecause \\TEs{iv} is identified from plausibly exogenous\nseparations, we treat it as the headline result,\nwhile \\TE{} summarises the average loss across specifications.\nLocal slack enters through \\urate{} measured in the year of displacement.\n"
+      },
+      {
+        "path": "chapters/robustness.tex",
+        "content": "\\chapter{Robustness}\n\\newcommand{\\urates}[1]{\\ensuremath{u_{#1}}}\nResults are unchanged when slack is measured by the\nsectoral rate \\urates{sec} instead of the local rate.\nDropping the 2008--2009 recession years leaves \\TEs{iv}\nessentially unchanged,\nand the aggregate \\TE{} remains negative and significant.\nUsing \\urates{nat} or \\urates{cz} as alternative controls\nproduces nearly identical profiles,\nso the headline estimates do not hinge on the slack measure,\nnor on whether \\urate{} enters linearly.\n"
+      }
+    ]
+  },
+  "instruction": "帮我收一下这套论文草稿的宏，章节作者各写各的，现在有两套功能重复的宏。第一套是处理效应：intro.tex 定义了无参的 \\TE（\\Delta），estimation.tex 定义了带下标参数的 \\TEs（\\Delta_{...}）。第二套是失业率：model.tex 定义了无参的 \\urate（u），robustness.tex 定义了带下标参数的 \\urates（u_{...}）。统一成带参数的版本：在 main.tex 导言区加 \\newcommand{\\TE}[1]{\\ensuremath{\\Delta_{#1}}} 和 \\newcommand{\\ur}[1]{\\ensuremath{u_{#1}}}，把四个章节里的局部定义删掉。原先不带参数的 \\TE 改成 \\TE{avg}，\\urate 改成 \\ur{nat}；带参数的 \\TEs{X} 和 \\urates{X} 分别改名 \\TE{X}、\\ur{X}，下标参数保持不变。每个文件都过一遍，别漏。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\newcommand\\{\\\\TE\\}\\[1\\]",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\newcommand\\{\\\\ur\\}\\[1\\]",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\newcommand{\\TE}[1]{\\ensuremath{\\Delta_{#1}}}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "\\newcommand{\\ur}[1]{\\ensuremath{u_{#1}}}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/intro.tex",
+        "pattern": "\\\\newcommand",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/intro.tex",
+        "pattern": "\\\\TE\\{avg\\}",
+        "op": "eq",
+        "count": 3
+      },
+      {
+        "kind": "count",
+        "file": "chapters/model.tex",
+        "pattern": "\\\\newcommand",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/model.tex",
+        "pattern": "urate",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/model.tex",
+        "pattern": "\\\\ur\\{nat\\}",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "chapters/model.tex",
+        "pattern": "\\\\TE\\{avg\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/estimation.tex",
+        "pattern": "TEs",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/estimation.tex",
+        "pattern": "urate",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/estimation.tex",
+        "pattern": "\\\\TE\\{",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "count",
+        "file": "chapters/estimation.tex",
+        "pattern": "\\\\ur\\{nat\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/robustness.tex",
+        "pattern": "urate",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/robustness.tex",
+        "pattern": "TEs",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/robustness.tex",
+        "pattern": "\\\\ur\\{",
+        "op": "eq",
+        "count": 4
+      },
+      {
+        "kind": "count",
+        "file": "chapters/robustness.tex",
+        "pattern": "\\\\TE\\{",
+        "op": "eq",
+        "count": 2
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{report}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath,amssymb}\n\\newcommand{\\TE}[1]{\\ensuremath{\\Delta_{#1}}}\n\\newcommand{\\ur}[1]{\\ensuremath{u_{#1}}}\n\n\\title{Job Displacement and Re-employment:\\\\Evidence from Plant Closings, 2008--2019}\n\\author{PhD dissertation draft --- L.~Moreau}\n\\date{July 2026}\n\n\\begin{document}\n\\maketitle\n\\input{chapters/intro}\n\\input{chapters/model}\n\\input{chapters/estimation}\n\\input{chapters/robustness}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/intro.tex",
+        "content": "\\chapter{Introduction}\nThe earnings losses from job displacement are large and persistent.\nWe estimate that the average effect \\TE{avg} on annual earnings\nis negative for up to a decade after the layoff.\nThe long-run \\TE{avg} is driven by spells of non-employment\nrather than by lower wage rates,\nand the dispersion of \\TE{avg} across workers is substantial.\n"
+      },
+      {
+        "path": "chapters/model.tex",
+        "content": "\\chapter{Model}\nThe model links displacement losses to local labour market slack.\nWhen the aggregate rate \\ur{nat} is high,\ndisplaced workers queue longer,\nand the effect \\TE{avg} on earnings is amplified.\nWe allow \\ur{nat} to vary at the commuting-zone level.\n"
+      },
+      {
+        "path": "chapters/estimation.tex",
+        "content": "\\chapter{Estimation}\nOur baseline estimate \\TE{ols} compares displaced workers\nto a matched control group.\nThe instrumented estimate \\TE{iv} exploits the timing\nof closings within multi-plant firms.\nBecause \\TE{iv} is identified from plausibly exogenous\nseparations, we treat it as the headline result,\nwhile \\TE{avg} summarises the average loss across specifications.\nLocal slack enters through \\ur{nat} measured in the year of displacement.\n"
+      },
+      {
+        "path": "chapters/robustness.tex",
+        "content": "\\chapter{Robustness}\nResults are unchanged when slack is measured by the\nsectoral rate \\ur{sec} instead of the local rate.\nDropping the 2008--2009 recession years leaves \\TE{iv}\nessentially unchanged,\nand the aggregate \\TE{avg} remains negative and significant.\nUsing \\ur{nat} or \\ur{cz} as alternative controls\nproduces nearly identical profiles,\nso the headline estimates do not hinge on the slack measure,\nnor on whether \\ur{nat} enters linearly.\n"
+      }
+    ]
+  }
+}

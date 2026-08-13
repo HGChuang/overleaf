@@ -1,0 +1,79 @@
+{
+  "id": "structure-hard-eqref-unify-missing-labels",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\usepackage{hyperref}\n\\begin{document}\n\\section{Model}\nThe state evolves by\n\\begin{equation}\nx_{t+1} = A x_t + B u_t\n\\label{eq:state}\n\\end{equation}\nwith process noise\n\\begin{equation}\nw_t \\sim \\mathcal{N}(0, Q)\n\\label{eq:noise}\n\\end{equation}\nThe cost aggregates stage losses\n\\begin{equation}\nJ = \\sum_{t=0}^{T} c(x_t, u_t)\n\\end{equation}\nand the value satisfies\n\\begin{equation}\nV(x) = \\min_u \\; c(x,u) + V(f(x,u))\n\\end{equation}\nEnergy decays as\n\\begin{equation}\nE_{t+1} \\leq \\rho E_t\n\\end{equation}\nwhile momentum follows\n\\begin{equation}\np_t = m v_t\n\\end{equation}\n\\section{Analysis}\nThe dynamics in \\ref{eq:state} are linear, and \\eqref{eq:noise} models the disturbance.\n\\autoref{eq:cost} defines the objective, while \\ref{eq:cost} is reused below.\nThe Bellman form in \\eqref{eq:bellman} is standard; energy decay in \\ref{eq:energy} and momentum in \\eqref{eq:momentum} close the argument.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Analysis 节的公式引用风格混乱（\\ref、\\eqref、\\autoref 混用）。做两件事：① 全部公式引用统一为 \\eqref；② 其中 \\ref{eq:cost}、\\eqref{eq:bellman}、\\ref{eq:energy}、\\eqref{eq:momentum} 引用的 label 在 Model 节的对应公式上根本不存在（cost 聚合、Bellman 形式、能量衰减、动量这四个公式都没 \\label），请补上 \\label{eq:cost}、\\label{eq:bellman}、\\label{eq:energy}、\\label{eq:momentum} 让引用落到实处。公式内容与行文一字不改。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\autoref",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\ref\\{",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\eqref\\{",
+        "op": "gte",
+        "count": 7
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{eq:cost\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{eq:bellman\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{eq:energy\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\label\\{eq:momentum\\}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\usepackage{hyperref}\n\\begin{document}\n\\section{Model}\nThe state evolves by\n\\begin{equation}\nx_{t+1} = A x_t + B u_t\n\\label{eq:state}\n\\end{equation}\nwith process noise\n\\begin{equation}\nw_t \\sim \\mathcal{N}(0, Q)\n\\label{eq:noise}\n\\end{equation}\nThe cost aggregates stage losses\n\\begin{equation}\nJ = \\sum_{t=0}^{T} c(x_t, u_t)\n\\label{eq:cost}\n\\end{equation}\nand the value satisfies\n\\begin{equation}\nV(x) = \\min_u \\; c(x,u) + V(f(x,u))\n\\label{eq:bellman}\n\\end{equation}\nEnergy decays as\n\\begin{equation}\nE_{t+1} \\leq \\rho E_t\n\\label{eq:energy}\n\\end{equation}\nwhile momentum follows\n\\begin{equation}\np_t = m v_t\n\\label{eq:momentum}\n\\end{equation}\n\\section{Analysis}\nThe dynamics in \\eqref{eq:state} are linear, and \\eqref{eq:noise} models the disturbance.\n\\eqref{eq:cost} defines the objective, while \\eqref{eq:cost} is reused below.\nThe Bellman form in \\eqref{eq:bellman} is standard; energy decay in \\eqref{eq:energy} and momentum in \\eqref{eq:momentum} close the argument.\n\\end{document}\n"
+      }
+    ]
+  }
+}

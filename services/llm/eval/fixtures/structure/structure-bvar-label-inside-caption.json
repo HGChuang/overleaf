@@ -1,0 +1,94 @@
+{
+  "id": "structure-bvar-label-inside-caption",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{graphicx}\n\n\\title{Latency Characteristics of the Serving Pipeline}\n\\author{Inference Infrastructure Group}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nOnline inference stacks fail in the tail, not in the mean.\nThis note documents the serving pipeline deployed in the\nnorth region and the measurements we used to characterise\nits tail latency. Figure~\\ref{fig:pipeline} summarises the\nrequest path, and the measurements that follow refer back\nto its stages. All experiments ran on the production\nshadow cluster during a quiet window in February.\n\n\\input{sections/results}\n\n\\section{Related Systems}\nThe earlier serving stack routed requests through a central\nbroker, and its latency profile was dominated by broker\ncontention rather than by queueing at the model workers.\nThe current design removes the broker entirely, so the\ncomparison with the old measurements is only qualitative.\nA full migration report is circulating separately.\n\\end{document}\n"
+      },
+      {
+        "path": "sections/results.tex",
+        "content": "\\section{Results}\nThe end-to-end path has four stages, and every stage\ncontributes to the tail. Figure~\\ref{fig:pipeline} marks\nthe stages at which we injected additional logging.\n\n\\begin{figure}[t]\n\\centering\n\\fbox{\\parbox[c][5cm][c]{0.7\\textwidth}{\\centering pipeline\ndiagram pending}}\n\\caption{The serving pipeline from request admission to\nresponse flush.\\label{fig:pipeline}}\n\\end{figure}\n\n\\begin{figure}[t]\n\\centering\n\\fbox{\\parbox[c][5cm][c]{0.7\\textwidth}{\\centering latency\nheat map pending}}\n\\caption{Tail latency under staged load, aggregated per\nstage.\\label{fig:latency}}\n\\end{figure}\n\nThe admission queue dominates the tail above the 99th\npercentile, as Figure~\\ref{fig:latency} makes clear: queue\nwait accounts for nearly two thirds of the worst decile of\nrequests once the batch aggregator saturates. The model\nworkers, by contrast, contribute a stable share at every\nload level we tested, which suggests that further worker\nscaling would buy little until the queue is re-engineered.\n"
+      }
+    ]
+  },
+  "instruction": "准备把图 label 的前缀从 fig: 统一改成 figure:。项目里所有以 fig: 开头的 \\label 连同引用它们的 \\ref 一起改，两个文件都要改到；label 保持在 \\caption 的参数里面原地改，别挪到 caption 外面，caption 的文字也不动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "sections/results.tex",
+        "pattern": "\\\\label\\{figure:",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\ref\\{figure:",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "sections/results.tex",
+        "pattern": "\\\\ref\\{figure:",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "fig:",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "sections/results.tex",
+        "pattern": "fig:",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "sections/results.tex",
+        "literal": "\\label{figure:pipeline}}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "sections/results.tex",
+        "literal": "\\label{figure:latency}}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "sections/results.tex",
+        "literal": "The serving pipeline from request admission to",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{graphicx}\n\n\\title{Latency Characteristics of the Serving Pipeline}\n\\author{Inference Infrastructure Group}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nOnline inference stacks fail in the tail, not in the mean.\nThis note documents the serving pipeline deployed in the\nnorth region and the measurements we used to characterise\nits tail latency. Figure~\\ref{figure:pipeline} summarises the\nrequest path, and the measurements that follow refer back\nto its stages. All experiments ran on the production\nshadow cluster during a quiet window in February.\n\n\\input{sections/results}\n\n\\section{Related Systems}\nThe earlier serving stack routed requests through a central\nbroker, and its latency profile was dominated by broker\ncontention rather than by queueing at the model workers.\nThe current design removes the broker entirely, so the\ncomparison with the old measurements is only qualitative.\nA full migration report is circulating separately.\n\\end{document}\n"
+      },
+      {
+        "path": "sections/results.tex",
+        "content": "\\section{Results}\nThe end-to-end path has four stages, and every stage\ncontributes to the tail. Figure~\\ref{figure:pipeline} marks\nthe stages at which we injected additional logging.\n\n\\begin{figure}[t]\n\\centering\n\\fbox{\\parbox[c][5cm][c]{0.7\\textwidth}{\\centering pipeline\ndiagram pending}}\n\\caption{The serving pipeline from request admission to\nresponse flush.\\label{figure:pipeline}}\n\\end{figure}\n\n\\begin{figure}[t]\n\\centering\n\\fbox{\\parbox[c][5cm][c]{0.7\\textwidth}{\\centering latency\nheat map pending}}\n\\caption{Tail latency under staged load, aggregated per\nstage.\\label{figure:latency}}\n\\end{figure}\n\nThe admission queue dominates the tail above the 99th\npercentile, as Figure~\\ref{figure:latency} makes clear: queue\nwait accounts for nearly two thirds of the worst decile of\nrequests once the batch aggregator saturates. The model\nworkers, by contrast, contribute a stable share at every\nload level we tested, which suggests that further worker\nscaling would buy little until the queue is re-engineered.\n"
+      }
+    ]
+  }
+}

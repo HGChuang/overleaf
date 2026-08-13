@@ -1,0 +1,38 @@
+{
+  "id": "semantic-dialogue-term-false-alarm",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\n\\title{Serving Long-Context Models on Modest GPUs:\\\\A Study of Quantised Attention State}\n\\author{T.~Banda and C.~Iversen}\n\\date{}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nLong-context inference is limited less by compute than by the memory\nfootprint of the attention state. We study quantisation of the KV cache\non a single commodity GPU and show that four-bit keys with eight-bit\nvalues preserve perplexity within measurement noise while halving\nresident memory. Latency improves by a third at sequence lengths beyond\nsixteen thousand tokens.\n\\end{abstract}\n\n\\section{Introduction}\nThe cost of autoregressive decoding is dominated by reading the KV cache\nback from memory at every step. As context windows grow, the KV cache\noutgrows the weights themselves, and serving systems either shard across\ndevices or evict state. We argue that aggressive quantisation of the\nKV cache is the cheaper lever on modest hardware, and we characterise\nthe accuracy cost of doing so across three open model families.\n\n\\section{Background}\nEach transformer layer stores per-token key and value tensors; together\nthese form the KV cache. Because decoding is memory-bound, the size of\nthis state sets both the latency floor and the largest batch that fits\non a device. Prior work prunes or evicts entries; we instead compress\nevery entry and keep the sequence complete.\n\n\\section{Design}\nOur quantiser calibrates per-channel scales on a held-out prompt set and\napplies them online as tokens are appended. The key-value cache is stored\nin four-bit integers with a per-channel floating scale, while values use\neight bits. Dequantisation is fused into the attention kernel, so no\nextra pass over memory is needed.\n\n\\section{Evaluation}\nWe evaluate on three open models ranging from seven to thirteen billion\nparameters, using long-document question answering and code completion\nas tasks. Across both tasks the kv cache quantised to our default\nsetting matches the uncompressed baseline within 0.1 perplexity points.\nThroughput at batch size one improves by 34 percent at thirty-two\nthousand tokens, and the largest servable batch doubles.\n\n\\section{Conclusion}\nCompressing attention state is a practical way to serve long contexts\non a single device. Our results suggest that capacity planning for\nlong-context deployments should budget memory for a quantised state\nrather than for full-precision tensors.\n\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "投稿前帮我统一下术语：KV cache 这个组件全文写法不一，我看到有 key-value cache 也有小写的 kv cache，全统一成 KV cache，该大写大写，别的字一个别动。",
+  "dialogue": {
+    "persona": "系统方向博士生，中文交流，论文是自己写的；用编辑器自带搜索数过次数但不完全相信自己的眼睛；会承认自己看错，不纠缠；达标就收工。",
+    "hiddenGoal": "终态：① key-value cache（第三节 Design 里一处）与 kv cache（第四节 Evaluation 里一处小写）全部清零，统一为 KV cache；② 统一后 KV cache 全文恰好 7 处（原本就有 5 处是对的，不许误伤）；③ 除这两处术语替换外，全文一字不动——不润色、不重排、不顺手改别的词。剧本：第 1 轮用户要求统一。第 2 轮（误报）：用户说'等下，第三节那个 key-value cache 我咋看着还在？你再查查。'——真相是 agent 若第 1 轮做对了，第三节那处已经改掉了，用户看到的是改之前的旧视图。分岔：若 agent 第 1 轮做对了——正确做法是重新搜一遍全文，回复用户'第三节已经统一了，现在那句是 the KV cache is stored...，全文已没有 key-value cache'，不做任何修改；若 agent 第 1 轮漏了第三节那处——那用户这次说对了，agent 应承认并补上；若 agent 不核实就动手乱改（比如把别处重写一遍交差，或把 the cache 这类泛指也改成 the KV cache）——判分记录损失，用户下轮'我不是让你重写，先搜一下再说话'。第 3 轮：若 agent 核实并解释——用户'哦我看的是改之前的缓存，那没事了，收工'，满意结束；若第 2 轮是补漏——用户抽查确认后同样收工。用户知识边界：会数出现次数、记得两种错误写法长什么样，但不逐句通读，凭搜索结果验收。",
+    "disclosure": "correction",
+    "maxUserTurns": 3
+  },
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: key-value cache 与 kv cache 两种变体全部清零并统一为 KV cache，全文 KV cache 恰好 7 处，其余内容（措辞、结构、数字）一字未动；4: 变体清零但个别替换处大小写或衔接略生硬；3: 一处变体残留，或统一时顺手改了无关措辞；2: 只改了一处变体，另一处残留；1: 基本未改，或不核实就乱改、破坏原文表述",
+    "assertions": [
+      { "kind": "literal-count", "file": "main.tex", "literal": "key-value cache", "op": "eq", "count": 0 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "kv cache", "op": "eq", "count": 0 },
+      { "kind": "literal-count", "file": "main.tex", "literal": "KV cache", "op": "eq", "count": 7 }
+    ]
+  },
+  "traceAssertions": [
+    { "kind": "max-turns", "max": 12 },
+    { "kind": "no-repeat-call", "maxIdentical": 2 }
+  ]
+}

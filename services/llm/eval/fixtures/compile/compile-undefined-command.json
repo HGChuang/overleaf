@@ -1,0 +1,27 @@
+{
+  "id": "compile-undefined-command",
+  "category": "compile",
+  "difficulty": "easy",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Succinct Arguments for Verifiable Computation}\n\\author{P. Nazari}\n\\date{January 2026}\n\\begin{document}\n\\maketitle\n\\section{Setup}\nA prover convinces a verifier that a delegated computation was carried out correctly.\nWe denote the transcript of the interaction by \\tq and analyse how its length\ngrows with the security parameter of the underlying commitment scheme.\nVerification runs in time polylogarithmic in the size of the circuit,\nwhich makes the scheme practical for very large computations.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "零知识证明笔记编译报 undefined，帮我看看是哪个命令写错了，谢谢。",
+  "grader": {
+    "type": "compile"
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Succinct Arguments for Verifiable Computation}\n\\author{P. Nazari}\n\\date{January 2026}\n\\begin{document}\n\\maketitle\n\\section{Setup}\nA prover convinces a verifier that a delegated computation was carried out correctly.\nWe denote the transcript of the interaction by $\\mathcal{T}$ and analyse how its length\ngrows with the security parameter of the underlying commitment scheme.\nVerification runs in time polylogarithmic in the size of the circuit,\nwhich makes the scheme practical for very large computations.\n\\end{document}\n"
+      }
+    ]
+  }
+}

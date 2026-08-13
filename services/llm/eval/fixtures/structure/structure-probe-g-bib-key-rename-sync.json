@@ -1,0 +1,80 @@
+{
+  "id": "structure-probe-g-bib-key-rename-sync",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Export Concentration and Growth Volatility: A Panel Reassessment}\n\\author{S. Mensah}\n\\date{}\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nA recurring finding in the development literature is that export\nconcentration amplifies output volatility in small open economies.\n\\cite{deng2023} estimate that a one-standard-deviation rise in product\nconcentration raises the variance of GDP growth by about eight percent\nin their sample of Sub-Saharan economies. The result has been influential\nin the policy debate, but the panel ends in 2011 and predates the\ncommodity price collapse that dominates the following decade.\n\nThis paper reassesses the finding on an extended panel that runs to\n2022. We keep the specification of the original study as close as\npossible so that differences in the estimates can be attributed to the\nsample rather than to modelling choices.\n\n\\section{Empirical strategy}\nFollowing \\cite{deng2023}, we instrument export concentration with\nthe interaction of colonial-era port locations and world commodity\nprices. The identifying assumption is that port geography affects\ngrowth volatility only through the trade structure it induces. We then\nre-estimate the second stage on the extended panel and compare the\nconcentration coefficient across the two sample periods.\n\n\\section{Data}\nExport concentration is measured by the Herfindahl index over\nfour-digit product lines from the UN Comtrade database. GDP growth and\nits within-country variance are computed from the World Bank national\naccounts. The extended panel covers thirty-one economies over\n1995--2022, of which the last decade is new relative to the original\nstudy.\n\n\\section{Results}\nOn the original sample window our estimates line up closely with the\npublished ones, which validates the replication of the specification.\nOn the extended panel the coefficient roughly halves, and the\nattenuation is driven almost entirely by the post-2011 years. The\nmechanism appears to be the diversification that followed the commodity\nprice collapse rather than any change in measurement.\n\n\\section{Conclusion}\nThe headline finding survives replication on its own sample but\nweakens considerably once the panel is extended past the commodity\nboom. Policy conclusions drawn from the earlier window should be\ntempered accordingly.\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\\end{document}\n"
+      },
+      {
+        "path": "refs.bib",
+        "content": "@article{deng2023,\n  author  = {Deng, Lin and Okafor, Chidi},\n  title   = {Export Diversification and Growth Volatility in Sub-Saharan Africa},\n  journal = {Journal of Development Economics},\n  year    = {2023},\n  volume  = {48},\n  pages   = {101--127}\n}\n\n@book{stiglitz2010,\n  author    = {Stiglitz, Joseph},\n  title     = {Freefall: America, Free Markets, and the Sinking of the World Economy},\n  publisher = {W. W. Norton},\n  year      = {2010}\n}\n"
+      }
+    ]
+  },
+  "instruction": "Deng 和 Okafor 那篇文章，我们一直按 working paper 年份记成 deng2023，但期刊正式版其实是 2024 年出的。请把引用键统一改成 deng2024：main.tex 里两处 \\cite 和 refs.bib 里的条目 key 一起改，bib 条目的 year 字段也顺手改成 2024，其它字段和条目保持原样。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "deng2023",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "main.tex",
+        "literal": "deng2024",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "literal-count",
+        "file": "refs.bib",
+        "literal": "deng2023",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "refs.bib",
+        "literal": "deng2024",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "refs.bib",
+        "pattern": "year\\s*=\\s*\\{2024\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "refs.bib",
+        "pattern": "year\\s*=\\s*\\{2023\\}",
+        "op": "eq",
+        "count": 0
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Export Concentration and Growth Volatility: A Panel Reassessment}\n\\author{S. Mensah}\n\\date{}\n\\begin{document}\n\\maketitle\n\n\\section{Introduction}\nA recurring finding in the development literature is that export\nconcentration amplifies output volatility in small open economies.\n\\cite{deng2024} estimate that a one-standard-deviation rise in product\nconcentration raises the variance of GDP growth by about eight percent\nin their sample of Sub-Saharan economies. The result has been influential\nin the policy debate, but the panel ends in 2011 and predates the\ncommodity price collapse that dominates the following decade.\n\nThis paper reassesses the finding on an extended panel that runs to\n2022. We keep the specification of the original study as close as\npossible so that differences in the estimates can be attributed to the\nsample rather than to modelling choices.\n\n\\section{Empirical strategy}\nFollowing \\cite{deng2024}, we instrument export concentration with\nthe interaction of colonial-era port locations and world commodity\nprices. The identifying assumption is that port geography affects\ngrowth volatility only through the trade structure it induces. We then\nre-estimate the second stage on the extended panel and compare the\nconcentration coefficient across the two sample periods.\n\n\\section{Data}\nExport concentration is measured by the Herfindahl index over\nfour-digit product lines from the UN Comtrade database. GDP growth and\nits within-country variance are computed from the World Bank national\naccounts. The extended panel covers thirty-one economies over\n1995--2022, of which the last decade is new relative to the original\nstudy.\n\n\\section{Results}\nOn the original sample window our estimates line up closely with the\npublished ones, which validates the replication of the specification.\nOn the extended panel the coefficient roughly halves, and the\nattenuation is driven almost entirely by the post-2011 years. The\nmechanism appears to be the diversification that followed the commodity\nprice collapse rather than any change in measurement.\n\n\\section{Conclusion}\nThe headline finding survives replication on its own sample but\nweakens considerably once the panel is extended past the commodity\nboom. Policy conclusions drawn from the earlier window should be\ntempered accordingly.\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\\end{document}\n"
+      },
+      {
+        "path": "refs.bib",
+        "content": "@article{deng2024,\n  author  = {Deng, Lin and Okafor, Chidi},\n  title   = {Export Diversification and Growth Volatility in Sub-Saharan Africa},\n  journal = {Journal of Development Economics},\n  year    = {2024},\n  volume  = {48},\n  pages   = {101--127}\n}\n\n@book{stiglitz2010,\n  author    = {Stiglitz, Joseph},\n  title     = {Freefall: America, Free Markets, and the Sinking of the World Economy},\n  publisher = {W. W. Norton},\n  year      = {2010}\n}\n"
+      }
+    ]
+  }
+}

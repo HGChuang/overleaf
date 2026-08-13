@@ -1,0 +1,74 @@
+{
+  "id": "semantic-fill-constraints-abstract-5hard",
+  "category": "semantic",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\\title{Renal Denervation for Resistant Hypertension:\nA Randomized Sham-Controlled Trial}\n\\author{The SPYRAL-HTN Collaborative Group}\n\\date{}\n\\begin{document}\n\\maketitle\n\\begin{abstract}\n\\input{abstract}\n\\end{abstract}\n\\section{Introduction}\nResistant hypertension, defined as blood pressure that remains above goal\ndespite concurrent use of three antihypertensive agents of different\nclasses, carries a high risk of cardiovascular events.\nCatheter-based renal denervation has been proposed as an adjunctive\ntherapy, but earlier trials yielded conflicting results.\n\\section{Methods}\nWe conducted a multicenter, randomized, sham-controlled trial at\ntwenty-four centers in five countries.\nEligible patients were randomly assigned in a two-to-one ratio to\nundergo catheter-based renal denervation or a sham procedure.\nThe primary efficacy endpoint was the change from baseline in mean\ntwenty-four-hour ambulatory systolic blood pressure at six months.\n\\end{document}\n"
+      },
+      {
+        "path": "abstract.tex",
+        "content": "We conducted a multicenter, randomized, sham-controlled trial of catheter-based renal denervation in patients with resistant hypertension. A total of 312 patients whose office systolic blood pressure remained at 160 mm Hg or higher despite a stable regimen of three or more antihypertensive medications, including a diuretic, were enrolled at twenty-four centers in five countries and randomly assigned in a two-to-one ratio to undergo renal denervation or a sham procedure. The primary efficacy endpoint was the change from baseline in mean twenty-four-hour ambulatory systolic blood pressure at six months, and the primary safety endpoint was a composite of major adverse events. At six months, the between-group difference in the change of ambulatory systolic pressure favored renal denervation by 4.7 mm Hg, with a prespecified Bayesian probability of superiority exceeding the required threshold. Office systolic pressure showed a consistent between-group difference, and the reduction was evident across all prespecified subgroups. Follow-up was complete for 96.8 percent of the randomized patients at six months. The composite safety endpoint did not differ significantly between the two groups, and no unanticipated device-related events were observed. In patients with resistant hypertension, catheter-based renal denervation produced a modest but statistically significant reduction in ambulatory systolic blood pressure at six months, with a favorable short-term safety profile. Longer follow-up is ongoing to assess the durability of the effect and to identify the patient subgroups most likely to benefit from the procedure in routine clinical practice.\n"
+      }
+    ]
+  },
+  "instruction": "编辑部来信，说摘要格式卡得很死，请按下面的要求重写 abstract.tex 里的摘要：① 全文压到 150 词以内，这是硬上限，超一个词都会被投稿系统退回；② 三个关键数字必须原样保留：312（入组人数）、4.7（六个月时动态收缩压的组间差，mm Hg）、96.8（随访完成率，百分数）；③ 两个术语必须原样保留，不得改写或替换：resistant hypertension、renal denervation；④ 试验的核心信息——随机假手术对照设计、主要终点结果、安全性结论——不能丢；⑤ 语言保持医学期刊摘要的正式简洁，不要口语化表达。main.tex 不用动。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "abstract.tex",
+    "passScore": 4,
+    "rubric": "5: 改写后摘要语言地道流畅、符合医学期刊摘要的正式语气，信息忠实原文（试验设计、主要疗效结果、安全性结论、结论方向均无歪曲或虚构），无冗余表达；4: 语言基本流畅规范，个别句式生硬或有轻微冗余，信息无损；3: 语言可读但明显口语化、句式破碎，或次要信息（非数字、非术语）有损；2: 语病较多、可读性差，或核心信息（设计类型/结果方向/安全性结论）失真；1: 语言混乱、严重跑题，或虚构原文没有的内容",
+    "assertions": [
+      {
+        "kind": "word-count",
+        "file": "abstract.tex",
+        "op": "lte",
+        "count": 150
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "312",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "4.7",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "96.8",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "resistant hypertension",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "abstract.tex",
+        "literal": "renal denervation",
+        "op": "gte",
+        "count": 1
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      }
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "id": "structure-bvar-two-phase-same-region",
+  "category": "structure",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\n\\title{Bleeding Risk Under Two Anticoagulation Regimens:\nA Seven-Clinic Prospective Cohort}\n\\author{S.~El-Amin, C.~Rivas, and J.~Kowalczyk}\n\\date{January 2026}\n\n\\begin{document}\n\\maketitle\n\n\\input{chapters/cohort}\n\\input{chapters/outcomes}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/cohort.tex",
+        "content": "\\section{Cohort}\nBetween March 2019 and October 2022 we enrolled 1,036 patients\nwith newly diagnosed atrial fibrillation at seven anticoagulation\nclinics. An interim analysis was released to consortium members in 2024.\nThe median follow-up was 31 months. Baseline characteristics were\nbalanced across treatment strata after inverse-probability weighting.\n\n\\section{Regimens}\nPatients received either a direct oral anticoagulant or dose-adjusted\nwarfarin according to clinician preference; crossover was documented\nand analysed under an intention-to-treat convention.\nConcomitant antiplatelet therapy was recorded at each visit.\n"
+      },
+      {
+        "path": "chapters/outcomes.tex",
+        "content": "\\section{Outcomes}\nThe primary outcome was major bleeding as defined by the\ninternational society criteria; secondary outcomes included\nclinically relevant non-major bleeding and all-cause mortality.\nEvents were adjudicated by two blinded reviewers, with a third\nreviewer resolving disagreements.\n\n\\section{Analysis}\nIncidence rates were compared with cause-specific hazard models,\nand sensitivity analyses repeated the comparisons in the\nper-protocol cohort.\n"
+      }
+    ]
+  },
+  "instruction": "Cohort 一节第一段要动两处，而且相互挨着，请注意基于当前文件内容来写补丁：第一，'An interim analysis was released to consortium members in 2024.' 这句话是旧进度报告的残留，整句删掉，删完后前后句衔接保持自然、不留多余空格或空行；第二，同一段里的中位随访时间按数据冻结结果从 31 个月改为 38 个月。其他段落和文件都不动。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "literal-count",
+        "file": "chapters/cohort.tex",
+        "literal": "An interim analysis was released to consortium members in 2024.",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/cohort.tex",
+        "literal": "The median follow-up was 38 months.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "literal-count",
+        "file": "chapters/cohort.tex",
+        "literal": "The median follow-up was 31 months.",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/cohort.tex",
+        "pattern": "clinics\\.\\s+The median follow-up was 38 months\\.",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "chapters/outcomes.tex"
+      },
+      {
+        "kind": "unchanged-file",
+        "file": "main.tex"
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{booktabs}\n\n\\title{Bleeding Risk Under Two Anticoagulation Regimens:\nA Seven-Clinic Prospective Cohort}\n\\author{S.~El-Amin, C.~Rivas, and J.~Kowalczyk}\n\\date{January 2026}\n\n\\begin{document}\n\\maketitle\n\n\\input{chapters/cohort}\n\\input{chapters/outcomes}\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/cohort.tex",
+        "content": "\\section{Cohort}\nBetween March 2019 and October 2022 we enrolled 1,036 patients\nwith newly diagnosed atrial fibrillation at seven anticoagulation\nclinics.\nThe median follow-up was 38 months. Baseline characteristics were\nbalanced across treatment strata after inverse-probability weighting.\n\n\\section{Regimens}\nPatients received either a direct oral anticoagulant or dose-adjusted\nwarfarin according to clinician preference; crossover was documented\nand analysed under an intention-to-treat convention.\nConcomitant antiplatelet therapy was recorded at each visit.\n"
+      },
+      {
+        "path": "chapters/outcomes.tex",
+        "content": "\\section{Outcomes}\nThe primary outcome was major bleeding as defined by the\ninternational society criteria; secondary outcomes included\nclinically relevant non-major bleeding and all-cause mortality.\nEvents were adjudicated by two blinded reviewers, with a third\nreviewer resolving disagreements.\n\n\\section{Analysis}\nIncidence rates were compared with cause-specific hazard models,\nand sensitivity analyses repeated the comparisons in the\nper-protocol cohort.\n"
+      }
+    ]
+  }
+}

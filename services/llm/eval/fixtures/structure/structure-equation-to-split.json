@@ -1,0 +1,44 @@
+{
+  "id": "structure-equation-to-split",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "capability",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\section{Analysis}\nExpanding the expectation gives the variance decomposition\n\\begin{equation}\n\\mathrm{Var}(\\hat{\\theta}) = \\frac{1}{n^2} \\sum_{i=1}^{n} \\mathrm{Var}(X_i) + \\frac{2}{n^2} \\sum_{i<j} \\mathrm{Cov}(X_i, X_j) - \\frac{2\\bar{c}}{n} \\mathrm{Bias}(\\hat{\\theta}) .\n\\end{equation}\nThe display overflows the text width by roughly one third.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "这个公式太长溢出页面了。改成 split 环境（仍在 equation 内），在等号处对齐换行：第一行到 = 为止，右端三项折到第二行并以 &= 对齐，公式内容不变。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{split\\}",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "&=",
+        "op": "gte",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\section{Analysis}\nExpanding the expectation gives the variance decomposition\n\\begin{equation}\n\\begin{split}\n\\mathrm{Var}(\\hat{\\theta}) &= \\frac{1}{n^2} \\sum_{i=1}^{n} \\mathrm{Var}(X_i) + \\frac{2}{n^2} \\sum_{i<j} \\mathrm{Cov}(X_i, X_j) \\\\ &\\quad - \\frac{2\\bar{c}}{n} \\mathrm{Bias}(\\hat{\\theta}) .\n\\end{split}\n\\end{equation}\nThe display overflows the text width by roughly one third.\n\\end{document}\n"
+      }
+    ]
+  }
+}

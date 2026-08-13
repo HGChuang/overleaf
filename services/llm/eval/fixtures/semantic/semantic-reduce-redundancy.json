@@ -1,0 +1,23 @@
+{
+  "id": "semantic-reduce-redundancy",
+  "category": "semantic",
+  "difficulty": "medium",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\title{Direct Recycling of Lithium-Ion Battery Cathodes}\n\\author{Anon}\n\\begin{document}\n\\maketitle\n\\section{Introduction}\nThe rapid growth of electric vehicles produces large volumes of spent batteries. Direct recycling is attractive because it preserves the cathode crystal structure. Unlike pyrometallurgy, direct recycling keeps the crystal structure intact and avoids breaking the material down to metals. This structure preservation is the key advantage: the cathode particles retain their layered framework, so relithiation restores capacity with little energy input. Hydrometallurgy dissolves the material and loses the structure entirely. Because the structure survives, direct recycling consumes far less energy than producing new cathode material from ore. We present a relithiation process that repairs degraded cathodes at low temperature.\n\\section{Process}\nSpent cathodes are treated in a lithium-rich solution at moderate temperature.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "Introduction 里“直接回收能保留正极晶体结构”这个论点翻来覆去说了三四遍，请去重精简：保留一次完整论述即可，其余重复句删除或合并，段落逻辑保持连贯（背景 → 直接回收的优势 → 本文工作），与火法、湿法对比的信息要保留，不得引入新论点。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: “保留晶体结构”的重复论述只保留一次完整版本，段落精简为背景 → 优势 → 本文工作的连贯结构，与火法/湿法的对比信息和低温 relithiation 工作均保留，无新增论点；4: 去重到位，仅个别衔接句稍欠流畅，关键对比信息保留；3: 仍残留 1 处明显重复，或删得过多导致对比信息缺失；2: 只删了 1 句，重复依旧明显；1: 未精简，或引入原文没有的新论点"
+  }
+}

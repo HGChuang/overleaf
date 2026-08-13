@@ -1,0 +1,102 @@
+{
+  "id": "structure-hold-medium-1",
+  "category": "structure",
+  "difficulty": "medium",
+  "suite": "holdout",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\n\\title{Riparian Buffer Structure Along Kaspian Creek}\n\\author{K.~Aldana and M.~Ostrander}\n\\date{August 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nWe report a two-season survey of the riparian corridor above the\nKaspian Creek gauging station, with emphasis on canopy closure,\nbasal area, and the survival of the 2019 planting cells.\n\\end{abstract}\n\n\\input{chapters/fieldwork}\n\\input{chapters/analysis}\n\n\\section{Conclusions}\n\\label{sec:conclusions}\n\nThe corridor recovers fastest where the survey grid of\nFigure~\\ref{fig:creek} overlaps the 2019 planting cells, and the\nnarrow reaches argue for extending the buffer upslope.\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/fieldwork.tex",
+        "content": "\\section{Field Layout}\n\\label{sec:field}\n\nThree 50~m transects were run perpendicular to the channel at\neach of the twelve sampling reaches. Canopy closure was recorded\nwith a spherical densiometer at 10~m intervals, and every stem\nover 5~cm DBH was tallied by species.\n\n\\begin{figure}[htbp]\n\\centering\n\\fbox{\\rule{0pt}{4cm}\\rule{6cm}{0pt}}\n\\caption{Layout of transects and planting cells along Kaspian\nCreek, keyed to the reach numbers used in the field books.}\n\\label{fig:creek}\n\\end{figure}\n\nBasal area was estimated with a 10-factor prism at every second\ndensiometer station. Sediment pins were installed at the toe of\neach bank and read after both high-flow events.\n"
+      },
+      {
+        "path": "chapters/analysis.tex",
+        "content": "\\section{Stand Metrics}\n\\label{sec:metrics}\n\nAs mapped in Figure~\\ref{fig:creek}, the buffer narrows to under\n15~m at reaches R4 and R7, and both reaches lost planted stems\nat roughly twice the corridor-wide rate.\n\nThe ordination in the appendix follows the reach grouping of\nFigure~\\ref{fig:crek}, pooling sites by valley-floor width\nrather than by aspect. Alder dominance tracks the narrow\nreaches, while cedar recovery concentrates on the wide,\nwell-drained benches.\n\nCanopy closure explains most of the variance in understorey\ncover; the densiometer series is archived with the reach maps.\n"
+      }
+    ]
+  },
+  "instruction": "样地布设图的标签要统一成 fig:meander。label 定义在 fieldwork 一章的图里，引用散在 main.tex 与两个章节文件；analysis 章还有一处把标签拼错成 fig:crek，那处的交叉引用一直是问号，这次一并归到 fig:meander。章节文字、图题和其余标签照旧。",
+  "grader": {
+    "type": "assert",
+    "stillCompiles": true,
+    "assertions": [
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "fig:creek",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/fieldwork.tex",
+        "pattern": "fig:creek",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/analysis.tex",
+        "pattern": "fig:creek",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "chapters/analysis.tex",
+        "pattern": "fig:crek",
+        "op": "eq",
+        "count": 0
+      },
+      {
+        "kind": "count",
+        "file": "main.tex",
+        "pattern": "fig:meander",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/fieldwork.tex",
+        "pattern": "fig:meander",
+        "op": "eq",
+        "count": 1
+      },
+      {
+        "kind": "count",
+        "file": "chapters/analysis.tex",
+        "pattern": "fig:meander",
+        "op": "eq",
+        "count": 2
+      },
+      {
+        "kind": "count",
+        "file": "chapters/fieldwork.tex",
+        "pattern": "\\\\label\\{fig:meander\\}",
+        "op": "eq",
+        "count": 1
+      }
+    ]
+  },
+  "solution": {
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass[11pt]{article}\n\\usepackage[margin=2.5cm]{geometry}\n\n\\title{Riparian Buffer Structure Along Kaspian Creek}\n\\author{K.~Aldana and M.~Ostrander}\n\\date{August 2026}\n\n\\begin{document}\n\\maketitle\n\n\\begin{abstract}\nWe report a two-season survey of the riparian corridor above the\nKaspian Creek gauging station, with emphasis on canopy closure,\nbasal area, and the survival of the 2019 planting cells.\n\\end{abstract}\n\n\\input{chapters/fieldwork}\n\\input{chapters/analysis}\n\n\\section{Conclusions}\n\\label{sec:conclusions}\n\nThe corridor recovers fastest where the survey grid of\nFigure~\\ref{fig:meander} overlaps the 2019 planting cells, and the\nnarrow reaches argue for extending the buffer upslope.\n\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/fieldwork.tex",
+        "content": "\\section{Field Layout}\n\\label{sec:field}\n\nThree 50~m transects were run perpendicular to the channel at\neach of the twelve sampling reaches. Canopy closure was recorded\nwith a spherical densiometer at 10~m intervals, and every stem\nover 5~cm DBH was tallied by species.\n\n\\begin{figure}[htbp]\n\\centering\n\\fbox{\\rule{0pt}{4cm}\\rule{6cm}{0pt}}\n\\caption{Layout of transects and planting cells along Kaspian\nCreek, keyed to the reach numbers used in the field books.}\n\\label{fig:meander}\n\\end{figure}\n\nBasal area was estimated with a 10-factor prism at every second\ndensiometer station. Sediment pins were installed at the toe of\neach bank and read after both high-flow events.\n"
+      },
+      {
+        "path": "chapters/analysis.tex",
+        "content": "\\section{Stand Metrics}\n\\label{sec:metrics}\n\nAs mapped in Figure~\\ref{fig:meander}, the buffer narrows to under\n15~m at reaches R4 and R7, and both reaches lost planted stems\nat roughly twice the corridor-wide rate.\n\nThe ordination in the appendix follows the reach grouping of\nFigure~\\ref{fig:meander}, pooling sites by valley-floor width\nrather than by aspect. Alder dominance tracks the narrow\nreaches, while cedar recovery concentrates on the wide,\nwell-drained benches.\n\nCanopy closure explains most of the variance in understorey\ncover; the densiometer series is archived with the reach maps.\n"
+      }
+    ]
+  }
+}

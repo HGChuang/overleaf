@@ -1,0 +1,23 @@
+{
+  "id": "semantic-hard-abstract-constraints",
+  "category": "semantic",
+  "difficulty": "hard",
+  "suite": "regression",
+  "project": {
+    "mainFile": "main.tex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\begin{abstract}\nGraph neural networks have become a popular choice for molecular property prediction, yet their behavior on out-of-distribution scaffolds remains poorly understood. In this work we present a systematic study of message-passing architectures across four benchmark datasets, and we show that a simple readout modification could potentially improve robustness substantially. Our best model might reach an AUC of 0.87 on the largest benchmark, which may correspond to a 12.4\\% relative gain over the strongest baseline, and inference could be up to 3.2 times faster than attention-based alternatives. We further analyze failure cases and find that performance degrades sharply on molecules with rare ring systems, a limitation that practitioners should keep in mind when deploying such models in screening pipelines.\n\\end{abstract}\n\\section{Introduction}\nMolecular property prediction is a core task in computational drug discovery.\n\\end{document}\n"
+      }
+    ]
+  },
+  "instruction": "摘要太长而且有大量 hedging。把它压缩到 120 词以内，硬约束：① 三个数字结果必须原样保留（0.87、12.4\\%、3.2）；② 关键词 graph neural network 必须保留；③ 局限性那句（rare ring systems 的意思）必须保留；④ 所有 hedging 词（could potentially / might / may / could be）全部删除，改成肯定表述。",
+  "grader": {
+    "type": "judge",
+    "stillCompiles": true,
+    "focusFile": "main.tex",
+    "passScore": 4,
+    "rubric": "5: 摘要 ≤120 词，0.87、12.4\\%、3.2 三个数字与 graph neural network 关键词、rare ring systems 局限性全部保留，所有 hedging 转为肯定表述且语义不失真；4: ≤120 词且数字/关键词/局限保留，但个别 hedging 残留或措辞略绕；3: 超 120 词，或丢 1 个数字/局限；2: 丢 2 项硬约束，或 hedging 基本未处理；1: 重写跑题或数字被篡改"
+  }
+}
