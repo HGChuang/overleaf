@@ -18,9 +18,6 @@
     "format:fix": "prettier --write $PWD/'**/*.ts'",
     "lint:fix": "eslint --fix .",
     "types:check": "tsc --noEmit",
-    "eval": "EVAL_GIT_HEAD=$(git rev-parse HEAD 2>/dev/null) docker exec -e EVAL_GIT_HEAD develop-llm-1 npx tsx eval/cli.ts",
-    "eval:validate": "docker exec develop-llm-1 npx tsx eval/validateFixtures.ts",
-    "eval:verify-graders": "docker exec develop-llm-1 npx tsx eval/verifyGraders.ts"
   },
   "version": "1.0.0",
   "directories": {

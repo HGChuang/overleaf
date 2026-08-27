@@ -1,12 +1,30 @@
+# 项目级 Codex 配置。
+#
+# 本项目使用：
+# - 主 Codex Agent 作为评测调度器
+# - 专门的 Subagent 承担用户模拟等评测角色
+
 [agents]
+
+# 开启 Subagent 能力。
 enabled = true
 
-# 所有没有显式指定模型的评测 subagent 默认使用 Luna
+# 没有显式指定模型的评测 Subagent 默认使用 Luna。
 default_subagent_model = "gpt-5.6-luna"
+
+# 评测过程中需要理解多轮上下文和复杂约束，
+# 默认使用较高推理强度。
 default_subagent_reasoning_effort = "high"
 
-# 根据额度和机器资源调整
+# 同一 Session 中最多允许同时运行的 Subagent 数量。
+#
+# 初期保持较小并发，确保：
+# - 每个 Benchmark Case 的项目状态能够正确隔离
+# - Trace 不会互相污染
+# - 本地机器资源可控
+#
+# 后续 Benchmark Harness 稳定后再根据资源情况调整。
 max_concurrent_threads_per_session = 4
 
-# 不允许 subagent 再无限创建 subagent
-max_depth = 1
+# 将 Subagent 被中断等信息反馈给主 Agent。
+interrupt_message = true
