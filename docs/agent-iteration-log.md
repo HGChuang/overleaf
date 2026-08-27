@@ -392,3 +392,37 @@ probe 验证接口组合和状态 barrier 后，才能建立 baseline。
 ### Commit
 
 在本地 commit 创建后记录于 Iteration 1 Review。
+
+## Iteration 2 — 旧评测内核改造成最小内存态 harness
+
+日期：2026-08-27
+
+### Observation / Evidence
+
+* 旧 `runner.ts`、`patchApplier.ts`、`compileRunner.ts` 已形成真实 provider、
+  Agent loop、内存文件和 CLSI 的闭环；本轮复用这些设计但不恢复大批量 DSL。
+* 独立 `eval_user` 返回公开首轮消息：`请把正文里的 “Hello World” 改成
+  “Hello Overleaf”。`，主 Agent 未替它编写用户内容。
+* replacement applicator 单测和 TypeScript 检查通过。
+* 真实 CLSI 正常 fixture 返回 `status=success`、`errorCount=0`，日志 marker
+  与更新后的文本一致；故意损坏 fixture 返回 `status=failure`、`errorCount=2`。
+
+### 本轮实现
+
+新增 `eval/headless/evalContext.ts`、`compileRunner.ts`、`serviceFactory.ts`、
+`runInMemoryCase.ts` 和 Hello Overleaf fixture。Agent 仍通过真实
+`CopilotService.chat` 与 provider 运行，文档通过内存 `filesRef` 表示，验证轮
+使用生产同源 `[自动验证]` 消息，compile log、transcript、tool calls 和结果
+均可落盘。
+
+### 单 Case 结果
+
+实际运行状态为 `INFRA_FAILURE`：provider
+`ark.cn-beijing.volces.com` TLS 连接失败，Agent tool calls 和 token usage 均为
+0。该结果不是 Copilot failure，也没有制造假 PASS。独立 CLSI 验证成功，因此
+当前主要阻塞是 provider 网络可达性。
+
+### Before vs After
+
+| 指标 | Before | After |
+|---|---|---|

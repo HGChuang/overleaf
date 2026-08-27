@@ -848,3 +848,34 @@ Main Agent Orchestrator
 
 > 浏览器不是主 Evaluation Harness 的必要组件；它是完整 UI 行为验证和
 > headless 语义校准所需的辅助组件。
+
+## Iteration 2：旧评测内核的最小内存态 harness
+
+本轮暂不评测项目持久化，复用旧体系中已经验证的 Agent、patch、CLSI 和
+deterministic grader 内核，避免恢复完整 fixture DSL 和批量 baseline。
+
+```text
+独立 eval_user 公开消息
+  -> CopilotService.chat（真实 provider 与 Agent loop）
+  -> 内存 filesRef（模拟用户文档）
+  -> replacement-only patch applicator（模拟 Accept）
+  -> compileRunner -> 真实 CLSI inline resources
+  -> output.log、结构化 errors/warnings、deterministic grader
+```
+
+实现边界：
+
+* 当前只自动接受非空 `oldText`/`newText` replacement；insertion、deletion、
+  未知文件必须明确失败。
+* `compileRunner` 暴露 `status`、`errorCount`、`errors`、`warningCount` 和
+  受限原始 `log`，可以区分 CLSI 基础设施失败与 Agent 产生的错误文档。
+* 本层不声称覆盖 Web session、Document Updater、ShareJS/OT 或项目 ZIP；这些
+  属于后续独立 conformance case。
+
+保留的旧实现价值包括：上下文构造、原子 patch 应用、隐藏验证轮、CLSI
+inline compile、transcript/usage/trace 和 deterministic grading。当前入口是
+`services/llm/eval/headless/runInMemoryCase.ts`。
+
+本轮一次真实 Agent 运行因 provider TLS 连接失败归类为 `INFRA_FAILURE`，没有
+把它误记为 Copilot 失败；独立 CLSI 正常 fixture 和故意损坏 fixture 的成功/失败
+及日志解析均已验证。
