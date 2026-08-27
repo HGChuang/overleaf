@@ -1,0 +1,12 @@
+[agents]
+enabled = true
+
+# 所有没有显式指定模型的评测 subagent 默认使用 Luna
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "high"
+
+# 根据额度和机器资源调整
+max_concurrent_threads_per_session = 4
+
+# 不允许 subagent 再无限创建 subagent
+max_depth = 1
