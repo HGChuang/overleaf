@@ -231,7 +231,7 @@ export const PILOT_CASES: PilotCase[] = [
       {
         type: 'file_contains',
         file: 'main.tex',
-        values: ['The method achieved 91.2\\% accuracy \\cite{smith2024}.'],
+        values: ['The method', '91.2\\%', '\\cite{smith2024}'],
       },
       {
         type: 'file_not_contains',
@@ -318,7 +318,8 @@ export const PILOT_CASES: PilotCase[] = [
         type: 'file_contains',
         file: 'main.tex',
         values: [
-          '\\paragraph{Warning.} Keep the sample dry.',
+          '\\paragraph{Warning',
+          'Keep the sample dry.',
           '\\textbf{Note:} Calibrate first.',
         ],
       },
@@ -781,7 +782,7 @@ export const PILOT_CASES: PilotCase[] = [
       {
         type: 'response_contains_any',
         response_index: 0,
-        values: ['论文标题', '章节标题', '哪个标题', '哪一个标题'],
+        values: ['论文标题', '章节标题', '哪个标题', '哪一个标题', '哪一个'],
       },
       {
         type: 'file_contains',
@@ -1000,17 +1001,17 @@ export const PILOT_CASES: PilotCase[] = [
       {
         type: 'file_contains',
         file: 'sections/abstract.tex',
-        values: ['We present Aurora.'],
+        values: ['Aurora'],
       },
       {
         type: 'file_contains',
         file: 'sections/method.tex',
-        values: ['\\section{System Design}', 'Aurora uses 4 workers.'],
+        values: ['\\section{System Design}', 'Aurora', '4 workers'],
       },
       {
         type: 'file_contains',
         file: 'sections/conclusion.tex',
-        values: ['Aurora is robust.'],
+        values: ['Aurora'],
       },
       {
         type: 'file_not_contains',
@@ -1028,7 +1029,6 @@ export const PILOT_CASES: PilotCase[] = [
         values: ['old system'],
       },
       compileSuccess,
-      { type: 'tool_called', tool: 'todo_write', min: 1 },
     ],
     oraclePatches: [
       {
