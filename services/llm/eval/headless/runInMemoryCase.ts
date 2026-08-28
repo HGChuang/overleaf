@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import {
@@ -10,8 +11,23 @@ import {
   VERIFY_MESSAGE,
   type EvalTask,
 } from './evalContext.js'
-import { compileFiles, type CompileResult } from './compileRunner.js'
-import { buildTaskService, emptyUsage, shutdownEval } from './serviceFactory.js'
+import type { CompileResult } from './compileRunner.js'
+import {
+  artifactReference,
+  CanonicalTraceWriter,
+  gitCommit,
+  hashValue,
+  type StructuredFailure,
+  writeJsonAtomic,
+} from './canonicalTrace.js'
+import {
+  buildTaskService,
+  emptyUsage,
+  evalPromptMetadata,
+  evalRuntimeConfig,
+  shutdownEval,
+} from './serviceFactory.js'
+import { tracedCompile, type TraceContextAccess } from './tracedCompile.js'
 
 type Status = 'PASS' | 'COPILOT_FAILURE' | 'INFRA_FAILURE'
 type JsonRecord = Record<string, unknown>
@@ -46,131 +62,438 @@ function getPatch(response: JsonRecord): ReplacementHunk[] | null {
       : null
   const block = Array.isArray(blocks)
     ? blocks.find(
-        item =>
+        (item) =>
           item &&
           typeof item === 'object' &&
           (item as JsonRecord).type === 'patch'
       )
     : null
-  const patch = block && typeof block === 'object' ? (block as JsonRecord).patch : null
-  const hunks = patch && typeof patch === 'object' ? (patch as JsonRecord).hunks : null
-  return Array.isArray(hunks) && hunks.length > 0 ? (hunks as ReplacementHunk[]) : null
+  const patch =
+    block && typeof block === 'object' ? (block as JsonRecord).patch : null
+  const hunks =
+    patch && typeof patch === 'object' ? (patch as JsonRecord).hunks : null
+  return Array.isArray(hunks) && hunks.length > 0
+    ? (hunks as ReplacementHunk[])
+    : null
 }
 
-async function saveJson(path: string, value: unknown) {
-  await writeFile(path, `${JSON.stringify(value, null, 2)}\n`)
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error)
+}
+
+function failureEnvelope({
+  phase,
+  error,
+  source,
+  retryable,
+  relatedEventId,
+}: {
+  phase: string
+  error: unknown
+  source: string
+  retryable: boolean
+  relatedEventId: string | null
+}): StructuredFailure {
+  return {
+    failure_phase: phase,
+    error_type: error instanceof Error ? error.name : 'EvaluationError',
+    error_source: source,
+    error_message: errorMessage(error),
+    retryable,
+    related_event_id: relatedEventId,
+  }
+}
+
+function sourceForPhase(phase: string): string {
+  if (phase === 'model') return 'provider'
+  if (phase === 'patch_apply') return 'patch_applicator'
+  if (phase === 'compile') return 'clsi'
+  if (phase === 'grader') return 'grader'
+  return 'evaluation_harness'
+}
+
+function retryableFor(phase: string, error: unknown): boolean {
+  const message = errorMessage(error).toLowerCase()
+  return (
+    phase === 'model' ||
+    phase === 'compile' ||
+    message.includes('connection') ||
+    message.includes('timeout') ||
+    message.includes('unavailable')
+  )
 }
 
 async function run() {
   const task = taskDefinition()
-  const runId = `${task.id}-${new Date().toISOString().replace(/[:.]/g, '-')}`
-  const runDir = join(artifactRoot, runId)
+  const startedAt = new Date().toISOString()
+  const trialId = process.env.EVAL_TRIAL_ID || `trial_${randomUUID()}`
+  const experimentId = process.env.EVAL_EXPERIMENT_ID || 'headless-tracing-p0'
+  const runId = `run_${randomUUID()}`
+  const runDir = join(
+    artifactRoot,
+    `${task.id}-${startedAt.replace(/[:.]/g, '-')}-${trialId.slice(-8)}`
+  )
   await mkdir(runDir, { recursive: true })
-  const filesRef = { current: task.files.map(file => ({ ...file })) }
-  const before = filesRef.current.map(file => ({ ...file }))
+
+  const eventsPath = join(runDir, 'events.jsonl')
+  const trace = new CanonicalTraceWriter(runId, eventsPath)
+  const filesRef = { current: task.files.map((file) => ({ ...file })) }
+  const before = filesRef.current.map((file) => ({ ...file }))
   const usage = emptyUsage()
   const toolCalls: Record<string, number> = {}
   const started = Date.now()
   const conversationId = `${task.id}-${Date.now().toString(36)}`
+  const config = evalRuntimeConfig()
+  const initialPayload = buildChatPayload(
+    task,
+    filesRef.current,
+    conversationId,
+    userMessage
+  )
+  const promptMetadata = evalPromptMetadata(initialPayload)
+  const manifest: JsonRecord = {
+    schema_version: 1,
+    run_id: runId,
+    experiment_id: experimentId,
+    case_id: task.id,
+    trial_id: trialId,
+    git_commit: await gitCommit(process.cwd()).catch(() => 'unknown'),
+    model: { resolution: 'pending' },
+    config,
+    prompt_hash: promptMetadata.promptHash,
+    config_hash: hashValue(config),
+    benchmark_hash: hashValue({ id: task.id, mainFile: task.mainFile }),
+    fixture_hash: hashValue(task.files),
+    tool_names: promptMetadata.toolNames,
+    started_at: startedAt,
+  }
+  await writeJsonAtomic(join(runDir, 'run.json'), manifest)
+  await writeJsonAtomic(join(runDir, 'before.json'), before)
+  const beforeArtifact = await artifactReference(runDir, 'before.json')
+
+  let currentTurnId: string | null = null
+  let currentParentEventId: string | null = null
+  let activeCompileToolCallId: string | null = null
+  let compileOrdinal = 0
+  const traceContext: TraceContextAccess = {
+    getTurnId: () => currentTurnId,
+    getParentEventId: () => currentParentEventId,
+    setParentEventId: (eventId) => {
+      currentParentEventId = eventId
+    },
+    getActiveToolCallId: () => activeCompileToolCallId,
+  }
+
+  const trialStarted = trace.emit({
+    event_type: 'trial_started',
+    summary: {
+      experiment_id: experimentId,
+      case_id: task.id,
+      trial_id: trialId,
+    },
+    artifacts: [beforeArtifact],
+  })
+  currentParentEventId = trialStarted.eventId
+  await trialStarted.committed
+
   let status: Status = 'INFRA_FAILURE'
-  let failure: JsonRecord | null = null
+  let failure: StructuredFailure | null = null
   let response: JsonRecord | null = null
   let patch: ReplacementHunk[] | null = null
   let compile: CompileResult | null = null
   let transcript: unknown[] = []
-  let serviceResources: Awaited<ReturnType<typeof buildTaskService>> | null = null
+  let patchOrdinal = 0
+  let failurePhase = 'setup'
+  let serviceResources: Awaited<ReturnType<typeof buildTaskService>> | null =
+    null
+  const toolStartEvents = new Map<string, string>()
 
   try {
-    serviceResources = await buildTaskService(filesRef, task.mainFile, usage)
+    serviceResources = await buildTaskService(filesRef, task.mainFile, usage, {
+      trace,
+      context: traceContext,
+      runDir,
+      nextCompileOrdinal: () => ++compileOrdinal,
+    })
+    manifest.model = await serviceResources.resolveModelMetadata(userId)
+    await writeJsonAtomic(join(runDir, 'run.json'), manifest)
+
     let instruction = userMessage
     for (let turn = 0; turn < 3; turn += 1) {
+      currentTurnId = `turn_${turn + 1}`
+      failurePhase = 'model'
       response = (await serviceResources.service.chat(
         userId,
         buildChatPayload(task, filesRef.current, conversationId, instruction),
         {
-          onEvent: event => {
-            if (event.type === 'tool_end') {
+          onEvent: (event) => {
+            if (event.type === 'tool_start') {
+              const queued = trace.emit({
+                event_type: 'tool_started',
+                parent_event_id: currentParentEventId,
+                turn_id: currentTurnId,
+                tool_call_id: event.toolCallId,
+                summary: { tool_name: event.toolName, args: event.args },
+              })
+              toolStartEvents.set(event.toolCallId, queued.eventId)
+              currentParentEventId = queued.eventId
+              if (event.toolName === 'compile_project') {
+                activeCompileToolCallId = event.toolCallId
+              }
+            } else if (event.type === 'tool_end') {
+              const queued = trace.emit({
+                event_type: 'tool_completed',
+                parent_event_id:
+                  toolStartEvents.get(event.toolCallId) ?? currentParentEventId,
+                turn_id: currentTurnId,
+                tool_call_id: event.toolCallId,
+                status: event.isError ? 'error' : 'ok',
+                summary: {
+                  tool_name: event.toolName,
+                  result_summary: event.resultSummary,
+                },
+              })
+              currentParentEventId = queued.eventId
               toolCalls[event.toolName] = (toolCalls[event.toolName] || 0) + 1
+              if (event.toolName === 'compile_project') {
+                activeCompileToolCallId = null
+              }
             }
           },
         }
       )) as unknown as JsonRecord
+      await trace.flush()
+
       const hunks = getPatch(response)
       if (!hunks) break
       patch = hunks
+      failurePhase = 'patch_apply'
       try {
         const applied = applyReplacementPatch(
-          new Map(filesRef.current.map(file => [file.path, file.content])),
+          new Map(filesRef.current.map((file) => [file.path, file.content])),
           hunks
         )
-        filesRef.current = [...applied.files.entries()].map(([path, content]) => ({
-          path,
-          content,
-        }))
+        filesRef.current = [...applied.files.entries()].map(
+          ([path, content]) => ({
+            path,
+            content,
+          })
+        )
       } catch (error) {
         if (error instanceof UnsupportedPatchError) {
           throw new Error(`unsupported replacement patch: ${error.message}`)
         }
         throw error
       }
+
+      patchOrdinal += 1
+      const patchPath = `patches/${String(patchOrdinal).padStart(2, '0')}-patch.json`
+      const snapshotPath = `snapshots/${String(patchOrdinal).padStart(2, '0')}-after.json`
+      await mkdir(join(runDir, 'patches'), { recursive: true })
+      await mkdir(join(runDir, 'snapshots'), { recursive: true })
+      await writeJsonAtomic(join(runDir, patchPath), hunks)
+      await writeJsonAtomic(join(runDir, snapshotPath), filesRef.current)
+      const patchApplied = trace.emit({
+        event_type: 'patch_applied',
+        parent_event_id: currentParentEventId,
+        turn_id: currentTurnId,
+        status: 'ok',
+        summary: {
+          hunk_count: hunks.length,
+          files: [...new Set(hunks.map((hunk) => hunk.file).filter(Boolean))],
+        },
+        artifacts: [
+          await artifactReference(runDir, patchPath),
+          await artifactReference(runDir, snapshotPath),
+        ],
+      })
+      currentParentEventId = patchApplied.eventId
+      await patchApplied.committed
       instruction = VERIFY_MESSAGE
     }
 
+    failurePhase = 'artifact'
     transcript = await serviceResources.memoryStore.load(
       serviceResources.service.buildThreadId(userId, conversationId)
     )
-    await saveJson(join(runDir, 'before.json'), before)
-    await saveJson(join(runDir, 'after.json'), filesRef.current)
-    await saveJson(join(runDir, 'copilot-response.json'), response)
-    await saveJson(join(runDir, 'patch.json'), patch)
-    await saveJson(join(runDir, 'transcript.json'), transcript)
-    await saveJson(join(runDir, 'tool-calls.json'), toolCalls)
+    await writeJsonAtomic(join(runDir, 'after.json'), filesRef.current)
+    await writeJsonAtomic(join(runDir, 'copilot-response.json'), response)
+    await writeJsonAtomic(join(runDir, 'patch.json'), patch)
+    await writeJsonAtomic(join(runDir, 'transcript.json'), transcript)
+    await writeJsonAtomic(join(runDir, 'tool-calls.json'), toolCalls)
 
     if (!patch) {
       status = 'COPILOT_FAILURE'
-      failure = { reason: 'no_patch', message: 'Agent did not submit a patch' }
+      failure = failureEnvelope({
+        phase: 'model',
+        error: new Error('Agent did not submit a patch'),
+        source: 'copilot',
+        retryable: false,
+        relatedEventId: currentParentEventId,
+      })
     } else {
-      compile = await compileFiles(filesRef.current, task.mainFile)
-      await saveJson(join(runDir, 'compile.json'), { ...compile, log: undefined })
-      if (compile.log !== null) await writeFile(join(runDir, 'output.log'), compile.log)
-      if (compile.status === 'unavailable' || compile.status.startsWith('http-')) {
+      failurePhase = 'compile'
+      const compileOutcome = await tracedCompile({
+        files: filesRef.current,
+        mainFile: task.mainFile,
+        purpose: 'final_grading',
+        ordinal: ++compileOrdinal,
+        runDir,
+        trace,
+        context: traceContext,
+      })
+      compile = compileOutcome.result
+      await writeJsonAtomic(join(runDir, 'compile.json'), {
+        ...compile,
+        log: undefined,
+      })
+      if (compile.log !== null)
+        await writeFile(join(runDir, 'output.log'), compile.log)
+
+      if (
+        compile.status === 'unavailable' ||
+        compile.status.startsWith('http-')
+      ) {
         status = 'INFRA_FAILURE'
-        failure = { reason: 'compile_unavailable', message: compile.note || compile.status }
+        failure = failureEnvelope({
+          phase: 'compile',
+          error: new Error(compile.note || compile.status),
+          source: 'clsi',
+          retryable: true,
+          relatedEventId: compileOutcome.completedEventId,
+        })
       } else if (compile.status !== 'success') {
         status = 'COPILOT_FAILURE'
-        failure = { reason: 'compile_failed', message: compile.note || compile.status }
+        failure = failureEnvelope({
+          phase: 'compile',
+          error: new Error(compile.note || compile.status),
+          source: 'latex',
+          retryable: false,
+          relatedEventId: compileOutcome.completedEventId,
+        })
       } else {
+        failurePhase = 'grader'
+        const graderStarted = trace.emit({
+          event_type: 'grader_started',
+          parent_event_id: currentParentEventId,
+          turn_id: currentTurnId,
+          summary: { grader: 'hello-overleaf-deterministic-v1' },
+        })
+        currentParentEventId = graderStarted.eventId
+        await graderStarted.committed
+
         const content =
-          filesRef.current.find(file => file.path === task.mainFile)?.content || ''
+          filesRef.current.find((file) => file.path === task.mainFile)
+            ?.content || ''
         const checks = {
           containsExpected: content.includes('Hello Overleaf'),
           removedOriginal: !content.includes('Hello World'),
           compileSuccess: compile.errorCount === 0,
-          compileLogSawExpected: compile.log?.includes('EVAL_BODY=Hello Overleaf') === true,
+          compileLogSawExpected:
+            compile.log?.includes('EVAL_BODY=Hello Overleaf') === true,
           compileLogDidNotSeeOriginal:
             compile.log?.includes('EVAL_BODY=Hello World') !== true,
         }
-        await saveJson(join(runDir, 'grader.json'), checks)
+        await writeJsonAtomic(join(runDir, 'grader.json'), checks)
+        const graderCompleted = trace.emit({
+          event_type: 'grader_completed',
+          parent_event_id: graderStarted.eventId,
+          turn_id: currentTurnId,
+          status: Object.values(checks).every(Boolean) ? 'ok' : 'error',
+          summary: {
+            grader: 'hello-overleaf-deterministic-v1',
+            passed: Object.values(checks).every(Boolean),
+            checks,
+          },
+          artifacts: [await artifactReference(runDir, 'grader.json')],
+        })
+        currentParentEventId = graderCompleted.eventId
+        await graderCompleted.committed
+
         if (Object.values(checks).every(Boolean)) {
           status = 'PASS'
         } else {
           status = 'COPILOT_FAILURE'
-          failure = {
-            reason: 'deterministic_grader_failed',
-            message: JSON.stringify(checks),
-          }
+          failure = failureEnvelope({
+            phase: 'grader',
+            error: new Error('deterministic grader failed'),
+            source: 'grader',
+            retryable: false,
+            relatedEventId: graderCompleted.eventId,
+          })
         }
       }
     }
   } catch (error) {
     status = 'INFRA_FAILURE'
-    failure = {
-      reason: 'runner_error',
-      message: error instanceof Error ? error.message : String(error),
-    }
+    failure = failureEnvelope({
+      phase: failurePhase,
+      error,
+      source: sourceForPhase(failurePhase),
+      retryable: retryableFor(failurePhase, error),
+      relatedEventId: currentParentEventId,
+    })
   } finally {
-    await saveJson(join(runDir, 'result.json'), {
+    if (serviceResources && transcript.length === 0) {
+      try {
+        transcript = await serviceResources.memoryStore.load(
+          serviceResources.service.buildThreadId(userId, conversationId)
+        )
+        if (transcript.length > 0) {
+          await writeJsonAtomic(join(runDir, 'transcript.json'), transcript)
+        }
+      } catch {
+        // The canonical lifecycle trace remains the failure source of truth.
+      }
+    }
+
+    if (serviceResources) {
+      try {
+        await shutdownEval()
+      } catch (error) {
+        if (!failure) {
+          status = 'INFRA_FAILURE'
+          failure = failureEnvelope({
+            phase: 'cleanup',
+            error,
+            source: 'evaluation_harness',
+            retryable: true,
+            relatedEventId: currentParentEventId,
+          })
+        }
+      }
+    }
+
+    const terminal = trace.emit(
+      status === 'PASS'
+        ? {
+            event_type: 'trial_completed',
+            parent_event_id: currentParentEventId,
+            turn_id: currentTurnId,
+            status: 'ok',
+            summary: { status, usage, tool_calls: toolCalls },
+          }
+        : {
+            event_type: 'trial_failed',
+            parent_event_id: currentParentEventId,
+            turn_id: currentTurnId,
+            status: 'error',
+            summary: { status, usage, tool_calls: toolCalls },
+            failure: failure as StructuredFailure,
+          }
+    )
+    currentParentEventId = terminal.eventId
+    await terminal.committed
+    await trace.flush()
+
+    const endedAt = new Date().toISOString()
+    Object.assign(manifest, { ended_at: endedAt, status, failure })
+    await writeJsonAtomic(join(runDir, 'run.json'), manifest)
+    await writeJsonAtomic(join(runDir, 'result.json'), {
+      runId,
+      experimentId,
       caseId: task.id,
+      trialId,
       status,
       failure,
       userMessage,
@@ -178,10 +501,11 @@ async function run() {
       usage,
       wallMs: Date.now() - started,
     })
-    if (serviceResources) await shutdownEval()
   }
 
-  process.stdout.write(`${JSON.stringify({ runDir, status, failure }, null, 2)}\n`)
+  process.stdout.write(
+    `${JSON.stringify({ runDir, runId, status, failure }, null, 2)}\n`
+  )
   process.exitCode = status === 'PASS' ? 0 : 1
 }
 
