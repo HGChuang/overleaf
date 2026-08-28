@@ -671,3 +671,59 @@ PASS，replacement、两次真实 CLSI compile 和 deterministic grader 均通�
 1. 用当前 canonical trace 做首个小型 baseline 和 failure analysis，不继续扩展 tracing。
 2. 后续进入持久化 harness 时，将同一 workspace hash 作为 Document Updater/CLSI/ZIP
    一致性 gate，而不是增加新的并行 trace 格式。
+
+## Iteration 6 — Benchmark Coverage Matrix 与 Case Schema
+
+日期：2026-08-28
+
+### Observation / Evidence
+
+* 生产 Copilot 已具备项目导航、文件读取/搜索、字数统计、规划、patch、compile feedback
+  和多轮 memory，但当前 headless runner 只有一个 hardcoded replacement smoke case。
+* 生产 `submit_patch` 支持更宽的 hunk 表达；当前可信 headless applicator 仅支持目标文件
+  明确、`oldText/newText` 都非空的 replacement。
+* prompt 明确要求 clarification、no-op、诚实拒绝、字数验证和 compile-fix loop，因此
+  benchmark 不能只统计“是否改出目标字符串”。
+
+### Interpretation / Root Cause
+
+当前缺口是产品能力 taxonomy、正交 coverage 轴与 harness support gate 尚未分离。如果直接
+批量生成 case，最容易得到大量单文件 D1 replacement 和近义 prompt，形成虚假的高覆盖。
+
+### Hypothesis
+
+先定义 C1–C11 能力域，以任务、项目规模、compile、交互、expected action、artifact、
+上下文和 prompt form 做正交记账，再按 family/fixture lineage 划分数据集，可在没有真实
+用户数据时建立可解释、抗泄漏的 benchmark。
+
+### Changes
+
+* 新增 `BENCHMARK_DESIGN.md`，定义能力边界、D1–D4 难度和 H0/H1/H2/BC 支持等级。
+* 给出覆盖 query/edit/repair/structure/table/figure/bibliography/clarification/no-op/
+  honesty/long-context/composite/recovery 的 Coverage Matrix。
+* 设计带 fixture hash、initial state、expected/forbidden behavior、patch/compile policy、
+  deterministic/model graders、provenance 和 harness gate 的 YAML case schema。
+* 规定 LLM 仅生成场景/表达变体，不定义 ground truth；按 case family + fixture lineage
+  去重和切分 dev/regression/holdout。
+* 本轮没有生成 benchmark case，没有运行 benchmark，也没有修改 Copilot 或 harness。
+
+### Benchmark / Metric Before vs After
+
+| 指标 | Before | After |
+|---|---|---|
+| capability taxonomy | 未定义 | C1–C11 |
+| difficulty | 隐含 | D1–D4，可按任务因素解释 |
+| harness support | 与能力混合 | H0/H1/H2/BC 显式 gate |
+| case schema | 无 | v1 设计完成，尚未实现 validator |
+| 新增/运行 cases | 0 | 0 |
+
+### Regression
+
+无运行时代码变化，也未执行 benchmark；没有可测量的 Copilot regression。
+
+### Remaining limitations / 推荐方向
+
+* schema 尚未实现 JSON Schema validator 或 registry loader。
+* H1 generic runner 尚未建立；矩阵大部分 family 当前只能设计、不能可信批量执行。
+* 后续应先挑少量人工 seed family 验证 schema，而不是立即批量生成变体。
+* insertion/deletion、真实持久化和 UI Accept/Reject 在 H2/BC gate 通过前保持 skipped。
