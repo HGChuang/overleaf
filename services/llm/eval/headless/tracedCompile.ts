@@ -27,7 +27,7 @@ export async function tracedCompile({
 }: {
   files: { path: string; content: string }[]
   mainFile: string
-  purpose: 'agent_verification' | 'final_grading'
+  purpose: 'initial_state' | 'agent_verification' | 'final_grading'
   ordinal: number
   runDir: string
   trace: CanonicalTraceWriter
