@@ -1039,3 +1039,117 @@ baseline：58% 是 single-small、75% 是 direct-command、92% 是 single-turn�
 C11 也尚未覆盖真实 patch rejection 后的动态恢复。后续要提高区分度，应增加不同
 fixture/layout/feedback chain，而不是批量改写 prompt。holdout 目前是逻辑隔离，仓库中的
 开发者仍能看到定义；本轮只保证 grader/oracle 未泄露给运行中的 `eval_user`。
+
+## Pilot Benchmark v2：动态多轮与区分度基线
+
+### 动态 `eval_user` 协议
+
+`runPilotCase.ts` 对标记为 `expected_behavior.dynamic_user=true` 的 case 使用
+`overleaf-eval-user/v1` stdin/stdout JSONL 协议。Harness 在收到 Copilot 的真实回复后才发出：
+
+* `turn_decision_required`：包含 Copilot 可见回复和当前 workspace hash；
+* `patch_decision_required`：额外包含 replacement patch preview。
+
+独立 `eval_user` session 必须返回 `continue_conversation`、`user_message`、
+`termination_reason`，patch 决策还要返回 `accept/reject`。被拒绝的 patch 不进入 workspace，
+而是保存为 `rejected-patches` artifact，并记录 `patch_rejected` event；后续反馈继续使用同一
+Copilot conversation。`eval_user_input_requested/received`、`patch_rejected/applied`、compile
+和 grader events 可按 parent event 与 workspace hash 重建完整因果链。
+
+baseline experiment 名含 `baseline` 时，runner 若得到 `git_commit=unknown` 会在
+`trial_started` 后写结构化 `EVAL_GIT_COMMIT_REQUIRED` / `trial_failed`。正式运行仍必须由
+orchestrator 显式注入正确 commit；runner 无法在不挂载 `.git` 的容器内判断一个格式合法但
+手工抄错的 SHA 是否对应预期版本。
+
+### Registry 与 validation gate
+
+旧 pilot 的 24 个已运行 holdout 全部转为 dev。本版新增 19 个互不重复的 D3/D4 family，
+其中 13 个 dev、6 个首次运行前冻结的 hidden holdout；没有批量生成 prompt variants，
+regression set 仍只等待真实 failure 积累。
+
+| 轴 | v2 实际覆盖 |
+|---|---|
+| family / split | 43；dev 37，hidden holdout 6 |
+| difficulty | D1 3，D2 12，D3 18，D4 10 |
+| dynamic | 12；其中 11 个实际发生至少 2 个用户 turn |
+| 新增重点 | multi-file、many-file/long-file、conflicting evidence、multi-constraint、repair loop、target discovery、no-op、clarification、correction、patch rejection |
+| patch rejection | 3 个 primary family；另有 2 个 clarification case 在错误首 patch 后触发拒绝 |
+| H2 | 继续 `SKIPPED`，未声称 insertion/deletion/new-file coverage |
+
+43/43 case 通过 runtime schema、oracle replacement 与 deterministic grader validation；
+43/43 通过真实 CLSI initial/final fixture gate。gate 曾发现 long-caption fixture 的 60 个连续
+float 导致 161 个 LaTeX errors，加入分页后重新验证通过，未把无效 fixture 交给 Copilot。
+grader 冻结前还修正两处歧义：patch-rejection case 必须产生目标语义变化，避免拒绝后原文
+假通过；figure follow-up 使用大小写不敏感的文件正则接受等价词序，同时继续保护 label。
+
+### Baseline（experiment `pilot-v2-discriminative-baseline`）
+
+Agent/harness 冻结 commit：`f66f0d5f683e13ff42b78a6a04677162a71cc6e1`。正式选中 trial
+均记录模型 `deepseek-v4-flash-ga-260731`、同一 config hash
+`bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e` 和正确 commit。
+选择规则为：排除 `INFRA_FAILURE`，每个 case 在正确 commit 的 trial 中选最新非基础设施
+结果；所有被排除 attempt 仍保留 canonical trace。
+
+| difficulty | PASS / cases | 通过率 |
+|---|---:|---:|
+| D1 | 3 / 3 | 100% |
+| D2 | 12 / 12 | 100% |
+| D3 | 17 / 18 | 94.4% |
+| D4 | 9 / 10 | 90.0% |
+| 总计 | 41 / 43 | 95.3% |
+
+dev 为 36/37（97.3%），holdout 为 5/6（83.3%）。按 category：
+
+| category | PASS / cases |
+|---|---:|
+| dynamic_clarification | 1 / 3 |
+| dynamic_correction | 2 / 2 |
+| patch_rejection | 3 / 3 |
+| compile_repair | 5 / 5 |
+| failure_recovery | 3 / 3 |
+| long_context | 4 / 4 |
+| no_op | 2 / 2 |
+| bibliography_edit | 2 / 2 |
+| constraint_edit | 2 / 2 |
+| content_edit | 2 / 2 |
+| cross_file_edit | 2 / 2 |
+| honesty | 3 / 3 |
+| interaction | 2 / 2 |
+| project_query | 2 / 2 |
+| structure_edit | 2 / 2 |
+| figure/table/multi_constraint/reference_repair | 各 1 / 1 |
+
+12 个 dynamic case 为 10/12；实际 multi-turn 的 11 个为 9/11（81.8%）。三个专门
+patch-rejection family 全部 PASS；包括 clarification 错误在内的 5 次用户拒绝均能驱动
+Copilot 恢复到正确最终 workspace，但 2 个 case 仍因首轮本应澄清却直接 patch 而失败。
+
+两项真实 capability failure 是 `dynamic.clarify-shared-title.v1`（dev/D3）和
+`hidden.duplicate-label-clarify.v1`（holdout/D4）。两者 trace 都显示：Copilot 发现或面对
+重复目标后未先询问，直接修改两个目标或错误目标；`eval_user` 拒绝后它能按反馈修正。
+失败检查均为 `first_response_no_patch` 与首回复问号 regex，最终文件/compile checks 通过。
+因此问题来自 clarification decision，而不是 tool、patch applicator、compile 或恢复能力。
+
+正式选中 trial 共 1,074,563 tokens、1,099,694 ms case wall time；tool calls 包括 43 次
+`submit_patch`、38 次 Agent 内 `compile_project`、84 次 `read_file`、34 次
+`search_project`。这些数字不含 eval_user 模型开销，也不把 harness final-grading compile
+计入 Agent tool-call 数。
+
+额外保留 5 个 infrastructure attempts：2 个 `model/MODEL_PROVIDER_ERROR`
+（connection error、terminated）和 3 个 `runner/RUNNER_EXECUTION_ERROR`
+（交互 stdin/readline 被关闭）。provider cases 降低并发后以新 session/trial 通过；stdin
+失败暴露当前手工 subagent 调度对交互进程生命周期较敏感。它们不进入 capability 分母。
+
+### Grader 审计与限制
+
+对两个失败 case 的 response、patch preview、拒绝反馈、最终 snapshot、compile 与全部失败
+checks 逐一复核，未发现确认的 grader false positive/negative。这里的“未发现”不等于所有
+主观内容质量都被完全覆盖；polish/translation 类 deterministic grader 主要验证结果约束和
+禁止项，不应被解释为完整语言质量评分。
+
+当前主要限制：动态协议依赖 orchestrator 保持 stdin 存活；没有统一的批量 scheduler/
+reporter 自动分配唯一 trial identity；holdout 已完成一次 baseline，后续不得拿本次结果反复
+调试；仓库可见的 holdout 是逻辑隔离而非密码学隐藏。H2 与 browser conformance 继续 skipped。
+
+本轮没有修改 Copilot prompt、model、tool 或 Agent loop。相对 24/24 的 v1，41/43 及
+clarification 集中的稳定失败证明区分度已有提升，但除 clarification 外多数 category 仍为
+100%，不能据此宣称 benchmark 已充分饱和。

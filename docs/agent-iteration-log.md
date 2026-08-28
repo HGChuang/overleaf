@@ -808,3 +808,94 @@ Agent failure 追加。
 
 * `f1e9354c89` — H1 pilot runner、schema、grader registry 与 24 个 seed。
 * `1384891d46` — 基于 live baseline 修正四个歧义 grader。
+
+## Iteration 8 — Dynamic Multi-turn 与 Discriminative Pilot
+
+日期：2026-08-28
+
+### 本轮研究的问题
+
+在不修改 Copilot 的前提下，把预生成多轮消息升级为 `eval_user` 逐轮消费真实 Copilot 回复，
+新增少量 D3/D4 family 提升区分度，冻结新的 hidden holdout，并重新运行 pilot baseline。
+
+### Observation / Evidence
+
+* v1 为 24/24 PASS，92% single-turn、D4 仅 2 个，无法区分 clarification/rejection/recovery。
+* 新 registry 为 43 family：旧 24 个全部视为 dev；新增 19 个 D3/D4，其中 dev 13、hidden
+  holdout 6。12 个 case 启用 dynamic protocol，11 个实际发生至少 2 个用户 turn。
+* 43/43 schema、oracle replacement、grader oracle 和真实 CLSI initial/final compile gate
+  通过；TypeScript 通过，11/11 pilot tests 通过。
+* 正式 baseline 为 41/43 PASS：dev 36/37，holdout 5/6；D3 17/18，D4 9/10。
+* 12 个 dynamic case 10/12，实际 multi-turn 9/11；三个 primary patch-rejection case 3/3。
+* 两个真实失败均属 dynamic clarification：首轮未澄清就修改重复目标；用户拒绝后均恢复出
+  正确最终 workspace，compile 也成功。
+* 正式 trial 总计 1,074,563 tokens、1,099,694 ms case wall time。所有正式 manifest 均记录
+  `f66f0d5f683e13ff42b78a6a04677162a71cc6e1`，model/config 一致。
+* 额外保留 5 个基础设施 attempt：2 个 provider error、3 个交互 stdin/readline closure；
+  均有结构化 `trial_failed`，不计入 capability 分母。
+
+### Interpretation / Root Cause
+
+v1 的主要失真来自多轮用户消息在 Copilot 回复前就已固定，以及难例覆盖不足。v2 的两个
+稳定失败表明 Copilot 能在用户明确纠正后恢复，但面对同名/重复目标时的首轮 clarification
+decision 不稳定。失败不是 patch、compile、grader 或 recovery 链路造成。
+
+### Changes
+
+* 增加 `overleaf-eval-user/v1` 动态 stdin/stdout 协议；每次 turn/patch decision 都包含真实
+  Copilot 回复，patch preview 还包含 hunk 与 workspace hash。
+* runner 支持 patch rejection：拒绝时 workspace 不变，保存 rejected patch artifact，写入
+  request/receive/rejected events，并用同一 Copilot conversation 消费用户反馈。
+* schema/types/registry 增加 `dynamic_user`、`user_turns`、`patch_rejections`、
+  `response_matches` 和 `file_matches`；grader 不依赖唯一澄清措辞或唯一 caption 词序。
+* 新增 19 个 D3/D4 family，覆盖 cross-file、many/long context、冲突证据、组合约束、repair
+  loop、target discovery、no-op、用户纠正和 patch rejection；没有批量生成 variants。
+* baseline experiment 对 `git_commit=unknown` 写结构化 runner failure；本轮正式运行全部显式
+  注入冻结 commit。
+* hidden holdout 在 fixture/grader gate 后冻结，dev 完成后才首次运行；未依据 hidden 结果
+  修改 case、grader 或 Copilot。
+
+### Benchmark / Metric Before vs After
+
+| 指标 | Before | After |
+|---|---:|---:|
+| families | 24 | 43 |
+| D3 / D4 | 7 / 2 | 18 / 10 |
+| dynamic cases | 0（仅预生成消息） | 12 |
+| 实际 multi-turn | 2 个 scripted | 11 个 response-conditioned |
+| baseline | 24/24 | 41/43 |
+| dynamic success | 不可测 | 10/12 |
+| multi-turn success | 不可信 | 9/11 |
+| primary patch-rejection | 0 | 3/3 PASS |
+| confirmed grader FP/FN | live 中 4/0 | 冻结后 baseline 中 0/0（人工复核两个失败） |
+
+### Failure Cases / Regression
+
+* `dynamic.clarify-shared-title.v1`：D3/dev；首轮同时修改两个 `Summary`，拒绝后只改目标文件。
+* `hidden.duplicate-label-clarify.v1`：D4/holdout；首轮错误修改 Method A，拒绝后只改 Method B。
+* terminal failure envelope 为 grader assertion，但 capability root cause 是 clarification behavior；
+  最终 workspace 与 compile checks 均通过。
+* 没有修改 Copilot，因此没有 Agent behavior regression 结论；旧 24 个 case 仍全部 PASS。
+
+### 本轮经验与限制
+
+* 真动态用户能暴露 scripted follow-up 无法发现的“首轮不澄清、事后可恢复”差异。
+* patch rejection 必须在应用前发生；只在最终 snapshot 模拟拒绝会掩盖 recovery 能力。
+* fixture gate 必须检查 LaTeX errorCount；长文件的 60 个 float 曾产生 161 个 errors，修复后
+  才进入 baseline。
+* 当前手工 subagent 调度会受 stdin 生命周期影响；批量 scheduler 仍应统一管理进程和唯一
+  trial ID。
+* hidden holdout 已使用一次，后续不能作为日常 dev 调试集；definitions 在仓库中仍是逻辑隐藏。
+
+### 推荐方向
+
+1. 不改 benchmark，针对两个 clarification trace 形成最小 Agent 行为假设与独立 regression
+   family；先分析再决定是否优化。
+2. 为动态协议实现稳定的批量 scheduler/reporter，统一并发、retry policy、trial identity 和
+   selected-trial 规则，减少手工 stdin failure。
+3. 从真实 evaluation failure append regression set；不要从本轮 PASS family 批量造近义变体。
+4. H2 insertion/deletion conformance 完成后再扩展 patch semantics，当前继续 skipped。
+
+### Commit
+
+* `f66f0d5f68` — dynamic runner、grader 修正与 19 个 discriminative seed families。
