@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "run_id": "run_95908a9c-b3d8-43ab-bd68-076f2e97367d",
+  "experiment_id": "tracing-p0-validation",
+  "case_id": "hello-overleaf-replacement",
+  "trial_id": "trace-p0-success",
+  "git_commit": "04d9928871466e2c275b0819c717517fa4012abb",
+  "model": {
+    "resolution": "pending"
+  },
+  "config": {
+    "agent_step_limit": null,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "prompt_hash": "6b58dbe5e6db4c89ebe9387cb01fc62e7bce59ca4a333b2bbe995f2eda41f7ef",
+  "config_hash": "90a481eca9665a4df6af9e0ff9e04e7149712639e35f691b0c503835d125e584",
+  "benchmark_hash": "b7caa506579cf16b77fb22c89560ee06841d28091bd0898a71ea11ba665d4bb5",
+  "fixture_hash": "21d6661607ce19fb314ee595434e15313d44edaea51d07103bafe82cb8734b53",
+  "tool_names": [
+    "list_project_files",
+    "read_file",
+    "read_file_fragment",
+    "search_project",
+    "count_words",
+    "todo_write",
+    "submit_patch",
+    "compile_project"
+  ],
+  "started_at": "2026-08-28T06:00:13.834Z"
+}

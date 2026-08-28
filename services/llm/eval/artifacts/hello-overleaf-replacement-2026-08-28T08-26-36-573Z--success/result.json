@@ -1,0 +1,26 @@
+{
+  "runId": "run_e78c7cc9-3fc7-4205-8112-ac69de401e0e",
+  "experimentId": "headless-tracing-p0",
+  "caseId": "hello-overleaf-replacement",
+  "trialId": "tracing-correlation-success",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "infrastructure",
+    "failure_phase": "setup",
+    "error_type": "INFRASTRUCTURE_SETUP_ERROR",
+    "error_source": "evaluation_runtime",
+    "error_message": "The `uri` parameter to `openUri()` must be a string, got \"undefined\". Make sure the first parameter to `mongoose.connect()` or `mongoose.createConnection()` is a string.",
+    "retryable": true,
+    "related_event_id": "evt_90cce755-9e4c-4a74-b86e-2a3dc3201fa3"
+  },
+  "userMessage": "请把正文里的“Hello World”改成“Hello Overleaf”。",
+  "toolCalls": {},
+  "usage": {
+    "input": 0,
+    "output": 0,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "totalTokens": 0
+  },
+  "wallMs": 76
+}

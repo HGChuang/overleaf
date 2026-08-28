@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "run_id": "run_954dd88e-ac6e-462b-8c1a-d4ddbb724d55",
+  "experiment_id": "headless-tracing-p0",
+  "case_id": "hello-overleaf-replacement",
+  "trial_id": "tracing-runner-final-cleanup",
+  "git_commit": "dea1c655012fe09e97da6368706764d8149d6055",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "prompt_hash": "6b58dbe5e6db4c89ebe9387cb01fc62e7bce59ca4a333b2bbe995f2eda41f7ef",
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "benchmark_hash": "b7caa506579cf16b77fb22c89560ee06841d28091bd0898a71ea11ba665d4bb5",
+  "fixture_hash": "21d6661607ce19fb314ee595434e15313d44edaea51d07103bafe82cb8734b53",
+  "initial_workspace_hash": "21d6661607ce19fb314ee595434e15313d44edaea51d07103bafe82cb8734b53",
+  "tool_names": [
+    "list_project_files",
+    "read_file",
+    "read_file_fragment",
+    "search_project",
+    "count_words",
+    "todo_write",
+    "submit_patch",
+    "compile_project"
+  ],
+  "started_at": "2026-08-28T08:33:01.672Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false,
+    "reason": "OpenAI SDK does not expose a public per-attempt retry lifecycle callback"
+  },
+  "ended_at": "2026-08-28T08:33:07.023Z",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "runner",
+    "failure_phase": "runner",
+    "error_type": "RUNNER_INJECTED_FAILURE",
+    "error_source": "evaluation_harness",
+    "error_message": "injected runner failure after patch",
+    "retryable": false,
+    "related_event_id": "evt_7eca4c0f-6102-488f-b471-3ce226778dd3"
+  }
+}

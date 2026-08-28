@@ -1,0 +1,6 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\newcommand{\\EvalBody}{Hello Overleaf}\n\\begin{document}\n\\EvalBody\n\\typeout{EVAL_BODY=\\EvalBody}\n\\end{document}\n"
+  }
+]

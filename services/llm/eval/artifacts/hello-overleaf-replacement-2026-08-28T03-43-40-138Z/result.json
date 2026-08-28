@@ -1,0 +1,19 @@
+{
+  "caseId": "hello-overleaf-replacement",
+  "status": "PASS",
+  "failure": null,
+  "userMessage": "请把正文中的“Hello World”改成“Hello Overleaf”。",
+  "toolCalls": {
+    "read_file": 1,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "usage": {
+    "input": 5910,
+    "output": 314,
+    "cacheRead": 12288,
+    "cacheWrite": 0,
+    "totalTokens": 18512
+  },
+  "wallMs": 14809
+}

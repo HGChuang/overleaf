@@ -1,0 +1,22 @@
+{
+  "runId": "run_14122d72-8a74-45ca-b5a0-d40a4346114f",
+  "experimentId": "tracing-p0-validation",
+  "caseId": "hello-overleaf-replacement",
+  "trialId": "trace-p0-success",
+  "status": "PASS",
+  "failure": null,
+  "userMessage": "请把正文里的“Hello World”改成“Hello Overleaf”。",
+  "toolCalls": {
+    "read_file": 1,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "usage": {
+    "input": 5982,
+    "output": 352,
+    "cacheRead": 12288,
+    "cacheWrite": 0,
+    "totalTokens": 18622
+  },
+  "wallMs": 12023
+}

@@ -1,0 +1,29 @@
+{
+  "runId": "run_eed452fb-161c-4ed4-8e63-6f357e9ab738",
+  "experimentId": "headless-tracing-p0",
+  "caseId": "hello-overleaf-replacement",
+  "trialId": "tracing-correlation-runner-failure-cleanup",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "runner",
+    "failure_phase": "runner",
+    "error_type": "RUNNER_INJECTED_FAILURE",
+    "error_source": "evaluation_harness",
+    "error_message": "injected runner failure after patch",
+    "retryable": false,
+    "related_event_id": "evt_618c962e-f015-4fdc-81f2-c54920ff0577"
+  },
+  "userMessage": "请把正文里的“Hello World”改成“Hello Overleaf”。",
+  "toolCalls": {
+    "read_file": 1,
+    "submit_patch": 1
+  },
+  "usage": {
+    "input": 4071,
+    "output": 276,
+    "cacheRead": 4096,
+    "cacheWrite": 0,
+    "totalTokens": 8443
+  },
+  "wallMs": 6087
+}

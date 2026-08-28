@@ -1,0 +1,30 @@
+{
+  "runId": "run_b38020ce-8524-40f9-9ac6-431b480e802b",
+  "experimentId": "headless-tracing-p0",
+  "caseId": "hello-overleaf-replacement",
+  "trialId": "tracing-correlation-compile-failure",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "infrastructure",
+    "failure_phase": "compile",
+    "error_type": "COMPILE_INFRASTRUCTURE_ERROR",
+    "error_source": "clsi",
+    "error_message": "CLSI request failed: fetch failed",
+    "retryable": true,
+    "related_event_id": "evt_72f68293-ab04-4c63-9f10-d9c552b76725"
+  },
+  "userMessage": "请把正文里的“Hello World”改成“Hello Overleaf”。",
+  "toolCalls": {
+    "read_file": 1,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "usage": {
+    "input": 5206,
+    "output": 404,
+    "cacheRead": 12032,
+    "cacheWrite": 0,
+    "totalTokens": 17642
+  },
+  "wallMs": 12787
+}

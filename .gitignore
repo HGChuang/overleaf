@@ -4,12 +4,8 @@
 # user defined files
 .env
 docker-compose.override.yml
-# Copilot eval harness — 保留源码/数据集/文档（A 档），忽略运行产物与本地凭据
-services/llm/eval/results/
-services/llm/eval/creds.ts
-services/llm/eval/*.bak
-COPILOT_IMPROVEMENT_LOG.md
-COPILOT_ROADMAP.md
 
 .claude/
+
+.codex/
 

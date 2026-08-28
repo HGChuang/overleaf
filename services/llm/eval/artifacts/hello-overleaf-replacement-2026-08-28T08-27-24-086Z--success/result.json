@@ -1,0 +1,22 @@
+{
+  "runId": "run_78cdd6f8-0581-4fb8-b726-47e46e5831c2",
+  "experimentId": "headless-tracing-p0",
+  "caseId": "hello-overleaf-replacement",
+  "trialId": "tracing-correlation-success",
+  "status": "PASS",
+  "failure": null,
+  "userMessage": "请把正文里的“Hello World”改成“Hello Overleaf”。",
+  "toolCalls": {
+    "read_file": 1,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "usage": {
+    "input": 5726,
+    "output": 364,
+    "cacheRead": 12544,
+    "cacheWrite": 0,
+    "totalTokens": 18634
+  },
+  "wallMs": 14750
+}
