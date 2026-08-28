@@ -582,3 +582,92 @@ events、parent IDs 和结构化 failure envelope。集中写文件使异常前�
   的 events 可保留。本轮一次错误 working directory 验证中保留了 `trial_started`。
 * 本轮不实现 patch/compile snapshot correlation；compile event 已有 artifact hash，
   但尚无统一 source snapshot hash，按用户要求留待后续 iteration。
+
+## Iteration 5 — Tracing 关键缺口收口
+
+日期：2026-08-28
+
+### Observation / Evidence
+
+* 旧 `patch_applied` 没有修改前后 workspace identity，compile event 也没有输入
+  workspace identity；只能按时间推断两者关系。
+* failure `error_type` 直接取 JavaScript `Error.name`，多数终止只显示泛化 `Error`。
+* 评测复用的生产 Mongo connector 在连接失败时直接 `process.exit(1)`，会跳过
+  runner 的 `finally`。
+* 第一次 cleanup 验证发现，即使 terminal trace 已写完，trial Redis mock 和模块导入
+  创建的全局 Redis client 仍保持 event loop。
+* OpenAI SDK 有内部 retry counter/header，但当前 API 没有公开逐 attempt 回调。
+
+### Interpretation / Root Cause
+
+执行 trace 已有 event/parent/turn/tool call 关系，但缺少内容寻址的 workspace 身份，
+无法证明 compile 使用了哪份源码。失败分类同时混用了 runtime class name 和执行阶段。
+异常终止缺口来自依赖层主动退出与评测专用资源未完全关闭，而不是 JSONL writer。
+
+### Hypothesis
+
+在 runner/compile seam 计算统一 workspace hash，引入小型稳定 taxonomy，并让评测专用
+连接错误回到 runner、显式关闭进程资源，即可补齐关键关联和异常安全，不需要修改
+Copilot prompt、tool 或 Agent loop。
+
+### Changes
+
+* 新增 `workspaceState.ts`：规范化、排序后计算 workspace SHA-256。
+* `patch_applied` 增加 before/after hash；每个 compile started/completed 增加 input hash；
+  manifest/trial start 增加 initial hash。
+* 新增 `failureTaxonomy.ts`，提供 model/tool/compile/grader/runner/infrastructure 六类
+  category 和稳定 error type；tool error event 也带同一分类字段。
+* 新增 eval-only database connector：连接失败抛回 runner，不调用 `process.exit()`。
+* 评测 shutdown 关闭 registry、mock Redis、全局 Redis 和 Mongo；异常 trial 在写完
+  `trial_failed` 后自然以 exit code 1 退出。
+* `run.json` 明确记录 provider retry 配置和实际 attempts 不可获得；未改造 SDK 私有层。
+* 新增 workspace hash 与 failure taxonomy 单元测试；没有新增 benchmark 或修改 Agent。
+
+### Validation / Before vs After
+
+| 验证项 | Before | After |
+|---|---|---|
+| patch → compile | 仅时间邻近 | before/after/input workspace SHA-256 可直接等值关联 |
+| 成功 trial | 可 PASS，但无 workspace 证据 | PASS，23 events，两次 compile 均对应 patch-after hash |
+| compile infra failure | 泛化 error，退出可能悬挂 | `infrastructure/COMPILE_INFRASTRUCTURE_ERROR`，25 events，自然 exit 1 |
+| runner failure | 无稳定注入验证 | `runner/RUNNER_INJECTED_FAILURE`，11 events，自然 exit 1 |
+| 中途失败 trace | 已 append 事件可保留 | patch event 与全部前序事件保留，末尾结构化 `trial_failed` |
+| 单元/类型检查 | 7 tests | 10/10 tests；TypeScript typecheck 通过 |
+
+成功 trial：
+
+* run：`hello-overleaf-replacement-2026-08-28T08-27-24-086Z--success`；
+* status `PASS`，23 events，18,634 tokens，14,750 ms；
+* initial/before hash 为 `21d666…4b53`，patch-after 为 `d19bd7…cc4c7`；
+* Agent verification 与 final grading compile 均输入 `d19bd7…cc4c7`，status success、
+  0 errors、0 warnings，grader 5/5。
+
+最终失败复验：
+
+* CLSI unavailable：`hello-overleaf-replacement-2026-08-28T08-33-13-421Z--cleanup`，
+  25 events，terminal `trial_failed`，17 秒内自然 exit 1；
+* patch 后 runner 注入失败：
+  `hello-overleaf-replacement-2026-08-28T08-33-01-672Z--cleanup`，11 events，
+  `related_event_id` 指向 `patch_applied`，约 5 秒自然 exit 1；
+* 两个最终失败 trial 的 `run.json.git_commit` 均为
+  `dea1c655012fe09e97da6368706764d8149d6055`。
+
+### Regression
+
+没有修改 Copilot prompt、model、tool 行为、Agent loop 或 benchmark。成功 case 仍为
+PASS，replacement、两次真实 CLSI compile 和 deterministic grader 均通过。
+
+### Remaining limitations
+
+* Provider SDK 实际 retry attempt 数不可可靠取得；只记录配置上限和不可用原因。
+* 未注入 `EVAL_GIT_COMMIT` 且容器无 `.git` 时，manifest 只能记录 `unknown`；正式
+  orchestrator 必须传入该值。
+* SIGKILL、宿主机掉电、文件系统不可写不能保证 terminal event。
+* 本轮 hash 关联的是当前内存态 harness workspace；持久化项目/version/ZIP correlation
+  不在本轮范围。
+
+### 推荐方向
+
+1. 用当前 canonical trace 做首个小型 baseline 和 failure analysis，不继续扩展 tracing。
+2. 后续进入持久化 harness 时，将同一 workspace hash 作为 Document Updater/CLSI/ZIP
+   一致性 gate，而不是增加新的并行 trace 格式。

@@ -935,3 +935,40 @@ phase、type、source、message、retryable 和 related event ID。
 model/read/patch/compile feedback，并由 `trial_failed.related_event_id` 指向失败的
 final compile。仍未解决的边界是：进程内依赖直接调用 `process.exit()` 时无法追加
 terminal event，但退出前已成功 append 的 events 不会丢失。
+
+## Canonical tracing：workspace 关联与失败分类
+
+每个 workspace 的身份定义为：对规范化路径、完整文件内容按路径排序后计算
+SHA-256。hash 只进入 event summary；完整 snapshot、patch 和 compile log 仍是独立
+artifact，不在 `events.jsonl` 重复保存。
+
+关联不变量：
+
+* `trial_started.summary.workspace_hash` 等于 `run.json.initial_workspace_hash`；
+* `patch_applied` 同时记录 `workspace_hash_before` 和 `workspace_hash_after`；
+* `compile_started` 与对应 `compile_completed` 记录同一 `input_workspace_hash`；
+* compile 属于哪个 patch 后状态，由 hash 等值直接判断，不依赖时间邻近推断。
+
+failure envelope 增加稳定的 `failure_category`：
+
+| category | 典型 error type | source 示例 |
+|---|---|---|
+| `model` | `MODEL_PROVIDER_ERROR`、`MODEL_NO_PATCH` | `provider`、`copilot` |
+| `tool` | `TOOL_EXECUTION_ERROR`、`TOOL_PATCH_APPLY_ERROR` | tool name、`patch_applicator` |
+| `compile` | `COMPILE_LATEX_ERROR` | `latex` |
+| `grader` | `GRADER_ASSERTION_FAILED`、`GRADER_EXECUTION_ERROR` | deterministic grader |
+| `runner` | `RUNNER_CONFIGURATION_ERROR`、`RUNNER_INJECTED_FAILURE` | evaluation harness |
+| `infrastructure` | `COMPILE_INFRASTRUCTURE_ERROR`、`INFRASTRUCTURE_SETUP_ERROR` | `clsi`、evaluation runtime |
+
+评测入口不再调用失败时 `process.exit(1)` 的生产 Mongo connector，而让连接异常抛回
+runner。结束时显式关闭 model registry、trial Redis mock、模块导入时创建的全局
+Redis client 和 Mongo，保证 terminal event/run manifest 写完后进程自然退出。
+无法捕获的边界仍包括 SIGKILL、宿主机掉电以及 trace 文件系统自身不可写。
+
+当前 OpenAI SDK 支持配置 `maxRetries`，但没有公开、可靠的逐 attempt lifecycle
+callback。`run.json.retry_observability` 因此只记录 configured max retries、
+`actual_attempts_available=false` 和原因；不包装私有 request/fetch 来猜测 attempt 数。
+
+容器通常没有挂载 `.git`。orchestrator 运行 trial 时必须显式传入
+`EVAL_GIT_COMMIT`；否则 manifest 会诚实记录 `unknown`，该 trial 不满足严格
+reproducibility gate。
