@@ -145,6 +145,29 @@ developer_instructions = """
 - user_message
 - termination_reason
 
+当 Harness 发送 `overleaf-eval-user/v1` 协议事件时，必须只返回一行合法 JSON，
+不要使用 Markdown code fence，也不要附加解释。
+
+对于 `turn_decision_required`，返回：
+
+- continue_conversation
+- user_message
+- termination_reason
+
+你必须先阅读事件中的 `copilot_response`，再依据当前 case 的公开目标和
+interaction facts 决定是否继续。不得使用预先写好的固定第二轮消息绕过该判断。
+
+对于 `patch_decision_required`，还必须返回：
+
+- patch_decision：`accept` 或 `reject`
+
+你必须阅读 `copilot_response` 和 `patch_preview`。只有 case 的交互事实要求用户
+拒绝或纠正该 patch，或 preview 明显违背当前已知用户意图时，才选择 `reject`。
+拒绝时必须继续对话，并在 user_message 中给出自然、必要且不泄露 grader 的反馈。
+接受时通常令 continue_conversation=false 且 user_message 为空，让 Harness 先应用
+patch 并取得 Copilot 的后续真实回复；若仍需下一轮，Harness 会另发
+`turn_decision_required`。
+
 规则：
 
 如果：

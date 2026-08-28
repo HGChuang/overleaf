@@ -103,7 +103,8 @@
       "properties": {
         "action": { "enum": ["patch", "clarify", "answer", "no_op", "refuse"] },
         "max_user_turns": { "type": "integer", "minimum": 1, "maximum": 4 },
-        "continue_after_patch": { "type": "boolean" }
+        "continue_after_patch": { "type": "boolean" },
+        "dynamic_user": { "type": "boolean" }
       },
       "additionalProperties": false
     },

@@ -34,6 +34,7 @@ import {
   fallbackForPhase,
 } from '../headless/failureTaxonomy.js'
 import { getPilotCase, validatePilotCase } from './caseRegistry.js'
+import { DynamicEvalUserProtocol } from './dynamicProtocol.js'
 import { gradePilotCase } from './graderRegistry.js'
 import type { PilotGradeContext, PilotResponse } from './types.js'
 
@@ -143,6 +144,9 @@ async function main() {
   if (!userId) throw new Error('EVAL_USER_ID is required')
   const userMessages = parseUserMessages()
   const caseDefinition = getPilotCase(caseId)
+  const dynamicProtocol = caseDefinition.expected_behavior.dynamic_user
+    ? new DynamicEvalUserProtocol()
+    : null
   const validationErrors = validatePilotCase(caseDefinition)
   const startedAt = new Date().toISOString()
   const trialId = process.env.EVAL_TRIAL_ID || `trial_${randomUUID()}`
@@ -163,6 +167,11 @@ async function main() {
   const responses: PilotResponse[] = []
   const patchFiles = new Set<string>()
   const patches: ReplacementHunk[][] = []
+  const rejectedPatches: ReplacementHunk[][] = []
+  const evalUserDecisions: Array<Record<string, unknown>> = []
+  const actualUserMessages = [userMessages[0]]
+  let patchRejectionCount = 0
+  let userTurnCount = 0
   const startedMs = Date.now()
   const conversationId = `${caseDefinition.case_id}-${Date.now().toString(36)}`
   const task = {
@@ -263,6 +272,21 @@ async function main() {
         source: 'case_registry',
         retryable: false,
       })
+    if (
+      experimentId.includes('baseline') &&
+      String(manifest.git_commit) === 'unknown'
+    ) {
+      throw new EvaluationFailure(
+        'EVAL_GIT_COMMIT is required for baseline evaluation runs',
+        {
+          category: 'runner',
+          phase: 'setup',
+          type: 'EVAL_GIT_COMMIT_REQUIRED',
+          source: 'evaluation_harness',
+          retryable: false,
+        },
+      )
+    }
     if (caseDefinition.harness.minimum_support === 'H2') {
       status = 'SKIPPED'
     } else {
@@ -311,16 +335,21 @@ async function main() {
       }
 
       let userTurn = 0
-      let shouldContinue = true
+      let scriptedMessageIndex = 0
+      let nextInstruction: string | undefined = userMessages[0]
       while (
-        shouldContinue &&
-        userTurn < userMessages.length &&
+        nextInstruction &&
         userTurn < caseDefinition.expected_behavior.max_user_turns
       ) {
         userTurn += 1
-        let instruction = userMessages[userTurn - 1]
+        userTurnCount = userTurn
+        let instruction = nextInstruction
+        nextInstruction = undefined
         let kind: PilotResponse['kind'] = 'user'
         let verificationRounds = 0
+        let rejectedFeedback: string | null = null
+        let latestResponseText = ''
+        let patchedThisUserTurn = false
         do {
           chatOrdinal += 1
           currentTurnId = `turn_${chatOrdinal}`
@@ -377,10 +406,11 @@ async function main() {
           )) as unknown as JsonRecord
           await trace.flush()
           const hunks = responsePatch(response)
+          latestResponseText = responseText(response)
           responses.push({
             userTurn,
             kind,
-            text: responseText(response),
+            text: latestResponseText,
             hadPatch: Boolean(hunks),
           })
           await writeJsonAtomic(
@@ -391,6 +421,84 @@ async function main() {
             response,
           )
           if (!hunks) break
+
+          if (dynamicProtocol) {
+            failurePhase = 'runner'
+            const requested = trace.emit({
+              event_type: 'eval_user_input_requested',
+              parent_event_id: currentParentEventId,
+              turn_id: currentTurnId,
+              summary: {
+                request_type: 'patch_decision_required',
+                user_turn: userTurn,
+                hunk_count: hunks.length,
+                workspace_hash: workspaceHash(filesRef.current),
+              },
+            })
+            currentParentEventId = requested.eventId
+            await requested.committed
+            const decision = await dynamicProtocol.request({
+              protocol: 'overleaf-eval-user/v1',
+              type: 'patch_decision_required',
+              case_id: caseDefinition.case_id,
+              user_turn: userTurn,
+              copilot_response: latestResponseText,
+              patch_preview: hunks,
+              workspace_hash: workspaceHash(filesRef.current),
+            })
+            evalUserDecisions.push({
+              request_event_id: requested.eventId,
+              request_type: 'patch_decision_required',
+              user_turn: userTurn,
+              ...decision,
+            })
+            const received = trace.emit({
+              event_type: 'eval_user_input_received',
+              parent_event_id: requested.eventId,
+              turn_id: currentTurnId,
+              status: 'ok',
+              summary: {
+                request_type: 'patch_decision_required',
+                patch_decision: decision.patch_decision,
+                continue_conversation: decision.continue_conversation,
+                user_message: decision.user_message,
+                termination_reason: decision.termination_reason,
+              },
+            })
+            currentParentEventId = received.eventId
+            await received.committed
+            if (decision.patch_decision === 'reject') {
+              patchRejectionCount += 1
+              const rejectedPath = `rejected-patches/${String(
+                patchRejectionCount,
+              ).padStart(2, '0')}.json`
+              await mkdir(dirname(join(runDir, rejectedPath)), {
+                recursive: true,
+              })
+              await writeJsonAtomic(join(runDir, rejectedPath), hunks)
+              const rejected = trace.emit({
+                event_type: 'patch_rejected',
+                parent_event_id: received.eventId,
+                turn_id: currentTurnId,
+                status: 'ok',
+                summary: {
+                  hunk_count: hunks.length,
+                  files: [
+                    ...new Set(hunks.map((hunk) => hunk.file).filter(Boolean)),
+                  ],
+                  workspace_hash_unchanged: workspaceHash(filesRef.current),
+                  feedback: decision.user_message,
+                },
+                artifacts: [await artifactReference(runDir, rejectedPath)],
+              })
+              currentParentEventId = rejected.eventId
+              await rejected.committed
+              rejectedPatches.push(hunks)
+              rejectedFeedback = decision.user_message
+              actualUserMessages.push(decision.user_message)
+              break
+            }
+          }
 
           failurePhase = 'patch_apply'
           const beforeHash = workspaceHash(filesRef.current)
@@ -418,6 +526,7 @@ async function main() {
             path,
             content,
           }))
+          patchedThisUserTurn = true
           patchOrdinal += 1
           patches.push(hunks)
           for (const patch of hunks) if (patch.file) patchFiles.add(patch.file)
@@ -456,13 +565,73 @@ async function main() {
           kind = 'automatic_verification'
         } while (true)
 
-        const patchedThisUserTurn = responses.some(
-          (item) => item.userTurn === userTurn && item.hadPatch,
-        )
-        shouldContinue =
-          userTurn < userMessages.length &&
-          (!patchedThisUserTurn ||
-            caseDefinition.expected_behavior.continue_after_patch === true)
+        if (rejectedFeedback) {
+          nextInstruction = rejectedFeedback
+          continue
+        }
+
+        if (
+          dynamicProtocol &&
+          userTurn < caseDefinition.expected_behavior.max_user_turns
+        ) {
+          failurePhase = 'runner'
+          const requested = trace.emit({
+            event_type: 'eval_user_input_requested',
+            parent_event_id: currentParentEventId,
+            turn_id: currentTurnId,
+            summary: {
+              request_type: 'turn_decision_required',
+              user_turn: userTurn,
+              patched: patchedThisUserTurn,
+              workspace_hash: workspaceHash(filesRef.current),
+            },
+          })
+          currentParentEventId = requested.eventId
+          await requested.committed
+          const decision = await dynamicProtocol.request({
+            protocol: 'overleaf-eval-user/v1',
+            type: 'turn_decision_required',
+            case_id: caseDefinition.case_id,
+            user_turn: userTurn,
+            copilot_response: latestResponseText,
+            workspace_hash: workspaceHash(filesRef.current),
+          })
+          evalUserDecisions.push({
+            request_event_id: requested.eventId,
+            request_type: 'turn_decision_required',
+            user_turn: userTurn,
+            ...decision,
+          })
+          const received = trace.emit({
+            event_type: 'eval_user_input_received',
+            parent_event_id: requested.eventId,
+            turn_id: currentTurnId,
+            status: 'ok',
+            summary: {
+              request_type: 'turn_decision_required',
+              continue_conversation: decision.continue_conversation,
+              user_message: decision.user_message,
+              termination_reason: decision.termination_reason,
+            },
+          })
+          currentParentEventId = received.eventId
+          await received.committed
+          if (decision.continue_conversation) {
+            nextInstruction = decision.user_message
+            actualUserMessages.push(decision.user_message)
+          }
+        } else if (!dynamicProtocol) {
+          scriptedMessageIndex += 1
+          const scriptedNext = userMessages[scriptedMessageIndex]
+          if (
+            scriptedNext &&
+            (!patchedThisUserTurn ||
+              caseDefinition.expected_behavior.continue_after_patch === true)
+          ) {
+            nextInstruction = scriptedNext
+            actualUserMessages.push(scriptedNext)
+          }
+        }
       }
 
       if (
@@ -514,6 +683,8 @@ async function main() {
         responses,
         patchFiles: [...patchFiles],
         patchCount: patches.length,
+        patchRejectionCount,
+        userTurnCount,
         toolCalls,
         compile: finalCompile,
       }
@@ -562,6 +733,7 @@ async function main() {
       )
     }
   } finally {
+    dynamicProtocol?.close()
     if (serviceResources) {
       try {
         await shutdownEval()
@@ -585,6 +757,18 @@ async function main() {
     await writeJsonAtomic(join(runDir, 'after.json'), filesRef.current)
     await writeJsonAtomic(join(runDir, 'responses.json'), responses)
     await writeJsonAtomic(join(runDir, 'patches.json'), patches)
+    await writeJsonAtomic(
+      join(runDir, 'rejected-patches.json'),
+      rejectedPatches,
+    )
+    await writeJsonAtomic(
+      join(runDir, 'eval-user-decisions.json'),
+      evalUserDecisions,
+    )
+    await writeJsonAtomic(join(runDir, 'eval-user-input.json'), {
+      messages: actualUserMessages,
+      session_id: manifest.eval_user_session_id,
+    })
     await writeJsonAtomic(join(runDir, 'tool-calls.json'), toolCalls)
     const terminal = trace.emit(
       status === 'PASS' || status === 'SKIPPED'
@@ -619,6 +803,8 @@ async function main() {
       usage,
       toolCalls,
       patchCount: patches.length,
+      patchRejectionCount,
+      userTurnCount,
       responseCount: responses.length,
       initialWorkspaceHash: workspaceHash(initialFiles),
       finalWorkspaceHash: workspaceHash(filesRef.current),

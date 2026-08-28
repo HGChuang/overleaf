@@ -117,6 +117,30 @@ export function validatePilotCase(caseDefinition: PilotCase): string[] {
   ) {
     errors.push(`${prefix}: clarification requires a second turn fact`)
   }
+  for (const grader of caseDefinition.graders || []) {
+    if (
+      grader.type === 'user_turns' &&
+      (grader.min > caseDefinition.expected_behavior.max_user_turns ||
+        (grader.max !== undefined && grader.max < grader.min))
+    ) {
+      errors.push(`${prefix}: user_turns grader exceeds the interaction budget`)
+    }
+    if (
+      grader.type === 'patch_rejections' &&
+      (!caseDefinition.expected_behavior.dynamic_user ||
+        caseDefinition.expected_behavior.max_user_turns < 2)
+    ) {
+      errors.push(
+        `${prefix}: patch rejection grading requires dynamic multi-turn`,
+      )
+    }
+  }
+  if (
+    caseDefinition.split === 'holdout' &&
+    !caseDefinition.metadata.tags.includes('hidden')
+  ) {
+    errors.push(`${prefix}: holdout family must be tagged hidden`)
+  }
   for (const invariant of caseDefinition.initial_state?.protected_invariants ||
     []) {
     const file = caseDefinition.fixture.files.find(

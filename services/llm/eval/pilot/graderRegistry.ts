@@ -58,6 +58,12 @@ function gradeOne(spec: GraderSpec, context: PilotGradeContext): GraderCheck {
         fileContent(context, spec.file, true)
       message = `${spec.file} unchanged=${passed}`
       break
+    case 'file_matches': {
+      const content = fileContent(context, spec.file) || ''
+      passed = new RegExp(spec.pattern, 'iu').test(content)
+      message = `${spec.file} matches /${spec.pattern}/iu`
+      break
+    }
     case 'regex_count': {
       const content = fileContent(context, spec.file) || ''
       const count = [...content.matchAll(new RegExp(spec.pattern, 'g'))].length
@@ -108,6 +114,24 @@ function gradeOne(spec: GraderSpec, context: PilotGradeContext): GraderCheck {
       passed =
         count >= spec.min && (spec.max === undefined || count <= spec.max)
       message = `${spec.tool} calls=${count}`
+      break
+    }
+    case 'user_turns':
+      passed =
+        context.userTurnCount >= spec.min &&
+        (spec.max === undefined || context.userTurnCount <= spec.max)
+      message = `user turns=${context.userTurnCount}`
+      break
+    case 'patch_rejections':
+      passed =
+        context.patchRejectionCount >= spec.min &&
+        (spec.max === undefined || context.patchRejectionCount <= spec.max)
+      message = `patch rejections=${context.patchRejectionCount}`
+      break
+    case 'response_matches': {
+      const response = selectedResponses(context, spec.response_index)
+      passed = new RegExp(spec.pattern, 'iu').test(response)
+      message = `response matches /${spec.pattern}/iu`
       break
     }
   }

@@ -15,6 +15,7 @@ export type GraderSpec =
   | { type: 'file_contains'; file: string; values: string[] }
   | { type: 'file_not_contains'; file: string; values: string[] }
   | { type: 'file_unchanged'; file: string }
+  | { type: 'file_matches'; file: string; pattern: string }
   | { type: 'regex_count'; file: string; pattern: string; count: number }
   | {
       type: 'compile'
@@ -26,6 +27,9 @@ export type GraderSpec =
   | { type: 'response_contains_all'; values: string[]; response_index?: number }
   | { type: 'patch_files'; files: string[] }
   | { type: 'tool_called'; tool: string; min: number; max?: number }
+  | { type: 'user_turns'; min: number; max?: number }
+  | { type: 'patch_rejections'; min: number; max?: number }
+  | { type: 'response_matches'; pattern: string; response_index?: number }
 
 export interface PilotCase {
   schema_version: 1
@@ -60,6 +64,7 @@ export interface PilotCase {
     action: ExpectedAction
     max_user_turns: number
     continue_after_patch?: boolean
+    dynamic_user?: boolean
   }
   forbidden_behavior: string[]
   patch_policy: {
@@ -106,6 +111,8 @@ export interface PilotGradeContext {
   responses: PilotResponse[]
   patchFiles: string[]
   patchCount: number
+  patchRejectionCount: number
+  userTurnCount: number
   toolCalls: Record<string, number>
   compile: {
     status: string

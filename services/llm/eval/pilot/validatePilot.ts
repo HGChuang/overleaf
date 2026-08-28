@@ -99,6 +99,20 @@ async function main() {
       responses,
       patchFiles,
       patchCount: caseDefinition.validation_oracle.patches?.length ? 1 : 0,
+      patchRejectionCount: Math.max(
+        0,
+        ...caseDefinition.graders
+          .filter((grader) => grader.type === 'patch_rejections')
+          .map((grader) =>
+            grader.type === 'patch_rejections' ? grader.min : 0,
+          ),
+      ),
+      userTurnCount: Math.max(
+        responses.length,
+        ...caseDefinition.graders
+          .filter((grader) => grader.type === 'user_turns')
+          .map((grader) => (grader.type === 'user_turns' ? grader.min : 0)),
+      ),
       toolCalls,
       compile: finalCompile,
     }

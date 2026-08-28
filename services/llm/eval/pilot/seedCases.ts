@@ -1,4 +1,5 @@
 import { workspaceHash } from '../headless/workspaceState.js'
+import { DISCRIMINATIVE_CASES } from './discriminativeSeedCases.js'
 import type {
   Capability,
   CompileMode,
@@ -32,6 +33,7 @@ function makeCase(input: {
   interactionFacts?: string[]
   action: ExpectedAction
   maxUserTurns?: number
+  dynamicUser?: boolean
   continueAfterPatch?: boolean
   initialCompile?: 'success' | 'failure'
   compileMode?: CompileMode
@@ -84,6 +86,7 @@ function makeCase(input: {
     expected_behavior: {
       action: input.action,
       max_user_turns: input.maxUserTurns || 1,
+      ...(input.dynamicUser ? { dynamic_user: true } : {}),
       ...(input.continueAfterPatch ? { continue_after_patch: true } : {}),
     },
     forbidden_behavior: [
@@ -127,7 +130,7 @@ const compileSuccess: GraderSpec = {
   max_errors: 0,
 }
 
-export const PILOT_CASES: PilotCase[] = [
+const PILOT_V1_CASES: PilotCase[] = [
   makeCase({
     id: 'grounding.results-location',
     split: 'dev',
@@ -159,7 +162,7 @@ export const PILOT_CASES: PilotCase[] = [
   }),
   makeCase({
     id: 'grounding.macro-origin',
-    split: 'holdout',
+    split: 'dev',
     category: 'project_query',
     capabilities: ['C1'],
     difficulty: 'D2',
@@ -212,7 +215,7 @@ export const PILOT_CASES: PilotCase[] = [
   }),
   makeCase({
     id: 'content.translation-preserve-citation',
-    split: 'holdout',
+    split: 'dev',
     category: 'content_edit',
     capabilities: ['C2', 'C7'],
     difficulty: 'D2',
@@ -297,7 +300,7 @@ export const PILOT_CASES: PilotCase[] = [
   }),
   makeCase({
     id: 'structure.warning-paragraph',
-    split: 'holdout',
+    split: 'dev',
     category: 'structure_edit',
     capabilities: ['C3'],
     difficulty: 'D2',
@@ -408,7 +411,7 @@ export const PILOT_CASES: PilotCase[] = [
   }),
   makeCase({
     id: 'crossfile.label-rename',
-    split: 'holdout',
+    split: 'dev',
     category: 'cross_file_edit',
     capabilities: ['C4', 'C3'],
     difficulty: 'D3',
@@ -499,7 +502,7 @@ export const PILOT_CASES: PilotCase[] = [
   }),
   makeCase({
     id: 'compile.crossfile-two-errors',
-    split: 'holdout',
+    split: 'dev',
     category: 'compile_repair',
     capabilities: ['C5', 'C11'],
     difficulty: 'D3',
@@ -588,7 +591,7 @@ export const PILOT_CASES: PilotCase[] = [
   }),
   makeCase({
     id: 'artifact.figure-caption',
-    split: 'holdout',
+    split: 'dev',
     category: 'figure_edit',
     capabilities: ['C6'],
     difficulty: 'D2',
@@ -715,7 +718,7 @@ export const PILOT_CASES: PilotCase[] = [
   }),
   makeCase({
     id: 'constraint.polish-preserve-measurement',
-    split: 'holdout',
+    split: 'dev',
     category: 'constraint_edit',
     capabilities: ['C7', 'C9'],
     difficulty: 'D2',
@@ -775,15 +778,13 @@ export const PILOT_CASES: PilotCase[] = [
     goal: '把标题改成“A Short Title”。',
     interactionFacts: ['我指的是论文的 \\title，不是 section 标题。'],
     action: 'clarify',
+    dynamicUser: true,
     maxUserTurns: 2,
     compileMode: 'required-after-apply',
     graders: [
       { type: 'first_response_no_patch' },
-      {
-        type: 'response_contains_any',
-        response_index: 0,
-        values: ['论文标题', '章节标题', '哪个标题', '哪一个标题', '哪一个'],
-      },
+      { type: 'response_matches', response_index: 0, pattern: '[?？]' },
+      { type: 'user_turns', min: 2, max: 2 },
       {
         type: 'file_contains',
         file: 'main.tex',
@@ -808,7 +809,7 @@ export const PILOT_CASES: PilotCase[] = [
   }),
   makeCase({
     id: 'dialog.noop-already-satisfied',
-    split: 'holdout',
+    split: 'dev',
     category: 'interaction',
     capabilities: ['C8'],
     difficulty: 'D1',
@@ -857,7 +858,7 @@ export const PILOT_CASES: PilotCase[] = [
   }),
   makeCase({
     id: 'honesty.nonexistent-citation',
-    split: 'holdout',
+    split: 'dev',
     category: 'honesty',
     capabilities: ['C9', 'C6'],
     difficulty: 'D2',
@@ -967,7 +968,7 @@ export const PILOT_CASES: PilotCase[] = [
   }),
   makeCase({
     id: 'context.composite-crossfile',
-    split: 'holdout',
+    split: 'dev',
     category: 'long_context',
     capabilities: ['C10', 'C4', 'C7'],
     difficulty: 'D4',
@@ -1085,7 +1086,7 @@ export const PILOT_CASES: PilotCase[] = [
   }),
   makeCase({
     id: 'recovery.followup-missed-file',
-    split: 'holdout',
+    split: 'dev',
     category: 'failure_recovery',
     capabilities: ['C11'],
     difficulty: 'D3',
@@ -1104,10 +1105,12 @@ export const PILOT_CASES: PilotCase[] = [
     goal: '先把 intro 里的 OldName 改成 Aurora。',
     interactionFacts: ['摘要里还是 OldName，也请改成 Aurora。'],
     action: 'patch',
+    dynamicUser: true,
     maxUserTurns: 2,
     continueAfterPatch: true,
     compileMode: 'required-after-apply',
     graders: [
+      { type: 'user_turns', min: 2, max: 2 },
       { type: 'file_contains', file: 'sections/intro.tex', values: ['Aurora'] },
       {
         type: 'file_contains',
@@ -1143,4 +1146,9 @@ export const PILOT_CASES: PilotCase[] = [
     oracleResponses: ['已修改 intro。', '已根据反馈修改摘要。'],
     tags: ['recovery', 'user-feedback', 'multi-turn'],
   }),
+]
+
+export const PILOT_CASES: PilotCase[] = [
+  ...PILOT_V1_CASES,
+  ...DISCRIMINATIVE_CASES,
 ]
