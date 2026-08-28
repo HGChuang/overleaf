@@ -522,3 +522,63 @@ HTTP 响应；Copilot 行为代码没有变化。
 2. 在评测镜像中固定 `tsx`/编译后 runner 入口，消除运行时 npm 下载。
 3. 用 3–5 个 replacement cases 建立首个小型 baseline，并保留独立 `eval_user` session。
 4. 在保持内存态范围的前提下，增加 compile-error repair 多轮 case。
+
+## Iteration 4 — Canonical Tracing P0
+
+日期：2026-08-28
+
+### Observation / Evidence
+
+* 旧 runner 只在成功路径末尾集中写 artifacts；早期 provider failure 只留下粗粒度
+  `runner_error`。
+* runtime 已有 model/tool 生命周期边界，compile、patch apply 和 grader 边界位于
+  harness，可在不修改 Copilot 行为的情况下采集。
+* 新成功 trial 为 `PASS`：23 个 canonical events，3 次 Agent tool call、2 次
+  compile、18,581 tokens、13,941 ms。
+* CLSI 故障 trial 为 `INFRA_FAILURE`：21 个 events，failure phase/source 为
+  `compile/clsi`，related event 指向失败的 final compile；此前的 patch 和 Agent
+  compile feedback 均保留。
+
+### Root Cause
+
+缺少的不是更多 transcript 文本，而是运行开始 manifest、即时 append 的 lifecycle
+events、parent IDs 和结构化 failure envelope。集中写文件使异常前数据虽可能存在于
+内存，却没有稳定落盘边界。
+
+### Changes
+
+* 新增 `canonicalTrace.ts`：稳定 hash、原子 run manifest、artifact reference 和
+  串行 append-only writer。
+* 新增 `tracedCompile.ts`：Agent verification/final grading compile 均产生 lifecycle
+  event，完整 log/result 留在独立 artifact。
+* `serviceFactory.ts` 对评测专用 stream/compile seam 加 tracing，不修改生产 Agent
+  prompt、model、tool 或 loop。
+* `runInMemoryCase.ts` 增加 run manifest、model/tool/patch/grader/terminal events 和
+  structured failure。
+* 新增 tracing writer 单元测试；没有新增 benchmark case。
+
+### Validation / Before vs After
+
+| 指标 | Before | After |
+|---|---|---|
+| canonical run manifest | 无 | `run.json`，含 identity/version/model/config/hashes |
+| 失败前 lifecycle | 失败时通常丢失 | event 发生后 append，CLSI failure 保留 20 个前序 event |
+| failure envelope | reason/message | phase/type/source/message/retryable/related event |
+| event correlation | 仅 toolCallId 局部关联 | run/event/parent/turn/tool call + sequence |
+| 大 payload | transcript/文件分散 | event 仅引用 path/hash/size；payload 仍为 artifact |
+
+验证结果：TypeScript typecheck 通过；7/7 单元测试通过；成功/失败真实 trace 均 sequence
+连续、所有 parent ID 可解析、所有 event artifact hash/size 匹配。
+
+### Regression
+
+没有修改 Copilot 行为或 benchmark。成功 case 仍为 `PASS`，replacement patch、CLSI
+和 5/5 deterministic grader 均通过。
+
+### Remaining P0 gaps
+
+* provider SDK 内部 retry attempts 仍不可见。
+* `connectDatabase()` 等底层依赖直接 `process.exit()` 时无法写 `trial_failed`；已 append
+  的 events 可保留。本轮一次错误 working directory 验证中保留了 `trial_started`。
+* 本轮不实现 patch/compile snapshot correlation；compile event 已有 artifact hash，
+  但尚无统一 source snapshot hash，按用户要求留待后续 iteration。

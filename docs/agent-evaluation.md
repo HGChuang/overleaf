@@ -907,3 +907,31 @@ Ark 走国内直连，同时保留 OpenAI 等其他域名的代理策略。该�
 replacement hunk，调用 `read_file`、`submit_patch`、`compile_project` 各一次；
 CLSI `status=success`、error/warning 均为 0，编译日志包含
 `EVAL_BODY=Hello Overleaf`。总 token 为 18,512，wall latency 为 14,809 ms。
+
+## Canonical tracing P0
+
+Headless runner 现在在 trial 开始时写入 `run.json`，并将 `events.jsonl` 作为
+canonical execution trace。run manifest 包含 run/experiment/case/trial identity、
+git commit、resolved model、安全的 config、prompt/config hash、benchmark/fixture
+hash 和开始时间；结束后补充 terminal status/failure。
+
+`events.jsonl` 逐事件 append，不保存大型 payload。当前覆盖：
+
+* `trial_started`；
+* `model_started` / `model_completed`；
+* `tool_started` / `tool_completed`；
+* `patch_applied`；
+* `compile_started` / `compile_completed`；
+* `grader_started` / `grader_completed`；
+* `trial_completed` / `trial_failed`。
+
+每个 event 有 run/event/parent identity、sequence、timestamp、turn ID 和适用的
+tool call ID。patch、snapshot、compile log/result 与 grader result 保持独立 artifact，
+event 只保存相对路径、SHA-256、size 和结构化 summary。failure envelope 包含
+phase、type、source、message、retryable 和 related event ID。
+
+真实验证包括一次 `PASS` 和同 case 的一次 CLSI unavailable `INFRA_FAILURE`。
+两次 trace 的 parent 均可解析、artifact hash 全部匹配；失败 trace 保留了此前的
+model/read/patch/compile feedback，并由 `trial_failed.related_event_id` 指向失败的
+final compile。仍未解决的边界是：进程内依赖直接调用 `process.exit()` 时无法追加
+terminal event，但退出前已成功 append 的 events 不会丢失。
