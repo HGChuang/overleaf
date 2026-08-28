@@ -972,3 +972,70 @@ callback。`run.json.retry_observability` 因此只记录 configured max retries
 容器通常没有挂载 `.git`。orchestrator 运行 trial 时必须显式传入
 `EVAL_GIT_COMMIT`；否则 manifest 会诚实记录 `unknown`，该 trial 不满足严格
 reproducibility gate。
+
+## Pilot Benchmark v1：H1 执行架构与基线
+
+第一版 pilot 只启用 H1 replacement semantics。统一入口为
+`services/llm/eval/pilot/runPilotCase.ts`，case 由 registry 加载后依次经过：schema
+校验、独立 fixture、真实 Copilot service、replacement patch dry-run/application、真实
+CLSI compile、grader registry 和 canonical trace。完成结果可通过
+`EVAL_RESUME_RESULT=<result.json>` 做 case-boundary resume；它只复用已有 terminal result，
+不声称支持不安全的 mid-turn resume。
+
+每个运行目录继续使用 `run.json + events.jsonl + artifacts`。`events.jsonl` 记录 model、
+tool、patch、compile、grader 和 terminal 生命周期；patch-after workspace hash 与 compile
+input hash 可直接关联。公开用户消息由独立 `eval_user` session 生成，并通过
+`EVAL_USER_MESSAGES_JSON` 注入；case 的 grader/oracle 不提供给 `eval_user`。当前多轮 runner
+可维持同一 Copilot conversation，并消费同一 `eval_user` session 产生的消息序列，但还不是
+“每次看到 Copilot 回复后再动态唤醒 eval_user”的交互协议。
+
+### Seed registry 与验证 gate
+
+registry 包含 24 个 systematic-human seed family；每个 seed 使用唯一
+`case_family_id + fixture_lineage`，dev/holdout 不共享 family 或变体：
+
+| 轴 | 实际覆盖 |
+|---|---|
+| split | dev 13；holdout 11；regression 0 |
+| difficulty | D1 3；D2 12；D3 7；D4 2 |
+| project scale | single-small 14；multi-small 8；single-long 1；multi-long 1 |
+| compile policy | optional 10；required-after-apply 11；repair-loop 2；forbidden 1 |
+| expected action | patch 16；answer 3；refuse 3；clarify 1；no-op 1 |
+| interaction | single-turn 22；multi-turn 2 |
+| prompt form | direct-command 18；question 2；其余 4 种各 1 |
+
+C1–C11 每类至少有 2 个 seed；C1/C2/C10 各 2 个，C3/C5/C8/C11 各 3 个，
+C4/C6/C7/C9 各 4 个（多标签计数）。Table、figure、bibliography 各有一个 primary
+category seed，并通过 C6 的交叉标签共同形成 4 个覆盖点。
+
+验证分三层：runtime schema/registry validation、oracle replacement + grader validation、
+真实 CLSI 对 initial/oracle-final workspace 的 compile validation。24/24 schema 有效，
+24/24 oracle 可应用，24/24 grader oracle 通过；真实 CLSI 验证中所有成功 fixture 为零
+LaTeX error，两类 compile-repair fixture 初始分别有 1/2 个 error、oracle 后为零 error。
+不能只用 CLSI `status=success` 判断 fixture，因为 pdfLaTeX 可能在产生 PDF 的同时报告 error。
+
+H2 的 insertion/deletion、新文件和资源路径仍由 runner 返回 `SKIPPED`，不会落入 H1 的
+PASS/FAIL 分母；本版没有批量生成 H2 seed，也没有宣称 H2 coverage。
+
+### Pilot baseline（2026-08-28）
+
+模型为 `deepseek-v4-flash-ga-260731`。以每个 family 最新的有效 adjudicated trial 计：
+
+本轮调度未向容器显式传入 `EVAL_GIT_COMMIT`，因此 baseline manifests 的 `git_commit` 为
+`unknown`；model/config/prompt/benchmark/fixture hashes 完整，但这些 trial 不满足严格的
+commit-level reproducibility gate。不能事后改写 canonical manifest，应在下次运行前修正调度参数。
+
+* 24/24 PASS；dev 13/13，holdout 11/11；所有 primary category 当前均为 100%。
+* 总计 497,647 tokens、333,630 ms case wall time、95 次 tool call、98 次 model completion、
+  34 次 compile、18 次 patch；均值约 20,735 tokens、13.9 秒、4.1 次 model completion。
+* 共保留 30 次尝试：24 PASS、5 个最初标为 `COPILOT_FAILURE`、1 个
+  `INFRA_FAILURE`。四个所谓 Copilot failure 实际是 grader 把合理措辞/LaTeX 等价形式或
+  可替代执行策略误判，修正后原 workspace 即满足新 grader；另一个失败来自 eval_user
+  改写公开目标时添加了不存在的源句，作废后用忠实 brief 重跑。infrastructure failure
+  是调度参数 user id 多了一个字符，结构化记录为 setup failure，修正输入后通过。
+
+100% 不能解释为 Copilot 已全面具备 C1–C11。当前 pilot 更适合作为 H1 conformance
+baseline：58% 是 single-small、75% 是 direct-command、92% 是 single-turn，D4 仅 2 个；
+C11 也尚未覆盖真实 patch rejection 后的动态恢复。后续要提高区分度，应增加不同
+fixture/layout/feedback chain，而不是批量改写 prompt。holdout 目前是逻辑隔离，仓库中的
+开发者仍能看到定义；本轮只保证 grader/oracle 未泄露给运行中的 `eval_user`。

@@ -727,3 +727,84 @@ PASS，replacement、两次真实 CLSI compile 和 deterministic grader 均通�
 * H1 generic runner 尚未建立；矩阵大部分 family 当前只能设计、不能可信批量执行。
 * 后续应先挑少量人工 seed family 验证 schema，而不是立即批量生成变体。
 * insertion/deletion、真实持久化和 UI Accept/Reject 在 H2/BC gate 通过前保持 skipped。
+
+## Iteration 7 — Pilot Benchmark v1
+
+日期：2026-08-28
+
+### 本轮研究的问题
+
+把上一轮设计变成可统一执行的 H1 pilot：实现 schema/registry/runner/resume，人工设计
+C1–C11 的小规模 seed families，完成 fixture、compile、grader validation，并在不修改
+Copilot 的前提下运行一次 baseline。
+
+### Observation / Evidence
+
+* 旧 headless 入口只有 hardcoded Hello Overleaf case，新增 case 无法统一加载、评分或 resume。
+* 24 个 seed 的 schema、oracle patch、deterministic grader 和真实 CLSI fixture validation
+  全部通过；dev 13、holdout 11，family/fixture lineage 无跨 split 泄漏。
+* baseline 选中的 24 个有效 trial 全部 PASS；总 token 497,647，case wall time 333,630 ms，
+  95 tool calls、98 model completions、34 compiles、18 patches。
+* 本轮命令遗漏 `EVAL_GIT_COMMIT`，容器又没有 `.git`，所以 run manifests 记录 `unknown`；
+  结果可由 benchmark/fixture/prompt/config hashes 定位，但未满足严格 commit reproducibility。
+* live baseline 识别出四个 grader 歧义：唯一英文翻译、paragraph 标点、澄清关键词和
+  `todo_write` 实现策略被错误当成必要结果。修正后原结果均满足 outcome。
+* 一次 eval_user 自行补充了公开 brief 不存在的源句；一次调度把 user id 多写一位。两者
+  分别作废为 user-simulation input error 和 `INFRA_FAILURE`，没有计为 Copilot failure。
+
+### Interpretation / Root Cause
+
+H1 的主要缺口是数据驱动执行层与 grader registry，不是 Copilot tool 本身。最初的 live
+false negatives 来自 grader 把 oracle 示例当唯一答案、把实现路径当产品合同。最终 100%
+则说明当前 seed 更像最小 conformance suite，尚不足以区分强弱；任务集中在明确的
+replacement、single-small、direct-command 和 single-turn。
+
+### Changes
+
+* 新增 pilot v1 TypeScript types、JSON Schema、case/fixture registry 和 runtime validator。
+* 新增 deterministic grader registry，覆盖 workspace/no-patch、文件断言、regex count、
+  compile、response、patch files 和 tool count。
+* 新增通用 H1 runner：真实 Agent、多 hunk/跨文件 replacement、multi-turn message
+  sequence、compile、canonical trace、结构化 failure 与 completed-result resume。
+* 新增 24 个互不重复的人工 seed families；C1–C11 各 2–4 个覆盖点；regression 仍为空。
+* 新增 oracle/grader 测试与真实 CLSI validation 工具；H2 保持 `SKIPPED`。
+* 根据 live evidence 放宽四个不合理 grader，但未改 Copilot prompt、model、tool 或 loop。
+
+### Benchmark / Metric Before vs After
+
+| 指标 | Before | After |
+|---|---|---|
+| 可执行 case | 1 个 hardcoded H0 smoke | 24 个 registry-driven H1 seed |
+| C1–C11 | 设计，无运行数据 | 每类 2–4 个覆盖点，全部已运行 |
+| split | 无 | dev 13 / holdout 11，按 family 隔离 |
+| schema / fixture / grader validation | 无统一 gate | 24/24 / 24/24 / 24/24 |
+| pilot baseline | 无 | 24/24 PASS（有效 adjudicated trials） |
+| resume | 无 | completed-result case-boundary resume |
+
+### Failure Cases / Regression
+
+没有确认的 Copilot capability failure，也没有修改 Agent，因此没有 Agent regression。
+保留全部初始失败 trace：4 个 grader false negative、1 个 eval_user input drift、1 个 setup
+infrastructure error。它们不进入 regression set；regression 只从后续真实、稳定复现的
+Agent failure 追加。
+
+### 本轮经验
+
+* oracle 能通过 grader 不代表 grader 无歧义；必须用真实 Agent 合理输出做 live validation。
+* CLSI 的 top-level success 不等于零 LaTeX error，fixture gate 必须同时检查 errorCount。
+* `eval_user` 隔离了用户角色，但预生成多轮消息仍可能漂移；公共 brief fidelity 需要协议约束。
+* 100% baseline 在当前分布上首先是“难度不足/覆盖偏斜”的信号，不应作为全面能力结论。
+
+### 推荐方向
+
+1. 增加少量更具区分度的跨文件、真实 compile feedback 和动态 recovery families，不批量造
+   prompt variants。
+2. 把 eval_user 接口升级为逐轮消费 Copilot response 的交互协议，并校验 public brief
+   fidelity。
+3. 从后续真实失败中建设 append-only regression set；不要预生成 regression。
+4. insertion/deletion conformance 完成后再启用 H2，当前继续 skipped。
+
+### Commits
+
+* `f1e9354c89` — H1 pilot runner、schema、grader registry 与 24 个 seed。
+* `1384891d46` — 基于 live baseline 修正四个歧义 grader。
