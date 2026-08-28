@@ -12,6 +12,8 @@ export interface ArtifactReference {
 }
 
 export interface StructuredFailure {
+  failure_category:
+    'model' | 'tool' | 'compile' | 'grader' | 'runner' | 'infrastructure'
   failure_phase: string
   error_type: string
   error_source: string

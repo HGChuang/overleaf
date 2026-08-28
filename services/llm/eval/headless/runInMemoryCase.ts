@@ -17,7 +17,6 @@ import {
   CanonicalTraceWriter,
   gitCommit,
   hashValue,
-  type StructuredFailure,
   writeJsonAtomic,
 } from './canonicalTrace.js'
 import {
@@ -28,12 +27,18 @@ import {
   shutdownEval,
 } from './serviceFactory.js'
 import { tracedCompile, type TraceContextAccess } from './tracedCompile.js'
+import { workspaceHash } from './workspaceState.js'
+import {
+  classifyFailure,
+  EvaluationFailure,
+  fallbackForPhase,
+} from './failureTaxonomy.js'
+import type { StructuredFailure } from './canonicalTrace.js'
 
 type Status = 'PASS' | 'COPILOT_FAILURE' | 'INFRA_FAILURE'
 type JsonRecord = Record<string, unknown>
 
 const userId = process.env.EVAL_USER_ID
-if (!userId) throw new Error('EVAL_USER_ID is required')
 const userMessage =
   process.env.EVAL_USER_MESSAGE ||
   '请把正文里的“Hello World”改成“Hello Overleaf”。'
@@ -77,52 +82,6 @@ function getPatch(response: JsonRecord): ReplacementHunk[] | null {
     : null
 }
 
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error)
-}
-
-function failureEnvelope({
-  phase,
-  error,
-  source,
-  retryable,
-  relatedEventId,
-}: {
-  phase: string
-  error: unknown
-  source: string
-  retryable: boolean
-  relatedEventId: string | null
-}): StructuredFailure {
-  return {
-    failure_phase: phase,
-    error_type: error instanceof Error ? error.name : 'EvaluationError',
-    error_source: source,
-    error_message: errorMessage(error),
-    retryable,
-    related_event_id: relatedEventId,
-  }
-}
-
-function sourceForPhase(phase: string): string {
-  if (phase === 'model') return 'provider'
-  if (phase === 'patch_apply') return 'patch_applicator'
-  if (phase === 'compile') return 'clsi'
-  if (phase === 'grader') return 'grader'
-  return 'evaluation_harness'
-}
-
-function retryableFor(phase: string, error: unknown): boolean {
-  const message = errorMessage(error).toLowerCase()
-  return (
-    phase === 'model' ||
-    phase === 'compile' ||
-    message.includes('connection') ||
-    message.includes('timeout') ||
-    message.includes('unavailable')
-  )
-}
-
 async function run() {
   const task = taskDefinition()
   const startedAt = new Date().toISOString()
@@ -164,8 +123,15 @@ async function run() {
     config_hash: hashValue(config),
     benchmark_hash: hashValue({ id: task.id, mainFile: task.mainFile }),
     fixture_hash: hashValue(task.files),
+    initial_workspace_hash: workspaceHash(task.files),
     tool_names: promptMetadata.toolNames,
     started_at: startedAt,
+    retry_observability: {
+      configured_provider_max_retries: config.provider_max_retries,
+      actual_attempts_available: false,
+      reason:
+        'OpenAI SDK does not expose a public per-attempt retry lifecycle callback',
+    },
   }
   await writeJsonAtomic(join(runDir, 'run.json'), manifest)
   await writeJsonAtomic(join(runDir, 'before.json'), before)
@@ -190,6 +156,7 @@ async function run() {
       experiment_id: experimentId,
       case_id: task.id,
       trial_id: trialId,
+      workspace_hash: workspaceHash(filesRef.current),
     },
     artifacts: [beforeArtifact],
   })
@@ -209,6 +176,15 @@ async function run() {
   const toolStartEvents = new Map<string, string>()
 
   try {
+    if (!userId) {
+      throw new EvaluationFailure('EVAL_USER_ID is required', {
+        category: 'runner',
+        phase: 'setup',
+        type: 'RUNNER_CONFIGURATION_ERROR',
+        source: 'evaluation_harness',
+        retryable: false,
+      })
+    }
     serviceResources = await buildTaskService(filesRef, task.mainFile, usage, {
       trace,
       context: traceContext,
@@ -251,6 +227,13 @@ async function run() {
                 summary: {
                   tool_name: event.toolName,
                   result_summary: event.resultSummary,
+                  ...(event.isError
+                    ? {
+                        failure_category: 'tool',
+                        error_type: 'TOOL_EXECUTION_ERROR',
+                        error_source: event.toolName,
+                      }
+                    : {}),
                 },
               })
               currentParentEventId = queued.eventId
@@ -268,6 +251,7 @@ async function run() {
       if (!hunks) break
       patch = hunks
       failurePhase = 'patch_apply'
+      const patchWorkspaceHashBefore = workspaceHash(filesRef.current)
       try {
         const applied = applyReplacementPatch(
           new Map(filesRef.current.map((file) => [file.path, file.content])),
@@ -285,6 +269,7 @@ async function run() {
         }
         throw error
       }
+      const patchWorkspaceHashAfter = workspaceHash(filesRef.current)
 
       patchOrdinal += 1
       const patchPath = `patches/${String(patchOrdinal).padStart(2, '0')}-patch.json`
@@ -301,6 +286,8 @@ async function run() {
         summary: {
           hunk_count: hunks.length,
           files: [...new Set(hunks.map((hunk) => hunk.file).filter(Boolean))],
+          workspace_hash_before: patchWorkspaceHashBefore,
+          workspace_hash_after: patchWorkspaceHashAfter,
         },
         artifacts: [
           await artifactReference(runDir, patchPath),
@@ -309,6 +296,16 @@ async function run() {
       })
       currentParentEventId = patchApplied.eventId
       await patchApplied.committed
+      if (process.env.EVAL_INJECT_RUNNER_FAILURE_AFTER_PATCH === '1') {
+        failurePhase = 'runner'
+        throw new EvaluationFailure('injected runner failure after patch', {
+          category: 'runner',
+          phase: 'runner',
+          type: 'RUNNER_INJECTED_FAILURE',
+          source: 'evaluation_harness',
+          retryable: false,
+        })
+      }
       instruction = VERIFY_MESSAGE
     }
 
@@ -324,13 +321,17 @@ async function run() {
 
     if (!patch) {
       status = 'COPILOT_FAILURE'
-      failure = failureEnvelope({
-        phase: 'model',
-        error: new Error('Agent did not submit a patch'),
-        source: 'copilot',
-        retryable: false,
-        relatedEventId: currentParentEventId,
-      })
+      failure = classifyFailure(
+        new EvaluationFailure('Agent did not submit a patch', {
+          category: 'model',
+          phase: 'model',
+          type: 'MODEL_NO_PATCH',
+          source: 'copilot',
+          retryable: false,
+        }),
+        fallbackForPhase('model'),
+        currentParentEventId
+      )
     } else {
       failurePhase = 'compile'
       const compileOutcome = await tracedCompile({
@@ -355,22 +356,30 @@ async function run() {
         compile.status.startsWith('http-')
       ) {
         status = 'INFRA_FAILURE'
-        failure = failureEnvelope({
-          phase: 'compile',
-          error: new Error(compile.note || compile.status),
-          source: 'clsi',
-          retryable: true,
-          relatedEventId: compileOutcome.completedEventId,
-        })
+        failure = classifyFailure(
+          new EvaluationFailure(compile.note || compile.status, {
+            category: 'infrastructure',
+            phase: 'compile',
+            type: 'COMPILE_INFRASTRUCTURE_ERROR',
+            source: 'clsi',
+            retryable: true,
+          }),
+          fallbackForPhase('compile'),
+          compileOutcome.completedEventId
+        )
       } else if (compile.status !== 'success') {
         status = 'COPILOT_FAILURE'
-        failure = failureEnvelope({
-          phase: 'compile',
-          error: new Error(compile.note || compile.status),
-          source: 'latex',
-          retryable: false,
-          relatedEventId: compileOutcome.completedEventId,
-        })
+        failure = classifyFailure(
+          new EvaluationFailure(compile.note || compile.status, {
+            category: 'compile',
+            phase: 'compile',
+            type: 'COMPILE_LATEX_ERROR',
+            source: 'latex',
+            retryable: false,
+          }),
+          fallbackForPhase('compile'),
+          compileOutcome.completedEventId
+        )
       } else {
         failurePhase = 'grader'
         const graderStarted = trace.emit({
@@ -414,25 +423,27 @@ async function run() {
           status = 'PASS'
         } else {
           status = 'COPILOT_FAILURE'
-          failure = failureEnvelope({
-            phase: 'grader',
-            error: new Error('deterministic grader failed'),
-            source: 'grader',
-            retryable: false,
-            relatedEventId: graderCompleted.eventId,
-          })
+          failure = classifyFailure(
+            new EvaluationFailure('deterministic grader failed', {
+              category: 'grader',
+              phase: 'grader',
+              type: 'GRADER_ASSERTION_FAILED',
+              source: 'deterministic_grader',
+              retryable: false,
+            }),
+            fallbackForPhase('grader'),
+            graderCompleted.eventId
+          )
         }
       }
     }
   } catch (error) {
     status = 'INFRA_FAILURE'
-    failure = failureEnvelope({
-      phase: failurePhase,
+    failure = classifyFailure(
       error,
-      source: sourceForPhase(failurePhase),
-      retryable: retryableFor(failurePhase, error),
-      relatedEventId: currentParentEventId,
-    })
+      fallbackForPhase(failurePhase),
+      currentParentEventId
+    )
   } finally {
     if (serviceResources && transcript.length === 0) {
       try {
@@ -453,13 +464,17 @@ async function run() {
       } catch (error) {
         if (!failure) {
           status = 'INFRA_FAILURE'
-          failure = failureEnvelope({
-            phase: 'cleanup',
+          failure = classifyFailure(
             error,
-            source: 'evaluation_harness',
-            retryable: true,
-            relatedEventId: currentParentEventId,
-          })
+            {
+              category: 'runner',
+              phase: 'cleanup',
+              type: 'RUNNER_CLEANUP_ERROR',
+              source: 'evaluation_harness',
+              retryable: true,
+            },
+            currentParentEventId
+          )
         }
       }
     }

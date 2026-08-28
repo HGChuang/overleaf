@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import RedisMock from 'ioredis-mock'
 import settings from '@overleaf/settings'
-import connectDatabase from '../../config/db.js'
+import redis from '../../config/redis.js'
 import { CopilotService } from '../../app/services/copilot.service.js'
 import { RedisMemoryStore } from '../../app/agent/memory.js'
 import { buildUnifiedSystemPrompt } from '../../app/agent/prompts.js'
@@ -12,6 +12,7 @@ import { streamOpenAICompat } from '../../app/llm/openaiCompatStream.js'
 import { CanonicalTraceWriter, hashValue } from './canonicalTrace.js'
 import type { EvalFile } from './evalContext.js'
 import { tracedCompile, type TraceContextAccess } from './tracedCompile.js'
+import { connectEvalDatabase } from './evalDatabase.js'
 
 export interface UsageRecord {
   input: number
@@ -75,6 +76,7 @@ function addUsage(target: UsageRecord, usage: unknown) {
 
 let databaseReady: Promise<void> | null = null
 const registries: ClientRegistry[] = []
+const memoryClients: RedisMock[] = []
 
 const noopLongTermMemory = {
   async readIndex() {
@@ -100,10 +102,12 @@ export async function buildTaskService(
   usage: UsageRecord,
   runtimeTrace: RuntimeTraceHooks
 ) {
-  databaseReady ||= connectDatabase().then(() => undefined)
+  databaseReady ||= connectEvalDatabase()
   await databaseReady
+  const memoryClient = new RedisMock()
+  memoryClients.push(memoryClient)
   const memoryStore = new RedisMemoryStore({
-    client: new RedisMock(),
+    client: memoryClient,
     keyPrefix: `eval:headless:${Date.now().toString(36)}`,
   })
   const registry = new ClientRegistry({
@@ -175,7 +179,8 @@ export async function buildTaskService(
           turn_id: turnId,
           status: 'error',
           summary: {
-            error_type: error instanceof Error ? error.name : 'UnknownError',
+            failure_category: 'model',
+            error_type: 'MODEL_PROVIDER_ERROR',
             error_message:
               error instanceof Error ? error.message : String(error),
           },
@@ -230,5 +235,7 @@ export async function buildTaskService(
 
 export async function shutdownEval() {
   for (const registry of registries.splice(0)) registry.close()
+  for (const client of memoryClients.splice(0)) client.disconnect()
+  redis.disconnect()
   await mongoose.disconnect()
 }

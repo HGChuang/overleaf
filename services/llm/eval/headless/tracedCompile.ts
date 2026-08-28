@@ -7,6 +7,7 @@ import {
   writeJsonAtomic,
 } from './canonicalTrace.js'
 import { compileFiles, type CompileResult } from './compileRunner.js'
+import { workspaceHash } from './workspaceState.js'
 
 export interface TraceContextAccess {
   getTurnId(): string | null
@@ -31,7 +32,12 @@ export async function tracedCompile({
   runDir: string
   trace: CanonicalTraceWriter
   context: TraceContextAccess
-}): Promise<{ result: CompileResult; completedEventId: string }> {
+}): Promise<{
+  result: CompileResult
+  completedEventId: string
+  inputWorkspaceHash: string
+}> {
+  const inputWorkspaceHash = workspaceHash(files)
   const turnId = context.getTurnId()
   const toolCallId = context.getActiveToolCallId?.() ?? null
   const started = trace.emit({
@@ -39,7 +45,12 @@ export async function tracedCompile({
     parent_event_id: context.getParentEventId(),
     turn_id: turnId,
     tool_call_id: toolCallId,
-    summary: { purpose, compiler: 'pdflatex', main_file: mainFile },
+    summary: {
+      purpose,
+      compiler: 'pdflatex',
+      main_file: mainFile,
+      input_workspace_hash: inputWorkspaceHash,
+    },
   })
   context.setParentEventId(started.eventId)
   await started.committed
@@ -71,6 +82,7 @@ export async function tracedCompile({
     status: failed ? 'error' : 'ok',
     summary: {
       purpose,
+      input_workspace_hash: inputWorkspaceHash,
       compile_status: result.status,
       error_count: result.errorCount,
       warning_count: result.warningCount,
@@ -80,5 +92,9 @@ export async function tracedCompile({
   })
   context.setParentEventId(completed.eventId)
   await completed.committed
-  return { result, completedEventId: completed.eventId }
+  return {
+    result,
+    completedEventId: completed.eventId,
+    inputWorkspaceHash,
+  }
 }
