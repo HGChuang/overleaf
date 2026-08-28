@@ -426,3 +426,99 @@ probe 验证接口组合和状态 barrier 后，才能建立 baseline。
 
 | 指标 | Before | After |
 |---|---|---|
+| 最小真实 Agent case | 无可执行入口 | `INFRA_FAILURE`，正确识别 provider TLS 故障 |
+| CLSI 正常 fixture | 未验证 | success，0 error |
+| CLSI 损坏 fixture | 未验证 | failure，2 errors |
+| Copilot 行为修改 | 无 | 无 |
+
+### Iteration 2 结论
+
+旧评测体系中的 Agent loop、内存 patch 和 CLSI 内核可以复用；当时尚未建立
+capability baseline，唯一阻塞是 provider 网络。没有观察到 Copilot regression。
+
+## Iteration 3 — Provider 连通性修复与真实回归
+
+日期：2026-08-28
+
+### 本轮研究的问题
+
+定位并修复 Iteration 2 中 Ark provider 的 TLS `INFRA_FAILURE`，不修改 Copilot
+行为，并用原有最小内存态 harness 做一次真实回归。
+
+### Observation / Evidence
+
+* provider 域名在宿主机和 LLM 容器均解析为 Clash fake-IP `198.18.0.54`，两边
+  最初都在 TLS 握手阶段得到 `SSL_ERROR_SYSCALL`。
+* Clash TUN、mixed port 和控制接口正常；百度、Cloudflare、OpenAI 的 TLS 对照
+  请求均成功，故障只发生在 Ark。
+* Clash debug log 显示 Ark 命中 `GLOBAL`，通过当前境外节点出站。
+* 临时切换 `GLOBAL -> DIRECT` 后 Ark 立即返回 HTTP 401，证书校验成功；临时
+  切换为 `rule` 后 Ark 返回 401，OpenAI 仍正常返回 421。
+* 现有订阅原始配置声明 `mode: rule`，生成配置的末端规则包含
+  `GEOIP,CN,Direct` 和 `MATCH,Others`。
+
+### Interpretation / Root Cause
+
+provider、API key 加载、模型选择和 LLM Docker 网络并非根因。Clash Verge 的
+持久运行模式被设为 `global`，覆盖了订阅规则，使中国区 Ark 被错误地强制送往
+境外代理节点；该出口与 Ark TLS 不兼容或被服务端拒绝。
+
+### Hypothesis
+
+恢复 Clash `rule` 模式后，Ark 会走直连，其他需代理域名仍按现有规则出站；真实
+Copilot + patch + CLSI case 应从 `INFRA_FAILURE` 恢复为可评分结果。
+
+### 本轮修改内容
+
+* 将本机 Clash Verge 持久配置的 `mode` 从 `global` 改为 `rule`，同步两份生成
+  配置，并通过控制接口同步当前运行态。
+* 修改前配置备份为同目录的 `config.yaml.pre-provider-fix.bak`。
+* 没有修改 Copilot prompt、model、tool、provider URL、benchmark 或 service code。
+* 更新 `docs/agent-evaluation.md` 和本日志，记录 provider preflight 与故障分类。
+
+### Benchmark / Metric Before vs After
+
+| 指标 | Before | After |
+|---|---|---|
+| 宿主机 Ark TLS | `SSL_ERROR_SYSCALL` | TLS 成功，HTTP 401（无凭据探测） |
+| LLM 容器 Ark TLS | `SSL_ERROR_SYSCALL` | TLS 成功，HTTP 401（无凭据探测） |
+| Hello Overleaf case | `INFRA_FAILURE` | `PASS` |
+| patch | 无 | replacement：`Hello World` → `Hello Overleaf` |
+| tool calls | 0 | `read_file=1`、`submit_patch=1`、`compile_project=1` |
+| CLSI | 独立 fixture 可用 | `success`，0 error，0 warning |
+| deterministic grader | 未运行 | 5/5 checks 通过 |
+| tokens | 0 | 18,512 |
+| wall latency | provider 入口失败 | 14,809 ms |
+
+`eval_user` 本轮独立生成公开请求：`请把正文中的“Hello World”改成
+“Hello Overleaf”。` Agent 返回一个 `main.tex` replacement hunk；应用后文档只
+包含 `Hello Overleaf`。编译日志包含 `EVAL_BODY=Hello Overleaf`，不包含原 marker。
+本轮 artifacts 保存于被 Git 忽略的
+`services/llm/eval/artifacts/hello-overleaf-replacement-2026-08-28T03-43-40-138Z/`。
+
+### 新增或仍存在的 Failure Cases
+
+* Clash 再次被切回 `global` 时，Ark provider 可能复现相同 TLS 故障。
+* 当前 provider preflight 尚未固化为 runner 自动步骤。
+* 当前运行镜像省略 dev dependency `tsx`，回归通过 `npx` 临时缓存启动；正式执行
+  入口仍需避免运行时下载。
+* 当前 harness 仍只支持 replacement，不支持 insertion/deletion。
+
+### Regression
+
+未观察到 regression。OpenAI 对照请求在 `rule` 模式下仍能完成 TLS 并返回预期
+HTTP 响应；Copilot 行为代码没有变化。
+
+### 本轮获得的经验和知识
+
+* fake-IP 本身不是故障证据；必须结合 Clash 命中规则和实际出口判断。
+* 无凭据 HTTP 401 是低成本 provider 网络 preflight，但不能替代真实 Agent smoke。
+* provider 网络故障必须保持为 `INFRA_FAILURE`，修复后才能建立 capability 结果。
+* 评测运行镜像需要一个确定、无需在线下载的 runner 启动方式。
+
+### 推荐的下一步方向
+
+1. 为 runner 增加不泄露凭据的 provider preflight 和结构化故障分类。
+2. 在评测镜像中固定 `tsx`/编译后 runner 入口，消除运行时 npm 下载。
+3. 用 3–5 个 replacement cases 建立首个小型 baseline，并保留独立 `eval_user` session。
+4. 在保持内存态范围的前提下，增加 compile-error repair 多轮 case。

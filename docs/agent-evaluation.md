@@ -879,3 +879,31 @@ inline compile、transcript/usage/trace 和 deterministic grading。当前入口
 本轮一次真实 Agent 运行因 provider TLS 连接失败归类为 `INFRA_FAILURE`，没有
 把它误记为 Copilot 失败；独立 CLSI 正常 fixture 和故意损坏 fixture 的成功/失败
 及日志解析均已验证。
+
+## Provider 连通性与评测前置检查
+
+2026-08-28 对 Iteration 2 的 provider `INFRA_FAILURE` 进行复核后确认：Ark
+provider 配置、模型配置和 LLM 容器本身没有故障。宿主机 Clash Verge 处于
+`global` 模式，导致 `ark.cn-beijing.volces.com` 被强制送往当前境外代理出口；
+该出口在 Ark TLS 握手阶段断开连接。切换为 `DIRECT` 或使用现有 `rule` 模式时，
+同一地址稳定返回无凭据探测所预期的 HTTP 401，证书校验成功。
+
+本机修复为将 Clash Verge 的持久配置和运行态都切换到 `rule`。现有规则集会让
+Ark 走国内直连，同时保留 OpenAI 等其他域名的代理策略。该修复属于评测运行环境，
+没有修改 Copilot prompt、model、tool、provider URL 或 Agent 行为。
+
+在正式 trial 前增加以下人工或自动 preflight 约定：
+
+1. 从宿主机和 LLM 容器分别请求 provider 的无凭据只读端点；HTTP 401 可以证明
+   DNS、TCP、TLS 和服务端入口可达，不能作为鉴权成功判断。
+2. 若宿主机和容器同时 TLS 失败，优先归类为宿主机 DNS/代理/TUN 故障；若仅容器
+   失败，再检查 Docker DNS、路由和代理可见性。
+3. provider preflight 通过后，仍必须运行一次真实 Agent + CLSI smoke case；只有
+   模型响应、tool call、patch、compile 和 grader 全链路成功，才解除 provider
+   `INFRA_FAILURE`。
+4. preflight 和 benchmark 都不得打印 API key、代理凭据或订阅内容。
+
+修复后的 Hello Overleaf smoke case 为 `PASS`：Agent 产生一个非空
+replacement hunk，调用 `read_file`、`submit_patch`、`compile_project` 各一次；
+CLSI `status=success`、error/warning 均为 0，编译日志包含
+`EVAL_BODY=Hello Overleaf`。总 token 为 18,512，wall latency 为 14,809 ms。
