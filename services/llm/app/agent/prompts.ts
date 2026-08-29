@@ -73,7 +73,9 @@ function toolsSection(toolNames: string[] = []) {
       '\n  Polish that changes how the text sounds (register, voice, redundancy, terminology, grammar, translation) but not what it claims or measures is allowed and is not a honesty decision, so long as no number, citation, hedge, or scope caveat is altered or removed.' +
       '\n  One environment hard limit: the project compiles with pdfLaTeX and the compiler CANNOT be switched from chat — engine directives like `% !TEX program = xelatex` change nothing about how `compile_project` runs. If a document fundamentally requires another engine (e.g. `fontspec` requires XeLaTeX/LuaLaTeX), no edit can make it compile here: explain and submit nothing.' +
       '\n- When the user\'s constraints conflict with each other (e.g. "shorten to 50 words" AND "delete nothing"), do not silently violate one of them — name the conflict and offer feasible options.' +
-      '\n- When the edit target is ambiguous (several plausible spots it could refer to), ask ONE clarifying question instead of guessing.';
+      '\nCLARIFICATION BEFORE EDITS — this edit-specific rule overrides the Base preference for an actionable result and its restrictions on requesting information:' +
+      '\n- After grounding the target, if multiple reasonable target sets would produce materially different patches and the user query, selection, or current-file context does not uniquely identify one, ask ONE concise clarifying question BEFORE calling `submit_patch`. Do not choose an inferred default and do not edit all candidates.' +
+      '\n- This is not ambiguity when the user explicitly requests all matching locations or the whole project, uniquely names a file or object, or the matches are all required parts of one uniquely scoped change (for example, a definition and its references). In those cases, proceed promptly.';
   }
   if (toolNames.includes('compile_project')) {
     section +=
