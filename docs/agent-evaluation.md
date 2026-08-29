@@ -1217,3 +1217,24 @@ LLM 容器的 TLS probe、Clash 日志共同表明，火山方舟中国区端点
 fixture hashes 仍可用于交叉核对，但不能事后改写 canonical manifest，因此 37-case 汇总是
 行为证据充分、commit-level provenance 不完整的 dev baseline。后续 scheduler 应从宿主 Git
 自动注入并校验 SHA，避免继续人工抄录。
+
+## Benchmark v3：中文用户场景候选池
+
+为避免继续围绕 43 个已运行 pilot case 调试并高估能力，Benchmark v3 先建立独立的中文用户
+场景候选层。四个互相隔离的 `eval_user` session 分别从内容/结构、编译/引用、图表/项目、交互/
+长上下文四个方向生成，共得到 150 条候选：38 / 38 / 37 / 37。主 Agent 没有扮演用户或补写
+用户请求，只负责保留来源、编号、去重和结构验证。
+
+候选记录位于 `services/llm/eval/benchmark-v3/`，包括首轮请求，以及每条请求对应的项目摘要、
+后续可能透露事实、必须保留项和不可接受结果。所有用户可见请求均为中文；文件名、LaTeX 命令、
+编译器等必要技术实体可以保留原名。自动检查验证总量、source 分布、ID/消息唯一性、中文内容、
+brief 一一覆盖、候选 schema 边界和 manifest 非执行状态，当前 6/6 通过，TypeScript typecheck
+通过。
+
+这 150 条数据当前全部是 `candidate`，可执行数为 0，不进入任何 PASS/FAIL 分母，也没有运行
+Copilot。`eval_user` 的角色是模拟用户，不能同时提供 grader/oracle；因此后续必须由独立的
+benchmark materialization 流程逐条补齐 fixture、策略无关 outcome、protected invariants、
+oracle、grader mutation test 和 compile validation，之后才能升级为 `executable`。split 也暂不
+分配，避免在 family/lineage 尚未确认前造成 dev/holdout 泄漏。
+
+完整 gate 和来源清单记录在 `services/llm/eval/benchmark-v3/README.md` 与 `manifest.json`。

@@ -1037,3 +1037,65 @@ After difficulty：D1 3/3、D2 10/12、D3 17/17、D4 5/5。wall time 增量主�
   2. 给 baseline scheduler 增加宿主 Git SHA 自动注入/校验和 selected-trial report；
   3. 在不用于调试的前提下，安排一次新的 hidden holdout 评估验证泛化；
   4. 分离 Agent execution latency 与人工 `eval_user` orchestration wait。
+
+## Iteration 11 — Benchmark v3 中文候选场景生成
+
+日期：2026-08-30
+
+### 本轮研究的问题
+
+按照新的完整测试集策略，先由 `eval_user` 而非主 Agent 生成覆盖面足够宽的中文用户场景；本轮
+建立候选池和质量 gate，不运行 Copilot，不把未物化场景计入 benchmark 分母。
+
+### Observation / Evidence
+
+* 既有 pilot 只有 43 个已执行 family，且已多次用于开发与分析，不适合作为完整能力天花板；
+* 四个独立 `eval_user` session 共生成 150 条中文候选，分别覆盖内容/结构 38 条、编译/引用
+  38 条、图表/项目 37 条、交互/长上下文 37 条；
+* 每条场景同时保留项目摘要、后续事实、必须保留和不可接受结果，便于后续物化 multi-turn 与
+  protected invariants；
+* 自动验证 6/6 通过：数量、source 分布、ID/首轮消息唯一、中文内容、brief 覆盖、候选字段边界
+  和 manifest 非执行状态均有效；TypeScript typecheck 通过。
+
+### Interpretation / Root Cause
+
+此前正确率偏高的根因之一是可执行 seed 的任务形态和失败表面有限，而且 holdout 已参与过分析。
+直接批量复制 prompt 只会扩大样本数，不会增加独立能力覆盖。先让隔离的用户模拟 session 生成
+真正不同的用户目标，再经过 fixture/oracle/grader gate，是降低 prompt 偏置和数据泄漏风险的
+必要前置步骤。
+
+### Changes
+
+* 新增 `eval/benchmark-v3/candidateSeeds.ts`：150 条由 `eval_user` 生成的中文首轮请求及 provenance；
+* 新增四份 `briefs/*.tsv`：保存 150 条场景的用户视角上下文与约束；
+* 新增 `candidate.schema.json`、`manifest.json` 和 `candidateSeeds.test.ts`，明确
+  `candidate != executable`，并自动验证语料完整性；
+* 新增中文 README，记录角色边界、物化 gate 和禁止进入 PASS/FAIL 分母的约束；
+* 未修改 Copilot、prompt、tool、Agent loop、现有 benchmark 或 grader。
+
+### Benchmark / Metric Before vs After
+
+| 指标 | Before | After |
+|---|---:|---:|
+| Benchmark v3 中文候选 | 0 | 150 |
+| 独立 `eval_user` 来源 session | 0 | 4 |
+| 重复 candidate ID / 首轮消息 | 0 / 0 | 0 / 0 |
+| 含结构化用户场景摘要 | 0 | 150 |
+| Benchmark v3 可执行 case | 0 | 0 |
+| 本轮 Copilot trial | 0 | 0 |
+
+### Failure Cases / Regression
+
+本轮没有执行 Copilot，因此没有新增 capability failure，也不能报告通过率。候选集测试和全量
+TypeScript typecheck 通过；现有 benchmark 未修改，没有行为 regression。当前缺口是 150 条
+候选尚未具有 fixture、oracle、grader、compile validation 和正式 split。
+
+### 本轮经验与推荐方向
+
+* 用户场景生成与评分标准生成必须分离，不能让 `eval_user` 同时充当用户和裁判；
+* “150 条候选”不等于“150 条可执行测试”，manifest 必须显式暴露 executable=0；
+* 推荐下一步候选：
+  1. 按 coverage cell 选择首批 30–40 个 family，物化 fixture 与 multi-turn interaction；
+  2. 为物化 case 建立策略无关 outcome/invariant schema 与 grader mutation validation；
+  3. 完成 family lineage 审计后再分配 dev、release holdout 与 shadow set；
+  4. 所有候选物化完毕并封存 hidden manifest 后，再运行首次 baseline。

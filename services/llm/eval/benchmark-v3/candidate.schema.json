@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://overleaf.local/eval/benchmark-v3/candidate.schema.json",
+  "title": "Overleaf Copilot Benchmark v3 中文候选场景",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "candidate_id",
+    "source_session",
+    "source_ordinal",
+    "primary_domain",
+    "language",
+    "initial_user_message",
+    "lifecycle"
+  ],
+  "properties": {
+    "candidate_id": {
+      "type": "string",
+      "pattern": "^v3\\.(content|compile|artifact|interaction)\\.[0-9]{3}$"
+    },
+    "source_session": {
+      "type": "string",
+      "pattern": "^v3_user_"
+    },
+    "source_ordinal": { "type": "integer", "minimum": 1, "maximum": 38 },
+    "primary_domain": {
+      "enum": [
+        "内容结构与跨文件重构",
+        "编译引用与文献",
+        "图表资源与项目组织",
+        "动态交互与长上下文"
+      ]
+    },
+    "language": { "const": "zh-CN" },
+    "initial_user_message": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 240,
+      "pattern": "[\\p{Script=Han}]"
+    },
+    "lifecycle": { "const": "candidate" }
+  }
+}

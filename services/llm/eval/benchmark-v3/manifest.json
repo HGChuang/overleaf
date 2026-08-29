@@ -1,0 +1,35 @@
+{
+  "schema_version": 3,
+  "benchmark_id": "overleaf-agent-benchmark-v3",
+  "lifecycle": "candidate",
+  "language": "zh-CN",
+  "generated_by": [
+    "v3_user_content_structure",
+    "v3_user_compile_reference",
+    "v3_user_artifact_project",
+    "v3_user_interaction_long"
+  ],
+  "counts": {
+    "total": 150,
+    "content_structure": 38,
+    "compile_reference": 38,
+    "artifact_project": 37,
+    "interaction_long_context": 37,
+    "executable": 0
+  },
+  "split_status": "unassigned",
+  "validation": {
+    "scenario_count": true,
+    "unique_candidate_id": true,
+    "unique_initial_user_message": true,
+    "chinese_user_message": true,
+    "brief_coverage": true,
+    "fixture": false,
+    "oracle": false,
+    "initial_compile": false,
+    "final_compile": false,
+    "grader_mutation": false,
+    "hidden_sealed": false
+  },
+  "warning": "本清单仅描述中文候选场景，尚未物化为可执行测试，不得进入 PASS/FAIL 分母。"
+}
