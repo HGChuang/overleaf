@@ -899,3 +899,58 @@ decision 不稳定。失败不是 patch、compile、grader 或 recovery 链路�
 ### Commit
 
 * `f66f0d5f68` — dynamic runner、grader 修正与 19 个 discriminative seed families。
+
+## Iteration 9 — Clarification Failure Analysis
+
+日期：2026-08-29
+
+### 本轮研究的问题
+
+仅依据 canonical trace 和现有代码，对 Iteration 8 的两个真实 clarification failure 做最小范围
+归因；不修改 Copilot、benchmark 或 grader。
+
+### Observation / Evidence
+
+* 两个失败都在首轮检索并读取了全部候选，随后分别选择“两个同名标题都改”和“只改 Method A”；
+  duplicate-label patch summary 还明确承认 Method B 保留原 label。
+* 两次错误 patch 都被拒绝且未改变 workspace；用户明确作用域后，Agent 均能给出正确 patch，
+  最终文件与 compile checks 全部通过。
+* `dynamic.clarify-shared-title.v1` 存在同模型、同 temperature、同 config/prompt/benchmark/fixture
+  hash 的成功 smoke run；该 run 面对相同两个候选时先澄清。这排除了确定性的 context/tool/loop
+  故障，证明决策边界不稳定。
+* 相似成功 case 在目标结构明显不同或事实值冲突时先澄清；失败 case 都存在一个看似合理的默认
+  动作，因而更容易被“优先 actionable result”策略吸收。
+
+### Interpretation / Root Cause
+
+共同 failure mode 为：识别多个目标，但将一个 inferred default 当成用户意图，在澄清前提交 patch。
+主要原因是 system prompt 中 clarification policy 与“仅在无法继续时询问 / 尽快提交可执行 patch”
+存在竞争；直接触发是 temperature 0.7 下的不稳定 model decision。terminating `submit_patch` 缺少
+独立 ambiguity guard 是放大因素，不是首要根因。
+
+### Changes
+
+* 新增 `docs/CLARIFICATION_FAILURE_ANALYSIS.md`，记录逐 case 时间线、成功对照、分层归因、五个
+  问题的直接回答及三个候选修复。
+* 在 evaluation 设计和 iteration log 中记录本轮结论。
+* 未修改任何 Copilot、benchmark、grader 或 runtime 代码，未重跑 hidden case。
+
+### Benchmark / Metric Before vs After
+
+本轮为只读分析，没有 Before/After 行为指标。Iteration 8 baseline 保持 41/43；两个目标 case 的
+状态不变。
+
+### Failure Cases / Regression
+
+* failure case 未消除：`dynamic.clarify-shared-title.v1` 与
+  `hidden.duplicate-label-clarify.v1` 仍是有效 capability failures。
+* 未修改运行时代码，因此没有行为 regression；也没有修改 benchmark/grader 制造通过。
+
+### 本轮经验与推荐方向
+
+* “找到了所有候选”不等于“正确执行 clarification policy”；trace 必须区分 target discovery 与
+  intent resolution。
+* 首选下一步是最小 prompt A/B：统一“多个合理作用域”规则，并同时测明确全局编辑的过度澄清率。
+* 若 prompt-only 仍不稳定，再评估显式 clarification action；提交前硬 guard 风险最高，不应先做。
+
+完整分析：`docs/CLARIFICATION_FAILURE_ANALYSIS.md`。

@@ -1150,6 +1150,12 @@ checks 逐一复核，未发现确认的 grader false positive/negative。这里
 reporter 自动分配唯一 trial identity；holdout 已完成一次 baseline，后续不得拿本次结果反复
 调试；仓库可见的 holdout 是逻辑隔离而非密码学隐藏。H2 与 browser conformance 继续 skipped。
 
+Iteration 8 的两个 clarification failure 已完成独立 trace analysis，详见
+`docs/CLARIFICATION_FAILURE_ANALYSIS.md`。结论是：Agent 已识别多个候选，但 clarification policy
+与“尽快产生 actionable patch”的竞争指令使其采用了自行推断的默认作用域；相同 shared-title
+case 在完全相同 prompt/config/fixture 下也曾正确澄清，说明直接触发点是边界不清下的不稳定 model
+decision。最小候选修复层是统一 system prompt 的作用域歧义决策规则，本轮未实施行为修改。
+
 本轮没有修改 Copilot prompt、model、tool 或 Agent loop。相对 24/24 的 v1，41/43 及
 clarification 集中的稳定失败证明区分度已有提升，但除 clarification 外多数 category 仍为
 100%，不能据此宣称 benchmark 已充分饱和。
