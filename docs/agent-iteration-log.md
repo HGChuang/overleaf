@@ -1099,3 +1099,82 @@ TypeScript typecheck 通过；现有 benchmark 未修改，没有行为 regressi
   2. 为物化 case 建立策略无关 outcome/invariant schema 与 grader mutation validation；
   3. 完成 family lineage 审计后再分配 dev、release holdout 与 shadow set；
   4. 所有候选物化完毕并封存 hidden manifest 后，再运行首次 baseline。
+
+## Iteration 12 — Benchmark v3 首批可执行中文测试集
+
+日期：2026-08-30
+
+### 本轮研究的问题
+
+将 v3 中文候选池中的第一批 32 个 family 物化为可被现有 headless generic runner 执行、可通过
+deterministic grader 评分、且 fixture/oracle 经真实 CLSI 验证的 dev 测试集。本轮不运行
+Copilot，不建立或查看 hidden holdout。
+
+### Observation / Evidence
+
+* 四个 `gpt-5.6-luna`、high reasoning 子 Agent 按文件所有权各生成 8 个领域 case；用户首轮请求
+  全部由 factory 绑定到既有 `eval_user` candidate，主 Agent 没有代写用户消息；
+* 32 个 case 包含 23 个多文件、25 个 required compile/repair-loop、6 个动态多轮；D2/D3/D4
+  分别为 8/17/7，C1–C11 均有覆盖；
+* 每个 case 有两个关键错误 mutation。32 个 oracle 正例全部通过，64 个 mutation 全部被
+  deterministic grader 拒绝；
+* 第一次静态 gate 真实拦截了缺少 invariant grader、一个 false-positive mutation 和一个 oracle
+  response mismatch；修复后包含 report hash 防陈旧检查在内的 20/20 tests 与 TypeScript
+  typecheck 通过；
+* 第一次 CLSI gate 真实拦截 3 个 case：pdfLaTeX 中文支持缺失、proof 结束符未定义、subfigure
+  caption 非法；修复后全量 64 次 initial/final compile 重跑，32/32 initial 状态符合声明、
+  32/32 final workspace 均零错误成功，最终 validation report 为 `valid=true`。
+
+### Interpretation / Root Cause
+
+候选语料本身不足以成为 benchmark；主要缺口是没有把自然语言目标约束为可应用 oracle、可拒绝的
+错误表面和真实编译状态。子 Agent 的局部自检也不能替代运行环境验证：基础 schema 只确认
+protected invariant 出现在初始 fixture，却不保证 grader 会检查它；没有 CLSI 时，合法-looking
+LaTeX 仍可能在真实工具链失败。
+
+### Hypothesis 与 Changes
+
+本轮假设是“正例 + 关键错误负例 + 真实 initial/final compile”三层 gate 能阻止无效 case 被标记
+executable。实现包括：
+
+* 新增 v3 case factory、类型与四个领域 pack，共 32 个 dev family；
+* 新增 candidate linkage、中文字段、protected invariant、oracle positive 与 mutation negative
+  validation；
+* 新增真实 CLSI validation runner 和带 workspace hash 的 validation report；
+* generic runner registry 现在可解析 legacy 43 与 v3 32 个 case；
+* 更新 manifest，将 150 个 source candidate、32 个 materialized executable 和 118 个未物化
+  candidate 明确分开；
+* 未修改 Copilot prompt、tool、Agent loop、model 或既有 grader 行为。
+
+### Benchmark / Metric Before vs After
+
+| 指标 | Before | After |
+|---|---:|---:|
+| v3 executable dev case | 0 | 32 |
+| v3 未物化 candidate | 150 | 118 |
+| generic runner 可解析 case | 43 | 75 |
+| oracle positive validation | 0 | 32 / 32 |
+| grader negative mutation | 0 | 64 / 64 被拒绝 |
+| initial compile 声明一致 | 0 | 32 / 32 |
+| final compile 零错误 | 0 | 32 / 32 |
+| 本轮 Copilot trial | 0 | 0 |
+
+### Failure Cases / Regression
+
+validation 期间发现的 benchmark-definition failures 已全部修复并全量重跑。没有执行 Copilot，
+因此没有 capability pass rate 或新增 Copilot failure。legacy pilot tests 保持通过，TypeScript
+typecheck 通过，没有观察到 runner regression。
+
+当前覆盖仍不均衡：26/32 是 patch action，C9 仅 1 个、C11 仅 3 个，且全部是 dev；H2/H3
+继续没有 conformance，118 个候选尚未物化。因此这批数据可用于 dev evaluation，但还不能代表
+完整能力天花板，也不能充当可信 hidden holdout。
+
+### 本轮经验与推荐方向
+
+* 仅验证 oracle 能通过会留下 grader false positive；critical mutation 必须作为 case 的一等数据；
+* 真实 CLSI gate 必须同时检查 initial 与 final，不能从源码外观推断 compile 状态；
+* 推荐下一步候选：
+  1. 第二批优先物化 C9、C11、no-op/refuse/clarify 和长上下文 family，修正 action 失衡；
+  2. 为 H2/H3 file create/delete/rename 与 insertion/deletion 建立 conformance 后再物化对应候选；
+  3. 对全部 materialized family 做 fuzzy lineage 审计，并在外部私有位置建立新的 release holdout；
+  4. 冻结 dev set 后再运行首次 v3 baseline，先评测再分析 Copilot failure。

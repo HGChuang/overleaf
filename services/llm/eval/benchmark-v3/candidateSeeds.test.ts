@@ -116,17 +116,23 @@ test("eval_user briefs cover every candidate with structured Chinese context", (
   assert.equal(totalRows, BENCHMARK_V3_CANDIDATE_SEEDS.length);
 });
 
-test("manifest reports the candidate corpus as non-executable", () => {
+test("manifest separates the immutable candidate pool from the executable tranche", () => {
   const manifest = JSON.parse(
     readFileSync(new URL("manifest.json", import.meta.url), "utf8"),
   );
-  assert.equal(manifest.lifecycle, "candidate");
+  assert.equal(manifest.lifecycle, "candidate-pool-with-executable-tranche");
   assert.equal(manifest.language, "zh-CN");
-  assert.equal(manifest.counts.total, BENCHMARK_V3_CANDIDATE_SEEDS.length);
-  assert.equal(manifest.counts.executable, 0);
-  assert.equal(manifest.split_status, "unassigned");
-  assert.equal(manifest.validation.brief_coverage, true);
-  assert.equal(manifest.validation.fixture, false);
-  assert.equal(manifest.validation.oracle, false);
-  assert.equal(manifest.validation.grader_mutation, false);
+  assert.equal(
+    manifest.counts.source_candidates,
+    BENCHMARK_V3_CANDIDATE_SEEDS.length,
+  );
+  assert.equal(manifest.counts.materialized_candidates, 32);
+  assert.equal(manifest.counts.unmaterialized_candidates, 118);
+  assert.equal(manifest.counts.executable_cases, 32);
+  assert.equal(manifest.split_status, "first-tranche-dev-only");
+  assert.equal(manifest.validation.candidate_pool.brief_coverage, true);
+  assert.equal(manifest.validation.executable_tranche.oracle_apply, true);
+  assert.equal(manifest.validation.executable_tranche.final_compile, true);
+  assert.equal(manifest.validation.executable_tranche.grader_mutation, true);
+  assert.equal(manifest.validation.hidden_sealed, false);
 });

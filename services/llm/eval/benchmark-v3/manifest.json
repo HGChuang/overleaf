@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark_id": "overleaf-agent-benchmark-v3",
-  "lifecycle": "candidate",
+  "lifecycle": "candidate-pool-with-executable-tranche",
   "language": "zh-CN",
   "generated_by": [
     "v3_user_content_structure",
@@ -10,26 +10,35 @@
     "v3_user_interaction_long"
   ],
   "counts": {
-    "total": 150,
+    "source_candidates": 150,
     "content_structure": 38,
     "compile_reference": 38,
     "artifact_project": 37,
     "interaction_long_context": 37,
-    "executable": 0
+    "materialized_candidates": 32,
+    "unmaterialized_candidates": 118,
+    "executable_cases": 32
   },
-  "split_status": "unassigned",
+  "split_status": "first-tranche-dev-only",
   "validation": {
-    "scenario_count": true,
-    "unique_candidate_id": true,
-    "unique_initial_user_message": true,
-    "chinese_user_message": true,
-    "brief_coverage": true,
-    "fixture": false,
-    "oracle": false,
-    "initial_compile": false,
-    "final_compile": false,
-    "grader_mutation": false,
+    "candidate_pool": {
+      "scenario_count": true,
+      "unique_candidate_id": true,
+      "unique_initial_user_message": true,
+      "chinese_user_message": true,
+      "brief_coverage": true
+    },
+    "executable_tranche": {
+      "runtime_schema": true,
+      "candidate_linkage": true,
+      "oracle_apply": true,
+      "initial_compile": true,
+      "final_compile": true,
+      "grader_positive": true,
+      "grader_mutation": true,
+      "generic_runner_registry": true
+    },
     "hidden_sealed": false
   },
-  "warning": "本清单仅描述中文候选场景，尚未物化为可执行测试，不得进入 PASS/FAIL 分母。"
+  "warning": "只有 executable/ 中通过 validation-report.json gate 的 32 个 dev case 可运行；其余 118 个候选不得进入 PASS/FAIL 分母，当前也没有可用 hidden holdout。"
 }

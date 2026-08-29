@@ -93,7 +93,7 @@ export interface PilotCase {
     tags: string[]
     language: 'zh-CN' | 'en-US'
     prompt_form: string
-    provenance: 'systematic-human'
+    provenance: 'systematic-human' | 'llm-generated-user-seed'
   }
 }
 

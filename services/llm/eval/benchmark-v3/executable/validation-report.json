@@ -1,0 +1,861 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-29T18:18:28.532Z",
+  "lifecycle": "executable",
+  "language": "zh-CN",
+  "case_count": 32,
+  "source_counts": {
+    "content": 8,
+    "compile": 8,
+    "artifact": 8,
+    "interaction": 8
+  },
+  "difficulty_counts": {
+    "D1": 0,
+    "D2": 8,
+    "D3": 17,
+    "D4": 7
+  },
+  "compile_validation": true,
+  "compile_concurrency": 4,
+  "static_errors": [],
+  "cases": [
+    {
+      "case_id": "v3.content-introduction-progression.v1",
+      "source_candidate_id": "v3.content.001",
+      "fixture_hash": "b6b9926a859a7c8ca0f5f5ba4c7fbba24d878c1499acf3be755f5d13059c2b69",
+      "oracle_workspace_hash": "fa1d147531651cab4215ef0607e9b20761e44aa8fd8434ff937f3c541b70d26d",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.content-abstract-results-terminology.v1",
+      "source_candidate_id": "v3.content.002",
+      "fixture_hash": "337127b50c760e744f1b60d2339ba85c07e39d84fdb2702fcae48d446c7d2819",
+      "oracle_workspace_hash": "141af36c4a7b973996ce6d3412bd0a37dea8dd25781805c3199404859a977ccf",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.content-robotics-polish.v1",
+      "source_candidate_id": "v3.content.003",
+      "fixture_hash": "0255ef467e0e5bad23cdd028c20cc5f2f7b7656d037d22bc5b156665ae3e02ae",
+      "oracle_workspace_hash": "7dfd6bf32ab29b8536247ab653c70efd9b8b2195e5d7576dfa497121a161b33d",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.content-multifile-translation.v1",
+      "source_candidate_id": "v3.content.004",
+      "fixture_hash": "bc8cfa6ba49c60cd83bded8f5c6337d77c9dc6c54842c1baa50ba6665bf76825",
+      "oracle_workspace_hash": "c40fa08efef58d8a3549aed861fea824774d2f166e9336307b0a3fd2eca42b34",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.content-bilingual-sync.v1",
+      "source_candidate_id": "v3.content.006",
+      "fixture_hash": "fc641558215ab762f328e1162f8b171ecee35d5a04db09443a6e47d0fff04b09",
+      "oracle_workspace_hash": "b2ef12d6edb90b031474c29621629b59e6631360a2d477145fa3a61a73752acd",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.content-sample-identifiers-units.v1",
+      "source_candidate_id": "v3.content.009",
+      "fixture_hash": "6c1329ace467263fc15cc2530ce580c8e1931e3310009338b3fe9372e0481eae",
+      "oracle_workspace_hash": "3021ffa4f403e3d6f7399c9c289e9b721e2eb0c633a3cdf6f263ecd8071ba83e",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.content-theorem-numbering.v1",
+      "source_candidate_id": "v3.content.012",
+      "fixture_hash": "e4b07beca920f1e57602dd014d3de6d42ff4d64ec76d232ad5456aaffa1b73d0",
+      "oracle_workspace_hash": "e242be9ec46d6f6e6870e7f12c842528a18c88ec48cd6726ae85233f1fbbecc2",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.content-matrix-vector-notation.v1",
+      "source_candidate_id": "v3.content.014",
+      "fixture_hash": "cf18a9b25092b9fb517e8fd59d9815d7fc54b4fb8127c4e5936740764691a508",
+      "oracle_workspace_hash": "fae1602af5d208860618d87de3750bd9cdd873057f72639c575b3790bf7b7ea6",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.compile-duplicate-environment.v1",
+      "source_candidate_id": "v3.compile.005",
+      "fixture_hash": "bd0d829ef34a7b669914603474120cc0658fcf7b59bb3780fb47cda104ddd1f4",
+      "oracle_workspace_hash": "85f7177af692dd008e8061568e129a05374edf83947c59ac1e1fbb1dc96550a4",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "failure",
+        "status": "success",
+        "error_count": 1,
+        "warning_count": 0,
+        "valid": true,
+        "errors": [
+          {
+            "file": null,
+            "line": null,
+            "message": "LaTeX Error: Command \\codeblock already defined."
+          }
+        ]
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.compile-conditional-macro.v1",
+      "source_candidate_id": "v3.compile.006",
+      "fixture_hash": "78de6db57eead0f508f25f6c10703eb69369d21c15670a74a6d703bbf972e526",
+      "oracle_workspace_hash": "734bb92a8c41eeedd1543ec5f5e7900472b4714c523e02412c26d1b2c29d42ef",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "failure",
+        "status": "success",
+        "error_count": 1,
+        "warning_count": 0,
+        "valid": true,
+        "errors": [
+          {
+            "file": null,
+            "line": 2,
+            "message": "Undefined control sequence."
+          }
+        ]
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.compile-appendix-label-collision.v1",
+      "source_candidate_id": "v3.compile.009",
+      "fixture_hash": "013f0f18923094693e54d8269961e8622a31f611ebad9e5f47df9593c58200cd",
+      "oracle_workspace_hash": "a0afa5705375da572b8e89dce6f5dbb63fb3b9eebf14754db8512c24f1e2b2e3",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "failure",
+        "status": "success",
+        "error_count": 1,
+        "warning_count": 4,
+        "valid": true,
+        "errors": [
+          {
+            "file": null,
+            "line": null,
+            "message": "LaTeX Error: Command \\c@resultstable already defined."
+          }
+        ]
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.compile-bibliography-entrypoint.v1",
+      "source_candidate_id": "v3.compile.012",
+      "fixture_hash": "32a634f4542d39a13ceda1fbcc52732ada0fda389e81d0a2b85c06cbf620ea6b",
+      "oracle_workspace_hash": "c7afc29629d1bc48109b79274e3e3e8ad0417e892e9bbd1e08ea948a37c0b581",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "failure",
+        "status": "success",
+        "error_count": 1,
+        "warning_count": 2,
+        "valid": true,
+        "errors": [
+          {
+            "file": null,
+            "line": 5,
+            "message": "Undefined control sequence."
+          }
+        ]
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.compile-algorithm-environment.v1",
+      "source_candidate_id": "v3.compile.020",
+      "fixture_hash": "568d9cad0e1d1bf99432854128b7dc7b6c499e906c029a92a0b62fd2475947d5",
+      "oracle_workspace_hash": "569309cd377659208ff9fd25c286fad1006472a7f359d2d9b48970c04b02b622",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "failure",
+        "status": "success",
+        "error_count": 3,
+        "warning_count": 0,
+        "valid": true,
+        "errors": [
+          {
+            "file": null,
+            "line": null,
+            "message": "LaTeX Error: Environment algorithm undefined."
+          },
+          {
+            "file": null,
+            "line": null,
+            "message": "LaTeX Error: \\caption outside float."
+          },
+          {
+            "file": null,
+            "line": null,
+            "message": "LaTeX Error: \\begin{document} ended by \\end{algorithm}."
+          }
+        ]
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.compile-proof-environment.v1",
+      "source_candidate_id": "v3.compile.023",
+      "fixture_hash": "d93219f52a1a6c5df26c48b265af895f8a82d56bb1ba1324645fd54e6f8dd5a8",
+      "oracle_workspace_hash": "e8912e556eec395fde5f36876ae69920cc357572c038f65a18898bed62de1267",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "failure",
+        "status": "success",
+        "error_count": 2,
+        "warning_count": 0,
+        "valid": true,
+        "errors": [
+          {
+            "file": null,
+            "line": null,
+            "message": "LaTeX Error: Environment proof undefined."
+          },
+          {
+            "file": null,
+            "line": null,
+            "message": "LaTeX Error: \\begin{document} ended by \\end{proof}."
+          }
+        ]
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.compile-department-figure-counters.v1",
+      "source_candidate_id": "v3.compile.026",
+      "fixture_hash": "74e76b6ce48236baa8a95fd2bee52e023e70d22aa71fa75a47b3a4307c043486",
+      "oracle_workspace_hash": "aa2469e1f41dd0c56076e68393c101ce0e5be19ea6162f0875b31bd89c152ec7",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "failure",
+        "status": "success",
+        "error_count": 1,
+        "warning_count": 0,
+        "valid": true,
+        "errors": [
+          {
+            "file": null,
+            "line": null,
+            "message": "LaTeX Error: Command \\c@deptfigure already defined."
+          }
+        ]
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.compile-final-multi-artifact.v1",
+      "source_candidate_id": "v3.compile.038",
+      "fixture_hash": "9e430e6114af87461a8feaca21e71fecfd61693ca916cd04c37e94516976cded",
+      "oracle_workspace_hash": "1ccc0f4cbb82dcf5434b5b81dc9a687b85b1680672c9008548c1f51456f39258",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "failure",
+        "status": "success",
+        "error_count": 2,
+        "warning_count": 0,
+        "valid": true,
+        "errors": [
+          {
+            "file": null,
+            "line": null,
+            "message": "LaTeX Error: Command \\projectterm already defined."
+          },
+          {
+            "file": null,
+            "line": 10,
+            "message": "Undefined control sequence."
+          }
+        ]
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.figure-location-caption.v1",
+      "source_candidate_id": "v3.artifact.001",
+      "fixture_hash": "42616671f7eb7ea27a66cc53ec507d83a167418b937dd4f3d6fa48b5d4d2c532",
+      "oracle_workspace_hash": "bd7f431f96c4cdf8a18f5ac1881ef972f685d4c5fa27081d3e8d132008527e22",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.three-subfigures-width.v1",
+      "source_candidate_id": "v3.artifact.002",
+      "fixture_hash": "a939674ee80ff3229ea8ab0699e1aba6d40cf73b71daef6be91ed6158562a6e0",
+      "oracle_workspace_hash": "1ba0270f38a93baa740aec37002170e8be1e5e1d785ee3185ada95160c923ac3",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.combined-chart-group.v1",
+      "source_candidate_id": "v3.artifact.005",
+      "fixture_hash": "865787b32b45fc102ae8f184d63a3c01a3670a6155c7e27ae010a8fe71dea32b",
+      "oracle_workspace_hash": "9817340e360c8c40bf01cac233dd54f4f7a1c9d08a24c846afba7fb2df73208b",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.survey-longtable-header.v1",
+      "source_candidate_id": "v3.artifact.009",
+      "fixture_hash": "96b98a04dc4722b94bbef8d47aa595ea34b01365aea212724129fe9317109c61",
+      "oracle_workspace_hash": "db10542da09e3b5fc025b38d1b0d1f112df9b2e92b68aaabd9b36a37ed89c636",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.financial-wide-table.v1",
+      "source_candidate_id": "v3.artifact.010",
+      "fixture_hash": "bfd4d73b1935c376f6e82427fb2e7c9592000809c0c66877810908d2cc12b5cd",
+      "oracle_workspace_hash": "e1c2549317fab8226241f32c3387ce7e3e84868d01ed04a84ec3079aec904950",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.beamer-flowchart-scale.v1",
+      "source_candidate_id": "v3.artifact.016",
+      "fixture_hash": "e3d80bb7965d158c856c79cd2a4cf0e5ccb207f9780ca189ed9ab969aeba8ad6",
+      "oracle_workspace_hash": "97d478839fb0bc471395abd319e0e0f74369c433a09096c65eceb360bf12a50f",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.appendix-table-reference.v1",
+      "source_candidate_id": "v3.artifact.030",
+      "fixture_hash": "643b115c8cc08ef45846bc542723808fe5c9f76e97758f6e88ddf52d9ad73404",
+      "oracle_workspace_hash": "9154fd12d13f8a637f4f97ba1377a5b6f149426c1b58a85dd984f6c48c1b5524",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 2,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.main-supplement-organization.v1",
+      "source_candidate_id": "v3.artifact.037",
+      "fixture_hash": "f04bad7a4f003238d2043f9c02432bf17262feea73d9c9dee56146fe62164ffc",
+      "oracle_workspace_hash": "ec55b69671df6b04ba58409f8750ea9a5e9108b3e5aa0214f2d91371f64cf3dc",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.interaction-title-clarification.v1",
+      "source_candidate_id": "v3.interaction.001",
+      "fixture_hash": "8f2308ca378db806734031257bbbe2b6114f53dd7d1001b294e4fbd730bed436",
+      "oracle_workspace_hash": "8f2308ca378db806734031257bbbe2b6114f53dd7d1001b294e4fbd730bed436",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.interaction-old-files-clarification.v1",
+      "source_candidate_id": "v3.interaction.003",
+      "fixture_hash": "70f73187821b53406cc2e530ad26ad743611263532271a2ce64f1987ea3e699a",
+      "oracle_workspace_hash": "70f73187821b53406cc2e530ad26ad743611263532271a2ce64f1987ea3e699a",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.interaction-caption-no-op.v1",
+      "source_candidate_id": "v3.interaction.002",
+      "fixture_hash": "10ef1548219995a6030b7aad9a3ace5c5d2ff180130840b6a7df9d945fe6b087",
+      "oracle_workspace_hash": "10ef1548219995a6030b7aad9a3ace5c5d2ff180130840b6a7df9d945fe6b087",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.interaction-unverified-claim-refusal.v1",
+      "source_candidate_id": "v3.interaction.004",
+      "fixture_hash": "a587743b65aaac9beca22b63f3a6dfff43121f6819d6405b8af0c8041afb7772",
+      "oracle_workspace_hash": "a587743b65aaac9beca22b63f3a6dfff43121f6819d6405b8af0c8041afb7772",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.interaction-preamble-no-op.v1",
+      "source_candidate_id": "v3.interaction.020",
+      "fixture_hash": "37ac2e8f8f07a80b4384e68a4222770c25ceaff283383ffd20f96f337e63d823",
+      "oracle_workspace_hash": "37ac2e8f8f07a80b4384e68a4222770c25ceaff283383ffd20f96f337e63d823",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.interaction-title-recovery.v1",
+      "source_candidate_id": "v3.interaction.006",
+      "fixture_hash": "3e6351b148a8e321f156f361fc789d55f28b2e7f6f5ad13ae6f79bf69dfe2f6e",
+      "oracle_workspace_hash": "4caf48416463682b8738283cdcceb2f004790cb73f99a13a15fb7f05176fb1a4",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.interaction-trend-chart-recovery.v1",
+      "source_candidate_id": "v3.interaction.007",
+      "fixture_hash": "3d46dad5007bbc23e3ae1417885955a014ddb8e7cac82ae0142ee2e053db0499",
+      "oracle_workspace_hash": "e28d6680001fc4f78265e7f5e7a7ea730d2d99e497c5452fdc2c829222fdae2c",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.interaction-long-terms-clarification.v1",
+      "source_candidate_id": "v3.interaction.026",
+      "fixture_hash": "b4b063641c6d66ed01f987043bdd17e87345ce996d762e9cef2d768aa729fb1f",
+      "oracle_workspace_hash": "b4b063641c6d66ed01f987043bdd17e87345ce996d762e9cef2d768aa729fb1f",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    }
+  ],
+  "valid": true
+}

@@ -1,4 +1,5 @@
 import { workspaceHash } from '../headless/workspaceState.js'
+import { V3_EXECUTABLE_CASES } from '../benchmark-v3/executable/index.js'
 import { PILOT_CASES } from './seedCases.js'
 import type { Capability, PilotCase } from './types.js'
 
@@ -14,6 +15,11 @@ const ALL_CAPABILITIES: Capability[] = [
   'C9',
   'C10',
   'C11',
+]
+
+export const EVALUATION_CASES: PilotCase[] = [
+  ...PILOT_CASES,
+  ...V3_EXECUTABLE_CASES,
 ]
 
 export function validatePilotCase(caseDefinition: PilotCase): string[] {
@@ -181,7 +187,7 @@ export function validatePilotRegistry(cases = PILOT_CASES): string[] {
 }
 
 export function getPilotCase(caseId: string): PilotCase {
-  const found = PILOT_CASES.find((item) => item.case_id === caseId)
+  const found = EVALUATION_CASES.find((item) => item.case_id === caseId)
   if (!found) throw new Error(`Unknown pilot case: ${caseId}`)
   return found
 }

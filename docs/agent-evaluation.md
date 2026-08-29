@@ -1225,16 +1225,46 @@ fixture hashes 仍可用于交叉核对，但不能事后改写 canonical manife
 长上下文四个方向生成，共得到 150 条候选：38 / 38 / 37 / 37。主 Agent 没有扮演用户或补写
 用户请求，只负责保留来源、编号、去重和结构验证。
 
-候选记录位于 `services/llm/eval/benchmark-v3/`，包括首轮请求，以及每条请求对应的项目摘要、
+来源候选记录位于 `services/llm/eval/benchmark-v3/`，包括首轮请求，以及每条请求对应的项目摘要、
 后续可能透露事实、必须保留项和不可接受结果。所有用户可见请求均为中文；文件名、LaTeX 命令、
 编译器等必要技术实体可以保留原名。自动检查验证总量、source 分布、ID/消息唯一性、中文内容、
-brief 一一覆盖、候选 schema 边界和 manifest 非执行状态，当前 6/6 通过，TypeScript typecheck
+brief 一一覆盖和候选 schema 边界，当前 6/6 通过，TypeScript typecheck
 通过。
 
-这 150 条数据当前全部是 `candidate`，可执行数为 0，不进入任何 PASS/FAIL 分母，也没有运行
-Copilot。`eval_user` 的角色是模拟用户，不能同时提供 grader/oracle；因此后续必须由独立的
-benchmark materialization 流程逐条补齐 fixture、策略无关 outcome、protected invariants、
-oracle、grader mutation test 和 compile validation，之后才能升级为 `executable`。split 也暂不
-分配，避免在 family/lineage 尚未确认前造成 dev/holdout 泄漏。
+150 条来源记录继续保持 `candidate`，其中 32 条已派生为 executable dev case，剩余 118 条仍
+不可执行。`eval_user` 的角色只负责模拟用户；fixture、策略无关 outcome、protected invariants、
+oracle、grader mutation 和 compile validation 由独立 materialization 流程完成。当前没有 v3
+hidden holdout，也没有运行 Copilot baseline。
 
 完整 gate 和来源清单记录在 `services/llm/eval/benchmark-v3/README.md` 与 `manifest.json`。
+
+### Benchmark v3 第一批 executable dev set
+
+第一批 32 个 case 由四个 `gpt-5.6-luna`、high reasoning 子 Agent 分领域物化，每个领域 8 个，
+主 Agent 统一执行 validation。用户首轮请求严格引用原 `eval_user` candidate；用户可见内容、
+interaction facts 和 oracle response 均为中文。case fixture 可包含任务所需的英文论文内容或
+LaTeX 技术实体。
+
+| 覆盖项 | 第一批结果 |
+|---|---:|
+| 难度 | D2 8；D3 17；D4 7 |
+| 多文件 | 23 / 32 |
+| required compile / repair loop | 25 / 32 |
+| dynamic multi-turn | 6 / 32 |
+| expected action | patch 26；clarify 3；answer/no-op/refuse 各 1 |
+| source domain | content/compile/artifact/interaction 各 8 |
+| grader negative mutations | 64，全部被拒绝 |
+
+C1–C11 均有覆盖，但当前仍不平衡：C9 只有 1 个、C11 只有 3 个，且第一批没有 D1；这是 dev
+tranche，不应解释成完整 benchmark 已建成。D1 已在 legacy pilot 中充分出现，v3 后续更应补强
+C9、C11、非 patch action、H2/H3 与组合长上下文，而不是机械补 D1 数量。
+
+验证分三层：runtime schema/candidate lineage/中文字段；oracle positive 与 critical mutation
+negative；真实 CLSI initial/final compile。第一次静态 gate 发现受保护 invariant 未被 grader
+显式检查、一个 mutation 未被拒绝、一个澄清 oracle 与正则不一致；第一次真实编译又发现中文
+pdfLaTeX 支持、proof 结束符和 subfigure caption 三处 fixture/oracle 问题。修正后全量重跑结果
+为 20/20 tests、32/32 initial 状态符合声明、32/32 final workspace 零错误编译，validation report
+最终 `valid=true`；tests 包含 report 与当前 fixture/oracle hash 的防陈旧检查。
+
+generic runner 的 case registry 已能通过 ID 解析 legacy 43 + v3 32 个 case；没有改变 Copilot、
+prompt、tool schema、Agent loop 或 grader runtime 行为。
