@@ -954,3 +954,86 @@ decision 不稳定。失败不是 patch、compile、grader 或 recovery 链路�
 * 若 prompt-only 仍不稳定，再评估显式 clarification action；提交前硬 guard 风险最高，不应先做。
 
 完整分析：`docs/CLARIFICATION_FAILURE_ANALYSIS.md`。
+
+## Iteration 10 — 最小 Clarification Policy Optimization
+
+日期：2026-08-30
+
+### 本轮研究的问题
+
+只修改 clarification policy：当多个合理目标会产生实质不同 patch，而用户上下文不足以唯一
+确定目标时，要求 Agent 在修改前澄清；验证该规则能否修复两个 dev clarification 场景，同时
+保留明确请求的快速执行能力。本轮不修改 benchmark、grader、tool schema、Agent loop、
+temperature，也不运行 hidden holdout。
+
+### Observation / Evidence
+
+* Before 的两个 clarification dev case 为 1/2；失败的
+  `dynamic.clarify-shared-title.v1` 首轮已找到两个同名目标，却直接同时修改，拒绝后才恢复。
+* 最小 prompt 修改后，两个 clarification dev case 为 2/2，全部首轮先澄清；dynamic dev 从
+  7/8 提升到 8/8。
+* 完整 dev 为 35/37。两个失败均为非 clarification D2 case：一个使用可编译的
+  `\\paragraph*{Warning}`，另一个使用语义等价且保留约束的词序；两者均被只接受唯一形式的
+  deterministic grader 拒绝。
+* 37 个选中 trial 共 44 user turns、75 responses、169 model calls、181 tool calls、59 次
+  compile、894,812 tokens、1,459,644 ms case wall time；未观察到过度澄清。
+* 14/14 prompt/pilot tests 与 TypeScript typecheck 通过。hidden holdout 未运行。
+
+### Interpretation / Root Cause
+
+原 failure 的主要原因是 prompt 中 clarification 与“尽快产生 actionable result”的优先级不清，
+使边界模型决策采用 inferred default。新增规则直接约束该决策点，且明确保留全局请求、唯一命名
+目标和同一作用域联动修改的例外。After 的两个总分失败没有目标歧义、没有多余询问，trace 更
+支持 grader ambiguity，而不是 clarification policy regression。
+
+### Changes
+
+* `app/agent/prompts.ts`：加入最小、通用的 edit-target ambiguity 优先规则。
+* `eval/pilot/clarificationPolicy.test.ts`：覆盖先澄清、明确作用域快速执行、无 patch tool 时不
+  注入规则三个 prompt contract。
+* 当前改动已在 `61a50d50c8db3d2f0841cf43e1a0b5ab32d8e4d2` 提交。
+* 为继续评测，将本机 Clash 从 `GLOBAL` 恢复为 `rule`：火山方舟端点 TLS 从失败恢复为预期
+  401，同一 provider smoke case 随后 PASS。没有修改 Copilot model/config。
+
+### Benchmark / Metric Before vs After
+
+| 指标 | Before | After |
+|---|---:|---:|
+| 完整 dev | 36/37（97.3%） | 35/37（94.6%） |
+| clarification dev | 1/2（50.0%） | 2/2（100%） |
+| dynamic dev | 7/8（87.5%） | 8/8（100%） |
+| user turns / responses | 44 / 75 | 44 / 75 |
+| model calls | 166 | 169 |
+| tokens | 829,592 | 894,812（+7.9%） |
+| case wall time | 745,224 ms | 1,459,644 ms |
+| 过度澄清 | 0 | 0 |
+
+After difficulty：D1 3/3、D2 10/12、D3 17/17、D4 5/5。wall time 增量主要来自
+手工动态 `eval_user` roundtrip 等待，不能解释为 prompt latency regression；turn 数不变。
+
+### Failure Cases / Regression
+
+* 原 dev clarification failure 已消除；未运行 hidden failure，因此不宣称 hidden 已修复。
+* `structure.warning-paragraph.v1` 与 `constraint.polish-preserve-measurement.v1` 是 grader
+  false-negative/ambiguity 候选，本轮按要求未修改 grader，也不纳入 Agent regression 结论。
+* provider 中断的三次 `MODEL_PROVIDER_ERROR` 为 infrastructure attempt，不进入 capability
+  分母；修复代理路由后 smoke 与剩余 10 个 dev case 全部 PASS。
+* 没有发现过度澄清或明确全局/跨文件任务被阻断，因此保留本次 prompt 修改，不回滚。
+
+### Reproducibility 限制
+
+早期 26 个选中 trial 的 `EVAL_GIT_COMMIT` 被手工录入为前缀正确、后缀错误的 SHA；后续 11 个
+记录真实完整 commit。实际代码与 prompt 未变化，hash 可交叉验证，但 canonical manifest 不应
+被事后修改，因此完整 dev 汇总存在 commit-level provenance 缺口。后续 baseline 必须由调度器
+从宿主仓库自动读取并校验 commit，禁止手抄。
+
+### 本轮经验与推荐方向
+
+* 小范围 prompt 优先级规则足以改变目标歧义的首轮决策，并且当前 dev 未显示过度澄清。
+* deterministic grader 应验证语义与约束，而不是无必要地绑定 starred form 或唯一英语词序；
+  但修正应作为独立 benchmark-quality iteration，不能在本轮追分。
+* 推荐下一步候选：
+  1. 独立审计并最小修复两个 grader ambiguity，再用冻结 Agent 重放 dev；
+  2. 给 baseline scheduler 增加宿主 Git SHA 自动注入/校验和 selected-trial report；
+  3. 在不用于调试的前提下，安排一次新的 hidden holdout 评估验证泛化；
+  4. 分离 Agent execution latency 与人工 `eval_user` orchestration wait。

@@ -1159,3 +1159,61 @@ decision。最小候选修复层是统一 system prompt 的作用域歧义决策
 本轮没有修改 Copilot prompt、model、tool 或 Agent loop。相对 24/24 的 v1，41/43 及
 clarification 集中的稳定失败证明区分度已有提升，但除 clarification 外多数 category 仍为
 100%，不能据此宣称 benchmark 已充分饱和。
+
+## Clarification Policy Optimization：Dev-only 结果
+
+Iteration 10 只在 system prompt 的 edit policy 中加入一条通用优先级规则：当 Agent 已发现
+多个会产生实质不同 patch 的合理目标集合，而用户请求、query、selection 与 current file 都
+不能唯一确定目标时，必须在 `submit_patch` 前提出一个简短澄清问题；不得自行选择 inferred
+default，也不得把全部候选一起修改。显式要求修改全部、唯一命名目标、以及同一唯一作用域所需
+的定义与引用联动不属于该歧义。tool schema、Agent loop、temperature、benchmark 与 grader
+均未修改。
+
+本轮只运行 dev，不运行已经使用过的 hidden holdout。以每个 dev family 最新的非
+`INFRA_FAILURE` trial 计：
+
+| 指标 | Iteration 8 Before | Iteration 10 After |
+|---|---:|---:|
+| dev PASS | 36 / 37（97.3%） | 35 / 37（94.6%） |
+| clarification dev | 1 / 2（50.0%） | 2 / 2（100%） |
+| dynamic dev | 7 / 8（87.5%） | 8 / 8（100%） |
+| user turns / responses | 44 / 75 | 44 / 75 |
+| model calls | 166 | 169 |
+| tokens | 829,592 | 894,812 |
+| case wall time | 745,224 ms | 1,459,644 ms |
+| patch rejections | 3 | 2 |
+| 观察到的过度澄清 | 0 | 0 |
+
+After 按 difficulty 为 D1 3/3、D2 10/12、D3 17/17、D4 5/5。两个 clarification
+case 都在首轮先询问再修改，其中 `dynamic.clarify-shared-title.v1` 从失败变为 PASS；8 个
+动态 dev case 全部 PASS。wall time 不能直接归因给 prompt：动态 case 的 1,018,938 ms 包含
+手工 orchestrator 与独立 `eval_user` session 的轮次等待，Before 对应值仅 343,349 ms；
+Agent turns 没有增加，model calls 增加 3 次，token 增加 65,220（7.9%）。
+
+总分下降来自两个非 clarification 的 D2 trial：
+
+* `structure.warning-paragraph.v1` 生成可编译且语义合理的
+  `\\paragraph*{Warning}`，grader 只接受 `\\paragraph{Warning...}`；
+* `constraint.polish-preserve-measurement.v1` 保留 preliminary/results/suggest 与 412 ms，
+  生成 `Preliminary results suggest a 412 ms latency.`，grader 只接受唯一词序
+  `Preliminary results suggest 412 ms latency.`。
+
+两者的文件约束与 compile trace 均无 clarification regression 证据，应作为 grader
+false-negative/ambiguity 候选，而不是据此回滚 Agent policy。本轮按约束没有修改 benchmark
+或 grader。prompt contract、dynamic protocol 与 registry tests 为 14/14，TypeScript
+typecheck 通过。
+
+### Provider 与 provenance 说明
+
+中途 `deepseek-v4-flash-ga-260731` 的首个模型调用连续返回 `Connection error`。宿主机与
+LLM 容器的 TLS probe、Clash 日志共同表明，火山方舟中国区端点被 `GLOBAL` 模式送入不可用
+代理节点；恢复 `rule` 模式后，无鉴权 probe 立即得到预期 401，同一 case 随后从 0-token
+`INFRA_FAILURE` 恢复为 PASS。该修复是本机代理运行/持久配置调整，不是 Copilot 行为修改；
+三次失败 attempt 的 canonical trace 继续保留且不进入 capability 分母。
+
+早期 26 个 dev trial 虽然强制写入了 `EVAL_GIT_COMMIT`，但 orchestrator 手工录入的 SHA
+只有前缀正确、后缀错误；后续 11 个选中 trial 记录了真实完整 commit
+`61a50d50c8db3d2f0841cf43e1a0b5ab32d8e4d2`。实际运行代码未在两者之间变化，prompt/config/
+fixture hashes 仍可用于交叉核对，但不能事后改写 canonical manifest，因此 37-case 汇总是
+行为证据充分、commit-level provenance 不完整的 dev baseline。后续 scheduler 应从宿主 Git
+自动注入并校验 SHA，避免继续人工抄录。
