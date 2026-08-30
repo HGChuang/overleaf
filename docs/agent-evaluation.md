@@ -1356,3 +1356,29 @@ applicator 拒绝路径穿越、覆盖和缺失源。6 个 fixture 的 initial/f
 
 当前仍没有 hidden holdout，73 个 v3 case 全是 dev；本轮没有运行 Copilot，因此没有 baseline
 正确率或能力天花板结论。
+
+## Iteration 15：首次 v3 baseline 的部分运行记录
+
+本轮由独立 `eval_user` session 驱动 baseline，主 agent 仅负责调度和结果汇总；没有修改
+Copilot、benchmark、grader 或 tool schema。运行因 runner 交互进程生命周期、Mongo setup、
+provider 和 CLSI 的不稳定而停止，详细 attempt 表与 artifact 路径见
+`services/llm/eval/benchmark-v3/BASELINE_PARTIAL_20260830.md`。
+
+主 experiment `benchmark-v3-baseline-20260830` 在 commit
+`09f358c35a3e988c5b84579d4c676d6da6437069`、`deepseek-v4-flash-ga-260731` /
+`openai-compat` 下产生 26 个 attempts，覆盖 20 个 case。17 个有有效 terminal 的 case 中
+9 个 PASS、8 个 COPILOT_FAILURE，部分有效通过率为 9/17（52.9%）；8 个 INFRA_FAILURE 和
+1 个未结束 attempt 不进入分母。辅助 smoke 有 3 个 attempts，只有 1 个有效 capability
+failure；clarification 第二次完整运行被人工定性为 `GRADER_FAILURE/INVALID_CASE_RESULT`，
+不纳入能力分数。
+
+有效主 experiment 合计 428,681 tokens、66 次 model start、93 次 tool call、10 次 compile、
+484,555 ms wall；全部 attempts 的 tokens/wall 为 437,180/511,927 ms。有效失败中 7 个
+来自 grader、1 个来自 tool patch semantic；排除的基础设施失败包括 runner/setup、Mongo
+setup、CLSI fetch 和 provider model error。
+
+`v3.compile-proof-environment.v1` 先发生 CLSI `fetch failed`，随后同一 case 的 initial
+compile 在 CLSI 恢复后返回预期的 `success` 加 2 errors，证明不能将一次 health/network
+false-negative 归因给模型或 fixture。当前未发现残留 baseline runner 进程；但 runner 的
+stdio/进程回收仍是正式 baseline 前的阻塞项。由于 73 个 executable 中只有 17 个产生有效
+terminal，本轮结果明确是 partial baseline，不能解释为完整集合的能力天花板。

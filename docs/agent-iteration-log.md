@@ -1334,3 +1334,67 @@ H2 insertion/deletion 和 H3 file operations 仍是明确 unsupported；6 个 H3
   2. 在仓库外建立未用于调试的 private hidden holdout，并按 family lineage 做交叉审计；
   3. 若要启用 H2，先统一 browser/headless 的显式 insertion anchor 并修复 deletion apply；
   4. 若要启用 H3，先设计结构化 file-operation tool 与真实项目 API conformance，再解除 blocked。
+
+## Iteration 15 — Benchmark v3 首次 baseline（部分运行）
+
+日期：2026-08-30
+
+### Observation / Evidence
+
+本轮按根目录约定由独立 `eval_user` session 模拟用户，主 agent 只调度；未修改 Copilot、
+benchmark、grader 或 tool schema。主 experiment `benchmark-v3-baseline-20260830` 使用
+`deepseek-v4-flash-ga-260731` / `openai-compat`，commit 为
+`09f358c35a3e988c5b84579d4c676d6da6437069`。
+
+主 experiment 产生 26 个 attempts、20 个 unique case，其中 17 个有有效 terminal：9 PASS、
+8 COPILOT_FAILURE，部分分母通过率为 9/17（52.9%）。另有 8 个 INFRA_FAILURE 和 1 个
+incomplete，不进入 capability 分母。重复 case 保留为 attempts：例如 figure、preamble 和
+answer-appendix 的 setup 失败后有有效 PASS；score-counter 有两次 setup 失败后才有有效
+terminal COPILOT_FAILURE。73 个 executable case 中，53 个未产生 attempt，另有 3 个已尝试但
+没有有效 terminal，因此尚有 56 个 case 没有有效运行记录。
+
+辅助 `benchmark-v3-baseline-smoke` 有 3 个 attempts、2 个 unique case：首个 clarification
+attempt 中断；第二个完整 clarification attempt 的 Copilot 行为是正确澄清→用户选择→标题
+patch→compile 成功，但旧 grader 要求 `no_patch`，人工标为
+`GRADER_FAILURE/INVALID_CASE_RESULT`；另一个内容 case 为有效 COPILOT_FAILURE。它们不改写主
+experiment 的 9/17 结果。
+
+### Root Cause / Interpretation
+
+本次观察到的主要不是一个单一 Copilot 能力结论，而是 baseline 执行可靠性不足：runner 的
+交互 stdio/进程回收没有形成稳定生命周期；部分 case 遇到 Mongo URI 缺失、provider model
+error 或 CLSI fetch failure。有效 terminal 的 7 个 grader failure 和 1 个 tool semantic
+failure 需要后续按 trace 分析，不能把 infra 与 capability 混算。
+
+CLSI false-negative 证据是 `v3.compile-proof-environment.v1`：第一次 initial compile 为
+`CLSI request failed: fetch failed`，后续 attempt 在 CLSI 恢复后返回预期 initial
+`compile_status=success`、2 errors。故这次失败被归为 infrastructure，不归因于 fixture 或
+Copilot。
+
+### Changes（仅运行与报告）
+
+* 停止并检查本轮 runner：清理前匹配 `runPilotCase`/两个 experiment 的进程数为 0，清理后仍为 0；没有重启服务或删除 artifacts。
+* 只读扫描 `run.json`、`events.jsonl`、`result.json`、`grader.json` 并保留重复 attempt 关系。
+* 新增中文部分基线报告：`services/llm/eval/benchmark-v3/BASELINE_PARTIAL_20260830.md`。
+* 将本 iteration 的范围、分母和限制记录在本日志与 `docs/agent-evaluation.md`。
+
+### Validation
+
+报告中的有效分母为 17，指标为有效 terminal 合计 428,681 tokens、66 model starts、93 tool
+calls、10 compile calls、484,555 ms wall；全部主 attempts 为 437,180 tokens、511,927 ms、
+96 tools、10 compile。trace 能恢复 terminal status、failure taxonomy、turn/tool/patch/
+compile 顺序；未补造缺失的 retry 或未结束 trial 数据。
+
+### Regression / Remaining blockers
+
+未运行新 case，未观察到 Copilot 行为 regression。当前结果不是 73-case 正式 baseline：runner
+进程回收、Mongo/provider/CLSI preflight、唯一 trial scheduling 和剩余 56 个无有效记录 case
+仍需处理。73 个 case 仍全部是 dev，不能据此给出 hidden 泛化能力结论。
+
+### 下一步
+
+1. 修复并验证 runner stdio/子进程回收与 preflight，再从干净 experiment 运行完整 dev baseline。
+2. 保持 infra、incomplete、invalid grader result 与 capability failure 分离，并自动生成 attempt report。
+3. 首次正式 baseline 后再分析 7 个 grader failure，确认是否存在 grader false-positive/negative。
+
+本 iteration 未提交 Git，未 push。
