@@ -103,6 +103,17 @@ function gradeOne(spec: GraderSpec, context: PilotGradeContext): GraderCheck {
       message = `response contains all of ${JSON.stringify(spec.values)}`
       break
     }
+    case 'response_fact_groups': {
+      const response = selectedResponses(
+        context,
+        spec.response_index,
+      ).toLowerCase()
+      passed = spec.groups.every((alternatives) =>
+        alternatives.some((value) => response.includes(value.toLowerCase())),
+      )
+      message = `response satisfies ${spec.groups.length} semantic fact group(s)`
+      break
+    }
     case 'patch_files':
       passed =
         spec.files.length === context.patchFiles.length &&

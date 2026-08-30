@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { BENCHMARK_V3_CANDIDATE_SEEDS } from "./candidateSeeds.js";
+import { V3_SUPPLEMENTAL_SEEDS } from "./supplementalSeeds.js";
 
 const EXPECTED_SOURCE_COUNTS: Record<string, number> = {
   v3_user_content_structure: 38,
@@ -17,6 +18,26 @@ test("v3 candidate corpus contains exactly 150 eval_user generated seeds", () =>
     counts[seed.source_session] = (counts[seed.source_session] || 0) + 1;
   }
   assert.deepEqual(counts, EXPECTED_SOURCE_COUNTS);
+});
+
+test("non-edit supplement contains 9 unique Chinese eval_user seeds", () => {
+  assert.equal(V3_SUPPLEMENTAL_SEEDS.length, 9);
+  assert.equal(
+    new Set(V3_SUPPLEMENTAL_SEEDS.map((seed) => seed.candidate_id)).size,
+    9,
+  );
+  assert.equal(
+    new Set(V3_SUPPLEMENTAL_SEEDS.map((seed) => seed.initial_user_message))
+      .size,
+    9,
+  );
+  assert.ok(
+    V3_SUPPLEMENTAL_SEEDS.every(
+      (seed) =>
+        seed.source_session === "non_edit_eval_user" &&
+        /\p{Script=Han}/u.test(seed.initial_user_message),
+    ),
+  );
 });
 
 test("v3 candidate ids and user messages are unique", () => {
@@ -120,19 +141,30 @@ test("manifest separates the immutable candidate pool from the executable tranch
   const manifest = JSON.parse(
     readFileSync(new URL("manifest.json", import.meta.url), "utf8"),
   );
-  assert.equal(manifest.lifecycle, "candidate-pool-with-executable-tranche");
+  assert.equal(
+    manifest.lifecycle,
+    "candidate-pool-with-executable-and-blocked-conformance",
+  );
   assert.equal(manifest.language, "zh-CN");
   assert.equal(
     manifest.counts.source_candidates,
-    BENCHMARK_V3_CANDIDATE_SEEDS.length,
+    BENCHMARK_V3_CANDIDATE_SEEDS.length + V3_SUPPLEMENTAL_SEEDS.length,
   );
-  assert.equal(manifest.counts.materialized_candidates, 64);
-  assert.equal(manifest.counts.unmaterialized_candidates, 86);
-  assert.equal(manifest.counts.executable_cases, 64);
-  assert.equal(manifest.split_status, "first-two-tranches-dev-only");
+  assert.equal(manifest.counts.base_source_candidates, 150);
+  assert.equal(manifest.counts.supplemental_non_edit_candidates, 9);
+  assert.equal(manifest.counts.materialized_candidates, 79);
+  assert.equal(manifest.counts.unmaterialized_candidates, 80);
+  assert.equal(manifest.counts.executable_cases, 73);
+  assert.equal(manifest.counts.conformance_blocked_h3_cases, 6);
+  assert.equal(manifest.split_status, "three-tranches-dev-only");
   assert.equal(manifest.validation.candidate_pool.brief_coverage, true);
   assert.equal(manifest.validation.executable_tranche.oracle_apply, true);
   assert.equal(manifest.validation.executable_tranche.final_compile, true);
   assert.equal(manifest.validation.executable_tranche.grader_mutation, true);
+  assert.equal(manifest.validation.conformance.h2, "blocked-product-semantics");
+  assert.equal(
+    manifest.validation.conformance.h3,
+    "blocked-missing-agent-protocol",
+  );
   assert.equal(manifest.validation.hidden_sealed, false);
 });

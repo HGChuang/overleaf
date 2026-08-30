@@ -1,0 +1,900 @@
+{
+  "schema_version": 1,
+  "benchmark_id": "overleaf-agent-benchmark-v3",
+  "audit": "lineage",
+  "deterministic": true,
+  "source": {
+    "registry": "executable/index.ts",
+    "case_count": 64,
+    "case_ids_sha256": "4ccf75570e1f44da34a5839cff9542453dbc7258684edfedc2e9294befdd9068",
+    "all_cases_split": [
+      "dev"
+    ]
+  },
+  "method": {
+    "exact_identity": [
+      "case_id",
+      "case_family_id",
+      "source_candidate_id",
+      "fixture.fixture_id",
+      "fixture.fixture_lineage",
+      "canonical workspace sha256",
+      "exact normalized public prompt"
+    ],
+    "prompt_normalization": "NFKC + lowercase + punctuation/whitespace removal",
+    "fixture_normalization": "NFKC + remove comments/document wrappers/title metadata + whitespace removal",
+    "fuzzy_metric": "character 2-gram Jaccard",
+    "thresholds": {
+      "prompt_review": 0.72,
+      "fixture_review": 0.72,
+      "boilerplate_meaningful_length": 180
+    }
+  },
+  "summary": {
+    "duplicate_identity": {
+      "case_id": [],
+      "case_family_id": [],
+      "source_candidate_id": [],
+      "fixture_id": [],
+      "fixture_lineage": [],
+      "workspace": [],
+      "normalized_prompt": []
+    },
+    "shared_file_content_groups": [],
+    "prompt_near_duplicate_pairs": [],
+    "fixture_near_duplicate_pairs": [],
+    "top_prompt_similarity_pairs": [
+      {
+        "left_case_id": "v3.compile-algorithm-environment.v1",
+        "right_case_id": "v3.compile-score-counter-collision.v1",
+        "similarity": 0.2766,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.interaction-title-clarification.v1",
+        "right_case_id": "v3.interaction-title-recovery.v1",
+        "similarity": 0.1818,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.compile-score-counter-collision.v1",
+        "right_case_id": "v3.compile-subfigure-counter-recovery.v1",
+        "similarity": 0.16,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.compile-algorithm-environment.v1",
+        "right_case_id": "v3.compile-bibliography-entrypoint.v1",
+        "similarity": 0.1538,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.financial-wide-table.v1",
+        "right_case_id": "v3.three-subfigures-width.v1",
+        "similarity": 0.125,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.compile-bibliography-entrypoint.v1",
+        "right_case_id": "v3.interaction2-medical-anonymization.v1",
+        "similarity": 0.1207,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.appendix-table-reference.v1",
+        "right_case_id": "v3.compile-algorithm-environment.v1",
+        "similarity": 0.1176,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.content-pseudocode-normalization.v1",
+        "right_case_id": "v3.content-theorem-numbering.v1",
+        "similarity": 0.1159,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.appendix-table-reference.v1",
+        "right_case_id": "v3.compile-score-counter-collision.v1",
+        "similarity": 0.1091,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.appendix-table-reference.v1",
+        "right_case_id": "v3.content-sample-identifiers-units.v1",
+        "similarity": 0.1053,
+        "disposition": "below-threshold"
+      }
+    ],
+    "top_fixture_similarity_pairs": [
+      {
+        "left_case_id": "v3.compile-proof-closure-recovery.v1",
+        "right_case_id": "v3.compile-proof-environment.v1",
+        "similarity": 0.5723,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.chemistry-structure-reference.v1",
+        "right_case_id": "v3.combined-chart-group.v1",
+        "similarity": 0.5385,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.answer-entry-selection.v1",
+        "right_case_id": "v3.result-figure-near-analysis.v1",
+        "similarity": 0.5354,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.compile-department-figure-counters.v1",
+        "right_case_id": "v3.compile-score-counter-collision.v1",
+        "similarity": 0.5234,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.combined-chart-group.v1",
+        "right_case_id": "v3.result-figure-near-analysis.v1",
+        "similarity": 0.505,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.combined-chart-group.v1",
+        "right_case_id": "v3.three-subfigures-width.v1",
+        "similarity": 0.4944,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.compile-appendix-label-collision.v1",
+        "right_case_id": "v3.compile-score-counter-collision.v1",
+        "similarity": 0.4926,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.compile-department-figure-counters.v1",
+        "right_case_id": "v3.compile-subfigure-counter-recovery.v1",
+        "similarity": 0.4922,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.compile-score-counter-collision.v1",
+        "right_case_id": "v3.compile-subfigure-counter-recovery.v1",
+        "similarity": 0.4839,
+        "disposition": "below-threshold"
+      },
+      {
+        "left_case_id": "v3.chemistry-structure-reference.v1",
+        "right_case_id": "v3.result-figure-near-analysis.v1",
+        "similarity": 0.4834,
+        "disposition": "below-threshold"
+      }
+    ],
+    "linkage": {
+      "missing_source_candidates": [],
+      "candidate_brief_mismatches": [],
+      "fixture_lineage_mismatches": []
+    },
+    "counts": {
+      "duplicate_identity_groups": 0,
+      "shared_file_groups": 0,
+      "prompt_near_pairs": 0,
+      "fixture_near_pairs": 0,
+      "prompt_near_review_pairs": 0,
+      "fixture_near_review_pairs": 0
+    }
+  },
+  "case_lineage": [
+    {
+      "case_id": "v3.answer-entry-selection.v1",
+      "case_family_id": "v3.answer-entry-selection",
+      "source_candidate_id": "v3.artifact.025",
+      "source_lineage": {
+        "fixture_id": "v3.answer-entry-selection",
+        "fixture_lineage": "v3.artifact.025",
+        "workspace_sha256": "6ae1ff2531acf6237d50a5fa176227b697879bf9a25cfefc866c50bb520e426d"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.appendix-header-short-mark.v1",
+      "case_family_id": "v3.appendix-header-short-mark",
+      "source_candidate_id": "v3.artifact.020",
+      "source_lineage": {
+        "fixture_id": "v3.appendix-header-short-mark",
+        "fixture_lineage": "v3.artifact.020",
+        "workspace_sha256": "b31845e97ce6d63523e076e6065bad998c732b353c63df88cf6e3f63164a6eee"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.appendix-table-reference.v1",
+      "case_family_id": "v3.appendix-table-reference",
+      "source_candidate_id": "v3.artifact.030",
+      "source_lineage": {
+        "fixture_id": "v3.appendix-table-reference",
+        "fixture_lineage": "v3.artifact.030",
+        "workspace_sha256": "533f71aeb451938a3f1a538504fdb85473a46d3db52bf0542404a9f1c041813e"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.beamer-flowchart-scale.v1",
+      "case_family_id": "v3.beamer-flowchart-scale",
+      "source_candidate_id": "v3.artifact.016",
+      "source_lineage": {
+        "fixture_id": "v3.beamer-flowchart-scale",
+        "fixture_lineage": "v3.artifact.016",
+        "workspace_sha256": "f81f6895d9bc5d0c78fc00967d9867d6f60008136db45b10c7bb63ee4c58dd1f"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.beamer-reference-overflow.v1",
+      "case_family_id": "v3.beamer-reference-overflow",
+      "source_candidate_id": "v3.artifact.017",
+      "source_lineage": {
+        "fixture_id": "v3.beamer-reference-overflow",
+        "fixture_lineage": "v3.artifact.017",
+        "workspace_sha256": "feb3c7bb736f774c5c0f6b620266addac4e8e5b21c750255eb7e84555c61ae92"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.chemistry-structure-reference.v1",
+      "case_family_id": "v3.chemistry-structure-reference",
+      "source_candidate_id": "v3.artifact.029",
+      "source_lineage": {
+        "fixture_id": "v3.chemistry-structure-reference",
+        "fixture_lineage": "v3.artifact.029",
+        "workspace_sha256": "b11fb60e555aaa57752d0abe672d49232155403cdef9eea2ea76c802b180da09"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.combined-chart-group.v1",
+      "case_family_id": "v3.combined-chart-group",
+      "source_candidate_id": "v3.artifact.005",
+      "source_lineage": {
+        "fixture_id": "v3.combined-chart-group",
+        "fixture_lineage": "v3.artifact.005",
+        "workspace_sha256": "06e22219a643d7c1f570417eaeb3d9d4012bce45cfabf6bf3d04ee2c04c2675c"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-algorithm-environment.v1",
+      "case_family_id": "v3.compile-algorithm-environment",
+      "source_candidate_id": "v3.compile.020",
+      "source_lineage": {
+        "fixture_id": "v3.compile-algorithm-environment",
+        "fixture_lineage": "v3.compile.020",
+        "workspace_sha256": "a0659a8254275025de6eb271e4a1added1c5e3b4e8ae8ddaa9c7c12e48d22fd2"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-appendix-label-collision.v1",
+      "case_family_id": "v3.compile-appendix-label-collision",
+      "source_candidate_id": "v3.compile.009",
+      "source_lineage": {
+        "fixture_id": "v3.compile-appendix-label-collision",
+        "fixture_lineage": "v3.compile.009",
+        "workspace_sha256": "2471bc7bcfd0e3650261921d2bb211aea3e30d778498f423bc9c21cdb82e6360"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-bibliography-entrypoint.v1",
+      "case_family_id": "v3.compile-bibliography-entrypoint",
+      "source_candidate_id": "v3.compile.012",
+      "source_lineage": {
+        "fixture_id": "v3.compile-bibliography-entrypoint",
+        "fixture_lineage": "v3.compile.012",
+        "workspace_sha256": "f7e3196beb55221977dfe780a9d7888db02f6f276d7b968a3cccf7d62664f61e"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-chapter-input-recovery.v1",
+      "case_family_id": "v3.compile-chapter-input-recovery",
+      "source_candidate_id": "v3.compile.008",
+      "source_lineage": {
+        "fixture_id": "v3.compile-chapter-input-recovery",
+        "fixture_lineage": "v3.compile.008",
+        "workspace_sha256": "bbfbdf316b823a63035d2f643f0bb5329f6f369741a489c95d3a0ebfa7940022"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-conditional-macro.v1",
+      "case_family_id": "v3.compile-conditional-macro",
+      "source_candidate_id": "v3.compile.006",
+      "source_lineage": {
+        "fixture_id": "v3.compile-conditional-macro",
+        "fixture_lineage": "v3.compile.006",
+        "workspace_sha256": "79fc9a2f773f4401263c76176bfee1183a83d376e4f63c27d6067101865fd512"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-department-figure-counters.v1",
+      "case_family_id": "v3.compile-department-figure-counters",
+      "source_candidate_id": "v3.compile.026",
+      "source_lineage": {
+        "fixture_id": "v3.compile-department-figure-counters",
+        "fixture_lineage": "v3.compile.026",
+        "workspace_sha256": "6ccca67c03a6a72ae2f2802f00e37846520026aa35ea1d195b99d4e9ac3b8368"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-duplicate-environment.v1",
+      "case_family_id": "v3.compile-duplicate-environment",
+      "source_candidate_id": "v3.compile.005",
+      "source_lineage": {
+        "fixture_id": "v3.compile-duplicate-environment",
+        "fixture_lineage": "v3.compile.005",
+        "workspace_sha256": "5bb9a37087fbc53c76c559e048e7db352f12cf9e3231c2b185e6f7fca4d872aa"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-final-multi-artifact.v1",
+      "case_family_id": "v3.compile-final-multi-artifact",
+      "source_candidate_id": "v3.compile.038",
+      "source_lineage": {
+        "fixture_id": "v3.compile-final-multi-artifact",
+        "fixture_lineage": "v3.compile.038",
+        "workspace_sha256": "7e16b65dcf8bddad7bc654b97cdfa8463a985c8dfef9a7161ef5e9619218f520"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-glossary-bibliography-recovery.v1",
+      "case_family_id": "v3.compile-glossary-bibliography-recovery",
+      "source_candidate_id": "v3.compile.019",
+      "source_lineage": {
+        "fixture_id": "v3.compile-glossary-bibliography-recovery",
+        "fixture_lineage": "v3.compile.019",
+        "workspace_sha256": "5d408928ea06a56674f55b4a9f9ffa6ae839812331ce6abb5579e155ef9c6baa"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-lesson-list-recovery.v1",
+      "case_family_id": "v3.compile-lesson-list-recovery",
+      "source_candidate_id": "v3.compile.034",
+      "source_lineage": {
+        "fixture_id": "v3.compile-lesson-list-recovery",
+        "fixture_lineage": "v3.compile.034",
+        "workspace_sha256": "42ed3f056c7198e095e34378fe2bbd88e4d403d824a4a6da89735e8c90dff82f"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-nested-block-recovery.v1",
+      "case_family_id": "v3.compile-nested-block-recovery",
+      "source_candidate_id": "v3.compile.004",
+      "source_lineage": {
+        "fixture_id": "v3.compile-nested-block-recovery",
+        "fixture_lineage": "v3.compile.004",
+        "workspace_sha256": "5d38b55f095df79a321772bcb07fe8643ef6b8a19c49a00f03f5eeb3d982d30c"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-proof-closure-recovery.v1",
+      "case_family_id": "v3.compile-proof-closure-recovery",
+      "source_candidate_id": "v3.compile.003",
+      "source_lineage": {
+        "fixture_id": "v3.compile-proof-closure-recovery",
+        "fixture_lineage": "v3.compile.003",
+        "workspace_sha256": "20633a84cac00046e560f2b3ef9629ad3d6ff8779e2f838ce0edddd865266cea"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-proof-environment.v1",
+      "case_family_id": "v3.compile-proof-environment",
+      "source_candidate_id": "v3.compile.023",
+      "source_lineage": {
+        "fixture_id": "v3.compile-proof-environment",
+        "fixture_lineage": "v3.compile.023",
+        "workspace_sha256": "2cacc4cb3f1b0a68d6b004e2e1e4af559ba8df6b0957fc7fbea5ab632f3b7746"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-score-counter-collision.v1",
+      "case_family_id": "v3.compile-score-counter-collision",
+      "source_candidate_id": "v3.compile.031",
+      "source_lineage": {
+        "fixture_id": "v3.compile-score-counter-collision",
+        "fixture_lineage": "v3.compile.031",
+        "workspace_sha256": "59d6d2ee554138812949b504419d10b4df98b59cfab582f0971e9cd2840b9aed"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-subfigure-counter-recovery.v1",
+      "case_family_id": "v3.compile-subfigure-counter-recovery",
+      "source_candidate_id": "v3.compile.010",
+      "source_lineage": {
+        "fixture_id": "v3.compile-subfigure-counter-recovery",
+        "fixture_lineage": "v3.compile.010",
+        "workspace_sha256": "73ed733eed9ec5bdb053bdd6e52a8534d6b63255deacb4736d6bcb337bb83079"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.compile-wide-table-column-recovery.v1",
+      "case_family_id": "v3.compile-wide-table-column-recovery",
+      "source_candidate_id": "v3.compile.024",
+      "source_lineage": {
+        "fixture_id": "v3.compile-wide-table-column-recovery",
+        "fixture_lineage": "v3.compile.024",
+        "workspace_sha256": "6b410d124993dfb3b276bdd3c16fbd902287cf4afd01a154401a700204d12383"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-abstract-conclusion-terminology.v1",
+      "case_family_id": "v3.content-abstract-conclusion-terminology",
+      "source_candidate_id": "v3.content.002",
+      "source_lineage": {
+        "fixture_id": "v3.content-abstract-conclusion-terminology",
+        "fixture_lineage": "v3.content.002",
+        "workspace_sha256": "e61b3c767e33be761e355b58cd897853c9b1b20e2fb0540318b4299f40541bc0"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-appendix-interview-translation.v1",
+      "case_family_id": "v3.content-appendix-interview-translation",
+      "source_candidate_id": "v3.content.005",
+      "source_lineage": {
+        "fixture_id": "v3.content-appendix-interview-translation",
+        "fixture_lineage": "v3.content.005",
+        "workspace_sha256": "eb34aa3ef17fd813d0c68d0e30151c473cc037a29c7fc22f473c1bba017f0970"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-bilingual-questionnaire-format.v1",
+      "case_family_id": "v3.content-bilingual-questionnaire-format",
+      "source_candidate_id": "v3.content.030",
+      "source_lineage": {
+        "fixture_id": "v3.content-bilingual-questionnaire-format",
+        "fixture_lineage": "v3.content.030",
+        "workspace_sha256": "51ac8242910cb93cfe52d4a458702bcab56fa1f121697f7158c5d8f62ee03c38"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-bilingual-sync.v1",
+      "case_family_id": "v3.content-bilingual-sync",
+      "source_candidate_id": "v3.content.006",
+      "source_lineage": {
+        "fixture_id": "v3.content-bilingual-sync",
+        "fixture_lineage": "v3.content.006",
+        "workspace_sha256": "a415c03ea116bc7cb1b636e595fb7d89f36865afec840a345e44277e73d5018c"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-introduction-progression.v1",
+      "case_family_id": "v3.content-introduction-progression",
+      "source_candidate_id": "v3.content.001",
+      "source_lineage": {
+        "fixture_id": "v3.content-introduction-progression",
+        "fixture_lineage": "v3.content.001",
+        "workspace_sha256": "49d1472098663fd8094a714ea384870f077a75dbb6cfdbcf7c7918cc347531de"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-matrix-vector-notation.v1",
+      "case_family_id": "v3.content-matrix-vector-notation",
+      "source_candidate_id": "v3.content.014",
+      "source_lineage": {
+        "fixture_id": "v3.content-matrix-vector-notation",
+        "fixture_lineage": "v3.content.014",
+        "workspace_sha256": "7b95820238055792dbb2d332bb71df94f422b113275a0b16366209056ae88f46"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-multifile-translation.v1",
+      "case_family_id": "v3.content-multifile-translation",
+      "source_candidate_id": "v3.content.004",
+      "source_lineage": {
+        "fixture_id": "v3.content-multifile-translation",
+        "fixture_lineage": "v3.content.004",
+        "workspace_sha256": "a60c9bfbee4c14a75988706a2b25ffd5c33742bd3f9aabde721a258b7481f161"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-patient-group-terms.v1",
+      "case_family_id": "v3.content-patient-group-terms",
+      "source_candidate_id": "v3.content.011",
+      "source_lineage": {
+        "fixture_id": "v3.content-patient-group-terms",
+        "fixture_lineage": "v3.content.011",
+        "workspace_sha256": "9f39553ba7ab284fb700997544ae6cfe89d9f98a9921bff17f8aa862447f174e"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-privacy-review-insertion.v1",
+      "case_family_id": "v3.content-privacy-review-insertion",
+      "source_candidate_id": "v3.content.007",
+      "source_lineage": {
+        "fixture_id": "v3.content-privacy-review-insertion",
+        "fixture_lineage": "v3.content.007",
+        "workspace_sha256": "9fa06de3d72f11a0bdb3529055784abce12d099e3c79a0e67b206c482c4dfd38"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-project-directory-refusal.v1",
+      "case_family_id": "v3.content-project-directory-refusal",
+      "source_candidate_id": "v3.content.019",
+      "source_lineage": {
+        "fixture_id": "v3.content-project-directory-refusal",
+        "fixture_lineage": "v3.content.019",
+        "workspace_sha256": "fe8b1d84ef79e3d0c497ca04f469cc85e68a6ed667e11eb70fafeebd641b1fed"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-pseudocode-normalization.v1",
+      "case_family_id": "v3.content-pseudocode-normalization",
+      "source_candidate_id": "v3.content.015",
+      "source_lineage": {
+        "fixture_id": "v3.content-pseudocode-normalization",
+        "fixture_lineage": "v3.content.015",
+        "workspace_sha256": "621b01b3b5e51c698871fd0acfcffa8973e090d7c6ef88b24e4ff04fe6f104b6"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-robotics-polish.v1",
+      "case_family_id": "v3.content-robotics-polish",
+      "source_candidate_id": "v3.content.003",
+      "source_lineage": {
+        "fixture_id": "v3.content-robotics-polish",
+        "fixture_lineage": "v3.content.003",
+        "workspace_sha256": "3951a6c5ae7581dcbb122a33717cf68739b408a9bd9b99fefdc3e4f736e8f5cd"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-sample-identifiers-units.v1",
+      "case_family_id": "v3.content-sample-identifiers-units",
+      "source_candidate_id": "v3.content.009",
+      "source_lineage": {
+        "fixture_id": "v3.content-sample-identifiers-units",
+        "fixture_lineage": "v3.content.009",
+        "workspace_sha256": "2920cbf2ea48078456d38cb09c4b4fb325552dc0a542ef5ea6a2365b9a808f98"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-significance-footnotes.v1",
+      "case_family_id": "v3.content-significance-footnotes",
+      "source_candidate_id": "v3.content.010",
+      "source_lineage": {
+        "fixture_id": "v3.content-significance-footnotes",
+        "fixture_lineage": "v3.content.010",
+        "workspace_sha256": "7e21a06bd5e7ec8aca760b76081257ae5824532849db58dc42888372e1b7ef6e"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-theorem-numbering.v1",
+      "case_family_id": "v3.content-theorem-numbering",
+      "source_candidate_id": "v3.content.012",
+      "source_lineage": {
+        "fixture_id": "v3.content-theorem-numbering",
+        "fixture_lineage": "v3.content.012",
+        "workspace_sha256": "6290cb1758c295647ea876f2d888988fd56ab8e510b6f208c722a9a7d7a4f0da"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.content-todo-clarification.v1",
+      "case_family_id": "v3.content-todo-clarification",
+      "source_candidate_id": "v3.content.029",
+      "source_lineage": {
+        "fixture_id": "v3.content-todo-clarification",
+        "fixture_lineage": "v3.content.029",
+        "workspace_sha256": "3598f2560729d62e635c69458fd66bdd2686b2337668efc07518a4841b63b42c"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.duplicate-main-entry-refusal.v1",
+      "case_family_id": "v3.duplicate-main-entry-refusal",
+      "source_candidate_id": "v3.artifact.023",
+      "source_lineage": {
+        "fixture_id": "v3.duplicate-main-entry-refusal",
+        "fixture_lineage": "v3.artifact.023",
+        "workspace_sha256": "94e98dc9e221cb2be8e31010a63c4ed68d7b9bd949928ba36d006b77db5ce342"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.figure-location-caption.v1",
+      "case_family_id": "v3.figure-location-caption",
+      "source_candidate_id": "v3.artifact.001",
+      "source_lineage": {
+        "fixture_id": "v3.figure-location-caption",
+        "fixture_lineage": "v3.artifact.001",
+        "workspace_sha256": "9c14df28f5e02139bb56db00df6ff449519da00e9df0f570cbbe04874a97da40"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.financial-wide-table.v1",
+      "case_family_id": "v3.financial-wide-table",
+      "source_candidate_id": "v3.artifact.010",
+      "source_lineage": {
+        "fixture_id": "v3.financial-wide-table",
+        "fixture_lineage": "v3.artifact.010",
+        "workspace_sha256": "d63046f0003f35659b9d7c1a8e84aa4ca78daa76ba21d95e15e542fb6a035ec5"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction-caption-no-op.v1",
+      "case_family_id": "v3.interaction-caption-no-op",
+      "source_candidate_id": "v3.interaction.002",
+      "source_lineage": {
+        "fixture_id": "v3.interaction-caption-no-op",
+        "fixture_lineage": "v3.interaction.002",
+        "workspace_sha256": "d4c06946944adcd2fea3351e069dd281cb4b777137adb4b01446b3b010478c83"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction-long-terms-clarification.v1",
+      "case_family_id": "v3.interaction-long-terms-clarification",
+      "source_candidate_id": "v3.interaction.026",
+      "source_lineage": {
+        "fixture_id": "v3.interaction-long-terms-clarification",
+        "fixture_lineage": "v3.interaction.026",
+        "workspace_sha256": "94df0d79dde3ca780ea4ca4d79646634e5cc4b46ef742a095c198973aebdccc8"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction-old-files-clarification.v1",
+      "case_family_id": "v3.interaction-old-files-clarification",
+      "source_candidate_id": "v3.interaction.003",
+      "source_lineage": {
+        "fixture_id": "v3.interaction-old-files-clarification",
+        "fixture_lineage": "v3.interaction.003",
+        "workspace_sha256": "cbbee7518b16847e5b1a04b8c764e22f0637f05800b01922e21197e5b41db80f"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction-preamble-no-op.v1",
+      "case_family_id": "v3.interaction-preamble-no-op",
+      "source_candidate_id": "v3.interaction.020",
+      "source_lineage": {
+        "fixture_id": "v3.interaction-preamble-no-op",
+        "fixture_lineage": "v3.interaction.020",
+        "workspace_sha256": "87a6908b72220f5511ddf0cbf1cb7f482519b4da0f4b55c9f2f278920b9d24d6"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction-title-clarification.v1",
+      "case_family_id": "v3.interaction-title-clarification",
+      "source_candidate_id": "v3.interaction.001",
+      "source_lineage": {
+        "fixture_id": "v3.interaction-title-clarification",
+        "fixture_lineage": "v3.interaction.001",
+        "workspace_sha256": "1a38c8110c94ffd2f364bc513c54cd5305a8444191f69febbbed36663a85b659"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction-title-recovery.v1",
+      "case_family_id": "v3.interaction-title-recovery",
+      "source_candidate_id": "v3.interaction.006",
+      "source_lineage": {
+        "fixture_id": "v3.interaction-title-recovery",
+        "fixture_lineage": "v3.interaction.006",
+        "workspace_sha256": "62420c24c9446c9eea4da2f027ddcaf01214ca83652a8235f56be847e58a36bd"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction-trend-chart-recovery.v1",
+      "case_family_id": "v3.interaction-trend-chart-recovery",
+      "source_candidate_id": "v3.interaction.007",
+      "source_lineage": {
+        "fixture_id": "v3.interaction-trend-chart-recovery",
+        "fixture_lineage": "v3.interaction.007",
+        "workspace_sha256": "6fa3525515d2f1c9e08226baf2e0713a0936658d12f216e74009d6ba53e075d0"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction-unverified-claim-refusal.v1",
+      "case_family_id": "v3.interaction-unverified-claim-refusal",
+      "source_candidate_id": "v3.interaction.004",
+      "source_lineage": {
+        "fixture_id": "v3.interaction-unverified-claim-refusal",
+        "fixture_lineage": "v3.interaction.004",
+        "workspace_sha256": "34e4ec59c33354faaf14d013a5b1a1bf2b50277332dfebc5df015757fa29033d"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction2-anonymous-review-patch.v1",
+      "case_family_id": "v3.interaction2-anonymous-review-patch",
+      "source_candidate_id": "v3.interaction.016",
+      "source_lineage": {
+        "fixture_id": "v3.interaction2-anonymous-review-patch",
+        "fixture_lineage": "v3.interaction.016",
+        "workspace_sha256": "ca6ac20197f71132b3d4f74193be0105cb7cd56e6ee81492d007a3ac09a24333"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction2-conference-page-limit-clarification.v1",
+      "case_family_id": "v3.interaction2-conference-page-limit-clarification",
+      "source_candidate_id": "v3.interaction.036",
+      "source_lineage": {
+        "fixture_id": "v3.interaction2-conference-page-limit-clarification",
+        "fixture_lineage": "v3.interaction.036",
+        "workspace_sha256": "4ae4d184e35cc95e3e35ef4d487f2829098c6758793afed5d1b423ad58a3eb80"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction2-conflicting-date-refusal.v1",
+      "case_family_id": "v3.interaction2-conflicting-date-refusal",
+      "source_candidate_id": "v3.interaction.010",
+      "source_lineage": {
+        "fixture_id": "v3.interaction2-conflicting-date-refusal",
+        "fixture_lineage": "v3.interaction.010",
+        "workspace_sha256": "eae2b218af92d069c4764f9dbd12407a37650bb1fb70e0b02b4faf166acb1995"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction2-dependency-upgrade-clarification.v1",
+      "case_family_id": "v3.interaction2-dependency-upgrade-clarification",
+      "source_candidate_id": "v3.interaction.021",
+      "source_lineage": {
+        "fixture_id": "v3.interaction2-dependency-upgrade-clarification",
+        "fixture_lineage": "v3.interaction.021",
+        "workspace_sha256": "ae1514130087b58d929e0ce513fad2c1f3ee64de56ad2ba849e81656152530c4"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction2-image-rights-refusal.v1",
+      "case_family_id": "v3.interaction2-image-rights-refusal",
+      "source_candidate_id": "v3.interaction.017",
+      "source_lineage": {
+        "fixture_id": "v3.interaction2-image-rights-refusal",
+        "fixture_lineage": "v3.interaction.017",
+        "workspace_sha256": "73ca9a5d81cfe56e1e7048134e00241566c8c2234253b5524150e1e8eeb46db6"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction2-medical-anonymization.v1",
+      "case_family_id": "v3.interaction2-medical-anonymization",
+      "source_candidate_id": "v3.compile.015",
+      "source_lineage": {
+        "fixture_id": "v3.interaction2-medical-anonymization",
+        "fixture_lineage": "v3.compile.015",
+        "workspace_sha256": "e5ac563ca8d63ae365d734e513493ebf52b567a5786aadf36cecd3661ed16c2c"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction2-theorem-symbol-clarification.v1",
+      "case_family_id": "v3.interaction2-theorem-symbol-clarification",
+      "source_candidate_id": "v3.interaction.013",
+      "source_lineage": {
+        "fixture_id": "v3.interaction2-theorem-symbol-clarification",
+        "fixture_lineage": "v3.interaction.013",
+        "workspace_sha256": "1787caa37b0dff91131b53b2c451efafef52eab21c42bf5b5214345ae63c6452"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.interaction2-version-margin-clarification.v1",
+      "case_family_id": "v3.interaction2-version-margin-clarification",
+      "source_candidate_id": "v3.interaction.008",
+      "source_lineage": {
+        "fixture_id": "v3.interaction2-version-margin-clarification",
+        "fixture_lineage": "v3.interaction.008",
+        "workspace_sha256": "ebc32dd6e6e7174dd55f4a174e395669a8b79d621621f3a05f4c29e2cfca8db7"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.main-supplement-organization.v1",
+      "case_family_id": "v3.main-supplement-organization",
+      "source_candidate_id": "v3.artifact.037",
+      "source_lineage": {
+        "fixture_id": "v3.main-supplement-organization",
+        "fixture_lineage": "v3.artifact.037",
+        "workspace_sha256": "1f3fc4d82333a69f824c70ef8d42ba9092a3c82a96609c51f13d16bd3fcb263c"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.multilevel-performance-table.v1",
+      "case_family_id": "v3.multilevel-performance-table",
+      "source_candidate_id": "v3.artifact.011",
+      "source_lineage": {
+        "fixture_id": "v3.multilevel-performance-table",
+        "fixture_lineage": "v3.artifact.011",
+        "workspace_sha256": "8033cac9a9806b611fd6fb23ee60578fb0b541b06839e7aa9cd6ea653d4a69ca"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.result-figure-near-analysis.v1",
+      "case_family_id": "v3.result-figure-near-analysis",
+      "source_candidate_id": "v3.artifact.003",
+      "source_lineage": {
+        "fixture_id": "v3.result-figure-near-analysis",
+        "fixture_lineage": "v3.artifact.003",
+        "workspace_sha256": "8d6fa311117c51d835f7bc269a057cf6006b314777e0655030a8605acbb688a3"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.survey-longtable-header.v1",
+      "case_family_id": "v3.survey-longtable-header",
+      "source_candidate_id": "v3.artifact.009",
+      "source_lineage": {
+        "fixture_id": "v3.survey-longtable-header",
+        "fixture_lineage": "v3.artifact.009",
+        "workspace_sha256": "3bc18de5bcd91d2e15d628313b1a0a1b9b1893ccfe4973a84e0c812d6a964a97"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.three-subfigures-width.v1",
+      "case_family_id": "v3.three-subfigures-width",
+      "source_candidate_id": "v3.artifact.002",
+      "source_lineage": {
+        "fixture_id": "v3.three-subfigures-width",
+        "fixture_lineage": "v3.artifact.002",
+        "workspace_sha256": "e567cb54a435efc4444708deb14a3c8757730b1ae3c8859daa8ee3ed2323b80b"
+      },
+      "split": "dev"
+    },
+    {
+      "case_id": "v3.workshop-slide-columns.v1",
+      "case_family_id": "v3.workshop-slide-columns",
+      "source_candidate_id": "v3.artifact.018",
+      "source_lineage": {
+        "fixture_id": "v3.workshop-slide-columns",
+        "fixture_lineage": "v3.artifact.018",
+        "workspace_sha256": "39100cca04b315cf40b4053f49cc98c77eb86c5fc8c38b079abb90372e1f5aa3"
+      },
+      "split": "dev"
+    }
+  ],
+  "conclusions": {
+    "exact_identity_collision_free": true,
+    "prompt_near_duplicates_require_review": false,
+    "fixture_near_duplicates_require_review": false,
+    "linkage_consistent": true,
+    "shared_latex_boilerplate_is_not_leakage": true,
+    "split_leakage_detected": false,
+    "cross_split_candidate_groups": [],
+    "note": "本报告只审计当前 executable 64 case；它们全部属于 dev，不能据此证明与未来 hidden holdout 没有 family-level 泄漏。"
+  }
+}

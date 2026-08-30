@@ -1,11 +1,13 @@
 import { workspaceHash } from "../../headless/workspaceState.js";
 import { BENCHMARK_V3_CANDIDATE_SEEDS } from "../candidateSeeds.js";
+import { V3_SUPPLEMENTAL_SEEDS } from "../supplementalSeeds.js";
 import type { V3CaseInput, V3ExecutableCase } from "./types.js";
 
 export function makeV3Case(input: V3CaseInput): V3ExecutableCase {
-  const candidate = BENCHMARK_V3_CANDIDATE_SEEDS.find(
-    (seed) => seed.candidate_id === input.candidateId,
-  );
+  const candidate = [
+    ...BENCHMARK_V3_CANDIDATE_SEEDS,
+    ...V3_SUPPLEMENTAL_SEEDS,
+  ].find((seed) => seed.candidate_id === input.candidateId);
   if (!candidate) {
     throw new Error(`未知的 Benchmark v3 candidate：${input.candidateId}`);
   }

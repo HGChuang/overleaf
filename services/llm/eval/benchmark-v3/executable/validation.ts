@@ -7,6 +7,7 @@ import { validatePilotCase } from "../../pilot/caseRegistry.js";
 import { gradePilotCase } from "../../pilot/graderRegistry.js";
 import type { PilotGradeContext, PilotResponse } from "../../pilot/types.js";
 import { BENCHMARK_V3_CANDIDATE_SEEDS } from "../candidateSeeds.js";
+import { V3_SUPPLEMENTAL_SEEDS } from "../supplementalSeeds.js";
 import type { V3ExecutableCase, V3GraderMutation } from "./types.js";
 
 function applyPatches(
@@ -108,9 +109,10 @@ function requireChinese(
 export function validateV3Case(caseDefinition: V3ExecutableCase): string[] {
   const errors = validatePilotCase(caseDefinition);
   const prefix = caseDefinition.case_id;
-  const candidate = BENCHMARK_V3_CANDIDATE_SEEDS.find(
-    (seed) => seed.candidate_id === caseDefinition.source_candidate_id,
-  );
+  const candidate = [
+    ...BENCHMARK_V3_CANDIDATE_SEEDS,
+    ...V3_SUPPLEMENTAL_SEEDS,
+  ].find((seed) => seed.candidate_id === caseDefinition.source_candidate_id);
   if (!candidate) {
     errors.push(`${prefix}: source candidate 不存在`);
   } else if (

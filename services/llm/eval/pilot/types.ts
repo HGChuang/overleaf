@@ -25,6 +25,11 @@ export type GraderSpec =
     }
   | { type: 'response_contains_any'; values: string[]; response_index?: number }
   | { type: 'response_contains_all'; values: string[]; response_index?: number }
+  | {
+      type: 'response_fact_groups'
+      groups: string[][]
+      response_index?: number
+    }
   | { type: 'patch_files'; files: string[] }
   | { type: 'tool_called'; tool: string; min: number; max?: number }
   | { type: 'user_turns'; min: number; max?: number }

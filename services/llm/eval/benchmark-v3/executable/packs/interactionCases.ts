@@ -629,7 +629,7 @@ The chapter body and its citations are fixed.
     scale: "multi-small",
     pressure: "many-files",
     interactionFacts: [
-      "新要求改为趋势图；原始精确数值必须保留，并沿用原图配色。",
+      "用户第二轮明确反馈：‘不要继续压缩表格，改成趋势图；原始精确数值必须保留，并沿用原图配色。’",
       "如果首轮补丁只压缩表格而没有转为趋势图，应拒绝并说明新的目标。",
     ],
     action: "patch",

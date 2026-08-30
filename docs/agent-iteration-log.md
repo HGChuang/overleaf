@@ -1252,3 +1252,85 @@ file create/delete/rename 未完成；86 个 candidate 尚未物化。因此不�
   2. 建立 H2/H3 conformance 后再物化 insertion/deletion 与文件操作候选；
   3. 对 64 个 family 做 fuzzy lineage 和 grader ambiguity 审计；
   4. 在仓库外封存新的 private holdout，再运行首次 v3 dev/holdout baseline。
+
+## Iteration 14 — 非编辑覆盖、H2/H3 conformance 与 64-family 审计
+
+日期：2026-08-30
+
+### 本轮研究的问题
+
+在运行首次 v3 baseline 前，补齐 answer/no-op/安全拒绝，确认 insertion/deletion 与文件操作能否
+可信进入 headless 分母，并审计已有 64 个 family 的 lineage 与 grader ambiguity。本轮不运行
+Copilot，不修改 prompt、Agent loop 或 tool schema。
+
+### Observation / Evidence
+
+* 前两批 action 分布为 patch 47、clarify 10、answer 1、no-op 1、refuse 5，非编辑决策明显偏薄；
+* 第一版并行 non-edit 草案虽然通过机械 oracle/mutation gate，却把若干 candidate 请求映射成了
+  不同任务，例如“润色引言”被物化为“检查导言区后回答”。人工 lineage 复核将整批草案拒绝；
+* 独立 `eval_user` 重新提供 9 个中文用户 seed，主流程据此构造 answer/no-op/refuse 各 3 个；
+* `submit_patch` 能表达 H2 形状，但生产 insertion 依赖当前光标，deletion 被空 `newText` guard
+  忽略；Agent tool pool 完全没有 H3 文件操作协议；
+* 64-case lineage audit 未发现 exact/fuzzy collision 或当前 split 泄漏；grader audit 的 P0 为 0，
+  128/128 mutation 被拒绝，但 57 个 case 有 P1 静态复核候选、7 个为 P2。
+* 逐条语义映射复核另外发现 3 个明确 source 错配和 4 个目标范围含糊项；机械 schema、oracle 和
+  mutation gate 无法发现这类“判分自洽但测错任务”的问题。
+
+### Interpretation / Root Cause
+
+answer/no-op 稀缺来自前两轮优先证明 patch/compile runner，而不是 Agent 已达到能力上限。原 non-edit
+草案暴露的根因是 schema linkage 只能证明 public brief 字符串来自 candidate，不能证明 fixture、
+expected action 与用户意图语义一致。H2/H3 的阻塞则位于产品 apply/file-operation protocol，不能
+靠 headless 自定义语义绕过。
+
+### Hypothesis 与 Changes
+
+假设是：补充独立用户 seed、加强多事实 response grader，并将 unsupported 文件语义显式隔离，
+可提升数据集可信度而不改变 Copilot。修改包括：
+
+* 新增 9 条 `non_edit_eval_user` 中文 seed 和 9 个 executable family；
+* 新增 `response_fact_groups` grader，允许每个必要事实的多种同义表达；
+* 建立 H2 semantic classifier/status gate，并验证 tool schema/patch block 与 H1 拒绝路径；
+* 物化 6 个 `conformance-blocked` H3 文件操作 family，新增安全、原子返回的 oracle applicator；
+* 新增并运行 frozen 64-case lineage 与 grader ambiguity audit；
+* 修正 7 个语义复核命中项：摘要/结论目标、最终编译交叉引用、匿名投稿 seed 映射，以及动态
+  第二轮、三文件润色/翻译和资源目录引用范围；新增中文 `audits/semantic-review.md`；
+* 修复当前 HEAD 中阻断 npm/tsx 的 `services/llm/package.json` trailing comma；
+* 更新 registry、manifest、README、validation reports；未修改 Copilot 行为。
+
+### Benchmark / Metric Before vs After
+
+| 指标 | Before | After |
+|---|---:|---:|
+| v3 executable dev case | 64 | 73 |
+| generic runner 可解析 case | 107 | 116 |
+| answer / no-op / refuse | 1 / 1 / 5 | 4 / 4 / 8 |
+| 非 patch action | 17 | 26 |
+| 多文件 | 54 | 61 |
+| oracle positive validation | 64 / 64 | 73 / 73 |
+| grader mutation rejected | 128 / 128 | 146 / 146 |
+| CLSI initial/final valid | 64 / 64 | 73 / 73 |
+| H3 blocked family initial/final compile | 0 | 6 / 6 |
+| 本轮 Copilot trial | 0 | 0 |
+
+### Failure Cases / Regression
+
+首次 H3 compile gate 因 fixture 正文包含 pdflatex 不支持的中文字符而失败；仅将 fixture 正文改为
+ASCII 后，中文用户请求与元数据保持不变，12/12 initial/final compile 全部成功。语义复核命中的
+7 项也在 baseline 前全部修正；最终 73/73 initial 声明一致、73/73 oracle final 零错误，evaluation
+tests 46/46、TypeScript typecheck 和 hash correlation 均通过；没有运行 Copilot，因而不存在
+capability regression 结论。
+
+H2 insertion/deletion 和 H3 file operations 仍是明确 unsupported；6 个 H3 family 不进入分母。
+73 个 executable 全是 dev，没有 hidden holdout。grader audit 的 P1 flags 应在 baseline failure
+分析时优先排除误判，但静态 flag 本身不应通过放宽 benchmark 被清零。
+
+### 本轮经验与推荐方向
+
+* schema/oracle/mutation 全通过仍不能替代用户意图与 fixture/expected action 的语义复核；
+* unsupported capability 应有物化 case 和 conformance evidence，但不能进入 PASS/FAIL；
+* 推荐下一步候选：
+  1. 冻结 73-case dev manifest，运行首次 v3 baseline；
+  2. 在仓库外建立未用于调试的 private hidden holdout，并按 family lineage 做交叉审计；
+  3. 若要启用 H2，先统一 browser/headless 的显式 insertion anchor 并修复 deletion apply；
+  4. 若要启用 H3，先设计结构化 file-operation tool 与真实项目 API conformance，再解除 blocked。

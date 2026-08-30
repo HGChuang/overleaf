@@ -1297,3 +1297,62 @@ fixture/oracle workspace hash，防止 case 修改后继续使用陈旧报告。
 17，主要薄弱面得到补强。但 answer/no-op 各只有 1 个，全部 64 个仍是 dev，且 H2/H3 未完成，
 所以当前集合仍不能充当完整或 hidden benchmark。generic runner 当前可解析 legacy 43 + v3 64，
 共 107 个 case。本轮没有运行 Copilot 或修改其行为。
+
+## Benchmark v3 封版前补强与 conformance（Iteration 14）
+
+### 当前可执行覆盖
+
+独立 `eval_user` session 新增 9 条中文用户 seed，分别覆盖 grounded answer、已满足 no-op 与安全
+拒绝，各 3 条。主流程据此物化 fixture/oracle/grader；没有复用语义不匹配的旧 candidate，也
+没有把同一请求换措辞凑数。当前 v3 executable dev set 为：
+
+| 覆盖项 | Iteration 13 | Iteration 14 |
+|---|---:|---:|
+| executable family | 64 | 73 |
+| action | patch 47；clarify 10；answer 1；no-op 1；refuse 5 | patch 47；clarify 10；answer 4；no-op 4；refuse 8 |
+| 难度 | D2 8；D3 33；D4 23 | D2 9；D3 41；D4 23 |
+| 多文件 | 54 | 61 |
+| dynamic | 21 | 20 |
+| required compile / repair | 47 | 47 |
+| oracle positive | 64 / 64 | 73 / 73 |
+| critical mutation rejected | 128 / 128 | 146 / 146 |
+| CLSI initial/final | 64 / 64 | 73 / 73 |
+
+新增 non-edit grader 不依赖唯一完整回复：`response_fact_groups` 把每个必要事实表示为一组可接受
+同义表达，同时强制 `no_patch`、workspace unchanged、逐文件 unchanged 与关键项目事实。它仍是
+deterministic semantic approximation；baseline 中边界回复仍应保留人工复核通道。
+
+### H2/H3 conformance 决策
+
+真实代码审计和 conformance tests 得出：
+
+1. `submit_patch` schema 与 patch block 能承载 `oldText=""` insertion 和 `newText=""` deletion；
+2. 生产 Accept 对 insertion 调用 cursor insert，忽略 `file`/`line`，headless 无同一 cursor state；
+3. 生产 CodeMirror listener 对空 `newText` 直接返回，纯 deletion 实际不会应用；
+4. Agent tool pool 不存在 create/delete/rename/move file 工具。
+
+因此 H2 和 H3 都继续是明确 blocked，而不是 `PASS` 或 capability failure。H3 已物化 6 个中文
+family，覆盖 create、delete、rename/move、root document 与多操作项目重构；其结构化 oracle
+applicator 拒绝路径穿越、覆盖和缺失源。6 个 fixture 的 initial/final 共 12 次真实 CLSI compile
+全部成功且 0 error，但这些 case 不进入 Agent PASS/FAIL，直至真实 file-operation protocol 完成。
+
+### 64-family lineage / grader ambiguity audit
+
+审计范围冻结为 Iteration 13 的 64 个 family，避免新增 non-edit case 改写历史结论：
+
+* lineage：所有 identity、candidate、fixture、workspace、normalized prompt 均无 exact collision；
+  prompt/fixture 2-gram Jaccard 阈值 0.72 下无 review pair；无跨 split candidate 泄漏。因为全部
+  是 dev，这不能替代未来 dev/hidden 的跨集合审计；
+* grader：64/64 oracle 通过，128/128 mutation 被拒绝，P0=0；静态 review priority 为 P1 57、
+  P2 7。主要 flags 是精确 patch file 策略、固定 response 表达、缺少负向/文件范围约束，以及
+  compile grader 需要 canonical trace 的 workspace hash 关联；
+* P1/P2 是 review candidate，不自动等同 invalid。首次 baseline 中若失败只发生在这些 grader，
+  必须先判断 false positive/negative，再归因给 Copilot。
+
+自动审计之外又逐条比对 source、brief、fixture、interaction facts、oracle 和 grader，命中 3 个
+明确语义错配与 4 个范围含糊项。摘要/结果已改为摘要/结论；最终编译 case 补齐真实交叉引用；
+医学匿名化从不匹配的 `interaction.011` 重新映射到 `compile.015`；其余四项显式限定第二轮反馈、
+三文件润色/翻译范围和资源目录遗留引用。修正后 73-case CLSI 与 64-case audits 均已全量刷新。
+
+当前仍没有 hidden holdout，73 个 v3 case 全是 dev；本轮没有运行 Copilot，因此没有 baseline
+正确率或能力天花板结论。

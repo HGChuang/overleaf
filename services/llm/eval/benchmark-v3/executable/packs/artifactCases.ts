@@ -1080,7 +1080,12 @@ B & 15.8
     category: "主文与补充材料项目组织",
     capabilities: ["C3", "C4", "C10"],
     difficulty: "D4",
-    factors: ["主文入口隔离", "补充材料独立编译", "共享配置保护"],
+    factors: [
+      "主文入口隔离",
+      "资源目录改名后的引用修复",
+      "补充材料独立编译",
+      "共享配置保护",
+    ],
     files: [
       {
         path: "main.tex",
@@ -1115,7 +1120,7 @@ The supplementary measurements remain available as a separate document.
 `,
       },
       {
-        path: "figures/results.tex",
+        path: "assets/results.tex",
         content: String.raw`\begin{figure}[h]
 \centering
 \fbox{\rule{0pt}{2cm}\rule{0.6\linewidth}{0pt}}
@@ -1140,24 +1145,23 @@ Y & 3.4
     ],
     interactionFacts: [
       "main.tex 是主论文入口；supplement.tex 必须继续作为独立可编译入口。",
-      "当前主论文误输入 supplement-body.tex；主论文应只保留正文和 figures/results。",
-      "shared.tex、图表内容和补充材料文件都必须保留，不能删除或重命名。",
+      "图表资源目录已经从 figures 改名为 assets，main.tex 仍保留旧路径；同时主论文误输入了 supplement-body.tex。",
+      "只修复输入关系和遗留引用；shared.tex、图表内容和补充材料文件都必须保留。",
     ],
     action: "patch",
     scale: "multi-long",
     pressure: "combined",
-    initialCompile: "success",
-    compileMode: "required-after-apply",
+    initialCompile: "failure",
+    compileMode: "repair-loop",
     protectedInvariants: [
       { file: "main.tex", value: "\\documentclass{article}" },
       { file: "main.tex", value: "\\input{shared}" },
-      { file: "main.tex", value: "\\input{figures/results}" },
       { file: "supplement.tex", value: "\\input{supplement-body}" },
       {
         file: "shared.tex",
         value: "\\newcommand{\\ProjectName}{Joint Research Project}",
       },
-      { file: "figures/results.tex", value: "\\label{fig:main-results}" },
+      { file: "assets/results.tex", value: "\\label{fig:main-results}" },
     ],
     graders: [
       { type: "workspace_changed", expected: true },
@@ -1167,7 +1171,7 @@ Y & 3.4
         values: [
           "\\documentclass{article}",
           "\\input{shared}",
-          "\\input{figures/results}",
+          "\\input{assets/results}",
           "\\ifdefined\\IncludeSupplement",
           "\\input{supplement-body}",
         ],
@@ -1190,25 +1194,32 @@ Y & 3.4
       },
       {
         type: "file_contains",
-        file: "figures/results.tex",
+        file: "assets/results.tex",
         values: ["\\label{fig:main-results}"],
       },
-      { type: "file_unchanged", file: "figures/results.tex" },
+      {
+        type: "file_not_contains",
+        file: "main.tex",
+        values: ["\\input{figures/results}"],
+      },
+      { type: "file_unchanged", file: "assets/results.tex" },
       { type: "file_unchanged", file: "tables/supp-data.tex" },
       compileGrader,
     ],
     oraclePatches: [
       {
         file: "main.tex",
-        line: 6,
-        oldText: String.raw`\input{supplement-body}`,
-        newText: String.raw`\ifdefined\IncludeSupplement
+        line: 5,
+        oldText: String.raw`\input{figures/results}
+\input{supplement-body}`,
+        newText: String.raw`\input{assets/results}
+\ifdefined\IncludeSupplement
 \input{supplement-body}
 \fi`,
       },
     ],
     oracleResponse:
-      "已隔离主论文入口与补充材料入口：主文默认不载入补充正文，supplement.tex 仍可独立编译，共享配置和图表均保留。",
+      "已把主文图表输入更新到 assets/results，并隔离主论文与补充材料入口；supplement.tex 仍可独立编译，共享配置和图表均保留。",
     graderMutations: [
       {
         mutation_id: "主文仍直接载入补充材料",
@@ -1217,8 +1228,10 @@ Y & 3.4
           {
             file: "main.tex",
             line: 6,
-            oldText: String.raw`\input{supplement-body}`,
-            newText: String.raw`\input{supplement-body}`,
+            oldText: String.raw`\input{figures/results}
+\input{supplement-body}`,
+            newText: String.raw`\input{assets/results}
+\input{supplement-body}`,
           },
         ],
       },

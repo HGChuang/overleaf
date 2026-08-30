@@ -321,12 +321,12 @@ export const V3_INTERACTION_CASES_2: V3ExecutableCase[] = [
   }),
 
   makeV3Case({
-    candidateId: "v3.interaction.011",
-    caseSlug: "interaction2-medical-anonymization-recovery",
-    category: "医学匿名化恢复",
-    capabilities: ["C2", "C4", "C7", "C9", "C10", "C11"],
-    difficulty: "D4",
-    factors: ["隐私保护", "统计保留", "跨文件约束", "用户拒绝恢复"],
+    candidateId: "v3.compile.015",
+    caseSlug: "interaction2-medical-anonymization",
+    category: "匿名投稿修改",
+    capabilities: ["C2", "C4", "C7", "C10"],
+    difficulty: "D3",
+    factors: ["身份信息定位", "统计保留", "跨文件约束"],
     files: [
       { path: "main.tex", content: medicalMain },
       { path: "frontmatter.tex", content: medicalFrontmatter },
@@ -338,13 +338,11 @@ export const V3_INTERACTION_CASES_2: V3ExecutableCase[] = [
     scale: "multi-long",
     pressure: "combined",
     interactionFacts: [
-      "医学投稿需要同时压缩和匿名化；摘要有限字数，文献最多十五条。",
-      "日期和地点需要模糊化，但置信区间、统计结果、公开数据集和必要自引必须保留。",
+      "匿名投稿版本不得显示作者姓名、单位、精确日期或地点。",
+      "引用和参考文献必须保留；置信区间、统计结果、公开数据集和必要自引也不能删除。",
     ],
     action: "patch",
-    maxUserTurns: 2,
-    dynamicUser: true,
-    continueAfterPatch: true,
+    maxUserTurns: 1,
     initialCompile: "success",
     compileMode: "optional",
     protectedInvariants: [
@@ -401,7 +399,7 @@ This study evaluates a clinical intervention while retaining the required confid
       },
       { type: "file_unchanged", file: "chapters/results.tex" },
       { type: "file_unchanged", file: "references.tex" },
-      { type: "user_turns", min: 1, max: 2 },
+      { type: "user_turns", min: 1, max: 1 },
     ],
     graderMutations: [
       {
@@ -433,8 +431,8 @@ This study evaluates a clinical intervention while retaining the required confid
         patch_count: 1,
       },
     ],
-    tags: ["医学", "匿名化", "用户拒绝恢复", "长上下文", "跨文件"],
-    promptForm: "中文组合约束请求",
+    tags: ["医学", "匿名投稿", "身份保护", "长上下文", "跨文件"],
+    promptForm: "中文直接修改请求",
   }),
 
   makeV3Case({

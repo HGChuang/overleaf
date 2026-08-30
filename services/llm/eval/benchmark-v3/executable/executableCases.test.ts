@@ -8,13 +8,14 @@ import { oracleWorkspaceHash, validateV3Registry } from "./validation.js";
 
 const EXPECTED_SOURCE_COUNTS: Record<string, number> = {
   content: 16,
-  compile: 16,
+  compile: 17,
   artifact: 16,
-  interaction: 16,
+  interaction: 15,
+  nonedit: 9,
 };
 
-test("Benchmark v3 前两批物化 64 个不重复的中文 dev family", () => {
-  assert.equal(V3_EXECUTABLE_CASES.length, 64);
+test("Benchmark v3 三批物化 73 个不重复的中文 dev family", () => {
+  assert.equal(V3_EXECUTABLE_CASES.length, 73);
   assert.equal(
     new Set(V3_EXECUTABLE_CASES.map((item) => item.case_id)).size,
     V3_EXECUTABLE_CASES.length,
@@ -41,7 +42,7 @@ test("所有 v3 case 通过 schema、oracle、中文和 grader mutation gate", (
   assert.deepEqual(validateV3Registry(V3_EXECUTABLE_CASES), []);
 });
 
-test("前两批物化集覆盖难度、上下文、编译和多轮交互", () => {
+test("三批物化集覆盖难度、上下文、编译、交互和非编辑决策", () => {
   const difficultyCount = (level: string) =>
     V3_EXECUTABLE_CASES.filter((item) => item.difficulty.level === level)
       .length;
@@ -76,6 +77,13 @@ test("前两批物化集覆盖难度、上下文、编译和多轮交互", () =>
       action,
     );
   }
+  const actionCount = (action: string) =>
+    V3_EXECUTABLE_CASES.filter(
+      (item) => item.expected_behavior.action === action,
+    ).length;
+  assert.ok(actionCount("answer") >= 4);
+  assert.ok(actionCount("no_op") >= 4);
+  assert.ok(actionCount("refuse") >= 8);
 });
 
 test("C1-C11 在前两批 v3 可执行集中均有直接覆盖", () => {

@@ -110,7 +110,7 @@ Background and motivation are described briefly. The research gap is not yet exp
 
   makeV3Case({
     candidateId: "v3.content.002",
-    caseSlug: "content-abstract-results-terminology",
+    caseSlug: "content-abstract-conclusion-terminology",
     category: "跨文件术语统一",
     capabilities: ["C1", "C2", "C4", "C7"],
     difficulty: "D3",
@@ -121,7 +121,7 @@ Background and motivation are described briefly. The research gap is not yet exp
         content: String.raw`\documentclass{article}
 \begin{document}
 \input{sections/abstract}
-\input{sections/results}
+\input{sections/conclusion}
 \end{document}
 `,
       },
@@ -133,8 +133,8 @@ The boundary-aware model reaches 87.4\% Dice on the confirmed test split. Its li
 `,
       },
       {
-        path: "sections/results.tex",
-        content: String.raw`\section{Results}
+        path: "sections/conclusion.tex",
+        content: String.raw`\section{Conclusion}
 The edge-aware model reaches 87.4\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.
 `,
       },
@@ -147,13 +147,13 @@ The edge-aware model reaches 87.4\% Dice on the confirmed test split. Its limita
     compileMode: "required-after-apply",
     protectedInvariants: [
       { file: "sections/abstract.tex", value: "87.4\\%" },
-      { file: "sections/results.tex", value: "87.4\\%" },
+      { file: "sections/conclusion.tex", value: "87.4\\%" },
       {
         file: "sections/abstract.tex",
         value: "sensitivity to sparse annotations",
       },
       {
-        file: "sections/results.tex",
+        file: "sections/conclusion.tex",
         value: "sensitivity to sparse annotations",
       },
     ],
@@ -161,7 +161,7 @@ The edge-aware model reaches 87.4\% Dice on the confirmed test split. Its limita
       { type: "workspace_changed", expected: true },
       {
         type: "patch_files",
-        files: ["sections/abstract.tex", "sections/results.tex"],
+        files: ["sections/abstract.tex", "sections/conclusion.tex"],
       },
       {
         type: "file_contains",
@@ -174,7 +174,7 @@ The edge-aware model reaches 87.4\% Dice on the confirmed test split. Its limita
       },
       {
         type: "file_contains",
-        file: "sections/results.tex",
+        file: "sections/conclusion.tex",
         values: [
           "boundary-aware",
           "87.4\\%",
@@ -183,7 +183,7 @@ The edge-aware model reaches 87.4\% Dice on the confirmed test split. Its limita
       },
       {
         type: "file_not_contains",
-        file: "sections/results.tex",
+        file: "sections/conclusion.tex",
         values: ["edge-aware"],
       },
       { type: "compile", status: "success", max_errors: 0 },
@@ -198,7 +198,7 @@ The edge-aware model reaches 87.4\% Dice on the confirmed test split. Its limita
           "The boundary-aware model reaches 87.4\\% Dice on the confirmed test split. The model's limitation is sensitivity to sparse annotations.",
       },
       {
-        file: "sections/results.tex",
+        file: "sections/conclusion.tex",
         line: 2,
         oldText:
           "The edge-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.",
@@ -207,14 +207,14 @@ The edge-aware model reaches 87.4\% Dice on the confirmed test split. Its limita
       },
     ],
     oracleResponse:
-      "已在摘要与结果文件统一模型术语，保留确认的百分比和局限性；补丁应用后编译通过。",
+      "已在摘要与结论文件统一模型术语，保留确认的百分比和局限性；补丁应用后编译通过。",
     graderMutations: [
       {
-        mutation_id: "漏改结果术语",
-        description: "只修改摘要而遗漏结果文件中的旧术语。",
+        mutation_id: "漏改结论术语",
+        description: "只修改摘要而遗漏结论文件中的旧术语。",
         patches: [
           {
-            file: "sections/results.tex",
+            file: "sections/conclusion.tex",
             line: 2,
             oldText:
               "The edge-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.",
@@ -228,7 +228,7 @@ The edge-aware model reaches 87.4\% Dice on the confirmed test split. Its limita
         description: "统一术语时把已确认的百分比改成另一数值。",
         patches: [
           {
-            file: "sections/results.tex",
+            file: "sections/conclusion.tex",
             line: 2,
             oldText:
               "The edge-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.",
@@ -238,7 +238,7 @@ The edge-aware model reaches 87.4\% Dice on the confirmed test split. Its limita
         ],
       },
     ],
-    tags: ["摘要", "结果", "跨文件", "术语"],
+    tags: ["摘要", "结论", "跨文件", "术语"],
   }),
 
   makeV3Case({
@@ -275,7 +275,7 @@ We study trajectory tracking under the parameter restriction $\tau=0.5$. The con
       {
         path: "chapters/appendix.tex",
         content: String.raw`\section{Supplementary details}
-The proof uses the same parameter restriction $\tau=0.5$.
+The proof use same trajectory track restriction $\tau=0.5$ and it not claim robustness outside this range.
 \begin{figure}[h]
 \centering\rule{2cm}{1cm}
 \caption{Tracking comparison}\label{fig:tracking}
@@ -284,6 +284,7 @@ The proof uses the same parameter restriction $\tau=0.5$.
       },
     ],
     interactionFacts: [
+      "“这三部分”明确指 chapters/intro.tex、chapters/method.tex 和 chapters/appendix.tex，三处都需要润色。",
       "术语统一为“轨迹跟踪”。",
       "必须保留公式、图表引用、参数限制和对缺点的批判语气，不得改数字。",
     ],
@@ -298,7 +299,11 @@ The proof uses the same parameter restriction $\tau=0.5$.
       { type: "workspace_changed", expected: true },
       {
         type: "patch_files",
-        files: ["chapters/intro.tex", "chapters/method.tex"],
+        files: [
+          "chapters/intro.tex",
+          "chapters/method.tex",
+          "chapters/appendix.tex",
+        ],
       },
       {
         type: "file_contains",
@@ -321,7 +326,11 @@ The proof uses the same parameter restriction $\tau=0.5$.
       {
         type: "file_contains",
         file: "chapters/appendix.tex",
-        values: ["\\tau=0.5"],
+        values: [
+          "trajectory tracking restriction",
+          "\\tau=0.5",
+          "does not claim robustness",
+        ],
       },
       {
         type: "file_not_contains",
@@ -346,6 +355,14 @@ The proof uses the same parameter restriction $\tau=0.5$.
           "We study trajectory tracking under the parameter restriction $\\tau=0.5$. The controller does not claim robustness beyond this range.",
         newText:
           "We investigate trajectory tracking under the parameter restriction $\\tau=0.5$. The controller does not claim robustness beyond this range.",
+      },
+      {
+        file: "chapters/appendix.tex",
+        line: 2,
+        oldText:
+          "The proof use same trajectory track restriction $\\tau=0.5$ and it not claim robustness outside this range.",
+        newText:
+          "The proof uses the same trajectory tracking restriction $\\tau=0.5$ and does not claim robustness outside this range.",
       },
     ],
     oracleResponse:
@@ -431,6 +448,7 @@ The proof uses the same parameter restriction $\tau=0.5$.
       },
     ],
     interactionFacts: [
+      "“这些章节”明确指 sections/intro.tex、sections/method.tex 和 sections/appendix.tex；refs.tex 只是参考文献，不是翻译目标。",
       "项目名称 Aurora 不翻译。",
       "保留章节、名称、公式和引用；中文批注仍按批注规则处理，不得漏译正文。",
     ],
@@ -486,6 +504,7 @@ The proof uses the same parameter restriction $\tau=0.5$.
         file: "sections/method.tex",
         values: ["我们优化目标函数"],
       },
+      { type: "file_unchanged", file: "refs.tex" },
       { type: "compile", status: "success", max_errors: 0 },
     ],
     oraclePatches: [

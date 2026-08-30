@@ -1,19 +1,20 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-30T04:52:23.247Z",
+  "generated_at": "2026-08-30T07:31:27.570Z",
   "lifecycle": "executable",
   "language": "zh-CN",
-  "case_count": 64,
+  "case_count": 73,
   "source_counts": {
     "content": 16,
-    "compile": 16,
+    "compile": 17,
     "artifact": 16,
-    "interaction": 16
+    "interaction": 15,
+    "nonedit": 9
   },
   "difficulty_counts": {
     "D1": 0,
-    "D2": 8,
-    "D3": 33,
+    "D2": 9,
+    "D3": 41,
     "D4": 23
   },
   "compile_validation": true,
@@ -45,10 +46,10 @@
       "valid": true
     },
     {
-      "case_id": "v3.content-abstract-results-terminology.v1",
+      "case_id": "v3.content-abstract-conclusion-terminology.v1",
       "source_candidate_id": "v3.content.002",
-      "fixture_hash": "337127b50c760e744f1b60d2339ba85c07e39d84fdb2702fcae48d446c7d2819",
-      "oracle_workspace_hash": "141af36c4a7b973996ce6d3412bd0a37dea8dd25781805c3199404859a977ccf",
+      "fixture_hash": "71c148dda5864aef978a60d5dbff1bdaaef6e72468a0bc07f8522c98cd8c9030",
+      "oracle_workspace_hash": "332253a49d9959cbbab9670f973924e53cce5558e6f9b755dd81ad21aefd7a49",
       "mutation_count": 2,
       "initial_compile": {
         "declared": "success",
@@ -71,8 +72,8 @@
     {
       "case_id": "v3.content-robotics-polish.v1",
       "source_candidate_id": "v3.content.003",
-      "fixture_hash": "0255ef467e0e5bad23cdd028c20cc5f2f7b7656d037d22bc5b156665ae3e02ae",
-      "oracle_workspace_hash": "7dfd6bf32ab29b8536247ab653c70efd9b8b2195e5d7576dfa497121a161b33d",
+      "fixture_hash": "cd7ea7a5f5914b38def11b8314122082a8afcff132fdd20bafb22c85b5f7c225",
+      "oracle_workspace_hash": "0843a8c507550081fe71808c547e8607d36b9161e7d98ab27a6d018db7e171dd",
       "mutation_count": 2,
       "initial_compile": {
         "declared": "success",
@@ -632,14 +633,14 @@
     {
       "case_id": "v3.compile-final-multi-artifact.v1",
       "source_candidate_id": "v3.compile.038",
-      "fixture_hash": "9e430e6114af87461a8feaca21e71fecfd61693ca916cd04c37e94516976cded",
-      "oracle_workspace_hash": "1ccc0f4cbb82dcf5434b5b81dc9a687b85b1680672c9008548c1f51456f39258",
+      "fixture_hash": "b5eaf7bdeb378478859803340e572aa694b1c574b6a116831120c0a5acc8866a",
+      "oracle_workspace_hash": "8e460869993e8c20207fbe37719f22f267191519bbf802e4f05c615d821d30e8",
       "mutation_count": 2,
       "initial_compile": {
         "declared": "failure",
         "status": "success",
         "error_count": 2,
-        "warning_count": 0,
+        "warning_count": 2,
         "valid": true,
         "errors": [
           {
@@ -1115,16 +1116,32 @@
     {
       "case_id": "v3.main-supplement-organization.v1",
       "source_candidate_id": "v3.artifact.037",
-      "fixture_hash": "f04bad7a4f003238d2043f9c02432bf17262feea73d9c9dee56146fe62164ffc",
-      "oracle_workspace_hash": "ec55b69671df6b04ba58409f8750ea9a5e9108b3e5aa0214f2d91371f64cf3dc",
+      "fixture_hash": "19ffa47eaed8e91f78cdc5cf0bf130a78b06507a2a8fec1b961dc68cd5256a3e",
+      "oracle_workspace_hash": "d37bf890cf1d6abc13a2baa78d3c86043fde815494cb7477b884e30a286aac2d",
       "mutation_count": 2,
       "initial_compile": {
-        "declared": "success",
-        "status": "success",
-        "error_count": 0,
+        "declared": "failure",
+        "status": "failure",
+        "error_count": 3,
         "warning_count": 0,
         "valid": true,
-        "errors": []
+        "errors": [
+          {
+            "file": null,
+            "line": null,
+            "message": "LaTeX Error: File `figures/results.tex' not found."
+          },
+          {
+            "file": null,
+            "line": 5,
+            "message": "Emergency stop."
+          },
+          {
+            "file": null,
+            "line": null,
+            "message": "==> Fatal error occurred, no output PDF file produced!"
+          }
+        ]
       },
       "final_compile": {
         "declared": "success",
@@ -1569,8 +1586,8 @@
       "valid": true
     },
     {
-      "case_id": "v3.interaction2-medical-anonymization-recovery.v1",
-      "source_candidate_id": "v3.interaction.011",
+      "case_id": "v3.interaction2-medical-anonymization.v1",
+      "source_candidate_id": "v3.compile.015",
       "fixture_hash": "6c6742b49b573c5f29d102fe5fe6a0ed4b8b57895b3129bd379aea26648dec88",
       "oracle_workspace_hash": "8b0e59e43911ac490f55c04e79c6991fc9e38e03f675dac219251a2c72dc0410",
       "mutation_count": 2,
@@ -1693,6 +1710,222 @@
       "source_candidate_id": "v3.interaction.036",
       "fixture_hash": "3ebd83489255bb54ada47cad3cdac5fb76c66e2ab41b95223b86a36f3e87678c",
       "oracle_workspace_hash": "3ebd83489255bb54ada47cad3cdac5fb76c66e2ab41b95223b86a36f3e87678c",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.answer-experiment-facts.v1",
+      "source_candidate_id": "v3.nonedit.answer.001",
+      "fixture_hash": "fe85044cf05a5a88570d98a5b5f544d949c18f101e5d044d6f0986b840b052d9",
+      "oracle_workspace_hash": "fe85044cf05a5a88570d98a5b5f544d949c18f101e5d044d6f0986b840b052d9",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.answer-bibliography-configuration.v1",
+      "source_candidate_id": "v3.nonedit.answer.002",
+      "fixture_hash": "4440e8763a0530ff13163995867cff527ee4a07e186e0ca1cbfc6e633f9f2402",
+      "oracle_workspace_hash": "4440e8763a0530ff13163995867cff527ee4a07e186e0ca1cbfc6e633f9f2402",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.answer-appendix-algorithm-reference.v1",
+      "source_candidate_id": "v3.nonedit.answer.003",
+      "fixture_hash": "19495f1f7fd98ed0cd1c38557dfc3e8e07263187c3591406412ac3345d17b408",
+      "oracle_workspace_hash": "19495f1f7fd98ed0cd1c38557dfc3e8e07263187c3591406412ac3345d17b408",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.noop-title-already-exact.v1",
+      "source_candidate_id": "v3.nonedit.noop.001",
+      "fixture_hash": "0dafa16f1fb9f4736f1bda05c4b1c7e40d36aeec3879767d810cc2b74a085aca",
+      "oracle_workspace_hash": "0dafa16f1fb9f4736f1bda05c4b1c7e40d36aeec3879767d810cc2b74a085aca",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.noop-captions-already-capitalized.v1",
+      "source_candidate_id": "v3.nonedit.noop.002",
+      "fixture_hash": "232eaf9a1e9748fb6e4ca254e106d4f93af66cbe5bbf055a213c9231cc4af513",
+      "oracle_workspace_hash": "232eaf9a1e9748fb6e4ca254e106d4f93af66cbe5bbf055a213c9231cc4af513",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.noop-theorem-numbering-already-scoped.v1",
+      "source_candidate_id": "v3.nonedit.noop.003",
+      "fixture_hash": "4e550e1445fa89803f9e2f17cca1904faceb6d21daee2544d83ea840a0a147fa",
+      "oracle_workspace_hash": "4e550e1445fa89803f9e2f17cca1904faceb6d21daee2544d83ea840a0a147fa",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.refuse-fabricated-citation.v1",
+      "source_candidate_id": "v3.nonedit.refuse.001",
+      "fixture_hash": "3ecc0c6056993fd15f91b3ba10efdf4ce4014481fbf0f06ec868ba44e808c304",
+      "oracle_workspace_hash": "3ecc0c6056993fd15f91b3ba10efdf4ce4014481fbf0f06ec868ba44e808c304",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.refuse-unsupported-result-number.v1",
+      "source_candidate_id": "v3.nonedit.refuse.002",
+      "fixture_hash": "54208d02d0ada3044a130ba06e835afd89d732bd6af5a2856e077ef5e4ed551b",
+      "oracle_workspace_hash": "54208d02d0ada3044a130ba06e835afd89d732bd6af5a2856e077ef5e4ed551b",
+      "mutation_count": 2,
+      "initial_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "final_compile": {
+        "declared": "success",
+        "status": "success",
+        "error_count": 0,
+        "warning_count": 0,
+        "valid": true,
+        "errors": []
+      },
+      "valid": true
+    },
+    {
+      "case_id": "v3.refuse-fake-gpu-profile.v1",
+      "source_candidate_id": "v3.nonedit.refuse.003",
+      "fixture_hash": "f3bec3b6687b140fc20742640c8b0c7ff62f8d444119edca646287523d9d20c2",
+      "oracle_workspace_hash": "f3bec3b6687b140fc20742640c8b0c7ff62f8d444119edca646287523d9d20c2",
       "mutation_count": 2,
       "initial_compile": {
         "declared": "success",

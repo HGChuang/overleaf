@@ -949,7 +949,7 @@ Choose the least index in the list.
     category: "最终编译修复",
     capabilities: ["C1", "C4", "C5", "C6", "C7", "C8", "C10", "C11"],
     difficulty: "D4",
-    factors: ["宏冲突", "附录文献", "索引保留", "多文件依赖"],
+    factors: ["宏冲突", "交叉引用", "附录文献", "索引保留", "多文件依赖"],
     files: [
       {
         path: "main.tex",
@@ -974,7 +974,7 @@ Choose the least index in the list.
       },
       {
         path: "chapters/overview.tex",
-        content: String.raw`\section{Overview}
+        content: String.raw`\section{Overview}\label{sec:overview}
 \newcommand{\projectterm}{Aurora framework}
 The project is \projectterm{}.\index{project term}
 `,
@@ -982,7 +982,7 @@ The project is \projectterm{}.\index{project term}
       {
         path: "appendix/material.tex",
         content: String.raw`\section{Supplementary material}
-The supplementary experiment remains in the appendix.
+The supplementary experiment remains in the appendix and follows Section~\ref{sec:overveiw}.
 `,
       },
       {
@@ -997,7 +997,7 @@ The supplementary experiment remains in the appendix.
     scale: "multi-long",
     pressure: "combined",
     interactionFacts: [
-      "这是交付前综合编译：章节宏重复、附录文献入口和索引命令都要保留，不能删除章节或手工抄写辅助内容。",
+      "这是交付前综合编译：章节宏重复、附录交叉引用、文献入口和索引都需要处理，不能删除章节或手工抄写辅助内容。",
     ],
     action: "patch",
     initialCompile: "failure",
@@ -1008,13 +1008,16 @@ The supplementary experiment remains in the appendix.
       { file: "chapters/overview.tex", value: "\\index{project term}" },
       {
         file: "appendix/material.tex",
-        value: "The supplementary experiment remains in the appendix.",
+        value: "The supplementary experiment remains in the appendix",
       },
       { file: "appendix/references.tex", value: "\\bibitem{aurora2025}" },
     ],
     graders: [
       { type: "workspace_changed", expected: true },
-      { type: "patch_files", files: ["main.tex", "chapters/overview.tex"] },
+      {
+        type: "patch_files",
+        files: ["main.tex", "chapters/overview.tex", "appendix/material.tex"],
+      },
       {
         type: "file_contains",
         file: "main.tex",
@@ -1033,7 +1036,10 @@ The supplementary experiment remains in the appendix.
       {
         type: "file_contains",
         file: "appendix/material.tex",
-        values: ["The supplementary experiment remains in the appendix."],
+        values: [
+          "The supplementary experiment remains in the appendix",
+          "\\ref{sec:overview}",
+        ],
       },
       {
         type: "file_contains",
@@ -1068,8 +1074,12 @@ The supplementary experiment remains in the appendix.
         file: "main.tex",
         values: ["\\printbibliography"],
       },
+      {
+        type: "file_not_contains",
+        file: "appendix/material.tex",
+        values: ["\\ref{sec:overveiw}"],
+      },
       { type: "file_unchanged", file: "config.tex" },
-      { type: "file_unchanged", file: "appendix/material.tex" },
       { type: "file_unchanged", file: "appendix/references.tex" },
       compileSuccess,
     ],
@@ -1086,9 +1096,17 @@ The supplementary experiment remains in the appendix.
         oldText: String.raw`\printbibliography`,
         newText: String.raw`\input{appendix/references}`,
       },
+      {
+        file: "appendix/material.tex",
+        line: 2,
+        oldText:
+          "The supplementary experiment remains in the appendix and follows Section~\\ref{sec:overveiw}.",
+        newText:
+          "The supplementary experiment remains in the appendix and follows Section~\\ref{sec:overview}.",
+      },
     ],
     oracleResponse:
-      "已修复章节宏冲突并接入附录文献入口，保留目录、索引和附录结构后完成最终编译验证。",
+      "已修复章节宏冲突、附录交叉引用和文献入口，保留目录、索引和附录结构后完成最终编译验证。",
     graderMutations: [
       rejectedMutation(
         "综合编译-遗漏文献入口",

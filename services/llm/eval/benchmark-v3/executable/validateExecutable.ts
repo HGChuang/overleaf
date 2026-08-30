@@ -102,12 +102,14 @@ async function main() {
   const staticErrors = validateV3Registry(V3_EXECUTABLE_CASES);
   const compileResults = shouldCompile ? await compileAll() : [];
   const sourceCounts = Object.fromEntries(
-    ["content", "compile", "artifact", "interaction"].map((source) => [
-      source,
-      V3_EXECUTABLE_CASES.filter((item) =>
-        item.source_candidate_id.startsWith(`v3.${source}.`),
-      ).length,
-    ]),
+    ["content", "compile", "artifact", "interaction", "nonedit"].map(
+      (source) => [
+        source,
+        V3_EXECUTABLE_CASES.filter((item) =>
+          item.source_candidate_id.startsWith(`v3.${source}.`),
+        ).length,
+      ],
+    ),
   );
   const difficultyCounts = Object.fromEntries(
     ["D1", "D2", "D3", "D4"].map((level) => [
