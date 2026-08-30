@@ -1178,3 +1178,77 @@ typecheck 通过，没有观察到 runner regression。
   2. 为 H2/H3 file create/delete/rename 与 insertion/deletion 建立 conformance 后再物化对应候选；
   3. 对全部 materialized family 做 fuzzy lineage 审计，并在外部私有位置建立新的 release holdout；
   4. 冻结 dev set 后再运行首次 v3 baseline，先评测再分析 Copilot failure。
+
+## Iteration 13 — Benchmark v3 第二批可执行中文测试集
+
+日期：2026-08-30
+
+### 本轮研究的问题
+
+继续物化第二批 32 个 H1 dev family，重点修正第一批在 C9、C11、非 patch 决策、动态交互和长
+上下文上的覆盖不足。本轮不运行 Copilot，不建立或查看 hidden holdout。
+
+### Observation / Evidence
+
+* 四个原 `gpt-5.6-luna`、high reasoning 子 Agent 各生成 8 个新 case，没有重复第一批 candidate；
+* 前两批合计 64 个 family：54 个多文件、47 个 required compile/repair-loop、21 个动态；
+* 难度为 D2 8、D3 33、D4 23；action 为 patch 47、clarify 10、answer 1、no-op 1、refuse 5；
+* C9/C10/C11 从第一批的 1/5/3 提升到 12/19/16；非 patch 从 6 增至 17；
+* 64 个 oracle 正例全部通过，128 个关键错误 mutation 全部被 deterministic grader 拒绝；
+* 对全部 64 个 case 执行 128 次真实 CLSI compile：64/64 initial 状态符合声明，其中 16 个
+  initial failure 被真实复现；64/64 oracle final workspace 零错误成功；report 为 `valid=true`。
+
+### Interpretation / Root Cause
+
+第一批偏向明确 patch 任务，是因为优先选择了能快速证明 H1 harness 有效的 family；这会高估编辑
+能力并低估“何时不改、何时澄清、如何从失败恢复”。第二批按薄弱 capability 选材后，C9/C11 与
+动态交互覆盖显著提升，同时保持 candidate lineage 和 replacement-only 真实性。
+
+### Hypothesis 与 Changes
+
+本轮假设是用未使用的不同 family 补覆盖，而不是扩写 prompt variants，能提高区分度且不污染
+已有 case。修改包括：
+
+* 新增 `contentCases2.ts`、`compileCases2.ts`、`artifactCases2.ts`、`interactionCases2.ts`，共
+  32 个 executable dev family；
+* registry 与 coverage tests 扩展为四个 source 各 16、合计 64；
+* 覆盖 gate 新增 C9>=10、C10>=15、C11>=12、动态>=18、非 patch>=16 等最低约束；
+* validation report 全量刷新为 64 case，而非仅编译新增 case；
+* 更新 manifest、README 与评测设计；未修改 Copilot、prompt、tool、Agent loop 或 grader runtime。
+
+### Benchmark / Metric Before vs After
+
+| 指标 | Before | After |
+|---|---:|---:|
+| v3 executable dev case | 32 | 64 |
+| v3 未物化 candidate | 118 | 86 |
+| generic runner 可解析 case | 75 | 107 |
+| dynamic multi-turn | 6 | 21 |
+| 非 patch action | 6 | 17 |
+| C9 / C10 / C11 | 1 / 5 / 3 | 12 / 19 / 16 |
+| oracle positive validation | 32 / 32 | 64 / 64 |
+| grader negative mutation | 64 / 64 | 128 / 128 |
+| initial compile 声明一致 | 32 / 32 | 64 / 64 |
+| final compile 零错误 | 32 / 32 | 64 / 64 |
+| 本轮 Copilot trial | 0 | 0 |
+
+### Failure Cases / Regression
+
+统一静态 gate 初次发现 4 个第二批 definition failure：两个 oracle 与精确 grader 不一致、一个
+错误位置 mutation 被接受、一个 refusal 回复缺少必要语义。修复后 schema/oracle/mutation gate
+全部通过。真实 CLSI gate 本轮一次全量通过，没有 fixture compile failure。legacy pilot tests
+与 TypeScript typecheck 保持通过，没有 runner regression。
+
+当前仍有明显限制：answer/no-op 各只有 1 个；全部 v3 case 都是 dev；H2/H3 insertion、deletion、
+file create/delete/rename 未完成；86 个 candidate 尚未物化。因此不能用当前 64 个 dev case 估计
+最终泛化天花板，也不能把它们当 hidden holdout。
+
+### 本轮经验与推荐方向
+
+* 覆盖最低阈值应约束 capability/action 分布，而不只约束总 case 数；
+* 扩容后必须全量重跑 compile 和 hash correlation，不能只验证新增 tranche；
+* 推荐下一步候选：
+  1. 独立补充 answer/no-op 与安全拒绝 family，避免 clarification 代表全部非 patch 决策；
+  2. 建立 H2/H3 conformance 后再物化 insertion/deletion 与文件操作候选；
+  3. 对 64 个 family 做 fuzzy lineage 和 grader ambiguity 审计；
+  4. 在仓库外封存新的 private holdout，再运行首次 v3 dev/holdout baseline。

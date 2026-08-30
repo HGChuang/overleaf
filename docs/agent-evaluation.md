@@ -1231,7 +1231,7 @@ fixture hashes 仍可用于交叉核对，但不能事后改写 canonical manife
 brief 一一覆盖和候选 schema 边界，当前 6/6 通过，TypeScript typecheck
 通过。
 
-150 条来源记录继续保持 `candidate`，其中 32 条已派生为 executable dev case，剩余 118 条仍
+150 条来源记录继续保持 `candidate`，其中 64 条已派生为 executable dev case，剩余 86 条仍
 不可执行。`eval_user` 的角色只负责模拟用户；fixture、策略无关 outcome、protected invariants、
 oracle、grader mutation 和 compile validation 由独立 materialization 流程完成。当前没有 v3
 hidden holdout，也没有运行 Copilot baseline。
@@ -1268,3 +1268,32 @@ pdfLaTeX 支持、proof 结束符和 subfigure caption 三处 fixture/oracle 问
 
 generic runner 的 case registry 已能通过 ID 解析 legacy 43 + v3 32 个 case；没有改变 Copilot、
 prompt、tool schema、Agent loop 或 grader runtime 行为。
+
+### Benchmark v3 第二批与当前合并覆盖
+
+第二批继续由同四个 `gpt-5.6-luna`、high reasoning 子 Agent 各物化 8 个未使用 candidate，
+新增 32 个 dev family。选材优先 C9/C11、clarification/refusal、动态恢复、长上下文与跨文件
+compile repair，没有生成 prompt 改写 variants。当前合并覆盖为：
+
+| 覆盖项 | 前两批合计 |
+|---|---:|
+| executable dev family | 64 |
+| 难度 | D2 8；D3 33；D4 23 |
+| 多文件 | 54 / 64 |
+| required compile / repair loop | 47 / 64 |
+| dynamic multi-turn | 21 / 64 |
+| expected action | patch 47；clarify 10；answer 1；no-op 1；refuse 5 |
+| C9 / C10 / C11 | 12 / 19 / 16 |
+| source domain | content/compile/artifact/interaction 各 16 |
+| grader negative mutations | 128，全部被拒绝 |
+
+第二批静态 gate 发现两个 oracle 与 grader 不一致、一个错误位置 mutation 未被拒绝、一个 refusal
+回复与 grader 不一致，均在进入 compile gate 前修复。随后对前两批全量执行 128 次真实 CLSI
+initial/final compile：64/64 initial 状态符合声明，其中 16 个项目真实包含初始编译错误；64/64
+oracle final workspace 零错误成功。validation report 为 `valid=true`，并由测试逐 case 校验
+fixture/oracle workspace hash，防止 case 修改后继续使用陈旧报告。
+
+相对第一批，C9 从 1 增至 12，C10 从 5 增至 19，C11 从 3 增至 16，非 patch action 从 6 增至
+17，主要薄弱面得到补强。但 answer/no-op 各只有 1 个，全部 64 个仍是 dev，且 H2/H3 未完成，
+所以当前集合仍不能充当完整或 hidden benchmark。generic runner 当前可解析 legacy 43 + v3 64，
+共 107 个 case。本轮没有运行 Copilot 或修改其行为。

@@ -15,11 +15,11 @@
     "compile_reference": 38,
     "artifact_project": 37,
     "interaction_long_context": 37,
-    "materialized_candidates": 32,
-    "unmaterialized_candidates": 118,
-    "executable_cases": 32
+    "materialized_candidates": 64,
+    "unmaterialized_candidates": 86,
+    "executable_cases": 64
   },
-  "split_status": "first-tranche-dev-only",
+  "split_status": "first-two-tranches-dev-only",
   "validation": {
     "candidate_pool": {
       "scenario_count": true,
@@ -40,5 +40,5 @@
     },
     "hidden_sealed": false
   },
-  "warning": "只有 executable/ 中通过 validation-report.json gate 的 32 个 dev case 可运行；其余 118 个候选不得进入 PASS/FAIL 分母，当前也没有可用 hidden holdout。"
+  "warning": "只有 executable/ 中通过 validation-report.json gate 的 64 个 dev case 可运行；其余 86 个候选不得进入 PASS/FAIL 分母，当前也没有可用 hidden holdout。"
 }

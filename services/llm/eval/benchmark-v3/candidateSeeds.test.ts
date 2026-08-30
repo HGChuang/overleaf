@@ -126,10 +126,10 @@ test("manifest separates the immutable candidate pool from the executable tranch
     manifest.counts.source_candidates,
     BENCHMARK_V3_CANDIDATE_SEEDS.length,
   );
-  assert.equal(manifest.counts.materialized_candidates, 32);
-  assert.equal(manifest.counts.unmaterialized_candidates, 118);
-  assert.equal(manifest.counts.executable_cases, 32);
-  assert.equal(manifest.split_status, "first-tranche-dev-only");
+  assert.equal(manifest.counts.materialized_candidates, 64);
+  assert.equal(manifest.counts.unmaterialized_candidates, 86);
+  assert.equal(manifest.counts.executable_cases, 64);
+  assert.equal(manifest.split_status, "first-two-tranches-dev-only");
   assert.equal(manifest.validation.candidate_pool.brief_coverage, true);
   assert.equal(manifest.validation.executable_tranche.oracle_apply, true);
   assert.equal(manifest.validation.executable_tranche.final_compile, true);

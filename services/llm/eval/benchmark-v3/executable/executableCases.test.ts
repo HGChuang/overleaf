@@ -7,14 +7,14 @@ import { V3_EXECUTABLE_CASES } from "./index.js";
 import { oracleWorkspaceHash, validateV3Registry } from "./validation.js";
 
 const EXPECTED_SOURCE_COUNTS: Record<string, number> = {
-  content: 8,
-  compile: 8,
-  artifact: 8,
-  interaction: 8,
+  content: 16,
+  compile: 16,
+  artifact: 16,
+  interaction: 16,
 };
 
-test("Benchmark v3 首批物化 32 个不重复的中文 dev family", () => {
-  assert.equal(V3_EXECUTABLE_CASES.length, 32);
+test("Benchmark v3 前两批物化 64 个不重复的中文 dev family", () => {
+  assert.equal(V3_EXECUTABLE_CASES.length, 64);
   assert.equal(
     new Set(V3_EXECUTABLE_CASES.map((item) => item.case_id)).size,
     V3_EXECUTABLE_CASES.length,
@@ -41,27 +41,32 @@ test("所有 v3 case 通过 schema、oracle、中文和 grader mutation gate", (
   assert.deepEqual(validateV3Registry(V3_EXECUTABLE_CASES), []);
 });
 
-test("首批物化集覆盖难度、上下文、编译和多轮交互", () => {
+test("前两批物化集覆盖难度、上下文、编译和多轮交互", () => {
   const difficultyCount = (level: string) =>
     V3_EXECUTABLE_CASES.filter((item) => item.difficulty.level === level)
       .length;
-  assert.ok(difficultyCount("D2") >= 6);
-  assert.ok(difficultyCount("D3") >= 12);
-  assert.ok(difficultyCount("D4") >= 4);
+  assert.ok(difficultyCount("D2") >= 8);
+  assert.ok(difficultyCount("D3") >= 20);
+  assert.ok(difficultyCount("D4") >= 15);
   assert.ok(
     V3_EXECUTABLE_CASES.filter((item) => item.fixture.files.length > 1)
-      .length >= 16,
+      .length >= 45,
   );
   assert.ok(
     V3_EXECUTABLE_CASES.filter((item) =>
       ["required-after-apply", "repair-loop"].includes(
         item.compile_policy.mode,
       ),
-    ).length >= 16,
+    ).length >= 45,
   );
   assert.ok(
     V3_EXECUTABLE_CASES.filter((item) => item.expected_behavior.dynamic_user)
-      .length >= 6,
+      .length >= 18,
+  );
+  assert.ok(
+    V3_EXECUTABLE_CASES.filter(
+      (item) => item.expected_behavior.action !== "patch",
+    ).length >= 16,
   );
   for (const action of ["patch", "clarify", "answer", "no_op", "refuse"]) {
     assert.ok(
@@ -73,7 +78,7 @@ test("首批物化集覆盖难度、上下文、编译和多轮交互", () => {
   }
 });
 
-test("C1-C11 在首批 v3 可执行集中均有直接覆盖", () => {
+test("C1-C11 在前两批 v3 可执行集中均有直接覆盖", () => {
   const capabilities = Array.from(
     { length: 11 },
     (_, index) => `C${index + 1}`,
@@ -86,6 +91,12 @@ test("C1-C11 在首批 v3 可执行集中均有直接覆盖", () => {
       capability,
     );
   }
+  const capabilityCount = (capability: Capability) =>
+    V3_EXECUTABLE_CASES.filter((item) => item.capabilities.includes(capability))
+      .length;
+  assert.ok(capabilityCount("C9") >= 10);
+  assert.ok(capabilityCount("C10") >= 15);
+  assert.ok(capabilityCount("C11") >= 12);
 });
 
 test("generic runner registry 可以解析全部 v3 case", () => {
