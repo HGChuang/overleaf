@@ -1430,3 +1430,34 @@ targeted tests 10/10、executable tests 8/8、TypeScript typecheck 和 73 个 CL
 
 未观察到 Copilot 行为 regression，未运行 hidden holdout。普通 LaTeX compile failure 在部分路径仍可能被 grader failure 包住；持续磁盘故障无法保证所有 artifacts；provider 内部 retry、统一 provider/case 级 timeout 仍未实现。
 下一步应先从干净 experiment 运行 dev baseline，再进行 failure taxonomy 分析。
+
+## Iteration 17 — 修复 CLSI 执行网络
+
+日期：2026-09-01
+
+### Observation / Evidence
+
+`compileRunner.ts` 的 `http://clsi:3013` 只在 `develop` Compose 网络内可解析。宿主机启动 runner 会在 DNS/连接阶段返回 `fetch failed`；同一环境的 `llm` 容器内可以解析 `clsi`，HTTP 可达，真实 compile POST 返回成功。9230 是 inspector 端口，不是 CLSI HTTP 端口。参考意见的核心判断正确。
+
+### Root Cause / Hypothesis
+
+旧体系依赖容器内 wrapper；`b8a55d29` 删除旧 eval 实现后遗留的 wrapper 又指向已删除文件并硬编码容器名。新 harness 重建了 compile runner，却没有恢复 Compose service 级入口。假设是：只恢复基于 `docker compose exec llm` 的启动边界并注入宿主 Git SHA，即可消除 CLSI 网络 false-negative，不需要改 Copilot、patch、grader 或 benchmark。
+
+### Changes
+
+* 新增 `services/llm/eval/run-in-compose.sh`，按 Compose service 名执行 runner，不依赖容器实例名；
+* 自动注入 `EVAL_GIT_COMMIT`，转发必要的 `EVAL_*` 参数，默认保留 `EVAL_CLSI_URL=http://clsi:3013`；
+* 清空 eval 子进程继承的 inspector `NODE_OPTIONS`，避免并发 trial 端口争用；
+* 在 `services/llm/package.json` 注册 `npm run eval` / `npm run eval:pilot`；
+* 未修改 Copilot、benchmark、grader、tool schema 或 Agent loop。
+
+### Validation
+
+* `bash -n`、`git diff --check`、LLM TypeScript typecheck 通过；
+* Compose preflight：`llm`/`clsi` running，容器内 `getent hosts clsi` 成功，HTTP 可达；
+* 动态 clarification smoke 的 3 次真实 compile 全部 `success`、0 errors、0 warnings，最终 `COPILOT_FAILURE` 来自首轮直接修改的能力/grader 断言，而非 infrastructure；
+* 静态 D2 smoke `run_f65b1d61...` 为 `PASS`，1 patch、1 agent compile，最终 compile 成功且 0 errors/0 warnings；canonical trace 与 compile logs 完整，约 28 秒退出，无残留 runner。
+
+### Regression / Remaining limitations
+
+未观察到评测基础设施 regression，也未修改 Copilot 行为。动态 smoke 仍暴露已知的首轮过早修改能力失败，但不影响本轮网络修复结论。当前没有批量 scheduler；73-case baseline 应在本轮提交后的干净 SHA 上，由独立 `eval_user` session 按 case 调度，并使用新的 experiment ID。

@@ -1422,3 +1422,23 @@ terminal，本轮结果明确是 partial baseline，不能解释为完整集合�
 ### Regression / Remaining P0 gaps
 
 未观察到 Copilot 行为 regression；本轮没有运行 hidden holdout。普通 LaTeX compile failure 的 trial taxonomy 在部分路径仍可能落到 grader failure，需要后续以 compile evidence 细化；持续性磁盘故障只能 best-effort 保存；provider 内部 retry 和 case-level/provider stream timeout 尚未扩展到完整统一的 runner contract。真实 dynamic 回归受 CLSI 基础设施失败影响，不能作为 capability PASS。
+
+## Iteration 17 — 恢复 Compose 网络内的评测入口
+
+### Observation / Evidence
+
+当前 `compileRunner.ts` 默认访问 `http://clsi:3013`。`clsi` 是 `develop` Compose 网络内的 service DNS：宿主机不能解析，`llm` 容器内可解析并访问 HTTP。开发环境暴露的宿主端口 9230 映射到 CLSI 的 Node inspector 9229，并不是编译 HTTP 端口。此前宿主机直接启动 runner 得到的 `fetch failed` 发生在请求到达 CLSI 之前，不能归因给 LaTeX、patch 或 Copilot。
+
+历史提交 `b8a55d29` 删除旧 `eval/cli.ts` 和旧 compile runner 时曾留下指向已删除入口、且硬编码 `develop-llm-1` 的 wrapper。新 harness 恢复 headless compile 后没有恢复可靠的 Compose service 入口，这是本轮 baseline compile infrastructure failure 的直接根因。
+
+### Execution contract
+
+正式 H1 evaluation 必须通过 `services/llm/eval/run-in-compose.sh` 或 `services/llm` 下的 `npm run eval` 启动。wrapper 使用 `docker compose exec -T llm`，不依赖容器实例名；默认加载 develop Compose 与 dev override，显式把宿主 Git SHA 作为 `EVAL_GIT_COMMIT` 传入，并转发 runner 所需的 `EVAL_*` 参数。`EVAL_CLSI_URL` 保持为 `http://clsi:3013`。wrapper 清空子进程继承的 inspector `NODE_OPTIONS`，避免多个 trial 争用同一个 inspector 端口。
+
+不应为此把 CLSI 3013 暴露到宿主机，也不应把 9230 当成 HTTP API。宿主机直接运行 runner 不能作为可信 baseline 入口。
+
+### Validation
+
+容器 preflight 中 `llm` 与 `clsi` 均为 running，`llm` 内 `getent hosts clsi` 成功且 HTTP 可达。动态 smoke `run_75227b3a...` 的两次 agent compile 与一次 final grading compile 均为 `success`、0 errors、0 warnings；该 case 因 Copilot 首轮直接修改而被判为 `COPILOT_FAILURE`，说明 infrastructure 与 capability failure 已能正确分离。
+
+独立静态 smoke `run_f65b1d61...`（`v3.figure-location-caption.v1`）得到 `PASS`：1 次 patch、1 次 agent compile，final grading compile 同样成功，0 errors、0 warnings；`run.json`、`events.jsonl`、`result.json`、patch/snapshot/compile log artifacts 完整，runner 约 28 秒退出且无残留进程。本轮 smoke 发生在 wrapper 提交前，只用于入口验证；正式 baseline 必须使用本轮提交后的 SHA 和新的 experiment ID。

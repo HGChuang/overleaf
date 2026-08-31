@@ -17,7 +17,9 @@
     "format": "prettier --list-different $PWD/'**/*.ts'",
     "format:fix": "prettier --write $PWD/'**/*.ts'",
     "lint:fix": "eslint --fix .",
-    "types:check": "tsc --noEmit"
+    "types:check": "tsc --noEmit",
+    "eval": "bash ./eval/run-in-compose.sh eval/pilot/runPilotCase.ts",
+    "eval:pilot": "bash ./eval/run-in-compose.sh eval/pilot/runPilotCase.ts"
   },
   "version": "1.0.0",
   "directories": {
