@@ -19,7 +19,8 @@
     "lint:fix": "eslint --fix .",
     "types:check": "tsc --noEmit",
     "eval": "bash ./eval/run-in-compose.sh eval/pilot/runPilotCase.ts",
-    "eval:pilot": "bash ./eval/run-in-compose.sh eval/pilot/runPilotCase.ts"
+    "eval:pilot": "bash ./eval/run-in-compose.sh eval/pilot/runPilotCase.ts",
+    "eval:baseline": "tsx eval/pilot/baselineScheduler.ts"
   },
   "version": "1.0.0",
   "directories": {
