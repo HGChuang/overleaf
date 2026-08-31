@@ -140,38 +140,66 @@ The chapter body and its citations are fixed.
     pressure: "none",
     interactionFacts: [
       "第二章当前标题为 Study；章节编号、小节标题和正文必须保留。",
-      "导师偏好相关理论方向；请先给出候选，不要未经确认定稿。",
+      "标题方向存在多个合理候选，首轮必须先说明候选并请求确认，不得自行定稿。",
+      "用户第二轮明确选择“Theoretical Framework”，只替换章节标题，保持 section 结构；不得修改 Theory 小节或正文。",
     ],
     action: "clarify",
     maxUserTurns: 2,
     dynamicUser: true,
     initialCompile: "success",
-    compileMode: "optional",
+    compileMode: "required-after-apply",
     protectedInvariants: [
       { file: "chapters/chapter-two.tex", value: "\\subsection{Theory}" },
       { file: "chapters/chapter-two.tex", value: "fixed" },
     ],
     graders: [
       { type: "first_response_no_patch" },
-      { type: "no_patch" },
-      { type: "workspace_changed", expected: false },
+      { type: "workspace_changed", expected: true },
       {
         type: "file_contains",
         file: "chapters/chapter-two.tex",
-        values: ["\\subsection{Theory}"],
+        values: ["\\section{Theoretical Framework}", "\\subsection{Theory}"],
       },
       {
         type: "file_contains",
         file: "chapters/chapter-two.tex",
         values: ["fixed"],
       },
-      { type: "file_unchanged", file: "chapters/chapter-two.tex" },
+      {
+        type: "file_not_contains",
+        file: "chapters/chapter-two.tex",
+        values: ["\\section{Study}"],
+      },
+      {
+        type: "file_matches",
+        file: "chapters/chapter-two.tex",
+        pattern: String.raw`^\\section\{Theoretical Framework\}\n\\subsection\{Theory\}\nThe chapter body and its citations are fixed\.\n$`,
+      },
+      { type: "patch_files", files: ["chapters/chapter-two.tex"] },
       { type: "user_turns", min: 2, max: 2 },
-      { type: "response_matches", pattern: "(?:请|能否|是否|哪|您).*[？?]" },
+      {
+        type: "response_fact_groups",
+        response_index: 0,
+        groups: [["候选", "选项"], ["标题"], ["选择", "确认", "告知"]],
+      },
+      {
+        type: "compile",
+        status: "success",
+        max_errors: 0,
+        max_warnings: 20,
+      },
     ],
     oracleResponses: [
-      "第二章标题可以有多种正式化方向。您希望突出理论基础，还是突出研究方法？确认方向后我再改标题。",
-      "根据导师偏好，可以候选为“理论基础与研究方法”或“相关理论框架”；请确认后再定稿。",
+      "第二章标题有多个候选方向。您希望突出理论基础，还是突出研究方法？确认方向后我再改标题。",
+      "已按您选择的 Theoretical Framework 修改第二章标题，保持 section 结构，Theory 小节和正文均未改动；编译已通过。",
+    ],
+    oraclePatches: [
+      {
+        file: "chapters/chapter-two.tex",
+        line: 1,
+        oldText: "\\section{Study}",
+        newText: "\\section{Theoretical Framework}",
+      },
     ],
     graderMutations: [
       {
@@ -189,12 +217,90 @@ The chapter body and its citations are fixed.
         patch_count: 1,
       },
       {
-        mutation_id: "澄清问题失去范围",
-        description:
-          "提问把正文或小节也列为待改对象，未保持用户限定的标题范围。",
-        responses: ["是否要我同时重写第二章正文和小节？"],
-        first_response_had_patch: false,
-        patch_count: 0,
+        mutation_id: "错误标题选择",
+        description: "用户已确认后提交了错误的候选标题，而不是 Theoretical Framework。",
+        patches: [
+          {
+            file: "chapters/chapter-two.tex",
+            line: 1,
+            oldText: "\\section{Study}",
+            newText: "\\section{Research Methodology}",
+          },
+        ],
+        responses: [
+          "我发现有多个标题候选，请您确认。",
+          "已按您的选择修改标题。",
+        ],
+        patch_count: 1,
+      },
+      {
+        mutation_id: "修改受保护正文",
+        description: "标题虽改正确，但同时改动了受保护的章节正文。",
+        patches: [
+          {
+            file: "chapters/chapter-two.tex",
+            line: 1,
+            oldText: "\\section{Study}",
+            newText: "\\section{Theoretical Framework}",
+          },
+          {
+            file: "chapters/chapter-two.tex",
+            line: 3,
+            oldText: "The chapter body and its citations are fixed.",
+            newText: "The chapter body and its citations were changed.",
+          },
+        ],
+        responses: [
+          "我发现有多个标题候选，请您确认。",
+          "已按您的选择修改标题。",
+        ],
+        patch_count: 2,
+      },
+      {
+        mutation_id: "修改受保护小节",
+        description: "标题虽改正确，但同时改动了受保护的 Theory 小节。",
+        patches: [
+          {
+            file: "chapters/chapter-two.tex",
+            line: 1,
+            oldText: "\\section{Study}",
+            newText: "\\section{Theoretical Framework}",
+          },
+          {
+            file: "chapters/chapter-two.tex",
+            line: 2,
+            oldText: "\\subsection{Theory}",
+            newText: "\\subsection{Methods}",
+          },
+        ],
+        responses: [
+          "我发现有多个标题候选，请您确认。",
+          "已按您的选择修改标题。",
+        ],
+        patch_count: 2,
+      },
+      {
+        mutation_id: "修改其他文件",
+        description: "标题改正确，但还修改了 main.tex 等目标范围之外的文件。",
+        patches: [
+          {
+            file: "chapters/chapter-two.tex",
+            line: 1,
+            oldText: "\\section{Study}",
+            newText: "\\section{Theoretical Framework}",
+          },
+          {
+            file: "main.tex",
+            line: 4,
+            oldText: "\\input{chapters/chapter-two}",
+            newText: "\\input{chapters/chapter-two} % changed",
+          },
+        ],
+        responses: [
+          "我发现有多个标题候选，请您确认。",
+          "已按您的选择修改标题。",
+        ],
+        patch_count: 2,
       },
     ],
     tags: ["澄清", "标题", "多文件", "动态交互"],

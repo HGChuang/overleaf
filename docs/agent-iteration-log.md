@@ -1398,3 +1398,35 @@ compile 顺序；未补造缺失的 retry 或未结束 trial 数据。
 3. 首次正式 baseline 后再分析 7 个 grader failure，确认是否存在 grader false-positive/negative。
 
 本 iteration 未提交 Git，未 push。
+
+## Iteration 16 — 解阻动态 baseline 执行
+
+日期：2026-08-31
+
+### Observation / Evidence
+
+首次 v3 baseline 暴露两类基础问题：动态标题澄清 case 的真实链路是首轮无 patch、用户选择后第二轮提交 patch 并成功编译，但旧 grader 仍强制 `no_patch`，形成 grader false negative。
+setup/resume 异常后 runner 仍可能被模块级 Redis/client 句柄保持，动态 eval_user 协议没有 timeout，导致 baseline 出现终端结果但进程或 stdin 生命周期不干净；artifact 或状态写入异常也可能阻断 terminal event。
+
+### Root Cause / Hypothesis
+
+Root cause 是 case contract 与交互目标不一致，以及 runner cleanup/persistence 不是全路径、异常安全的。
+本轮假设：修正动态 case 的两阶段 contract，使用无条件幂等 cleanup、协议 timeout 和 best-effort terminal persistence，就能在不修改 Copilot 的前提下恢复可重复 baseline。
+
+### Changes
+
+* 标题 clarification case 改为首轮 `first_response_no_patch`，第二轮按用户选择修改，并检查精确的文件范围、受保护正文/subsection 和 compile 结果；删除与该目标矛盾的全局 no-op 断言。
+* runner 增加外层 unconditional cleanup，setup、resume、正常结束和异常路径统一回收资源；cleanup 单步失败不阻断后续步骤且可重复调用。
+* 动态 protocol 增加 `EVAL_USER_PROTOCOL_TIMEOUT_MS`（默认 120 秒），超时产生 runner failure。
+* 新增 runner lifecycle helpers，artifact 和 run/result state 写入失败时记录结构化 `RUNNER_ARTIFACT_PERSISTENCE_ERROR`，仍 best-effort 尝试 terminal trace 和最终状态。
+* 增加 contract、protocol、cleanup、artifact persistence 测试；没有修改 Copilot 行为或 benchmark 数量。
+
+### Validation
+
+targeted tests 10/10、executable tests 8/8、TypeScript typecheck 和 73 个 CLSI fixture initial/final validation 均通过。
+人为 setup failure 约 3 秒退出，runner 无残留。真实动态回归 `run_0c14099f...` 中 Copilot 正确完成澄清与 patch，然而 CLSI fetch failed；runner 及时退出，trace 保留了失败前事件和结构化 `INFRA_FAILURE`，该 run 不计作 PASS。
+
+### Regression / Remaining limitations
+
+未观察到 Copilot 行为 regression，未运行 hidden holdout。普通 LaTeX compile failure 在部分路径仍可能被 grader failure 包住；持续磁盘故障无法保证所有 artifacts；provider 内部 retry、统一 provider/case 级 timeout 仍未实现。
+下一步应先从干净 experiment 运行 dev baseline，再进行 failure taxonomy 分析。

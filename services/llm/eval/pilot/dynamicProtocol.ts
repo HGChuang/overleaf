@@ -21,6 +21,35 @@ export interface EvalUserDecision {
   patch_decision?: 'accept' | 'reject'
 }
 
+export const DEFAULT_EVAL_USER_PROTOCOL_TIMEOUT_MS = 120_000
+
+/** A missing eval_user response is a runner failure, not a model response. */
+export class EvalUserProtocolError extends Error {
+  readonly code = 'EVAL_USER_TIMEOUT'
+
+  constructor(timeoutMs: number) {
+    super(`eval_user protocol response timed out after ${timeoutMs}ms`)
+    this.name = 'EvalUserProtocolError'
+  }
+}
+
+export interface EvalUserProtocolIO {
+  input: NodeJS.ReadableStream
+  output: NodeJS.WritableStream
+}
+
+function configuredTimeoutMs(): number {
+  const raw = process.env.EVAL_USER_PROTOCOL_TIMEOUT_MS
+  if (raw === undefined || raw === '') return DEFAULT_EVAL_USER_PROTOCOL_TIMEOUT_MS
+  const timeoutMs = Number(raw)
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+    throw new Error(
+      'EVAL_USER_PROTOCOL_TIMEOUT_MS must be a positive number of milliseconds',
+    )
+  }
+  return timeoutMs
+}
+
 export function validateEvalUserDecision(
   value: unknown,
   eventType: EvalUserProtocolEvent['type'],
@@ -61,14 +90,34 @@ export function validateEvalUserDecision(
 
 export class DynamicEvalUserProtocol {
   private readonly readline: Interface
+  private readonly output: NodeJS.WritableStream
+  private readonly timeoutMs: number
+  private closed = false
 
-  constructor() {
-    this.readline = createInterface({ input: stdin, output: stdout })
+  constructor(
+    timeoutMs = configuredTimeoutMs(),
+    io: EvalUserProtocolIO = { input: stdin, output: stdout },
+  ) {
+    this.timeoutMs = timeoutMs
+    this.output = io.output
+    this.readline = createInterface({ input: io.input, output: io.output })
   }
 
   async request(event: EvalUserProtocolEvent): Promise<EvalUserDecision> {
-    stdout.write(`${EVAL_PROTOCOL_PREFIX}${JSON.stringify(event)}\n`)
-    const line = await this.readline.question('')
+    if (this.closed) throw new Error('eval_user protocol is closed')
+    this.output.write(`${EVAL_PROTOCOL_PREFIX}${JSON.stringify(event)}\n`)
+    let timeout: NodeJS.Timeout | undefined
+    const line = await Promise.race([
+      this.readline.question(''),
+      new Promise<never>((_, reject) => {
+        timeout = setTimeout(() => {
+          this.close()
+          reject(new EvalUserProtocolError(this.timeoutMs))
+        }, this.timeoutMs)
+      }),
+    ]).finally(() => {
+      if (timeout) clearTimeout(timeout)
+    })
     let parsed: unknown
     try {
       parsed = JSON.parse(line)
@@ -81,6 +130,12 @@ export class DynamicEvalUserProtocol {
   }
 
   close() {
+    if (this.closed) return
+    this.closed = true
     this.readline.close()
+  }
+
+  get isClosed() {
+    return this.closed
   }
 }

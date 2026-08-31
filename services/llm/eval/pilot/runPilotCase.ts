@@ -33,8 +33,16 @@ import {
   EvaluationFailure,
   fallbackForPhase,
 } from '../headless/failureTaxonomy.js'
+import {
+  finalizeTrial,
+  persistJsonArtifacts,
+  persistTrialState,
+} from '../headless/runnerLifecycle.js'
 import { getPilotCase, validatePilotCase } from './caseRegistry.js'
-import { DynamicEvalUserProtocol } from './dynamicProtocol.js'
+import {
+  DynamicEvalUserProtocol,
+  EvalUserProtocolError,
+} from './dynamicProtocol.js'
 import { gradePilotCase } from './graderRegistry.js'
 import type { PilotGradeContext, PilotResponse } from './types.js'
 
@@ -721,106 +729,153 @@ async function main() {
     }
   } catch (error) {
     if (!failure) {
+      const normalizedError =
+        error instanceof EvalUserProtocolError
+          ? new EvaluationFailure(error.message, {
+              category: 'runner',
+              phase: 'runner',
+              type: error.code,
+              source: 'dynamic_eval_user_protocol',
+              retryable: true,
+            })
+          : error
       status =
-        error instanceof EvaluationFailure &&
-        error.classification.type === 'UNSUPPORTED_PATCH_SEMANTICS'
+        normalizedError instanceof EvaluationFailure &&
+        normalizedError.classification.type === 'UNSUPPORTED_PATCH_SEMANTICS'
           ? 'COPILOT_FAILURE'
           : 'INFRA_FAILURE'
       failure = classifyFailure(
-        error,
+        normalizedError,
         fallbackForPhase(failurePhase),
         currentParentEventId,
       )
     }
   } finally {
     dynamicProtocol?.close()
-    if (serviceResources) {
-      try {
-        await shutdownEval()
-      } catch (error) {
-        if (!failure) {
-          status = 'INFRA_FAILURE'
-          failure = classifyFailure(
-            error,
-            {
-              category: 'runner',
-              phase: 'cleanup',
-              type: 'RUNNER_CLEANUP_ERROR',
-              source: 'evaluation_harness',
-              retryable: true,
-            },
-            currentParentEventId,
-          )
-        }
-      }
-    }
-    await writeJsonAtomic(join(runDir, 'after.json'), filesRef.current)
-    await writeJsonAtomic(join(runDir, 'responses.json'), responses)
-    await writeJsonAtomic(join(runDir, 'patches.json'), patches)
-    await writeJsonAtomic(
-      join(runDir, 'rejected-patches.json'),
-      rejectedPatches,
-    )
-    await writeJsonAtomic(
-      join(runDir, 'eval-user-decisions.json'),
-      evalUserDecisions,
-    )
-    await writeJsonAtomic(join(runDir, 'eval-user-input.json'), {
-      messages: actualUserMessages,
-      session_id: manifest.eval_user_session_id,
-    })
-    await writeJsonAtomic(join(runDir, 'tool-calls.json'), toolCalls)
-    const terminal = trace.emit(
-      status === 'PASS' || status === 'SKIPPED'
-        ? {
-            event_type: 'trial_completed',
-            parent_event_id: currentParentEventId,
-            turn_id: currentTurnId,
-            status: status === 'PASS' ? 'ok' : 'skipped',
-            summary: { status, usage, tool_calls: toolCalls },
-          }
-        : {
-            event_type: 'trial_failed',
-            parent_event_id: currentParentEventId,
-            turn_id: currentTurnId,
-            status: 'error',
-            summary: { status, usage, tool_calls: toolCalls },
-            failure: failure as StructuredFailure,
+    const markPersistenceFailure = (error: unknown) => {
+      status = 'INFRA_FAILURE'
+      failure = classifyFailure(
+        new EvaluationFailure(
+          `evaluation artifact persistence failed: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+          {
+            category: 'runner',
+            phase: 'artifact_persistence',
+            type: 'RUNNER_ARTIFACT_PERSISTENCE_ERROR',
+            source: 'evaluation_harness',
+            retryable: true,
           },
-    )
-    await terminal.committed
-    await trace.flush()
-    const result = {
-      runId,
-      runDir,
-      experimentId,
-      caseId: caseDefinition.case_id,
-      caseFamilyId: caseDefinition.case_family_id,
-      split: caseDefinition.split,
-      trialId,
-      status,
-      failure,
-      usage,
-      toolCalls,
-      patchCount: patches.length,
-      patchRejectionCount,
-      userTurnCount,
-      responseCount: responses.length,
-      initialWorkspaceHash: workspaceHash(initialFiles),
-      finalWorkspaceHash: workspaceHash(filesRef.current),
-      wallMs: Date.now() - startedMs,
+        ),
+        fallbackForPhase('runner'),
+        currentParentEventId,
+      )
     }
-    Object.assign(manifest, {
-      ended_at: new Date().toISOString(),
-      status,
-      failure,
-      final_workspace_hash: result.finalWorkspaceHash,
+    const persistArtifacts = () =>
+      persistJsonArtifacts([
+        { path: join(runDir, 'after.json'), value: filesRef.current },
+        { path: join(runDir, 'responses.json'), value: responses },
+        { path: join(runDir, 'patches.json'), value: patches },
+        {
+          path: join(runDir, 'rejected-patches.json'),
+          value: rejectedPatches,
+        },
+        {
+          path: join(runDir, 'eval-user-decisions.json'),
+          value: evalUserDecisions,
+        },
+        {
+          path: join(runDir, 'eval-user-input.json'),
+          value: {
+            messages: actualUserMessages,
+            session_id: manifest.eval_user_session_id,
+          },
+        },
+        { path: join(runDir, 'tool-calls.json'), value: toolCalls },
+      ])
+    const emitTerminal = async () => {
+      const terminal = trace.emit(
+        status === 'PASS' || status === 'SKIPPED'
+          ? {
+              event_type: 'trial_completed',
+              parent_event_id: currentParentEventId,
+              turn_id: currentTurnId,
+              status: status === 'PASS' ? 'ok' : 'skipped',
+              summary: { status, usage, tool_calls: toolCalls },
+            }
+          : {
+              event_type: 'trial_failed',
+              parent_event_id: currentParentEventId,
+              turn_id: currentTurnId,
+              status: 'error',
+              summary: { status, usage, tool_calls: toolCalls },
+              failure: failure as StructuredFailure,
+            },
+      )
+      currentParentEventId = terminal.eventId
+      await terminal.committed
+      await trace.flush()
+    }
+    const persistResult = async () => {
+      const buildResult = () => ({
+        runId,
+        runDir,
+        experimentId,
+        caseId: caseDefinition.case_id,
+        caseFamilyId: caseDefinition.case_family_id,
+        split: caseDefinition.split,
+        trialId,
+        status,
+        failure,
+        usage,
+        toolCalls,
+        patchCount: patches.length,
+        patchRejectionCount,
+        userTurnCount,
+        responseCount: responses.length,
+        initialWorkspaceHash: workspaceHash(initialFiles),
+        finalWorkspaceHash: workspaceHash(filesRef.current),
+        wallMs: Date.now() - startedMs,
+      })
+      const buildManifest = () => {
+        const result = buildResult()
+        Object.assign(manifest, {
+          ended_at: new Date().toISOString(),
+          status,
+          failure,
+          final_workspace_hash: result.finalWorkspaceHash,
+        })
+        return manifest
+      }
+      await persistTrialState({
+        runPath: join(runDir, 'run.json'),
+        resultPath: join(runDir, 'result.json'),
+        buildRun: buildManifest,
+        buildResult,
+        onPersistenceFailure: markPersistenceFailure,
+      })
+      const result = buildResult()
+      process.stdout.write(`${JSON.stringify({ ...result, status, failure }, null, 2)}\n`)
+      process.exitCode = status === 'PASS' || status === 'SKIPPED' ? 0 : 1
+    }
+    await finalizeTrial({
+      persistArtifacts,
+      onPersistenceFailure: markPersistenceFailure,
+      emitTerminal,
+      onTerminalFailure: markPersistenceFailure,
+      persistResult,
     })
-    await writeJsonAtomic(join(runDir, 'run.json'), manifest)
-    await writeJsonAtomic(join(runDir, 'result.json'), result)
-    process.stdout.write(`${JSON.stringify(result, null, 2)}\n`)
-    process.exitCode = status === 'PASS' || status === 'SKIPPED' ? 0 : 1
   }
 }
 
-await main()
+async function mainWithCleanup() {
+  try {
+    await main()
+  } finally {
+    // Cleanup is deliberately unconditional: resume, validation, setup and
+    // normal terminal paths may all leave shared clients behind.
+    await shutdownEval()
+  }
+}
+
+await mainWithCleanup()

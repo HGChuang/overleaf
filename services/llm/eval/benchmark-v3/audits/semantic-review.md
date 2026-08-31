@@ -19,9 +19,15 @@ grader 与 critical mutations。它补充自动 lineage/grader audit：自动检
 | `v3.content-multifile-translation.v1` | “这些章节”的边界依赖隐含文件结构 | 明确只指三个 `sections/*.tex`，并增加 `refs.tex` unchanged 约束 |
 | `v3.main-supplement-organization.v1` | seed 同时要求输入关系与资源目录改名后的遗留引用，原 case 只验证补充材料隔离 | fixture 使用已改名的 `assets/results.tex` 和主文旧路径，oracle 同时修复资源引用与补充材料输入关系 |
 
+另对真实 baseline 中暴露的 `v3.interaction-title-clarification.v1` 做了动态闭环复核：原 grader
+把“首轮必须无 patch”和“全程 no-op / workspace 不变”同时作为最终条件，错误排除了用户第二轮确认后的合法标题替换。
+现已改为首轮 `first_response_no_patch`，最终 workspace 必须变化且只包含
+`chapters/chapter-two.tex` 的 `Study`→`Theoretical Framework` replacement，并要求保留
+`Theory` 小节、固定正文和成功编译；首轮澄清回复只检查候选/确认语义，最终回复不再要求问句。
+
 ## 结论
 
-7 个命中项均已在进入 baseline 前修正，并重新通过 oracle、mutation、hash correlation 和真实
+上述 7 个 source→fixture/oracle 命中项，以及 1 个真实 baseline 暴露的动态 grader contract 问题，均已在进入 baseline 前修正，并重新通过 oracle、mutation、hash correlation 和真实
 CLSI initial/final compile gate。复核后原 64 个 family 未留下已知的 source→fixture/oracle P0
 错配。该结论只覆盖本轮逐条复核的问题，不等于自然语言语义已被自动完备证明；未来新增 family
 仍必须执行同一语义映射 gate。

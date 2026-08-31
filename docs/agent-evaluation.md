@@ -1382,3 +1382,43 @@ compile 在 CLSI 恢复后返回预期的 `success` 加 2 errors，证明不能�
 false-negative 归因给模型或 fixture。当前未发现残留 baseline runner 进程；但 runner 的
 stdio/进程回收仍是正式 baseline 前的阻塞项。由于 73 个 executable 中只有 17 个产生有效
 terminal，本轮结果明确是 partial baseline，不能解释为完整集合的能力天花板。
+
+## Iteration 16 — 解阻动态 baseline 执行
+
+### 本轮研究的问题
+
+本轮处理首次 v3 baseline 无法稳定完成的问题，范围限定为动态 clarification case 的评测契约、runner 生命周期和异常安全持久化；不修改 Copilot prompt、model、tool schema 或 Agent loop。
+
+### Observation / Evidence
+
+* 动态 case `v3.interaction-title-clarification.v1` 的真实执行已经表现为“首轮澄清、用户选择、第二轮提交标题 patch、编译成功”，但旧 grader 仍要求全程 `no_patch`，因此把正确行为判为失败。
+* baseline runner 在 setup/resume/provider 等早期异常路径可能只设置 `process.exitCode`，而模块级 Redis/client 句柄仍然存活，导致终端返回后进程不能及时退出；动态 eval_user stdin 也没有等待上限。
+* artifacts、`run.json`/`result.json` 或 terminal event 的单点写入异常可能遮蔽后续失败状态，降低仅凭 trace 恢复时间线的能力。
+* 验证中真实动态回归 run `run_0c14099f...` 中 Copilot 已正确完成目标，但 CLSI fetch 失败；runner 及时退出且保留 canonical trace，故该次归类为 `INFRA_FAILURE`，不能计作 PASS。
+
+### Interpretation / Root Cause
+
+动态 case 的根因是 grader contract 与多轮交互目标不一致，而非 Copilot 行为失败。baseline 无法结束的主要根因是 runner cleanup 只覆盖已完成 service setup 的路径，且协议读取没有 timeout；另外，终端持久化缺乏“失败后仍继续尝试写状态和 terminal event”的异常安全边界。
+
+### Hypothesis
+
+假设是：将 clarification case 表达为“首轮不 patch，第二轮按用户选择修改并满足精确最终状态”，并对所有 runner 路径使用幂等、无抛出的 cleanup，加上协议和 artifact persistence 的结构化失败处理，即可解锁可重复 baseline，同时不改变 Copilot 行为。
+
+### Changes
+
+* 修复标题 clarification case 的 contract：首轮要求无 patch；第二轮选择固定标题后要求目标文件更新、受保护的 subsection/正文保持不变并成功编译；grader 使用事实组而非唯一措辞。
+* runner 采用无条件的外层 cleanup，覆盖 resume、环境检查、数据库/provider setup、正常完成和异常退出；cleanup 步骤彼此独立且可重复调用，不用直接 `process.exit()` 终止进程。
+* 为动态 eval_user protocol 增加可配置 timeout（`EVAL_USER_PROTOCOL_TIMEOUT_MS`，默认 120 秒），超时归类为结构化 runner failure，并关闭 readline。
+* 将 artifact、run/result state 和 terminal trace 写入拆分为 best-effort 操作；记录 artifact persistence failure，仍继续尝试写 result 和 `trial_failed`/`trial_completed`，避免单个磁盘错误丢失此前事件。
+* 增加 targeted contract、protocol、cleanup 和 persistence 测试；未新增 benchmark case。
+
+### Validation
+
+* clarification targeted tests：10/10 通过；executable tests：8/8 通过。
+* TypeScript typecheck 通过；73 个 fixture 的 initial/final CLSI validation 通过。
+* 人为 setup failure 在约 3 秒内退出，且没有残留 runner 进程；cleanup 重复调用安全。
+* 动态真实回归 run `run_0c14099f...`：Copilot 的澄清、修改和 compile 行为正确，但 CLSI 返回 `fetch failed`，最终为 `INFRA_FAILURE`；`run.json`、`events.jsonl` 与已有 artifacts 保留了失败前事件和终止时间线。
+
+### Regression / Remaining P0 gaps
+
+未观察到 Copilot 行为 regression；本轮没有运行 hidden holdout。普通 LaTeX compile failure 的 trial taxonomy 在部分路径仍可能落到 grader failure，需要后续以 compile evidence 细化；持续性磁盘故障只能 best-effort 保存；provider 内部 retry 和 case-level/provider stream timeout 尚未扩展到完整统一的 runner contract。真实 dynamic 回归受 CLSI 基础设施失败影响，不能作为 capability PASS。

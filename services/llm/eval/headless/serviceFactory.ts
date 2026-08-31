@@ -233,9 +233,45 @@ export async function buildTaskService(
   }
 }
 
+export interface EvalCleanupStep {
+  resource: string
+  cleanup: () => void | Promise<void>
+}
+
+export async function runCleanupSteps(
+  steps: readonly EvalCleanupStep[],
+): Promise<void> {
+  for (const step of steps) {
+    try {
+      await step.cleanup()
+    } catch (error) {
+      try {
+        process.stderr.write(
+          `[evaluation cleanup] ${step.resource}: ${
+            error instanceof Error ? error.message : String(error)
+          }\n`,
+        )
+      } catch {
+        // Reporting cleanup errors must not prevent subsequent cleanup steps.
+      }
+    }
+  }
+}
+
 export async function shutdownEval() {
-  for (const registry of registries.splice(0)) registry.close()
-  for (const client of memoryClients.splice(0)) client.disconnect()
-  redis.disconnect()
-  await mongoose.disconnect()
+  // Splicing first makes repeated calls idempotent. Cleanup errors are
+  // deliberately non-throwing: a terminal result has already been persisted
+  // when this function is called by the pilot runner.
+  await runCleanupSteps([
+    ...registries.splice(0).map((registry) => ({
+      resource: 'client registry',
+      cleanup: () => registry.close(),
+    })),
+    ...memoryClients.splice(0).map((client) => ({
+      resource: 'memory client',
+      cleanup: () => client.disconnect(),
+    })),
+    { resource: 'redis', cleanup: () => redis.disconnect() },
+    { resource: 'mongoose', cleanup: () => mongoose.disconnect() },
+  ])
 }

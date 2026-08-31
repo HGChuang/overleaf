@@ -71,6 +71,9 @@ conformance case，其余 80 条仍不可执行。
 错配和 4 个目标范围含糊项；已分别通过修正摘要/结论目标、补齐交叉引用故障、重新映射匿名投稿
 seed，以及明确多轮反馈和文件范围处理。修正后重新生成两份自动审计并全量重跑验证。
 
+baseline 暴露的标题澄清 case 另完成动态 contract 修复：首轮仍必须无 patch，用户第二轮确认后
+只允许目标章节标题 replacement；grader 不再把最终状态要求成 no-op，也不再要求最终回复保留问句。
+
 新增 9 个 non-edit family 使用 `response_fact_groups`，每个事实允许多种等价中文表达，并同时
 约束 no-patch、workspace/file unchanged 与项目事实，避免再次依赖唯一完整措辞。
 
@@ -111,3 +114,16 @@ seed，以及明确多轮反馈和文件范围处理。修正后重新生成两�
 
 当前验证不代表 Copilot 能通过这些 case；它只证明 benchmark 定义本身可执行且能拒绝已声明的
 关键错误。hidden holdout 仍未生成和封存。
+
+## Runner 生命周期约定
+
+- `runPilotCase.ts` 在所有入口（包括 resume、参数/schema 失败和 service setup 失败）都会进入
+  最外层 cleanup；terminal event、结果和已生成 artifact flush 完成后才释放共享资源。
+- `shutdownEval()` 逐类释放 registry、memory client、Redis 和 Mongo；单个资源失败不会阻止后续
+  资源清理，重复调用是安全的。
+- 动态 `eval_user` 等待协议响应默认最多 120 秒，可用
+  `EVAL_USER_PROTOCOL_TIMEOUT_MS` 配置。超时会关闭 readline 并记录 `EVAL_USER_TIMEOUT` 的
+  runner failure；正常协议 JSON 不变。
+- 运行结束时各类 JSON artifact 独立尝试写入；即使某个 artifact 写入失败，也会继续写其他
+  artifact、尝试写入 terminal event 和 `result.json`，并将失败归类为
+  `RUNNER_ARTIFACT_PERSISTENCE_ERROR`。

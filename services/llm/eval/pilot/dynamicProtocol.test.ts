@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { validateEvalUserDecision } from './dynamicProtocol.js'
+import { PassThrough, Writable } from 'node:stream'
+import {
+  DynamicEvalUserProtocol,
+  EvalUserProtocolError,
+  validateEvalUserDecision,
+} from './dynamicProtocol.js'
 
 test('dynamic eval_user turn requires a message when continuing', () => {
   assert.throws(
@@ -51,4 +56,28 @@ test('accepted patch decision can continue to automatic verification', () => {
       patch_decision: 'accept',
     },
   )
+})
+
+test('dynamic protocol timeout closes readline and reports a structured timeout', async () => {
+  const input = new PassThrough()
+  const output = new Writable({ write(_chunk, _encoding, callback) { callback() } })
+  const protocol = new DynamicEvalUserProtocol(10, { input, output })
+
+  await assert.rejects(
+    protocol.request({
+      protocol: 'overleaf-eval-user/v1',
+      type: 'turn_decision_required',
+      case_id: 'timeout-test',
+      user_turn: 1,
+      copilot_response: '等待用户决定',
+      workspace_hash: 'hash',
+    }),
+    (error: unknown) =>
+      error instanceof EvalUserProtocolError &&
+      error.code === 'EVAL_USER_TIMEOUT',
+  )
+  assert.equal(protocol.isClosed, true)
+  protocol.close()
+  input.destroy()
+  output.destroy()
 })

@@ -2,9 +2,14 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { getPilotCase } from "../../pilot/caseRegistry.js";
+import { gradePilotCase } from "../../pilot/graderRegistry.js";
 import type { Capability } from "../../pilot/types.js";
 import { V3_EXECUTABLE_CASES } from "./index.js";
-import { oracleWorkspaceHash, validateV3Registry } from "./validation.js";
+import {
+  buildV3GradeContext,
+  oracleWorkspaceHash,
+  validateV3Registry,
+} from "./validation.js";
 
 const EXPECTED_SOURCE_COUNTS: Record<string, number> = {
   content: 16,
@@ -111,6 +116,45 @@ test("generic runner registry 可以解析全部 v3 case", () => {
   for (const caseDefinition of V3_EXECUTABLE_CASES) {
     assert.equal(getPilotCase(caseDefinition.case_id), caseDefinition);
   }
+});
+
+test("标题澄清真实两轮闭环的等价 trace 通过最终 contract", () => {
+  const caseDefinition = V3_EXECUTABLE_CASES.find(
+    (item) => item.case_id === "v3.interaction-title-clarification.v1",
+  );
+  assert.ok(caseDefinition);
+  const context = buildV3GradeContext(caseDefinition);
+  context.responses[0].text =
+    "我查看了项目文件，第二章标题存在多个候选。请选择合适的标题，确认后我再修改。";
+  context.responses[1].text =
+    "已按您选择的 Theoretical Framework 修改标题，保持 section 结构，正文未改动，编译成功。";
+  context.responses[0].hadPatch = false;
+  context.responses[1].hadPatch = true;
+  const grade = gradePilotCase(context);
+  assert.equal(grade.passed, true, JSON.stringify(grade.checks));
+  assert.deepEqual(
+    grade.checks.filter((check) => !check.passed),
+    [],
+  );
+});
+
+test("标题澄清 contract 拒绝受保护正文 mutation", () => {
+  const caseDefinition = V3_EXECUTABLE_CASES.find(
+    (item) => item.case_id === "v3.interaction-title-clarification.v1",
+  );
+  assert.ok(caseDefinition);
+  const mutation = caseDefinition.validation_oracle.grader_mutations.find(
+    (item) => item.mutation_id === "修改受保护正文",
+  );
+  assert.ok(mutation);
+  const grade = gradePilotCase(buildV3GradeContext(caseDefinition, mutation));
+  assert.equal(grade.passed, false);
+  assert.ok(
+    grade.checks.some(
+      (check) =>
+        check.grader.type === "file_matches" && check.passed === false,
+    ),
+  );
 });
 
 interface CompileValidationCase {

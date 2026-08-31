@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-30T12:17:23.656Z",
+  "generated_at": "2026-08-31T12:41:39.586Z",
   "registry": {
     "case_count": 64,
     "expected_case_count": 64,
@@ -31,27 +31,28 @@
     },
     "finding_counts": {
       "NO_FILE_SCOPE_GUARD": 15,
-      "PATCH_FILE_PATH_DEPENDENCY": 33,
-      "COMPILE_RESULT_ONLY": 47,
-      "RESPONSE_WORDING_DEPENDENCY": 16,
+      "PATCH_FILE_PATH_DEPENDENCY": 34,
+      "COMPILE_RESULT_ONLY": 48,
+      "RESPONSE_WORDING_DEPENDENCY": 15,
       "RESPONSE_SHORT_TOKEN": 3,
       "POSITIVE_CONTENT_ONLY": 9
     },
     "grader_type_counts": {
       "workspace_changed": 64,
       "file_contains": 184,
-      "file_not_contains": 38,
-      "patch_files": 33,
-      "compile": 47,
-      "file_unchanged": 53,
-      "file_matches": 11,
-      "no_patch": 14,
+      "file_not_contains": 39,
+      "patch_files": 34,
+      "compile": 48,
+      "file_unchanged": 52,
+      "file_matches": 12,
+      "no_patch": 13,
       "response_contains_all": 5,
       "first_response_no_patch": 10,
       "user_turns": 21,
       "regex_count": 9,
       "response_contains_any": 1,
-      "response_matches": 12
+      "response_fact_groups": 1,
+      "response_matches": 11
     },
     "mutation_rejection_rate": 1,
     "cases_with_no_rejected_mutation": 0
@@ -4731,24 +4732,26 @@
       "category": "澄清",
       "difficulty": "D2",
       "action": "clarify",
-      "compile_mode": "optional",
+      "compile_mode": "required-after-apply",
       "files": [
         "main.tex",
         "chapters/chapter-two.tex"
       ],
       "grader_types": [
         "first_response_no_patch",
-        "no_patch",
         "workspace_changed",
         "file_contains:chapters/chapter-two.tex",
         "file_contains:chapters/chapter-two.tex",
-        "file_unchanged:chapters/chapter-two.tex",
+        "file_not_contains:chapters/chapter-two.tex",
+        "file_matches:chapters/chapter-two.tex",
+        "patch_files:chapters/chapter-two.tex",
         "user_turns",
-        "response_matches:all"
+        "response_fact_groups",
+        "compile:success"
       ],
       "oracle_passed": true,
-      "mutation_count": 2,
-      "mutation_rejection_count": 2,
+      "mutation_count": 5,
+      "mutation_rejection_count": 5,
       "mutations": [
         {
           "mutation_id": "首轮擅自修改标题",
@@ -4756,54 +4759,128 @@
           "passed": false,
           "failedGraders": [
             "first_response_no_patch",
-            "no_patch",
-            "workspace_changed",
-            "file_unchanged:chapters/chapter-two.tex"
+            "file_contains:chapters/chapter-two.tex",
+            "file_matches:chapters/chapter-two.tex"
           ],
           "unaffectedGraders": [
+            "workspace_changed",
             "file_contains:chapters/chapter-two.tex",
-            "file_contains:chapters/chapter-two.tex",
+            "file_not_contains:chapters/chapter-two.tex",
+            "patch_files:chapters/chapter-two.tex",
             "user_turns",
-            "response_matches:all"
+            "response_fact_groups",
+            "compile:success"
           ]
         },
         {
-          "mutation_id": "澄清问题失去范围",
-          "description": "提问把正文或小节也列为待改对象，未保持用户限定的标题范围。",
+          "mutation_id": "错误标题选择",
+          "description": "用户已确认后提交了错误的候选标题，而不是 Theoretical Framework。",
           "passed": false,
           "failedGraders": [
-            "user_turns"
+            "file_contains:chapters/chapter-two.tex",
+            "file_matches:chapters/chapter-two.tex"
           ],
           "unaffectedGraders": [
             "first_response_no_patch",
-            "no_patch",
+            "workspace_changed",
+            "file_contains:chapters/chapter-two.tex",
+            "file_not_contains:chapters/chapter-two.tex",
+            "patch_files:chapters/chapter-two.tex",
+            "user_turns",
+            "response_fact_groups",
+            "compile:success"
+          ]
+        },
+        {
+          "mutation_id": "修改受保护正文",
+          "description": "标题虽改正确，但同时改动了受保护的章节正文。",
+          "passed": false,
+          "failedGraders": [
+            "file_contains:chapters/chapter-two.tex",
+            "file_matches:chapters/chapter-two.tex"
+          ],
+          "unaffectedGraders": [
+            "first_response_no_patch",
+            "workspace_changed",
+            "file_contains:chapters/chapter-two.tex",
+            "file_not_contains:chapters/chapter-two.tex",
+            "patch_files:chapters/chapter-two.tex",
+            "user_turns",
+            "response_fact_groups",
+            "compile:success"
+          ]
+        },
+        {
+          "mutation_id": "修改受保护小节",
+          "description": "标题虽改正确，但同时改动了受保护的 Theory 小节。",
+          "passed": false,
+          "failedGraders": [
+            "file_contains:chapters/chapter-two.tex",
+            "file_matches:chapters/chapter-two.tex"
+          ],
+          "unaffectedGraders": [
+            "first_response_no_patch",
+            "workspace_changed",
+            "file_contains:chapters/chapter-two.tex",
+            "file_not_contains:chapters/chapter-two.tex",
+            "patch_files:chapters/chapter-two.tex",
+            "user_turns",
+            "response_fact_groups",
+            "compile:success"
+          ]
+        },
+        {
+          "mutation_id": "修改其他文件",
+          "description": "标题改正确，但还修改了 main.tex 等目标范围之外的文件。",
+          "passed": false,
+          "failedGraders": [
+            "patch_files:chapters/chapter-two.tex"
+          ],
+          "unaffectedGraders": [
+            "first_response_no_patch",
             "workspace_changed",
             "file_contains:chapters/chapter-two.tex",
             "file_contains:chapters/chapter-two.tex",
-            "file_unchanged:chapters/chapter-two.tex",
-            "response_matches:all"
+            "file_not_contains:chapters/chapter-two.tex",
+            "file_matches:chapters/chapter-two.tex",
+            "user_turns",
+            "response_fact_groups",
+            "compile:success"
           ]
         }
       ],
       "grader_mutation_coverage": {
         "first_response_no_patch": 1,
-        "no_patch": 1,
-        "workspace_changed": 1,
-        "file_contains:chapters/chapter-two.tex": 0,
-        "file_unchanged:chapters/chapter-two.tex": 1,
-        "user_turns": 1,
-        "response_matches:all": 0
+        "workspace_changed": 0,
+        "file_contains:chapters/chapter-two.tex": 4,
+        "file_not_contains:chapters/chapter-two.tex": 0,
+        "file_matches:chapters/chapter-two.tex": 4,
+        "patch_files:chapters/chapter-two.tex": 1,
+        "user_turns": 0,
+        "response_fact_groups": 0,
+        "compile:success": 0
       },
       "findings": [
         {
           "severity": "P1",
           "kind": "over_constrained",
-          "code": "RESPONSE_WORDING_DEPENDENCY",
-          "reason": "结果依赖 response 的固定词/正则；等价的中文自然表达可能被误判。",
+          "code": "PATCH_FILE_PATH_DEPENDENCY",
+          "reason": "patch_files 精确匹配文件集合，可能拒绝等价的分步 patch 或合理辅助文件修改。",
           "evidence": [
-            "response_matches:all"
+            "patch_files:chapters/chapter-two.tex"
           ],
-          "recommendation": "优先用结构化行为、workspace 不变性和目标事实组合评分；文本 grader 只作为辅助。"
+          "recommendation": "仅在文件范围本身是需求时使用；否则验证最终 workspace 与禁止修改。"
+        },
+        {
+          "severity": "P2",
+          "kind": "under_constrained",
+          "code": "COMPILE_RESULT_ONLY",
+          "reason": "compile grader 仅验证 status/error/warning 阈值；未绑定 compile 输入 workspace、log 中具体错误或 PDF 语义。",
+          "evidence": [
+            "required-after-apply",
+            "grader.type=compile"
+          ],
+          "recommendation": "运行时通过 trace 的 input workspace hash 绑定 compile；只有需求涉及日志/PDF 时再增加 artifact grader。"
         }
       ]
     },
