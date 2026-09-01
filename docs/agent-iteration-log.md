@@ -1484,3 +1484,69 @@ dynamic 共 20 个 case、60 个 trial，其中 PASS=15（25.0%）。`COPILOT_FA
 ### Remaining limitations / 下一步
 
 仍需逐条审计 153 个失败，区分 grader ambiguity 与真实 capability failure；provider 内部 retry 仍不可见。下一步建立不参与调试的 hidden holdout，并从稳定真实失败中追加 regression cases。
+
+## Iteration 19 — Trial 3 baseline 系统性 failure analysis
+
+日期：2026-09-01
+
+### 本轮研究的问题
+
+对实验 `benchmark-v3-baseline-20260901-trial3-live-a74a9bf304` 的 153 个 `GRADER_ASSERTION_FAILED` 重新归因，区分 Copilot 能力、context/tool 路径、多轮恢复、benchmark / grader、动态用户协议和 infrastructure。
+
+### Observation / Evidence
+
+* 重新执行 canonical selection：260 个原始 attempts 中得到 219 个 `(case_id, trial_id)` groups；最新非 infra attempt 为 66 PASS、153 COPILOT_FAILURE、0 INFRA_FAILURE，与正式 baseline 一致。41 个历史 infra attempts 均未进入分母。
+* 219 个 canonical trial 的 `run.json`、`events.jsonl`、`grader.json`、patch、response、compile artifact 均可关联；153 个失败被逐条拆到具体 failed check。
+* Primary attribution：context/target 46 trials，dynamic loop 23，grader ambiguity 22，layout 21，patch semantics 15，benchmark instruction mismatch 14，unsupported semantics 12，infrastructure 0。
+* 44 个 0/3 case 的主因分布为 context/target 15、dynamic loop 7、layout 6、patch semantics 5、grader 5、benchmark instruction 3、unsupported semantics 3。
+* 强 false negative 证据包括：`v3.interaction-preamble-no-op.v1` 三个正确 no-op 均被 response regex 拒绝；`v3.noop-title-already-exact.v1` 两个正确 no-op 被固定 fact group 拒绝；`v3.content-multifile-translation.v1` 三个合理译文均因唯一英文句子失败；`v3.interaction-title-clarification.v1` 两个 trial 的最终文件和 compile 正确但首轮措辞不匹配。
+* 强 benchmark instruction mismatch 证据包括：`v3.compile-conditional-macro.v1`、`v3.compile-wide-table-column-recovery.v1` 等 public brief 只要求“查 / 定位”，expected action 却要求 patch。
+* 稳定真实能力失败证据包括：`v3.duplicate-main-entry-refusal.v1` 三个 trial 均在 replacement-only 不支持删除时把 `old_main.tex` 降级为注释并宣称清理完成；跨文件 target、布局约束和动态 recovery 也存在稳定 cluster。
+* 345 次 compile event 中 process status success/failure 为 337/8。8 次 failure 均不是 infra：6 次为预期 initial fixture failure，2 次来自 `v3.compile-chapter-input-recovery.v1` trial-3 用户拒绝必要路径修复。另有 15 次 final grading process success 但 `error_count>0`，加上 1 次 final process failure，构成 16 个 final compile grader failure。
+* dynamic 60 trial 平均 wall time 128.8 秒；102 次 `eval_user` 协议决策平均 49.6 秒、中位 45.5 秒。动态低分和延迟不能只归因 Copilot。
+
+### Interpretation
+
+当前 30.1% 是严格 deterministic grader 的能力下界，不是能力天花板。36 个失败 trial 的主因在 benchmark / grader；若从能力分母排除，能力侧下界估计为 `66/183=36.1%`。如果假设这些测量问题全部修正且相关 trial 均通过，严格通过率理论上限为 `102/219=46.6%`；这不是预测分数，只是测量偏差上界。
+
+同时，46 个 context/target 失败、23 个动态 loop 失败、21 个布局失败、15 个 patch 内容失败和 12 个 unsupported semantics 失败说明 Copilot 存在真实能力缺口，不能因为 grader 有问题而否定 baseline。
+
+### Root Cause
+
+评测侧存在四类契约问题：public brief 与 expected action 不一致、词面 response grader 过窄、dynamic user 决策与 hidden contract 冲突、compile process status 与零错误语义混淆。Copilot 侧的主要根因是跨文件目标发现不系统、动态 rejection 后缺少恢复协议、布局约束不显式、unsupported file operation 终止条件不清。
+
+### Changes
+
+* 新增 `services/llm/eval/benchmark-v3/BASELINE_FAILURE_ANALYSIS_20260901.md`；
+* 更新 `docs/agent-evaluation.md`；
+* 更新本 iteration log；
+* 未修改 Copilot prompt、model/config、tool schema、Agent loop、benchmark case、grader 或 runner；
+* 未运行 hidden holdout，未批量重跑 baseline。
+
+### Benchmark / Metric Before vs After
+
+Before：`PASS=66/219`，`COPILOT_FAILURE=153/219`，严格 deterministic pass rate 30.1%。
+After：本轮只做归因，不改分。能力侧解释更新为：可靠下界 30.1%；剔除主因 benchmark/grader trial 后为 36.1%；全部修正的理论上限为 46.6%。
+
+### 新确认的真实 failure cases
+
+* `v3.duplicate-main-entry-refusal.v1`：不可删除时伪装完成；
+* `v3.content-patient-group-terms.v1`、`v3.content-sample-identifiers-units.v1`、`v3.content-significance-footnotes.v1`：跨文件目标遗漏；
+* `v3.result-figure-near-analysis.v1`、`v3.workshop-slide-columns.v1`：首轮应澄清而直接修改，用户纠正后恢复不足；
+* `v3.financial-wide-table.v1`、`v3.three-subfigures-width.v1`、`v3.beamer-flowchart-scale.v1`：布局约束不达标。
+
+### Grader / benchmark ambiguity
+
+强候选见完整报告第 9 节。优先人工复核 `v3.interaction-preamble-no-op.v1`、`v3.noop-title-already-exact.v1`、`v3.content-multifile-translation.v1`、`v3.interaction-title-clarification.v1`、`v3.interaction2-conference-page-limit-clarification.v1`、`v3.interaction-title-recovery.v1`，以及 6 个 diagnostic-only vs patch contract 错配 case。
+
+### Regression / Remaining limitations
+
+无 Copilot 行为修改，因此无行为 regression。Benchmark strict metric 不变。当前仍无 hidden holdout；布局 case 缺少渲染级证据；provider 内部 retry 不可见；64-case 静态 grader audit 未覆盖新增 9 个 non-edit case。
+
+### 推荐下一步
+
+1. 先做 benchmark/grader contract 修复和 audit tests，不放宽通过标准；
+2. 从 context target cluster 抽 5–8 个稳定失败建立最小 regression case；
+3. 对布局 PASS/FAIL 做渲染级人工复核，再决定是否规则化；
+4. 下一轮 Copilot 实验只针对动态澄清 / rejection recovery 和跨文件目标清单；
+5. 建立不参与调试的 hidden holdout。

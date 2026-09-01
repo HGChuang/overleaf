@@ -1448,3 +1448,33 @@ terminal，本轮结果明确是 partial baseline，不能解释为完整集合�
 实验 `benchmark-v3-baseline-20260901-trial3-live-a74a9bf304` 完成 73 个 case × 3 个 trial，共 219 个 canonical trial；Git `a74a9bf3041508e78bdcb52290681ed42e71d72d`，模型 `deepseek-v4-flash-ga-260731` / `openai-compat`。
 
 严格 deterministic 结果：`PASS=66`、`COPILOT_FAILURE=153`、`INFRA_FAILURE=0`；tokens 7,719,447，wall time 14,114,558 ms，tool calls 1,355，compile 345（337 success、8 failure）。这是 dev/pilot baseline，不是 hidden holdout；`COPILOT_FAILURE` 仍需结合 trace 审计，不能直接等同模型纯能力失败。
+
+## Iteration 19：Trial 3 baseline failure analysis
+
+完整报告见 `services/llm/eval/benchmark-v3/BASELINE_FAILURE_ANALYSIS_20260901.md`。本轮只做分析，未修改 Copilot、benchmark、grader、runner 或配置。
+
+按 `(case_id, trial_id)` 重新选择最新非 infra attempt 后，260 个原始 attempts 得到 219 个 canonical trials。153 个失败 trial 全部打开具体 `grader.json` check、trace、patch、compile 和用户目标做分层归因：
+
+| Primary attribution | Failed trials | Cases |
+|---|---:|---:|
+| Context acquisition / target discovery | 46 | 16 |
+| Multi-turn Agent loop / recovery | 23 | 9 |
+| Grader false-negative / ambiguity | 22 | 9 |
+| Layout / visual semantics | 21 | 8 |
+| Patch semantics / content generation | 15 | 5 |
+| Benchmark / fixture instruction mismatch | 14 | 6 |
+| Unsupported patch semantics | 12 | 5 |
+| Infrastructure | 0 | 0 |
+
+关键结论：
+
+- `30.1%` 是严格 deterministic grader 下界，不是能力天花板；
+- 36 个失败 trial 的主因在 benchmark / grader；若从能力分母排除，得到 `66/183=36.1%` 的能力侧下界估计；
+- 44 个 0/3 case 中，15 个主要来自 context/target，7 个动态 loop，6 个布局，5 个 patch 内容，5 个 grader，3 个 benchmark instruction，3 个 unsupported semantics；
+- `v3.interaction-preamble-no-op.v1`、`v3.noop-title-already-exact.v1`、`v3.content-multifile-translation.v1`、`v3.interaction-title-clarification.v1` 等有强 false-negative 证据；
+- `v3.duplicate-main-entry-refusal.v1` 是稳定真实能力 / prompt decision failure：replacement-only 不支持删除时，Agent 伪装完成而非拒绝；
+- 345 次 compile event 的 8 次 process failure 均不是 canonical infra failure；其中 6 次为预期 initial fixture failure，2 次来自 `v3.compile-chapter-input-recovery.v1` trial-3 用户拒绝必要修复；
+- `compile_status=success` 可与 `error_count>0` 共存；baseline 的 compile success/failure 只表示 process status，不等于零错误；
+- dynamic 60 trial 的 wall time 平均 128.8 秒，其中 102 次 `eval_user` 协议决策平均 49.6 秒、中位 45.5 秒，动态延迟不能全部归因 Copilot。
+
+当前能力解释应写成区间：可靠下界 30.1%；剔除主因 benchmark/grader trial 后为 36.1%；若这些测量问题全部修正且相关 trial 均通过，理论上限为 46.6%。真实能力大概率位于 30.1% 与 46.6% 之间，但 dev-only 数据和渲染级约束缺失仍限制泛化结论。
