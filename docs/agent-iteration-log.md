@@ -1461,3 +1461,26 @@ targeted tests 10/10、executable tests 8/8、TypeScript typecheck 和 73 个 CL
 ### Regression / Remaining limitations
 
 未观察到评测基础设施 regression，也未修改 Copilot 行为。动态 smoke 仍暴露已知的首轮过早修改能力失败，但不影响本轮网络修复结论。当前没有批量 scheduler；73-case baseline 应在本轮提交后的干净 SHA 上，由独立 `eval_user` session 按 case 调度，并使用新的 experiment ID。
+
+## Iteration 18 — Benchmark v3 Trial 3 正式 baseline
+
+### Observation / Evidence
+
+实验 `benchmark-v3-baseline-20260901-trial3-live-a74a9bf304` 完成 73 个 case × 3 个 trial，共 219 个 canonical trial；Git commit 为 `a74a9bf3041508e78bdcb52290681ed42e71d72d`，模型为 `deepseek-v4-flash-ga-260731` / `openai-compat`。
+严格 deterministic 结果为 `PASS=66`、`COPILOT_FAILURE=153`、`INFRA_FAILURE=0`；case 分布 3/3=15、2/3=7、1/3=7、0/3=44。tokens 7,719,447，wall time 14,114,558 ms，tools 1,355，compile 345（337 success、8 failure）。
+219/219 canonical trial 的 identity、terminal trace 和 artifact 关联均有效；原始 260 attempts 中 41 个早期 infrastructure attempts 已被后续结果覆盖。
+
+### Interpretation
+
+严格通过率为 30.1%。153 个 `COPILOT_FAILURE` 均需结合 canonical trace 做 failure audit，不能直接等同模型纯能力失败；本次仍是 dev/pilot baseline，不是 hidden holdout。
+本轮没有修改 Copilot、benchmark、grader、tool schema 或 Agent loop，因而没有优化前后 regression 结论。
+
+### Changes / Validation
+
+新增正式中文报告 `services/llm/eval/benchmark-v3/BASELINE_20260901_TRIAL3.md`，并保留所有原始 artifacts；已验证 219 个 canonical 结果和终端 trace。详细指标与限制见该报告。
+
+dynamic 共 20 个 case、60 个 trial，其中 PASS=15（25.0%）。`COPILOT_FAILURE` 是严格 grader 结果，不能未经 trace audit 直接等同模型纯能力失败；本次是 dev/pilot baseline，不是 hidden holdout。
+
+### Remaining limitations / 下一步
+
+仍需逐条审计 153 个失败，区分 grader ambiguity 与真实 capability failure；provider 内部 retry 仍不可见。下一步建立不参与调试的 hidden holdout，并从稳定真实失败中追加 regression cases。

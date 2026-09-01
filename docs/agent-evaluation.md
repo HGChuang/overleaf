@@ -1442,3 +1442,9 @@ terminal，本轮结果明确是 partial baseline，不能解释为完整集合�
 容器 preflight 中 `llm` 与 `clsi` 均为 running，`llm` 内 `getent hosts clsi` 成功且 HTTP 可达。动态 smoke `run_75227b3a...` 的两次 agent compile 与一次 final grading compile 均为 `success`、0 errors、0 warnings；该 case 因 Copilot 首轮直接修改而被判为 `COPILOT_FAILURE`，说明 infrastructure 与 capability failure 已能正确分离。
 
 独立静态 smoke `run_f65b1d61...`（`v3.figure-location-caption.v1`）得到 `PASS`：1 次 patch、1 次 agent compile，final grading compile 同样成功，0 errors、0 warnings；`run.json`、`events.jsonl`、`result.json`、patch/snapshot/compile log artifacts 完整，runner 约 28 秒退出且无残留进程。本轮 smoke 发生在 wrapper 提交前，只用于入口验证；正式 baseline 必须使用本轮提交后的 SHA 和新的 experiment ID。
+
+## Iteration 18：Benchmark v3 Trial 3 正式 baseline
+
+实验 `benchmark-v3-baseline-20260901-trial3-live-a74a9bf304` 完成 73 个 case × 3 个 trial，共 219 个 canonical trial；Git `a74a9bf3041508e78bdcb52290681ed42e71d72d`，模型 `deepseek-v4-flash-ga-260731` / `openai-compat`。
+
+严格 deterministic 结果：`PASS=66`、`COPILOT_FAILURE=153`、`INFRA_FAILURE=0`；tokens 7,719,447，wall time 14,114,558 ms，tool calls 1,355，compile 345（337 success、8 failure）。这是 dev/pilot baseline，不是 hidden holdout；`COPILOT_FAILURE` 仍需结合 trace 审计，不能直接等同模型纯能力失败。
