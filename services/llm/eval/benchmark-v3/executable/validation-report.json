@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-31T12:41:18.062Z",
+  "generated_at": "2026-09-01T16:17:41.899Z",
   "lifecycle": "executable",
   "language": "zh-CN",
   "case_count": 73,
@@ -1469,7 +1469,7 @@
       "case_id": "v3.interaction-title-recovery.v1",
       "source_candidate_id": "v3.interaction.006",
       "fixture_hash": "3e6351b148a8e321f156f361fc789d55f28b2e7f6f5ad13ae6f79bf69dfe2f6e",
-      "oracle_workspace_hash": "4caf48416463682b8738283cdcceb2f004790cb73f99a13a15fb7f05176fb1a4",
+      "oracle_workspace_hash": "e0e3bca79978d0bc448c00b8ead83fd2057b0feedef0a0585085610fc638a1d1",
       "mutation_count": 2,
       "initial_compile": {
         "declared": "success",

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-31T12:41:39.586Z",
+  "generated_at": "2026-09-01T16:18:38.265Z",
   "registry": {
     "case_count": 64,
     "expected_case_count": 64,
@@ -24,35 +24,35 @@
   },
   "summary": {
     "cases_by_risk": {
-      "none": 0,
+      "none": 1,
       "P2": 7,
-      "P1": 57,
+      "P1": 56,
       "P0": 0
     },
     "finding_counts": {
       "NO_FILE_SCOPE_GUARD": 15,
       "PATCH_FILE_PATH_DEPENDENCY": 34,
       "COMPILE_RESULT_ONLY": 48,
-      "RESPONSE_WORDING_DEPENDENCY": 15,
+      "RESPONSE_WORDING_DEPENDENCY": 14,
       "RESPONSE_SHORT_TOKEN": 3,
       "POSITIVE_CONTENT_ONLY": 9
     },
     "grader_type_counts": {
       "workspace_changed": 64,
-      "file_contains": 184,
+      "file_contains": 183,
       "file_not_contains": 39,
       "patch_files": 34,
       "compile": 48,
+      "file_matches": 15,
       "file_unchanged": 52,
-      "file_matches": 12,
       "no_patch": 13,
       "response_contains_all": 5,
       "first_response_no_patch": 10,
       "user_turns": 21,
       "regex_count": 9,
       "response_contains_any": 1,
-      "response_fact_groups": 1,
-      "response_matches": 11
+      "response_fact_groups": 2,
+      "response_matches": 10
     },
     "mutation_rejection_rate": 1,
     "cases_with_no_rejected_mutation": 0
@@ -346,9 +346,11 @@
       "grader_types": [
         "workspace_changed",
         "patch_files:sections/intro.tex,sections/method.tex,sections/appendix.tex",
+        "file_matches:sections/intro.tex",
         "file_contains:sections/intro.tex",
+        "file_matches:sections/method.tex",
         "file_contains:sections/method.tex",
-        "file_contains:sections/appendix.tex",
+        "file_matches:sections/appendix.tex",
         "file_not_contains:sections/intro.tex",
         "file_not_contains:sections/method.tex",
         "file_unchanged:refs.tex",
@@ -364,14 +366,16 @@
           "passed": false,
           "failedGraders": [
             "patch_files:sections/intro.tex,sections/method.tex,sections/appendix.tex",
-            "file_contains:sections/intro.tex",
-            "file_contains:sections/method.tex",
-            "file_contains:sections/appendix.tex",
+            "file_matches:sections/intro.tex",
+            "file_matches:sections/method.tex",
+            "file_matches:sections/appendix.tex",
             "file_not_contains:sections/intro.tex",
             "file_not_contains:sections/method.tex"
           ],
           "unaffectedGraders": [
             "workspace_changed",
+            "file_contains:sections/intro.tex",
+            "file_contains:sections/method.tex",
             "file_unchanged:refs.tex",
             "compile:success"
           ]
@@ -382,13 +386,15 @@
           "passed": false,
           "failedGraders": [
             "patch_files:sections/intro.tex,sections/method.tex,sections/appendix.tex",
+            "file_matches:sections/intro.tex",
             "file_contains:sections/intro.tex",
-            "file_contains:sections/method.tex",
-            "file_contains:sections/appendix.tex",
+            "file_matches:sections/method.tex",
+            "file_matches:sections/appendix.tex",
             "file_not_contains:sections/method.tex"
           ],
           "unaffectedGraders": [
             "workspace_changed",
+            "file_contains:sections/method.tex",
             "file_not_contains:sections/intro.tex",
             "file_unchanged:refs.tex",
             "compile:success"
@@ -398,9 +404,11 @@
       "grader_mutation_coverage": {
         "workspace_changed": 0,
         "patch_files:sections/intro.tex,sections/method.tex,sections/appendix.tex": 2,
-        "file_contains:sections/intro.tex": 2,
-        "file_contains:sections/method.tex": 2,
-        "file_contains:sections/appendix.tex": 2,
+        "file_matches:sections/intro.tex": 2,
+        "file_contains:sections/intro.tex": 1,
+        "file_matches:sections/method.tex": 2,
+        "file_contains:sections/method.tex": 0,
+        "file_matches:sections/appendix.tex": 2,
         "file_not_contains:sections/intro.tex": 1,
         "file_not_contains:sections/method.tex": 2,
         "file_unchanged:refs.tex": 0,
@@ -5217,7 +5225,9 @@
           "description": "用户拒绝错误范围后，仍把所有同名标题和正文词汇一起替换。",
           "passed": false,
           "failedGraders": [
-            "file_contains:main.tex"
+            "file_contains:main.tex",
+            "file_contains:main.tex",
+            "regex_count:main.tex"
           ],
           "unaffectedGraders": [
             "workspace_changed",
@@ -5225,8 +5235,6 @@
             "file_contains:main.tex",
             "file_contains:main.tex",
             "file_contains:main.tex",
-            "file_contains:main.tex",
-            "regex_count:main.tex",
             "compile:success",
             "user_turns"
           ]
@@ -5236,7 +5244,9 @@
           "description": "第一次补丁被拒后只留下标题，误删或改写了固定术语所在正文。",
           "passed": false,
           "failedGraders": [
-            "file_contains:main.tex"
+            "file_contains:main.tex",
+            "file_contains:main.tex",
+            "regex_count:main.tex"
           ],
           "unaffectedGraders": [
             "workspace_changed",
@@ -5244,8 +5254,6 @@
             "file_contains:main.tex",
             "file_contains:main.tex",
             "file_contains:main.tex",
-            "file_contains:main.tex",
-            "regex_count:main.tex",
             "compile:success",
             "user_turns"
           ]
@@ -5254,8 +5262,8 @@
       "grader_mutation_coverage": {
         "workspace_changed": 0,
         "patch_files:main.tex": 0,
-        "file_contains:main.tex": 2,
-        "regex_count:main.tex": 0,
+        "file_contains:main.tex": 4,
+        "regex_count:main.tex": 2,
         "compile:success": 0,
         "user_turns": 0
       },
@@ -6128,7 +6136,7 @@
         "file_contains:anonymous.tex",
         "file_contains:shared/macros.tex",
         "user_turns",
-        "response_matches:all"
+        "response_fact_groups"
       ],
       "oracle_passed": true,
       "mutation_count": 2,
@@ -6149,7 +6157,7 @@
             "file_contains:anonymous.tex",
             "file_contains:shared/macros.tex",
             "user_turns",
-            "response_matches:all"
+            "response_fact_groups"
           ]
         },
         {
@@ -6167,7 +6175,7 @@
             "file_contains:supplement.tex",
             "file_contains:shared/macros.tex",
             "user_turns",
-            "response_matches:all"
+            "response_fact_groups"
           ]
         }
       ],
@@ -6180,20 +6188,9 @@
         "file_contains:anonymous.tex": 1,
         "file_contains:shared/macros.tex": 0,
         "user_turns": 0,
-        "response_matches:all": 0
+        "response_fact_groups": 0
       },
-      "findings": [
-        {
-          "severity": "P1",
-          "kind": "over_constrained",
-          "code": "RESPONSE_WORDING_DEPENDENCY",
-          "reason": "结果依赖 response 的固定词/正则；等价的中文自然表达可能被误判。",
-          "evidence": [
-            "response_matches:all"
-          ],
-          "recommendation": "优先用结构化行为、workspace 不变性和目标事实组合评分；文本 grader 只作为辅助。"
-        }
-      ]
+      "findings": []
     }
   ]
 }

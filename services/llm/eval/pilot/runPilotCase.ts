@@ -44,6 +44,7 @@ import {
   EvalUserProtocolError,
 } from './dynamicProtocol.js'
 import { gradePilotCase } from './graderRegistry.js'
+import { assertEvalUserFollowupContract } from './evalUserContract.js'
 import type { PilotGradeContext, PilotResponse } from './types.js'
 
 type Status =
@@ -454,6 +455,11 @@ async function main() {
               patch_preview: hunks,
               workspace_hash: workspaceHash(filesRef.current),
             })
+            assertEvalUserFollowupContract(
+              caseDefinition,
+              userTurn + 1,
+              decision,
+            )
             evalUserDecisions.push({
               request_event_id: requested.eventId,
               request_type: 'patch_decision_required',
@@ -604,6 +610,7 @@ async function main() {
             copilot_response: latestResponseText,
             workspace_hash: workspaceHash(filesRef.current),
           })
+          assertEvalUserFollowupContract(caseDefinition, userTurn + 1, decision)
           evalUserDecisions.push({
             request_event_id: requested.eventId,
             request_type: 'turn_decision_required',
@@ -855,7 +862,9 @@ async function main() {
         onPersistenceFailure: markPersistenceFailure,
       })
       const result = buildResult()
-      process.stdout.write(`${JSON.stringify({ ...result, status, failure }, null, 2)}\n`)
+      process.stdout.write(
+        `${JSON.stringify({ ...result, status, failure }, null, 2)}\n`,
+      )
       process.exitCode = status === 'PASS' || status === 'SKIPPED' ? 0 : 1
     }
     await finalizeTrial({

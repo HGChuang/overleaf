@@ -70,6 +70,10 @@ export interface PilotCase {
     max_user_turns: number
     continue_after_patch?: boolean
     dynamic_user?: boolean
+    eval_user_followups?: Array<{
+      user_turn: number
+      fact_groups: string[][]
+    }>
   }
   forbidden_behavior: string[]
   patch_policy: {

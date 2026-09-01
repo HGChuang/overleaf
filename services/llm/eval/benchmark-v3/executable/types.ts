@@ -41,6 +41,7 @@ export interface V3CaseInput {
   maxUserTurns?: number;
   dynamicUser?: boolean;
   continueAfterPatch?: boolean;
+  evalUserFollowups?: Array<{ user_turn: number; fact_groups: string[][] }>;
   initialCompile?: PilotCase["initial_state"]["compile_status"];
   compileMode?: CompileMode;
   protectedInvariants?: NonNullable<

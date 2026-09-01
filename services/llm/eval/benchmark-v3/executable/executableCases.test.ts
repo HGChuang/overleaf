@@ -151,9 +151,74 @@ test("标题澄清 contract 拒绝受保护正文 mutation", () => {
   assert.equal(grade.passed, false);
   assert.ok(
     grade.checks.some(
-      (check) =>
-        check.grader.type === "file_matches" && check.passed === false,
+      (check) => check.grader.type === "file_matches" && check.passed === false,
     ),
+  );
+});
+
+test("baseline 中等价的 no-op 与 clarification 措辞不再产生假阴性", () => {
+  const samples = [
+    {
+      caseId: "v3.interaction-preamble-no-op.v1",
+      response:
+        "导言区已经非常精简且干净，没有需要整理的地方，因此不建议额外改动。",
+    },
+    {
+      caseId: "v3.noop-title-already-exact.v1",
+      response: "标题已经与您要求完全一致，因此无需任何修改。",
+    },
+  ];
+  for (const sample of samples) {
+    const caseDefinition = V3_EXECUTABLE_CASES.find(
+      (item) => item.case_id === sample.caseId,
+    );
+    assert.ok(caseDefinition);
+    const context = buildV3GradeContext(caseDefinition);
+    context.responses[0].text = sample.response;
+    assert.equal(
+      gradePilotCase(context).passed,
+      true,
+      `${sample.caseId}: ${JSON.stringify(gradePilotCase(context).checks)}`,
+    );
+  }
+});
+
+test("会议页数澄清按事实而非问号和固定轮数评分", () => {
+  const caseDefinition = V3_EXECUTABLE_CASES.find(
+    (item) =>
+      item.case_id === "v3.interaction2-conference-page-limit-clarification.v1",
+  );
+  assert.ok(caseDefinition);
+  const context = buildV3GradeContext(caseDefinition);
+  context.responses = [
+    {
+      userTurn: 1,
+      kind: "user",
+      text: "请先提供页数上限，我需要这个信息才能继续核对",
+      hadPatch: false,
+    },
+  ];
+  context.userTurnCount = 1;
+  assert.equal(
+    gradePilotCase(context).passed,
+    true,
+    JSON.stringify(gradePilotCase(context).checks),
+  );
+});
+
+test("中文标题 recovery oracle 与用户目标一致", () => {
+  const caseDefinition = V3_EXECUTABLE_CASES.find(
+    (item) => item.case_id === "v3.interaction-title-recovery.v1",
+  );
+  assert.ok(caseDefinition);
+  const context = buildV3GradeContext(caseDefinition);
+  const main = context.finalFiles.find((file) => file.path === "main.tex");
+  assert.ok(main?.content.includes("\\section{研究方法}"));
+  assert.ok(!main?.content.includes("\\section{Research Methods}"));
+  assert.equal(
+    gradePilotCase(context).passed,
+    true,
+    JSON.stringify(gradePilotCase(context).checks),
   );
 });
 

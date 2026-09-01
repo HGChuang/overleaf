@@ -141,6 +141,18 @@ export function validatePilotCase(caseDefinition: PilotCase): string[] {
       )
     }
   }
+  for (const followup of caseDefinition.expected_behavior.eval_user_followups ||
+    []) {
+    if (
+      !caseDefinition.expected_behavior.dynamic_user ||
+      followup.user_turn < 2 ||
+      followup.user_turn > caseDefinition.expected_behavior.max_user_turns ||
+      followup.fact_groups.length === 0 ||
+      followup.fact_groups.some((group) => group.length === 0)
+    ) {
+      errors.push(`${prefix}: eval_user follow-up contract is invalid`)
+    }
+  }
   if (
     caseDefinition.split === 'holdout' &&
     !caseDefinition.metadata.tags.includes('hidden')

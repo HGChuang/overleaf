@@ -146,6 +146,12 @@ The chapter body and its citations are fixed.
     action: "clarify",
     maxUserTurns: 2,
     dynamicUser: true,
+    evalUserFollowups: [
+      {
+        user_turn: 2,
+        fact_groups: [["Theoretical Framework"]],
+      },
+    ],
     initialCompile: "success",
     compileMode: "required-after-apply",
     protectedInvariants: [
@@ -180,7 +186,11 @@ The chapter body and its citations are fixed.
       {
         type: "response_fact_groups",
         response_index: 0,
-        groups: [["候选", "选项"], ["标题"], ["选择", "确认", "告知"]],
+        groups: [
+          ["候选", "选项", "方向", "例如"],
+          ["标题", "section{study}"],
+          ["选择", "确认", "告诉", "告知"],
+        ],
       },
       {
         type: "compile",
@@ -218,7 +228,8 @@ The chapter body and its citations are fixed.
       },
       {
         mutation_id: "错误标题选择",
-        description: "用户已确认后提交了错误的候选标题，而不是 Theoretical Framework。",
+        description:
+          "用户已确认后提交了错误的候选标题，而不是 Theoretical Framework。",
         patches: [
           {
             file: "chapters/chapter-two.tex",
@@ -565,7 +576,7 @@ The chapter body and its citations are fixed.
       {
         type: "response_matches",
         pattern:
-          "(?:没有.*问题|未发现.*问题|无需.*修改|不需要.*修改|不应.*删除)",
+          "(?:没有.*(?:问题|需要整理|必要.*整理)|未发现.*(?:问题|需要整理)|无需.*(?:修改|整理|调整|改动)|不需要.*(?:修改|整理|调整|改动)|不建议.*改动|不应.*删除)",
       },
     ],
     oracleResponse:
@@ -635,9 +646,16 @@ The chapter body and its citations are fixed.
     oraclePatches: [
       {
         file: "main.tex",
+        line: 1,
+        oldText: "\\documentclass{article}",
+        newText:
+          "\\documentclass{article}\n\\usepackage{CJKutf8}\n\\AtBeginDocument{\\begin{CJK}{UTF8}{gbsn}}\n\\AtEndDocument{\\end{CJK}}",
+      },
+      {
+        file: "main.tex",
         line: 13,
         oldText: "\\section{Approach}",
-        newText: "\\section{Research Methods}",
+        newText: "\\section{研究方法}",
       },
     ],
     graders: [
@@ -646,7 +664,7 @@ The chapter body and its citations are fixed.
       {
         type: "file_contains",
         file: "main.tex",
-        values: ["\\section{Research Methods}"],
+        values: ["\\section{研究方法}"],
       },
       {
         type: "file_contains",
@@ -671,7 +689,7 @@ The chapter body and its citations are fixed.
       {
         type: "regex_count",
         file: "main.tex",
-        pattern: "\\\\section\\{Research Methods\\}",
+        pattern: "\\\\section\\{研究方法\\}",
         count: 1,
       },
       { type: "compile", status: "success", max_errors: 0 },

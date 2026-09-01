@@ -1507,7 +1507,7 @@ dynamic 共 20 个 case、60 个 trial，其中 PASS=15（25.0%）。`COPILOT_FA
 
 ### Interpretation
 
-当前 30.1% 是严格 deterministic grader 的能力下界，不是能力天花板。36 个失败 trial 的主因在 benchmark / grader；若从能力分母排除，能力侧下界估计为 `66/183=36.1%`。如果假设这些测量问题全部修正且相关 trial 均通过，严格通过率理论上限为 `102/219=46.6%`；这不是预测分数，只是测量偏差上界。
+当前 30.1% 是旧 deterministic contract 的观测通过率，不是能力天花板或严格下界。36 个失败 trial 被人工归因为 benchmark / grader 候选问题；`66/183=36.1%` 是排除它们后的条件通过率，`102/219=46.6%` 是把它们全部机械翻转后的分数，二者都不构成真实能力区间。
 
 同时，46 个 context/target 失败、23 个动态 loop 失败、21 个布局失败、15 个 patch 内容失败和 12 个 unsupported semantics 失败说明 Copilot 存在真实能力缺口，不能因为 grader 有问题而否定 baseline。
 
@@ -1526,7 +1526,7 @@ dynamic 共 20 个 case、60 个 trial，其中 PASS=15（25.0%）。`COPILOT_FA
 ### Benchmark / Metric Before vs After
 
 Before：`PASS=66/219`，`COPILOT_FAILURE=153/219`，严格 deterministic pass rate 30.1%。
-After：本轮只做归因，不改分。能力侧解释更新为：可靠下界 30.1%；剔除主因 benchmark/grader trial 后为 36.1%；全部修正的理论上限为 46.6%。
+After：本轮只做归因，不改分。30.1% 是旧 contract 的观测通过率；36.1% 与 46.6% 仅表示候选测量问题对分数的敏感性，不构成真实能力下界或上限。
 
 ### 新确认的真实 failure cases
 
@@ -1550,3 +1550,47 @@ After：本轮只做归因，不改分。能力侧解释更新为：可靠下界
 3. 对布局 PASS/FAIL 做渲染级人工复核，再决定是否规则化；
 4. 下一轮 Copilot 实验只针对动态澄清 / rejection recovery 和跨文件目标清单；
 5. 建立不参与调试的 hidden holdout。
+
+## Iteration 20 — 修复 Baseline 中已确认的 Benchmark / Grader 合同问题
+
+日期：2026-09-02
+
+### 本轮研究的问题
+
+在不修改 Copilot 的前提下，修正正式 baseline 暴露的 grader 假阴性、public brief 与 expected action 冲突、唯一翻译/标题 oracle，以及动态 `eval_user` 偏离 hidden fact 后错误归因 Copilot 的问题。
+
+### Observation / Evidence
+
+* 6 个 compile repair family 的 grader 要求 patch 和零错误编译，但用户原话只要求“查清/定位”；多个 trial 因正确诊断后等待确认而失败。
+* no-op 和 clarification 的真实正确回复因“无需任何修改”“没有需要整理”“没有问号”等词面差异失败。
+* `content-multifile-translation` 的三文件合理译文因没有复制唯一英文句子而失败；`interaction-title-recovery` 的用户明确要求中文，旧 oracle 却只接受英文标题。
+* `interaction-title-clarification` 的 `eval_user` 曾选择与 interaction facts 不同的标题，导致正确遵循模拟用户的 Copilot 被 grader 判错。
+
+### Root Cause
+
+Benchmark 的用户授权、expected action、validation oracle、dynamic user facts 和 deterministic grader 没有形成同一份可执行合同；部分 grader 把措辞和执行轮数误当成任务语义。
+
+### Changes
+
+* 明确 6 个 compile repair seed 的修复和编译授权；
+* 放宽 4 类已确认词面假阴性，同时保留 no-patch、workspace、保护文件和 compile 约束；
+* 将翻译 case 改为多语义锚点与结构保护，将标题 recovery 改为中文+CJK oracle；
+* 新增 `eval_user_followups` 及 runner 校验，模拟器偏离必要事实时输出可重试 infrastructure failure；
+* 新增 baseline 等价回复、中文标题和 eval_user contract 回归测试；重新生成 compile validation 与 grader ambiguity audit。
+
+### Validation / Before vs After
+
+* Before：旧 baseline 中已确认的等义 no-op/clarification、合理翻译、中文标题方案和模拟用户漂移会进入 `COPILOT_FAILURE`。
+* After：对应等价回复和 oracle 测试通过；模拟用户漂移分类为 `EVAL_USER_CONTRACT_VIOLATION`；73/73 fixture/oracle 通过真实 CLSI，28/28 定向测试和类型检查通过。
+* 本轮没有重跑 Agent baseline，因此不报告新的 pass rate，也不把历史失败机械改分。
+
+### Regression / Remaining limitations
+
+未修改 Copilot，因此无行为 regression。所有声明 mutation 仍被 grader 拒绝，ambiguity audit P0=0。翻译语义仍是确定性锚点近似，不等同完整语言质量评分；布局 case 仍缺 rendered/PDF 级 grader；只有需要固定 hidden fact 的动态 case 才应声明 follow-up contract，不能把所有 `eval_user` 回复脚本化。
+
+### 推荐下一步
+
+1. 用新 experiment ID 运行小规模 repaired-contract smoke，确认 canonical trace 中 contract violation 分类正确；
+2. 再运行完整 73×3 baseline，旧结果保留但不混合统计；
+3. 对布局 family 补渲染级人工 adjudication，确认后再决定 grader；
+4. 基于修复后的稳定真实失败建立 regression set，并另建未调试 hidden holdout。

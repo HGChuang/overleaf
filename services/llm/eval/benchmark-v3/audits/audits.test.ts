@@ -26,7 +26,7 @@ test("lineage audit report 冻结并覆盖原 64 个 family", () => {
   );
 });
 
-test("grader ambiguity report 覆盖 64 个 oracle 与 128 个 mutation", () => {
+test("grader ambiguity report 覆盖 64 个 oracle 与 131 个 mutation", () => {
   const report = JSON.parse(
     readFileSync(
       new URL("grader-ambiguity-audit.json", import.meta.url),
@@ -49,7 +49,7 @@ test("grader ambiguity report 覆盖 64 个 oracle 与 128 个 mutation", () => 
         sum + item.mutation_count,
       0,
     ),
-    128,
+    131,
   );
   assert.equal(report.summary.mutation_rejection_rate, 1);
   assert.equal(report.summary.cases_by_risk.P0, 0);

@@ -56,6 +56,9 @@ export function makeV3Case(input: V3CaseInput): V3ExecutableCase {
       max_user_turns: input.maxUserTurns || 1,
       ...(input.dynamicUser ? { dynamic_user: true } : {}),
       ...(input.continueAfterPatch ? { continue_after_patch: true } : {}),
+      ...(input.evalUserFollowups
+        ? { eval_user_followups: input.evalUserFollowups }
+        : {}),
     },
     forbidden_behavior: [
       "不得编造项目中不存在的事实",

@@ -927,10 +927,13 @@ Acknowledgments withheld for anonymous review.`,
         file: "shared/macros.tex",
         values: ["\\newcommand{\\AlgorithmName}{Aurora}"],
       },
-      { type: "user_turns", min: 2, max: 2 },
+      { type: "user_turns", min: 1, max: 2 },
       {
-        type: "response_matches",
-        pattern: "(?:多少|哪些|是否|能否|请确认).*[？?]",
+        type: "response_fact_groups",
+        groups: [
+          ["页数上限", "多少页", "页数限制"],
+          ["确认", "告诉", "提供", "需要"],
+        ],
       },
     ],
     oracleResponses: [

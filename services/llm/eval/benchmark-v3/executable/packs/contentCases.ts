@@ -471,28 +471,32 @@ The proof use same trajectory track restriction $\tau=0.5$ and it not claim robu
         ],
       },
       {
+        type: "file_matches",
+        file: "sections/intro.tex",
+        pattern:
+          "(?=[\\s\\S]*(?:interpretable|explainable))(?=[\\s\\S]*edge inference)[\\s\\S]*Aurora[\\s\\S]*\\\\cite\\{wang2022\\}",
+      },
+      {
         type: "file_contains",
         file: "sections/intro.tex",
-        values: [
-          "This study examines interpretable edge inference.",
-          "Aurora",
-          "\\cite{wang2022}",
-        ],
+        values: ["Aurora", "\\cite{wang2022}"],
+      },
+      {
+        type: "file_matches",
+        file: "sections/method.tex",
+        pattern:
+          "(?=[\\s\\S]*(?:optimiz|objective))(?=[\\s\\S]*L\\(\\\\theta\\)=\\\\\\|y-f_\\\\theta\\(x\\)\\\\\\|\\^2)[\\s\\S]*",
       },
       {
         type: "file_contains",
         file: "sections/method.tex",
-        values: [
-          "We optimize the objective",
-          "L(\\theta)",
-          "\\|y-f_\\theta(x)\\|^2",
-          "L(\\theta)=\\|y-f_\\theta(x)\\|^2",
-        ],
+        values: ["L(\\theta)", "\\|y-f_\\theta(x)\\|^2"],
       },
       {
-        type: "file_contains",
+        type: "file_matches",
         file: "sections/appendix.tex",
-        values: ["The appendix records implementation details."],
+        pattern:
+          "(?=[\\s\\S]*appendix)(?=[\\s\\S]*implementation)(?=[\\s\\S]*detail)[\\s\\S]*",
       },
       {
         type: "file_not_contains",

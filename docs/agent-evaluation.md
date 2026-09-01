@@ -1469,7 +1469,7 @@ terminal，本轮结果明确是 partial baseline，不能解释为完整集合�
 关键结论：
 
 - `30.1%` 是严格 deterministic grader 下界，不是能力天花板；
-- 36 个失败 trial 的主因在 benchmark / grader；若从能力分母排除，得到 `66/183=36.1%` 的能力侧下界估计；
+- 36 个失败 trial 被人工归因为 benchmark / grader 候选问题；排除这些失败后，条件通过率为 `66/183=36.1%`，但这不是能力下界；
 - 44 个 0/3 case 中，15 个主要来自 context/target，7 个动态 loop，6 个布局，5 个 patch 内容，5 个 grader，3 个 benchmark instruction，3 个 unsupported semantics；
 - `v3.interaction-preamble-no-op.v1`、`v3.noop-title-already-exact.v1`、`v3.content-multifile-translation.v1`、`v3.interaction-title-clarification.v1` 等有强 false-negative 证据；
 - `v3.duplicate-main-entry-refusal.v1` 是稳定真实能力 / prompt decision failure：replacement-only 不支持删除时，Agent 伪装完成而非拒绝；
@@ -1477,4 +1477,15 @@ terminal，本轮结果明确是 partial baseline，不能解释为完整集合�
 - `compile_status=success` 可与 `error_count>0` 共存；baseline 的 compile success/failure 只表示 process status，不等于零错误；
 - dynamic 60 trial 的 wall time 平均 128.8 秒，其中 102 次 `eval_user` 协议决策平均 49.6 秒、中位 45.5 秒，动态延迟不能全部归因 Copilot。
 
-当前能力解释应写成区间：可靠下界 30.1%；剔除主因 benchmark/grader trial 后为 36.1%；若这些测量问题全部修正且相关 trial 均通过，理论上限为 46.6%。真实能力大概率位于 30.1% 与 46.6% 之间，但 dev-only 数据和渲染级约束缺失仍限制泛化结论。
+当前 `30.1%` 只能解释为旧冻结 deterministic contract 的观测通过率，不能严格称为真实能力下界。`36.1%` 是排除候选测量无效失败后的条件通过率，`46.6%` 是把这些候选失败机械翻转后的分数，不构成 Copilot 能力区间；dev-only、潜在 false positive 和渲染级约束缺失仍阻止能力天花板判断。
+
+## Iteration 20：Baseline 测量合同修复
+
+本轮只修评测环境，不修改 Copilot。针对正式 baseline 中已确认的测量问题完成四类修复：
+
+- 6 个 compile repair seed 的中文 public brief 从“查清/定位”改为明确要求“查明、修复并编译验证”，使用户授权与 `expected_behavior.action=patch` 一致；
+- no-op、refusal 和 clarification grader 不再依赖唯一连续短语、固定问号或必须发生第二轮，而改为关键事实组与状态约束；
+- 跨文件翻译不再要求唯一英文句子，改为语义锚点、中文正文移除、公式/项目名/引用保护和编译联合验证；中文标题 recovery 的 oracle 改为真正的 `研究方法`，并提供可由 pdfLaTeX 编译的 CJK oracle；
+- 新增可选 `eval_user_followups` 合同。若动态用户没有提供 case 声明的必要 hidden fact，则记为可重试的 `INFRA_FAILURE / EVAL_USER_CONTRACT_VIOLATION`，不再污染 Copilot 能力分数。未声明 follow-up 合同的动态 case 仍保持自由模拟。
+
+验证：73/73 fixture 与 oracle 通过真实 CLSI 编译，static errors 为 0；benchmark/schema/oracle/grader/audit/dynamic contract 共 28 个定向测试全部通过；TypeScript 类型检查通过。grader ambiguity audit 仍保留 P1/P2 风险提示，不能把静态 audit 的潜在风险自动解释为 case 无效。本轮未重跑 baseline，旧 30.1% 分数只属于旧合同，不能与修复后运行直接混合。
