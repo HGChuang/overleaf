@@ -1497,3 +1497,9 @@ terminal，本轮结果明确是 partial baseline，不能解释为完整集合�
 严格 deterministic 结果：`PASS=75`、`COPILOT_FAILURE=144`、`INFRA_FAILURE=0`，通过率 `34.2%`。静态为 `61/159=38.4%`，动态为 `14/60=23.3%`。相比旧合同 baseline 的 `66/219=30.1%`，总体增加 9 个 PASS；但 contract 已变化，不能解释为纯 Copilot 提升。动态从 `15/60` 到 `14/60`，需要逐 case 复核后再判断是否为真实回归。
 
 完整报告见 `services/llm/eval/benchmark-v3/BASELINE_REPAIRED_20260902.md`；canonical machine-readable 汇总见 `services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/_scheduler/benchmark-v3-baseline-repaired-20260902-f04baac/canonical-summary.json`。
+
+## Iteration 22：Repaired-contract baseline 失败分析
+
+对 `benchmark-v3-baseline-repaired-20260902-f04baac` 的 55 个失败 case family、144 个失败 canonical trial 完成逐条审计。当前 canonical 环境失败为 0；唯一疑似的中文 CJK 环境缺失被当前 CLSI oracle 复验推翻：`CJKutf8` oracle 以 `pdflatex` 编译成功且 0 errors。`v3.interaction-title-recovery.v1` 归因为 Copilot 选择不可用 `ctex` 且未找到局部 `CJKutf8` 修复，而非评测环境不满足。
+
+主要 case-level 归因为 patch semantics 28、response semantics 15、benchmark/grader contract 6、mixed 4、context/target discovery 1、multi-turn recovery 1。下一步应先 adjudicate contract 与 mixed case，再从稳定的 patch/response 语义失败中建立 regression set；不能直接把 144 个 `COPILOT_FAILURE` 全部视为纯模型能力缺陷。完整报告见 `services/llm/eval/benchmark-v3/BASELINE_FAILURE_ANALYSIS_REPAIRED_20260902.md`。

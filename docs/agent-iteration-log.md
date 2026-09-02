@@ -1652,3 +1652,55 @@ Token 总量 9,018,725；wall time 17,495,524 ms；tool calls 1,547；accepted p
 2. 抽样复核 `file_contains` 高频失败，区分 context target、patch content 与 grader false negative；
 3. 为动态 `eval_user` 增加 schema-constrained output 与 protocol regression；
 4. 建立不参与调试的 hidden holdout 后再做 Copilot 行为修改。
+
+## Iteration 22 — Repaired-contract baseline 全量失败分析
+
+日期：2026-09-02
+
+### 本轮研究的问题
+
+对实验 `benchmark-v3-baseline-repaired-20260902-f04baac` 的 144 个失败 canonical trial 和 55 个失败 case family 逐条归因，重点回答是否仍存在由评测环境不满足导致的失败。
+
+### Observation / Evidence
+
+- 219 个 canonical trial 均有 terminal capability result：75 `PASS`、144 `COPILOT_FAILURE`、0 canonical `INFRA_FAILURE`。
+- 4 个 subagent 分别审计 compile、content、interaction 和剩余失败 case，覆盖 55/55 个失败 case family。
+- 唯一疑似环境失败为 `v3.interaction-title-recovery.v1`。失败日志包含 `ctex.sty` 缺失或中文 Unicode 错误，但该 benchmark 的 validation oracle 使用 `CJKutf8`。
+- 将该 oracle 直接提交当前 CLSI，`pdflatex` 返回 `status=success`、`errorCount=0`，证明 benchmark 所需 CJK 支持存在；`ctex` 缺失不构成该 case 的环境失败。
+- 55 个 case 的主要归因为：patch semantics 28、response semantics 15、benchmark/grader contract 6、mixed 4、context/target discovery 1、multi-turn recovery 1。
+
+### Interpretation / Root Cause
+
+当前 baseline 没有已确认的环境不满足导致的 canonical 失败。`v3.interaction-title-recovery.v1` 的直接原因是 Copilot 选择了 benchmark 环境不可用的 `ctex`，且在动态用户拒绝全局 CJK 包装后没有找到可用的最小局部 `CJKutf8` 修复；不是 CLSI 缺少 benchmark 所需 CJK 依赖。
+
+### Changes
+
+新增逐 case 报告 `services/llm/eval/benchmark-v3/BASELINE_FAILURE_ANALYSIS_REPAIRED_20260902.md`，包含环境审计、55 个 case 的索引与详情、跨类归因和下一步建议。本轮未修改 Copilot、benchmark case、grader、tool schema 或评测环境。
+
+### Validation
+
+- 校验 4 份 subagent 报告覆盖全部 55 个失败 case ID，无重复缺失。
+- 使用当前 CLSI 独立复验中文标题 oracle，`status=success`、`errorCount=0`。
+- 报告统计与 canonical summary 的 144 个失败 trial、55 个失败 case family 对齐。
+
+### Benchmark / Metric Before vs After
+
+本轮仅做失败归因，没有重跑评测，baseline 分数保持 75/219（34.2%）不变。分析结果不改变任何 canonical status；被推翻的环境假设仅修正归因，不改机器结果。
+
+### Failure Cases / Regression
+
+已确认 6 个 case 以 benchmark/grader contract ambiguity 为主，4 个 case 为 mixed；这些不应直接作为 Copilot 行为优化目标。28 个 patch semantics、15 个 response semantics、1 个 context/target discovery 和 1 个 multi-turn recovery case 是后续候选能力方向。
+
+### Lessons
+
+- 编译失败本身不能自动推出环境缺失，必须对照 case oracle 并在同一评测服务中复验。
+- “缺少 `ctex`”与“缺少 benchmark 所需 CJK 支持”是两个不同命题；本环境支持 `CJKutf8` oracle。
+- case-level primary attribution 必须保留 mixed 和 contract ambiguity，避免把测量问题误当模型缺陷。
+
+### Recommended next steps
+
+1. 人工 adjudicate 6 个 benchmark/grader contract ambiguity case；
+2. 拆解 4 个 mixed case 的能力因素与测量因素；
+3. 针对计数器独立性和 `renew` vs delete 建立小规模 regression set；
+4. 对歧义场景做澄清优先策略实验，但不直接修改 benchmark；
+5. 用新 experiment ID 重新运行完整 baseline，作为后续行为修改的 before/after 对照。
