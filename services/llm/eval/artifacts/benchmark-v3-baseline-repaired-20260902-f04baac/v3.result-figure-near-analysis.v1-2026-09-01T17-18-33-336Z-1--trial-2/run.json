@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "run_id": "run_3e2289d2-fc44-46e9-9ad7-ac074b03d5a5",
+  "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "case_id": "v3.result-figure-near-analysis.v1",
+  "case_family_id": "v3.result-figure-near-analysis",
+  "trial_id": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.result-figure-near-analysis.v1--trial-2",
+  "split": "dev",
+  "git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "prompt_hash": "ca6c26227d650f0a4b170448fb0904cb8141b0573caa0f0135eb2ec68aae252b",
+  "benchmark_hash": "24a0955f1b70839d571f22e540514b7a6a4efe703ad77e1e1a56d5d1d6c86b71",
+  "fixture_hash": "fb857f7e917a55c84fc825fb4a047dbf8a9d59b21846e51d1f6b4eab81e42352",
+  "initial_workspace_hash": "fb857f7e917a55c84fc825fb4a047dbf8a9d59b21846e51d1f6b4eab81e42352",
+  "eval_user_session_id": "eval-user-v3.result-figure-near-analysis.v1",
+  "started_at": "2026-09-01T17:18:33.336Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "ended_at": "2026-09-01T17:18:57.957Z",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "runner",
+    "failure_phase": "runner",
+    "error_type": "RUNNER_EXECUTION_ERROR",
+    "error_source": "evaluation_harness",
+    "error_message": "readline was closed",
+    "retryable": false,
+    "related_event_id": "evt_e836aaf4-a750-499f-85df-e0cb3d69a4ce"
+  },
+  "final_workspace_hash": "fb857f7e917a55c84fc825fb4a047dbf8a9d59b21846e51d1f6b4eab81e42352"
+}

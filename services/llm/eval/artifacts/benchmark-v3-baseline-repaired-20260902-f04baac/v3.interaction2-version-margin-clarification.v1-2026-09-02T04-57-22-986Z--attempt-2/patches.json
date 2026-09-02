@@ -1,0 +1,10 @@
+[
+  [
+    {
+      "file": "main.tex",
+      "line": 2,
+      "oldText": "\\documentclass{article}\n\\input{shared/macros}\n\\begin{document}",
+      "newText": "\\documentclass{article}\n\\input{shared/macros}\n\\usepackage[margin=\\SharedMargin]{geometry}\n\\begin{document}"
+    }
+  ]
+]

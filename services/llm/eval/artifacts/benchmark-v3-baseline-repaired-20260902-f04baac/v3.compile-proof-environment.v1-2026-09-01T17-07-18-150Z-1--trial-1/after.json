@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{amssymb}\n\\input{theorem-settings}\n\\begin{document}\n\\input{chapters/lemma}\n\\end{document}\n"
+  },
+  {
+    "path": "theorem-settings.tex",
+    "content": "\\newtheorem{lemma}{Lemma}\n\\newenvironment{proofx}{\\par\\noindent Proof: }{\\hfill$\\square$\\par}\n"
+  },
+  {
+    "path": "chapters/lemma.tex",
+    "content": "\\begin{lemma}\nEvery finite list has a first element.\n\\end{lemma}\n\\begin{proofx}\nChoose the least index in the list.\n\\end{proofx}\n"
+  }
+]

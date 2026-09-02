@@ -1,0 +1,19 @@
+[
+  {
+    "request_event_id": "evt_2d190633-b2de-496a-92d3-0b1a62331510",
+    "request_type": "turn_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "选 C：把 scale 的两种含义用不同术语区分，同时只补充文中已有、可以核对的符号。新的 survey 符号不要编造；若无可补条目，就改写符号表的“已有条目”表述。",
+    "termination_reason": "明确修订范围。"
+  },
+  {
+    "request_event_id": "evt_68e844c2-ccca-4a04-863f-1a03d67cfd8e",
+    "request_type": "patch_decision_required",
+    "user_turn": 2,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "区分术语并只记录已有S，不编造新符号。",
+    "patch_decision": "accept"
+  }
+]

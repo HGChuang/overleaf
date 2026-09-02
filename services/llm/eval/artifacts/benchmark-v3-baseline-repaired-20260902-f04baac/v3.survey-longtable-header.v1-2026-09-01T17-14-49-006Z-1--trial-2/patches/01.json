@@ -1,0 +1,14 @@
+[
+  {
+    "file": "tables/survey.tex",
+    "line": 1,
+    "oldText": "\\begin{table}[h]\n\\centering\n\\caption{Survey results}\n\\label{tab:survey}\n\\begin{tabular}{rll}\nNo. & Group & Percentage \\\\\n1 & A & 10\\% \\\\",
+    "newText": "\\begin{longtable}{rll}\n\\caption{Survey results}\\label{tab:survey}\\\\\nNo. & Group & Percentage \\\\\n\\endfirsthead\nNo. & Group & Percentage \\\\\n\\endhead\n1 & A & 10\\% \\\\"
+  },
+  {
+    "file": "tables/survey.tex",
+    "line": 31,
+    "oldText": "22 & A & 31\\%\n\\end{tabular}\n\\end{table}\n",
+    "newText": "22 & A & 31\\%\n\\end{longtable}\n"
+  }
+]

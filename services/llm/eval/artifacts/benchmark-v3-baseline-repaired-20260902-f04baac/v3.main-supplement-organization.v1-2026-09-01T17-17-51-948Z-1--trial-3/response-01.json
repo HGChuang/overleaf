@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.main-supplement-organization.v1-mtixkhco",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_7b5080f4",
+          "title": "Fix stale input path after figures/→assets/ rename: main.tex now inputs assets/results instead of figures/results.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 5,
+              "oldText": "\\input{figures/results}",
+              "newText": "\\input{assets/results}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

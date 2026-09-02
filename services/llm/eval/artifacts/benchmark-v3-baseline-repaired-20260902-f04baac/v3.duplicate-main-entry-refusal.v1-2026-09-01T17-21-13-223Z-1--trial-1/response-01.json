@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.duplicate-main-entry-refusal.v1-mtixosno",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_fa35cd5c",
+          "title": "将 main.tex 明确为唯一主入口（加头部注释），并把 old_main.tex 的 LaTeX 骨架注释化，改为纯注释的已废弃备份说明，消除易误用的重复入口。",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\begin{document}\n\\input{sections/lecture}\n\\end{document}",
+              "newText": "% ============================================================\n% MAIN ENTRY — 项目主文档，唯一入口\n% Current course lecture notes live here.\n% Compile THIS file. Content: sections/lecture.tex (+ exercises).\n% NOTE: old_main.tex is deprecated and must NOT be used as an entry.\n% ============================================================\n\\documentclass{article}\n\\begin{document}\n\\input{sections/lecture}\n\\end{document}"
+            },
+            {
+              "file": "old_main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\begin{document}\nBackup entry; do not use as the current lecture.\n\\end{document}",
+              "newText": "% ============================================================\n% DEPRECATED — 已废弃备份，切勿编译 / DO NOT COMPILE\n%\n% This file was once a main entry and is kept only as a backup\n% reference. To remove the confusing duplicate entry, its LaTeX\n% scaffolding is commented out so it can no longer be compiled\n% or mistaken for the main document.\n%\n% The single main entry is: main.tex\n%   main.tex -> \\input{sections/lecture.tex}\n%            -> \\input{sections/exercises.tex}\n% ============================================================\n% \\documentclass{article}\n% \\begin{document}\n% Backup entry; do not use as the current lecture.\n% \\end{document}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "file": "main.tex",
+    "line": 1,
+    "oldText": "\\documentclass{article}\n\\begin{document}",
+    "newText": "\\documentclass{article}\n\\usepackage{pgfplots}\n\\pgfplotsset{compat=1.17}\n\\begin{document}"
+  },
+  {
+    "file": "chapters/results.tex",
+    "line": 2,
+    "oldText": "The original result table uses the laboratory palette and exact values are reported below.\n\\begin{table}[h]\n\\centering\n\\caption{Performance values}\n\\label{tab:performance}\n\\begin{tabular}{lrr}\nSystem & Accuracy & Recall \\\\\nBase & 0.81 & 0.74 \\\\\nNew & 0.86 & 0.79 \\\\\n\\end{tabular}\n\\end{table}",
+    "newText": "The laboratory palette is used below and exact values are reported.\n\\begin{figure}[ht]\n\\centering\n\\begin{tikzpicture}\n\\begin{axis}[\n    width=0.8\\linewidth,\n    height=0.45\\linewidth,\n    xlabel={System},\n    ylabel={Score},\n    xtick={0,1},\n    xticklabels={Base, New},\n    ymin=0, ymax=1,\n    ymajorgrids=true,\n    legend pos=south east,\n    legend style={font=\\small},\n    every axis plot/.append style={line width=1.4pt},\n]\n\\addplot[color=blue!70!black, mark=*, nodes near coords] coordinates {(0,0.81) (1,0.86)};\n\\addlegendentry{Accuracy}\n\\addplot[color=red!70!black, mark=square*, nodes near coords] coordinates {(0,0.74) (1,0.79)};\n\\addlegendentry{Recall}\n\\end{axis}\n\\end{tikzpicture}\n\\caption{Performance trend from Base to New}\n\\label{fig:performance}\n\\end{figure}"
+  }
+]

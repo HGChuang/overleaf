@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.compile-chapter-input-recovery.v1",
+  "case_family_id": "v3.compile-chapter-input-recovery",
+  "source_candidate_id": "v3.compile.008",
+  "split": "dev",
+  "category": "章节引用恢复",
+  "capabilities": [
+    "C1",
+    "C4",
+    "C5",
+    "C11"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "章节路径过期",
+      "跨文件定位",
+      "动态用户纠正"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.compile-chapter-input-recovery",
+    "fixture_lineage": "v3.compile.008",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\tableofcontents\n\\input{chapters/chapter3-old}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/chapter3.tex",
+        "content": "\\section{Methods}\nThe inserted chapter keeps the intended order and title.\n"
+      }
+    ],
+    "sha256": "2156c0968ad78062286759b79813a29505f5b0d6688a4b1c93bbd95bbdb26aa1"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "many-files"
+  },
+  "user_goal": {
+    "public_brief": "我新增了一节以后，目录和交叉引用都像是旧的。请帮我让它们更新，但不要改变书稿内容。",
+    "interaction_facts": [
+      "主文件仍引用已废弃的 chapter3-old 路径，当前正式章节文件是 chapters/chapter3.tex；目录命令和章节标题必须保留。",
+      "如果首轮只报告路径错误，用户会确认应使用正式的 chapter3 文件。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "failure",
+    "protected_invariants": [
+      {
+        "file": "main.tex",
+        "value": "\\tableofcontents"
+      },
+      {
+        "file": "chapters/chapter3.tex",
+        "value": "The inserted chapter keeps the intended order and title."
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 2,
+    "dynamic_user": true,
+    "continue_after_patch": true
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "chapters/chapter3.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "repair-loop",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "main.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\tableofcontents"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/chapter3.tex",
+      "values": [
+        "The inserted chapter keeps the intended order and title."
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\input{chapters/chapter3}"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "main.tex",
+      "values": [
+        "\\input{chapters/chapter3-old}"
+      ]
+    },
+    {
+      "type": "file_unchanged",
+      "file": "chapters/chapter3.tex"
+    },
+    {
+      "type": "user_turns",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "main.tex",
+        "line": 4,
+        "oldText": "\\input{chapters/chapter3-old}",
+        "newText": "\\input{chapters/chapter3}"
+      }
+    ],
+    "responses": [
+      "正式章节文件是 chapters/chapter3.tex，我会保留目录和章节顺序。",
+      "已恢复正式章节输入路径并完成编译验证。"
+    ],
+    "grader_mutations": [
+      {
+        "mutation_id": "章节路径-继续使用旧文件",
+        "description": "把输入路径改成了另一个不存在的旧文件，正式章节仍未接入。",
+        "patches": [
+          {
+            "file": "main.tex",
+            "line": 4,
+            "oldText": "\\input{chapters/chapter3-old}",
+            "newText": "\\input{chapters/chapter3-draft}"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "failure",
+          "errorCount": 1,
+          "warningCount": 0
+        }
+      },
+      {
+        "mutation_id": "章节路径-改动章节内容",
+        "description": "修改章节正文来规避路径错误，破坏了章节内容保护。",
+        "patches": [
+          {
+            "file": "chapters/chapter3.tex",
+            "line": 2,
+            "oldText": "The inserted chapter keeps the intended order and title.",
+            "newText": "The inserted chapter changes the intended order and title."
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "success",
+          "errorCount": 0,
+          "warningCount": 0
+        }
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "章节",
+      "路径恢复",
+      "动态纠正",
+      "编译引用与文献"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文动态故障报告",
+    "provenance": "llm-generated-user-seed"
+  }
+}

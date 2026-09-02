@@ -1,0 +1,16 @@
+[
+  [
+    {
+      "file": "main.tex",
+      "line": 2,
+      "oldText": "\\input{shared/macros}\n\\begin{document}",
+      "newText": "\\input{shared/macros}\n\\usepackage[margin=\\SharedMargin]{geometry}\n\\begin{document}"
+    },
+    {
+      "file": "conference.tex",
+      "line": 1,
+      "oldText": "\\documentclass{article}\n\\usepackage[margin=0.75in]{geometry}",
+      "newText": "\\documentclass{article}\n\\input{shared/macros}\n\\usepackage[margin=\\SharedMargin]{geometry}"
+    }
+  ]
+]

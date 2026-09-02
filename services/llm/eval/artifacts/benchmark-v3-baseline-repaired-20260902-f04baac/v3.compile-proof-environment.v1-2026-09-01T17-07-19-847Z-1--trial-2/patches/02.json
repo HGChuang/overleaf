@@ -1,0 +1,8 @@
+[
+  {
+    "file": "theorem-settings.tex",
+    "line": 1,
+    "oldText": "\\newtheorem{lemma}{Lemma}",
+    "newText": "\\usepackage{amssymb}% provides \\square\n\\newtheorem{lemma}{Lemma}"
+  }
+]

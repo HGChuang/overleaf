@@ -1,0 +1,32 @@
+{
+  "runId": "run_041c00ea-02b1-4e9f-88bc-bc964e7d9455",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.interaction2-conference-page-limit-clarification.v1-2026-09-02T04-48-29-663Z--attempt-2",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.interaction2-conference-page-limit-clarification.v1",
+  "caseFamilyId": "v3.interaction2-conference-page-limit-clarification",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.interaction2-conference-page-limit-clarification.v1--trial-1--attempt-2",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 13295,
+    "output": 3867,
+    "cacheRead": 22528,
+    "cacheWrite": 0,
+    "totalTokens": 39690
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 5,
+    "search_project": 2,
+    "count_words": 1,
+    "compile_project": 1
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 2,
+  "responseCount": 2,
+  "initialWorkspaceHash": "3ebd83489255bb54ada47cad3cdac5fb76c66e2ab41b95223b86a36f3e87678c",
+  "finalWorkspaceHash": "3ebd83489255bb54ada47cad3cdac5fb76c66e2ab41b95223b86a36f3e87678c",
+  "wallMs": 81453
+}

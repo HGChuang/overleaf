@@ -1,0 +1,6 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{caption}\n\\captionsetup{font=footnotesize,justification=raggedright,singlelinecheck=false}\n\\begin{document}\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{35mm}{20mm}}\n\\caption{A laboratory result}\n\\label{fig:result}\n\\end{figure}\n\\end{document}\n"
+  }
+]

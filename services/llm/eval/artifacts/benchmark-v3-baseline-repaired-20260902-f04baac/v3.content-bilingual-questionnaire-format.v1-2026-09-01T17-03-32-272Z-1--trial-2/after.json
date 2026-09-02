@@ -1,0 +1,18 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{survey}\n\\input{methods}\n\\input{notes}\n\\end{document}\n"
+  },
+  {
+    "path": "survey.tex",
+    "content": "\\section{Questionnaire}\nQ1. How satisfied are you?\nOptions: 1 = Very dissatisfied; 2 = Dissatisfied; 3 = Neutral; 4 = Satisfied; 5 = Very satisfied.\nQ2. Would you recommend the service?\nOptions: 1 = Definitely no; 2 = Probably no; 3 = Unsure; 4 = Probably yes; 5 = Definitely yes.\n"
+  },
+  {
+    "path": "methods.tex",
+    "content": "\\section{Methods}\nWe used a five-level scale and analyzed Question 1 and Question 2.\n"
+  },
+  {
+    "path": "notes.tex",
+    "content": "\\section{Notes}\nThe questionnaire order and skip logic are unchanged.\n"
+  }
+]

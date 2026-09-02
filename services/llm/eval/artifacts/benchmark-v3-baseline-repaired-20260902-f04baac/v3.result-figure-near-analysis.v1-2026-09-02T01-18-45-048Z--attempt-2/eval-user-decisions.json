@@ -1,0 +1,20 @@
+[
+  {
+    "request_event_id": "evt_81c01ad4-2113-4073-a6f8-9c9813975e9a",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "请只调整 Accuracy 图的位置；Ablation figure 请保持原样，不要修改它。",
+    "termination_reason": "补丁同时修改了不应变化的 Ablation figure，需要缩小范围。",
+    "patch_decision": "reject"
+  },
+  {
+    "request_event_id": "evt_91a7f6b3-9b66-4239-a126-74957f309730",
+    "request_type": "patch_decision_required",
+    "user_turn": 2,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "补丁仅调整 Accuracy figure，Ablation 保持不变。",
+    "patch_decision": "accept"
+  }
+]

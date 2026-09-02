@@ -1,0 +1,28 @@
+[
+  {
+    "request_event_id": "evt_32fcc3ca-acdb-42d6-97f9-a38413ede476",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "接受边距补丁。",
+    "patch_decision": "accept"
+  },
+  {
+    "request_event_id": "evt_a428f899-7b66-40e5-9a0a-debe2b9c09a6",
+    "request_type": "turn_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "会议版请不要改动，保持原来的 0.75in；请撤回 conference 的修改，只保留学位论文入口使用 SharedMargin 的调整。",
+    "termination_reason": "会议版不应修改。"
+  },
+  {
+    "request_event_id": "evt_ef5f93ea-326e-4a75-a693-1b04511b1c63",
+    "request_type": "patch_decision_required",
+    "user_turn": 2,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "恢复会议版0.75in，main保留SharedMargin。",
+    "patch_decision": "accept"
+  }
+]

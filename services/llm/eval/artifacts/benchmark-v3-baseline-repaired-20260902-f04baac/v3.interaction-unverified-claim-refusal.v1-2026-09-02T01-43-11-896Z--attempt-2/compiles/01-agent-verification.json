@@ -1,0 +1,22 @@
+{
+  "status": "success",
+  "errorCount": 3,
+  "errors": [
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: Unicode character 待 (U+5F85)"
+    },
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: Unicode character 核 (U+6838)"
+    },
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: Unicode character 实 (U+5B9E)"
+    }
+  ],
+  "warningCount": 0
+}

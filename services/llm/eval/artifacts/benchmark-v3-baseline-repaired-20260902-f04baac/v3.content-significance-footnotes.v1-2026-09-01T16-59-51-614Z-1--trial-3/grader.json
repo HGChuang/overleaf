@@ -1,0 +1,81 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "patch_files",
+        "files": [
+          "table-one.tex",
+          "table-two.tex",
+          "appendix-table.tex"
+        ]
+      },
+      "passed": false,
+      "message": "patch files=[\"results.tex\",\"table-one.tex\",\"table-two.tex\",\"appendix-table.tex\"]"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "table-one.tex",
+        "values": [
+          "0.42",
+          "Two-sided tests use p<0.05."
+        ]
+      },
+      "passed": false,
+      "message": "table-one.tex contains 2 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "table-two.tex",
+        "values": [
+          "0.37",
+          "Two-sided tests use p<0.05."
+        ]
+      },
+      "passed": false,
+      "message": "table-two.tex contains 2 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "appendix-table.tex",
+        "values": [
+          "0.31",
+          "Two-sided tests use p<0.05."
+        ]
+      },
+      "passed": false,
+      "message": "appendix-table.tex contains 2 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_not_contains",
+        "file": "table-one.tex",
+        "values": [
+          "One-sided test"
+        ]
+      },
+      "passed": true,
+      "message": "table-one.tex excludes 1 forbidden value(s)"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

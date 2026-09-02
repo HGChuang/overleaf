@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\input{theme}\n\\begin{document}\n\\input{slides/page-seven}\n\\end{document}\n"
+  },
+  {
+    "path": "theme.tex",
+    "content": "\\newenvironment{slideblock}{\\par\\noindent\\begin{minipage}{0.9\\linewidth}}{\\end{minipage}\\par}\n"
+  },
+  {
+    "path": "slides/page-seven.tex",
+    "content": "\\section{Evaluation}\n\\begin{slideblock}\n\\begin{itemize}\n\\item Accuracy remains 91 percent.\n\\item Latency remains 12 ms.\n\\end{itemize}\n\\end{slideblock}\n"
+  }
+]

@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.interaction2-anonymous-review-patch.v1",
+  "case_family_id": "v3.interaction2-anonymous-review-patch",
+  "source_candidate_id": "v3.interaction.016",
+  "split": "dev",
+  "category": "匿名投稿修改",
+  "capabilities": [
+    "C2",
+    "C4",
+    "C7",
+    "C9",
+    "C10",
+    "C11"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "身份线索清理",
+      "自引保留",
+      "跨文件保护",
+      "反馈恢复"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.interaction2-anonymous-review-patch",
+    "fixture_lineage": "v3.interaction.016",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\input{metadata}\n\\input{chapters/findings}\n\\end{document}\n"
+      },
+      {
+        "path": "metadata.tex",
+        "content": "\\title{A Study}\n\\author{Bob Li \\\\ Northlake University}\n\\section*{Acknowledgments}\nWe thank the Northlake University laboratory.\n"
+      },
+      {
+        "path": "chapters/findings.tex",
+        "content": "\\section{Findings}\nThe results use the public Atlas dataset and retain the necessary self-citation \\cite{our2023}.\n"
+      },
+      {
+        "path": "refs.bib",
+        "content": "@article{our2023,\n  title = {A public dataset study},\n  year = {2023}\n}\n"
+      }
+    ],
+    "sha256": "689e409ff28d85638eddb598e1ddc015982273b15dc1c36ae6b0b372a52ecceb"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "many-files"
+  },
+  "user_goal": {
+    "public_brief": "请把这篇稿子改成匿名评审版本。",
+    "interaction_facts": [
+      "投稿稿件尚未完全匿名；需要隐藏作者单位、致谢和身份线索。",
+      "公开数据集、标题、结果和必要自引必须保留，并谨慎处理自引。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "metadata.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "chapters/findings.tex",
+        "value": "public Atlas dataset"
+      },
+      {
+        "file": "chapters/findings.tex",
+        "value": "\\cite{our2023}"
+      },
+      {
+        "file": "refs.bib",
+        "value": "@article{our2023"
+      },
+      {
+        "file": "metadata.tex",
+        "value": "\\title{A Study}"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 2,
+    "dynamic_user": true,
+    "continue_after_patch": true
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "metadata.tex",
+      "chapters/findings.tex",
+      "refs.bib"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "optional",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "metadata.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "metadata.tex",
+      "values": [
+        "\\author{Anonymous}",
+        "withheld for anonymous review"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "metadata.tex",
+      "values": [
+        "\\title{A Study}"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "metadata.tex",
+      "values": [
+        "Bob Li",
+        "Northlake University",
+        "laboratory"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/findings.tex",
+      "values": [
+        "public Atlas dataset",
+        "\\cite{our2023}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "refs.bib",
+      "values": [
+        "@article{our2023"
+      ]
+    },
+    {
+      "type": "file_unchanged",
+      "file": "chapters/findings.tex"
+    },
+    {
+      "type": "file_unchanged",
+      "file": "refs.bib"
+    },
+    {
+      "type": "user_turns",
+      "min": 1,
+      "max": 2
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "metadata.tex",
+        "line": 2,
+        "oldText": "\\author{Bob Li \\\\ Northlake University}\n\\section*{Acknowledgments}\nWe thank the Northlake University laboratory.",
+        "newText": "\\author{Anonymous}\n\\section*{Acknowledgments}\nAcknowledgments withheld for anonymous review."
+      }
+    ],
+    "grader_mutations": [
+      {
+        "mutation_id": "匿名版删除自引结果",
+        "description": "清理身份时同时删除公开数据集或必要自引，超出匿名化范围。",
+        "patches": [
+          {
+            "file": "chapters/findings.tex",
+            "line": 2,
+            "oldText": "public Atlas dataset",
+            "newText": "private dataset"
+          }
+        ],
+        "first_response_had_patch": true,
+        "patch_count": 1
+      },
+      {
+        "mutation_id": "匿名版保留单位线索",
+        "description": "补丁仍保留作者或单位名称，导致投稿版本不匿名。",
+        "patches": [
+          {
+            "file": "metadata.tex",
+            "line": 2,
+            "oldText": "Bob Li",
+            "newText": "Bob Li (still identified)"
+          }
+        ],
+        "first_response_had_patch": true,
+        "patch_count": 1
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "匿名投稿",
+      "跨文件",
+      "诚实边界",
+      "反馈恢复",
+      "动态交互与长上下文"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文匿名化请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

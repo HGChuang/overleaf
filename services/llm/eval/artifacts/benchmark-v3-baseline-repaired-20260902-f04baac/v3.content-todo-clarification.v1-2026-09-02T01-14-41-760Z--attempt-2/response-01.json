@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.content-todo-clarification.v1-mtjeloto",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_818e10f8",
+          "title": "Fill in the sample count (42, sourced from Table 3 in table-three.tex) in the Experiment section and keep the unresolved \"source unknown\" item as a clear TODO note.",
+          "hunks": [
+            {
+              "file": "experiment.tex",
+              "line": 2,
+              "oldText": "\\section{Experiment}\n% TODO: fill the sample count from Table 3\n% TODO: source unknown; keep this item\n",
+              "newText": "\\section{Experiment}\nThe experiment uses 42 samples, as reported in Table 3.\n% TODO: source unknown; keep this item\n"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

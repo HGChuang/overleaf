@@ -1,0 +1,11 @@
+[
+  {
+    "request_event_id": "evt_10febabf-dbc7-480f-9275-d4e6f23fd595",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "我先确认一下：这里的 S 和 S_surv 分别对应哪个具体术语？它们应在哪一节首次定义或使用？目前项目里没有这两个符号，确认后我再决定是否加入。",
+    "termination_reason": "项目未提供新符号。",
+    "patch_decision": "reject"
+  }
+]

@@ -1,0 +1,8 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "第二章（`chapters/chapter-two.tex`）当前的标题是：\n\n```\n\\section{Study}\n\\subsection{Theory}\n```\n\n\"改得更正式\"可以有多种含义，不同改法会产生意思完全不同的标题（例如 `Theoretical Background`、`Literature Review`、`Research Overview` 等）。为了不擅自替你选择一个可能不对的标题，请你确认一下想要的更正式标题是什么：\n\n- 是想保留\"研究/学习\"这层含义，只换成更正式的措辞（如 `A Formal Study`）？\n- 还是想改为体现其内容的标题（子节是 Theory，比如 `Theoretical Background` / `Theoretical Framework`）？\n- 或者你已有指定的标题？\n\n请告诉我具体方向（或直接给出标题），我再用补丁（submit_patch）帮你改。",
+    "hadPatch": false
+  }
+]

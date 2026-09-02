@@ -1,0 +1,32 @@
+Using default settings from /overleaf/services/llm/config/settings.defaults.cjs
+Redis connected successfully
+{
+  "runId": "run_7dc2fe95-dc15-4502-bd60-20ac2e166d74",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.noop-theorem-numbering-already-scoped.v1-2026-09-01T17-30-38-684Z-1--trial-1",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.noop-theorem-numbering-already-scoped.v1",
+  "caseFamilyId": "v3.noop-theorem-numbering-already-scoped",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.noop-theorem-numbering-already-scoped.v1--trial-1",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 2826,
+    "output": 601,
+    "cacheRead": 10240,
+    "cacheWrite": 0,
+    "totalTokens": 13667
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 1,
+    "search_project": 1
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 1,
+  "initialWorkspaceHash": "4e550e1445fa89803f9e2f17cca1904faceb6d21daee2544d83ea840a0a147fa",
+  "finalWorkspaceHash": "4e550e1445fa89803f9e2f17cca1904faceb6d21daee2544d83ea840a0a147fa",
+  "wallMs": 10400
+}

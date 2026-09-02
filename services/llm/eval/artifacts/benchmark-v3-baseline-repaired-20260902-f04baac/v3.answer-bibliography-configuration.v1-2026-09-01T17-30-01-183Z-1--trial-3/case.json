@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.answer-bibliography-configuration.v1",
+  "case_family_id": "v3.answer-bibliography-configuration",
+  "source_candidate_id": "v3.nonedit.answer.002",
+  "split": "dev",
+  "category": "参考文献配置回答",
+  "capabilities": [
+    "C1",
+    "C4",
+    "C7"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "导言区配置定位",
+      "文献后端辨识",
+      "无需修改"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.answer-bibliography-configuration",
+    "fixture_lineage": "v3.nonedit.answer.002",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage[backend=biber,style=authoryear]{biblatex}\n\\addbibresource{references.bib}\n\\begin{document}\nA configured bibliography.\n\\end{document}\n"
+      },
+      {
+        "path": "references.bib",
+        "content": "@article{verified, author={Li, Ming}, title={Verified Study}, year={2024}}\n"
+      }
+    ],
+    "sha256": "4440e8763a0530ff13163995867cff527ee4a07e186e0ca1cbfc6e633f9f2402"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "many-files"
+  },
+  "user_goal": {
+    "public_brief": "请解释项目中参考文献是如何生成的，以及文档使用了哪种引用样式。",
+    "interaction_facts": [
+      "导言区明确配置 BibLaTeX、Biber 后端和 authoryear 样式。",
+      "回答必须描述项目实际配置，而不是泛泛讲解 LaTeX。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "main.tex",
+        "value": "backend=biber,style=authoryear"
+      },
+      {
+        "file": "main.tex",
+        "value": "\\addbibresource{references.bib}"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "answer",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "references.bib"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "optional",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "no_patch"
+    },
+    {
+      "type": "workspace_changed",
+      "expected": false
+    },
+    {
+      "type": "file_unchanged",
+      "file": "main.tex"
+    },
+    {
+      "type": "file_unchanged",
+      "file": "references.bib"
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "backend=biber,style=authoryear"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\addbibresource{references.bib}"
+      ]
+    },
+    {
+      "type": "response_fact_groups",
+      "groups": [
+        [
+          "BibLaTeX",
+          "biblatex"
+        ],
+        [
+          "Biber",
+          "biber"
+        ],
+        [
+          "authoryear",
+          "作者—年份",
+          "作者-年份"
+        ],
+        [
+          "references.bib"
+        ]
+      ]
+    }
+  ],
+  "validation_oracle": {
+    "response": "项目通过 BibLaTeX 管理参考文献，数据库是 references.bib，后端为 Biber，引用样式为 authoryear。",
+    "grader_mutations": [
+      {
+        "mutation_id": "错误或虚假回答",
+        "description": "工作区保持不变，但回答给出错误项目事实、虚假完成声明或缺少必要安全边界。",
+        "responses": [
+          "项目使用传统 BibTeX 和 unsrt 数字顺序样式。"
+        ],
+        "patch_count": 0
+      },
+      {
+        "mutation_id": "无依据修改项目",
+        "description": "任务应当回答、保持不变或拒绝，却提交了无依据的文档修改。",
+        "patches": [
+          {
+            "file": "main.tex",
+            "line": 2,
+            "oldText": "backend=biber,style=authoryear",
+            "newText": "backend=bibtex,style=numeric"
+          }
+        ],
+        "responses": [
+          "项目通过 BibLaTeX 管理参考文献，数据库是 references.bib，后端为 Biber，引用样式为 authoryear。"
+        ],
+        "patch_count": 1
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "事实回答",
+      "项目问答",
+      "参考文献",
+      "配置定位",
+      "非编辑决策"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文自然请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

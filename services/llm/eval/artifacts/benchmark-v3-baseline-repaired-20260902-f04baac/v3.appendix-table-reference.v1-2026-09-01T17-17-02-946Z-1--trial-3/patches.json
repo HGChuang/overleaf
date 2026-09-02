@@ -1,0 +1,16 @@
+[
+  [
+    {
+      "file": "main.tex",
+      "line": 5,
+      "oldText": "The detailed measurements are in Table~\\ref{tab:appendix-data}.",
+      "newText": "The detailed measurements are in Table~\\ref{tab:appendix_data}."
+    },
+    {
+      "file": "appendix-data.tex",
+      "line": 2,
+      "oldText": "\\appendix\n\\section{Data}",
+      "newText": "\\appendix\n\\setcounter{table}{0}\n\\renewcommand{\\thetable}{\\thesection.\\arabic{table}}\n\\section{Data}"
+    }
+  ]
+]

@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.appendix-table-reference.v1-mtixj1k4",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_f2822141",
+          "title": "统一 \\ref 与 \\label 标签（tab:appendix_data），并在 \\appendix 后加 \\counterwithin{table}{section} 使附录表格编号为 A.1。",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 5,
+              "oldText": "The detailed measurements are in Table~\\ref{tab:appendix-data}.",
+              "newText": "The detailed measurements are in Table~\\ref{tab:appendix_data}."
+            },
+            {
+              "file": "appendix-data.tex",
+              "line": 2,
+              "oldText": "\\appendix\n\\section{Data}",
+              "newText": "\\appendix\n\\counterwithin{table}{section}\n\\section{Data}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

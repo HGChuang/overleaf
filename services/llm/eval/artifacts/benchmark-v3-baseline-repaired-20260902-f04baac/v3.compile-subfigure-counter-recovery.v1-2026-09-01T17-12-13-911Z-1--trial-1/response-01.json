@@ -1,0 +1,37 @@
+{
+  "conversationId": "v3.compile-subfigure-counter-recovery.v1-mtixd8is",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 3 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_68f45b60",
+          "title": "Replace hand-rolled panel counter with subcaption figure/subfigure; fix duplicate label and wire labels to real figure numbers.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\begin{document}\n\\input{figures/experiment-a}\n\\input{figures/experiment-b}\n\\end{document}",
+              "newText": "\\documentclass{article}\n\\usepackage{subcaption}\n\\begin{document}\n\\input{figures/experiment-a}\n\\input{figures/experiment-b}\n\\end{document}"
+            },
+            {
+              "file": "figures/experiment-a.tex",
+              "line": 1,
+              "oldText": "\\section{Experiment A}\n\\newcounter{panel}\n\\refstepcounter{panel}\\label{fig:panel-a}\n\\begin{center}\\fbox{Panel A}\\end{center}",
+              "newText": "\\section{Experiment A}\n\\begin{figure}[htbp]\n\\centering\n\\begin{subfigure}{0.45\\textwidth}\n\\centering\n\\fbox{Panel A}\n\\caption{Panel A}\n\\label{fig:panel-a}\n\\end{subfigure}\n\\caption{Experiment A result}\n\\end{figure}"
+            },
+            {
+              "file": "figures/experiment-b.tex",
+              "line": 1,
+              "oldText": "\\section{Experiment B}\n\\newcounter{panel}\n\\refstepcounter{panel}\\label{fig:panel-a}\n\\begin{center}\\fbox{Panel B}\\end{center}",
+              "newText": "\\section{Experiment B}\n\\begin{figure}[htbp]\n\\centering\n\\begin{subfigure}{0.45\\textwidth}\n\\centering\n\\fbox{Panel B}\n\\caption{Panel B}\n\\label{fig:panel-b}\n\\end{subfigure}\n\\caption{Experiment B result}\n\\end{figure}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

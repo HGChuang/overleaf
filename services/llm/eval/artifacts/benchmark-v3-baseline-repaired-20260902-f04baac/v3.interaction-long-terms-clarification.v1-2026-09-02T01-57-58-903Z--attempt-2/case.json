@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.interaction-long-terms-clarification.v1",
+  "case_family_id": "v3.interaction-long-terms-clarification",
+  "source_candidate_id": "v3.interaction.026",
+  "split": "dev",
+  "category": "长上下文澄清",
+  "capabilities": [
+    "C4",
+    "C7",
+    "C8",
+    "C10"
+  ],
+  "difficulty": {
+    "level": "D4",
+    "factors": [
+      "长篇多章",
+      "同词异义",
+      "符号表约定",
+      "索引保护",
+      "多轮澄清"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.interaction-long-terms-clarification",
+    "fixture_lineage": "v3.interaction.026",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\tableofcontents\n\\input{chapters/theory}\n\\input{chapters/field-study}\n\\input{appendix/symbols}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/theory.tex",
+        "content": "\\section{Theory}\nIn the theory chapter, the term scale denotes the normalization factor.\nThe symbol table records \\(S\\) for this meaning and the index points to this section.\n"
+      },
+      {
+        "path": "chapters/field-study.tex",
+        "content": "\\section{Field Study}\nIn the field-study chapter, the term scale denotes the survey scale.\nThe symbol table must distinguish this meaning from the theory chapter.\n"
+      },
+      {
+        "path": "appendix/symbols.tex",
+        "content": "\\section{Symbols}\nThe symbol table contains separate entries for the normalization factor and survey scale.\nThe existing index references must continue to resolve.\n"
+      }
+    ],
+    "sha256": "b4b063641c6d66ed01f987043bdd17e87345ce996d762e9cef2d768aa729fb1f"
+  },
+  "project_complexity": {
+    "scale": "multi-long",
+    "context_pressure": "combined"
+  },
+  "user_goal": {
+    "public_brief": "请检查全文术语和符号是否一致，并修正明显问题。",
+    "interaction_facts": [
+      "长篇论文有多章术语和符号约定，同一词在不同章节含义不同。",
+      "符号表需要区分这些含义，索引引用不能失效；应先确认需要修正的具体术语或章节。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "chapters/theory.tex",
+        "value": "normalization factor"
+      },
+      {
+        "file": "chapters/field-study.tex",
+        "value": "survey scale"
+      },
+      {
+        "file": "appendix/symbols.tex",
+        "value": "existing index references"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "clarify",
+    "max_user_turns": 2,
+    "dynamic_user": true
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "chapters/theory.tex",
+      "chapters/field-study.tex",
+      "appendix/symbols.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "optional",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "first_response_no_patch"
+    },
+    {
+      "type": "no_patch"
+    },
+    {
+      "type": "workspace_changed",
+      "expected": false
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/theory.tex",
+      "values": [
+        "normalization factor"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/field-study.tex",
+      "values": [
+        "survey scale"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "appendix/symbols.tex",
+      "values": [
+        "existing index references"
+      ]
+    },
+    {
+      "type": "file_unchanged",
+      "file": "chapters/theory.tex"
+    },
+    {
+      "type": "file_unchanged",
+      "file": "chapters/field-study.tex"
+    },
+    {
+      "type": "file_unchanged",
+      "file": "appendix/symbols.tex"
+    },
+    {
+      "type": "user_turns",
+      "min": 2,
+      "max": 2
+    },
+    {
+      "type": "response_matches",
+      "pattern": "(?:具体|哪些|哪一|是否|请).*[？?]"
+    }
+  ],
+  "validation_oracle": {
+    "responses": [
+      "这里不能直接全局统一：该术语在理论章和实地研究章含义不同。请问要修正哪些具体术语或章节范围？",
+      "我会保留两个语义并检查符号表和索引；请先确认要处理哪一组术语，确认前不提交补丁。"
+    ],
+    "grader_mutations": [
+      {
+        "mutation_id": "长文全局机械替换",
+        "description": "把不同章节中含义不同的同一词全局替换，改变术语语义。",
+        "patches": [
+          {
+            "file": "chapters/theory.tex",
+            "line": 2,
+            "oldText": "scale denotes the normalization factor",
+            "newText": "normalization factor denotes the normalization factor"
+          },
+          {
+            "file": "chapters/field-study.tex",
+            "line": 2,
+            "oldText": "scale denotes the survey scale",
+            "newText": "normalization factor denotes the survey scale"
+          }
+        ],
+        "first_response_had_patch": true,
+        "patch_count": 2
+      },
+      {
+        "mutation_id": "澄清后破坏索引",
+        "description": "尚未确认范围就修改符号表并删除或改写现有索引依据。",
+        "responses": [
+          "我已经统一了所有章节的该术语，并重建了索引。"
+        ],
+        "first_response_had_patch": true,
+        "patch_count": 2
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "长上下文",
+      "澄清",
+      "同词异义",
+      "多文件",
+      "动态交互与长上下文"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文全局检查请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

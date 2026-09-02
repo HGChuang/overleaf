@@ -1,0 +1,32 @@
+{
+  "runId": "run_47c7d274-1559-4559-a808-71fb6d9c630a",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.appendix-table-reference.v1-2026-09-01T17-17-02-946Z-1--trial-3",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.appendix-table-reference.v1",
+  "caseFamilyId": "v3.appendix-table-reference",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.appendix-table-reference.v1--trial-3",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 10998,
+    "output": 5405,
+    "cacheRead": 29184,
+    "cacheWrite": 0,
+    "totalTokens": 45587
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 2,
+    "search_project": 2,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "patchCount": 1,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 2,
+  "initialWorkspaceHash": "643b115c8cc08ef45846bc542723808fe5c9f76e97758f6e88ddf52d9ad73404",
+  "finalWorkspaceHash": "91af456d9e927fc67ea4f90519fb5a1fa90c3d0072699a9a7a6f72e97b56e2fa",
+  "wallMs": 46309
+}

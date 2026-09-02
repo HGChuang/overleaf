@@ -1,0 +1,340 @@
+{
+  "raw_attempts": 282,
+  "logical_trials": 219,
+  "status_counts": {
+    "PASS": 75,
+    "COPILOT_FAILURE": 144
+  },
+  "static": {
+    "trials": 159,
+    "pass": 61,
+    "copilot_failure": 98
+  },
+  "dynamic": {
+    "trials": 60,
+    "pass": 14,
+    "copilot_failure": 46
+  },
+  "attempt_counts": {
+    "1": 159,
+    "2": 57,
+    "3": 3
+  },
+  "wall_ms_total": 17495524,
+  "usage": {
+    "input": 2549732,
+    "output": 880001,
+    "cacheRead": 5588992,
+    "cacheWrite": 0,
+    "totalTokens": 9018725
+  },
+  "tool_calls": {
+    "read_file": 644,
+    "search_project": 221,
+    "list_project_files": 175,
+    "submit_patch": 194,
+    "compile_project": 171,
+    "todo_write": 128,
+    "read_file_fragment": 10,
+    "count_words": 4
+  },
+  "patch_count": 170,
+  "patch_rejection_count": 23,
+  "user_turn_count": 260,
+  "response_count": 430,
+  "selection_rule": "For each logical trial, select the latest PASS or COPILOT_FAILURE attempt by run.started_at; retain all infrastructure attempts separately.",
+  "by_case": {
+    "v3.answer-appendix-algorithm-reference.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.answer-bibliography-configuration.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.answer-entry-selection.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.answer-experiment-facts.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.appendix-header-short-mark.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.appendix-table-reference.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.beamer-flowchart-scale.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.beamer-reference-overflow.v1": {
+      "PASS": 1,
+      "COPILOT_FAILURE": 2
+    },
+    "v3.chemistry-structure-reference.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.combined-chart-group.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.compile-algorithm-environment.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.compile-appendix-label-collision.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.compile-bibliography-entrypoint.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.compile-chapter-input-recovery.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.compile-conditional-macro.v1": {
+      "PASS": 1,
+      "COPILOT_FAILURE": 2
+    },
+    "v3.compile-department-figure-counters.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.compile-duplicate-environment.v1": {
+      "PASS": 1,
+      "COPILOT_FAILURE": 2
+    },
+    "v3.compile-final-multi-artifact.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.compile-glossary-bibliography-recovery.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.compile-lesson-list-recovery.v1": {
+      "PASS": 2,
+      "COPILOT_FAILURE": 1
+    },
+    "v3.compile-nested-block-recovery.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.compile-proof-closure-recovery.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.compile-proof-environment.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.compile-score-counter-collision.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.compile-subfigure-counter-recovery.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.compile-wide-table-column-recovery.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.content-abstract-conclusion-terminology.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-appendix-interview-translation.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-bilingual-questionnaire-format.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-bilingual-sync.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-introduction-progression.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-matrix-vector-notation.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-multifile-translation.v1": {
+      "PASS": 2,
+      "COPILOT_FAILURE": 1
+    },
+    "v3.content-patient-group-terms.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-privacy-review-insertion.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-project-directory-refusal.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-pseudocode-normalization.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-robotics-polish.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-sample-identifiers-units.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-significance-footnotes.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.content-theorem-numbering.v1": {
+      "PASS": 2,
+      "COPILOT_FAILURE": 1
+    },
+    "v3.content-todo-clarification.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.duplicate-main-entry-refusal.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.figure-location-caption.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.financial-wide-table.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.interaction-caption-no-op.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.interaction-long-terms-clarification.v1": {
+      "PASS": 1,
+      "COPILOT_FAILURE": 2
+    },
+    "v3.interaction-old-files-clarification.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.interaction-preamble-no-op.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.interaction-title-clarification.v1": {
+      "PASS": 2,
+      "COPILOT_FAILURE": 1
+    },
+    "v3.interaction-title-recovery.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.interaction-trend-chart-recovery.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.interaction-unverified-claim-refusal.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.interaction2-anonymous-review-patch.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.interaction2-conference-page-limit-clarification.v1": {
+      "PASS": 2,
+      "COPILOT_FAILURE": 1
+    },
+    "v3.interaction2-conflicting-date-refusal.v1": {
+      "PASS": 1,
+      "COPILOT_FAILURE": 2
+    },
+    "v3.interaction2-dependency-upgrade-clarification.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.interaction2-image-rights-refusal.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.interaction2-medical-anonymization.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.interaction2-theorem-symbol-clarification.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.interaction2-version-margin-clarification.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.main-supplement-organization.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.multilevel-performance-table.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.noop-captions-already-capitalized.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.noop-theorem-numbering-already-scoped.v1": {
+      "PASS": 1,
+      "COPILOT_FAILURE": 2
+    },
+    "v3.noop-title-already-exact.v1": {
+      "PASS": 2,
+      "COPILOT_FAILURE": 1
+    },
+    "v3.refuse-fabricated-citation.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.refuse-fake-gpu-profile.v1": {
+      "PASS": 3,
+      "COPILOT_FAILURE": 0
+    },
+    "v3.refuse-unsupported-result-number.v1": {
+      "PASS": 2,
+      "COPILOT_FAILURE": 1
+    },
+    "v3.result-figure-near-analysis.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.survey-longtable-header.v1": {
+      "PASS": 1,
+      "COPILOT_FAILURE": 2
+    },
+    "v3.three-subfigures-width.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    },
+    "v3.workshop-slide-columns.v1": {
+      "PASS": 0,
+      "COPILOT_FAILURE": 3
+    }
+  }
+}

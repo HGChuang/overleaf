@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.interaction-title-recovery.v1-mtixtg0z",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_7be755ee",
+          "title": "Change the third section title from \"Approach\" to \"研究方法\", keeping its body unchanged.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 11,
+              "oldText": "\\section{Approach}\nThe third section is the requested chapter title. The fixed term federated learning remains here.",
+              "newText": "\\section{研究方法}\nThe third section is the requested chapter title. The fixed term federated learning remains here."
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

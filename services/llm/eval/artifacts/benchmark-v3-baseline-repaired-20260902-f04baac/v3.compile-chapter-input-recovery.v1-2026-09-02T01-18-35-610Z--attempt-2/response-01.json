@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.compile-chapter-input-recovery.v1-mtjeqp9i",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_52509cac",
+          "title": "Point \\\\input at the existing file chapters/chapter3.tex so the compile succeeds and the TOC/cross-references refresh without touching the chapter content.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 4,
+              "oldText": "\\input{chapters/chapter3-old}",
+              "newText": "\\input{chapters/chapter3}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

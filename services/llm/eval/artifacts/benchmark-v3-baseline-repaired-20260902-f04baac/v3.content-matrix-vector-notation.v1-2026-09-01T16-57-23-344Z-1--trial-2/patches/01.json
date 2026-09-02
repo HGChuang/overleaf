@@ -1,0 +1,8 @@
+[
+  {
+    "file": "macros.tex",
+    "line": 1,
+    "oldText": "\\newcommand{\\vect}[1]{\\vec{#1}}\n\\newcommand{\\mat}[1]{#1}\n\\newcommand{\\trans}{^{\\top}}",
+    "newText": "% Unified notation: bold for vectors and matrices, ^{\\top} for transpose.\n\\newcommand{\\vect}[1]{\\mathbf{#1}}\n\\newcommand{\\mat}[1]{\\mathbf{#1}}\n\\newcommand{\\trans}{^{\\top}}"
+  }
+]

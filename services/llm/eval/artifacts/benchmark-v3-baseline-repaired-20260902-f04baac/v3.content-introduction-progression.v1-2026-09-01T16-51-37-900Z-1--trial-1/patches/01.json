@@ -1,0 +1,8 @@
+[
+  {
+    "file": "main.tex",
+    "line": 5,
+    "oldText": "Background and motivation are described briefly. The research gap is not yet explicit. Our method uses a constrained encoder for traffic prediction. The contributions are: (1) a calibrated benchmark; (2) a robust encoder; (3) an open evaluation protocol. The method reaches 91.2\\% accuracy on the Metro test set \\cite{lee2021}.",
+    "newText": "% ---------- 1. 研究背景 ----------\n% TODO(作者): 请在下面补充研究背景与动机的具体内容（现有语句仅为占位，需作者撰写，助手不能代写）。\n% Background and motivation are described briefly.\n\n% ---------- 2. 现有问题 ----------\n% TODO(作者): 请在下面明确现有方法存在的问题与研究缺口（现有语句仅为占位，需作者撰写，助手不能代写）。\n% The research gap is not yet explicit.\n\n% ---------- 3. 本文方法 ----------\nOur method uses a constrained encoder for traffic prediction and reaches 91.2\\% accuracy on the Metro test set \\cite{lee2021}.\n\n% ---------- 4. 主要贡献 ----------\nThe contributions are: (1) a calibrated benchmark; (2) a robust encoder; (3) an open evaluation protocol."
+  }
+]

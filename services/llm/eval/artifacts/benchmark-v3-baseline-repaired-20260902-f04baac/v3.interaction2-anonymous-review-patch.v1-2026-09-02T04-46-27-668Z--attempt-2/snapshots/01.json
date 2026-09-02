@@ -1,0 +1,18 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{metadata}\n\\input{chapters/findings}\n\\end{document}\n"
+  },
+  {
+    "path": "metadata.tex",
+    "content": "\\title{A Study}\n\\author{Anonymous}\n% Acknowledgments removed for anonymous review; restore in the camera-ready version.\n"
+  },
+  {
+    "path": "chapters/findings.tex",
+    "content": "\\section{Findings}\nThe results use the public Atlas dataset and build on the prior study \\cite{our2023}.\n"
+  },
+  {
+    "path": "refs.bib",
+    "content": "@article{our2023,\n  title = {A public dataset study},\n  author = {Anonymous},\n  year = {2023}\n}\n"
+  }
+]

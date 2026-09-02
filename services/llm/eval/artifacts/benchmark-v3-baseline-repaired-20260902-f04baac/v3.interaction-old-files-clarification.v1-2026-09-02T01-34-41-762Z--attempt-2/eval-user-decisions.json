@@ -1,0 +1,11 @@
+[
+  {
+    "request_event_id": "evt_7cc9c35b-48f1-461d-bc5e-419fb2baed98",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "先不要应用这个改动。请先列出 old-notes 的所有引用位置，并确认是否有未合并记录；看完清单后我再确认是否删除。",
+    "termination_reason": "尚未核查引用和未合并内容。",
+    "patch_decision": "reject"
+  }
+]

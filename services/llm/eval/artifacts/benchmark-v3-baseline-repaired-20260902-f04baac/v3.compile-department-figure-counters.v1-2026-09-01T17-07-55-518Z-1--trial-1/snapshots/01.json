@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\newcounter{deptfigure}\n\\begin{document}\n\\input{departments/engineering}\n\\input{departments/annex}\n\\end{document}\n"
+  },
+  {
+    "path": "departments/engineering.tex",
+    "content": "\\section{Engineering}\n\\refstepcounter{deptfigure}\\label{fig:engineering}\n\\begin{center}Engineering architecture figure\\end{center}\n"
+  },
+  {
+    "path": "departments/annex.tex",
+    "content": "\\section{Annex}\n\\refstepcounter{deptfigure}\\label{fig:annex}\n\\begin{center}Annex workflow figure\\end{center}\n"
+  }
+]

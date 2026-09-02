@@ -1,0 +1,33 @@
+Using default settings from /overleaf/services/llm/config/settings.defaults.cjs
+Redis connected successfully
+{
+  "runId": "run_54cbf94a-4162-436f-a3bb-da62c07b05b2",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.compile-glossary-bibliography-recovery.v1-2026-09-01T17-10-16-307Z-1--trial-1",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.compile-glossary-bibliography-recovery.v1",
+  "caseFamilyId": "v3.compile-glossary-bibliography-recovery",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.compile-glossary-bibliography-recovery.v1--trial-1",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 14747,
+    "output": 3423,
+    "cacheRead": 27392,
+    "cacheWrite": 0,
+    "totalTokens": 45562
+  },
+  "toolCalls": {
+    "read_file": 4,
+    "todo_write": 2,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "patchCount": 1,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 2,
+  "initialWorkspaceHash": "986fe0cc1844ba0cab85bd8eab61c8d42abec08520b0ddd5d87623bcbd29e08c",
+  "finalWorkspaceHash": "24a9fe5675695322c9e2ed2c38ed9408d1a7d23aabcb4df8707cac88d04fb65d",
+  "wallMs": 33273
+}

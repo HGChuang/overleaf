@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.interaction-title-recovery.v1-mtjfwu09",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_e027affe",
+          "title": "Remove the ctex package line so the only remaining change is the third section title 研究方法.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\usepackage[UTF8]{ctex}\n\\begin{document}",
+              "newText": "\\documentclass{article}\n\\begin{document}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

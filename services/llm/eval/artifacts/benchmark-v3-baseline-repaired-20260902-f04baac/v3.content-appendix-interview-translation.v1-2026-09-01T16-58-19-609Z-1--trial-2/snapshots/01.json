@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{CJKutf8}\n\\begin{document}\n\\begin{CJK*}{UTF8}{gbsn}\n\\input{appendix}\n\\input{interview}\n\\end{CJK*}\n\\end{document}\n"
+  },
+  {
+    "path": "appendix.tex",
+    "content": "\\section{附录说明}\n设备校准说明为 X200 型号保留。\n"
+  },
+  {
+    "path": "interview.tex",
+    "content": "\\section{访谈问题}\n问题 1：该设备的使用便捷程度如何？\n\n选项：A. 非常困难；B. 困难；C. 一般；D. 容易；E. 非常容易。\n"
+  }
+]

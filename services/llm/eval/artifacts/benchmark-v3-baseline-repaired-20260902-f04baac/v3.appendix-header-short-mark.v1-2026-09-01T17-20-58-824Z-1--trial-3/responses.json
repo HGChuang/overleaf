@@ -1,0 +1,14 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 1,
+    "kind": "automatic_verification",
+    "text": "✅ 编译通过（errorCount = 0，无警告）。\n\n修复已完成并验证：\n\n- **页眉溢出已消除**：`appendix.tex` 中的 `\\markboth{...}{...}` 已改为简短版本 `Appendix: Reproducibility Measurements and Evidence`，页眉右栏（`\\leftmark`）显示短标题，不再溢出。\n- **正文标题保持完整**：`\\section{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}` 未改动，完整长标题仍显示在正文标题中。\n- **目录显示完整**：因为未使用 `\\section[短标题]{...}` 的可选参数，目录中的条目仍为完整标题。\n\n重新编译日志确认输出为 1 页 PDF，编译干净无错误。",
+    "hadPatch": false
+  }
+]

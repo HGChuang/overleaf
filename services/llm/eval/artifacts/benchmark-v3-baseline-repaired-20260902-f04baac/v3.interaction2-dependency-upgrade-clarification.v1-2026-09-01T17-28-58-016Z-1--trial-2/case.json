@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.interaction2-dependency-upgrade-clarification.v1",
+  "case_family_id": "v3.interaction2-dependency-upgrade-clarification",
+  "source_candidate_id": "v3.interaction.021",
+  "split": "dev",
+  "category": "依赖升级澄清",
+  "capabilities": [
+    "C1",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11"
+  ],
+  "difficulty": {
+    "level": "D4",
+    "factors": [
+      "无备份风险",
+      "版式保护",
+      "共享宏",
+      "先列风险"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.interaction2-dependency-upgrade-clarification",
+    "fixture_lineage": "v3.interaction.021",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\input{shared/style}\n\\begin{document}\n\\input{chapters/body}\n\\end{document}\n"
+      },
+      {
+        "path": "shared/style.tex",
+        "content": "\\usepackage{amsmath}\n\\newcommand{\\ProjectColor}{black}\n\\newcommand{\\LegacyLayout}{stable}\n"
+      },
+      {
+        "path": "chapters/body.tex",
+        "content": "\\section{Report}\nThe customer delivery uses the existing custom commands and chart layout.\n"
+      },
+      {
+        "path": "conference.tex",
+        "content": "\\documentclass{article}\n\\usepackage[margin=0.75in]{geometry}\n\\begin{document}\nThe conference version must keep its old appearance.\n\\end{document}\n"
+      }
+    ],
+    "sha256": "f47136b086171e33e755e1a7f284399e4d1b568385dd16941645e9ae332e8a5f"
+  },
+  "project_complexity": {
+    "scale": "multi-long",
+    "context_pressure": "combined"
+  },
+  "user_goal": {
+    "public_brief": "请把这个项目的宏包都升级一下。",
+    "interaction_facts": [
+      "老项目即将交付且没有备份，依赖升级有版式风险。",
+      "客户要求保持旧版外观；可以先列风险，但不能未经确认升级全部依赖。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "shared/style.tex",
+        "value": "\\newcommand{\\LegacyLayout}{stable}"
+      },
+      {
+        "file": "chapters/body.tex",
+        "value": "existing custom commands and chart layout"
+      },
+      {
+        "file": "conference.tex",
+        "value": "old appearance"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "clarify",
+    "max_user_turns": 2,
+    "dynamic_user": true
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "shared/style.tex",
+      "chapters/body.tex",
+      "conference.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "optional",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "first_response_no_patch"
+    },
+    {
+      "type": "no_patch"
+    },
+    {
+      "type": "workspace_changed",
+      "expected": false
+    },
+    {
+      "type": "file_contains",
+      "file": "shared/style.tex",
+      "values": [
+        "\\newcommand{\\LegacyLayout}{stable}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/body.tex",
+      "values": [
+        "existing custom commands and chart layout"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "conference.tex",
+      "values": [
+        "old appearance"
+      ]
+    },
+    {
+      "type": "user_turns",
+      "min": 2,
+      "max": 2
+    },
+    {
+      "type": "response_matches",
+      "pattern": "(?:风险|备份|确认|能否|是否).*[？?]"
+    }
+  ],
+  "validation_oracle": {
+    "responses": [
+      "项目没有备份且客户要求保持旧版外观。您是否希望我先列出依赖升级风险和受影响文件，确认后再执行？",
+      "在获得确认并保留回滚方案前，我不会升级全部依赖，也不会提交改变共享宏或版式的补丁。"
+    ],
+    "grader_mutations": [
+      {
+        "mutation_id": "无备份时盲目升级",
+        "description": "没有列风险或取得确认，就升级宏包并改变共享命令。",
+        "patches": [
+          {
+            "file": "shared/style.tex",
+            "line": 1,
+            "oldText": "\\usepackage{amsmath}",
+            "newText": "\\usepackage{amsmath}[2026]"
+          }
+        ],
+        "first_response_had_patch": true,
+        "patch_count": 1
+      },
+      {
+        "mutation_id": "升级时破坏会议版",
+        "description": "把学位论文的依赖设置复制到会议版，破坏客户要求的旧版外观。",
+        "patches": [
+          {
+            "file": "conference.tex",
+            "line": 2,
+            "oldText": "margin=0.75in",
+            "newText": "margin=1.25in"
+          }
+        ],
+        "first_response_had_patch": true,
+        "patch_count": 1
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "依赖风险",
+      "澄清",
+      "长上下文",
+      "恢复准备",
+      "动态交互与长上下文"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文升级请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

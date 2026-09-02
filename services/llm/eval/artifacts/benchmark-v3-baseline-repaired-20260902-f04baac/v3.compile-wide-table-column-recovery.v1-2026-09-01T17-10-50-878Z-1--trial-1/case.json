@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.compile-wide-table-column-recovery.v1",
+  "case_family_id": "v3.compile-wide-table-column-recovery",
+  "source_candidate_id": "v3.compile.024",
+  "split": "dev",
+  "category": "表格编译修复",
+  "capabilities": [
+    "C1",
+    "C4",
+    "C5",
+    "C6",
+    "C11"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "列数不一致",
+      "跨文件表格",
+      "保留备注列"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.compile-wide-table-column-recovery",
+    "fixture_lineage": "v3.compile.024",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\input{tables/market}\n\\end{document}\n"
+      },
+      {
+        "path": "tables/market.tex",
+        "content": "\\section{Market data}\n\\begin{tabular}{ll}\n\\multicolumn{3}{l}{Dataset} \\\\\nName & Score & Note \\\\\nAtlas & 91.2 & Stable \\\\\n\\end{tabular}\n"
+      }
+    ],
+    "sha256": "588f28a8737f90a3ef7484867312442f0cf49a57cf9c49e5948455e4b09c226e"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "many-files"
+  },
+  "user_goal": {
+    "public_brief": "市场分析报告中的长表突然编译失败，错误好像和列数有关。请定位具体表格、修复列定义，并确认项目能够正常编译。",
+    "interaction_facts": [
+      "第三列备注是新增数据，表头的跨列单元格和小数数据都必须保留，不能删列或改成图片。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "tables/market.tex",
+    "compile_status": "failure",
+    "protected_invariants": [
+      {
+        "file": "main.tex",
+        "value": "\\input{tables/market}"
+      },
+      {
+        "file": "tables/market.tex",
+        "value": "\\multicolumn{3}{l}{Dataset}"
+      },
+      {
+        "file": "tables/market.tex",
+        "value": "Atlas & 91.2 & Stable"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "tables/market.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "repair-loop",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "tables/market.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\input{tables/market}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "tables/market.tex",
+      "values": [
+        "\\multicolumn{3}{l}{Dataset}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "tables/market.tex",
+      "values": [
+        "Atlas & 91.2 & Stable"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "tables/market.tex",
+      "values": [
+        "\\begin{tabular}{lll}"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "tables/market.tex",
+      "values": [
+        "\\begin{tabular}{ll}"
+      ]
+    },
+    {
+      "type": "file_unchanged",
+      "file": "main.tex"
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "tables/market.tex",
+        "line": 2,
+        "oldText": "\\begin{tabular}{ll}",
+        "newText": "\\begin{tabular}{lll}"
+      }
+    ],
+    "response": "已将市场表格列定义与三列数据及跨列表头对齐，保留备注列并完成编译验证。",
+    "grader_mutations": [
+      {
+        "mutation_id": "表格列数-错误列定义",
+        "description": "改成了四列而不是与现有三列数据一致的列定义。",
+        "patches": [
+          {
+            "file": "tables/market.tex",
+            "line": 2,
+            "oldText": "\\begin{tabular}{ll}",
+            "newText": "\\begin{tabular}{llll}"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "success",
+          "errorCount": 0,
+          "warningCount": 0
+        }
+      },
+      {
+        "mutation_id": "表格列数-修改数据",
+        "description": "删除备注列中的数据来回避列数错误，破坏了受保护数据。",
+        "patches": [
+          {
+            "file": "tables/market.tex",
+            "line": 5,
+            "oldText": "Atlas & 91.2 & Stable",
+            "newText": "Atlas & 91.2"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "failure",
+          "errorCount": 1,
+          "warningCount": 0
+        }
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "表格",
+      "列数",
+      "数据保护",
+      "编译引用与文献"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文故障报告",
+    "provenance": "llm-generated-user-seed"
+  }
+}

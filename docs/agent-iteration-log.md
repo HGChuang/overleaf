@@ -1594,3 +1594,61 @@ Benchmark 的用户授权、expected action、validation oracle、dynamic user f
 2. 再运行完整 73×3 baseline，旧结果保留但不混合统计；
 3. 对布局 family 补渲染级人工 adjudication，确认后再决定 grader；
 4. 基于修复后的稳定真实失败建立 regression set，并另建未调试 hidden holdout。
+
+## Iteration 21 — 运行 repaired-contract 完整 baseline
+
+日期：2026-09-02
+
+### 本轮研究的问题
+
+在 Iteration 20 修复 benchmark 测量合同后，运行完整 73 × 3 baseline，建立可与后续 Agent 实验比较的新基线。
+
+### Observation / Evidence
+
+* 原始 attempts 282 个，logical trials 219 个。
+* 159 个静态 logical trial 全部一次完成。
+* 60 个动态 logical trial 首轮因无 bridge 记录为 infrastructure failure；后续均由独立 `eval_user` session 补齐。
+* 2 次 `eval_user` 输出非 JSON、1 次 readline closed 也保留为 infrastructure attempt，并分别重跑。
+* 最终 219 个 logical trial 均有 `PASS` 或 `COPILOT_FAILURE`，canonical `INFRA_FAILURE=0`。
+
+### Root Cause
+
+首轮动态基础设施失败来自 scheduler 未提供 `EVAL_USER_BRIDGE_COMMAND`；后续少数失败来自外部 `eval_user` 输出协议不严格或 readline 生命周期问题。均不属于 Copilot 能力结果。
+
+### Changes
+
+* 完成 `benchmark-v3-baseline-repaired-20260902-f04baac` 全量评测；
+* 保留全部 63 个 infrastructure attempts，不混入能力分母；
+* 新增 canonical summary 与完整 baseline 报告；
+* 未修改 Copilot prompt、model/config、tool schema、Agent loop、benchmark case 或 grader。
+
+### Benchmark / Metric Before vs After
+
+| Metric | Old contract | Repaired contract | Delta |
+|---|---:|---:|---:|
+| Overall PASS | 66 / 219 | 75 / 219 | +9 |
+| Overall rate | 30.1% | 34.2% | +4.1 pp |
+| Static PASS | 51 / 159 | 61 / 159 | +10 |
+| Dynamic PASS | 15 / 60 | 14 / 60 | -1 |
+
+Token 总量 9,018,725；wall time 17,495,524 ms；tool calls 1,547；accepted patches 170；rejected patches 23。
+
+### Failure Cases / Regression
+
+18 个 case family 3/3 通过，41 个 case family 0/3 通过。最高频失败检查为 `file_contains`（150 次 / 41 case）、`file_not_contains`（40 / 18）、`patch_files`（37 / 15）。
+
+动态 PASS 从 15 到 14，出现观测性下降；`v3.interaction-unverified-claim-refusal.v1` 从 3/3 降到 0/3，`v3.noop-theorem-numbering-already-scoped.v1` 从 3/3 降到 1/3。由于 benchmark contract 已变化，本轮不把它们判定为 Copilot regression，只列为优先复核对象。
+
+### Lessons
+
+* 动态 baseline 必须把 user simulator 的协议输出严格限制为 JSON；
+* infrastructure attempts 与能力 attempts 必须按 logical trial 分开保留；
+* contract 修复后的分数不能与旧合同分数直接当作 Agent A/B 比较；
+* 动态 case 的重复稳定性低于静态 case，需要 case-level trace 审计后再优化 Agent。
+
+### Recommended next steps
+
+1. 审计 `v3.interaction-unverified-claim-refusal.v1` 与 `v3.noop-theorem-numbering-already-scoped.v1` 的 repaired-contract 回归；
+2. 抽样复核 `file_contains` 高频失败，区分 context target、patch content 与 grader false negative；
+3. 为动态 `eval_user` 增加 schema-constrained output 与 protocol regression；
+4. 建立不参与调试的 hidden holdout 后再做 Copilot 行为修改。

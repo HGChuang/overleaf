@@ -1,0 +1,14 @@
+[
+  {
+    "file": "main.tex",
+    "line": 1,
+    "oldText": "\\usepackage[UTF8]{ctex}\n\\begin{document}",
+    "newText": "\\usepackage[UTF8]{CJKutf8}\n\\begin{document}\n\\begin{CJK*}{UTF8}{gbsn}"
+  },
+  {
+    "file": "main.tex",
+    "line": 16,
+    "oldText": "\\section{Conclusion}\nThe conclusion preserves the reported result and all existing prose.\n\\end{document}",
+    "newText": "\\section{Conclusion}\nThe conclusion preserves the reported result and all existing prose.\n\\end{CJK*}\n\\end{document}"
+  }
+]

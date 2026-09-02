@@ -1,0 +1,22 @@
+{
+  "status": "failure",
+  "errorCount": 3,
+  "errors": [
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: File `chapters/chapter3-old.tex' not found."
+    },
+    {
+      "file": null,
+      "line": 4,
+      "message": "Emergency stop."
+    },
+    {
+      "file": null,
+      "line": null,
+      "message": "==> Fatal error occurred, no output PDF file produced!"
+    }
+  ],
+  "warningCount": 0
+}

@@ -1,0 +1,41 @@
+Using default settings from /overleaf/services/llm/config/settings.defaults.cjs
+Redis connected successfully
+__OVERLEAF_EVAL_PROTOCOL_V1__{"protocol":"overleaf-eval-user/v1","type":"patch_decision_required","case_id":"v3.result-figure-near-analysis.v1","user_turn":1,"copilot_response":"Proposed 2 changes — review the inline preview, then Accept or Reject.","patch_preview":[{"file":"sections/analysis.tex","line":3,"oldText":"\\begin{figure}[t]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}","newText":"\\begin{figure}[!ht]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}"},{"file":"sections/analysis.tex","line":10,"oldText":"\\begin{figure}[b]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Ablation results}","newText":"\\begin{figure}[!ht]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Ablation results}"}],"workspace_hash":"fb857f7e917a55c84fc825fb4a047dbf8a9d59b21846e51d1f6b4eab81e42352"}
+{
+  "runId": "run_49c99928-735b-4ad2-b853-54d2e228bf7b",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.result-figure-near-analysis.v1-2026-09-01T17-18-43-954Z-1--trial-3",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.result-figure-near-analysis.v1",
+  "caseFamilyId": "v3.result-figure-near-analysis",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.result-figure-near-analysis.v1--trial-3",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "runner",
+    "failure_phase": "runner",
+    "error_type": "RUNNER_EXECUTION_ERROR",
+    "error_source": "evaluation_harness",
+    "error_message": "readline was closed",
+    "retryable": false,
+    "related_event_id": "evt_aa9328bb-454d-46a8-943e-892f7ac1ef46"
+  },
+  "usage": {
+    "input": 703,
+    "output": 2771,
+    "cacheRead": 12288,
+    "cacheWrite": 0,
+    "totalTokens": 15762
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 2,
+    "submit_patch": 1
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 1,
+  "initialWorkspaceHash": "fb857f7e917a55c84fc825fb4a047dbf8a9d59b21846e51d1f6b4eab81e42352",
+  "finalWorkspaceHash": "fb857f7e917a55c84fc825fb4a047dbf8a9d59b21846e51d1f6b4eab81e42352",
+  "wallMs": 23441
+}

@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.compile-nested-block-recovery.v1",
+  "case_family_id": "v3.compile-nested-block-recovery",
+  "source_candidate_id": "v3.compile.004",
+  "split": "dev",
+  "category": "幻灯片环境修复",
+  "capabilities": [
+    "C1",
+    "C4",
+    "C5",
+    "C11"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "嵌套环境顺序",
+      "跨文件页面定位",
+      "保留主题内容"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.compile-nested-block-recovery",
+    "fixture_lineage": "v3.compile.004",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\input{theme}\n\\begin{document}\n\\input{slides/page-seven}\n\\end{document}\n"
+      },
+      {
+        "path": "theme.tex",
+        "content": "\\newenvironment{slideblock}{\\par\\noindent\\begin{minipage}{0.9\\linewidth}}{\\end{minipage}\\par}\n"
+      },
+      {
+        "path": "slides/page-seven.tex",
+        "content": "\\section{Evaluation}\n\\begin{slideblock}\n\\begin{itemize}\n\\item Accuracy remains 91 percent.\n\\item Latency remains 12 ms.\n\\end{slideblock}\n\\end{itemize}\n"
+      }
+    ],
+    "sha256": "4e5e27bcf6f8cef111995ab8d91679c72d3f98a82a6b391b8966de23536e2264"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "many-files"
+  },
+  "user_goal": {
+    "public_brief": "我的组会幻灯片编译到中间就停了，请指出是哪一页出了问题，并尽量保留主题样式。",
+    "interaction_facts": [
+      "第七页同时包含 slideblock 和 itemize，当前错误是结束顺序颠倒；主题、颜色语义和两项数据必须保留。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "slides/page-seven.tex",
+    "compile_status": "failure",
+    "protected_invariants": [
+      {
+        "file": "main.tex",
+        "value": "\\input{slides/page-seven}"
+      },
+      {
+        "file": "theme.tex",
+        "value": "\\newenvironment{slideblock}"
+      },
+      {
+        "file": "slides/page-seven.tex",
+        "value": "Accuracy remains 91 percent."
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "theme.tex",
+      "slides/page-seven.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "repair-loop",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "slides/page-seven.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\input{slides/page-seven}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "theme.tex",
+      "values": [
+        "\\newenvironment{slideblock}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "slides/page-seven.tex",
+      "values": [
+        "Accuracy remains 91 percent.",
+        "Latency remains 12 ms."
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "slides/page-seven.tex",
+      "values": [
+        "\\end{itemize}\n\\end{slideblock}"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "slides/page-seven.tex",
+      "values": [
+        "\\end{slideblock}\n\\end{itemize}"
+      ]
+    },
+    {
+      "type": "file_unchanged",
+      "file": "main.tex"
+    },
+    {
+      "type": "file_unchanged",
+      "file": "theme.tex"
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "slides/page-seven.tex",
+        "line": 5,
+        "oldText": "\\end{slideblock}\n\\end{itemize}",
+        "newText": "\\end{itemize}\n\\end{slideblock}"
+      }
+    ],
+    "response": "已按嵌套顺序闭合第七页的列表和内容块，保留主题数据并完成编译验证。",
+    "grader_mutations": [
+      {
+        "mutation_id": "嵌套环境-只交换一端",
+        "description": "只交换了一个结束命令，另一个环境仍然嵌套错误。",
+        "patches": [
+          {
+            "file": "slides/page-seven.tex",
+            "line": 5,
+            "oldText": "\\end{slideblock}",
+            "newText": "\\end{itemize}"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "failure",
+          "errorCount": 1,
+          "warningCount": 0
+        }
+      },
+      {
+        "mutation_id": "嵌套环境-删除数据项",
+        "description": "通过删除一项实验数据回避环境错误，破坏了受保护内容。",
+        "patches": [
+          {
+            "file": "slides/page-seven.tex",
+            "line": 4,
+            "oldText": "Accuracy remains 91 percent.",
+            "newText": "Accuracy remains 90 percent."
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "success",
+          "errorCount": 0,
+          "warningCount": 0
+        }
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "幻灯片",
+      "嵌套环境",
+      "编译",
+      "编译引用与文献"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文故障报告",
+    "provenance": "llm-generated-user-seed"
+  }
+}

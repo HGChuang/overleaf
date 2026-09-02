@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.compile-score-counter-collision.v1",
+  "case_family_id": "v3.compile-score-counter-collision",
+  "source_candidate_id": "v3.compile.031",
+  "split": "dev",
+  "category": "谱例编号修复",
+  "capabilities": [
+    "C1",
+    "C4",
+    "C5",
+    "C6",
+    "C11"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "自定义计数器冲突",
+      "附件独立编号",
+      "跨文件标签"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.compile-score-counter-collision",
+    "fixture_lineage": "v3.compile.031",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\input{scores/main-score}\n\\appendix\n\\input{scores/annex-score}\n\\end{document}\n"
+      },
+      {
+        "path": "scores/main-score.tex",
+        "content": "\\section{Main score}\n\\newcounter{scorefigure}\n\\refstepcounter{scorefigure}\\label{fig:main-score}\n\\begin{center}Main score example\\end{center}\n"
+      },
+      {
+        "path": "scores/annex-score.tex",
+        "content": "\\section{Annex score}\n\\newcounter{scorefigure}\n\\refstepcounter{scorefigure}\\label{fig:main-score}\n\\begin{center}Annex score example\\end{center}\n"
+      }
+    ],
+    "sha256": "f8676aa4368080f73a002e4bacd081ea136ae0410819838cfeb627426beeca11"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "repeated-anchors"
+  },
+  "user_goal": {
+    "public_brief": "谱例本身能显示，但正文引用和后面的编号乱了。请帮我修复标签和计数器问题。",
+    "interaction_facts": [
+      "主谱例和附件谱例分别位于两个文件；附件需要独立计数器和标签，两个谱例的内容与图题必须保留。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "scores/annex-score.tex",
+    "compile_status": "failure",
+    "protected_invariants": [
+      {
+        "file": "main.tex",
+        "value": "\\input{scores/main-score}"
+      },
+      {
+        "file": "scores/main-score.tex",
+        "value": "Main score example"
+      },
+      {
+        "file": "scores/annex-score.tex",
+        "value": "Annex score example"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "scores/main-score.tex",
+      "scores/annex-score.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "repair-loop",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "scores/annex-score.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\input{scores/main-score}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "scores/main-score.tex",
+      "values": [
+        "Main score example"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "scores/annex-score.tex",
+      "values": [
+        "Annex score example"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "scores/annex-score.tex",
+      "values": [
+        "\\newcounter{annexscorefigure}",
+        "\\refstepcounter{annexscorefigure}",
+        "\\label{fig:annex-score}"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "scores/annex-score.tex",
+      "values": [
+        "\\newcounter{scorefigure}",
+        "\\refstepcounter{scorefigure}",
+        "\\label{fig:main-score}"
+      ]
+    },
+    {
+      "type": "file_unchanged",
+      "file": "main.tex"
+    },
+    {
+      "type": "file_unchanged",
+      "file": "scores/main-score.tex"
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "scores/annex-score.tex",
+        "line": 2,
+        "oldText": "\\newcounter{scorefigure}",
+        "newText": "\\newcounter{annexscorefigure}"
+      },
+      {
+        "file": "scores/annex-score.tex",
+        "line": 3,
+        "oldText": "\\refstepcounter{scorefigure}",
+        "newText": "\\refstepcounter{annexscorefigure}"
+      },
+      {
+        "file": "scores/annex-score.tex",
+        "line": 3,
+        "oldText": "\\label{fig:main-score}",
+        "newText": "\\label{fig:annex-score}"
+      }
+    ],
+    "response": "已为附件谱例拆分计数器和标签，保留主谱例及附件内容并完成编译验证。",
+    "grader_mutations": [
+      {
+        "mutation_id": "谱例计数器-只改计数器",
+        "description": "只改了附件计数器，标签仍与主谱例冲突。",
+        "patches": [
+          {
+            "file": "scores/annex-score.tex",
+            "line": 2,
+            "oldText": "\\newcounter{scorefigure}",
+            "newText": "\\newcounter{annexscorefigure}"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "success",
+          "errorCount": 0,
+          "warningCount": 0
+        }
+      },
+      {
+        "mutation_id": "谱例计数器-修改主谱例",
+        "description": "修改主谱例内容来回避附件冲突，破坏了受保护文件。",
+        "patches": [
+          {
+            "file": "scores/main-score.tex",
+            "line": 4,
+            "oldText": "Main score example",
+            "newText": "Annex score example"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "success",
+          "errorCount": 0,
+          "warningCount": 0
+        }
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "谱例",
+      "计数器",
+      "标签",
+      "编译引用与文献"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文故障报告",
+    "provenance": "llm-generated-user-seed"
+  }
+}

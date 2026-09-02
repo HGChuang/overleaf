@@ -1,0 +1,14 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 1,
+    "kind": "automatic_verification",
+    "text": "✅ 编译通过（`errorCount: 0`，无警告）。\n\n修复确认：`chapters/ch3.tex` 第 7 行的 `\\end{lemma}` 已改为 `\\end{proof}`，`proof` 环境正确闭合，项目现已正常编译生成 PDF。",
+    "hadPatch": false
+  }
+]

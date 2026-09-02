@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{sections/method}\n\\appendix\n\\input{appendix/algorithm}\n\\end{document}\n"
+  },
+  {
+    "path": "sections/method.tex",
+    "content": "\\section{Method}\nThe normalization procedure is detailed in Appendix~\\ref{alg:appendix-normalize}.\n"
+  },
+  {
+    "path": "appendix/algorithm.tex",
+    "content": "\\section{Normalization pseudocode}\\label{alg:appendix-normalize}\nNormalize each feature using the training statistics.\n"
+  }
+]

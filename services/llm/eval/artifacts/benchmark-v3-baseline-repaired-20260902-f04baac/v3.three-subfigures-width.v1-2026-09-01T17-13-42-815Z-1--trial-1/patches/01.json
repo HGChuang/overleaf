@@ -1,0 +1,8 @@
+[
+  {
+    "file": "sections/methods.tex",
+    "line": 3,
+    "oldText": "\\centering\n\\subcaptionbox{Subfigure A: input}{\\fbox{\\rule{0pt}{2cm}\\rule{0.38\\linewidth}{0pt}}}\n\\subcaptionbox{Subfigure B: encoder}{\\fbox{\\rule{0pt}{2cm}\\rule{0.38\\linewidth}{0pt}}}\n\\subcaptionbox{Subfigure C: output}{\\fbox{\\rule{0pt}{2cm}\\rule{0.38\\linewidth}{0pt}}}\n\\caption{Method pipeline}",
+    "newText": "\\centering\n\\begin{subfigure}{0.3\\linewidth}\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.95\\linewidth}{0pt}}\n\\caption{Subfigure A: input}\n\\end{subfigure}\\hfill\n\\begin{subfigure}{0.3\\linewidth}\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.95\\linewidth}{0pt}}\n\\caption{Subfigure B: encoder}\n\\end{subfigure}\\hfill\n\\begin{subfigure}{0.3\\linewidth}\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.95\\linewidth}{0pt}}\n\\caption{Subfigure C: output}\n\\end{subfigure}\n\\caption{Method pipeline}"
+  }
+]

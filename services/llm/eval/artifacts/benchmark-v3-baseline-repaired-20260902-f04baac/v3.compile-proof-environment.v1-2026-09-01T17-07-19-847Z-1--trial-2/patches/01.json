@@ -1,0 +1,8 @@
+[
+  {
+    "file": "theorem-settings.tex",
+    "line": 2,
+    "oldText": "\\newenvironment{proofx}{\\par\\noindent Proof: }{\\hfill$\\square$\\par}",
+    "newText": "\\newenvironment{proof}{\\par\\noindent Proof: }{\\hfill$\\square$\\par}"
+  }
+]

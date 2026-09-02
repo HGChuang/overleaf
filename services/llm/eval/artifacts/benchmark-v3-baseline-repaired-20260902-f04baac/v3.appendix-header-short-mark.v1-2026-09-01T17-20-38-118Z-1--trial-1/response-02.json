@@ -1,0 +1,9 @@
+{
+  "conversationId": "v3.appendix-header-short-mark.v1-mtixo1kk",
+  "message": {
+    "role": "assistant",
+    "content": "编译已通过：`errorCount = 0`，无警告，输出正常生成（1 页 PDF）。\n\n修复成功说明：\n- **页眉**：`appendix.tex` 中的 `\\markboth` 现在使用短标题 `Appendix: Reproducibility Measurements`，运行页眉不再因长标题溢出。\n- **正文标题**：`\\section{...}` 保持完整长标题，显示不变。\n- **目录**：`\\section` 未使用可选参数，因此目录条目仍为完整长标题。\n\n如果你希望页眉用其他短标题（例如只保留 “Supplementary Evidence” 或加章节号 “Appendix A: …”），告诉我即可调整。",
+    "blocks": []
+  },
+  "suggestedActions": []
+}

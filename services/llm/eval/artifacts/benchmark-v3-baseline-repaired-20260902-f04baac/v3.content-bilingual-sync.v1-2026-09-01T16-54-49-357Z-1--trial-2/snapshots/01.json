@@ -1,0 +1,26 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{CJKutf8}\n\\begin{document}\n\\begin{CJK*}{UTF8}{gbsn}\n\\input{zh/intro}\n\\input{en/intro}\n\\input{zh/method}\n\\input{en/method}\n\\input{refs}\n\\end{CJK*}\n\\end{document}\n"
+  },
+  {
+    "path": "zh/intro.tex",
+    "content": "\\section{中文引言}\n本报告将社会韧性定义为社区网络在冲击后适应的能力。\n"
+  },
+  {
+    "path": "en/intro.tex",
+    "content": "\\section{English Introduction}\nThe report defines social resilience as the capacity of a community network to adapt after a shock.\n"
+  },
+  {
+    "path": "zh/method.tex",
+    "content": "\\section{中文方法}\n我们使用相同的网络指标来衡量社会韧性。\n"
+  },
+  {
+    "path": "en/method.tex",
+    "content": "\\section{English Method}\nWe measure social resilience with the same network indicators.\n"
+  },
+  {
+    "path": "refs.tex",
+    "content": "\\begin{thebibliography}{1}\n\\bibitem{chen2023} Chen, 2023.\n\\end{thebibliography}\n"
+  }
+]

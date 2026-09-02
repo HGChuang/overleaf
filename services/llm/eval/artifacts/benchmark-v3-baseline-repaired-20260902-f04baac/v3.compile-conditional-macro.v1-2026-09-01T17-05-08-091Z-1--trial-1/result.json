@@ -1,0 +1,31 @@
+{
+  "runId": "run_59de1b03-6b31-47e3-9462-d428ee3b04a1",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.compile-conditional-macro.v1-2026-09-01T17-05-08-091Z-1--trial-1",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.compile-conditional-macro.v1",
+  "caseFamilyId": "v3.compile-conditional-macro",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.compile-conditional-macro.v1--trial-1",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 12772,
+    "output": 2314,
+    "cacheRead": 16384,
+    "cacheWrite": 0,
+    "totalTokens": 31470
+  },
+  "toolCalls": {
+    "read_file": 3,
+    "search_project": 2,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "patchCount": 1,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 2,
+  "initialWorkspaceHash": "78de6db57eead0f508f25f6c10703eb69369d21c15670a74a6d703bbf972e526",
+  "finalWorkspaceHash": "734bb92a8c41eeedd1543ec5f5e7900472b4714c523e02412c26d1b2c29d42ef",
+  "wallMs": 24234
+}

@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.interaction-title-recovery.v1-mtjfm8bv",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_81a64aeb",
+          "title": "在导言区添加 ctex 宏包以支持中文（研究方法标题）在 pdfLaTeX 下编译。",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\begin{document}",
+              "newText": "\\documentclass{article}\n\\usepackage[UTF8]{ctex}\n\\begin{document}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

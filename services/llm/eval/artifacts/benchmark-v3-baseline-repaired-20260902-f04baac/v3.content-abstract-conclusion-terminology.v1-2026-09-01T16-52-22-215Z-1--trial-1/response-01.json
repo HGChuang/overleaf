@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.content-abstract-conclusion-terminology.v1-mtiwnp03",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_08443133",
+          "title": "统一结论中的模型术语为摘要所用的 \"boundary-aware\"，保持 87.4% Dice 数字不变。",
+          "hunks": [
+            {
+              "file": "sections/conclusion.tex",
+              "line": 2,
+              "oldText": "The edge-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.",
+              "newText": "The boundary-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations."
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "run_id": "run_a8e4451e-d0df-4b55-9af9-b0af879ce9b3",
+  "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "case_id": "v3.noop-title-already-exact.v1",
+  "case_family_id": "v3.noop-title-already-exact",
+  "trial_id": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.noop-title-already-exact.v1--trial-2",
+  "split": "dev",
+  "git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "prompt_hash": "4dfcc76a739a86ccf1b9868ec872345ced1bfc267936f61d80ea781bd2e5d73b",
+  "benchmark_hash": "da4d840828b84edd50a810bb7868cbdfd6fdb0235d7abc0a6f925c7b184a9690",
+  "fixture_hash": "0dafa16f1fb9f4736f1bda05c4b1c7e40d36aeec3879767d810cc2b74a085aca",
+  "initial_workspace_hash": "0dafa16f1fb9f4736f1bda05c4b1c7e40d36aeec3879767d810cc2b74a085aca",
+  "eval_user_session_id": "eval-user-v3.noop-title-already-exact.v1",
+  "started_at": "2026-09-01T17:30:21.847Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "ended_at": "2026-09-01T17:30:26.655Z",
+  "status": "PASS",
+  "failure": null,
+  "final_workspace_hash": "0dafa16f1fb9f4736f1bda05c4b1c7e40d36aeec3879767d810cc2b74a085aca"
+}

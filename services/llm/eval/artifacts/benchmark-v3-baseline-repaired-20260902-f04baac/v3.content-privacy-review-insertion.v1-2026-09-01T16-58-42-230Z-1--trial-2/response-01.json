@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.content-privacy-review-insertion.v1-mtiwvu81",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_b0d7cd8d",
+          "title": "在相关工作的 INSERT 标记处插入一段可穿戴设备隐私风险综述，引用文献库中的三篇论文（park2021、liu2022、gao2023）。",
+          "hunks": [
+            {
+              "file": "related.tex",
+              "line": 3,
+              "oldText": "% INSERT PRIVACY REVIEW HERE",
+              "newText": "Wearable devices continuously capture sensitive health and behavioral data, which raises significant privacy concerns for users. Prior work has examined these privacy risks in wearable sensing \\cite{park2021,liu2022,gao2023}, highlighting the need for privacy-preserving designs in continuous health monitoring."
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

@@ -1,0 +1,40 @@
+Using default settings from /overleaf/services/llm/config/settings.defaults.cjs
+Redis connected successfully
+__OVERLEAF_EVAL_PROTOCOL_V1__{"protocol":"overleaf-eval-user/v1","type":"patch_decision_required","case_id":"v3.interaction-title-recovery.v1","user_turn":1,"copilot_response":"Proposed 1 change — review the inline preview, then Accept or Reject.","patch_preview":[{"file":"main.tex","line":12,"oldText":"\\section{Approach}\nThe third section is the requested chapter title. The fixed term federated learning remains here.","newText":"\\section{研究方法}\nThe third section is the requested chapter title. The fixed term federated learning remains here."}],"workspace_hash":"3e6351b148a8e321f156f361fc789d55f28b2e7f6f5ad13ae6f79bf69dfe2f6e"}
+{
+  "runId": "run_8de1449a-b4ac-418d-a8e0-de0052661902",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.interaction-title-recovery.v1-2026-09-01T17-24-41-901Z-1--trial-2",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.interaction-title-recovery.v1",
+  "caseFamilyId": "v3.interaction-title-recovery",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.interaction-title-recovery.v1--trial-2",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "runner",
+    "failure_phase": "runner",
+    "error_type": "RUNNER_EXECUTION_ERROR",
+    "error_source": "evaluation_harness",
+    "error_message": "readline was closed",
+    "retryable": false,
+    "related_event_id": "evt_90075756-f536-4476-8e28-0d6592054e4d"
+  },
+  "usage": {
+    "input": 306,
+    "output": 465,
+    "cacheRead": 8192,
+    "cacheWrite": 0,
+    "totalTokens": 8963
+  },
+  "toolCalls": {
+    "read_file": 1,
+    "submit_patch": 1
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 1,
+  "initialWorkspaceHash": "3e6351b148a8e321f156f361fc789d55f28b2e7f6f5ad13ae6f79bf69dfe2f6e",
+  "finalWorkspaceHash": "3e6351b148a8e321f156f361fc789d55f28b2e7f6f5ad13ae6f79bf69dfe2f6e",
+  "wallMs": 6956
+}

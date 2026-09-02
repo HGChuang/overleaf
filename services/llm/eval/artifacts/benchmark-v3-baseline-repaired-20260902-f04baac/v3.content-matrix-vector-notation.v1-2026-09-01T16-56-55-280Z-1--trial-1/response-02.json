@@ -1,0 +1,9 @@
+{
+  "conversationId": "v3.content-matrix-vector-notation.v1-mtiwtjp7",
+  "message": {
+    "role": "assistant",
+    "content": "编译已通过，`errorCount = 0`、`warningCount = 0`，修复成功。\n\n**本次变更确认：**\n- `macros.tex` 第 2 行：`\\newcommand{\\mat}[1]{#1}` → `\\newcommand{\\mat}[1]{\\mathbf{#1}}`，矩阵（`A`、`Q`）现在以粗体渲染，与向量的 `\\vec{…}`（箭头）和转置的 `^{\\top}` 形成统一的记号体系。\n- 公式引用（`model.tex` 的递推式与能量式、`theory.tex` 的能量式与递推式引用）原本已一致，未做任何改动，递推关系 `x_{t+1} = A x_t + u_t` 保持不变。\n- 全文成功编译为 1 页 PDF，无错误、无警告。",
+    "blocks": []
+  },
+  "suggestedActions": []
+}

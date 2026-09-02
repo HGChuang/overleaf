@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{subcaption}\n\\begin{document}\n\\input{figures/experiment-a}\n\\input{figures/experiment-b}\n\\end{document}\n"
+  },
+  {
+    "path": "figures/experiment-a.tex",
+    "content": "\\section{Experiment A}\n\\begin{figure}[htbp]\n\\centering\n\\begin{subfigure}{0.45\\textwidth}\n\\centering\n\\fbox{Panel A}\n\\caption{Panel A}\n\\label{fig:panel-a}\n\\end{subfigure}\n\\caption{Experiment A result}\n\\end{figure}\n"
+  },
+  {
+    "path": "figures/experiment-b.tex",
+    "content": "\\section{Experiment B}\n\\begin{figure}[htbp]\n\\centering\n\\begin{subfigure}{0.45\\textwidth}\n\\centering\n\\fbox{Panel B}\n\\caption{Panel B}\n\\label{fig:panel-b}\n\\end{subfigure}\n\\caption{Experiment B result}\n\\end{figure}\n"
+  }
+]

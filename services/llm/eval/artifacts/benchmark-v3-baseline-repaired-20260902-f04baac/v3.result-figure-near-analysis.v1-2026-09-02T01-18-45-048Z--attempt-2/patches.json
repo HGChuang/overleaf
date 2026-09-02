@@ -1,0 +1,10 @@
+[
+  [
+    {
+      "file": "sections/analysis.tex",
+      "line": 3,
+      "oldText": "\\begin{figure}[t]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}",
+      "newText": "\\begin{figure}[htbp]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}"
+    }
+  ]
+]

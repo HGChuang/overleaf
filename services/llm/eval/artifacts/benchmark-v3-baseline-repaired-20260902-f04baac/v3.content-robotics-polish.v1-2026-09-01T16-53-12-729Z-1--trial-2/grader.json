@@ -1,0 +1,84 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "patch_files",
+        "files": [
+          "chapters/intro.tex",
+          "chapters/method.tex",
+          "chapters/appendix.tex"
+        ]
+      },
+      "passed": true,
+      "message": "patch files=[\"chapters/intro.tex\",\"chapters/method.tex\",\"chapters/appendix.tex\"]"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "chapters/intro.tex",
+        "values": [
+          "trajectory tracking",
+          "clear weakness",
+          "\\ref{fig:tracking}"
+        ]
+      },
+      "passed": false,
+      "message": "chapters/intro.tex contains 3 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "chapters/method.tex",
+        "values": [
+          "trajectory tracking",
+          "\\tau=0.5",
+          "does not claim robustness"
+        ]
+      },
+      "passed": false,
+      "message": "chapters/method.tex contains 3 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "chapters/appendix.tex",
+        "values": [
+          "trajectory tracking restriction",
+          "\\tau=0.5",
+          "does not claim robustness"
+        ]
+      },
+      "passed": true,
+      "message": "chapters/appendix.tex contains 3 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_not_contains",
+        "file": "chapters/intro.tex",
+        "values": [
+          "Our trajectory method has a clear weakness"
+        ]
+      },
+      "passed": true,
+      "message": "chapters/intro.tex excludes 1 forbidden value(s)"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

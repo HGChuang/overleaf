@@ -1,0 +1,105 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "patch_files",
+        "files": [
+          "settings.tex"
+        ]
+      },
+      "passed": true,
+      "message": "patch files=[\"settings.tex\"]"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "main.tex",
+        "values": [
+          "\\input{appendix/notes}"
+        ]
+      },
+      "passed": true,
+      "message": "main.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "settings.tex",
+        "values": [
+          "\\ifshowappendix"
+        ]
+      },
+      "passed": true,
+      "message": "settings.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "appendix/notes.tex",
+        "values": [
+          "\\appendixnote{}"
+        ]
+      },
+      "passed": true,
+      "message": "appendix/notes.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "settings.tex",
+        "values": [
+          "\\showappendixtrue",
+          "\\ifshowappendix",
+          "\\appendixnote"
+        ]
+      },
+      "passed": false,
+      "message": "settings.tex contains 3 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_not_contains",
+        "file": "settings.tex",
+        "values": [
+          "\\showappendixfalse"
+        ]
+      },
+      "passed": false,
+      "message": "settings.tex excludes 1 forbidden value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "main.tex"
+      },
+      "passed": true,
+      "message": "main.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "appendix/notes.tex"
+      },
+      "passed": true,
+      "message": "appendix/notes.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

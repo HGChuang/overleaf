@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.survey-longtable-header.v1-mtixgyvl",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_9c9a53b9",
+          "title": "将 table/tabular 问卷结果表改为 longtable，并在续页用 \\endhead 保留表头",
+          "hunks": [
+            {
+              "file": "tables/survey.tex",
+              "line": 1,
+              "oldText": "\\begin{table}[h]\n\\centering\n\\caption{Survey results}\n\\label{tab:survey}\n\\begin{tabular}{rll}\nNo. & Group & Percentage \\\\",
+              "newText": "\\begin{longtable}{rll}\n\\caption{Survey results}\\label{tab:survey}\\\\\nNo. & Group & Percentage \\\\\n\\endfirsthead\n\\caption*{Survey results (continued)}\\\\\nNo. & Group & Percentage \\\\\n\\endhead"
+            },
+            {
+              "file": "tables/survey.tex",
+              "line": 31,
+              "oldText": "22 & A & 31\\%\n\\end{tabular}\n\\end{table}",
+              "newText": "22 & A & 31\\%\n\\end{longtable}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

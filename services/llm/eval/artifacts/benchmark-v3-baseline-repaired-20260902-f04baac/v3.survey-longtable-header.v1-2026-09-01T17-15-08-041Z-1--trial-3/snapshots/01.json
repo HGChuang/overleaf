@@ -1,0 +1,10 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{longtable}\n\\begin{document}\n\\input{tables/survey}\n\\end{document}\n"
+  },
+  {
+    "path": "tables/survey.tex",
+    "content": "\\begin{longtable}{rll}\n\\caption{Survey results}\\label{tab:survey}\\\\\nNo. & Group & Percentage \\\\\n\\endfirsthead\n\\caption*{Survey results (continued)}\\\\\nNo. & Group & Percentage \\\\\n\\endhead\n1 & A & 10\\% \\\\\n2 & B & 11\\% \\\\\n3 & C & 12\\% \\\\\n4 & A & 13\\% \\\\\n5 & B & 14\\% \\\\\n6 & C & 15\\% \\\\\n7 & A & 16\\% \\\\\n8 & B & 17\\% \\\\\n9 & C & 18\\% \\\\\n10 & A & 19\\% \\\\\n11 & B & 20\\% \\\\\n12 & C & 21\\% \\\\\n13 & A & 22\\% \\\\\n14 & B & 23\\% \\\\\n15 & C & 24\\% \\\\\n16 & A & 25\\% \\\\\n17 & B & 26\\% \\\\\n18 & C & 27\\% \\\\\n19 & A & 28\\% \\\\\n20 & B & 29\\% \\\\\n21 & C & 30\\% \\\\\n22 & A & 31\\%\n\\end{longtable}\n"
+  }
+]

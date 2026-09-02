@@ -1,0 +1,104 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "main.tex",
+        "values": [
+          "\\documentclass{article}",
+          "The main document must show the complete answer.",
+          "\\input{answer}"
+        ]
+      },
+      "passed": true,
+      "message": "main.tex contains 3 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_not_contains",
+        "file": "main.tex",
+        "values": [
+          "\\input{draft}"
+        ]
+      },
+      "passed": true,
+      "message": "main.tex excludes 1 forbidden value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "draft.tex",
+        "values": [
+          "Draft reasoning remains available for later reference."
+        ]
+      },
+      "passed": true,
+      "message": "draft.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "answer.tex",
+        "values": [
+          "The complete answer includes the verified derivation."
+        ]
+      },
+      "passed": true,
+      "message": "answer.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "figures/diagram.tex",
+        "values": [
+          "\\label{fig:answer-diagram}"
+        ]
+      },
+      "passed": true,
+      "message": "figures/diagram.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "draft.tex"
+      },
+      "passed": true,
+      "message": "draft.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "answer.tex"
+      },
+      "passed": true,
+      "message": "answer.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "figures/diagram.tex"
+      },
+      "passed": true,
+      "message": "figures/diagram.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0,
+        "max_warnings": 20
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

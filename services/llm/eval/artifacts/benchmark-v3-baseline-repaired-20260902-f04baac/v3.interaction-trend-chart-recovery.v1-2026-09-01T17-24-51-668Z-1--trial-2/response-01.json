@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.interaction-trend-chart-recovery.v1-mtixth7l",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_a91e4667",
+          "title": "Compress Chapter 4 results table: smaller font (footnotesize), tighter column padding (tabcolsep 4pt), reduced row height (arraystretch 1.1), and relaxed float placement [htbp] so it stays on one page.",
+          "hunks": [
+            {
+              "file": "chapters/results.tex",
+              "line": 3,
+              "oldText": "\\begin{table}[h]\n\\centering\n\\caption{Performance values}\n\\label{tab:performance}\n\\begin{tabular}{lrr}",
+              "newText": "\\begin{table}[htbp]\n\\centering\n\\caption{Performance values}\n\\label{tab:performance}\n\\footnotesize\n\\setlength{\\tabcolsep}{4pt}\n\\renewcommand{\\arraystretch}{1.1}\n\\begin{tabular}{lrr}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.figure-location-caption.v1-mtixeebh",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_cb342867",
+          "title": "Move the experiment figure from Methods into the Results section, center it with \\centering, and make the caption centered and numbered via the caption package.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\usepackage[margin=2cm]{geometry}\n\\begin{document}",
+              "newText": "\\documentclass{article}\n\\usepackage[margin=2cm]{geometry}\n\\usepackage[justification=centering]{caption}\n\\begin{document}"
+            },
+            {
+              "file": "main.tex",
+              "line": 6,
+              "oldText": "\\section{Methods}\nThe experiment steps must remain in their original order.\n\\begin{figure}[h]\n\\raggedright\n\\fbox{\\rule{0pt}{3cm}\\rule{0.72\\linewidth}{0pt}}\n\\caption{Experiment photograph (experiment.jpg)}\n\\label{fig:experiment}\n\\end{figure}\n\\section{Results}\nThe result analysis refers to the experiment photograph.",
+              "newText": "\\section{Methods}\nThe experiment steps must remain in their original order.\n\n\\section{Results}\nThe result analysis refers to the experiment photograph (Figure~\\ref{fig:experiment}).\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{0.72\\linewidth}{0pt}}\n\\caption{Experiment photograph (experiment.jpg)}\n\\label{fig:experiment}\n\\end{figure}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

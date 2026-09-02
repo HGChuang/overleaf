@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.compile-conditional-macro.v1",
+  "case_family_id": "v3.compile-conditional-macro",
+  "source_candidate_id": "v3.compile.006",
+  "split": "dev",
+  "category": "编译修复",
+  "capabilities": [
+    "C1",
+    "C4",
+    "C5"
+  ],
+  "difficulty": {
+    "level": "D2",
+    "factors": [
+      "条件编译",
+      "跨文件宏来源",
+      "保持版式结构"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.compile-conditional-macro",
+    "fixture_lineage": "v3.compile.006",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\input{settings}\n\\begin{document}\nCourse report body.\n\\input{appendix/notes}\n\\end{document}\n"
+      },
+      {
+        "path": "settings.tex",
+        "content": "\\newif\\ifshowappendix\n\\showappendixfalse\n\\ifshowappendix\n  \\newcommand{\\appendixnote}{Appendix note}\n\\fi\n"
+      },
+      {
+        "path": "appendix/notes.tex",
+        "content": "\\section*{Appendix notes}\n\\appendixnote{}\n"
+      }
+    ],
+    "sha256": "78de6db57eead0f508f25f6c10703eb69369d21c15670a74a6d703bbf972e526"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "many-files"
+  },
+  "user_goal": {
+    "public_brief": "日志说这个宏没有定义，可是设置文件里明明有定义。请查清原因、修复问题，并确认项目能够正常编译。",
+    "interaction_facts": [
+      "宏只在条件开关打开时定义，附录仍必须通过该条件结构调用宏，不能改成手工文字。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "settings.tex",
+    "compile_status": "failure",
+    "protected_invariants": [
+      {
+        "file": "main.tex",
+        "value": "\\input{appendix/notes}"
+      },
+      {
+        "file": "settings.tex",
+        "value": "\\ifshowappendix"
+      },
+      {
+        "file": "appendix/notes.tex",
+        "value": "\\appendixnote{}"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "settings.tex",
+      "appendix/notes.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "repair-loop",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "settings.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\input{appendix/notes}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "settings.tex",
+      "values": [
+        "\\ifshowappendix"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "appendix/notes.tex",
+      "values": [
+        "\\appendixnote{}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "settings.tex",
+      "values": [
+        "\\showappendixtrue",
+        "\\ifshowappendix",
+        "\\appendixnote"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "settings.tex",
+      "values": [
+        "\\showappendixfalse"
+      ]
+    },
+    {
+      "type": "file_unchanged",
+      "file": "main.tex"
+    },
+    {
+      "type": "file_unchanged",
+      "file": "appendix/notes.tex"
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "settings.tex",
+        "line": 2,
+        "oldText": "\\showappendixfalse",
+        "newText": "\\showappendixtrue"
+      }
+    ],
+    "response": "已打开设置文件中的条件开关，使附录宏按原有结构定义，并完成编译验证。",
+    "grader_mutations": [
+      {
+        "mutation_id": "条件宏-绕过条件结构",
+        "description": "直接把附录宏调用替换为文字，删除了条件宏调用关系。",
+        "patches": [
+          {
+            "file": "appendix/notes.tex",
+            "line": 2,
+            "oldText": "\\appendixnote{}",
+            "newText": "Appendix note"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "failure",
+          "errorCount": 1,
+          "warningCount": 0
+        }
+      },
+      {
+        "mutation_id": "条件宏-错误开关值",
+        "description": "将开关改成了不存在的命令，无法定义条件分支中的宏。",
+        "patches": [
+          {
+            "file": "settings.tex",
+            "line": 2,
+            "oldText": "\\showappendixfalse",
+            "newText": "\\showappendixmaybe"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "failure",
+          "errorCount": 1,
+          "warningCount": 0
+        }
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "条件编译",
+      "宏来源",
+      "附录",
+      "编译引用与文献"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文故障报告",
+    "provenance": "llm-generated-user-seed"
+  }
+}

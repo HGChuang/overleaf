@@ -1,0 +1,31 @@
+{
+  "runId": "run_386efc82-be4c-4aa7-becf-b60fbbad703d",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.compile-nested-block-recovery.v1-2026-09-01T17-09-55-717Z-1--trial-2",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.compile-nested-block-recovery.v1",
+  "caseFamilyId": "v3.compile-nested-block-recovery",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.compile-nested-block-recovery.v1--trial-2",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 8090,
+    "output": 1461,
+    "cacheRead": 14336,
+    "cacheWrite": 0,
+    "totalTokens": 23887
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 3,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "patchCount": 1,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 2,
+  "initialWorkspaceHash": "4e5e27bcf6f8cef111995ab8d91679c72d3f98a82a6b391b8966de23536e2264",
+  "finalWorkspaceHash": "eaf1b4d9c0e4dad56ee8a34e0e044b8d9639e0f984e3c8ec29e5d5e16fc00d0b",
+  "wallMs": 17954
+}

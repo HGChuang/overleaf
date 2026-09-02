@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.result-figure-near-analysis.v1-mtjevqa7",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_10d8cb89",
+          "title": "仅将 accuracy 图的浮动位置从 [t] 改为 [h!]，使其尽量紧跟在引用它的精度分析段落之后；ablation 图保持 [b] 不变，且不引入绝对定位。",
+          "hunks": [
+            {
+              "file": "sections/analysis.tex",
+              "line": 3,
+              "oldText": "\\begin{figure}[t]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}",
+              "newText": "\\begin{figure}[h!]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

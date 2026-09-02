@@ -1,0 +1,20 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 3 changes — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 2,
+    "kind": "user",
+    "text": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 2,
+    "kind": "automatic_verification",
+    "text": "✅ 编译通过（errorCount = 0，无警告）。\n\n修复已生效：\n\n- `main.tex`：已加载 `\\usepackage{float}`，为 `[H]` 定位提供支持。\n- `sections/analysis.tex`：**accuracy** 结果图由 `[t]` 改为 `[H]`，强制固定在其实验分析段附近，不会再漂移到结论之后。\n- **ablation** 图保持原来的 `[b]` 浮动定位，未做改动。\n\n文档正常输出为 1 页 PDF，无任何编译错误。",
+    "hadPatch": false
+  }
+]

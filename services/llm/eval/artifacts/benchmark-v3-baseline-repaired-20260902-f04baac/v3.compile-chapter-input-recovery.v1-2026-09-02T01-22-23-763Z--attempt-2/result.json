@@ -1,0 +1,30 @@
+{
+  "runId": "run_67de79a7-58fe-457a-9168-d265b00dae64",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.compile-chapter-input-recovery.v1-2026-09-02T01-22-23-763Z--attempt-2",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.compile-chapter-input-recovery.v1",
+  "caseFamilyId": "v3.compile-chapter-input-recovery",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.compile-chapter-input-recovery.v1--trial-2--attempt-2",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 3664,
+    "output": 1113,
+    "cacheRead": 17408,
+    "cacheWrite": 0,
+    "totalTokens": 22185
+  },
+  "toolCalls": {
+    "read_file": 2,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "patchCount": 1,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 2,
+  "initialWorkspaceHash": "2156c0968ad78062286759b79813a29505f5b0d6688a4b1c93bbd95bbdb26aa1",
+  "finalWorkspaceHash": "577b920cb9ca94e700c047d04a78106a4e17b6c5af25c9b0a55bba8cf945db10",
+  "wallMs": 186920
+}

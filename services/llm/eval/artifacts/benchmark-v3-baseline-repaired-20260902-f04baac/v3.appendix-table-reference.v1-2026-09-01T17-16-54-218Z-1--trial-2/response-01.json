@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.appendix-table-reference.v1-mtixj8t3",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_1995bb0c",
+          "title": "Fix the cross-reference key in main.tex so it matches the actual label tab:appendix_data defined in appendix-data.tex",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 5,
+              "oldText": "The detailed measurements are in Table~\\ref{tab:appendix-data}.",
+              "newText": "The detailed measurements are in Table~\\ref{tab:appendix_data}."
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

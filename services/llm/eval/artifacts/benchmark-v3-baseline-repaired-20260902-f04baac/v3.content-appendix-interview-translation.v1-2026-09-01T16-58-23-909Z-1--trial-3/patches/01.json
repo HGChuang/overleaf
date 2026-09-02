@@ -1,0 +1,14 @@
+[
+  {
+    "file": "appendix.tex",
+    "line": 1,
+    "oldText": "\\section{Appendix notes}\nThe device calibration note is retained for Model X200.",
+    "newText": "\\section{附录说明}\n设备校准说明已为 Model X200 保留。"
+  },
+  {
+    "file": "interview.tex",
+    "line": 1,
+    "oldText": "\\section{Interview questions}\nQuestion 1: How easy was the device to use?\n\nOptions: A. Very difficult; B. Difficult; C. Neutral; D. Easy; E. Very easy.",
+    "newText": "\\section{访谈问题}\n问题1：该设备使用起来有多容易？\n\n选项：A. 非常困难；B. 困难；C. 一般；D. 容易；E. 非常容易。"
+  }
+]

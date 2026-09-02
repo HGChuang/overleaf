@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.compile-conditional-macro.v1-mtix43yf",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_0374aa2e",
+          "title": "将 \\showappendixfalse 改为 \\showappendixtrue，使 \\appendixnote 宏被定义，修复 Undefined control sequence",
+          "hunks": [
+            {
+              "file": "settings.tex",
+              "line": 2,
+              "oldText": "\\showappendixfalse",
+              "newText": "\\showappendixtrue"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

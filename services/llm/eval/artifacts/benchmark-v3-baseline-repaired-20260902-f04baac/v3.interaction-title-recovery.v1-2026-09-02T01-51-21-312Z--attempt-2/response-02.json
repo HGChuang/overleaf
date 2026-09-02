@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.interaction-title-recovery.v1-mtjfwu09",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_f35219f4",
+          "title": "Add ctex (UTF-8 CJK) package so the Chinese section title compiles under pdfLaTeX.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\begin{document}",
+              "newText": "\\documentclass{article}\n\\usepackage[UTF8]{ctex}\n\\begin{document}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{abstract}\n\\input{methods}\n\\input{flow}\n\\input{supplement}\n\\end{document}\n"
+  },
+  {
+    "path": "abstract.tex",
+    "content": "\\section{Abstract}\nThe treatment group (TG) included 128 patients, while the control group (CG) included 126 patients.\n"
+  },
+  {
+    "path": "methods.tex",
+    "content": "\\section{Methods}\nWe use TG and CG after their first full names.\n"
+  },
+  {
+    "path": "flow.tex",
+    "content": "\\section{Participant flow}\nTG had 128 enrolled patients and CG had 126.\n"
+  },
+  {
+    "path": "supplement.tex",
+    "content": "\\section{Supplement}\nThe TG and CG labels are used in the supplementary analysis.\n"
+  }
+]

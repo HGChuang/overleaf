@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.duplicate-main-entry-refusal.v1-mtixozx2",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_4226947c",
+          "title": "将标题改为英文 ASCII（Current Lecture），修复 pdfLaTeX 无法编译中文标题的问题",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 9,
+              "oldText": "\\title{课程讲义}",
+              "newText": "\\title{Current Lecture}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

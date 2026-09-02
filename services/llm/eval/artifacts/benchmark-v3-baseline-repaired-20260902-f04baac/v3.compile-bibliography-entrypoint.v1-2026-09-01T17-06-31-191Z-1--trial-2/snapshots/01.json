@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage[numbers]{natbib}\n\\begin{document}\n\\input{chapters/related}\n\\input{references}\n\\end{document}\n"
+  },
+  {
+    "path": "chapters/related.tex",
+    "content": "\\section{Related work}\nPrior work discusses reproducible experiments~\\cite{smith2024}.\n"
+  },
+  {
+    "path": "references.tex",
+    "content": "\\begin{thebibliography}{9}\n\\bibitem{smith2024} Smith, A. Reproducible experiments. 2024.\n\\end{thebibliography}\n"
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.result-figure-near-analysis.v1-mtjeqwjq",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_f7a7a2cd",
+          "title": "Change both result figures from single-placement [t]/[b] to [htbp] so they stay near their analysis paragraphs instead of being deferred past the Conclusion.",
+          "hunks": [
+            {
+              "file": "sections/analysis.tex",
+              "line": 3,
+              "oldText": "\\begin{figure}[t]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}",
+              "newText": "\\begin{figure}[htbp]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}"
+            },
+            {
+              "file": "sections/analysis.tex",
+              "line": 10,
+              "oldText": "\\begin{figure}[b]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Ablation results}",
+              "newText": "\\begin{figure}[htbp]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Ablation results}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

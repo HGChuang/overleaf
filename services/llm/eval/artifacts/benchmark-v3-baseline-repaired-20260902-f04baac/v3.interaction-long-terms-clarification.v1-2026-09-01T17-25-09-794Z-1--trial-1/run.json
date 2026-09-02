@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "run_id": "run_43031718-fd9f-4532-9570-436f5f39ffed",
+  "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "case_id": "v3.interaction-long-terms-clarification.v1",
+  "case_family_id": "v3.interaction-long-terms-clarification",
+  "trial_id": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.interaction-long-terms-clarification.v1--trial-1",
+  "split": "dev",
+  "git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "prompt_hash": "1215efc85fd6061d09b83742eb7f2735a1f0e971e5f2775feeb4caaaaba6f133",
+  "benchmark_hash": "f87227d99cea229b4656f620301e0c11bce884083812095faa5c81c691cfe68b",
+  "fixture_hash": "b4b063641c6d66ed01f987043bdd17e87345ce996d762e9cef2d768aa729fb1f",
+  "initial_workspace_hash": "b4b063641c6d66ed01f987043bdd17e87345ce996d762e9cef2d768aa729fb1f",
+  "eval_user_session_id": "eval-user-v3.interaction-long-terms-clarification.v1",
+  "started_at": "2026-09-01T17:25:09.794Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "ended_at": "2026-09-01T17:25:48.141Z",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "runner",
+    "failure_phase": "runner",
+    "error_type": "RUNNER_EXECUTION_ERROR",
+    "error_source": "evaluation_harness",
+    "error_message": "readline was closed",
+    "retryable": false,
+    "related_event_id": "evt_a1079db2-ad60-4754-9b41-c84290a7964c"
+  },
+  "final_workspace_hash": "b4b063641c6d66ed01f987043bdd17e87345ce996d762e9cef2d768aa729fb1f"
+}

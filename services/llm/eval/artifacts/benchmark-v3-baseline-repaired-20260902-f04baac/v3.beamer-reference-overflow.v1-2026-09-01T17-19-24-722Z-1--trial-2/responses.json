@@ -1,0 +1,14 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 1,
+    "kind": "automatic_verification",
+    "text": "✅ 编译成功（errorCount = 0，无警告），修复已生效。\n\n**所做修改**（`main.tex` 第 3 行）：\n\n```latex\n\\begin{frame}[allowframebreaks]{References}\n```\n\n**原理**：为参考文献这一页加入了 Beamer 的 `allowframebreaks` 帧选项。这样当参考文献条目超出单页可显示高度（受页脚 `footline`、标题栏和 `\\scriptsize` 字号影响）时，超出的条目会自动**续排到下一页**，而不是在页面底部被裁切，从而保证所有条目都能完整显示。若内容能在单页内放下，则仍然只占一页（本次编译输出即为 1 页）。\n\n如需进一步压缩单页空间，还可以考虑：\n- 改用 `\\footnotesize` / 行距压缩（`\\setlength{\\itemsep}{...}`）\n- 移除或精简页脚模板 `\\setbeamertemplate{footline}{...}`\n\n但目前 `allowframebreaks` 已从根本上保证所有参考文献可见，无需额外改动。",
+    "hadPatch": false
+  }
+]

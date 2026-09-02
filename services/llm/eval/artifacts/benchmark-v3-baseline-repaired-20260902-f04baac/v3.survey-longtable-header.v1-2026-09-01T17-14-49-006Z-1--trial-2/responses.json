@@ -1,0 +1,14 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 1,
+    "kind": "automatic_verification",
+    "text": "编译通过（errorCount = 0，无警告）。修复已生效：\n\n- **`tables/survey.tex`**：将原来的 `table` + `tabular` 环境改为 `longtable`，因此表格可自动跨页显示。\n- 表头行 `No. & Group & Percentage` 通过 `\\endfirsthead`（首页表头）和 `\\endhead`（续页重复表头）在每一页上重复出现。\n- `\\caption` 和 `\\label{tab:survey}` 保留在 `longtable` 中，`\\ref{tab:survey}` 仍可正常引用。\n- `main.tex` 中已加载 `longtable` 宏包，无需其他改动。\n\n如果你的实际数据行更多、确实需要换页才能看到效果，只要内容超过一页即可自动断页并保留表头。",
+    "hadPatch": false
+  }
+]

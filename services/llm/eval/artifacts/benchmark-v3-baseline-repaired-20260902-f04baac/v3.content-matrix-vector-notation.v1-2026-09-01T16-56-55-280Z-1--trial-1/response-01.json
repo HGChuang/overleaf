@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.content-matrix-vector-notation.v1-mtiwtjp7",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_100b6f37",
+          "title": "Unify matrix notation by making the \\\\mat macro render matrices in boldface (\\\\mathbf), consistent with the \\\\vect arrow and \\\\trans superscript; the recurrence relation and all formula references are unchanged.",
+          "hunks": [
+            {
+              "file": "macros.tex",
+              "line": 2,
+              "oldText": "\\newcommand{\\mat}[1]{#1}",
+              "newText": "\\newcommand{\\mat}[1]{\\mathbf{#1}}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

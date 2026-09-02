@@ -1,0 +1,11 @@
+[
+  {
+    "request_event_id": "evt_1ee84a93-9a3a-48cc-8ccf-87b06521090f",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "先不要应用这个删除 patch。我还不清楚 `chapters/old-notes` 是否被其他文件引用、里面是否有尚未合并的记录；请先列出相关旧文件及其引用状态，再决定具体删除范围。",
+    "termination_reason": "引用关系和未合并记录未知，先确认。",
+    "patch_decision": "reject"
+  }
+]

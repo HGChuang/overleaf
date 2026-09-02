@@ -1,0 +1,78 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "no_patch"
+      },
+      "passed": true,
+      "message": "patch count=0"
+    },
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": false
+      },
+      "passed": true,
+      "message": "workspace changed=false, expected=false"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "main.tex"
+      },
+      "passed": true,
+      "message": "main.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "main.tex",
+        "values": [
+          "\\title{Robust Sentiment Classification with Contextual Features}"
+        ]
+      },
+      "passed": true,
+      "message": "main.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "main.tex",
+        "values": [
+          "\\author{Research Team}"
+        ]
+      },
+      "passed": true,
+      "message": "main.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "response_fact_groups",
+        "groups": [
+          [
+            "已经",
+            "当前",
+            "现有",
+            "正是"
+          ],
+          [
+            "一致",
+            "相同",
+            "就是",
+            "正是"
+          ],
+          [
+            "无需修改",
+            "无需任何修改",
+            "无需调整",
+            "不需要修改",
+            "不作修改"
+          ]
+        ]
+      },
+      "passed": false,
+      "message": "response satisfies 3 semantic fact group(s)"
+    }
+  ]
+}

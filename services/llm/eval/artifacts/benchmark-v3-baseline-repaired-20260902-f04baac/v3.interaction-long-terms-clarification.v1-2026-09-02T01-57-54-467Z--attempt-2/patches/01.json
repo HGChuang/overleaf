@@ -1,0 +1,14 @@
+[
+  {
+    "file": "chapters/theory.tex",
+    "line": 2,
+    "oldText": "In the theory chapter, the term scale denotes the normalization factor.",
+    "newText": "In the theory chapter, the term scaling factor denotes the normalization factor."
+  },
+  {
+    "file": "appendix/symbols.tex",
+    "line": 2,
+    "oldText": "The symbol table contains separate entries for the normalization factor and survey scale.",
+    "newText": "The symbol table records \\(S\\) for the normalization factor. The survey scale is denoted by the term scale in the field-study chapter and has no dedicated symbol in this document."
+  }
+]

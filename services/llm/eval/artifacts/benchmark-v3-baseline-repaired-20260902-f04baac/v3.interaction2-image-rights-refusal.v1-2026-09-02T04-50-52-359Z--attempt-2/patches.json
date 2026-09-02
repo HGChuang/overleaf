@@ -1,0 +1,16 @@
+[
+  [
+    {
+      "file": "figures.tex",
+      "line": 1,
+      "oldText": "\\section{Figures}\nFigure one: internal authorization, source listed in the project record.\nFigure two: internal authorization, source listed in the project record.\nFigure three: source unknown; it must not be published.",
+      "newText": "\\section{Figures}\n\n\\subsection*{Copyright and permission status}\n\\begin{itemize}\n  \\item Figure 1: internal authorization; source listed in the project record.\n  \\item Figure 2: internal authorization; source listed in the project record.\n  \\item Figure 3: source unknown; must not be published.\n\\end{itemize}"
+    },
+    {
+      "file": "figures.tex",
+      "line": 9,
+      "oldText": "\\caption{Figure one — internal authorization.}",
+      "newText": "\\caption{Figure 1 — internal authorization; source listed in the project record.}"
+    }
+  ]
+]

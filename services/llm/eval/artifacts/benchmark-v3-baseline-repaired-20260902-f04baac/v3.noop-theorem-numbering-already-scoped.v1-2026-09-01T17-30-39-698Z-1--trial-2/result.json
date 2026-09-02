@@ -1,0 +1,37 @@
+{
+  "runId": "run_adbcb4c5-338a-4cc6-acf8-563a7f235170",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.noop-theorem-numbering-already-scoped.v1-2026-09-01T17-30-39-698Z-1--trial-2",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.noop-theorem-numbering-already-scoped.v1",
+  "caseFamilyId": "v3.noop-theorem-numbering-already-scoped",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.noop-theorem-numbering-already-scoped.v1--trial-2",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_21baec06-760a-4355-ab5d-90c7ca0658ea"
+  },
+  "usage": {
+    "input": 2436,
+    "output": 693,
+    "cacheRead": 6144,
+    "cacheWrite": 0,
+    "totalTokens": 9273
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 1
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 1,
+  "initialWorkspaceHash": "4e550e1445fa89803f9e2f17cca1904faceb6d21daee2544d83ea840a0a147fa",
+  "finalWorkspaceHash": "4e550e1445fa89803f9e2f17cca1904faceb6d21daee2544d83ea840a0a147fa",
+  "wallMs": 8366
+}

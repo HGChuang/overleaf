@@ -1,0 +1,30 @@
+[
+  [
+    {
+      "file": "main.tex",
+      "line": 3,
+      "oldText": "\\usepackage{graphicx}\n\\begin{document}",
+      "newText": "\\usepackage{graphicx}\n\\usepackage{booktabs}\n\\usepackage{siunitx}\n\\sisetup{\n  group-separator = {,},\n  group-minimum-digits = 4,\n  scientific-notation = false,\n}\n\\begin{document}"
+    },
+    {
+      "file": "main.tex",
+      "line": 9,
+      "oldText": "\\begin{tabular}{lrrrr}\nYear & Revenue & Cost & Profit & Staff \\\\\n2022 & 1,234,567 & 987,654 & 246,913 & 120 \\\\\n2023 & 2,345,678 & 1,876,543 & 469,135 & 145 \\\\\n\\end{tabular}",
+      "newText": "\\small\n\\begin{tabular}{lSSSS}\n\\toprule\nYear & {Revenue} & {Cost} & {Profit} & {Staff} \\\\\n\\midrule\n2022 & 1,234,567 & 987,654 & 246,913 & 120 \\\\\n2023 & 2,345,678 & 1,876,543 & 469,135 & 145 \\\\\n\\bottomrule\n\\end{tabular}"
+    }
+  ],
+  [
+    {
+      "file": "main.tex",
+      "line": 4,
+      "oldText": "\\usepackage{booktabs}\n\\usepackage{siunitx}\n\\sisetup{\n  group-separator = {,},\n  group-minimum-digits = 4,\n  scientific-notation = false,\n}\n\\begin{document}",
+      "newText": "\\usepackage{booktabs}\n\\begin{document}"
+    },
+    {
+      "file": "main.tex",
+      "line": 15,
+      "oldText": "\\small\n\\begin{tabular}{lSSSS}\n\\toprule\nYear & {Revenue} & {Cost} & {Profit} & {Staff} \\\\\n\\midrule\n2022 & 1,234,567 & 987,654 & 246,913 & 120 \\\\\n2023 & 2,345,678 & 1,876,543 & 469,135 & 145 \\\\\n\\bottomrule\n\\end{tabular}",
+      "newText": "\\small\n\\begin{tabular}{lrrrr}\n\\toprule\nYear & Revenue & Cost & Profit & Staff \\\\\n\\midrule\n2022 & 1,234,567 & 987,654 & 246,913 & 120 \\\\\n2023 & 2,345,678 & 1,876,543 & 469,135 & 145 \\\\\n\\bottomrule\n\\end{tabular}"
+    }
+  ]
+]

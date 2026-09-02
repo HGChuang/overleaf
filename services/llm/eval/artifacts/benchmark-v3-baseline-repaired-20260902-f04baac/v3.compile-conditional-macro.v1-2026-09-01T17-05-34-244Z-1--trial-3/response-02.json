@@ -1,0 +1,9 @@
+{
+  "conversationId": "v3.compile-conditional-macro.v1-mtix4o4v",
+  "message": {
+    "role": "assistant",
+    "content": "修复成功 ✅\n\n**编译结果**：`errorCount = 0`，无警告，输出 `output.pdf`（1 页）。\n\n**原因**：`\\appendixnote` 确实写在 `settings.tex` 里，但它的定义被包在条件分支内：\n\n```latex\n\\showappendixfalse        % 标志为“假”\n\\ifshowappendix\n  \\newcommand{\\appendixnote}{Appendix note}   % 这个分支被跳过，宏从未定义\n\\fi\n```\n\n由于 `\\showappendixfalse`，`\\ifshowappendix` 分支在编译时被跳过，`\\newcommand` 从未执行；而 `appendix/notes.tex` 第 2 行又无条件地使用 `\\appendixnote{}`，于是报 `Undefined control sequence`（即日志中 line 2 的错误）。\n\n**修复**：在 `settings.tex` 中把宏定义移出条件分支，使其始终可用（`\\showappendixfalse` 状态保持不变）：\n\n```latex\n\\newif\\ifshowappendix\n\\showappendixfalse\n\\newcommand{\\appendixnote}{Appendix note}\n```\n\n一点提示：`\\ifshowappendix` 标志当前只在 `settings.tex` 中用来门控这一个宏定义，没有其他地方使用它。如果你的本意是让它真正控制“附录是否显示”，那么 `main.tex` 里无条件 `\\input{appendix/notes}` 也需要一并加上条件门控——如需这样调整，告诉我即可。",
+    "blocks": []
+  },
+  "suggestedActions": []
+}

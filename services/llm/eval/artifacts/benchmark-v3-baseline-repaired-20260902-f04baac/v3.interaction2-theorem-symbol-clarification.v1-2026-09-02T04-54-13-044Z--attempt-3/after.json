@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{chapters/theorem}\n\\input{appendix/symbols}\n\\end{document}\n"
+  },
+  {
+    "path": "chapters/theorem.tex",
+    "content": "\\section{Theorem 3}\nLet A denote the set and c denote a constant.\n\\begin{equation}\n  A = \\{x : x > c\\}\n\\end{equation}\nThe proof uses the existing uppercase set notation.\n"
+  },
+  {
+    "path": "appendix/symbols.tex",
+    "content": "\\section{Symbols}\nThe symbol table keeps A for the set and c for the constant.\n"
+  }
+]

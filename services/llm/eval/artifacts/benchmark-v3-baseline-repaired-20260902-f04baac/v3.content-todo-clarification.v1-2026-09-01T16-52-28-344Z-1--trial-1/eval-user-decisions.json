@@ -1,0 +1,11 @@
+[
+  {
+    "request_event_id": "evt_812cb0b8-29c0-4af3-8bd5-870690756c19",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "先不要修改。样本数可以依据表三补全，但样本来源仍然未知；请先确认如何处理这个未知来源，来源信息不足的地方保留清晰的待办说明。",
+    "patch_decision": "reject",
+    "termination_reason": "首轮需要先澄清样本来源这一未知事实，暂不接受当前修改。"
+  }
+]

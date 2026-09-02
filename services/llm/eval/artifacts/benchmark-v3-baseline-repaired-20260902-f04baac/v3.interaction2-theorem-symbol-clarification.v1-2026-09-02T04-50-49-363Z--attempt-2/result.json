@@ -1,0 +1,38 @@
+{
+  "runId": "run_8435b0ea-6f21-4ab2-a192-3708d5bc8676",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.interaction2-theorem-symbol-clarification.v1-2026-09-02T04-50-49-363Z--attempt-2",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.interaction2-theorem-symbol-clarification.v1",
+  "caseFamilyId": "v3.interaction2-theorem-symbol-clarification",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.interaction2-theorem-symbol-clarification.v1--trial-1--attempt-2",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "runner",
+    "failure_phase": "runner",
+    "error_type": "RUNNER_EXECUTION_ERROR",
+    "error_source": "evaluation_harness",
+    "error_message": "eval_user returned invalid JSON: Unexpected token '根', \"根据 Copilot\"... is not valid JSON",
+    "retryable": false,
+    "related_event_id": "evt_2bda4adb-852b-48f4-aa04-2df3a79fa332"
+  },
+  "usage": {
+    "input": 26345,
+    "output": 11213,
+    "cacheRead": 31488,
+    "cacheWrite": 0,
+    "totalTokens": 69046
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 6,
+    "search_project": 16
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 1,
+  "initialWorkspaceHash": "a1487e2962175846517e6b74c835de2d80d4a687caf4b730ece21c5cae9e89da",
+  "finalWorkspaceHash": "a1487e2962175846517e6b74c835de2d80d4a687caf4b730ece21c5cae9e89da",
+  "wallMs": 124555
+}

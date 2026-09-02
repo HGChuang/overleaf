@@ -1,0 +1,14 @@
+[
+  {
+    "file": "appendix/table.tex",
+    "line": 2,
+    "oldText": "\\section{Supplementary tables}\n\\newcounter{resultstable}\n\\refstepcounter{resultstable}",
+    "newText": "\\section{Supplementary tables}\n\\refstepcounter{resultstable}"
+  },
+  {
+    "file": "appendix/table.tex",
+    "line": 5,
+    "oldText": "\\label{tab:results}",
+    "newText": "\\label{tab:appendix-results}"
+  }
+]

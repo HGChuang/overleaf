@@ -1,0 +1,14 @@
+[
+  {
+    "file": "survey.tex",
+    "line": 2,
+    "oldText": "Q1. How satisfied are you?\nOptions: 1 = Very dissatisfied; 2 = Dissatisfied; 3 = Neutral; 4 = Satisfied; 5 = Very satisfied.\nQ2. Would you recommend the service?\nOptions: 1 = Definitely no; 2 = Probably no; 3 = Unsure; 4 = Probably yes; 5 = Definitely yes.",
+    "newText": "Q1. How satisfied are you with the service?\nOptions: 1 = Very dissatisfied; 2 = Dissatisfied; 3 = Neutral; 4 = Satisfied; 5 = Very satisfied.\nQ2. Would you recommend the service to others?\nOptions: 1 = Definitely no; 2 = Probably no; 3 = Unsure; 4 = Probably yes; 5 = Definitely yes."
+  },
+  {
+    "file": "methods.tex",
+    "line": 2,
+    "oldText": "We used a five-level scale and analyzed Question 1 and Question 2.",
+    "newText": "We used a five-level scale, ranging from 1 (Very dissatisfied / Definitely no) to 5 (Very satisfied / Definitely yes), and analyzed Q1 and Q2."
+  }
+]

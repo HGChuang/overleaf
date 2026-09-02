@@ -1,0 +1,98 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "patch_files",
+        "files": [
+          "abstract.tex",
+          "methods.tex",
+          "flow.tex",
+          "supplement.tex"
+        ]
+      },
+      "passed": true,
+      "message": "patch files=[\"abstract.tex\",\"methods.tex\",\"flow.tex\",\"supplement.tex\"]"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "abstract.tex",
+        "values": [
+          "intervention group (IG)",
+          "control group (CG)",
+          "128 patients",
+          "126 patients"
+        ]
+      },
+      "passed": false,
+      "message": "abstract.tex contains 4 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "methods.tex",
+        "values": [
+          "intervention group IG",
+          "control group CG"
+        ]
+      },
+      "passed": false,
+      "message": "methods.tex contains 2 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "flow.tex",
+        "values": [
+          "intervention group (IG)",
+          "control group (CG)",
+          "128 enrolled patients",
+          "126"
+        ]
+      },
+      "passed": false,
+      "message": "flow.tex contains 4 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "supplement.tex",
+        "values": [
+          "intervention group (IG)",
+          "control group (CG)"
+        ]
+      },
+      "passed": false,
+      "message": "supplement.tex contains 2 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_not_contains",
+        "file": "abstract.tex",
+        "values": [
+          "treatment group"
+        ]
+      },
+      "passed": false,
+      "message": "abstract.tex excludes 1 forbidden value(s)"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

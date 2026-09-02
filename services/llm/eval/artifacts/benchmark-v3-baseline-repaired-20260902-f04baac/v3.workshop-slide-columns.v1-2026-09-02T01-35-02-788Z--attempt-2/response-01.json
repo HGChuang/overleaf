@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.workshop-slide-columns.v1-mtjfbuz5",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_30ef7007",
+          "title": "Fix column overflow (0.62+0.42=1.04>1.0) by reducing the image column to 0.55\\textwidth in both the Overview and Workshop frames, so the photos and bullet points are fully visible.",
+          "hunks": [
+            {
+              "file": "slides/workshop.tex",
+              "line": 3,
+              "oldText": "\\begin{column}{0.62\\textwidth}\n\\fbox{\\rule{0pt}{3cm}\\rule{0.62\\linewidth}{0pt}}\n\\end{column}\n\\begin{column}{0.42\\textwidth}\nOverview note.",
+              "newText": "\\begin{column}{0.55\\textwidth}\n\\fbox{\\rule{0pt}{3cm}\\rule{0.62\\linewidth}{0pt}}\n\\end{column}\n\\begin{column}{0.42\\textwidth}\nOverview note."
+            },
+            {
+              "file": "slides/workshop.tex",
+              "line": 15,
+              "oldText": "\\begin{frame}{Workshop}\n\\begin{columns}\n\\begin{column}{0.62\\textwidth}",
+              "newText": "\\begin{frame}{Workshop}\n\\begin{columns}\n\\begin{column}{0.55\\textwidth}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

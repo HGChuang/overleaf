@@ -1,0 +1,6 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\section{Introduction}\nBackground and motivation are described briefly. The research gap is not yet explicit. Our method uses a constrained encoder for traffic prediction. The contributions are: (1) a calibrated benchmark; (2) a robust encoder; (3) an open evaluation protocol. The method reaches 91.2\\% accuracy on the Metro test set \\cite{lee2021}.\n\\begin{thebibliography}{1}\n\\bibitem{lee2021} Lee, 2021.\n\\end{thebibliography}\n\\end{document}\n"
+  }
+]

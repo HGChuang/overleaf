@@ -1,0 +1,39 @@
+{
+  "runId": "run_23b51497-2eef-48ff-83ae-f899d73e1273",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.interaction-title-recovery.v1-2026-09-01T17-24-50-134Z-1--trial-3",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.interaction-title-recovery.v1",
+  "caseFamilyId": "v3.interaction-title-recovery",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.interaction-title-recovery.v1--trial-3",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "runner",
+    "failure_phase": "runner",
+    "error_type": "RUNNER_EXECUTION_ERROR",
+    "error_source": "evaluation_harness",
+    "error_message": "readline was closed",
+    "retryable": false,
+    "related_event_id": "evt_09a090b3-8832-4854-8d19-ccef1b5f3dfd"
+  },
+  "usage": {
+    "input": 683,
+    "output": 969,
+    "cacheRead": 12288,
+    "cacheWrite": 0,
+    "totalTokens": 13940
+  },
+  "toolCalls": {
+    "search_project": 1,
+    "list_project_files": 1,
+    "read_file": 1,
+    "submit_patch": 1
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 1,
+  "initialWorkspaceHash": "3e6351b148a8e321f156f361fc789d55f28b2e7f6f5ad13ae6f79bf69dfe2f6e",
+  "finalWorkspaceHash": "3e6351b148a8e321f156f361fc789d55f28b2e7f6f5ad13ae6f79bf69dfe2f6e",
+  "wallMs": 11931
+}

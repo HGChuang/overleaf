@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\tableofcontents\n\\input{chapters/current}\n\\input{chapters/old-notes}\n\\end{document}\n"
+  },
+  {
+    "path": "chapters/current.tex",
+    "content": "\\section{Current Results}\nThe current experiment record is still referenced by the main document.\n"
+  },
+  {
+    "path": "chapters/old-notes.tex",
+    "content": "\\section{Old Notes}\nThis file may contain an unmerged experiment record and its reference status is unknown.\n"
+  }
+]

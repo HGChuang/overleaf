@@ -1,0 +1,10 @@
+[
+  [
+    {
+      "file": "sections/methods.tex",
+      "line": 4,
+      "oldText": "\\subcaptionbox{Subfigure A: input}{\\fbox{\\rule{0pt}{2cm}\\rule{0.38\\linewidth}{0pt}}}\n\\subcaptionbox{Subfigure B: encoder}{\\fbox{\\rule{0pt}{2cm}\\rule{0.38\\linewidth}{0pt}}}\n\\subcaptionbox{Subfigure C: output}{\\fbox{\\rule{0pt}{2cm}\\rule{0.38\\linewidth}{0pt}}}",
+      "newText": "\\subcaptionbox{Subfigure A: input}{\\fbox{\\rule{0pt}{2cm}\\rule{0.30\\linewidth}{0pt}}}\\hfill\n\\subcaptionbox{Subfigure B: encoder}{\\fbox{\\rule{0pt}{2cm}\\rule{0.30\\linewidth}{0pt}}}\\hfill\n\\subcaptionbox{Subfigure C: output}{\\fbox{\\rule{0pt}{2cm}\\rule{0.30\\linewidth}{0pt}}}"
+    }
+  ]
+]

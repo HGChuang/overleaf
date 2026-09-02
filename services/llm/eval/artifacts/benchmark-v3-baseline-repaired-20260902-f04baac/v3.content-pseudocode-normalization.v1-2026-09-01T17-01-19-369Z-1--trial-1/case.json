@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.content-pseudocode-normalization.v1",
+  "case_family_id": "v3.content-pseudocode-normalization",
+  "source_candidate_id": "v3.content.015",
+  "split": "dev",
+  "category": "算法伪代码规范化",
+  "capabilities": [
+    "C2",
+    "C3",
+    "C4",
+    "C7",
+    "C10"
+  ],
+  "difficulty": {
+    "level": "D4",
+    "factors": [
+      "算法环境定位",
+      "输入输出约束",
+      "复杂度保护"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.content-pseudocode-normalization",
+    "fixture_lineage": "v3.content.015",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\input{algorithm}\n\\input{complexity}\n\\end{document}\n"
+      },
+      {
+        "path": "algorithm.tex",
+        "content": "\\section{Algorithm}\n\\begin{verbatim}\nfor each node v:\n  update score[v]\nreturn scores\n\\end{verbatim}\n"
+      },
+      {
+        "path": "complexity.tex",
+        "content": "\\section{Complexity}\nThe running time is O(n+m) for a graph with n nodes and m edges.\n"
+      }
+    ],
+    "sha256": "09abb988516f85d934fd26726379bf7654800733522192283e6c1b99403c4317"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "many-files"
+  },
+  "user_goal": {
+    "public_brief": "请把伪代码整理成规范的算法环境，补齐步骤编号和输入输出说明，并修正复杂度分析中的算法引用。",
+    "interaction_facts": [
+      "伪代码整理为规范算法环境，补齐输入输出和步骤编号。",
+      "步骤顺序、变量含义和 O(n+m) 复杂度分析必须保持与实验一致。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "algorithm.tex",
+        "value": "update score[v]"
+      },
+      {
+        "file": "complexity.tex",
+        "value": "O(n+m)"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "algorithm.tex",
+      "complexity.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "required-after-apply",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "algorithm.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "algorithm.tex",
+      "values": [
+        "Input: graph G",
+        "Output: scores",
+        "1. for each node v",
+        "2. update score[v]",
+        "3. return scores",
+        "update score[v]"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "complexity.tex",
+      "values": [
+        "O(n+m)"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "algorithm.tex",
+      "values": [
+        "\\begin{verbatim}"
+      ]
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "algorithm.tex",
+        "line": 2,
+        "oldText": "\\begin{verbatim}\nfor each node v:\n  update score[v]\nreturn scores\n\\end{verbatim}",
+        "newText": "\\noindent\\textbf{Input: graph G}\\quad \\textbf{Output: scores}\n\\par 1. for each node v\n\\par 2. update score[v]\n\\par 3. return scores"
+      }
+    ],
+    "response": "已补齐算法输入输出和步骤编号，保留变量、步骤顺序及 O(n+m) 复杂度分析；编译通过。",
+    "grader_mutations": [
+      {
+        "mutation_id": "遗漏算法输出",
+        "description": "规范化时没有补齐算法输出说明。",
+        "patches": [
+          {
+            "file": "algorithm.tex",
+            "line": 2,
+            "oldText": "\\begin{verbatim}\nfor each node v:\n  update score[v]\nreturn scores\n\\end{verbatim}",
+            "newText": "\\noindent\\textbf{Input:} graph G\n\\begin{enumerate}\n\\item for each node v\n\\item update score[v]\n\\item return scores\n\\end{enumerate}"
+          }
+        ]
+      },
+      {
+        "mutation_id": "改变复杂度分析",
+        "description": "整理伪代码时把受保护的复杂度改成 O(n^2)。",
+        "patches": [
+          {
+            "file": "complexity.tex",
+            "line": 2,
+            "oldText": "The running time is O(n+m) for a graph with n nodes and m edges.",
+            "newText": "The running time is O(n^2) for a graph with n nodes and m edges."
+          }
+        ]
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "伪代码",
+      "算法环境",
+      "复杂度保护",
+      "长上下文",
+      "内容结构与跨文件重构"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文自然请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

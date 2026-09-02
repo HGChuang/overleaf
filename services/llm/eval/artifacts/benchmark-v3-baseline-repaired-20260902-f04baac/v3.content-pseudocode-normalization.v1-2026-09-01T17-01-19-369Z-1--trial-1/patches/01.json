@@ -1,0 +1,20 @@
+[
+  {
+    "file": "main.tex",
+    "line": 1,
+    "oldText": "\\documentclass{article}\n\\begin{document}",
+    "newText": "\\documentclass{article}\n\\usepackage{algorithm}\n\\usepackage{algpseudocode}\n\\begin{document}"
+  },
+  {
+    "file": "algorithm.tex",
+    "line": 1,
+    "oldText": "\\section{Algorithm}\n\\begin{verbatim}\nfor each node v:\n  update score[v]\nreturn scores\n\\end{verbatim}",
+    "newText": "\\section{Algorithm}\n\\begin{algorithm}[htbp]\n\\caption{Score computation}\n\\label{alg:score}\n\\begin{algorithmic}[1]\n\\Require A graph $G=(V,E)$ with $n$ nodes and $m$ edges\n\\Ensure The score $score[v]$ of each node $v \\in V$\n\\For{each node $v \\in V$}\n    \\State update $score[v]$\n\\EndFor\n\\State \\textbf{return} $scores$\n\\end{algorithmic}\n\\end{algorithm}"
+  },
+  {
+    "file": "complexity.tex",
+    "line": 2,
+    "oldText": "\\section{Complexity}\nThe running time is O(n+m) for a graph with n nodes and m edges.",
+    "newText": "\\section{Complexity}\nAlgorithm~\\ref{alg:score} runs in $O(n+m)$ time for a graph with $n$ nodes and $m$ edges."
+  }
+]

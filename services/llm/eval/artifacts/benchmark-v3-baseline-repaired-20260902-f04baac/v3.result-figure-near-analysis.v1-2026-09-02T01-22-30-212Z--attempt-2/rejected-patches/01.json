@@ -1,0 +1,20 @@
+[
+  {
+    "file": "main.tex",
+    "line": 1,
+    "oldText": "\\documentclass{article}\n\\begin{document}",
+    "newText": "\\documentclass{article}\n\\usepackage{float}\n\\begin{document}"
+  },
+  {
+    "file": "sections/analysis.tex",
+    "line": 3,
+    "oldText": "\\begin{figure}[t]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}",
+    "newText": "\\begin{figure}[H]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}"
+  },
+  {
+    "file": "sections/analysis.tex",
+    "line": 8,
+    "oldText": "\\begin{figure}[b]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Ablation results}",
+    "newText": "\\begin{figure}[H]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Ablation results}"
+  }
+]

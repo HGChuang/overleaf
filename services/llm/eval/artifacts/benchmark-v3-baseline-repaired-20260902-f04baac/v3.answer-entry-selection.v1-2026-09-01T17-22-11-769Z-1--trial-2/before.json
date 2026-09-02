@@ -1,0 +1,18 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\section{Final submission}\nThe main document must show the complete answer.\n\\input{draft}\n\\end{document}\n"
+  },
+  {
+    "path": "draft.tex",
+    "content": "\\section{Draft version}\nDraft reasoning remains available for later reference.\n\\input{figures/diagram}\n"
+  },
+  {
+    "path": "answer.tex",
+    "content": "\\section{Complete answer version}\nThe complete answer includes the verified derivation.\n\\input{figures/diagram}\n"
+  },
+  {
+    "path": "figures/diagram.tex",
+    "content": "\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.55\\linewidth}{0pt}}\n\\caption{Answer diagram placeholder}\n\\label{fig:answer-diagram}\n\\end{figure}\n"
+  }
+]

@@ -1,0 +1,68 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "main.tex",
+        "values": [
+          "\\input{sections/methods}"
+        ]
+      },
+      "passed": true,
+      "message": "main.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "sections/methods.tex",
+        "values": [
+          "\\centering",
+          "Subfigure A: input",
+          "Subfigure B: encoder",
+          "Subfigure C: output",
+          "\\caption{Method pipeline}"
+        ]
+      },
+      "passed": true,
+      "message": "sections/methods.tex contains 5 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "regex_count",
+        "file": "sections/methods.tex",
+        "pattern": "\\\\subcaptionbox",
+        "count": 3
+      },
+      "passed": true,
+      "message": "sections/methods.tex regex count=3, expected=3"
+    },
+    {
+      "grader": {
+        "type": "file_matches",
+        "file": "sections/methods.tex",
+        "pattern": "0\\.31\\\\linewidth[\\s\\S]*0\\.31\\\\linewidth[\\s\\S]*0\\.31\\\\linewidth"
+      },
+      "passed": false,
+      "message": "sections/methods.tex matches /0\\.31\\\\linewidth[\\s\\S]*0\\.31\\\\linewidth[\\s\\S]*0\\.31\\\\linewidth/iu"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0,
+        "max_warnings": 20
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

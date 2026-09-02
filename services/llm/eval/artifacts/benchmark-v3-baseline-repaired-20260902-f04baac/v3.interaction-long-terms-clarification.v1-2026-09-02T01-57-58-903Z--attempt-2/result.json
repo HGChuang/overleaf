@@ -1,0 +1,30 @@
+{
+  "runId": "run_91416094-f476-446f-8cdc-a12ef930d5c3",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.interaction-long-terms-clarification.v1-2026-09-02T01-57-58-903Z--attempt-2",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.interaction-long-terms-clarification.v1",
+  "caseFamilyId": "v3.interaction-long-terms-clarification",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.interaction-long-terms-clarification.v1--trial-1--attempt-2",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 11054,
+    "output": 9073,
+    "cacheRead": 16384,
+    "cacheWrite": 0,
+    "totalTokens": 36511
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 4,
+    "search_project": 4
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 2,
+  "responseCount": 2,
+  "initialWorkspaceHash": "b4b063641c6d66ed01f987043bdd17e87345ce996d762e9cef2d768aa729fb1f",
+  "finalWorkspaceHash": "b4b063641c6d66ed01f987043bdd17e87345ce996d762e9cef2d768aa729fb1f",
+  "wallMs": 180348
+}

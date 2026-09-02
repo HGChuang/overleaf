@@ -1,0 +1,19 @@
+[
+  {
+    "request_event_id": "evt_57c25fb0-7d27-4e24-a50a-eab207ce2919",
+    "request_type": "turn_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "那就先不要写具体的 73。请改成谨慎表述，并明确标注相关数据待核实；我之后再补来源。",
+    "termination_reason": "选择删除具体数并谨慎表述。"
+  },
+  {
+    "request_event_id": "evt_7142dd29-fe05-4a73-a810-6f4381fbcf1a",
+    "request_type": "patch_decision_required",
+    "user_turn": 2,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "删除无来源具体数并明确待核实。",
+    "patch_decision": "accept"
+  }
+]

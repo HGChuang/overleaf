@@ -1,0 +1,20 @@
+[
+  {
+    "request_event_id": "evt_99dce68b-789d-4e50-bc1d-dadc53d84910",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "不对，我只需要改学位论文版本(main.tex)的页边距，会议版(conference.tex)的边距不要动。你怎么把会议版也改了？另外共享宏的改动会不会影响到会议版？",
+    "patch_decision": "reject",
+    "termination_reason": "Patch incorrectly modifies conference.tex margins which should remain unchanged per interaction facts; Copilot failed to clarify scope before proposing changes, and user needs to correct the misunderstanding."
+  },
+  {
+    "request_event_id": "evt_70587759-4a05-4716-9847-4ec66850bed3",
+    "request_type": "patch_decision_required",
+    "user_turn": 2,
+    "continue_conversation": false,
+    "user_message": "",
+    "patch_decision": "accept",
+    "termination_reason": "Patch now only modifies main.tex (thesis version) as requested, leaving conference.tex unchanged. User's scope correction has been addressed."
+  }
+]

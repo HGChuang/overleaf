@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "run_id": "run_50dd4343-955c-4ef7-848b-e3afab95757e",
+  "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "case_id": "v3.content-bilingual-sync.v1",
+  "case_family_id": "v3.content-bilingual-sync",
+  "trial_id": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.content-bilingual-sync.v1--trial-3",
+  "split": "dev",
+  "git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "prompt_hash": "e18aa8faa6b6547eed3162bbf654d4851959cd25d79751966a9bddc4a0d9a596",
+  "benchmark_hash": "c35b32fac2c1114f15cdfab20a8b48a0c37c16eee5f5bc8e7f3786e0120ea2a2",
+  "fixture_hash": "fc641558215ab762f328e1162f8b171ecee35d5a04db09443a6e47d0fff04b09",
+  "initial_workspace_hash": "fc641558215ab762f328e1162f8b171ecee35d5a04db09443a6e47d0fff04b09",
+  "eval_user_session_id": "eval-user-v3.content-bilingual-sync.v1",
+  "started_at": "2026-09-01T16:54:55.612Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "ended_at": "2026-09-01T16:55:43.423Z",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_9e77e037-5902-4b64-a51a-b3fab815fa6d"
+  },
+  "final_workspace_hash": "221eb338e332d89aaeebc5cee24a81527fe6d035d40b76fc4ee92c7c954b7074"
+}

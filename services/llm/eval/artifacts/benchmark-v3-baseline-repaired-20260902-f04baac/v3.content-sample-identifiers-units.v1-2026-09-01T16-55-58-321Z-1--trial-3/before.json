@@ -1,0 +1,18 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{sections/samples}\n\\input{sections/results}\n\\input{sections/conclusion}\n\\end{document}\n"
+  },
+  {
+    "path": "sections/samples.tex",
+    "content": "\\section{Samples}\nSample A has a thickness of 12 um. Sample B has a thickness of 15 um. Sample C has a thickness of 9 um.\n"
+  },
+  {
+    "path": "sections/results.tex",
+    "content": "\\section{Results}\nSample A produced the highest signal. Sample B was stable. Sample C was the control.\n"
+  },
+  {
+    "path": "sections/conclusion.tex",
+    "content": "\\section{Conclusion}\nThe order Sample A, Sample B, Sample C is retained in the analysis.\n"
+  }
+]

@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.appendix-header-short-mark.v1",
+  "case_family_id": "v3.appendix-header-short-mark",
+  "source_candidate_id": "v3.artifact.020",
+  "split": "dev",
+  "category": "附录长标题与页眉短显示",
+  "capabilities": [
+    "C3",
+    "C4",
+    "C6",
+    "C7"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "跨文件标题定位",
+      "页眉溢出保护",
+      "完整标题保留"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.appendix-header-short-mark",
+    "fixture_lineage": "v3.artifact.020",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{fancyhdr}\n\\pagestyle{fancy}\n\\fancyhead[L]{Research report}\n\\fancyhead[R]{\\leftmark}\n\\begin{document}\n\\input{appendix}\n\\end{document}\n"
+      },
+      {
+        "path": "appendix.tex",
+        "content": "\\appendix\n\\section{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}\n\\markboth{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}\nThe complete appendix title must remain in the section heading and table of contents.\n"
+      }
+    ],
+    "sha256": "54dfb2121c3d8769103db13f618243333e0e4dcc78256d70ffb27aa0c76be48d"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "many-files"
+  },
+  "user_goal": {
+    "public_brief": "请处理附录长标题导致的页眉溢出，正文标题和目录显示仍要完整。",
+    "interaction_facts": [
+      "完整附录标题必须保留在章节标题和目录中，不能截断或改写。",
+      "只允许为页眉设置短显示文本 Appendix Data，页边距和正文样式不变。",
+      "目标文件是 appendix.tex，主文件的输入关系必须保持有效。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "main.tex",
+        "value": "\\input{appendix}"
+      },
+      {
+        "file": "appendix.tex",
+        "value": "\\section{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}"
+      },
+      {
+        "file": "appendix.tex",
+        "value": "The complete appendix title must remain in the section heading and table of contents."
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "appendix.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "required-after-apply",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\input{appendix}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "appendix.tex",
+      "values": [
+        "\\section{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}",
+        "\\markboth{Appendix Data}{Appendix Data}",
+        "The complete appendix title must remain in the section heading and table of contents."
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "appendix.tex",
+      "values": [
+        "\\markboth{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}"
+      ]
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0,
+      "max_warnings": 20
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "appendix.tex",
+        "line": 3,
+        "oldText": "\\markboth{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}",
+        "newText": "\\markboth{Appendix Data}{Appendix Data}"
+      }
+    ],
+    "response": "已保留 appendix.tex 的完整附录标题，并将页眉改为短显示文本 Appendix Data，正文和目录关系不变。",
+    "grader_mutations": [
+      {
+        "mutation_id": "完整标题被截断",
+        "description": "为避免页眉溢出而截断了附录章节标题，目录信息不完整。",
+        "patches": [
+          {
+            "file": "appendix.tex",
+            "line": 2,
+            "oldText": "\\section{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}",
+            "newText": "\\section{A Very Long Appendix Title}"
+          }
+        ]
+      },
+      {
+        "mutation_id": "页眉仍使用完整长标题",
+        "description": "页眉没有设置短显示文本，长标题仍可能溢出页眉区域。",
+        "patches": [
+          {
+            "file": "appendix.tex",
+            "line": 3,
+            "oldText": "\\markboth{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}",
+            "newText": "\\markboth{Full Appendix Header}{Full Appendix Header}"
+          }
+        ]
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "附录",
+      "长标题",
+      "页眉",
+      "短显示文本",
+      "图表资源与项目组织"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文直接请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

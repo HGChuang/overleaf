@@ -1,0 +1,22 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\input{shared/macros}\n\\begin{document}\n\\input{main-paper}\n\\end{document}\n"
+  },
+  {
+    "path": "main-paper.tex",
+    "content": "\\section{Main Paper}\nThe main paper contains the key algorithm figure and the required experiment.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{30mm}{18mm}}\n\\caption{Key algorithm figure.}\n\\end{figure}\n"
+  },
+  {
+    "path": "supplement.tex",
+    "content": "\\section{Supplement}\nThe supplement contains implementation details and is counted separately from the main paper.\n"
+  },
+  {
+    "path": "anonymous.tex",
+    "content": "\\section*{Anonymous version}\nThe anonymous version shares the project macros and contains no author identity.\n"
+  },
+  {
+    "path": "shared/macros.tex",
+    "content": "\\newcommand{\\SharedCommand}{stable}\n\\newcommand{\\AlgorithmName}{Aurora}\n"
+  }
+]

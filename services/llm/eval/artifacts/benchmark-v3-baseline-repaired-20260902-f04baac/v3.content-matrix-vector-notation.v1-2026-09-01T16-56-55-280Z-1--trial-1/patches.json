@@ -1,0 +1,10 @@
+[
+  [
+    {
+      "file": "macros.tex",
+      "line": 2,
+      "oldText": "\\newcommand{\\mat}[1]{#1}",
+      "newText": "\\newcommand{\\mat}[1]{\\mathbf{#1}}"
+    }
+  ]
+]

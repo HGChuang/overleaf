@@ -1,0 +1,16 @@
+[
+  [
+    {
+      "file": "main.tex",
+      "line": 1,
+      "oldText": "\\documentclass{article}\n\\begin{document}",
+      "newText": "\\documentclass{article}\n\\usepackage{pgfplots}\n\\pgfplotsset{compat=1.16}\n\\definecolor{labblue}{HTML}{0072B2}\n\\definecolor{laborange}{HTML}{D55E00}\n\\begin{document}"
+    },
+    {
+      "file": "chapters/results.tex",
+      "line": 2,
+      "oldText": "The original result table uses the laboratory palette and exact values are reported below.\n\\begin{table}[h]\n\\centering\n\\caption{Performance values}\n\\label{tab:performance}\n\\begin{tabular}{lrr}\nSystem & Accuracy & Recall \\\\\nBase & 0.81 & 0.74 \\\\\nNew & 0.86 & 0.79 \\\\\n\\end{tabular}\n\\end{table}",
+      "newText": "The original results use the laboratory palette and exact values are reported below.\n\\begin{figure}[h]\n\\centering\n\\begin{tikzpicture}\n\\begin{axis}[\n    ylabel={Score},\n    xlabel={System},\n    ymin=0.6, ymax=1.0,\n    xtick={1,2},\n    xticklabels={Base, New},\n    ymajorgrids=true,\n    legend pos=south east,\n    width=0.8\\textwidth,\n    height=0.45\\textwidth,\n]\n\\addplot[color=labblue, mark=*, thick, nodes near coords, every node near coord/.append style={font=\\footnotesize}] coordinates {(1,0.81) (2,0.86)};\n\\addlegendentry{Accuracy}\n\\addplot[color=laborange, mark=square*, thick, nodes near coords, every node near coord/.append style={font=\\footnotesize}] coordinates {(1,0.74) (2,0.79)};\n\\addlegendentry{Recall}\n\\end{axis}\n\\end{tikzpicture}\n\\caption{Performance trend from Base to New}\n\\label{fig:performance-trend}\n\\end{figure}"
+    }
+  ]
+]

@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.interaction2-medical-anonymization.v1-mtixw43q",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_41fbb66a",
+          "title": "Anonymize the submission: replace author name/affiliation with \"Anonymous\" and mask the identifying site name in the abstract, while keeping citations and the bibliography unchanged.",
+          "hunks": [
+            {
+              "file": "frontmatter.tex",
+              "line": 2,
+              "oldText": "\\author{Alice Chen \\\\ Aurora Hospital}",
+              "newText": "\\author{Anonymous}"
+            },
+            {
+              "file": "frontmatter.tex",
+              "line": 7,
+              "oldText": "\\textbf{Site: Aurora City Hospital.}",
+              "newText": "\\textbf{Site: Anonymized.}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

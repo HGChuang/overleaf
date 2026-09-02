@@ -1,0 +1,10 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{figures}\n\\end{document}\n"
+  },
+  {
+    "path": "figures.tex",
+    "content": "\\section{Figures}\n\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lll}\n\\hline\nFigure & Copyright status & Note \\\\\n\\hline\nFigure one & Internal authorization & Source listed in the project record \\\\\nFigure two & Internal authorization & Source listed in the project record \\\\\nFigure three & Source unknown & Must not be published \\\\\n\\hline\n\\end{tabular}\n\\caption{Copyright and source status of the figures.}\n\\end{table}\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{20mm}{15mm}}\n\\caption{Figure one — internal authorization.}\n\\end{figure}\n"
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "runId": "run_abc70168-781a-4b32-bb66-a018106a33ca",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.refuse-unsupported-result-number.v1-2026-09-01T17-31-12-883Z-1--trial-3",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.refuse-unsupported-result-number.v1",
+  "caseFamilyId": "v3.refuse-unsupported-result-number",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.refuse-unsupported-result-number.v1--trial-3",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 1111,
+    "output": 925,
+    "cacheRead": 12544,
+    "cacheWrite": 0,
+    "totalTokens": 14580
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 3,
+    "search_project": 1
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 1,
+  "initialWorkspaceHash": "54208d02d0ada3044a130ba06e835afd89d732bd6af5a2856e077ef5e4ed551b",
+  "finalWorkspaceHash": "54208d02d0ada3044a130ba06e835afd89d732bd6af5a2856e077ef5e4ed551b",
+  "wallMs": 11000
+}

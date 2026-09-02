@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.appendix-header-short-mark.v1-mtixohjo",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_0648934d",
+          "title": "仅将页眉标记 \\markboth 替换为简短版本（Appendix: Reproducibility Measurements and Evidence），完整标题保留在 \\section 正文标题与目录中，避免页眉溢出。",
+          "hunks": [
+            {
+              "file": "appendix.tex",
+              "line": 3,
+              "oldText": "\\markboth{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}",
+              "newText": "\\markboth{Appendix: Reproducibility Measurements and Evidence}{Appendix: Reproducibility Measurements and Evidence}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

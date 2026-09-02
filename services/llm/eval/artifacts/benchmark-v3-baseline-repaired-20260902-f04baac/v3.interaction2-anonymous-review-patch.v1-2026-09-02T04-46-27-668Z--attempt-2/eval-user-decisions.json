@@ -1,0 +1,19 @@
+[
+  {
+    "request_event_id": "evt_2150cfcc-6317-46a1-b2d5-705efe585b06",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "patch_decision": "accept",
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "提案合理：隐藏了作者姓名和单位、移除了致谢、保留了必要自引且对其做了匿名化处理（bib 中作者改为 Anonymous，正文中措辞弱化），公开数据集和标题均保留。符合匿名评审版本的要求，接受该 patch。"
+  },
+  {
+    "request_event_id": "evt_12358575-6b75-4ff3-a6ff-979f37cf4bef",
+    "request_type": "turn_decision_required",
+    "user_turn": 1,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "匿名评审版本的主要目标已达成：作者、单位、致谢均已匿名化，自引也做了匿名处理，编译通过。用户需求已满足，无需继续对话。"
+  }
+]

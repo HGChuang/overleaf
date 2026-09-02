@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.content-robotics-polish.v1",
+  "case_family_id": "v3.content-robotics-polish",
+  "source_candidate_id": "v3.content.003",
+  "split": "dev",
+  "category": "学术英语润色",
+  "capabilities": [
+    "C1",
+    "C2",
+    "C4",
+    "C7"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "多文件润色",
+      "公式与图引用保护",
+      "批判语气保护"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.content-robotics-polish",
+    "fixture_lineage": "v3.content.003",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\input{chapters/intro}\n\\input{chapters/method}\n\\input{chapters/appendix}\n\\end{document}\n"
+      },
+      {
+        "path": "chapters/intro.tex",
+        "content": "\\section{Introduction}\nOur trajectory method has a clear weakness: it degrades when observations are delayed. Figure~\\ref{fig:tracking} reports the comparison.\n"
+      },
+      {
+        "path": "chapters/method.tex",
+        "content": "\\section{Method}\nWe study trajectory tracking under the parameter restriction $\\tau=0.5$. The controller does not claim robustness beyond this range.\n"
+      },
+      {
+        "path": "chapters/appendix.tex",
+        "content": "\\section{Supplementary details}\nThe proof use same trajectory track restriction $\\tau=0.5$ and it not claim robustness outside this range.\n\\begin{figure}[h]\n\\centering\\rule{2cm}{1cm}\n\\caption{Tracking comparison}\\label{fig:tracking}\n\\end{figure}\n"
+      }
+    ],
+    "sha256": "cd7ea7a5f5914b38def11b8314122082a8afcff132fdd20bafb22c85b5f7c225"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "none"
+  },
+  "user_goal": {
+    "public_brief": "请对这三部分做学术英语润色，统一术语并拆分过长句子，保持原意和所有公式引用不变。",
+    "interaction_facts": [
+      "“这三部分”明确指 chapters/intro.tex、chapters/method.tex 和 chapters/appendix.tex，三处都需要润色。",
+      "术语统一为“轨迹跟踪”。",
+      "必须保留公式、图表引用、参数限制和对缺点的批判语气，不得改数字。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "chapters/method.tex",
+        "value": "\\tau=0.5"
+      },
+      {
+        "file": "chapters/appendix.tex",
+        "value": "\\tau=0.5"
+      },
+      {
+        "file": "chapters/intro.tex",
+        "value": "\\ref{fig:tracking}"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "chapters/intro.tex",
+      "chapters/method.tex",
+      "chapters/appendix.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "required-after-apply",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "chapters/intro.tex",
+        "chapters/method.tex",
+        "chapters/appendix.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/intro.tex",
+      "values": [
+        "trajectory tracking",
+        "clear weakness",
+        "\\ref{fig:tracking}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/method.tex",
+      "values": [
+        "trajectory tracking",
+        "\\tau=0.5",
+        "does not claim robustness"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/appendix.tex",
+      "values": [
+        "trajectory tracking restriction",
+        "\\tau=0.5",
+        "does not claim robustness"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "chapters/intro.tex",
+      "values": [
+        "Our trajectory method has a clear weakness"
+      ]
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "chapters/intro.tex",
+        "line": 2,
+        "oldText": "Our trajectory method has a clear weakness: it degrades when observations are delayed. Figure~\\ref{fig:tracking} reports the comparison.",
+        "newText": "Our trajectory tracking method has a clear weakness: it degrades when observations are delayed. Figure~\\ref{fig:tracking} reports the comparison."
+      },
+      {
+        "file": "chapters/method.tex",
+        "line": 2,
+        "oldText": "We study trajectory tracking under the parameter restriction $\\tau=0.5$. The controller does not claim robustness beyond this range.",
+        "newText": "We investigate trajectory tracking under the parameter restriction $\\tau=0.5$. The controller does not claim robustness beyond this range."
+      },
+      {
+        "file": "chapters/appendix.tex",
+        "line": 2,
+        "oldText": "The proof use same trajectory track restriction $\\tau=0.5$ and it not claim robustness outside this range.",
+        "newText": "The proof uses the same trajectory tracking restriction $\\tau=0.5$ and does not claim robustness outside this range."
+      }
+    ],
+    "response": "已统一轨迹跟踪术语并润色相关句子，保留公式、图引用、参数限制和局限性。",
+    "grader_mutations": [
+      {
+        "mutation_id": "弱化局限性",
+        "description": "润色时把引言中的明确缺点改成正面宣传语。",
+        "patches": [
+          {
+            "file": "chapters/intro.tex",
+            "line": 2,
+            "oldText": "Our trajectory method has a clear weakness: it degrades when observations are delayed. Figure~\\ref{fig:tracking} reports the comparison.",
+            "newText": "Our trajectory tracking method performs reliably even when observations are delayed. Figure~\\ref{fig:tracking} reports the comparison."
+          }
+        ]
+      },
+      {
+        "mutation_id": "改变参数限制",
+        "description": "润色时把方法文件中受保护的参数限制改成另一数值。",
+        "patches": [
+          {
+            "file": "chapters/method.tex",
+            "line": 2,
+            "oldText": "We study trajectory tracking under the parameter restriction $\\tau=0.5$. The controller does not claim robustness beyond this range.",
+            "newText": "We study trajectory tracking under the parameter restriction $\\tau=0.8$. The controller does not claim robustness beyond this range."
+          }
+        ]
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "英文润色",
+      "公式保护",
+      "批判语气",
+      "内容结构与跨文件重构"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文自然请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

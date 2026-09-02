@@ -1,0 +1,27 @@
+{
+  "status": "success",
+  "errorCount": 4,
+  "errors": [
+    {
+      "file": null,
+      "line": 6,
+      "message": "Extra }, or forgotten \\endgroup."
+    },
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: \\begin{minipage} on input line 2 ended by \\end{slideblock}."
+    },
+    {
+      "file": null,
+      "line": 6,
+      "message": "Missing } inserted."
+    },
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: \\begin{slideblock} on input line 2 ended by \\end{itemize}."
+    }
+  ],
+  "warningCount": 0
+}

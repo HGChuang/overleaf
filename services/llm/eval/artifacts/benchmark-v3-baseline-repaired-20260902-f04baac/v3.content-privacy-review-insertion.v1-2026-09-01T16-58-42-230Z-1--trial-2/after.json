@@ -1,0 +1,10 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{related}\n\\begin{thebibliography}{3}\n\\bibitem{park2021} Park, 2021.\n\\bibitem{liu2022} Liu, 2022.\n\\bibitem{gao2023} Gao, 2023.\n\\end{thebibliography}\n\\end{document}\n"
+  },
+  {
+    "path": "related.tex",
+    "content": "\\section{Related work}\nWearable sensing improves access to continuous health measurements.\nWearable devices continuously capture sensitive health and behavioral data, which raises significant privacy concerns for users. Prior work has examined these privacy risks in wearable sensing \\cite{park2021,liu2022,gao2023}, highlighting the need for privacy-preserving designs in continuous health monitoring.\nThe remaining gap is the lack of a common evaluation protocol.\n"
+  }
+]

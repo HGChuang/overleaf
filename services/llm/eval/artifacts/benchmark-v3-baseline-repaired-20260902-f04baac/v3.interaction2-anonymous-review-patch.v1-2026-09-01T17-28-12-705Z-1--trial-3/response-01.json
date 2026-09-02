@@ -1,0 +1,43 @@
+{
+  "conversationId": "v3.interaction2-anonymous-review-patch.v1-mtixxsbx",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 4 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_acb9f449",
+          "title": "Anonymize the manuscript for double-blind review: replace author name/affiliation with \"Anonymous\", remove the institution-specific acknowledgment, and mask the self-citation (rewording + renaming bib key our2023→anon2023).",
+          "hunks": [
+            {
+              "file": "metadata.tex",
+              "line": 3,
+              "oldText": "\\author{Bob Li \\\\ Northlake University}",
+              "newText": "\\author{Anonymous}"
+            },
+            {
+              "file": "metadata.tex",
+              "line": 4,
+              "oldText": "\\section*{Acknowledgments}\nWe thank the Northlake University laboratory.",
+              "newText": "\\section*{Acknowledgments}\nRemoved for anonymous review."
+            },
+            {
+              "file": "chapters/findings.tex",
+              "line": 2,
+              "oldText": "The results use the public Atlas dataset and retain the necessary self-citation \\cite{our2023}.",
+              "newText": "The results use the public Atlas dataset and cite prior work \\cite{anon2023}."
+            },
+            {
+              "file": "refs.bib",
+              "line": 1,
+              "oldText": "@article{our2023,",
+              "newText": "@article{anon2023,"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{sections/introduction}\n\\input{sections/setup}\n\\input{sections/results}\n\\end{document}\n"
+  },
+  {
+    "path": "sections/introduction.tex",
+    "content": "\\section{Introduction}\nWe study binary sentiment classification on SST-2.\n"
+  },
+  {
+    "path": "sections/setup.tex",
+    "content": "\\section{Experimental Setup}\nWe use the official SST-2 split: 67,349 training examples and 1,821 test examples.\n"
+  },
+  {
+    "path": "sections/results.tex",
+    "content": "\\section{Results}\nThe primary metrics are Accuracy and Macro-F1.\n"
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.interaction-title-recovery.v1-mtjfwu09",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_8f8056b6",
+          "title": "Swap ctex for CJKutf8 and wrap the document body in a CJK environment so the Chinese title (and its TOC entry) typeset under pdfLaTeX.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 2,
+              "oldText": "\\usepackage[UTF8]{ctex}\n\\begin{document}\n\\tableofcontents",
+              "newText": "\\usepackage{CJKutf8}\n\\begin{document}\n\\begin{CJK}{UTF8}{gbsn}\n\\tableofcontents"
+            },
+            {
+              "file": "main.tex",
+              "line": 16,
+              "oldText": "The conclusion preserves the reported result and all existing prose.\n\\end{document}",
+              "newText": "The conclusion preserves the reported result and all existing prose.\n\\end{CJK}\n\\end{document}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

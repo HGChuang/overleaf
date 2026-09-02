@@ -1,0 +1,20 @@
+[
+  {
+    "file": "metadata.tex",
+    "line": 1,
+    "oldText": "\\title{A Study}\n\\author{Bob Li \\\\ Northlake University}\n\\section*{Acknowledgments}\nWe thank the Northlake University laboratory.",
+    "newText": "\\title{A Study}\n\\author{Anonymous}\n% Acknowledgments removed for anonymous review; restore in the camera-ready version."
+  },
+  {
+    "file": "chapters/findings.tex",
+    "line": 2,
+    "oldText": "The results use the public Atlas dataset and retain the necessary self-citation \\cite{our2023}.",
+    "newText": "The results use the public Atlas dataset and build on the prior study \\cite{our2023}."
+  },
+  {
+    "file": "refs.bib",
+    "line": 1,
+    "oldText": "@article{our2023,\n  title = {A public dataset study},\n  year = {2023}\n}",
+    "newText": "@article{our2023,\n  title = {A public dataset study},\n  author = {Anonymous},\n  year = {2023}\n}"
+  }
+]

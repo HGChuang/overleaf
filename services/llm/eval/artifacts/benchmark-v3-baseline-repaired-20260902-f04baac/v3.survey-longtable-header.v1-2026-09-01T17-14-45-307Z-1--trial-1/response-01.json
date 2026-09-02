@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.survey-longtable-header.v1-mtixghc6",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_e32fc34f",
+          "title": "将问卷结果表从 table+tabular 改写为 longtable，支持跨页并在续页顶部重复表头（带 continued 提示）。",
+          "hunks": [
+            {
+              "file": "tables/survey.tex",
+              "line": 1,
+              "oldText": "\\begin{table}[h]\n\\centering\n\\caption{Survey results}\n\\label{tab:survey}\n\\begin{tabular}{rll}\nNo. & Group & Percentage \\\\",
+              "newText": "\\begin{longtable}{rll}\n\\caption{Survey results}\\label{tab:survey}\\\\\n\\hline\nNo. & Group & Percentage \\\\\n\\hline\n\\endfirsthead\n\\multicolumn{3}{c}{\\tablename\\ \\thetable{} (continued)}\\\\\n\\hline\nNo. & Group & Percentage \\\\\n\\hline\n\\endhead\n\\hline\n\\endfoot\n\\hline\n\\endlastfoot"
+            },
+            {
+              "file": "tables/survey.tex",
+              "line": 30,
+              "oldText": "\\end{tabular}\n\\end{table}",
+              "newText": "\\end{longtable}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

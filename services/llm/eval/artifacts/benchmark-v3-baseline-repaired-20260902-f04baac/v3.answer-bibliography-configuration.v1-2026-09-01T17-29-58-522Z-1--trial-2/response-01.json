@@ -1,0 +1,9 @@
+{
+  "conversationId": "v3.answer-bibliography-configuration.v1-mtiy01zb",
+  "message": {
+    "role": "assistant",
+    "content": "项目中的参考文献是通过 **biblatex + biber** 机制配置的。具体分析如下：\n\n## 1. 参考文献生成机制\n\n**`main.tex` 中的配置（共 7 行）：**\n```latex\n\\documentclass{article}\n\\usepackage[backend=biber,style=authoryear]{biblatex}   % 加载 biblatex，后端 biber，样式 authoryear\n\\addbibresource{references.bib}                          % 挂载参考文献数据库\n\\begin{document}\nA configured bibliography.\n\\end{document}\n```\n\n- `\\usepackage[backend=biber,...]{biblatex}` 加载 biblatex 宏包，并指定**编译后端为 biber**（而非 bibtex）。\n- `\\addbibresource{references.bib}` 将数据库文件与文档关联。\n\n**`references.bib` 中的条目（1 条）：**\n```bibtex\n@article{verified, author={Li, Ming}, title={Verified Study}, year={2024}}\n```\n这是标准的 BibTeX/Biber 条目格式，`verified` 是引用键（citation key），字段为作者、标题、年份。\n\n## 2. 引用样式\n\n- **style=authoryear**：即**作者-年份**样式（author–year）。正文引用显示为「(Li Ming 2024)」或「Li Ming (2024)」这种格式，参考文献列表按作者/年份排序，而不是数字序号。\n- **backend=biber**：使用 biber 处理 `.bib` 文件，兼容 Unicode 和更多字段类型。\n\n## 3. 需要注意的一点 ⚠️\n\n虽然配置已就绪，但当前文档**实际上并不会生成任何参考文献列表**，原因是：\n\n1. 正文中**没有任何 `\\cite{...}` 引用命令**（只有纯文本 \"A configured bibliography.\"）；\n2. **缺少 `\\printbibliography` 命令**，因此即使有 `\\cite`，编译输出中也看不到参考文献表。\n\n## 4. 如何真正生成参考文献\n\n要生成参考文献，需要在文档中补充：\n- 正文引用位置加 `\\cite{verified}`；\n- 文档末尾加 `\\printbibliography`。\n\n若需要，我可以帮你在 `main.tex` 中添加这些命令，使参考文献真正生成出来。",
+    "blocks": []
+  },
+  "suggestedActions": []
+}

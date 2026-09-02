@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{sections/results}\n\\end{document}\n"
+  },
+  {
+    "path": "sections/results.tex",
+    "content": "\\section{Experimental results}\nThe first reaction uses structure~\\ref{fig:structure-a}.\nThe second reaction uses structure~\\ref{fig:structure-b}.\nReaction equation: A $\\rightarrow$ B.\n\\input{figures/structures}\n"
+  },
+  {
+    "path": "figures/structures.tex",
+    "content": "\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.55\\linewidth}{0pt}}\n\\caption{Structure A}\n\\label{fig:structure-a}\n\\end{figure}\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.55\\linewidth}{0pt}}\n\\caption{Structure B}\n\\label{fig:structure-b}\n\\end{figure}\n"
+  }
+]

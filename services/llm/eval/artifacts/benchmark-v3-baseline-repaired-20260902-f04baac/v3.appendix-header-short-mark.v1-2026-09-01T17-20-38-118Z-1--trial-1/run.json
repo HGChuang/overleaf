@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "run_id": "run_099491b3-b036-4f7a-966a-fa4c31925cff",
+  "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "case_id": "v3.appendix-header-short-mark.v1",
+  "case_family_id": "v3.appendix-header-short-mark",
+  "trial_id": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.appendix-header-short-mark.v1--trial-1",
+  "split": "dev",
+  "git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "prompt_hash": "46930b49506667843daa6812c9f3061194a3b7acb220a6fa9ab0482b191b4e29",
+  "benchmark_hash": "3feef8f6508886dce607fc0d8ac1a0e0e7923e25e9bc4d8c768e11adb798c6f5",
+  "fixture_hash": "54dfb2121c3d8769103db13f618243333e0e4dcc78256d70ffb27aa0c76be48d",
+  "initial_workspace_hash": "54dfb2121c3d8769103db13f618243333e0e4dcc78256d70ffb27aa0c76be48d",
+  "eval_user_session_id": "eval-user-v3.appendix-header-short-mark.v1",
+  "started_at": "2026-09-01T17:20:38.118Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "ended_at": "2026-09-01T17:21:10.393Z",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_5c8d375d-8d84-436a-862d-abcc0f0f321f"
+  },
+  "final_workspace_hash": "49ff34a90c3c77c60407ca25959e038ac549899fe6e141135b05b6687b32ac19"
+}

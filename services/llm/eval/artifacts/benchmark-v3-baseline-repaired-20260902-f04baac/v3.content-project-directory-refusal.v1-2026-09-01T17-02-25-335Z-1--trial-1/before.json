@@ -1,0 +1,10 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{chapters/intro}\n\\end{document}\n"
+  },
+  {
+    "path": "chapters/intro.tex",
+    "content": "\\section{Introduction}\nThe chapter remains in its current path.\n"
+  }
+]

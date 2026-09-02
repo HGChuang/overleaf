@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\input{settings}\n\\begin{document}\nCourse report body.\n\\input{appendix/notes}\n\\end{document}\n"
+  },
+  {
+    "path": "settings.tex",
+    "content": "\\newif\\ifshowappendix\n\\showappendixfalse\n\\ifshowappendix\n  \\newcommand{\\appendixnote}{Appendix note}\n\\fi\n"
+  },
+  {
+    "path": "appendix/notes.tex",
+    "content": "\\section*{Appendix notes}\n\\appendixnote{}\n"
+  }
+]

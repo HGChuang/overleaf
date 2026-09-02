@@ -1,0 +1,10 @@
+[
+  [
+    {
+      "file": "settings.tex",
+      "line": 1,
+      "oldText": "\\newif\\ifshowappendix\n\\showappendixfalse\n\\ifshowappendix\n  \\newcommand{\\appendixnote}{Appendix note}\n\\fi",
+      "newText": "\\newif\\ifshowappendix\n\\showappendixfalse\n\\newcommand{\\appendixnote}{Appendix note}"
+    }
+  ]
+]

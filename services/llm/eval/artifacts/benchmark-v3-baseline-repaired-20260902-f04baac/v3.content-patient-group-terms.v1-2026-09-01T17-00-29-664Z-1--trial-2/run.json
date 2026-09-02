@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "run_id": "run_dceaa872-1c49-4a4b-9d78-446ed93e806f",
+  "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "case_id": "v3.content-patient-group-terms.v1",
+  "case_family_id": "v3.content-patient-group-terms",
+  "trial_id": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.content-patient-group-terms.v1--trial-2",
+  "split": "dev",
+  "git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "prompt_hash": "d9655219d1034e647ad8129aa9443a937a740b45060180606222c2a500f04465",
+  "benchmark_hash": "3c5b8fb04346cab53da96511b73e8b5daf039d5eac2798a0ce0658f49fa1a915",
+  "fixture_hash": "f74652f62e546baa5569655c9b74ae877721ea1e5c09b89556aeb7c7daaf255a",
+  "initial_workspace_hash": "f74652f62e546baa5569655c9b74ae877721ea1e5c09b89556aeb7c7daaf255a",
+  "eval_user_session_id": "eval-user-v3.content-patient-group-terms.v1",
+  "started_at": "2026-09-01T17:00:29.664Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "ended_at": "2026-09-01T17:01:16.586Z",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_c0b11f05-fd38-4a7e-9624-0573e7f24462"
+  },
+  "final_workspace_hash": "f95f44665b09451167b879a70d0ba5a5835181855f9ae2941a63862b3eb11ad2"
+}

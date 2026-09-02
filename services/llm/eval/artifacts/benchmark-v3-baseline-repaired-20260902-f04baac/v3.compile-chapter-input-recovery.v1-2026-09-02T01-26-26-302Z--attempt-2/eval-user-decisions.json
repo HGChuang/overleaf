@@ -1,0 +1,19 @@
+[
+  {
+    "request_event_id": "evt_08bffb0f-ed95-42c6-ac64-ad7ace6827d1",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "仅修正输入路径，符合意图。",
+    "patch_decision": "accept"
+  },
+  {
+    "request_event_id": "evt_6f14656b-411a-4229-90e0-805da41b9d25",
+    "request_type": "turn_decision_required",
+    "user_turn": 1,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "路径修复后编译通过且正文未改。"
+  }
+]

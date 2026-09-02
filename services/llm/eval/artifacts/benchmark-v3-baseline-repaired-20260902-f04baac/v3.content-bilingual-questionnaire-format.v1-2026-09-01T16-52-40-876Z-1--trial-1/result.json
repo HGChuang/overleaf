@@ -1,0 +1,39 @@
+{
+  "runId": "run_6030f765-de9a-45ed-8be9-1421bd83b3ea",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.content-bilingual-questionnaire-format.v1-2026-09-01T16-52-40-876Z-1--trial-1",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.content-bilingual-questionnaire-format.v1",
+  "caseFamilyId": "v3.content-bilingual-questionnaire-format",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.content-bilingual-questionnaire-format.v1--trial-1",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "runner",
+    "failure_phase": "runner",
+    "error_type": "EVAL_USER_TIMEOUT",
+    "error_source": "dynamic_eval_user_protocol",
+    "error_message": "eval_user protocol response timed out after 120000ms",
+    "retryable": true,
+    "related_event_id": "evt_7d83363b-175e-4aa2-929a-953980bd5971"
+  },
+  "usage": {
+    "input": 17230,
+    "output": 15856,
+    "cacheRead": 28672,
+    "cacheWrite": 0,
+    "totalTokens": 61758
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 7,
+    "submit_patch": 2,
+    "search_project": 1
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 1,
+  "userTurnCount": 2,
+  "responseCount": 2,
+  "initialWorkspaceHash": "94361cebaa8b472c652af19ee5293b44d88ce2367eefc654e5782932959403af",
+  "finalWorkspaceHash": "94361cebaa8b472c652af19ee5293b44d88ce2367eefc654e5782932959403af",
+  "wallMs": 344361
+}

@@ -1,0 +1,22 @@
+[
+  [
+    {
+      "file": "methods.tex",
+      "line": 2,
+      "oldText": "We call the treatment group TG and the control group CG after their first full names.",
+      "newText": "We call the treatment group (TG) and the control group (CG) after their first full names."
+    },
+    {
+      "file": "flow.tex",
+      "line": 2,
+      "oldText": "The treatment group had 128 enrolled patients and the control group had 126.",
+      "newText": "TG had 128 enrolled patients and CG had 126."
+    },
+    {
+      "file": "supplement.tex",
+      "line": 2,
+      "oldText": "The treatment group and control group labels are used in the supplementary analysis.",
+      "newText": "The TG and CG labels are used in the supplementary analysis."
+    }
+  ]
+]

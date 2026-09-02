@@ -1,0 +1,42 @@
+Using default settings from /overleaf/services/llm/config/settings.defaults.cjs
+Redis connected successfully
+{
+  "runId": "run_3128f351-5801-426f-b226-28e84924c477",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.interaction2-medical-anonymization.v1-2026-09-01T17-26-54-649Z-1--trial-1",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.interaction2-medical-anonymization.v1",
+  "caseFamilyId": "v3.interaction2-medical-anonymization",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.interaction2-medical-anonymization.v1--trial-1",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_9ccea459-3e7f-4c50-9725-44ab48febe6e"
+  },
+  "usage": {
+    "input": 10117,
+    "output": 3004,
+    "cacheRead": 26624,
+    "cacheWrite": 0,
+    "totalTokens": 39745
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 4,
+    "search_project": 3,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "patchCount": 1,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 2,
+  "initialWorkspaceHash": "6c6742b49b573c5f29d102fe5fe6a0ed4b8b57895b3129bd379aea26648dec88",
+  "finalWorkspaceHash": "0dac2926a304a48249a355087a213ec8095c71e2eae9a706133e94adeba71200",
+  "wallMs": 32540
+}

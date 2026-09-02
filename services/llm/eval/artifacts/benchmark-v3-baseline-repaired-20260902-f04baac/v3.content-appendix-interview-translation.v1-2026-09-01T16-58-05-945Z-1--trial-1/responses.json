@@ -1,0 +1,14 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 1,
+    "kind": "automatic_verification",
+    "text": "编译成功 ✓\n\n`compile_project` 返回 **errorCount = 0，warningCount = 0**。gbsn（宋体）中文字体正常加载并输出 PDF，中文翻译已正确生效。\n\n本次改动摘要：\n- **appendix.tex** → 标题改为 `附录说明`，正文译为 `Model X200 的设备校准说明予以保留。`（保留设备型号 Model X200）\n- **interview.tex** → 标题改为 `访谈问题`，问题译为 `问题1：设备的使用方便程度如何？`，选项译为 `A. 非常困难；B. 困难；C. 一般；D. 容易；E. 非常容易。`（保留问题编号 1 与选项标签 A–E）\n\n问题编号、选项标签与设备型号均原样保留，文档无编译错误或警告。",
+    "hadPatch": false
+  }
+]

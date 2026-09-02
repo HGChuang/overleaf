@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{algorithm}\n\\input{complexity}\n\\end{document}\n"
+  },
+  {
+    "path": "algorithm.tex",
+    "content": "\\section{Algorithm}\n\\begin{verbatim}\nfor each node v:\n  update score[v]\nreturn scores\n\\end{verbatim}\n"
+  },
+  {
+    "path": "complexity.tex",
+    "content": "\\section{Complexity}\nThe running time is O(n+m) for a graph with n nodes and m edges.\n"
+  }
+]

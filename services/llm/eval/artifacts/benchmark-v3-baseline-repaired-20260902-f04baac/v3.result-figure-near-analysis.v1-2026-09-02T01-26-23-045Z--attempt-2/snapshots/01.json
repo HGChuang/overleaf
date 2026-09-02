@@ -1,0 +1,10 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{float}\n\\begin{document}\n\\input{sections/analysis}\n\\end{document}\n"
+  },
+  {
+    "path": "sections/analysis.tex",
+    "content": "\\section{Analysis}\nThe accuracy analysis appears before the result figures.\n\\begin{figure}[H]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}\n\\label{fig:accuracy}\n\\end{figure}\nThe ablation analysis is a separate paragraph.\n\\begin{figure}[b]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Ablation results}\n\\label{fig:ablation}\n\\end{figure}\n\\section{Conclusion}\nThe conclusion follows both analyses.\n"
+  }
+]

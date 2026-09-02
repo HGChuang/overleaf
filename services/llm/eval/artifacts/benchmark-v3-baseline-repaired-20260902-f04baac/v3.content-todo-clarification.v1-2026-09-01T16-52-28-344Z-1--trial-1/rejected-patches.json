@@ -1,0 +1,16 @@
+[
+  [
+    {
+      "file": "experiment.tex",
+      "line": 1,
+      "oldText": "\\section{Experiment}\n% TODO: fill the sample count from Table 3",
+      "newText": "\\section{Experiment}\nThe experiment was run on 42 samples (Table~3)."
+    },
+    {
+      "file": "experiment.tex",
+      "line": 3,
+      "oldText": "% TODO: source unknown; keep this item",
+      "newText": "% TODO: source unknown for this item; no citation exists in the project.\n%       Add the reference here once the source is identified."
+    }
+  ]
+]

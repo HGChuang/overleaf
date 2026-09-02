@@ -1,0 +1,52 @@
+{
+  "status": "success",
+  "errorCount": 9,
+  "errors": [
+    {
+      "file": null,
+      "line": null,
+      "message": "Package siunitx Error: Invalid number '1,234,567'."
+    },
+    {
+      "file": null,
+      "line": 21,
+      "message": "Forbidden control sequence found while scanning use of \\__siunitx_table_color"
+    },
+    {
+      "file": null,
+      "line": 21,
+      "message": "Missing \\endgroup inserted."
+    },
+    {
+      "file": null,
+      "line": null,
+      "message": "Package siunitx Error: Invalid number '2,345,678'."
+    },
+    {
+      "file": null,
+      "line": 22,
+      "message": "Forbidden control sequence found while scanning use of \\__siunitx_table_color"
+    },
+    {
+      "file": null,
+      "line": 22,
+      "message": "Missing \\endgroup inserted."
+    },
+    {
+      "file": null,
+      "line": null,
+      "message": "Package siunitx Error: Invalid number '1,876,543'."
+    },
+    {
+      "file": null,
+      "line": 22,
+      "message": "Forbidden control sequence found while scanning use of \\__siunitx_table_color"
+    },
+    {
+      "file": null,
+      "line": 22,
+      "message": "Missing \\endgroup inserted."
+    }
+  ],
+  "warningCount": 0
+}

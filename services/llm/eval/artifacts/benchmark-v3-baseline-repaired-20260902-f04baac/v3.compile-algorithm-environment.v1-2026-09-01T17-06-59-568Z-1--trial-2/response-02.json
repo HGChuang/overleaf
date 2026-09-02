@@ -1,0 +1,9 @@
+{
+  "conversationId": "v3.compile-algorithm-environment.v1-mtix6hz1",
+  "message": {
+    "role": "assistant",
+    "content": "✅ 编译通过（errorCount = 0，无警告），修复成功。\n\n**原因回顾：** `main.tex` 未加载 `algorithm` 宏包，导致 `\\begin{algorithm}` 未定义，连带引发 `\\caption outside float` 和 `\\end{document} ended by \\end{algorithm}` 三个错误；`\\label{alg:search}` 因此从未生效，正文 `Algorithm~\\ref{alg:search}` 显示为 `??`。\n\n**修复内容：** 在 `main.tex` 导言区加入 `\\usepackage{algorithm}`（`algorithm.sty` 已正常加载）。现在算法浮动体正常排版，`\\label{alg:search}` 生效，正文引用会正确显示为 **Algorithm 1**。\n\n**小提示：** 若后续要在算法体内写伪代码（`\\begin{algorithmic}` / `\\If` 等），还需再加载 `\\usepackage{algpseudocode}`（或 `algorithmic`），届时告诉我即可帮你加上。",
+    "blocks": []
+  },
+  "suggestedActions": []
+}

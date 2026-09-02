@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.content-multifile-translation.v1",
+  "case_family_id": "v3.content-multifile-translation",
+  "source_candidate_id": "v3.content.004",
+  "split": "dev",
+  "category": "跨文件学术翻译",
+  "capabilities": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C7"
+  ],
+  "difficulty": {
+    "level": "D4",
+    "factors": [
+      "多文件目标发现",
+      "翻译完整性",
+      "名称公式引用保护"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.content-multifile-translation",
+    "fixture_lineage": "v3.content.004",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\input{sections/intro}\n\\input{sections/method}\n\\input{sections/appendix}\n\\input{refs}\n\\end{document}\n"
+      },
+      {
+        "path": "sections/intro.tex",
+        "content": "\\section{Introduction}\n% 中文正文：本研究考察可解释的边缘推理。项目名称 Aurora 不翻译，方法引用 \\cite{wang2022} 保留。\n"
+      },
+      {
+        "path": "sections/method.tex",
+        "content": "\\section{Method}\n% 中文正文：我们优化目标函数 $L(\\theta)=\\|y-f_\\theta(x)\\|^2$。\n"
+      },
+      {
+        "path": "sections/appendix.tex",
+        "content": "\\section{Appendix}\n% 中文批注：附录中的注释规则不翻译为正文。\n% 中文正文：附录记录实现细节。\n"
+      },
+      {
+        "path": "refs.tex",
+        "content": "\\begin{thebibliography}{1}\n\\bibitem{wang2022} Wang, 2022.\n\\end{thebibliography}\n"
+      }
+    ],
+    "sha256": "bc8cfa6ba49c60cd83bded8f5c6337d77c9dc6c54842c1baa50ba6665bf76825"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "none"
+  },
+  "user_goal": {
+    "public_brief": "请把这些章节翻译成自然、正式的学术英语，保留 LaTeX 结构、引用和公式，并补齐尚未翻译的中文段落。",
+    "interaction_facts": [
+      "“这些章节”明确指 sections/intro.tex、sections/method.tex 和 sections/appendix.tex；refs.tex 只是参考文献，不是翻译目标。",
+      "项目名称 Aurora 不翻译。",
+      "保留章节、名称、公式和引用；中文批注仍按批注规则处理，不得漏译正文。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "sections/intro.tex",
+        "value": "Aurora"
+      },
+      {
+        "file": "sections/intro.tex",
+        "value": "\\cite{wang2022}"
+      },
+      {
+        "file": "sections/method.tex",
+        "value": "L(\\theta)"
+      },
+      {
+        "file": "sections/method.tex",
+        "value": "\\|y-f_\\theta(x)\\|^2"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "sections/intro.tex",
+      "sections/method.tex",
+      "sections/appendix.tex",
+      "refs.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "required-after-apply",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "sections/intro.tex",
+        "sections/method.tex",
+        "sections/appendix.tex"
+      ]
+    },
+    {
+      "type": "file_matches",
+      "file": "sections/intro.tex",
+      "pattern": "(?=[\\s\\S]*(?:interpretable|explainable))(?=[\\s\\S]*edge inference)[\\s\\S]*Aurora[\\s\\S]*\\\\cite\\{wang2022\\}"
+    },
+    {
+      "type": "file_contains",
+      "file": "sections/intro.tex",
+      "values": [
+        "Aurora",
+        "\\cite{wang2022}"
+      ]
+    },
+    {
+      "type": "file_matches",
+      "file": "sections/method.tex",
+      "pattern": "(?=[\\s\\S]*(?:optimiz|objective))(?=[\\s\\S]*L\\(\\\\theta\\)=\\\\\\|y-f_\\\\theta\\(x\\)\\\\\\|\\^2)[\\s\\S]*"
+    },
+    {
+      "type": "file_contains",
+      "file": "sections/method.tex",
+      "values": [
+        "L(\\theta)",
+        "\\|y-f_\\theta(x)\\|^2"
+      ]
+    },
+    {
+      "type": "file_matches",
+      "file": "sections/appendix.tex",
+      "pattern": "(?=[\\s\\S]*appendix)(?=[\\s\\S]*implementation)(?=[\\s\\S]*detail)[\\s\\S]*"
+    },
+    {
+      "type": "file_not_contains",
+      "file": "sections/intro.tex",
+      "values": [
+        "本研究考察"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "sections/method.tex",
+      "values": [
+        "我们优化目标函数"
+      ]
+    },
+    {
+      "type": "file_unchanged",
+      "file": "refs.tex"
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "sections/intro.tex",
+        "line": 2,
+        "oldText": "% 中文正文：本研究考察可解释的边缘推理。项目名称 Aurora 不翻译，方法引用 \\cite{wang2022} 保留。",
+        "newText": "This study examines interpretable edge inference. The project name Aurora remains unchanged, and the method citation \\cite{wang2022} is preserved."
+      },
+      {
+        "file": "sections/method.tex",
+        "line": 2,
+        "oldText": "% 中文正文：我们优化目标函数 $L(\\theta)=\\|y-f_\\theta(x)\\|^2$。",
+        "newText": "We optimize the objective $L(\\theta)=\\|y-f_\\theta(x)\\|^2$."
+      },
+      {
+        "file": "sections/appendix.tex",
+        "line": 3,
+        "oldText": "% 中文正文：附录记录实现细节。",
+        "newText": "The appendix records implementation details."
+      }
+    ],
+    "response": "已翻译三个章节文件，保留 Aurora、公式、引用及中文批注规则；补丁应用后编译通过。",
+    "grader_mutations": [
+      {
+        "mutation_id": "漏译附录正文",
+        "description": "只翻译引言和方法，附录正文仍保留中文。",
+        "patches": [
+          {
+            "file": "sections/appendix.tex",
+            "line": 3,
+            "oldText": "% 中文正文：附录记录实现细节。",
+            "newText": "% 附录正文仍为中文，翻译尚未完成。"
+          }
+        ]
+      },
+      {
+        "mutation_id": "误改项目名称",
+        "description": "翻译时把受保护的项目名称 Aurora 翻译成其他名称。",
+        "patches": [
+          {
+            "file": "sections/intro.tex",
+            "line": 2,
+            "oldText": "% 中文正文：本研究考察可解释的边缘推理。项目名称 Aurora 不翻译，方法引用 \\cite{wang2022} 保留。",
+            "newText": "This study examines interpretable edge inference. The project name Dawn is translated, and the method citation \\cite{wang2022} is preserved."
+          }
+        ]
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "翻译",
+      "多文件",
+      "公式与引用",
+      "内容结构与跨文件重构"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文自然请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

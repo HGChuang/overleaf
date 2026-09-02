@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.content-sample-identifiers-units.v1",
+  "case_family_id": "v3.content-sample-identifiers-units",
+  "source_candidate_id": "v3.content.009",
+  "split": "dev",
+  "category": "跨文件编号与单位",
+  "capabilities": [
+    "C1",
+    "C2",
+    "C4",
+    "C6",
+    "C7"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "目标发现",
+      "编号全局同步",
+      "单位格式保护"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.content-sample-identifiers-units",
+    "fixture_lineage": "v3.content.009",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\input{sections/samples}\n\\input{sections/results}\n\\input{sections/conclusion}\n\\end{document}\n"
+      },
+      {
+        "path": "sections/samples.tex",
+        "content": "\\section{Samples}\nSample A has a thickness of 12 um. Sample B has a thickness of 15 um. Sample C has a thickness of 9 um.\n"
+      },
+      {
+        "path": "sections/results.tex",
+        "content": "\\section{Results}\nSample A produced the highest signal. Sample B was stable. Sample C was the control.\n"
+      },
+      {
+        "path": "sections/conclusion.tex",
+        "content": "\\section{Conclusion}\nThe order Sample A, Sample B, Sample C is retained in the analysis.\n"
+      }
+    ],
+    "sha256": "6c1329ace467263fc15cc2530ce580c8e1931e3310009338b3fe9372e0481eae"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "none"
+  },
+  "user_goal": {
+    "public_brief": "请同步样品编号和单位，并检查相关章节的交叉引用；必要时修改结论中对应的句子。",
+    "interaction_facts": [
+      "旧样品编号必须依次改为 S01、S02、S03，厚度单位统一写成微米格式。",
+      "保留测量数值、样品顺序、主要结论和章节引用，不得擅自命名或删引用。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "sections/samples.tex",
+        "value": "12"
+      },
+      {
+        "file": "sections/samples.tex",
+        "value": "15"
+      },
+      {
+        "file": "sections/samples.tex",
+        "value": "9"
+      },
+      {
+        "file": "sections/results.tex",
+        "value": "highest signal"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "sections/samples.tex",
+      "sections/results.tex",
+      "sections/conclusion.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "required-after-apply",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "sections/samples.tex",
+        "sections/results.tex",
+        "sections/conclusion.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "sections/samples.tex",
+      "values": [
+        "S01",
+        "S02",
+        "S03",
+        "12",
+        "15",
+        "9",
+        "12~$\\mu$m",
+        "15~$\\mu$m",
+        "9~$\\mu$m"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "sections/results.tex",
+      "values": [
+        "S01",
+        "S02",
+        "S03",
+        "highest signal"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "sections/conclusion.tex",
+      "values": [
+        "S01, S02, S03"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "sections/samples.tex",
+      "values": [
+        "Sample A",
+        "Sample B",
+        "Sample C",
+        " um"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "sections/results.tex",
+      "values": [
+        "Sample A",
+        "Sample B",
+        "Sample C"
+      ]
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "sections/samples.tex",
+        "line": 2,
+        "oldText": "Sample A has a thickness of 12 um. Sample B has a thickness of 15 um. Sample C has a thickness of 9 um.",
+        "newText": "S01 has a thickness of 12~$\\mu$m. S02 has a thickness of 15~$\\mu$m. S03 has a thickness of 9~$\\mu$m."
+      },
+      {
+        "file": "sections/results.tex",
+        "line": 2,
+        "oldText": "Sample A produced the highest signal. Sample B was stable. Sample C was the control.",
+        "newText": "S01 produced the highest signal. S02 was stable. S03 was the control."
+      },
+      {
+        "file": "sections/conclusion.tex",
+        "line": 2,
+        "oldText": "The order Sample A, Sample B, Sample C is retained in the analysis.",
+        "newText": "The order S01, S02, S03 is retained in the analysis."
+      }
+    ],
+    "response": "已在样品、结果和结论文件同步编号，并将厚度单位统一为微米格式；数值、顺序和结论均保留，编译通过。",
+    "grader_mutations": [
+      {
+        "mutation_id": "漏改结论编号",
+        "description": "只更新样品和结果文件，结论仍使用旧编号。",
+        "patches": [
+          {
+            "file": "sections/conclusion.tex",
+            "line": 2,
+            "oldText": "The order Sample A, Sample B, Sample C is retained in the analysis.",
+            "newText": "The original sample order is retained in the analysis."
+          }
+        ]
+      },
+      {
+        "mutation_id": "改变测量数值",
+        "description": "同步单位时擅自把第二个样品的厚度改成 18 微米。",
+        "patches": [
+          {
+            "file": "sections/samples.tex",
+            "line": 2,
+            "oldText": "Sample A has a thickness of 12 um. Sample B has a thickness of 15 um. Sample C has a thickness of 9 um.",
+            "newText": "S01 has a thickness of 12~$\\mu$m. S02 has a thickness of 18~$\\mu$m. S03 has a thickness of 9~$\\mu$m."
+          }
+        ]
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "样品编号",
+      "单位",
+      "跨文件",
+      "内容结构与跨文件重构"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文自然请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

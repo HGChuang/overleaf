@@ -1,0 +1,9 @@
+{
+  "conversationId": "v3.content-pseudocode-normalization.v1-mtiwz7gy",
+  "message": {
+    "role": "assistant",
+    "content": "编译通过 ✅（errorCount = 0，无警告），所有修改已生效。\n\n本次改动摘要：\n\n1. **main.tex** — 添加 `\\usepackage{algorithm}` 和 `\\usepackage{algpseudocode}`，使算法环境可正常编译。\n\n2. **algorithm.tex** — 将原 `verbatim` 块整理为规范算法环境：\n   - `\\Require`（输入）：图 $G=(V,E)$，含 $n$ 个节点、$m$ 条边\n   - `\\Ensure`（输出）：每个节点 $v$ 的得分 $score[v]$\n   - 通过 `\\begin{algorithmic}[1]` 自动补齐步骤编号\n   - 添加 `\\caption` 与 `\\label{alg:score}`\n\n3. **complexity.tex** — 复杂度分析改为引用算法：\"Algorithm~\\ref{alg:score} runs in $O(n+m)$ time...\"，修正了原来未关联算法的引用。",
+    "blocks": []
+  },
+  "suggestedActions": []
+}

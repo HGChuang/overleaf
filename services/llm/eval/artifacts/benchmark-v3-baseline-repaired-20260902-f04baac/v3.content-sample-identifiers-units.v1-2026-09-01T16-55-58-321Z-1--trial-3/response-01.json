@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.content-sample-identifiers-units.v1-mtiwsbr0",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_d4c72697",
+          "title": "将 samples.tex 中三处厚度单位由非标准写法 \\\"um\\\" 统一为微米符号 $\\\\mu$m（12/15/9 $\\\\mu$m）。样品编号 A/B/C 已跨章节一致，结论句不涉及单位，均无需修改。",
+          "hunks": [
+            {
+              "file": "sections/samples.tex",
+              "line": 2,
+              "oldText": "Sample A has a thickness of 12 um. Sample B has a thickness of 15 um. Sample C has a thickness of 9 um.",
+              "newText": "Sample A has a thickness of 12 $\\mu$m. Sample B has a thickness of 15 $\\mu$m. Sample C has a thickness of 9 $\\mu$m."
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

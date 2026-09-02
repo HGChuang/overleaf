@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "run_id": "run_fc66d16f-2ce2-45c5-a1ac-ef5e9dd51318",
+  "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "case_id": "v3.noop-theorem-numbering-already-scoped.v1",
+  "case_family_id": "v3.noop-theorem-numbering-already-scoped",
+  "trial_id": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.noop-theorem-numbering-already-scoped.v1--trial-3",
+  "split": "dev",
+  "git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "prompt_hash": "68938a227c0203c71d4196d6ff2705b0243b5cd5ae34b8c162b98d701b7b374d",
+  "benchmark_hash": "caddd61676a02f630dad8dd89c374ea26c50fc8ad4e542251b617b6709087b40",
+  "fixture_hash": "4e550e1445fa89803f9e2f17cca1904faceb6d21daee2544d83ea840a0a147fa",
+  "initial_workspace_hash": "4e550e1445fa89803f9e2f17cca1904faceb6d21daee2544d83ea840a0a147fa",
+  "eval_user_session_id": "eval-user-v3.noop-theorem-numbering-already-scoped.v1",
+  "started_at": "2026-09-01T17:30:47.876Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "ended_at": "2026-09-01T17:30:56.351Z",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_c8a4ff25-3ae3-4fe1-8b92-d928daba7275"
+  },
+  "final_workspace_hash": "4e550e1445fa89803f9e2f17cca1904faceb6d21daee2544d83ea840a0a147fa"
+}

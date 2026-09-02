@@ -1,0 +1,30 @@
+Using default settings from /overleaf/services/llm/config/settings.defaults.cjs
+Redis connected successfully
+{
+  "runId": "run_999bd721-2a26-4e88-a92e-352658f4009f",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.noop-title-already-exact.v1-2026-09-01T17-30-25-958Z-1--trial-3",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.noop-title-already-exact.v1",
+  "caseFamilyId": "v3.noop-title-already-exact",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.noop-title-already-exact.v1--trial-3",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 255,
+    "output": 207,
+    "cacheRead": 8192,
+    "cacheWrite": 0,
+    "totalTokens": 8654
+  },
+  "toolCalls": {
+    "read_file": 1
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 1,
+  "initialWorkspaceHash": "0dafa16f1fb9f4736f1bda05c4b1c7e40d36aeec3879767d810cc2b74a085aca",
+  "finalWorkspaceHash": "0dafa16f1fb9f4736f1bda05c4b1c7e40d36aeec3879767d810cc2b74a085aca",
+  "wallMs": 5564
+}

@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.compile-duplicate-environment.v1-mtix3lyv",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_716873bb",
+          "title": "移除 chapters/code.tex 中与 config.tex 重复的 codeblock 环境定义，保留全局定义以保证代码排版不变",
+          "hunks": [
+            {
+              "file": "chapters/code.tex",
+              "line": 1,
+              "oldText": "% 本章为代码环境提供局部设置。\n\\newenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}",
+              "newText": "% 代码环境已在 config.tex 中统一定义，本章无需重复定义。"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

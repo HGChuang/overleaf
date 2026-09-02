@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "run_id": "run_11e3adb1-c11a-47ca-be9f-269a645b56e1",
+  "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "case_id": "v3.content-pseudocode-normalization.v1",
+  "case_family_id": "v3.content-pseudocode-normalization",
+  "trial_id": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.content-pseudocode-normalization.v1--trial-3",
+  "split": "dev",
+  "git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "prompt_hash": "202e98853ac33ce207c8f9e0f06339a9adf4dbe3c7d7e8e811b8e4108ced467b",
+  "benchmark_hash": "1a674d4bafc9321531e979f91d0d678cba99c8612bec7d7e467e0130e4058001",
+  "fixture_hash": "09abb988516f85d934fd26726379bf7654800733522192283e6c1b99403c4317",
+  "initial_workspace_hash": "09abb988516f85d934fd26726379bf7654800733522192283e6c1b99403c4317",
+  "eval_user_session_id": "eval-user-v3.content-pseudocode-normalization.v1",
+  "started_at": "2026-09-01T17:02:00.695Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "ended_at": "2026-09-01T17:02:27.506Z",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_300d5300-dd16-485e-b54f-2cc81fcb543f"
+  },
+  "final_workspace_hash": "7e9dcd8549dcd2a3024d9958306fb689a212b0e25686f94ddd8b148b48c5a133"
+}

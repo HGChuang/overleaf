@@ -1,0 +1,18 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\input{shared/style}\n\\begin{document}\n\\input{chapters/body}\n\\end{document}\n"
+  },
+  {
+    "path": "shared/style.tex",
+    "content": "\\usepackage{amsmath}\n\\newcommand{\\ProjectColor}{black}\n\\newcommand{\\LegacyLayout}{stable}\n"
+  },
+  {
+    "path": "chapters/body.tex",
+    "content": "\\section{Report}\nThe customer delivery uses the existing custom commands and chart layout.\n"
+  },
+  {
+    "path": "conference.tex",
+    "content": "\\documentclass{article}\n\\usepackage[margin=0.75in]{geometry}\n\\begin{document}\nThe conference version must keep its old appearance.\n\\end{document}\n"
+  }
+]

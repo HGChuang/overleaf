@@ -1,0 +1,14 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 1,
+    "kind": "automatic_verification",
+    "text": "✅ 编译已通过。\n\n**验证结果**：`compile_project` 返回 `errorCount: 0`，`warningCount: 0`。日志确认：\n\n- `(./main.tex)` → `(./shared.tex)` → `(./assets/results.tex)` 全部正常加载\n- `Output written on output.pdf (1 page, 23408 bytes)`，PDF 成功产出\n\n之前的 `LaTeX Error: File 'figures/results.tex' not found.` 已随补丁修复消除：`main.tex` 现引用 `assets/results.tex`（`figures/` 改名后的正确路径），且主论文不再并入 `supplement-body.tex`，主论文与补充材料（`supplement.tex`）的输入关系已按预期理清。",
+    "hadPatch": false
+  }
+]

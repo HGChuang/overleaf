@@ -1,0 +1,10 @@
+[
+  [
+    {
+      "file": "main.tex",
+      "line": 5,
+      "oldText": "\\input{chapters/whitepaper}\n\\printglossary\n\\printbibliography\n\\printindex",
+      "newText": "\\input{chapters/whitepaper}\n\\input{glossary}\n\\input{references}\n\\printindex"
+    }
+  ]
+]

@@ -1,0 +1,112 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "patch_files",
+        "files": [
+          "lessons/seven.tex"
+        ]
+      },
+      "passed": true,
+      "message": "patch files=[\"lessons/seven.tex\"]"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "main.tex",
+        "values": [
+          "\\input{lessons/seven}"
+        ]
+      },
+      "passed": true,
+      "message": "main.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "lessons/seven.tex",
+        "values": [
+          "The shared counter remains stable."
+        ]
+      },
+      "passed": true,
+      "message": "lessons/seven.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "answers/seven.tex",
+        "values": [
+          "The answer keeps the original lesson numbering."
+        ]
+      },
+      "passed": true,
+      "message": "answers/seven.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "lessons/seven.tex",
+        "values": [
+          "\\end{enumerate}\n\\end{enumerate}"
+        ]
+      },
+      "passed": false,
+      "message": "lessons/seven.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_not_contains",
+        "file": "lessons/seven.tex",
+        "values": [
+          "\\end{itemize}"
+        ]
+      },
+      "passed": false,
+      "message": "lessons/seven.tex excludes 1 forbidden value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "main.tex"
+      },
+      "passed": true,
+      "message": "main.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "answers/seven.tex"
+      },
+      "passed": true,
+      "message": "answers/seven.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "user_turns",
+        "min": 1,
+        "max": 2
+      },
+      "passed": true,
+      "message": "user turns=2"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

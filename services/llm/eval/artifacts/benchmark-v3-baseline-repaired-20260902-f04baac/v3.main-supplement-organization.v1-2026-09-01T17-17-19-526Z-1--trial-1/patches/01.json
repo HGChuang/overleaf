@@ -1,0 +1,8 @@
+[
+  {
+    "file": "main.tex",
+    "line": 4,
+    "oldText": "\\section{Main paper}\n\\input{figures/results}\n\\input{supplement-body}",
+    "newText": "\\section{Main paper}\n\\input{assets/results}"
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.combined-chart-group.v1-mtixg0l3",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_2fd329a2",
+          "title": "合并柱状图和折线图为同一个 figure 组，用两个 subfigure（上柱状图、下折线图），保留各自的 caption 和 label。",
+          "hunks": [
+            {
+              "file": "sections/results.tex",
+              "line": 1,
+              "oldText": "\\section{Results}\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.75\\linewidth}{0pt}}\n\\caption{Bar chart explanation}\n\\label{fig:model-bar}\n\\end{figure}\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.75\\linewidth}{0pt}}\n\\caption{Line chart explanation}\n\\label{fig:model-line}\n\\end{figure}",
+              "newText": "\\section{Results}\n\\begin{figure}[h]\n\\centering\n\\begin{subfigure}{0.75\\linewidth}\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.75\\linewidth}{0pt}}\n\\caption{Bar chart explanation}\n\\label{fig:model-bar}\n\\end{subfigure}\n\n\\vspace{1em}\n\n\\begin{subfigure}{0.75\\linewidth}\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.75\\linewidth}{0pt}}\n\\caption{Line chart explanation}\n\\label{fig:model-line}\n\\end{subfigure}\n\\end{figure}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

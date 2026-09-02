@@ -1,0 +1,18 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\input{shared/macros}\n\\usepackage[margin=\\SharedMargin]{geometry}\n\\begin{document}\n\\input{thesis/body}\n\\end{document}\n"
+  },
+  {
+    "path": "thesis/body.tex",
+    "content": "\\section{Thesis}\nThe thesis layout is governed by the shared command \\ThesisName.\n"
+  },
+  {
+    "path": "shared/macros.tex",
+    "content": "\\newcommand{\\ThesisName}{Aurora Thesis}\n\\newcommand{\\SharedMargin}{1in}\n"
+  },
+  {
+    "path": "conference.tex",
+    "content": "\\documentclass{article}\n\\input{shared/macros}\n\\usepackage[margin=\\SharedMargin]{geometry}\n\\begin{document}\nConference layout remains stable.\n\\end{document}\n"
+  }
+]

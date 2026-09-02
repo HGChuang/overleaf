@@ -1,0 +1,10 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{fancyhdr}\n\\pagestyle{fancy}\n\\fancyhead[L]{Research report}\n\\fancyhead[R]{\\leftmark}\n\\begin{document}\n\\input{appendix}\n\\end{document}\n"
+  },
+  {
+    "path": "appendix.tex",
+    "content": "\\appendix\n\\section{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}\n\\markboth{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}\nThe complete appendix title must remain in the section heading and table of contents.\n"
+  }
+]

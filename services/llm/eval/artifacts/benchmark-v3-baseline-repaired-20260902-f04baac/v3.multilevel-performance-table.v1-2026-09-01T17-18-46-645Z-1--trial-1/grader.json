@@ -1,0 +1,75 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "main.tex",
+        "values": [
+          "\\input{tables/performance}"
+        ]
+      },
+      "passed": true,
+      "message": "main.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "tables/performance.tex",
+        "values": [
+          "\\caption{Model performance}",
+          "\\label{tab:performance}",
+          "Dataset A",
+          "Dataset B",
+          "Dataset C",
+          "Alpha",
+          "Alpha &",
+          "Beta",
+          "Beta &",
+          "\\textbf{0.91}",
+          "\\textbf{0.90}",
+          "\\textbf{0.88}"
+        ]
+      },
+      "passed": false,
+      "message": "tables/performance.tex contains 12 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_matches",
+        "file": "tables/performance.tex",
+        "pattern": "Dataset A[\\s\\S]*Dataset B[\\s\\S]*Dataset C"
+      },
+      "passed": true,
+      "message": "tables/performance.tex matches /Dataset A[\\s\\S]*Dataset B[\\s\\S]*Dataset C/iu"
+    },
+    {
+      "grader": {
+        "type": "regex_count",
+        "file": "tables/performance.tex",
+        "pattern": "\\\\textbf\\{",
+        "count": 6
+      },
+      "passed": false,
+      "message": "tables/performance.tex regex count=0, expected=6"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0,
+        "max_warnings": 20
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

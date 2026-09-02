@@ -1,0 +1,8 @@
+[
+  {
+    "file": "macros.tex",
+    "line": 1,
+    "oldText": "\\newcommand{\\vect}[1]{\\vec{#1}}\n\\newcommand{\\mat}[1]{#1}\n\\newcommand{\\trans}{^{\\top}}",
+    "newText": "% \\vect: 向量（小写粗体）；\\mat: 矩阵（大写粗体）；\\trans: 转置\n\\newcommand{\\vect}[1]{\\mathbf{#1}}\n\\newcommand{\\mat}[1]{\\mathbf{#1}}\n\\newcommand{\\trans}{^{\\top}}"
+  }
+]

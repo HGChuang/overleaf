@@ -1,0 +1,20 @@
+[
+  {
+    "request_event_id": "evt_8b09b132-1ded-46db-a300-93f45095fd54",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "这样压缩表格不太合适，先不要继续压缩了。请改成趋势图，同时保留精确数值和原来的配色。",
+    "termination_reason": "首轮表格压缩不符合后续目标。",
+    "patch_decision": "reject"
+  },
+  {
+    "request_event_id": "evt_5ea2c7fd-615b-4944-8d8f-41dfe7768663",
+    "request_type": "patch_decision_required",
+    "user_turn": 2,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "趋势图保留精确数值与配色。",
+    "patch_decision": "accept"
+  }
+]

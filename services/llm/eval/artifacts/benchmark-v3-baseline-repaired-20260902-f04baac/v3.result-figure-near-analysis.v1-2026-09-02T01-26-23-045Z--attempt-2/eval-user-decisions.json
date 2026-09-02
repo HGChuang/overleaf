@@ -1,0 +1,20 @@
+[
+  {
+    "request_event_id": "evt_667a6261-b7f0-4841-9510-7bccc97a2b69",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "accuracy 图可以固定在分析附近；但请不要改动 ablation 图，它保持原来的 [b] 浮动定位即可。",
+    "termination_reason": "Ablation 图不应改动。",
+    "patch_decision": "reject"
+  },
+  {
+    "request_event_id": "evt_bde0caef-90da-4eb3-8c7d-9b1ca985fe23",
+    "request_type": "patch_decision_required",
+    "user_turn": 2,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "添加 float 包且仅调整 Accuracy，Ablation 不变。",
+    "patch_decision": "accept"
+  }
+]

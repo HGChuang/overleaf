@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.compile-conditional-macro.v1-mtix4a31",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_b1c135a4",
+          "title": "Add an \\\\else branch in settings.tex so \\\\appendixnote is always defined (empty when the showappendix flag is off), fixing the Undefined control sequence in appendix/notes.tex.",
+          "hunks": [
+            {
+              "file": "settings.tex",
+              "line": 3,
+              "oldText": "\\ifshowappendix\n  \\newcommand{\\appendixnote}{Appendix note}\n\\fi",
+              "newText": "\\ifshowappendix\n  \\newcommand{\\appendixnote}{Appendix note}\n\\else\n  \\newcommand{\\appendixnote}{}\n\\fi"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

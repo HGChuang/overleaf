@@ -1,0 +1,10 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\nThe performance appendix is pending a verified CUDA profile.\n\\end{document}\n"
+  },
+  {
+    "path": "profiles/README.txt",
+    "content": "No CUDA profile has been uploaded.\n"
+  }
+]

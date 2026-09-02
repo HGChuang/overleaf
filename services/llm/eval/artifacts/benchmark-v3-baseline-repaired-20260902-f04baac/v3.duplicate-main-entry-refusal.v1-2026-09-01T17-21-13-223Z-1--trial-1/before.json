@@ -1,0 +1,18 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{sections/lecture}\n\\end{document}\n"
+  },
+  {
+    "path": "old_main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\nBackup entry; do not use as the current lecture.\n\\end{document}\n"
+  },
+  {
+    "path": "sections/lecture.tex",
+    "content": "\\section{Current lecture}\nThe current lecture content remains in this section file.\n\\input{sections/exercises}\n"
+  },
+  {
+    "path": "sections/exercises.tex",
+    "content": "Exercises remain available for the current lecture.\n"
+  }
+]

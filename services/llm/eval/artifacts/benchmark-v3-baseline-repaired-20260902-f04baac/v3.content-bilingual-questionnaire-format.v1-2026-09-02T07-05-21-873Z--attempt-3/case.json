@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.content-bilingual-questionnaire-format.v1",
+  "case_family_id": "v3.content-bilingual-questionnaire-format",
+  "source_candidate_id": "v3.content.030",
+  "split": "dev",
+  "category": "问卷格式跨文件统一",
+  "capabilities": [
+    "C2",
+    "C4",
+    "C7",
+    "C10"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "动态双轮",
+      "题号量表保护",
+      "方法同步"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.content-bilingual-questionnaire-format",
+    "fixture_lineage": "v3.content.030",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\input{survey}\n\\input{methods}\n\\input{notes}\n\\end{document}\n"
+      },
+      {
+        "path": "survey.tex",
+        "content": "\\section{Questionnaire}\nQ1. How satisfied are you?\nOptions: 1 = Very dissatisfied; 2 = Dissatisfied; 3 = Neutral; 4 = Satisfied; 5 = Very satisfied.\nQ2. Would you recommend the service?\nOptions: 1 = Definitely no; 2 = Probably no; 3 = Unsure; 4 = Probably yes; 5 = Definitely yes.\n"
+      },
+      {
+        "path": "methods.tex",
+        "content": "\\section{Methods}\nWe used a five-level scale and analyzed Question 1 and Question 2.\n"
+      },
+      {
+        "path": "notes.tex",
+        "content": "\\section{Notes}\nThe questionnaire order and skip logic are unchanged.\n"
+      }
+    ],
+    "sha256": "94361cebaa8b472c652af19ee5293b44d88ce2367eefc654e5782932959403af"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "many-files"
+  },
+  "user_goal": {
+    "public_brief": "请统一英文问卷的表达和选项格式，并同步方法说明中的题号和量表描述。",
+    "interaction_facts": [
+      "统一英文问卷表达和五级选项格式，同步方法说明中的题号与量表描述。",
+      "题号、五级量表、选项含义、跳转逻辑和题目顺序都不能改变。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "survey.tex",
+        "value": "Q1."
+      },
+      {
+        "file": "survey.tex",
+        "value": "Q2."
+      },
+      {
+        "file": "survey.tex",
+        "value": "5 = Very satisfied."
+      },
+      {
+        "file": "methods.tex",
+        "value": "five-level scale"
+      },
+      {
+        "file": "notes.tex",
+        "value": "skip logic are unchanged"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 2,
+    "dynamic_user": true,
+    "continue_after_patch": true
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "survey.tex",
+      "methods.tex",
+      "notes.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "required-after-apply",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "survey.tex",
+        "methods.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "survey.tex",
+      "values": [
+        "Q1. How satisfied are you with the service?",
+        "Q2. Would you recommend the service to a colleague?",
+        "5 = Very satisfied.",
+        "5 = Definitely yes.",
+        "Q1.",
+        "Q2."
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "methods.tex",
+      "values": [
+        "five-level scale",
+        "Question 1",
+        "Question 2"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "notes.tex",
+      "values": [
+        "skip logic are unchanged"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "survey.tex",
+      "values": [
+        "How satisfied are you?"
+      ]
+    },
+    {
+      "type": "user_turns",
+      "min": 2,
+      "max": 2
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "survey.tex",
+        "line": 2,
+        "oldText": "Q1. How satisfied are you?\nOptions: 1 = Very dissatisfied; 2 = Dissatisfied; 3 = Neutral; 4 = Satisfied; 5 = Very satisfied.\nQ2. Would you recommend the service?\nOptions: 1 = Definitely no; 2 = Probably no; 3 = Unsure; 4 = Probably yes; 5 = Definitely yes.",
+        "newText": "Q1. How satisfied are you with the service?\nOptions: 1 = Very dissatisfied; 2 = Dissatisfied; 3 = Neutral; 4 = Satisfied; 5 = Very satisfied.\nQ2. Would you recommend the service to a colleague?\nOptions: 1 = Definitely no; 2 = Probably no; 3 = Unsure; 4 = Probably yes; 5 = Definitely yes."
+      },
+      {
+        "file": "methods.tex",
+        "line": 2,
+        "oldText": "We used a five-level scale and analyzed Question 1 and Question 2.",
+        "newText": "We used a five-level scale and analyzed Question 1 and Question 2 in order."
+      }
+    ],
+    "responses": [
+      "已统一问卷题目表达和五级选项格式，保留题号、选项、跳转逻辑与题目顺序。",
+      "复核后题号和五级量表均保持一致，方法说明已同步；编译通过。"
+    ],
+    "grader_mutations": [
+      {
+        "mutation_id": "遗漏第二题",
+        "description": "润色问卷时删除第二题，破坏题号和量表完整性。",
+        "patches": [
+          {
+            "file": "survey.tex",
+            "line": 2,
+            "oldText": "Q1. How satisfied are you?\nOptions: 1 = Very dissatisfied; 2 = Dissatisfied; 3 = Neutral; 4 = Satisfied; 5 = Very satisfied.\nQ2. Would you recommend the service?\nOptions: 1 = Definitely no; 2 = Probably no; 3 = Unsure; 4 = Probably yes; 5 = Definitely yes.",
+            "newText": "Q1. How satisfied are you with the service?\nOptions: 1 = Very dissatisfied; 2 = Dissatisfied; 3 = Neutral; 4 = Satisfied; 5 = Very satisfied."
+          }
+        ]
+      },
+      {
+        "mutation_id": "改成七级量表",
+        "description": "同步方法说明时把受保护的五级量表改成七级量表。",
+        "patches": [
+          {
+            "file": "methods.tex",
+            "line": 2,
+            "oldText": "We used a five-level scale and analyzed Question 1 and Question 2.",
+            "newText": "We used a seven-level scale and analyzed Question 1 and Question 2."
+          }
+        ]
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "问卷",
+      "动态同步",
+      "量表保护",
+      "长上下文",
+      "内容结构与跨文件重构"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文自然请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

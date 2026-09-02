@@ -1,0 +1,26 @@
+[
+  {
+    "path": "main.tex",
+    "content": "% Main paper (standalone): shared preamble (shared.tex) + main-paper\n% results (assets/results.tex). The supplementary material is a separate\n% document (supplement.tex) built from supplement-body.tex.\n\\documentclass{article}\n\\input{shared}\n\\begin{document}\n\\section{Main paper}\n\\input{assets/results}\n\\end{document}\n"
+  },
+  {
+    "path": "supplement.tex",
+    "content": "% Supplement (standalone): shares the preamble (shared.tex) with the main\n% paper; its body lives in supplement-body.tex.\n\\documentclass{article}\n\\input{shared}\n\\begin{document}\n\\input{supplement-body}\n\\end{document}\n"
+  },
+  {
+    "path": "supplement-body.tex",
+    "content": "\\section{Supplementary material}\nThe supplementary measurements remain available as a separate document.\n\\input{tables/supp-data}\n"
+  },
+  {
+    "path": "shared.tex",
+    "content": "\\newcommand{\\ProjectName}{Joint Research Project}\n"
+  },
+  {
+    "path": "assets/results.tex",
+    "content": "\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.6\\linewidth}{0pt}}\n\\caption{Main paper results}\n\\label{fig:main-results}\n\\end{figure}\n"
+  },
+  {
+    "path": "tables/supp-data.tex",
+    "content": "\\begin{table}[h]\n\\centering\n\\caption{Supplementary data}\n\\begin{tabular}{lr}\nItem & Value \\\\\nX & 1.2 \\\\\nY & 3.4\n\\end{tabular}\n\\end{table}\n"
+  }
+]

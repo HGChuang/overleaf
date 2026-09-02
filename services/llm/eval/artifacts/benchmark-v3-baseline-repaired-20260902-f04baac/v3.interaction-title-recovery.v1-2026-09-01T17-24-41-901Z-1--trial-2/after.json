@@ -1,0 +1,6 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\tableofcontents\n\\section{Introduction}\nThe introduction records the research question and keeps the fixed term federated learning.\n\\section{Approach}\nThis section explains the approach. The approach is repeated in the long manuscript so that\nthe editor must use the section heading as an anchor rather than replacing every occurrence.\n\\subsection{Approach}\nThe subsection uses the same word, but its body must remain unchanged.\n\\section{Approach}\nThe third section is the requested chapter title. The fixed term federated learning remains here.\n\\section{Conclusion}\nThe conclusion preserves the reported result and all existing prose.\n\\end{document}\n"
+  }
+]

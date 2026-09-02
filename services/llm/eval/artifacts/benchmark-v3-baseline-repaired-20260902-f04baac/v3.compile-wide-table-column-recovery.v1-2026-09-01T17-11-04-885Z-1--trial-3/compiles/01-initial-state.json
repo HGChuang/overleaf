@@ -1,0 +1,22 @@
+{
+  "status": "success",
+  "errorCount": 3,
+  "errors": [
+    {
+      "file": null,
+      "line": 3,
+      "message": "Extra alignment tab has been changed to \\cr."
+    },
+    {
+      "file": null,
+      "line": 4,
+      "message": "Extra alignment tab has been changed to \\cr."
+    },
+    {
+      "file": null,
+      "line": 5,
+      "message": "Extra alignment tab has been changed to \\cr."
+    }
+  ],
+  "warningCount": 0
+}

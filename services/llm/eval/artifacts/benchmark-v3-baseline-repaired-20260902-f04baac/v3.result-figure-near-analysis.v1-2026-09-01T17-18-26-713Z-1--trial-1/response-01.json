@@ -1,0 +1,37 @@
+{
+  "conversationId": "v3.result-figure-near-analysis.v1-mtixl86d",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 3 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_ad9ccfc7",
+          "title": "Keep result figures next to their analysis paragraphs by adding the float package and switching [t]/[b] float specifiers to [H] (here, exactly at the definition point).",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\begin{document}",
+              "newText": "\\documentclass{article}\n\\usepackage{float}\n\\begin{document}"
+            },
+            {
+              "file": "sections/analysis.tex",
+              "line": 4,
+              "oldText": "\\begin{figure}[t]",
+              "newText": "\\begin{figure}[H]"
+            },
+            {
+              "file": "sections/analysis.tex",
+              "line": 12,
+              "oldText": "\\begin{figure}[b]",
+              "newText": "\\begin{figure}[H]"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

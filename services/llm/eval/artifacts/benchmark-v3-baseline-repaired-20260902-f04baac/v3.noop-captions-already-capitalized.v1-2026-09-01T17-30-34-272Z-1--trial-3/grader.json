@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "grader": {
+        "type": "no_patch"
+      },
+      "passed": true,
+      "message": "patch count=0"
+    },
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": false
+      },
+      "passed": true,
+      "message": "workspace changed=false, expected=false"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "main.tex"
+      },
+      "passed": true,
+      "message": "main.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "figures/architecture.tex"
+      },
+      "passed": true,
+      "message": "figures/architecture.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "figures/results.tex"
+      },
+      "passed": true,
+      "message": "figures/results.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "figures/architecture.tex",
+        "values": [
+          "System architecture and data flow."
+        ]
+      },
+      "passed": true,
+      "message": "figures/architecture.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "figures/results.tex",
+        "values": [
+          "Accuracy across evaluation settings."
+        ]
+      },
+      "passed": true,
+      "message": "figures/results.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "response_fact_groups",
+        "groups": [
+          [
+            "图注"
+          ],
+          [
+            "已经",
+            "均已",
+            "全部"
+          ],
+          [
+            "大写"
+          ],
+          [
+            "无需修改",
+            "不需要修改",
+            "不作修改"
+          ]
+        ]
+      },
+      "passed": true,
+      "message": "response satisfies 4 semantic fact group(s)"
+    }
+  ]
+}

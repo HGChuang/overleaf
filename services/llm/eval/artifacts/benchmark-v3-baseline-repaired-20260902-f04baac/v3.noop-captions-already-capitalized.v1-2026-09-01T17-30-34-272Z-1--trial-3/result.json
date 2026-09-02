@@ -1,0 +1,30 @@
+{
+  "runId": "run_040268f1-97c9-4368-b702-791da06f4a7c",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.noop-captions-already-capitalized.v1-2026-09-01T17-30-34-272Z-1--trial-3",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.noop-captions-already-capitalized.v1",
+  "caseFamilyId": "v3.noop-captions-already-capitalized",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.noop-captions-already-capitalized.v1--trial-3",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 1566,
+    "output": 839,
+    "cacheRead": 12288,
+    "cacheWrite": 0,
+    "totalTokens": 14693
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 3,
+    "search_project": 1
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 1,
+  "initialWorkspaceHash": "232eaf9a1e9748fb6e4ca254e106d4f93af66cbe5bbf055a213c9231cc4af513",
+  "finalWorkspaceHash": "232eaf9a1e9748fb6e4ca254e106d4f93af66cbe5bbf055a213c9231cc4af513",
+  "wallMs": 10926
+}

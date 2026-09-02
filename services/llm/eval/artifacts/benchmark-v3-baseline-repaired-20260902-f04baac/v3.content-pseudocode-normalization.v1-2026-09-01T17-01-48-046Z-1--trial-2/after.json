@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{algorithm}\n\\usepackage{algpseudocode}\n\\begin{document}\n\\input{algorithm}\n\\input{complexity}\n\\end{document}\n"
+  },
+  {
+    "path": "algorithm.tex",
+    "content": "\\section{Algorithm}\n\\begin{algorithm}\n\\caption{Score update}\n\\label{alg:score-update}\n\\begin{algorithmic}[1]\n\\Require A graph $G=(V,E)$ with $n$ nodes and $m$ edges\n\\Ensure The score vector $\\mathrm{score}[v]$ for every node $v \\in V$\n\\For{each node $v \\in V$}\n  \\State update $\\mathrm{score}[v]$\n\\EndFor\n\\State \\Return the score vector $\\mathrm{score}$\n\\end{algorithmic}\n\\end{algorithm}\n"
+  },
+  {
+    "path": "complexity.tex",
+    "content": "\\section{Complexity}\nThe running time of Algorithm~\\ref{alg:score-update} is $O(n+m)$ for a graph with $n$ nodes and $m$ edges.\n"
+  }
+]

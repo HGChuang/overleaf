@@ -1,0 +1,10 @@
+[
+  {
+    "request_event_id": "evt_2c7f1132-5bf8-4b3c-9c5b-0649ac55322e",
+    "request_type": "turn_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "会议要求主稿 8 页，参考文献不计入。正文我还在写，目前是占位的，后面会填充内容。关键算法图必须保留。另外共享宏你别乱改，会影响补充材料和匿名版。",
+    "termination_reason": "回答 Copilot 的澄清问题，提供页数限制和注意事项，等待 Copilot 后续操作。"
+  }
+]

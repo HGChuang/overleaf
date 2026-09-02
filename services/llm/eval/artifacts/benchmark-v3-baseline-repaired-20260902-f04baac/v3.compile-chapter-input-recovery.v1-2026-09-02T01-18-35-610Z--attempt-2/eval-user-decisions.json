@@ -1,0 +1,19 @@
+[
+  {
+    "request_event_id": "evt_8ec7669c-6e4c-4f14-88e5-f7d57e06503c",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "patch_decision": "accept",
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "仅修正正式章节 input 路径，其他内容保持不变。"
+  },
+  {
+    "request_event_id": "evt_92797a30-c155-4826-9392-ff9f7a032bcf",
+    "request_type": "turn_decision_required",
+    "user_turn": 1,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "路径修复后编译成功且正文未改，目标完成。"
+  }
+]

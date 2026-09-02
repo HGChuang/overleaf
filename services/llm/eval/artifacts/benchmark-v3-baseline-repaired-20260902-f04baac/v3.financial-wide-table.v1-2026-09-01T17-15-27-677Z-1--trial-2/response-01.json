@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.financial-wide-table.v1-mtixhe15",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_88713af4",
+          "title": "Fit financial table to page width using siunitx S columns + booktabs, keeping all numbers in full form (no scientific notation) via scientific-notation=false.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 3,
+              "oldText": "\\usepackage{graphicx}\n\\begin{document}",
+              "newText": "\\usepackage{graphicx}\n\\usepackage{booktabs}\n\\usepackage{siunitx}\n\\sisetup{\n  group-separator = {,},\n  group-minimum-digits = 4,\n  scientific-notation = false,\n}\n\\begin{document}"
+            },
+            {
+              "file": "main.tex",
+              "line": 9,
+              "oldText": "\\begin{tabular}{lrrrr}\nYear & Revenue & Cost & Profit & Staff \\\\\n2022 & 1,234,567 & 987,654 & 246,913 & 120 \\\\\n2023 & 2,345,678 & 1,876,543 & 469,135 & 145 \\\\\n\\end{tabular}",
+              "newText": "\\small\n\\begin{tabular}{lSSSS}\n\\toprule\nYear & {Revenue} & {Cost} & {Profit} & {Staff} \\\\\n\\midrule\n2022 & 1,234,567 & 987,654 & 246,913 & 120 \\\\\n2023 & 2,345,678 & 1,876,543 & 469,135 & 145 \\\\\n\\bottomrule\n\\end{tabular}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

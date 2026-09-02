@@ -1,0 +1,22 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{makeidx}\n\\makeindex\n\\input{config}\n\\begin{document}\n\\tableofcontents\n\\input{chapters/overview}\n\\appendix\n\\input{appendix/material}\n\\printbibliography\n\\printindex\n\\end{document}\n"
+  },
+  {
+    "path": "config.tex",
+    "content": "\\newcommand{\\projectterm}{Aurora framework}\n"
+  },
+  {
+    "path": "chapters/overview.tex",
+    "content": "\\section{Overview}\\label{sec:overview}\n\\newcommand{\\projectterm}{Aurora framework}\nThe project is \\projectterm{}.\\index{project term}\n"
+  },
+  {
+    "path": "appendix/material.tex",
+    "content": "\\section{Supplementary material}\nThe supplementary experiment remains in the appendix and follows Section~\\ref{sec:overveiw}.\n"
+  },
+  {
+    "path": "appendix/references.tex",
+    "content": "\\begin{thebibliography}{9}\n\\bibitem{aurora2025} Aurora Team. Technical report. 2025.\n\\end{thebibliography}\n"
+  }
+]

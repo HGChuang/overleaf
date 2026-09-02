@@ -1,0 +1,108 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "main.tex",
+        "values": [
+          "\\documentclass{article}",
+          "\\input{shared}",
+          "\\input{assets/results}",
+          "\\ifdefined\\IncludeSupplement",
+          "\\input{supplement-body}"
+        ]
+      },
+      "passed": false,
+      "message": "main.tex contains 5 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_matches",
+        "file": "main.tex",
+        "pattern": "\\\\ifdefined\\\\IncludeSupplement\\s*\\\\input\\{supplement-body\\}"
+      },
+      "passed": false,
+      "message": "main.tex matches /\\\\ifdefined\\\\IncludeSupplement\\s*\\\\input\\{supplement-body\\}/iu"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "supplement.tex",
+        "values": [
+          "\\input{shared}",
+          "\\input{supplement-body}"
+        ]
+      },
+      "passed": true,
+      "message": "supplement.tex contains 2 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "shared.tex",
+        "values": [
+          "\\newcommand{\\ProjectName}{Joint Research Project}"
+        ]
+      },
+      "passed": true,
+      "message": "shared.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "assets/results.tex",
+        "values": [
+          "\\label{fig:main-results}"
+        ]
+      },
+      "passed": true,
+      "message": "assets/results.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_not_contains",
+        "file": "main.tex",
+        "values": [
+          "\\input{figures/results}"
+        ]
+      },
+      "passed": true,
+      "message": "main.tex excludes 1 forbidden value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "assets/results.tex"
+      },
+      "passed": true,
+      "message": "assets/results.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "tables/supp-data.tex"
+      },
+      "passed": true,
+      "message": "tables/supp-data.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0,
+        "max_warnings": 20
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

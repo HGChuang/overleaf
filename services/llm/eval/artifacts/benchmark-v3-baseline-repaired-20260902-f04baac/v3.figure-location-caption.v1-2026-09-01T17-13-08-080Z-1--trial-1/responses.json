@@ -1,0 +1,14 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 1,
+    "kind": "automatic_verification",
+    "text": "编译通过，`errorCount = 0`，无警告。修复成功 ✓\n\n已完成的内容：\n- **图片移至第二节（Results）**：实验照片占位框已从 Methods 移到 Results 段落后。\n- **图片居中**：`\\raggedright` 改为 `\\centering`，图片在页面上水平居中。\n- **标题居中并编号**：加载了 `caption` 宏包（`justification=centering`），标题显示为 **\"Figure 1: Experiment photograph (experiment.jpg)\"**，居中且自动编号。\n- 另在 Results 正文中加入了交叉引用 `(Figure~\\ref{fig:experiment})`，将文字与图片对应起来。\n\n一点说明：项目里目前**没有实际上传的图片文件**（文件列表中只有 `main.tex`），所以图片仍以原来的 `\\fbox` 占位框表示。如果你之后上传 `experiment.jpg`，只需把占位框那一行替换为 `\\includegraphics[width=0.72\\linewidth]{experiment.jpg}` 即可显示真实照片，标题和编号会自动保留。",
+    "hadPatch": false
+  }
+]

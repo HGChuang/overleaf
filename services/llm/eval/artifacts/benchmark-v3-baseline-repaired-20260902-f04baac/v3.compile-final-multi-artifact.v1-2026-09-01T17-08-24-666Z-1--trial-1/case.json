@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.compile-final-multi-artifact.v1",
+  "case_family_id": "v3.compile-final-multi-artifact",
+  "source_candidate_id": "v3.compile.038",
+  "split": "dev",
+  "category": "最终编译修复",
+  "capabilities": [
+    "C1",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C10",
+    "C11"
+  ],
+  "difficulty": {
+    "level": "D4",
+    "factors": [
+      "宏冲突",
+      "交叉引用",
+      "附录文献",
+      "索引保留",
+      "多文件依赖"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.compile-final-multi-artifact",
+    "fixture_lineage": "v3.compile.038",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{makeidx}\n\\makeindex\n\\input{config}\n\\begin{document}\n\\tableofcontents\n\\input{chapters/overview}\n\\appendix\n\\input{appendix/material}\n\\printbibliography\n\\printindex\n\\end{document}\n"
+      },
+      {
+        "path": "config.tex",
+        "content": "\\newcommand{\\projectterm}{Aurora framework}\n"
+      },
+      {
+        "path": "chapters/overview.tex",
+        "content": "\\section{Overview}\\label{sec:overview}\n\\newcommand{\\projectterm}{Aurora framework}\nThe project is \\projectterm{}.\\index{project term}\n"
+      },
+      {
+        "path": "appendix/material.tex",
+        "content": "\\section{Supplementary material}\nThe supplementary experiment remains in the appendix and follows Section~\\ref{sec:overveiw}.\n"
+      },
+      {
+        "path": "appendix/references.tex",
+        "content": "\\begin{thebibliography}{9}\n\\bibitem{aurora2025} Aurora Team. Technical report. 2025.\n\\end{thebibliography}\n"
+      }
+    ],
+    "sha256": "b5eaf7bdeb378478859803340e572aa694b1c574b6a116831120c0a5acc8866a"
+  },
+  "project_complexity": {
+    "scale": "multi-long",
+    "context_pressure": "combined"
+  },
+  "user_goal": {
+    "public_brief": "这是交付前的最终编译，日志里同时有宏定义、交叉引用、索引和参考文献问题。请按依赖关系帮我逐项处理，直到生成稳定的最终 PDF。",
+    "interaction_facts": [
+      "这是交付前综合编译：章节宏重复、附录交叉引用、文献入口和索引都需要处理，不能删除章节或手工抄写辅助内容。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "chapters/overview.tex",
+    "compile_status": "failure",
+    "protected_invariants": [
+      {
+        "file": "main.tex",
+        "value": "\\makeindex"
+      },
+      {
+        "file": "main.tex",
+        "value": "\\tableofcontents"
+      },
+      {
+        "file": "chapters/overview.tex",
+        "value": "\\index{project term}"
+      },
+      {
+        "file": "appendix/material.tex",
+        "value": "The supplementary experiment remains in the appendix"
+      },
+      {
+        "file": "appendix/references.tex",
+        "value": "\\bibitem{aurora2025}"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "config.tex",
+      "chapters/overview.tex",
+      "appendix/material.tex",
+      "appendix/references.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "repair-loop",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "main.tex",
+        "chapters/overview.tex",
+        "appendix/material.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\makeindex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\tableofcontents"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/overview.tex",
+      "values": [
+        "\\index{project term}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "appendix/material.tex",
+      "values": [
+        "The supplementary experiment remains in the appendix",
+        "\\ref{sec:overview}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "appendix/references.tex",
+      "values": [
+        "\\bibitem{aurora2025}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/overview.tex",
+      "values": [
+        "\\renewcommand{\\projectterm}{Aurora framework}",
+        "\\index{project term}"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "chapters/overview.tex",
+      "values": [
+        "\\newcommand{\\projectterm}{Aurora framework}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\input{appendix/references}",
+        "\\makeindex",
+        "\\printindex",
+        "\\tableofcontents"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "main.tex",
+      "values": [
+        "\\printbibliography"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "appendix/material.tex",
+      "values": [
+        "\\ref{sec:overveiw}"
+      ]
+    },
+    {
+      "type": "file_unchanged",
+      "file": "config.tex"
+    },
+    {
+      "type": "file_unchanged",
+      "file": "appendix/references.tex"
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "chapters/overview.tex",
+        "line": 2,
+        "oldText": "\\newcommand{\\projectterm}{Aurora framework}",
+        "newText": "\\renewcommand{\\projectterm}{Aurora framework}"
+      },
+      {
+        "file": "main.tex",
+        "line": 9,
+        "oldText": "\\printbibliography",
+        "newText": "\\input{appendix/references}"
+      },
+      {
+        "file": "appendix/material.tex",
+        "line": 2,
+        "oldText": "The supplementary experiment remains in the appendix and follows Section~\\ref{sec:overveiw}.",
+        "newText": "The supplementary experiment remains in the appendix and follows Section~\\ref{sec:overview}."
+      }
+    ],
+    "response": "已修复章节宏冲突、附录交叉引用和文献入口，保留目录、索引和附录结构后完成最终编译验证。",
+    "grader_mutations": [
+      {
+        "mutation_id": "综合编译-遗漏文献入口",
+        "description": "只修复了章节宏冲突，遗漏附录文献入口，综合编译仍不完整。",
+        "patches": [
+          {
+            "file": "chapters/overview.tex",
+            "line": 2,
+            "oldText": "\\newcommand{\\projectterm}{Aurora framework}",
+            "newText": "\\renewcommand{\\projectterm}{Aurora framework}"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "failure",
+          "errorCount": 1,
+          "warningCount": 0
+        }
+      },
+      {
+        "mutation_id": "综合编译-删除索引命令",
+        "description": "用文献入口修复了编译，却删除索引命令来回避辅助文件要求。",
+        "patches": [
+          {
+            "file": "chapters/overview.tex",
+            "line": 2,
+            "oldText": "\\newcommand{\\projectterm}{Aurora framework}",
+            "newText": "\\renewcommand{\\projectterm}{Aurora framework}"
+          },
+          {
+            "file": "main.tex",
+            "line": 8,
+            "oldText": "\\input{appendix/material}",
+            "newText": "\\input{appendix/references}"
+          }
+        ],
+        "patch_count": 2,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "success",
+          "errorCount": 0,
+          "warningCount": 0
+        }
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "最终编译",
+      "宏",
+      "文献",
+      "索引",
+      "附录",
+      "编译引用与文献"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文综合故障报告",
+    "provenance": "llm-generated-user-seed"
+  }
+}

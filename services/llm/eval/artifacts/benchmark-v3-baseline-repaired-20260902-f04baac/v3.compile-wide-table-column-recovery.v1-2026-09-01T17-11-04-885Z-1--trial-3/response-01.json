@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.compile-wide-table-column-recovery.v1-mtixbr9e",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_27d895fd",
+          "title": "将 tabular 列定义从 2 列 (ll) 改为 3 列 (lll)，与各行的 3 列数据及 \\\\multicolumn{3} 匹配",
+          "hunks": [
+            {
+              "file": "tables/market.tex",
+              "line": 2,
+              "oldText": "\\begin{tabular}{ll}",
+              "newText": "\\begin{tabular}{lll}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

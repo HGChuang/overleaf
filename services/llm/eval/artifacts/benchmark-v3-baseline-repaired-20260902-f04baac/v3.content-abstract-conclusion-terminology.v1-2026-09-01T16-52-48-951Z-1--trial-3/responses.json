@@ -1,0 +1,8 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "我查看了项目的两个内容文件，核对如下：\n\n- `sections/abstract.tex`（第 2 行）：\n  > The **boundary-aware** model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.\n- `sections/conclusion.tex`（第 2 行）：\n  > The **edge-aware** model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.\n\n结论表述（\"reaches 87.4\\% Dice on the confirmed test split\" 和 \"Its limitation is sensitivity to sparse annotations\"）两处已经完全一致，实验数字也相同；**唯一的差异是模型名称**——摘要用 `boundary-aware`，结论用 `edge-aware`。\n\n要统一只需改一个词，但需要确认哪一个是论文采用的标准名称，因为两处改动后的结果不同（摘要改成 edge-aware，或结论改成 boundary-aware），而当前上下文中没有任何线索能唯一确定哪个是正式命名。因此先请你确认：\n\n```\n% 请确认统一使用哪个术语：boundary-aware 还是 edge-aware？\n```\n\n确认后我会用 `submit_patch` 将另一处统一为指定术语（不触碰 87.4\\% 等任何数字）。",
+    "hadPatch": false
+  }
+]

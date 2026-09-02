@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{timeline}\n\\input{footnotes}\n\\end{document}\n"
+  },
+  {
+    "path": "timeline.tex",
+    "content": "\\section{Event timeline}\nThe interview source records the event on 12 March 2024.\nThe timeline source records the event on 13 March 2024.\n"
+  },
+  {
+    "path": "footnotes.tex",
+    "content": "\\section*{Notes}\n\\textsuperscript{1} The interview and timeline are both retained as sources.\n\\textsuperscript{2} The interview source records the event on 12 March 2024, while the timeline source records it on 13 March 2024; the two sources disagree on the date.\n"
+  }
+]

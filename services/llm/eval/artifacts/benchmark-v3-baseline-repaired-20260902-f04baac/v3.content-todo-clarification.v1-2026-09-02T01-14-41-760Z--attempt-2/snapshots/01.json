@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{experiment}\n\\input{table-three}\n\\end{document}\n"
+  },
+  {
+    "path": "experiment.tex",
+    "content": "\\section{Experiment}\nThe experiment uses 42 samples, as reported in Table 3.\n% TODO: source unknown; keep this item\n"
+  },
+  {
+    "path": "table-three.tex",
+    "content": "\\section{Table 3}\nTable 3 reports 42 samples.\n"
+  }
+]

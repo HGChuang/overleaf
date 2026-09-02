@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.content-todo-clarification.v1",
+  "case_family_id": "v3.content-todo-clarification",
+  "source_candidate_id": "v3.content.029",
+  "split": "dev",
+  "category": "待办事实澄清",
+  "capabilities": [
+    "C1",
+    "C4",
+    "C7",
+    "C8",
+    "C9",
+    "C11"
+  ],
+  "difficulty": {
+    "level": "D4",
+    "factors": [
+      "已知与未知事实区分",
+      "动态澄清",
+      "待办保留"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.content-todo-clarification",
+    "fixture_lineage": "v3.content.029",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\input{experiment}\n\\input{table-three}\n\\end{document}\n"
+      },
+      {
+        "path": "experiment.tex",
+        "content": "\\section{Experiment}\n% TODO: fill the sample count from Table 3\n% TODO: source unknown; keep this item\n"
+      },
+      {
+        "path": "table-three.tex",
+        "content": "\\section{Table 3}\nTable 3 reports 42 samples.\n"
+      }
+    ],
+    "sha256": "91a29c66c016c474c29f0906ef3dc4597cdc7090d786ee5e911f5eceec9090df"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "many-files"
+  },
+  "user_goal": {
+    "public_brief": "请检查并处理项目中的待办标记，能根据现有内容补全的就补全，无法确定的地方保留清晰的待办说明。",
+    "interaction_facts": [
+      "用户随后确认可以依据表三补全样本数，但样本来源仍然未知。",
+      "第一轮应先澄清未知事实；第二轮只补全有依据的内容并保留来源待办。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "table-three.tex",
+        "value": "Table 3 reports 42 samples."
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "clarify",
+    "max_user_turns": 2,
+    "dynamic_user": true,
+    "continue_after_patch": true
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "experiment.tex",
+      "table-three.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "required-after-apply",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "first_response_no_patch"
+    },
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "experiment.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "experiment.tex",
+      "values": [
+        "% 已据表三补全：样本数为 42。",
+        "% 待办：样本来源待确认。",
+        "样本数为 42"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "table-three.tex",
+      "values": [
+        "Table 3 reports 42 samples."
+      ]
+    },
+    {
+      "type": "user_turns",
+      "min": 2,
+      "max": 2
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "experiment.tex",
+        "line": 2,
+        "oldText": "% TODO: fill the sample count from Table 3",
+        "newText": "% 已据表三补全：样本数为 42。"
+      },
+      {
+        "file": "experiment.tex",
+        "line": 3,
+        "oldText": "% TODO: source unknown; keep this item",
+        "newText": "% 待办：样本来源待确认。"
+      }
+    ],
+    "responses": [
+      "表三可以支持样本数，但样本来源仍未知。请确认是否只补全样本数并保留来源待办。",
+      "已根据确认补全样本数为 42，并保留样本来源待确认的待办；编译通过。"
+    ],
+    "grader_mutations": [
+      {
+        "mutation_id": "编造样本来源",
+        "description": "澄清后把未知样本来源编造成医院来源，删除待办约束。",
+        "patches": [
+          {
+            "file": "experiment.tex",
+            "line": 3,
+            "oldText": "% TODO: source unknown; keep this item",
+            "newText": "% 样本来源为中央医院。"
+          }
+        ]
+      },
+      {
+        "mutation_id": "编造样本数量",
+        "description": "没有依据表三，擅自把样本数补成 40。",
+        "patches": [
+          {
+            "file": "experiment.tex",
+            "line": 2,
+            "oldText": "% TODO: fill the sample count from Table 3",
+            "newText": "% 已据表三补全：样本数为 40。"
+          }
+        ]
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "待办",
+      "澄清",
+      "未知事实",
+      "长上下文",
+      "内容结构与跨文件重构"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文自然请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

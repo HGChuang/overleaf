@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.workshop-slide-columns.v1-mtixn1rx",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_c35cc9a5",
+          "title": "修复 Workshop 帧布局：列宽由 0.62+0.42（超界 1.04）改为 0.6+0.38（0.98），照片占位框填满整列宽度，并启用 [T] 顶部对齐，确保要点和照片完整可见。",
+          "hunks": [
+            {
+              "file": "slides/workshop.tex",
+              "line": 13,
+              "oldText": "\\begin{columns}\n\\begin{column}{0.62\\textwidth}\n\\fbox{\\rule{0pt}{3cm}\\rule{0.62\\linewidth}{0pt}}\n\\end{column}\n\\begin{column}{0.42\\textwidth}\n\\begin{itemize}",
+              "newText": "\\begin{columns}[T]\n\\begin{column}{0.6\\textwidth}\n\\fbox{\\rule{0pt}{3cm}\\rule{\\dimexpr\\linewidth-2\\fboxsep-2\\fboxrule}{0pt}}\n\\end{column}\n\\begin{column}{0.38\\textwidth}\n\\begin{itemize}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

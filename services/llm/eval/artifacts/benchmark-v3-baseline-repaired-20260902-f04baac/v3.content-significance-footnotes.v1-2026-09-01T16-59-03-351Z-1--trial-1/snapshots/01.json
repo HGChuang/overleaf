@@ -1,0 +1,22 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{results}\n\\input{table-one}\n\\input{table-two}\n\\input{appendix-table}\n\\end{document}\n"
+  },
+  {
+    "path": "results.tex",
+    "content": "\\section{Results}\nThe primary comparison is reported in Table 1. In all tables, the asterisk ($^*$) marks estimates significant at the 5\\% level ($p<0.05$).\n"
+  },
+  {
+    "path": "table-one.tex",
+    "content": "\\begin{table}[h]\n\\caption{Primary comparison}\n\\begin{tabular}{cc}\nGroup & Estimate\\\\\nA & 0.42\\\\\n\\end{tabular}\n\\footnotesize{* $p<0.05$.}\n\\end{table}\n"
+  },
+  {
+    "path": "table-two.tex",
+    "content": "\\begin{table}[h]\n\\caption{Secondary comparison}\n\\begin{tabular}{cc}\nGroup & Estimate\\\\\nB & 0.37\\\\\n\\end{tabular}\n\\footnotesize{* $p<0.05$.}\n\\end{table}\n"
+  },
+  {
+    "path": "appendix-table.tex",
+    "content": "\\section{Appendix table}\n\\begin{table}[h]\n\\caption{Sensitivity analysis}\n\\begin{tabular}{cc}\nSetting & Estimate\\\\\nBase & 0.31\\\\\n\\end{tabular}\n\\footnotesize{* $p<0.05$.}\n\\end{table}\n"
+  }
+]

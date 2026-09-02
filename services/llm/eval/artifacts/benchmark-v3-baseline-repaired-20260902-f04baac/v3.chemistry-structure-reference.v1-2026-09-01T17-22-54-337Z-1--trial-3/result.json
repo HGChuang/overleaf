@@ -1,0 +1,32 @@
+{
+  "runId": "run_5732031f-9d12-4460-bc8f-7a1b0c471e57",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.chemistry-structure-reference.v1-2026-09-01T17-22-54-337Z-1--trial-3",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.chemistry-structure-reference.v1",
+  "caseFamilyId": "v3.chemistry-structure-reference",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.chemistry-structure-reference.v1--trial-3",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 6860,
+    "output": 2426,
+    "cacheRead": 28672,
+    "cacheWrite": 0,
+    "totalTokens": 37958
+  },
+  "toolCalls": {
+    "todo_write": 2,
+    "list_project_files": 1,
+    "read_file": 3,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "patchCount": 1,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 2,
+  "initialWorkspaceHash": "6705f23edb8498319bf76bc1f2fefa373de170d9ce97c338f3d4905a8c4a478c",
+  "finalWorkspaceHash": "457688470b9611fe54893ede57614b1db58f04b0de6f1ebdd3611f77f40de8ef",
+  "wallMs": 31046
+}

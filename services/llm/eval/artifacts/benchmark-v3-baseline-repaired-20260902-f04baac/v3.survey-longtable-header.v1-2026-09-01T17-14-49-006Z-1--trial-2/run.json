@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "run_id": "run_f2753eb1-fead-4682-aae3-68e6ff06c718",
+  "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "case_id": "v3.survey-longtable-header.v1",
+  "case_family_id": "v3.survey-longtable-header",
+  "trial_id": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.survey-longtable-header.v1--trial-2",
+  "split": "dev",
+  "git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "prompt_hash": "29d884f53de114386173fdf2e43a391e2dbc53589ea7dff300c519f830d43c87",
+  "benchmark_hash": "fca44d26989bb5edcefa71015fb26692e10aca9f123b11bd7424986316b2c8cb",
+  "fixture_hash": "96b98a04dc4722b94bbef8d47aa595ea34b01365aea212724129fe9317109c61",
+  "initial_workspace_hash": "96b98a04dc4722b94bbef8d47aa595ea34b01365aea212724129fe9317109c61",
+  "eval_user_session_id": "eval-user-v3.survey-longtable-header.v1",
+  "started_at": "2026-09-01T17:14:49.006Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "ended_at": "2026-09-01T17:15:05.288Z",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_010699ee-e604-403e-b1a0-2a7df417c25a"
+  },
+  "final_workspace_hash": "80bfe6b36c9d54ab314e46e30309a4f2dc832d68566d8ab61251cb4e2b305b30"
+}

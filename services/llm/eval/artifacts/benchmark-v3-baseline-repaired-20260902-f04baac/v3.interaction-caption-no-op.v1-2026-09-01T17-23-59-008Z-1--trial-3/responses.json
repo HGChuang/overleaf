@@ -1,0 +1,8 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "我已检查了 `main.tex` 中的图注格式。以下是我的检查结果：\n\n## 检查结果\n\n**图注相关配置（前导区）：**\n```latex\n\\usepackage{caption}\n\\captionsetup{font=footnotesize,justification=raggedright,singlelinecheck=false}\n```\n\n**图环境（正文）：**\n```latex\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{35mm}{20mm}}\n\\caption{A laboratory result}\n\\label{fig:result}\n\\end{figure}\n```\n\n## 逐项核对\n\n| 检查项 | 状态 |\n|---|---|\n| `\\caption` 位于 `figure` 环境内部 | ✅ 正确 |\n| `\\label` 放在 `\\caption` 之后（引用标签的顺序正确） | ✅ 正确 |\n| `caption` 宏包已加载，`\\captionsetup` 参数合法（footnotesize / raggedright） | ✅ 正确 |\n| 图注文本为简洁的描述性短句 | ✅ 正常 |\n\n## 结论\n\n图注格式**没有问题，无需修改**，因此我没有提交任何改动。\n\n几点仅供参考（不构成格式错误，不需处理）：\n- 图中的 `\\fbox{\\rule{35mm}{20mm}}` 只是占位框，正式投稿前需替换为实际图片（如 `\\includegraphics`）。\n- 图注 \"A laboratory result\" 末尾未加句号，属于风格细节，是否添加由你自行决定。\n- 环境定位符 `[h]` 可能导致图被推到文末，若排版受限可考虑 `[htbp]`，这与图注格式无关。\n\n如果你后续想统一图注样式（如加粗标签、居中、加句号等），告诉我你的偏好，我再帮你调整。",
+    "hadPatch": false
+  }
+]

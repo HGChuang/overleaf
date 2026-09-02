@@ -1,0 +1,37 @@
+{
+  "conversationId": "v3.compile-score-counter-collision.v1-mtixc65e",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 3 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_c3b4a5b6",
+          "title": "Define the scorefigure counter once in the preamble, and give the annex example its own label to stop the label collision.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\begin{document}",
+              "newText": "\\documentclass{article}\n\\newcounter{scorefigure}\n\\begin{document}"
+            },
+            {
+              "file": "scores/main-score.tex",
+              "line": 2,
+              "oldText": "\\section{Main score}\n\\newcounter{scorefigure}\n\\refstepcounter{scorefigure}\\label{fig:main-score}",
+              "newText": "\\section{Main score}\n\\refstepcounter{scorefigure}\\label{fig:main-score}"
+            },
+            {
+              "file": "scores/annex-score.tex",
+              "line": 2,
+              "oldText": "\\section{Annex score}\n\\newcounter{scorefigure}\n\\refstepcounter{scorefigure}\\label{fig:main-score}",
+              "newText": "\\section{Annex score}\n\\refstepcounter{scorefigure}\\label{fig:annex-score}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

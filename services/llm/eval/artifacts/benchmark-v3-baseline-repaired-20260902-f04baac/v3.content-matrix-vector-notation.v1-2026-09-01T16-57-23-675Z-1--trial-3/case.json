@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.content-matrix-vector-notation.v1",
+  "case_family_id": "v3.content-matrix-vector-notation",
+  "source_candidate_id": "v3.content.014",
+  "split": "dev",
+  "category": "跨文件数学记号",
+  "capabilities": [
+    "C2",
+    "C3",
+    "C4",
+    "C7"
+  ],
+  "difficulty": {
+    "level": "D4",
+    "factors": [
+      "宏定义定位",
+      "跨文件公式一致性",
+      "递推关系保护"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.content-matrix-vector-notation",
+    "fixture_lineage": "v3.content.014",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\input{macros.tex}\n\\begin{document}\n\\input{sections/model}\n\\input{sections/theory}\n\\end{document}\n"
+      },
+      {
+        "path": "macros.tex",
+        "content": "\\newcommand{\\vect}[1]{\\vec{#1}}\n\\newcommand{\\mat}[1]{#1}\n\\newcommand{\\trans}{^{\\top}}\n"
+      },
+      {
+        "path": "sections/model.tex",
+        "content": "\\section{Model}\nThe recurrence is $\\vect{x}_{t+1}=\\mat{A}\\vect{x}_t+\\vect{u}_t$.\nThe energy is $\\vect{x}\\trans\\mat{Q}\\vect{x}$.\n"
+      },
+      {
+        "path": "sections/theory.tex",
+        "content": "\\section{Theory}\nThe bound uses $\\vect{x}\\trans\\mat{Q}\\vect{x}$ and preserves the recurrence.\n"
+      }
+    ],
+    "sha256": "cf18a9b25092b9fb517e8fd59d9815d7fc54b4fb8127c4e5936740764691a508"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "none"
+  },
+  "user_goal": {
+    "public_brief": "请统一矩阵、向量和转置的记号，并同步模型、算法和理论分析中的公式引用，不要改变递推关系。",
+    "interaction_facts": [
+      "向量统一为粗体、矩阵统一为花体、转置统一使用上标 T。",
+      "必须同步宏文件、模型和理论分析，不能改变递推关系、维度或理论结论。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "sections/model.tex",
+        "value": "\\vect{x}_{t+1}=\\mat{A}\\vect{x}_t+\\vect{u}_t"
+      },
+      {
+        "file": "sections/theory.tex",
+        "value": "preserves the recurrence"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "macros.tex",
+      "sections/model.tex",
+      "sections/theory.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "required-after-apply",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "macros.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "macros.tex",
+      "values": [
+        "\\newcommand{\\vect}[1]{\\mathbf{#1}}",
+        "\\newcommand{\\mat}[1]{\\mathcal{#1}}",
+        "\\newcommand{\\trans}{^{T}}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "sections/model.tex",
+      "values": [
+        "\\vect{x}_{t+1}=\\mat{A}\\vect{x}_t+\\vect{u}_t",
+        "\\vect{x}\\trans\\mat{Q}\\vect{x}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "sections/theory.tex",
+      "values": [
+        "\\vect{x}\\trans\\mat{Q}\\vect{x}",
+        "preserves the recurrence"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "macros.tex",
+      "values": [
+        "\\newcommand{\\vect}[1]{\\vec{#1}}",
+        "\\newcommand{\\mat}[1]{#1}",
+        "\\newcommand{\\trans}{^{\\top}}"
+      ]
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "macros.tex",
+        "line": 1,
+        "oldText": "\\newcommand{\\vect}[1]{\\vec{#1}}\n\\newcommand{\\mat}[1]{#1}\n\\newcommand{\\trans}{^{\\top}}",
+        "newText": "\\newcommand{\\vect}[1]{\\mathbf{#1}}\n\\newcommand{\\mat}[1]{\\mathcal{#1}}\n\\newcommand{\\trans}{^{T}}"
+      }
+    ],
+    "response": "已集中更新向量、矩阵和转置宏，模型与理论文件继续使用同一递推关系；编译通过。",
+    "grader_mutations": [
+      {
+        "mutation_id": "向量宏未统一",
+        "description": "只更新矩阵和转置，向量仍使用旧的箭头记号。",
+        "patches": [
+          {
+            "file": "macros.tex",
+            "line": 1,
+            "oldText": "\\newcommand{\\vect}[1]{\\vec{#1}}\n\\newcommand{\\mat}[1]{#1}\n\\newcommand{\\trans}{^{\\top}}",
+            "newText": "\\newcommand{\\vect}[1]{\\vec{#1}}\n\\newcommand{\\mat}[1]{\\mathcal{#1}}\n\\newcommand{\\trans}{^{T}}"
+          }
+        ]
+      },
+      {
+        "mutation_id": "理论文件漏同步",
+        "description": "宏已更新，但理论文件中的关键二次型被替换为不一致的记号。",
+        "patches": [
+          {
+            "file": "sections/theory.tex",
+            "line": 2,
+            "oldText": "The bound uses $\\vect{x}\\trans\\mat{Q}\\vect{x}$ and preserves the recurrence.",
+            "newText": "The bound uses $\\vec{x}\\trans\\mat{Q}\\vec{x}$ and preserves the recurrence."
+          }
+        ]
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "矩阵",
+      "向量",
+      "数学宏",
+      "跨文件",
+      "内容结构与跨文件重构"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文自然请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

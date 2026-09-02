@@ -1,0 +1,14 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 1,
+    "kind": "automatic_verification",
+    "text": "编译成功（`errorCount: 0`，无警告）。匿名补丁已生效：\n\n- **frontmatter.tex** 的作者字段已由 `\\author{Alice Chen \\\\ Aurora Hospital}` 改为 `\\author{Anonymous}`，标题和日期保留。\n- 引用与参考文献原样保留：`chapters/results.tex` 中的 `\\cite{self2022}` 及 `references.tex` 中的 `thebibliography` 均未改动。\n\n一点提醒：`frontmatter.tex` 摘要里仍有 `\\textbf{Site: Aurora City Hospital.}`，机构名在匿名投稿中也可能暴露身份。如果你需要，我可以把它也一并匿名化（例如替换为 \"Site anonymized for review\"）。需要的话请告诉我。",
+    "hadPatch": false
+  }
+]

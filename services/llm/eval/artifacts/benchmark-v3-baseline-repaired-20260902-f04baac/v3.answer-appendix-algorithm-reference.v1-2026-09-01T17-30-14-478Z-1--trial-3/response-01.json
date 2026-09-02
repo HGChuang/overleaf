@@ -1,0 +1,9 @@
+{
+  "conversationId": "v3.answer-appendix-algorithm-reference.v1-mtiy0eai",
+  "message": {
+    "role": "assistant",
+    "content": "确认结果如下：\n\n**标签（label）**\n- 附录中的标签为 `alg:appendix-normalize`，定义在 `appendix/algorithm.tex` 第 1 行，挂在 `\\section{Normalization pseudocode}` 上：\n  ```latex\n  \\section{Normalization pseudocode}\\label{alg:appendix-normalize}\n  ```\n\n**正文中的引用位置**\n- 引用出现在 `sections/method.tex` 第 2 行：\n  ```latex\n  The normalization procedure is detailed in Appendix~\\ref{alg:appendix-normalize}.\n  ```\n- 即正文\"方法\"一节中通过 `\\ref{alg:appendix-normalize}` 指回该附录小节，编译后显示为 \"Appendix A\"（因为 `main.tex` 在 `\\input{sections/method}` 之后、`\\input{appendix/algorithm}` 之前有 `\\appendix`）。\n\n**一点提醒**\n目前 `appendix/algorithm.tex` 里只是一个普通 `\\section` 加一句文字说明，并没有真正的 `algorithm`/`algorithmic` 伪代码环境（即没有 `\\begin{algorithm}...\\end{algorithm}` 及对应的算法编号/`caption`）。因此该标签实际引用的是\"小节\"，而不是\"算法编号（Algorithm 1 之类）\"。如果你希望正文引用的是编号算法（如 \"Algorithm 1\"），需要在该附录文件中补充 `algorithm` 环境，并把 `\\label` 移到环境内部。需要我帮你补上吗？",
+    "blocks": []
+  },
+  "suggestedActions": []
+}

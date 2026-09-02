@@ -1,0 +1,31 @@
+{
+  "runId": "run_f7bf39e6-ffc4-4e68-ad78-a72db6d08a00",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.content-theorem-numbering.v1-2026-09-01T16-56-38-623Z-1--trial-3",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.content-theorem-numbering.v1",
+  "caseFamilyId": "v3.content-theorem-numbering",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.content-theorem-numbering.v1--trial-3",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 7942,
+    "output": 4852,
+    "cacheRead": 20480,
+    "cacheWrite": 0,
+    "totalTokens": 33274
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 1,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "patchCount": 1,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 2,
+  "initialWorkspaceHash": "e4b07beca920f1e57602dd014d3de6d42ff4d64ec76d232ad5456aaffa1b73d0",
+  "finalWorkspaceHash": "e242be9ec46d6f6e6870e7f12c842528a18c88ec48cd6726ae85233f1fbbecc2",
+  "wallMs": 42137
+}

@@ -1,0 +1,10 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\nThe related work cites only verified sources.\n\\end{document}\n"
+  },
+  {
+    "path": "references.bib",
+    "content": "@article{verified2024, author={Li, Ming}, title={Verified Study}, year={2024}}\n"
+  }
+]

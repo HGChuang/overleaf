@@ -1,0 +1,39 @@
+{
+  "runId": "run_4a90eea3-76e4-4255-8954-6b0f541e6526",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.result-figure-near-analysis.v1-2026-09-02T01-26-23-045Z--attempt-2",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.result-figure-near-analysis.v1",
+  "caseFamilyId": "v3.result-figure-near-analysis",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.result-figure-near-analysis.v1--trial-3--attempt-2",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_cceb9e00-0083-4192-b906-caab424a161e"
+  },
+  "usage": {
+    "input": 10027,
+    "output": 4383,
+    "cacheRead": 34816,
+    "cacheWrite": 0,
+    "totalTokens": 49226
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 4,
+    "submit_patch": 2,
+    "compile_project": 1
+  },
+  "patchCount": 1,
+  "patchRejectionCount": 1,
+  "userTurnCount": 2,
+  "responseCount": 3,
+  "initialWorkspaceHash": "fb857f7e917a55c84fc825fb4a047dbf8a9d59b21846e51d1f6b4eab81e42352",
+  "finalWorkspaceHash": "a2fe624efb95b5616986b1c70d3f7cf962ce8a080f12ae98955b05b877197fbc",
+  "wallMs": 234458
+}

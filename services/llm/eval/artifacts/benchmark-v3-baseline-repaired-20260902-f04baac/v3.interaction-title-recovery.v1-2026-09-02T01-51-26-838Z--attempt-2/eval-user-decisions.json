@@ -1,0 +1,20 @@
+[
+  {
+    "request_event_id": "evt_8a38aaaf-947c-452a-81ed-7696ed55e275",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "仅修改第三章标题，正文不变。",
+    "patch_decision": "accept"
+  },
+  {
+    "request_event_id": "evt_c5ba22b6-7893-46cc-b230-2888439c5210",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "标题改动可以，但请不要添加 CJKutf8 或修改编译环境；只保留第三个 section 标题的修改，其他结构和正文不变。",
+    "termination_reason": "编译环境变更超出范围。",
+    "patch_decision": "reject"
+  }
+]

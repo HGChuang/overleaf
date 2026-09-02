@@ -1,0 +1,6 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{beamer}\n\\setbeamertemplate{footline}{\\hfill\\scriptsize Footer content\\hfill\\vskip2pt}\n\\begin{document}\n\\begin{frame}[allowframebreaks]{References}\n\\scriptsize\n\\begin{itemize}\n\\item Reference A: a long bibliography entry about experimental design.\n\\item Reference B: a long bibliography entry about model evaluation.\n\\item Reference C: a long bibliography entry about reproducibility.\n\\item Reference D: a long bibliography entry about statistical analysis.\n\\item Reference E: a long bibliography entry about document systems.\n\\end{itemize}\n\\end{frame}\n\\end{document}\n"
+  }
+]

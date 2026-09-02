@@ -1,0 +1,101 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "first_response_no_patch"
+      },
+      "passed": false,
+      "message": "first response hadPatch=true"
+    },
+    {
+      "grader": {
+        "type": "response_contains_any",
+        "response_index": 0,
+        "values": [
+          "哪一页",
+          "Workshop"
+        ]
+      },
+      "passed": false,
+      "message": "response contains one of [\"哪一页\",\"Workshop\"]"
+    },
+    {
+      "grader": {
+        "type": "response_contains_all",
+        "response_index": 1,
+        "values": [
+          "Workshop",
+          "右栏"
+        ]
+      },
+      "passed": false,
+      "message": "response contains all of [\"Workshop\",\"右栏\"]"
+    },
+    {
+      "grader": {
+        "type": "user_turns",
+        "min": 2,
+        "max": 2
+      },
+      "passed": true,
+      "message": "user turns=2"
+    },
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "main.tex",
+        "values": [
+          "\\input{slides/workshop}"
+        ]
+      },
+      "passed": true,
+      "message": "main.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "slides/workshop.tex",
+        "values": [
+          "\\begin{frame}{Overview}",
+          "\\begin{frame}{Workshop}",
+          "Point one remains visible.",
+          "Point two remains visible.",
+          "Point three remains visible.",
+          "Point four remains visible.",
+          "0.45\\textwidth",
+          "0.48\\textwidth"
+        ]
+      },
+      "passed": false,
+      "message": "slides/workshop.tex contains 8 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_matches",
+        "file": "slides/workshop.tex",
+        "pattern": "\\\\begin\\{frame\\}\\{Overview\\}[\\s\\S]*\\\\begin\\{frame\\}\\{Workshop\\}"
+      },
+      "passed": true,
+      "message": "slides/workshop.tex matches /\\\\begin\\{frame\\}\\{Overview\\}[\\s\\S]*\\\\begin\\{frame\\}\\{Workshop\\}/iu"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0,
+        "max_warnings": 20
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

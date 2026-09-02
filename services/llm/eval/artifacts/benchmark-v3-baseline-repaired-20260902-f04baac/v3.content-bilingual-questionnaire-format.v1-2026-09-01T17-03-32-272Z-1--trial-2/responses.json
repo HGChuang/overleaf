@@ -1,0 +1,8 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "我先读完了项目文件，情况如下：\n\n- `survey.tex`：问卷只有两题。\n  - Q1（满意度）：`1 = Very dissatisfied; 2 = Dissatisfied; 3 = Neutral; 4 = Satisfied; 5 = Very satisfied.`\n  - Q2（推荐意愿）：`1 = Definitely no; 2 = Probably no; 3 = Unsure; 4 = Probably yes; 5 = Definitely yes.`\n- `methods.tex`：目前写的是 `analyzed Question 1 and Question 2` 和笼统的 `We used a five-level scale`，题号（Q1/Q2）与量表描述都未与问卷对齐。\n- `notes.tex`：不涉及，无需改动。\n\n题号和量表描述同步到 `methods.tex` 这部分的处理很明确。但\"统一英文问卷的表达和选项格式\"有两种含义，会产出**差异较大**的补丁（一种会改写 Q2 的选项措辞，另一种不改语义只统一排版），需要先确认一下你想要的统一方向：\n\n```latex\n% 请问按哪种方式统一？A) 把Q2改成与Q1同构的\"Very…/…/Neutral/…/Very…\"量表（如 Very unlikely/Unlikely/Neutral/Likely/Very likely），题干也统一为\"How … are you?\"；B) 保留Q2现有的 Definitely/Probably 措辞，仅统一两题的编号、标点、选项排版格式。\n```\n\n（两种方案下，我都会同步 `methods.tex`：把 \"Question 1/Question 2\" 改为与问卷一致的 Q1/Q2，并写明两题各自使用的五级量表。）选 A 或 B，我即可据此生成补丁。",
+    "hadPatch": false
+  }
+]

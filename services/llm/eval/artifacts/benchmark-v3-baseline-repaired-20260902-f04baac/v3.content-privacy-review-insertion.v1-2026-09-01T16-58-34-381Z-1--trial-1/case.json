@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.content-privacy-review-insertion.v1",
+  "case_family_id": "v3.content-privacy-review-insertion",
+  "source_candidate_id": "v3.content.007",
+  "split": "dev",
+  "category": "相关工作综述插入",
+  "capabilities": [
+    "C1",
+    "C2",
+    "C4",
+    "C7",
+    "C9"
+  ],
+  "difficulty": {
+    "level": "D4",
+    "factors": [
+      "目标锚点发现",
+      "已有文献约束",
+      "不得编造结论"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.content-privacy-review-insertion",
+    "fixture_lineage": "v3.content.007",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\input{related}\n\\begin{thebibliography}{3}\n\\bibitem{park2021} Park, 2021.\n\\bibitem{liu2022} Liu, 2022.\n\\bibitem{gao2023} Gao, 2023.\n\\end{thebibliography}\n\\end{document}\n"
+      },
+      {
+        "path": "related.tex",
+        "content": "\\section{Related work}\nWearable sensing improves access to continuous health measurements.\n% INSERT PRIVACY REVIEW HERE\nThe remaining gap is the lack of a common evaluation protocol.\n"
+      }
+    ],
+    "sha256": "e631f58a76f0b2377be0c53a468d8de5dc52de1626839bd3c9ac17ea647fe57a"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "repeated-anchors"
+  },
+  "user_goal": {
+    "public_brief": "请在相关工作中插入一段关于可穿戴设备隐私风险的综述，并使用文献库里已有的三篇论文。",
+    "interaction_facts": [
+      "隐私风险综述必须插在技术优势段落之后、研究空白之前。",
+      "只能使用文献库已有的 park2021、liu2022、gao2023，不得虚构文献或产品化结论。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "related.tex",
+        "value": "Wearable sensing improves access"
+      },
+      {
+        "file": "related.tex",
+        "value": "The remaining gap is the lack"
+      },
+      {
+        "file": "main.tex",
+        "value": "\\bibitem{park2021}"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "related.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "required-after-apply",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "related.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "related.tex",
+      "values": [
+        "Wearable sensing improves access",
+        "Privacy risks include re-identification and unauthorized inference",
+        "\\cite{park2021,liu2022,gao2023}",
+        "The remaining gap is the lack"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "\\bibitem{park2021}",
+        "\\bibitem{liu2022}",
+        "\\bibitem{gao2023}"
+      ]
+    },
+    {
+      "type": "file_matches",
+      "file": "related.tex",
+      "pattern": "Privacy risks include[\\s\\S]*The remaining gap is the lack"
+    },
+    {
+      "type": "file_not_contains",
+      "file": "related.tex",
+      "values": [
+        "% INSERT PRIVACY REVIEW HERE",
+        "\\cite{unknown2025}"
+      ]
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "related.tex",
+        "line": 3,
+        "oldText": "% INSERT PRIVACY REVIEW HERE",
+        "newText": "Privacy risks include re-identification and unauthorized inference \\cite{park2021,liu2022,gao2023}."
+      }
+    ],
+    "response": "已在技术优势之后、研究空白之前插入隐私风险综述，并只使用已有三篇文献；编译通过。",
+    "grader_mutations": [
+      {
+        "mutation_id": "虚构文献键",
+        "description": "插入综述时使用文献库不存在的引用键。",
+        "patches": [
+          {
+            "file": "related.tex",
+            "line": 3,
+            "oldText": "% INSERT PRIVACY REVIEW HERE",
+            "newText": "Privacy risks include re-identification and unauthorized inference \\cite{unknown2025}."
+          }
+        ]
+      },
+      {
+        "mutation_id": "放错综述位置",
+        "description": "把综述放到研究空白之后，破坏用户指定的段落顺序。",
+        "patches": [
+          {
+            "file": "related.tex",
+            "line": 3,
+            "oldText": "% INSERT PRIVACY REVIEW HERE\nThe remaining gap is the lack of a common evaluation protocol.",
+            "newText": "The remaining gap is the lack of a common evaluation protocol.\nPrivacy risks include re-identification and unauthorized inference \\cite{park2021,liu2022,gao2023}."
+          }
+        ]
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "相关工作",
+      "已有文献",
+      "科研诚实",
+      "内容结构与跨文件重构"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文自然请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

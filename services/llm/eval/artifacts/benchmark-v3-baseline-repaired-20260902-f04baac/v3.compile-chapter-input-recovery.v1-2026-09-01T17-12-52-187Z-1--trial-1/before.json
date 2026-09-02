@@ -1,0 +1,10 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\tableofcontents\n\\input{chapters/chapter3-old}\n\\end{document}\n"
+  },
+  {
+    "path": "chapters/chapter3.tex",
+    "content": "\\section{Methods}\nThe inserted chapter keeps the intended order and title.\n"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "file": "results.tex",
+    "line": 1,
+    "oldText": "\\section{Results}\nThe primary comparison is reported in Table 1.",
+    "newText": "\\section{Results}\nThe primary comparison is reported in Table 1.\nIn all tables, asterisks denote statistical significance at the 5\\% level ($p<0.05$)."
+  },
+  {
+    "file": "table-one.tex",
+    "line": 8,
+    "oldText": "\\footnotesize{* One-sided test, p<0.05.}",
+    "newText": "\\footnotesize{Note: * Statistically significant at the 5\\% level ($p<0.05$).}"
+  },
+  {
+    "file": "table-two.tex",
+    "line": 8,
+    "oldText": "\\footnotesize{* Statistical test, p<0.05.}",
+    "newText": "\\footnotesize{Note: * Statistically significant at the 5\\% level ($p<0.05$).}"
+  },
+  {
+    "file": "appendix-table.tex",
+    "line": 10,
+    "oldText": "\\footnotesize{* Significance threshold p<0.05.}",
+    "newText": "\\footnotesize{Note: * Statistically significant at the 5\\% level ($p<0.05$).}"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "conversationId": "v3.noop-captions-already-capitalized.v1-mtiy0pvs",
+  "message": {
+    "role": "assistant",
+    "content": "我检查了项目中的所有图注，结果如下：\n\n项目共 3 个文件，其中包含图注（`\\caption`）的位置只有两处，均在 `figures/` 目录下：\n\n1. **figures/architecture.tex**（第 1 行）\n   - 图注：`\\caption{System architecture and data flow.}`\n   - 句首为 `System`（大写 S）✅\n\n2. **figures/results.tex**（第 1 行）\n   - 图注：`\\caption{Accuracy across evaluation settings.}`\n   - 句首为 `Accuracy`（大写 A）✅\n\n`main.tex` 本身只包含 `\\documentclass` 与 `\\input` 指令，不包含任何图注。\n\n**结论**：两处图注均已使用句首大写（sentence-case 首字母大写），格式正确，无需修改，因此不提交任何补丁。",
+    "blocks": []
+  },
+  "suggestedActions": []
+}

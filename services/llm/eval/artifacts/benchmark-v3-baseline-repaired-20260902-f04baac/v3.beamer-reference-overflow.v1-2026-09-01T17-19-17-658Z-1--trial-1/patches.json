@@ -1,0 +1,10 @@
+[
+  [
+    {
+      "file": "main.tex",
+      "line": 4,
+      "oldText": "\\begin{frame}{References}\n\\scriptsize\n\\begin{itemize}",
+      "newText": "\\begin{frame}[shrink]{References}\n\\scriptsize\n\\begin{itemize}"
+    }
+  ]
+]

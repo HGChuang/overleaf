@@ -1,0 +1,22 @@
+[
+  [
+    {
+      "file": "main.tex",
+      "line": 1,
+      "oldText": "\\documentclass{article}\n\\begin{document}",
+      "newText": "\\documentclass{article}\n\\newcounter{scorefigure}\n\\begin{document}"
+    },
+    {
+      "file": "scores/main-score.tex",
+      "line": 2,
+      "oldText": "\\section{Main score}\n\\newcounter{scorefigure}\n\\refstepcounter{scorefigure}\\label{fig:main-score}",
+      "newText": "\\section{Main score}\n\\refstepcounter{scorefigure}\\label{fig:main-score}"
+    },
+    {
+      "file": "scores/annex-score.tex",
+      "line": 2,
+      "oldText": "\\section{Annex score}\n\\newcounter{scorefigure}\n\\refstepcounter{scorefigure}\\label{fig:main-score}",
+      "newText": "\\section{Annex score}\n\\refstepcounter{scorefigure}\\label{fig:annex-score}"
+    }
+  ]
+]

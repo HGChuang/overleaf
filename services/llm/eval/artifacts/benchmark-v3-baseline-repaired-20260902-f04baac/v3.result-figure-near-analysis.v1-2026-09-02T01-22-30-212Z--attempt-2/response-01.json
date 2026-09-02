@@ -1,0 +1,37 @@
+{
+  "conversationId": "v3.result-figure-near-analysis.v1-mtjevqa7",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 3 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_bc6e83f6",
+          "title": "防止结果图漂移到结论之后：为项目加载 float 宏包，并将两个图环境的浮动位置从 [t]/[b] 改为强制“就在此处”的 [H]，使精度图、消融图分别紧跟在引用它们的分析段落旁。",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\begin{document}",
+              "newText": "\\documentclass{article}\n\\usepackage{float}\n\\begin{document}"
+            },
+            {
+              "file": "sections/analysis.tex",
+              "line": 3,
+              "oldText": "\\begin{figure}[t]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}",
+              "newText": "\\begin{figure}[H]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Accuracy results}"
+            },
+            {
+              "file": "sections/analysis.tex",
+              "line": 8,
+              "oldText": "\\begin{figure}[b]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Ablation results}",
+              "newText": "\\begin{figure}[H]\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.65\\linewidth}{0pt}}\n\\caption{Ablation results}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "request_event_id": "evt_0a588873-2413-490a-a8ca-a401265ea2d3",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "版权信息已整理为规范的结构化格式，准确标注了各图片的授权状态，接受修改。",
+    "patch_decision": "accept"
+  },
+  {
+    "request_event_id": "evt_dc2a4496-cdcf-4010-b47e-b4e003f0a963",
+    "request_type": "turn_decision_required",
+    "user_turn": 1,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "版权信息已整理为结构化格式，三张图片的授权状态都标注清楚了，用户目标已达成。"
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "file": "survey.tex",
+    "line": 2,
+    "oldText": "Q1. How satisfied are you?",
+    "newText": "Q1. How satisfied are you with the service?"
+  },
+  {
+    "file": "methods.tex",
+    "line": 2,
+    "oldText": "We used a five-level scale and analyzed Question 1 and Question 2.",
+    "newText": "We used two five-level scales: a satisfaction scale for Q1 (1 = Very dissatisfied to 5 = Very satisfied) and a recommendation likelihood scale for Q2 (1 = Definitely no to 5 = Definitely yes), and analyzed both Q1 and Q2."
+  }
+]

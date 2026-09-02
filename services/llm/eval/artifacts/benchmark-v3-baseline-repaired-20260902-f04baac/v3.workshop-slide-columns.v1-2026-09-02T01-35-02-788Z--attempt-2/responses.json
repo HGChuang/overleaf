@@ -1,0 +1,20 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 2,
+    "kind": "user",
+    "text": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 2,
+    "kind": "automatic_verification",
+    "text": "编译成功，`errorCount = 0`，无警告。✅\n\n修复已确认生效：\n\n- **Workshop 页**：左栏（图片）宽度已从 `0.62\\textwidth` 调整为 `0.55\\textwidth`，两栏合计 `0.55 + 0.42 = 0.97 ≤ 1.0`，不再超出幻灯片右边缘，四个要点与照片均完整可见。\n- **Overview 页**：保持原状未改动，与你的要求一致。",
+    "hadPatch": false
+  }
+]

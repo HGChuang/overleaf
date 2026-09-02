@@ -1,0 +1,107 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "patch_files",
+        "files": [
+          "metadata.tex"
+        ]
+      },
+      "passed": false,
+      "message": "patch files=[\"metadata.tex\",\"chapters/findings.tex\",\"refs.bib\"]"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "metadata.tex",
+        "values": [
+          "\\author{Anonymous}",
+          "withheld for anonymous review"
+        ]
+      },
+      "passed": false,
+      "message": "metadata.tex contains 2 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "metadata.tex",
+        "values": [
+          "\\title{A Study}"
+        ]
+      },
+      "passed": true,
+      "message": "metadata.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_not_contains",
+        "file": "metadata.tex",
+        "values": [
+          "Bob Li",
+          "Northlake University",
+          "laboratory"
+        ]
+      },
+      "passed": true,
+      "message": "metadata.tex excludes 3 forbidden value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "chapters/findings.tex",
+        "values": [
+          "public Atlas dataset",
+          "\\cite{our2023}"
+        ]
+      },
+      "passed": true,
+      "message": "chapters/findings.tex contains 2 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "refs.bib",
+        "values": [
+          "@article{our2023"
+        ]
+      },
+      "passed": true,
+      "message": "refs.bib contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "chapters/findings.tex"
+      },
+      "passed": false,
+      "message": "chapters/findings.tex unchanged=false"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "refs.bib"
+      },
+      "passed": false,
+      "message": "refs.bib unchanged=false"
+    },
+    {
+      "grader": {
+        "type": "user_turns",
+        "min": 1,
+        "max": 2
+      },
+      "passed": true,
+      "message": "user turns=1"
+    }
+  ]
+}

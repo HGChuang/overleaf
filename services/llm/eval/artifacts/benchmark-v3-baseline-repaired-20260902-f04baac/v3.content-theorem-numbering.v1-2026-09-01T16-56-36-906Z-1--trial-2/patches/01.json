@@ -1,0 +1,14 @@
+[
+  {
+    "file": "main.tex",
+    "line": 2,
+    "oldText": "\\usepackage{amsthm}\n\\newtheorem{theorem}{Theorem}[section]\n\\newtheorem{lemma}{Lemma}[section]\n\\newtheorem{proposition}{Proposition}",
+    "newText": "\\usepackage{amsthm}\n\\usepackage{cleveref}\n\\newtheorem{theorem}{Theorem}[section]\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{proposition}[theorem]{Proposition}"
+  },
+  {
+    "file": "main.tex",
+    "line": 20,
+    "oldText": "Theorem~\\ref{thm:main}, Lemma~\\ref{lem:aux}, and Proposition~\\ref{prop:rate} are used below.",
+    "newText": "\\Cref{thm:main,lem:aux,prop:rate} are used below."
+  }
+]

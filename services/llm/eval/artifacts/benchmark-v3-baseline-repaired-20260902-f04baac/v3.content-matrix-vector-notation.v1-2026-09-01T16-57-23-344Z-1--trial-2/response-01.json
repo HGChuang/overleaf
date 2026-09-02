@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.content-matrix-vector-notation.v1-mtiwu5cq",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_721885cb",
+          "title": "Unify matrix/vector/transpose notation in macros.tex (bold for both, \\top for transpose); model and theory stay in sync automatically via the shared macros.",
+          "hunks": [
+            {
+              "file": "macros.tex",
+              "line": 1,
+              "oldText": "\\newcommand{\\vect}[1]{\\vec{#1}}\n\\newcommand{\\mat}[1]{#1}\n\\newcommand{\\trans}{^{\\top}}",
+              "newText": "% Unified notation: bold for vectors and matrices, ^{\\top} for transpose.\n\\newcommand{\\vect}[1]{\\mathbf{#1}}\n\\newcommand{\\mat}[1]{\\mathbf{#1}}\n\\newcommand{\\trans}{^{\\top}}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

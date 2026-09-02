@@ -1,0 +1,9 @@
+{
+  "conversationId": "v3.content-patient-group-terms.v1-mtiwy54b",
+  "message": {
+    "role": "assistant",
+    "content": "✅ 编译通过（`errorCount: 0`，无警告）。\n\n患者组名称与缩写已统一规范：\n\n- **摘要（首次出现处）**：`treatment group (TG)`、`control group (CG)` —— 按论文规范在首次出现时给出全称＋括号缩写；\n- **方法部分**：改为规范的指代说明（\"…referred to as TG and CG, respectively\"），不再以非标准句式引入缩写；\n- **参与流程与补充材料**：缩写定义后统一改用 **TG / CG**，与摘要保持一致；\n- 项目无图注（无 figure 环境 / `\\caption`），故图注部分无需修改。\n\n所有测量数据（128 / 126）与结论均未改动。",
+    "blocks": []
+  },
+  "suggestedActions": []
+}

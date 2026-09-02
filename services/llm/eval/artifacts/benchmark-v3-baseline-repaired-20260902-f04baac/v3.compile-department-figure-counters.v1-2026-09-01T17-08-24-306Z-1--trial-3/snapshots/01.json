@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n% 部门图计数器：全局只定义一次，编号随 section（部门）重置\n\\newcounter{deptfigure}\n\\counterwithin{deptfigure}{section}\n\\begin{document}\n\\input{departments/engineering}\n\\input{departments/annex}\n\\end{document}\n"
+  },
+  {
+    "path": "departments/engineering.tex",
+    "content": "\\section{Engineering}\n\\refstepcounter{deptfigure}\\label{fig:engineering}\n\\begin{center}Figure~\\thedeptfigure: Engineering architecture figure\\end{center}\n"
+  },
+  {
+    "path": "departments/annex.tex",
+    "content": "\\section{Annex}\n\\refstepcounter{deptfigure}\\label{fig:annex}\n\\begin{center}Figure~\\thedeptfigure: Annex workflow figure\\end{center}\n"
+  }
+]

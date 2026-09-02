@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.workshop-slide-columns.v1-mtixn1d8",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_6d12c173",
+          "title": "Workshop 页：两栏改为顶部对齐 [T]，图片栏宽度由 0.62\\textwidth 调为 0.55\\textwidth，使两栏总宽 ≤ 1.0\\textwidth，确保照片和要点完整可见。",
+          "hunks": [
+            {
+              "file": "slides/workshop.tex",
+              "line": 8,
+              "oldText": "\\begin{frame}{Workshop}\n\\begin{columns}\n\\begin{column}{0.62\\textwidth}",
+              "newText": "\\begin{frame}{Workshop}\n\\begin{columns}[T]\n\\begin{column}{0.55\\textwidth}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

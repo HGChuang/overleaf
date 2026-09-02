@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.content-abstract-conclusion-terminology.v1",
+  "case_family_id": "v3.content-abstract-conclusion-terminology",
+  "source_candidate_id": "v3.content.002",
+  "split": "dev",
+  "category": "跨文件术语统一",
+  "capabilities": [
+    "C1",
+    "C2",
+    "C4",
+    "C7"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "跨文件定位",
+      "术语一致性",
+      "实验事实保护"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.content-abstract-conclusion-terminology",
+    "fixture_lineage": "v3.content.002",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\input{sections/abstract}\n\\input{sections/conclusion}\n\\end{document}\n"
+      },
+      {
+        "path": "sections/abstract.tex",
+        "content": "\\begin{abstract}\nThe boundary-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.\n\\end{abstract}\n"
+      },
+      {
+        "path": "sections/conclusion.tex",
+        "content": "\\section{Conclusion}\nThe edge-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.\n"
+      }
+    ],
+    "sha256": "71c148dda5864aef978a60d5dbff1bdaaef6e72468a0bc07f8522c98cd8c9030"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "none"
+  },
+  "user_goal": {
+    "public_brief": "请统一摘要和结论中的术语和结论表述，让两处对模型效果的描述一致，但不要改变实验数字。",
+    "interaction_facts": [
+      "边界指标和摘要中的百分比已经确认。",
+      "模型名称统一为边界感知模型，必须保留局限性，不得虚构实验或夸大因果。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "main.tex",
+    "compile_status": "success",
+    "protected_invariants": [
+      {
+        "file": "sections/abstract.tex",
+        "value": "87.4\\%"
+      },
+      {
+        "file": "sections/conclusion.tex",
+        "value": "87.4\\%"
+      },
+      {
+        "file": "sections/abstract.tex",
+        "value": "sensitivity to sparse annotations"
+      },
+      {
+        "file": "sections/conclusion.tex",
+        "value": "sensitivity to sparse annotations"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "sections/abstract.tex",
+      "sections/conclusion.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "required-after-apply",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "sections/abstract.tex",
+        "sections/conclusion.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "sections/abstract.tex",
+      "values": [
+        "boundary-aware",
+        "87.4\\%",
+        "sensitivity to sparse annotations"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "sections/conclusion.tex",
+      "values": [
+        "boundary-aware",
+        "87.4\\%",
+        "sensitivity to sparse annotations"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "sections/conclusion.tex",
+      "values": [
+        "edge-aware"
+      ]
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "sections/abstract.tex",
+        "line": 2,
+        "oldText": "The boundary-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.",
+        "newText": "The boundary-aware model reaches 87.4\\% Dice on the confirmed test split. The model's limitation is sensitivity to sparse annotations."
+      },
+      {
+        "file": "sections/conclusion.tex",
+        "line": 2,
+        "oldText": "The edge-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.",
+        "newText": "The boundary-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations."
+      }
+    ],
+    "response": "已在摘要与结论文件统一模型术语，保留确认的百分比和局限性；补丁应用后编译通过。",
+    "grader_mutations": [
+      {
+        "mutation_id": "漏改结论术语",
+        "description": "只修改摘要而遗漏结论文件中的旧术语。",
+        "patches": [
+          {
+            "file": "sections/conclusion.tex",
+            "line": 2,
+            "oldText": "The edge-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.",
+            "newText": "The results describe a different model without a confirmed metric."
+          }
+        ]
+      },
+      {
+        "mutation_id": "改变医学指标",
+        "description": "统一术语时把已确认的百分比改成另一数值。",
+        "patches": [
+          {
+            "file": "sections/conclusion.tex",
+            "line": 2,
+            "oldText": "The edge-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.",
+            "newText": "The boundary-aware model reaches 89.1\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations."
+          }
+        ]
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "摘要",
+      "结论",
+      "跨文件",
+      "术语",
+      "内容结构与跨文件重构"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文自然请求",
+    "provenance": "llm-generated-user-seed"
+  }
+}

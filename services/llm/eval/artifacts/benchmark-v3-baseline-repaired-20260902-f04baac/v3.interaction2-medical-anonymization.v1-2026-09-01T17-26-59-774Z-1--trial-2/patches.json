@@ -1,0 +1,16 @@
+[
+  [
+    {
+      "file": "frontmatter.tex",
+      "line": 2,
+      "oldText": "\\author{Alice Chen \\\\ Aurora Hospital}",
+      "newText": "\\author{}"
+    },
+    {
+      "file": "frontmatter.tex",
+      "line": 7,
+      "oldText": "This study evaluates a clinical intervention while retaining the required confidence interval.\n\\textbf{Site: Aurora City Hospital.}",
+      "newText": "This study evaluates a clinical intervention while retaining the required confidence interval."
+    }
+  ]
+]

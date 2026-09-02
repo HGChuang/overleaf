@@ -1,0 +1,60 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "main.tex",
+        "values": [
+          "\\begin{frame}[allowframebreaks]{References}",
+          "Footer content",
+          "Reference A:",
+          "Reference B:",
+          "Reference C:",
+          "Reference D:",
+          "Reference E:"
+        ]
+      },
+      "passed": false,
+      "message": "main.tex contains 7 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "regex_count",
+        "file": "main.tex",
+        "pattern": "Reference [A-E]:",
+        "count": 5
+      },
+      "passed": true,
+      "message": "main.tex regex count=5, expected=5"
+    },
+    {
+      "grader": {
+        "type": "regex_count",
+        "file": "main.tex",
+        "pattern": "\\\\begin\\{frame",
+        "count": 1
+      },
+      "passed": true,
+      "message": "main.tex regex count=1, expected=1"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0,
+        "max_warnings": 20
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

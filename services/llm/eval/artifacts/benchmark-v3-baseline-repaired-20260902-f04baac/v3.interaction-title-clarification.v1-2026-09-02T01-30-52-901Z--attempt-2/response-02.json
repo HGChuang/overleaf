@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.interaction-title-clarification.v1-mtjf6i5r",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_5e6d863e",
+          "title": "将 chapter-two.tex 中 \\section 标题由 \"Study\" 改为 \"Theoretical Framework\"，保留 Theory 小节及正文不变。",
+          "hunks": [
+            {
+              "file": "chapters/chapter-two.tex",
+              "line": 1,
+              "oldText": "\\section{Study}",
+              "newText": "\\section{Theoretical Framework}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

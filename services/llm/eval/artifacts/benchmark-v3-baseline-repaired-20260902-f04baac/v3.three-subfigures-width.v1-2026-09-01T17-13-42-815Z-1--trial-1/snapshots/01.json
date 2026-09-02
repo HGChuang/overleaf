@@ -1,0 +1,10 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass[twocolumn]{article}\n\\usepackage{subcaption}\n\\begin{document}\n\\input{sections/methods}\n\\end{document}\n"
+  },
+  {
+    "path": "sections/methods.tex",
+    "content": "\\section{Method}\n\\begin{figure}[t]\n\\centering\n\\begin{subfigure}{0.3\\linewidth}\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.95\\linewidth}{0pt}}\n\\caption{Subfigure A: input}\n\\end{subfigure}\\hfill\n\\begin{subfigure}{0.3\\linewidth}\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.95\\linewidth}{0pt}}\n\\caption{Subfigure B: encoder}\n\\end{subfigure}\\hfill\n\\begin{subfigure}{0.3\\linewidth}\n\\centering\n\\fbox{\\rule{0pt}{2cm}\\rule{0.95\\linewidth}{0pt}}\n\\caption{Subfigure C: output}\n\\end{subfigure}\n\\caption{Method pipeline}\n\\label{fig:method-pipeline}\n\\end{figure}\n"
+  }
+]

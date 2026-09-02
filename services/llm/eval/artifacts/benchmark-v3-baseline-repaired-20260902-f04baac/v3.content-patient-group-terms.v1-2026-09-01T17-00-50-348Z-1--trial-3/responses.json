@@ -1,0 +1,14 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 3 changes — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 1,
+    "kind": "automatic_verification",
+    "text": "✅ 编译通过（errorCount = 0，warningCount = 0），补丁已成功应用并验证。\n\n**统一后的命名方案**（依据 methods.tex 中论文自述的惯例：全称在先、缩写随后）：\n- **abstract.tex**（全篇首次出现）— 保留全称 \"treatment group\" / \"control group\"，即 methods.tex 所说的 \"first full names\"，无需改动，符合规范。\n- **methods.tex**（正文首次出现，缩写定义处）— 改为标准格式 `treatment group (TG)` / `control group (CG)`。\n- **flow.tex** — 全称已定义后改用缩写：`TG had 128 enrolled patients and CG had 126.`\n- **supplement.tex** — 改用缩写：`The TG and CG labels are used in the supplementary analysis.`\n\n**首次出现位置核对结果**：\n- 正文：methods.tex 首次以 \"全称 (缩写)\" 形式引入 TG/CG ✓\n- 图注：本项目中不存在任何 `figure`/`caption` 环境，故无可检查项\n- 补充材料：supplement.tex 直接沿用已定义的缩写 TG/CG ✓\n\n所有数值（128、126）与原文保持一致，未改动任何测量数据或含义。",
+    "hadPatch": false
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.content-bilingual-questionnaire-format.v1-mtjeh5bm",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_10e77cb9",
+          "title": "统一问卷 Q1 表述使其与 Q2 平行，并将 methods 中的题号（Q1/Q2）与两类五级量表描述同步至问卷内容",
+          "hunks": [
+            {
+              "file": "survey.tex",
+              "line": 2,
+              "oldText": "Q1. How satisfied are you?",
+              "newText": "Q1. How satisfied are you with the service?"
+            },
+            {
+              "file": "methods.tex",
+              "line": 2,
+              "oldText": "We used a five-level scale and analyzed Question 1 and Question 2.",
+              "newText": "We used two five-level scales: a satisfaction scale for Q1 (1 = Very dissatisfied to 5 = Very satisfied) and a recommendation likelihood scale for Q2 (1 = Definitely no to 5 = Definitely yes), and analyzed both Q1 and Q2."
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

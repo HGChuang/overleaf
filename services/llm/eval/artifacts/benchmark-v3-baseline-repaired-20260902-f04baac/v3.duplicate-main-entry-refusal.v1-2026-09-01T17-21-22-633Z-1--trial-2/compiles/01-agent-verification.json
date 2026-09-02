@@ -1,0 +1,27 @@
+{
+  "status": "success",
+  "errorCount": 4,
+  "errors": [
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: Unicode character 课 (U+8BFE)"
+    },
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: Unicode character 程 (U+7A0B)"
+    },
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: Unicode character 讲 (U+8BB2)"
+    },
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: Unicode character 义 (U+4E49)"
+    }
+  ],
+  "warningCount": 1
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 1,
+    "kind": "automatic_verification",
+    "text": "✅ 编译通过（errorCount = 0，无警告）。\n\n修复成功：`sections/conclusion.tex` 中的模型名称已由 \"edge-aware\" 统一为 \"boundary-aware\"，现在摘要与结论对模型效果的描述完全一致，实验数字 **87.4% Dice** 未做任何改动。",
+    "hadPatch": false
+  }
+]

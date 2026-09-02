@@ -1,0 +1,28 @@
+{
+  "runId": "run_875900a1-9e70-4215-8db3-250132521400",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.answer-bibliography-configuration.v1-2026-09-01T17-29-58-522Z-1--trial-2",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.answer-bibliography-configuration.v1",
+  "caseFamilyId": "v3.answer-bibliography-configuration",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.answer-bibliography-configuration.v1--trial-2",
+  "status": "PASS",
+  "failure": null,
+  "usage": {
+    "input": 357,
+    "output": 759,
+    "cacheRead": 8192,
+    "cacheWrite": 0,
+    "totalTokens": 9308
+  },
+  "toolCalls": {
+    "read_file": 2
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 1,
+  "initialWorkspaceHash": "4440e8763a0530ff13163995867cff527ee4a07e186e0ca1cbfc6e633f9f2402",
+  "finalWorkspaceHash": "4440e8763a0530ff13163995867cff527ee4a07e186e0ca1cbfc6e633f9f2402",
+  "wallMs": 7459
+}

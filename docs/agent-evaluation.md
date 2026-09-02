@@ -1489,3 +1489,11 @@ terminal，本轮结果明确是 partial baseline，不能解释为完整集合�
 - 新增可选 `eval_user_followups` 合同。若动态用户没有提供 case 声明的必要 hidden fact，则记为可重试的 `INFRA_FAILURE / EVAL_USER_CONTRACT_VIOLATION`，不再污染 Copilot 能力分数。未声明 follow-up 合同的动态 case 仍保持自由模拟。
 
 验证：73/73 fixture 与 oracle 通过真实 CLSI 编译，static errors 为 0；benchmark/schema/oracle/grader/audit/dynamic contract 共 28 个定向测试全部通过；TypeScript 类型检查通过。grader ambiguity audit 仍保留 P1/P2 风险提示，不能把静态 audit 的潜在风险自动解释为 case 无效。本轮未重跑 baseline，旧 30.1% 分数只属于旧合同，不能与修复后运行直接混合。
+
+## Iteration 21：Repaired-contract full baseline
+
+实验 `benchmark-v3-baseline-repaired-20260902-f04baac` 完成 73 × 3 = 219 个 logical trial，绑定 Git `f04baac28373651dbf9a1d02e5dbd62ab943afaf`。原始 attempts 282 个；每个 logical trial 选择最新有效能力结果，63 个基础设施 attempts 原样保留但不进入能力分母。
+
+严格 deterministic 结果：`PASS=75`、`COPILOT_FAILURE=144`、`INFRA_FAILURE=0`，通过率 `34.2%`。静态为 `61/159=38.4%`，动态为 `14/60=23.3%`。相比旧合同 baseline 的 `66/219=30.1%`，总体增加 9 个 PASS；但 contract 已变化，不能解释为纯 Copilot 提升。动态从 `15/60` 到 `14/60`，需要逐 case 复核后再判断是否为真实回归。
+
+完整报告见 `services/llm/eval/benchmark-v3/BASELINE_REPAIRED_20260902.md`；canonical machine-readable 汇总见 `services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/_scheduler/benchmark-v3-baseline-repaired-20260902-f04baac/canonical-summary.json`。

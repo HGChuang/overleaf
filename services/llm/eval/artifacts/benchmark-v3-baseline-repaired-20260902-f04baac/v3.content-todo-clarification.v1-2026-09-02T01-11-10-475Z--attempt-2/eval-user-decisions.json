@@ -1,0 +1,11 @@
+[
+  {
+    "request_event_id": "evt_e544966b-c480-4b97-a0c4-1f23bda073f8",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "表三的样本数可以补全为 42，但来源目前仍然未知。请先不要提交这次修改，先说明或确认来源应如何处理。",
+    "termination_reason": "当前修改涉及仍未确定的来源信息，需要先澄清后再决定是否接受补丁。",
+    "patch_decision": "reject"
+  }
+]

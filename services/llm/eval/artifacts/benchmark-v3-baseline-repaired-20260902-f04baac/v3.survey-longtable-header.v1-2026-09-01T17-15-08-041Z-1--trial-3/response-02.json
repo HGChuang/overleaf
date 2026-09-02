@@ -1,0 +1,9 @@
+{
+  "conversationId": "v3.survey-longtable-header.v1-mtixgyvl",
+  "message": {
+    "role": "assistant",
+    "content": "编译通过（errorCount = 0，无警告），修复已生效。✅\n\n改动内容：\n- 将 `tables/survey.tex` 中的 `table` + `tabular` 环境替换为 `longtable`，使表格可以跨页显示。\n- 用 `\\endfirsthead` 定义首页表头（含标题和标签），用 `\\endhead` 定义续页表头（显示 “Survey results (continued)” 及列标题），因此分页后每页都会保留表头。\n\n`main.tex` 无需改动（`longtable` 宏包原本就已加载）。",
+    "blocks": []
+  },
+  "suggestedActions": []
+}

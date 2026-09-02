@@ -1,0 +1,22 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\input{sections/intro}\n\\input{sections/method}\n\\input{sections/appendix}\n\\input{refs}\n\\end{document}\n"
+  },
+  {
+    "path": "sections/intro.tex",
+    "content": "\\section{Introduction}\nThis study investigates explainable edge inference \\cite{wang2022}.\n% The project name Aurora is not translated; the method citation \\cite{wang2022} is preserved.\n"
+  },
+  {
+    "path": "sections/method.tex",
+    "content": "\\section{Method}\nWe optimize the objective function $L(\\theta)=\\|y-f_\\theta(x)\\|^2$.\n"
+  },
+  {
+    "path": "sections/appendix.tex",
+    "content": "\\section{Appendix}\n% Annotation: the annotation rules in the appendix are not translated into body text.\nThe appendix documents implementation details.\n"
+  },
+  {
+    "path": "refs.tex",
+    "content": "\\begin{thebibliography}{1}\n\\bibitem{wang2022} Wang, 2022.\n\\end{thebibliography}\n"
+  }
+]

@@ -1,0 +1,42 @@
+Using default settings from /overleaf/services/llm/config/settings.defaults.cjs
+Redis connected successfully
+{
+  "runId": "run_91ee1d2d-c9cd-4ee5-a68f-ec21cb066803",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.content-significance-footnotes.v1-2026-09-01T16-59-51-614Z-1--trial-3",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.content-significance-footnotes.v1",
+  "caseFamilyId": "v3.content-significance-footnotes",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.content-significance-footnotes.v1--trial-3",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_18fd89f3-ca1b-4a1a-9f91-381ee0d713ba"
+  },
+  "usage": {
+    "input": 13224,
+    "output": 6819,
+    "cacheRead": 41472,
+    "cacheWrite": 0,
+    "totalTokens": 61515
+  },
+  "toolCalls": {
+    "list_project_files": 1,
+    "read_file": 5,
+    "todo_write": 2,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "patchCount": 1,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 2,
+  "initialWorkspaceHash": "d54acd5ba63444c643776ce0110e95d4f0e941e41dcb24d0c0d8f7ef00c9b294",
+  "finalWorkspaceHash": "2274137b48949760633f1c718b2fbb58f08d762688bab946d9af5f22190045bc",
+  "wallMs": 56009
+}

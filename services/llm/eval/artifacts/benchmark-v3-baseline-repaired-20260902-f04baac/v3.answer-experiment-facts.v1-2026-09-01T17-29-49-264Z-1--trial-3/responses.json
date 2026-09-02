@@ -1,0 +1,8 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "根据项目源码（`sections/introduction.tex`、`sections/setup.tex`、`sections/results.tex`），论文主实验的信息如下：\n\n**数据集**\n- SST-2（二分类情感分类任务），见 `sections/introduction.tex`。\n\n**训练/测试划分**\n- 使用 SST-2 官方划分：67,349 个训练样本、1,821 个测试样本，见 `sections/setup.tex`。\n\n**评价指标**\n- 主要指标为 Accuracy（准确率）和 Macro-F1，见 `sections/results.tex`。\n\n需要说明的是：项目源码目前非常精简，未包含验证集划分的说明、各模型的实验数值或对比表等内容。如需补充这些细节，请提供相应内容，我可以帮你写入文档。",
+    "hadPatch": false
+  }
+]

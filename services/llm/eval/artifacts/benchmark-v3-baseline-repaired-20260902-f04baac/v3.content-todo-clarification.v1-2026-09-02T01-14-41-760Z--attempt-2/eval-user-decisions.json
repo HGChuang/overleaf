@@ -1,0 +1,19 @@
+[
+  {
+    "request_event_id": "evt_04ffd428-f4a8-44c6-a319-15e49cf43f69",
+    "request_type": "patch_decision_required",
+    "user_turn": 1,
+    "patch_decision": "accept",
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "首轮 patch 符合公开事实：写入可确认的 42，并保留来源未知的清晰 TODO。"
+  },
+  {
+    "request_event_id": "evt_3f06dd86-a76b-4af1-9eba-febad9399547",
+    "request_type": "turn_decision_required",
+    "user_turn": 1,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "已补入可确认的 42，保留来源未知 TODO，且编译通过；无需继续。"
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "conversationId": "v3.compile-department-figure-counters.v1-mtix7zzx",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 3 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_85a56004",
+          "title": "Move the deptfigure counter definition to main.tex preamble so it is defined once; remove the duplicate \\newcounter from both department files so figure numbering is continuous (Engineering=1, Annex=2) and \\ref resolves correctly.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\begin{document}",
+              "newText": "\\documentclass{article}\n\\newcounter{deptfigure}\n\\begin{document}"
+            },
+            {
+              "file": "departments/engineering.tex",
+              "line": 2,
+              "oldText": "\\section{Engineering}\n\\newcounter{deptfigure}\n\\refstepcounter{deptfigure}\\label{fig:engineering}",
+              "newText": "\\section{Engineering}\n\\refstepcounter{deptfigure}\\label{fig:engineering}"
+            },
+            {
+              "file": "departments/annex.tex",
+              "line": 2,
+              "oldText": "\\section{Annex}\n\\newcounter{deptfigure}\n\\refstepcounter{deptfigure}\\label{fig:annex}",
+              "newText": "\\section{Annex}\n\\refstepcounter{deptfigure}\\label{fig:annex}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

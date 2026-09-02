@@ -1,0 +1,16 @@
+[
+  [
+    {
+      "file": "slides/workshop.tex",
+      "line": 1,
+      "oldText": "\\begin{frame}{Overview}\n\\begin{columns}\n\\begin{column}{0.62\\textwidth}\n\\fbox{\\rule{0pt}{3cm}\\rule{0.62\\linewidth}{0pt}}\n\\end{column}\n\\begin{column}{0.42\\textwidth}\nOverview note.",
+      "newText": "\\begin{frame}{Overview}\n\\begin{columns}[t]\n\\begin{column}{0.55\\textwidth}\n\\fbox{\\rule{0pt}{3cm}\\rule{0.55\\linewidth}{0pt}}\n\\end{column}\n\\begin{column}{0.43\\textwidth}\nOverview note."
+    },
+    {
+      "file": "slides/workshop.tex",
+      "line": 12,
+      "oldText": "\\begin{frame}{Workshop}\n\\begin{columns}\n\\begin{column}{0.62\\textwidth}\n\\fbox{\\rule{0pt}{3cm}\\rule{0.62\\linewidth}{0pt}}\n\\end{column}\n\\begin{column}{0.42\\textwidth}\n\\begin{itemize}",
+      "newText": "\\begin{frame}{Workshop}\n\\begin{columns}[t]\n\\begin{column}{0.55\\textwidth}\n\\fbox{\\rule{0pt}{3cm}\\rule{0.55\\linewidth}{0pt}}\n\\end{column}\n\\begin{column}{0.43\\textwidth}\n\\begin{itemize}"
+    }
+  ]
+]

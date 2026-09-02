@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.compile-duplicate-environment.v1",
+  "case_family_id": "v3.compile-duplicate-environment",
+  "source_candidate_id": "v3.compile.005",
+  "split": "dev",
+  "category": "编译修复",
+  "capabilities": [
+    "C1",
+    "C4",
+    "C5"
+  ],
+  "difficulty": {
+    "level": "D2",
+    "factors": [
+      "跨文件定位",
+      "重复环境定义",
+      "保留代码样式"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.compile-duplicate-environment",
+    "fixture_lineage": "v3.compile.005",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\input{config}\n\\input{chapters/code}\n\\begin{document}\nThis is the technical manual.\n\\begin{codeblock}\nfor value in values:\n    print(value)\n\\end{codeblock}\n\\end{document}\n"
+      },
+      {
+        "path": "config.tex",
+        "content": "\\newenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}\n"
+      },
+      {
+        "path": "chapters/code.tex",
+        "content": "% 本章为代码环境提供局部设置。\n\\newenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}\n"
+      }
+    ],
+    "sha256": "bd0d829ef34a7b669914603474120cc0658fcf7b59bb3780fb47cda104ddd1f4"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "many-files"
+  },
+  "user_goal": {
+    "public_brief": "我自定义了一个代码环境，现在提示命令重复定义。请帮我解决，同时不要影响章节里的代码排版。",
+    "interaction_facts": [
+      "重复定义位于主文件加载的设置文件和第二章文件，代码正文与行号样式必须保留。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "chapters/code.tex",
+    "compile_status": "failure",
+    "protected_invariants": [
+      {
+        "file": "main.tex",
+        "value": "This is the technical manual."
+      },
+      {
+        "file": "config.tex",
+        "value": "\\ttfamily\\small"
+      },
+      {
+        "file": "chapters/code.tex",
+        "value": "\\par\\ttfamily\\small"
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "config.tex",
+      "chapters/code.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "repair-loop",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "chapters/code.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "This is the technical manual."
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "config.tex",
+      "values": [
+        "\\ttfamily\\small"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/code.tex",
+      "values": [
+        "\\par\\ttfamily\\small"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "chapters/code.tex",
+      "values": [
+        "\\renewenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}"
+      ]
+    },
+    {
+      "type": "file_unchanged",
+      "file": "config.tex"
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "for value in values:",
+        "print(value)"
+      ]
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "chapters/code.tex",
+        "line": 2,
+        "oldText": "\\newenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}",
+        "newText": "\\renewenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}"
+      }
+    ],
+    "response": "已将第二章的重复代码环境改为兼容已有定义的重定义，并完成编译验证。",
+    "grader_mutations": [
+      {
+        "mutation_id": "重复环境-错误环境名",
+        "description": "把重复定义改成了另一个环境名，原环境仍然没有得到兼容修复。",
+        "patches": [
+          {
+            "file": "chapters/code.tex",
+            "line": 2,
+            "oldText": "\\newenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}",
+            "newText": "\\renewenvironment{otherblock}{\\par\\ttfamily\\small}{\\par}"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "failure",
+          "errorCount": 1,
+          "warningCount": 0
+        }
+      },
+      {
+        "mutation_id": "重复环境-改动设置文件",
+        "description": "虽然局部文件看似可编译，但修改了受保护的全局代码样式文件。",
+        "patches": [
+          {
+            "file": "chapters/code.tex",
+            "line": 2,
+            "oldText": "\\newenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}",
+            "newText": "\\renewenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}"
+          },
+          {
+            "file": "config.tex",
+            "line": 1,
+            "oldText": "\\newenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}",
+            "newText": "\\renewenvironment{codeblock}{\\par\\ttfamily}{\\par}"
+          }
+        ],
+        "patch_count": 2,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "success",
+          "errorCount": 0,
+          "warningCount": 0
+        }
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "重复宏包环境",
+      "跨文件",
+      "编译",
+      "编译引用与文献"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文故障报告",
+    "provenance": "llm-generated-user-seed"
+  }
+}

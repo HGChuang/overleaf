@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\input{settings}\n\\begin{document}\n\\input{chapters/ch3}\n\\end{document}\n"
+  },
+  {
+    "path": "settings.tex",
+    "content": "\\newtheorem{lemma}{Lemma}\n\\newenvironment{proof}{\\par\\noindent Proof: }{\\hfill$\\diamond$\\par}\n"
+  },
+  {
+    "path": "chapters/ch3.tex",
+    "content": "\\section{Third chapter}\n\\begin{lemma}\nEvery finite graph has a spanning forest.\n\\end{lemma}\n\\begin{proof}\nRepeatedly add an edge that joins two components.\n\\end{proof}\n"
+  }
+]

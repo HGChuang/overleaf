@@ -1,0 +1,38 @@
+{
+  "runId": "run_04582235-1bff-4f53-9157-6f975c64e170",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.content-theorem-numbering.v1-2026-09-01T16-56-36-906Z-1--trial-2",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.content-theorem-numbering.v1",
+  "caseFamilyId": "v3.content-theorem-numbering",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.content-theorem-numbering.v1--trial-2",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_cff92dba-789e-456f-be87-60574d348ab3"
+  },
+  "usage": {
+    "input": 9083,
+    "output": 5557,
+    "cacheRead": 20480,
+    "cacheWrite": 0,
+    "totalTokens": 35120
+  },
+  "toolCalls": {
+    "read_file": 1,
+    "submit_patch": 1,
+    "compile_project": 1
+  },
+  "patchCount": 1,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 2,
+  "initialWorkspaceHash": "e4b07beca920f1e57602dd014d3de6d42ff4d64ec76d232ad5456aaffa1b73d0",
+  "finalWorkspaceHash": "2f7d140cc9399c49075d8a21fc2b14647601768e76bdec76544b30f07438fafe",
+  "wallMs": 44272
+}

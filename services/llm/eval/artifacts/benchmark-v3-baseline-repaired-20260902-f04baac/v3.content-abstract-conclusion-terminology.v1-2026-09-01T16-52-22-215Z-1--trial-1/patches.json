@@ -1,0 +1,10 @@
+[
+  [
+    {
+      "file": "sections/conclusion.tex",
+      "line": 2,
+      "oldText": "The edge-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations.",
+      "newText": "The boundary-aware model reaches 87.4\\% Dice on the confirmed test split. Its limitation is sensitivity to sparse annotations."
+    }
+  ]
+]

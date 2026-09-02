@@ -1,0 +1,67 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "patch_files",
+        "files": [
+          "appendix.tex",
+          "interview.tex"
+        ]
+      },
+      "passed": true,
+      "message": "patch files=[\"appendix.tex\",\"interview.tex\"]"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "appendix.tex",
+        "values": [
+          "附录校准说明保留设备型号 Model X200。",
+          "Model X200"
+        ]
+      },
+      "passed": false,
+      "message": "appendix.tex contains 2 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "interview.tex",
+        "values": [
+          "问题 1：设备使用起来有多容易？",
+          "选项：A. 非常困难；B. 困难；C. 中性；D. 容易；E. 非常容易。",
+          "1",
+          "A."
+        ]
+      },
+      "passed": false,
+      "message": "interview.tex contains 4 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "main.tex"
+      },
+      "passed": true,
+      "message": "main.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

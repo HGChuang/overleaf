@@ -1,0 +1,10 @@
+[
+  [
+    {
+      "file": "chapters/results.tex",
+      "line": 3,
+      "oldText": "\\begin{table}[h]\n\\centering\n\\caption{Performance values}",
+      "newText": "\\begin{table}[h]\n\\centering\n\\small\n\\setlength{\\tabcolsep}{4pt}\n\\renewcommand{\\arraystretch}{0.9}\n\\caption{Performance values}"
+    }
+  ]
+]

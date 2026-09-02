@@ -1,0 +1,14 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 4 changes — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 1,
+    "kind": "automatic_verification",
+    "text": "✅ 编译成功（errorCount = 0，无警告）。补丁已应用并验证通过：\n\n**所做的修改（未改动任何统计数值）：**\n- **`results.tex`（正文）**：新增统一说明 “In all tables, * denotes statistical significance at the 5% level (p<0.05).”\n- **`table-one.tex`**：脚注统一为 `Note: One-sided test; * denotes statistical significance at the 5% level (p<0.05).`（保留了该表原有的“单侧检验”说明）\n- **`table-two.tex`**：脚注统一为 `Note: * denotes statistical significance at the 5% level (p<0.05).`\n- **`appendix-table.tex`**：脚注统一为同样的说明（原先的 “Significance threshold p<0.05” 未解释 `*` 的含义，现已补全）\n\n现在正文与三张结果表的显著性符号说明完全一致，且 Table 1 的单侧检验细节被保留（删除它属于改动统计描述，故未动）。三个估计值 0.42 / 0.37 / 0.31 及显著性结论均未受影响。",
+    "hadPatch": false
+  }
+]

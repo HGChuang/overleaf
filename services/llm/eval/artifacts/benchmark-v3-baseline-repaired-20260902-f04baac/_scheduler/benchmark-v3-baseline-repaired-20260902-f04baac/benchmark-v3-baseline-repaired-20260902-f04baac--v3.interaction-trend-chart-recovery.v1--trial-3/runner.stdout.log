@@ -1,0 +1,40 @@
+Using default settings from /overleaf/services/llm/config/settings.defaults.cjs
+Redis connected successfully
+__OVERLEAF_EVAL_PROTOCOL_V1__{"protocol":"overleaf-eval-user/v1","type":"patch_decision_required","case_id":"v3.interaction-trend-chart-recovery.v1","user_turn":1,"copilot_response":"Proposed 1 change — review the inline preview, then Accept or Reject.","patch_preview":[{"file":"chapters/results.tex","line":3,"oldText":"\\begin{table}[h]\n\\centering\n\\caption{Performance values}\n\\label{tab:performance}\n\\begin{tabular}{lrr}","newText":"\\begin{table}[!ht]\n\\centering\n\\caption{Performance values}\n\\label{tab:performance}\n\\renewcommand{\\arraystretch}{0.75}\n\\setlength{\\tabcolsep}{4pt}\n\\footnotesize\n\\begin{tabular}{lrr}"}],"workspace_hash":"3d46dad5007bbc23e3ae1417885955a014ddb8e7cac82ae0142ee2e053db0499"}
+{
+  "runId": "run_ef61dcd6-2058-4c9a-b2e2-99e752b0d946",
+  "runDir": "/overleaf/services/llm/eval/artifacts/benchmark-v3-baseline-repaired-20260902-f04baac/v3.interaction-trend-chart-recovery.v1-2026-09-01T17-25-04-882Z-1--trial-3",
+  "experimentId": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "caseId": "v3.interaction-trend-chart-recovery.v1",
+  "caseFamilyId": "v3.interaction-trend-chart-recovery",
+  "split": "dev",
+  "trialId": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.interaction-trend-chart-recovery.v1--trial-3",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "runner",
+    "failure_phase": "runner",
+    "error_type": "RUNNER_EXECUTION_ERROR",
+    "error_source": "evaluation_harness",
+    "error_message": "readline was closed",
+    "retryable": false,
+    "related_event_id": "evt_f36263f6-22ab-4e16-842e-70e416fbb015"
+  },
+  "usage": {
+    "input": 480,
+    "output": 1977,
+    "cacheRead": 8192,
+    "cacheWrite": 0,
+    "totalTokens": 10649
+  },
+  "toolCalls": {
+    "read_file": 2,
+    "submit_patch": 1
+  },
+  "patchCount": 0,
+  "patchRejectionCount": 0,
+  "userTurnCount": 1,
+  "responseCount": 1,
+  "initialWorkspaceHash": "3d46dad5007bbc23e3ae1417885955a014ddb8e7cac82ae0142ee2e053db0499",
+  "finalWorkspaceHash": "3d46dad5007bbc23e3ae1417885955a014ddb8e7cac82ae0142ee2e053db0499",
+  "wallMs": 15915
+}

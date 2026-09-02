@@ -1,0 +1,6 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass[a4paper]{article}\n\\usepackage[margin=2cm]{geometry}\n\\usepackage{graphicx}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\caption{Annual operating data}\n\\label{tab:finance}\n\\resizebox{\\ifdim\\width>\\textwidth\\textwidth\\else\\width\\fi}{!}{%\n\\begin{tabular}{lrrrr}\nYear & Revenue & Cost & Profit & Staff \\\\\n2022 & 1,234,567 & 987,654 & 246,913 & 120 \\\\\n2023 & 2,345,678 & 1,876,543 & 469,135 & 145 \\\\\n\\end{tabular}}\n\\end{table}\n\\end{document}\n"
+  }
+]

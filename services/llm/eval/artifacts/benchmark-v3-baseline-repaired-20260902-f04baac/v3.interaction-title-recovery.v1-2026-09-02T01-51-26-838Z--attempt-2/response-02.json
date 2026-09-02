@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.interaction-title-recovery.v1-mtjfwy9t",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_417f7e4f",
+          "title": "为 pdfLaTeX 加载 CJKutf8 包并包裹正文，使中文标题“研究方法”可正常编译。",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\begin{document}",
+              "newText": "\\documentclass{article}\n\\usepackage{CJKutf8}\n\\begin{document}\n\\begin{CJK}{UTF8}{gbsn}"
+            },
+            {
+              "file": "main.tex",
+              "line": 16,
+              "oldText": "\\end{document}",
+              "newText": "\\end{CJK}\n\\end{document}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\newcounter{scorefigure}\n\\begin{document}\n\\input{scores/main-score}\n\\appendix\n\\input{scores/annex-score}\n\\end{document}\n"
+  },
+  {
+    "path": "scores/main-score.tex",
+    "content": "\\section{Main score}\n\\refstepcounter{scorefigure}\\label{fig:main-score}\n\\begin{center}Main score example\\end{center}\n"
+  },
+  {
+    "path": "scores/annex-score.tex",
+    "content": "\\section{Annex score}\n\\refstepcounter{scorefigure}\\label{fig:annex-score}\n\\begin{center}Annex score example\\end{center}\n"
+  }
+]

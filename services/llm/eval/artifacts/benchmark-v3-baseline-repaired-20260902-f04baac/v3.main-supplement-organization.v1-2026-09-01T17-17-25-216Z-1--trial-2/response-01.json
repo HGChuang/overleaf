@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.main-supplement-organization.v1-mtixjwq5",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_0d25908d",
+          "title": "Fix the renamed resource path (figures/results → assets/results) in main.tex and separate the main paper from the supplement body so each document has a clean, commented input structure.",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\input{shared}\n\\begin{document}\n\\section{Main paper}\n\\input{figures/results}\n\\input{supplement-body}\n\\end{document}",
+              "newText": "% Main paper (standalone): shared preamble (shared.tex) + main-paper\n% results (assets/results.tex). The supplementary material is a separate\n% document (supplement.tex) built from supplement-body.tex.\n\\documentclass{article}\n\\input{shared}\n\\begin{document}\n\\section{Main paper}\n\\input{assets/results}\n\\end{document}"
+            },
+            {
+              "file": "supplement.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\input{shared}\n\\begin{document}\n\\input{supplement-body}\n\\end{document}",
+              "newText": "% Supplement (standalone): shares the preamble (shared.tex) with the main\n% paper; its body lives in supplement-body.tex.\n\\documentclass{article}\n\\input{shared}\n\\begin{document}\n\\input{supplement-body}\n\\end{document}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

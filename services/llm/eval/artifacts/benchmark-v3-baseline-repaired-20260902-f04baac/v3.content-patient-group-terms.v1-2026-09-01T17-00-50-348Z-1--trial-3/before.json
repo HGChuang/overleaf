@@ -1,0 +1,22 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{abstract}\n\\input{methods}\n\\input{flow}\n\\input{supplement}\n\\end{document}\n"
+  },
+  {
+    "path": "abstract.tex",
+    "content": "\\section{Abstract}\nThe treatment group included 128 patients, while the control group included 126 patients.\n"
+  },
+  {
+    "path": "methods.tex",
+    "content": "\\section{Methods}\nWe call the treatment group TG and the control group CG after their first full names.\n"
+  },
+  {
+    "path": "flow.tex",
+    "content": "\\section{Participant flow}\nThe treatment group had 128 enrolled patients and the control group had 126.\n"
+  },
+  {
+    "path": "supplement.tex",
+    "content": "\\section{Supplement}\nThe treatment group and control group labels are used in the supplementary analysis.\n"
+  }
+]

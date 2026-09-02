@@ -1,0 +1,25 @@
+{
+  "conversationId": "v3.compile-algorithm-environment.v1-mtix6hz1",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_609f4868",
+          "title": "Add \\\\usepackage{algorithm} so the algorithm float environment and \\\\label/\\\\ref numbering work",
+          "hunks": [
+            {
+              "file": "main.tex",
+              "line": 1,
+              "oldText": "\\documentclass{article}\n\\begin{document}",
+              "newText": "\\documentclass{article}\n\\usepackage{algorithm}\n\\begin{document}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

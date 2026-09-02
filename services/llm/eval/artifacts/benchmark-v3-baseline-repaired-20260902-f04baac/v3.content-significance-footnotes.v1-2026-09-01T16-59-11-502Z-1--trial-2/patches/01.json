@@ -1,0 +1,26 @@
+[
+  {
+    "file": "results.tex",
+    "line": 2,
+    "oldText": "The primary comparison is reported in Table 1.",
+    "newText": "The primary comparison is reported in Table 1. In all tables, * denotes statistical significance at the 5\\% level (p<0.05)."
+  },
+  {
+    "file": "table-one.tex",
+    "line": 8,
+    "oldText": "\\footnotesize{* One-sided test, p<0.05.}",
+    "newText": "\\footnotesize{Note: One-sided test; * denotes statistical significance at the 5\\% level (p<0.05).}"
+  },
+  {
+    "file": "table-two.tex",
+    "line": 8,
+    "oldText": "\\footnotesize{* Statistical test, p<0.05.}",
+    "newText": "\\footnotesize{Note: * denotes statistical significance at the 5\\% level (p<0.05).}"
+  },
+  {
+    "file": "appendix-table.tex",
+    "line": 9,
+    "oldText": "\\footnotesize{* Significance threshold p<0.05.}",
+    "newText": "\\footnotesize{Note: * denotes statistical significance at the 5\\% level (p<0.05).}"
+  }
+]

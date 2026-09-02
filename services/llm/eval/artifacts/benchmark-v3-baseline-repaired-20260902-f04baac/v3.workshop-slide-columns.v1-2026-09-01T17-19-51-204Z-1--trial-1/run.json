@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "run_id": "run_0c4daef4-e7e8-450e-bd7a-208f8a74b387",
+  "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "case_id": "v3.workshop-slide-columns.v1",
+  "case_family_id": "v3.workshop-slide-columns",
+  "trial_id": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.workshop-slide-columns.v1--trial-1",
+  "split": "dev",
+  "git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "prompt_hash": "559e5052d8a9707aafff3126fc1be74aa1b948514e1425977a36f55f5758768a",
+  "benchmark_hash": "04e87bc2709cd8465f1667cc5ea5999a44014e8abf0ec637a041323064e637d7",
+  "fixture_hash": "63997981ecd17f1c060c4b84bc7dba684643e0c310e25601789dd80afc076028",
+  "initial_workspace_hash": "63997981ecd17f1c060c4b84bc7dba684643e0c310e25601789dd80afc076028",
+  "eval_user_session_id": "eval-user-v3.workshop-slide-columns.v1",
+  "started_at": "2026-09-01T17:19:51.204Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "ended_at": "2026-09-01T17:20:48.486Z",
+  "status": "INFRA_FAILURE",
+  "failure": {
+    "failure_category": "runner",
+    "failure_phase": "runner",
+    "error_type": "RUNNER_EXECUTION_ERROR",
+    "error_source": "evaluation_harness",
+    "error_message": "readline was closed",
+    "retryable": false,
+    "related_event_id": "evt_5ec42cb5-60b9-4fc3-afdc-ea2d63428469"
+  },
+  "final_workspace_hash": "63997981ecd17f1c060c4b84bc7dba684643e0c310e25601789dd80afc076028"
+}

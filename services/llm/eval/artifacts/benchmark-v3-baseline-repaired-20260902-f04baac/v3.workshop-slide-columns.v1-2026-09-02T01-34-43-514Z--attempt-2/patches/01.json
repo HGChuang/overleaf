@@ -1,0 +1,8 @@
+[
+  {
+    "file": "slides/workshop.tex",
+    "line": 12,
+    "oldText": "\\begin{frame}{Workshop}\n\\begin{columns}\n\\begin{column}{0.62\\textwidth}\n\\fbox{\\rule{0pt}{3cm}\\rule{0.62\\linewidth}{0pt}}\n\\end{column}\n\\begin{column}{0.42\\textwidth}\n\\begin{itemize}\n\\item Point one remains visible.\n\\item Point two remains visible.\n\\item Point three remains visible.\n\\item Point four remains visible.\n\\end{itemize}\n\\end{column}\n\\end{columns}\n\\end{frame}",
+    "newText": "\\begin{frame}{Workshop}\n\\begin{columns}[t]\n\\begin{column}{0.55\\textwidth}\n\\fbox{\\rule{0pt}{3cm}\\rule{0.55\\linewidth}{0pt}}\n\\end{column}\n\\begin{column}{0.43\\textwidth}\n\\begin{itemize}\n\\item Point one remains visible.\n\\item Point two remains visible.\n\\item Point three remains visible.\n\\item Point four remains visible.\n\\end{itemize}\n\\end{column}\n\\end{columns}\n\\end{frame}"
+  }
+]

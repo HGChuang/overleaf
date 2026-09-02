@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "run_id": "run_f7bf39e6-ffc4-4e68-ad78-a72db6d08a00",
+  "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+  "case_id": "v3.content-theorem-numbering.v1",
+  "case_family_id": "v3.content-theorem-numbering",
+  "trial_id": "benchmark-v3-baseline-repaired-20260902-f04baac--v3.content-theorem-numbering.v1--trial-3",
+  "split": "dev",
+  "git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+  "prompt_hash": "afd88ebf2e6445bf626dc5a334821f1fd9f90cd6b4220e12c67268946da2c326",
+  "benchmark_hash": "c405c43eb26f9dcbc741adb637d039fca4b712e1f1c7f55fc2fb02876eb1e256",
+  "fixture_hash": "e4b07beca920f1e57602dd014d3de6d42ff4d64ec76d232ad5456aaffa1b73d0",
+  "initial_workspace_hash": "e4b07beca920f1e57602dd014d3de6d42ff4d64ec76d232ad5456aaffa1b73d0",
+  "eval_user_session_id": "eval-user-v3.content-theorem-numbering.v1",
+  "started_at": "2026-09-01T16:56:38.623Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "ended_at": "2026-09-01T16:57:20.772Z",
+  "status": "PASS",
+  "failure": null,
+  "final_workspace_hash": "e242be9ec46d6f6e6870e7f12c842528a18c88ec48cd6726ae85233f1fbbecc2"
+}

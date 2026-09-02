@@ -1,0 +1,10 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\usepackage{fancyhdr}\n\\pagestyle{fancy}\n\\fancyhead[L]{Research report}\n\\fancyhead[R]{\\leftmark}\n\\begin{document}\n\\input{appendix}\n\\end{document}\n"
+  },
+  {
+    "path": "appendix.tex",
+    "content": "\\appendix\n\\section{A Very Long Appendix Title About Reproducibility Measurements and Supplementary Evidence}\n% Short form is used only for the running header to prevent overflow;\n% the full title still appears in the section heading and the table of contents.\n\\markboth{Appendix: Reproducibility Measurements}{Appendix: Reproducibility Measurements}\nThe complete appendix title must remain in the section heading and table of contents.\n"
+  }
+]

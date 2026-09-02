@@ -1,0 +1,107 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "grader": {
+        "type": "workspace_changed",
+        "expected": true
+      },
+      "passed": true,
+      "message": "workspace changed=true, expected=true"
+    },
+    {
+      "grader": {
+        "type": "patch_files",
+        "files": [
+          "appendix/table.tex"
+        ]
+      },
+      "passed": true,
+      "message": "patch files=[\"appendix/table.tex\"]"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "main.tex",
+        "values": [
+          "See appendix table~\\ref{tab:appendix-results}."
+        ]
+      },
+      "passed": true,
+      "message": "main.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "body.tex",
+        "values": [
+          "\\label{tab:results}"
+        ]
+      },
+      "passed": true,
+      "message": "body.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "body.tex",
+        "values": [
+          "Main results table"
+        ]
+      },
+      "passed": true,
+      "message": "body.tex contains 1 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "main.tex"
+      },
+      "passed": true,
+      "message": "main.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "file_unchanged",
+        "file": "body.tex"
+      },
+      "passed": true,
+      "message": "body.tex unchanged=true"
+    },
+    {
+      "grader": {
+        "type": "file_contains",
+        "file": "appendix/table.tex",
+        "values": [
+          "\\newcounter{appendixtable}",
+          "\\refstepcounter{appendixtable}",
+          "\\label{tab:appendix-results}",
+          "Appendix results table"
+        ]
+      },
+      "passed": false,
+      "message": "appendix/table.tex contains 4 required value(s)"
+    },
+    {
+      "grader": {
+        "type": "file_not_contains",
+        "file": "appendix/table.tex",
+        "values": [
+          "\\newcounter{resultstable}",
+          "\\label{tab:results}"
+        ]
+      },
+      "passed": true,
+      "message": "appendix/table.tex excludes 2 forbidden value(s)"
+    },
+    {
+      "grader": {
+        "type": "compile",
+        "status": "success",
+        "max_errors": 0
+      },
+      "passed": true,
+      "message": "compile=success, errors=0, warnings=0"
+    }
+  ]
+}

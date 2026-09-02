@@ -1,0 +1,20 @@
+[
+  {
+    "userTurn": 1,
+    "kind": "user",
+    "text": "Proposed 1 change — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 2,
+    "kind": "user",
+    "text": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "hadPatch": true
+  },
+  {
+    "userTurn": 2,
+    "kind": "automatic_verification",
+    "text": "✅ 编译成功（`errorCount: 0`，`warningCount: 0`），PDF 已正常生成（1 页）。\n\n改动已生效：\n- `main.tex` 前置区加载了 `pgfplots` 并定义了实验室配色 `labblue` / `laborange`。\n- `chapters/results.tex` 中原来的表格已替换为 Base→New 的趋势折线图（Accuracy 蓝色 0.81→0.86、Recall 橙色 0.74→0.79），精确数值以坐标点标签形式保留，图下方仍有文字版精确值。\n\n唯一提示是 pgfplots 建议把 `compat=1.16` 升到 `1.18`（非错误、不影响编译），需要的话我可以顺手帮你升级。",
+    "hadPatch": false
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "request_event_id": "evt_5edf6cf1-bf67-444c-a473-d1f3cddeb93d",
+    "request_type": "turn_decision_required",
+    "user_turn": 1,
+    "continue_conversation": true,
+    "user_message": "我选择“Theoretical Framework”。请只修改 Study 这一节的标题，保留现有的 Theory 小节和正文内容不变。",
+    "termination_reason": "用户已选择正式标题，等待应用。"
+  },
+  {
+    "request_event_id": "evt_bc31868d-ec12-4105-a0ed-9e4c3919e51d",
+    "request_type": "patch_decision_required",
+    "user_turn": 2,
+    "continue_conversation": false,
+    "user_message": "",
+    "termination_reason": "仅按选择修改标题，其他内容不变。",
+    "patch_decision": "accept"
+  }
+]

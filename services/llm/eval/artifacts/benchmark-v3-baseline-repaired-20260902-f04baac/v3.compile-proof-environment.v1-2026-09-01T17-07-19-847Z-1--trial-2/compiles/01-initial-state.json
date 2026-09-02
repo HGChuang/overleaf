@@ -1,0 +1,17 @@
+{
+  "status": "success",
+  "errorCount": 2,
+  "errors": [
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: Environment proof undefined."
+    },
+    {
+      "file": null,
+      "line": null,
+      "message": "LaTeX Error: \\begin{document} ended by \\end{proof}."
+    }
+  ],
+  "warningCount": 0
+}

@@ -1,0 +1,37 @@
+{
+  "conversationId": "v3.content-bilingual-questionnaire-format.v1-mtiwo3eh",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 3 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_58b3f573",
+          "title": "统一 Q1、Q2 两道题的英文表达为平行结构（均指向 the service），选项标签与 1–5 含义原样保留；按题号 Q1/Q2 同步方法说明中的 5 级量表描述；题号、顺序、跳转逻辑不变。",
+          "hunks": [
+            {
+              "file": "survey.tex",
+              "line": 2,
+              "oldText": "Q1. How satisfied are you?",
+              "newText": "Q1. How satisfied are you with the service?"
+            },
+            {
+              "file": "survey.tex",
+              "line": 4,
+              "oldText": "Q2. Would you recommend the service?",
+              "newText": "Q2. How likely are you to recommend the service?"
+            },
+            {
+              "file": "methods.tex",
+              "line": 2,
+              "oldText": "We used a five-level scale and analyzed Question 1 and Question 2.",
+              "newText": "We used a five-level scale for each item. Question 1 (Q1) measured satisfaction with the service (1 = Very dissatisfied, 2 = Dissatisfied, 3 = Neutral, 4 = Satisfied, 5 = Very satisfied), and Question 2 (Q2) measured likelihood of recommending the service (1 = Definitely no, 2 = Probably no, 3 = Unsure, 4 = Probably yes, 5 = Definitely yes)."
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

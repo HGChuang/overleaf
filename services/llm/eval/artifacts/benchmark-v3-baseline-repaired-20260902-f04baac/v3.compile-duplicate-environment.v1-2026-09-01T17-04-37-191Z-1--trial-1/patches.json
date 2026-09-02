@@ -1,0 +1,10 @@
+[
+  [
+    {
+      "file": "chapters/code.tex",
+      "line": 2,
+      "oldText": "% 本章为代码环境提供局部设置。\n\\newenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}",
+      "newText": "% 本章为代码环境提供局部设置。\n\\renewenvironment{codeblock}{\\par\\ttfamily\\small}{\\par}"
+    }
+  ]
+]
