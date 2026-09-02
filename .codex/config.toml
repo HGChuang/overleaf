@@ -4,9 +4,6 @@
 # - 主 Codex Agent 作为评测调度器
 # - 专门的 Subagent 承担用户模拟等评测角色
 
-approval_policy = "never"
-sandbox_mode = "danger-full-access"
-
 [agents]
 
 # 开启 Subagent 能力。
