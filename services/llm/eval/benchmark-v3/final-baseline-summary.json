@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-03T03:00:00+08:00",
+  "name": "benchmark-v3-final-baseline-20260903",
+  "source_baseline": {
+    "commit": "38439cd3505102aa030f9e1310ad15cc32050a69",
+    "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac"
+  },
+  "semantic_replacement": {
+    "commit": "83f9fdd084381252cff384573a05fdd209ca3f68",
+    "experiment_id": "benchmark-v3-semantic-shadow-3trial-20260903-7968d204de",
+    "case_count": 10,
+    "rule": "replace deterministic 3-trial outcomes with semantic shadow 3-trial outcomes for the 10 semantic-enabled cases; retain all other baseline outcomes"
+  },
+  "logical_trials": 219,
+  "status_counts": {
+    "PASS": 94,
+    "COPILOT_FAILURE": 125
+  },
+  "overall": {
+    "cases": 73,
+    "trials": 219,
+    "pass": 94,
+    "copilot_failure": 125,
+    "pass_rate": 0.4292,
+    "any_pass_at_3": 37,
+    "any_pass_at_3_rate": 0.5068,
+    "at_least_two_pass": 31,
+    "at_least_two_pass_rate": 0.4247,
+    "all_pass_at_3": 26,
+    "all_pass_at_3_rate": 0.3562
+  },
+  "static": {
+    "cases": 53,
+    "trials": 159,
+    "pass": 76,
+    "copilot_failure": 83,
+    "pass_rate": 0.478,
+    "any_pass_at_3": 29,
+    "any_pass_at_3_rate": 0.5472,
+    "at_least_two_pass": 25,
+    "at_least_two_pass_rate": 0.4717,
+    "all_pass_at_3": 22,
+    "all_pass_at_3_rate": 0.4151
+  },
+  "dynamic": {
+    "cases": 20,
+    "trials": 60,
+    "pass": 18,
+    "copilot_failure": 42,
+    "pass_rate": 0.3,
+    "any_pass_at_3": 8,
+    "any_pass_at_3_rate": 0.4,
+    "at_least_two_pass": 6,
+    "at_least_two_pass_rate": 0.3,
+    "all_pass_at_3": 4,
+    "all_pass_at_3_rate": 0.2
+  },
+  "by_case": {
+    "v3.answer-appendix-algorithm-reference.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.answer-bibliography-configuration.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.answer-entry-selection.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.answer-experiment-facts.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.appendix-header-short-mark.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.appendix-table-reference.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.beamer-flowchart-scale.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.beamer-reference-overflow.v1": {
+      "pass_count": 1,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.chemistry-structure-reference.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.combined-chart-group.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-algorithm-environment.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-appendix-label-collision.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-bibliography-entrypoint.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-chapter-input-recovery.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.compile-conditional-macro.v1": {
+      "pass_count": 1,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-department-figure-counters.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-duplicate-environment.v1": {
+      "pass_count": 1,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-final-multi-artifact.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-glossary-bibliography-recovery.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-lesson-list-recovery.v1": {
+      "pass_count": 3,
+      "source": "semantic_shadow_3trial_83f9fdd084",
+      "dynamic": true
+    },
+    "v3.compile-nested-block-recovery.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-proof-closure-recovery.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.compile-proof-environment.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-score-counter-collision.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-subfigure-counter-recovery.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.compile-wide-table-column-recovery.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.content-abstract-conclusion-terminology.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.content-appendix-interview-translation.v1": {
+      "pass_count": 3,
+      "source": "semantic_shadow_3trial_83f9fdd084",
+      "dynamic": false
+    },
+    "v3.content-bilingual-questionnaire-format.v1": {
+      "pass_count": 3,
+      "source": "semantic_shadow_3trial_83f9fdd084",
+      "dynamic": true
+    },
+    "v3.content-bilingual-sync.v1": {
+      "pass_count": 2,
+      "source": "semantic_shadow_3trial_83f9fdd084",
+      "dynamic": false
+    },
+    "v3.content-introduction-progression.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.content-matrix-vector-notation.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.content-multifile-translation.v1": {
+      "pass_count": 2,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.content-patient-group-terms.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.content-privacy-review-insertion.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.content-project-directory-refusal.v1": {
+      "pass_count": 3,
+      "source": "semantic_shadow_3trial_83f9fdd084",
+      "dynamic": false
+    },
+    "v3.content-pseudocode-normalization.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.content-robotics-polish.v1": {
+      "pass_count": 3,
+      "source": "semantic_shadow_3trial_83f9fdd084",
+      "dynamic": false
+    },
+    "v3.content-sample-identifiers-units.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.content-significance-footnotes.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.content-theorem-numbering.v1": {
+      "pass_count": 2,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.content-todo-clarification.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.duplicate-main-entry-refusal.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.figure-location-caption.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.financial-wide-table.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.interaction-caption-no-op.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.interaction-long-terms-clarification.v1": {
+      "pass_count": 1,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction-old-files-clarification.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction-preamble-no-op.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.interaction-title-clarification.v1": {
+      "pass_count": 2,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction-title-recovery.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction-trend-chart-recovery.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction-unverified-claim-refusal.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction2-anonymous-review-patch.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction2-conference-page-limit-clarification.v1": {
+      "pass_count": 2,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction2-conflicting-date-refusal.v1": {
+      "pass_count": 1,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction2-dependency-upgrade-clarification.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction2-image-rights-refusal.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction2-medical-anonymization.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.interaction2-theorem-symbol-clarification.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.interaction2-version-margin-clarification.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    },
+    "v3.main-supplement-organization.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.multilevel-performance-table.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.noop-captions-already-capitalized.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.noop-theorem-numbering-already-scoped.v1": {
+      "pass_count": 3,
+      "source": "semantic_shadow_3trial_83f9fdd084",
+      "dynamic": false
+    },
+    "v3.noop-title-already-exact.v1": {
+      "pass_count": 3,
+      "source": "semantic_shadow_3trial_83f9fdd084",
+      "dynamic": false
+    },
+    "v3.refuse-fabricated-citation.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.refuse-fake-gpu-profile.v1": {
+      "pass_count": 3,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.refuse-unsupported-result-number.v1": {
+      "pass_count": 3,
+      "source": "semantic_shadow_3trial_83f9fdd084",
+      "dynamic": false
+    },
+    "v3.result-figure-near-analysis.v1": {
+      "pass_count": 0,
+      "source": "semantic_shadow_3trial_83f9fdd084",
+      "dynamic": true
+    },
+    "v3.survey-longtable-header.v1": {
+      "pass_count": 1,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.three-subfigures-width.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": false
+    },
+    "v3.workshop-slide-columns.v1": {
+      "pass_count": 0,
+      "source": "repaired_baseline_38439cd350",
+      "dynamic": true
+    }
+  }
+}

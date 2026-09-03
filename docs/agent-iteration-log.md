@@ -1873,3 +1873,63 @@ Semantic grader 在 9/10 个 case 上保持 3-trial 完全一致，且未产生 
 2. 对每次 semantic fail 做人工 adjudication；
 3. 引入 repeated-run variance 指标，量化判分稳定性；
 4. 在稳定性充分后再讨论是否将 semantic grader 晋升为 canonical。
+
+## Iteration 26 — 最终 baseline 结果替换
+
+日期：2026-09-03
+
+### 本轮研究的问题
+
+以 repaired-contract baseline 为基础，引入 semantic shadow 3-trial 结果，生成最终 baseline 并计算 pass@3 等指标。
+
+### Observation / Evidence
+
+* Source baseline commit：`38439cd3505102aa030f9e1310ad15cc32050a69`
+* Source baseline experiment：`benchmark-v3-baseline-repaired-20260902-f04baac`
+* Semantic replacement commit：`83f9fdd084381252cff384573a05fdd209ca3f68`
+* Semantic replacement experiment：`benchmark-v3-semantic-shadow-3trial-20260903-7968d204de`
+* 替换范围：10 个 semantic-enabled case 的 3-trial 结果；
+* 保留范围：其余 63 个 case 的原始 baseline 结果；
+* 最终 baseline：`benchmark-v3-final-baseline-20260903`。
+
+### Root Cause
+
+Deterministic grader 对 10 个语义敏感 case 存在固定字符串或固定 patch 范围导致的 false negative。semantic shadow 结果在这些 case 上更准确地反映 Copilot 行为，因此用其替换对应 case 的 baseline 结果。
+
+### Changes
+
+* 新增 `services/llm/eval/benchmark-v3/final-baseline-summary.json`；
+* 新增 `services/llm/eval/benchmark-v3/FINAL_BASELINE_20260903.md`；
+* 未修改 Copilot 行为；
+* 未修改 canonical grading；
+* 仅做结果级合成与指标计算。
+
+### Benchmark / Metric Before vs After
+
+| Metric | Original baseline | Final baseline |
+|---|---:|---:|
+| PASS | 75 / 219 | 94 / 219 |
+| Trial-level pass rate | 34.2% | 42.9% |
+| pass@3 | 32 / 73 = 43.8% | 37 / 73 = 50.7% |
+| At least 2/3 pass | 25 / 73 = 34.2% | 31 / 73 = 42.5% |
+| all-pass@3 | 18 / 73 = 24.7% | 26 / 73 = 35.6% |
+| Static pass@3 | 25 / 53 = 47.2% | 29 / 53 = 54.7% |
+| Dynamic pass@3 | 7 / 20 = 35.0% | 8 / 20 = 40.0% |
+
+### Failure Cases / Regression
+
+本轮不是 Copilot 行为变化，而是评测结果合成。与原始 baseline 相比，trial-level PASS 增加 19，case-level pass@3 增加 5，all-pass@3 增加 8。不能把这些提升解释为 Copilot 本身改进，只能解释为 semantic grading 修正了 deterministic false negative。
+
+### Lessons
+
+* 结果级合成可以快速得到更符合语义观察的 baseline；
+* pass@3 应明确区分为 case-level “至少一次通过”；
+* all-pass@3 与 pass@3 不能混用；
+* semantic shadow 结果尚未 canonical，最终 baseline 应明确标注结果来源。
+
+### Recommended next steps
+
+1. 对 10 个 semantic case 做人工 adjudication，确认 shadow 结果可信；
+2. 讨论是否将 semantic grader 晋升为 canonical；
+3. 用最终 baseline 作为后续 Copilot 优化的对照基线；
+4. 保持 deterministic grader 继续负责结构、数值与编译结果。

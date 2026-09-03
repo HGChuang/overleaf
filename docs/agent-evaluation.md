@@ -1525,3 +1525,11 @@ Canonical 结果为 `PASS=3`、`COPILOT_FAILURE=7`。Semantic shadow 结果为 `
 Canonical 结果为 `PASS=10`、`COPILOT_FAILURE=20`；Semantic shadow 结果为 `pass=26`、`fail=4`。9 / 10 个 case 的 semantic 结果在 3 trial 内完全一致；唯一不一致的 `v3.content-bilingual-sync.v1` 在 trial 3 中将 `social resilience` 译为“社会恢复力”而非要求的“社会韧性”，因此该次 fail 是真实行为差异，不是 grader 抖动。`v3.result-figure-near-analysis.v1` 在 3 trial 中均因未先澄清目标图而 fail。
 
 本轮结果表明 semantic grader 在选定 case 上具备较好的跨 trial 稳定性，且未引入 canonical failure 之外的新失败。完整报告见 `services/llm/eval/benchmark-v3/SEMANTIC_GRADER_STABILITY_20260903.md`。
+
+## Iteration 26：最终 baseline 结果替换
+
+以 commit `38439cd3505102aa030f9e1310ad15cc32050a69` 的 repaired-contract baseline 为基础，用 commit `83f9fdd084381252cff384573a05fdd209ca3f68` 的 10 个 semantic-enabled case 3-trial shadow 结果替换对应 deterministic 结果，生成 `benchmark-v3-final-baseline-20260903`。其余 63 个 case 保持原始 baseline 结果不变。
+
+最终结果为 219 logical trial 中 `PASS=94`、`COPILOT_FAILURE=125`，trial-level pass rate 为 `42.9%`。Case-level pass@3 为 `37/73=50.7%`，at least 2/3 pass 为 `31/73=42.5%`，all-pass@3 为 `26/73=35.6%`。静态 pass@3 为 `29/53=54.7%`，动态 pass@3 为 `8/20=40.0%`。
+
+这是结果级合成 baseline，不是新的端到端评测；semantic 结果仍是 shadow 结果，尚未晋升 canonical。完整报告见 `services/llm/eval/benchmark-v3/FINAL_BASELINE_20260903.md`，机器可读汇总见 `services/llm/eval/benchmark-v3/final-baseline-summary.json`。
