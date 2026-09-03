@@ -3,7 +3,7 @@
 set -euo pipefail
 
 AGENT_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd -- "$AGENT_ROOT/../../.." && pwd)"
+REPO_ROOT="$(cd -- "$AGENT_ROOT/../.." && pwd)"
 INPUT_FILE="$(mktemp)"
 PROMPT_FILE="$(mktemp)"
 OUTPUT_FILE="$(mktemp)"
