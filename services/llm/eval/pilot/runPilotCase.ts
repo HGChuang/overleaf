@@ -45,6 +45,10 @@ import {
 } from './dynamicProtocol.js'
 import { gradePilotCase } from './graderRegistry.js'
 import { assertEvalUserFollowupContract } from './evalUserContract.js'
+import {
+  buildSemanticGraderInput,
+  SEMANTIC_GRADER_INPUT_FILE,
+} from './semanticGrader.js'
 import type { PilotGradeContext, PilotResponse } from './types.js'
 
 type Status =
@@ -719,6 +723,30 @@ async function main() {
       })
       currentParentEventId = graderCompleted.eventId
       await graderCompleted.committed
+
+      if (caseDefinition.semantic_grading) {
+        const semanticInput = buildSemanticGraderInput(gradeContext)
+        await writeJsonAtomic(
+          join(runDir, SEMANTIC_GRADER_INPUT_FILE),
+          semanticInput,
+        )
+        const semanticPrepared = trace.emit({
+          event_type: 'semantic_grader_prepared',
+          parent_event_id: currentParentEventId,
+          turn_id: currentTurnId,
+          summary: {
+            grader: 'semantic_grader',
+            mode: 'shadow',
+            semantic_type: semanticInput.task.semantic_type,
+            criterion_count: semanticInput.criteria.length,
+          },
+          artifacts: [
+            await artifactReference(runDir, SEMANTIC_GRADER_INPUT_FILE),
+          ],
+        })
+        currentParentEventId = semanticPrepared.eventId
+        await semanticPrepared.committed
+      }
       status = grade.passed ? 'PASS' : 'COPILOT_FAILURE'
       if (!grade.passed) {
         failure = classifyFailure(

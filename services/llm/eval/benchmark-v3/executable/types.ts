@@ -44,6 +44,7 @@ export interface V3CaseInput {
   evalUserFollowups?: Array<{ user_turn: number; fact_groups: string[][] }>;
   initialCompile?: PilotCase["initial_state"]["compile_status"];
   compileMode?: CompileMode;
+  semanticGrading?: PilotCase["semantic_grading"];
   protectedInvariants?: NonNullable<
     PilotCase["initial_state"]["protected_invariants"]
   >;

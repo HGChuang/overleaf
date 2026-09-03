@@ -59,6 +59,25 @@ The conclusion follows both analyses.
     pressure: "repeated-anchors",
     initialCompile: "success",
     compileMode: "required-after-apply",
+    semanticGrading: {
+      type: "content_semantics",
+      files: ["sections/analysis.tex", "main.tex"],
+      criteria: [
+        {
+          id: "clarifies_target_figure",
+          description: "在修改前澄清应移动哪一个结果图，而不是直接猜测修改。",
+        },
+        {
+          id: "accuracy_figure_near_analysis",
+          description:
+            "用户确认后，准确率图仍位于对应分析段落附近且没有移动到结论之后。",
+        },
+        {
+          id: "ablation_figure_preserved",
+          description: "消融图的位置、caption 和 label 语义保持不变。",
+        },
+      ],
+    },
     protectedInvariants: [
       { file: "main.tex", value: "\\input{sections/analysis}" },
       {

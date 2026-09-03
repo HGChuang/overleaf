@@ -8,6 +8,22 @@ export type ExpectedAction = 'patch' | 'clarify' | 'answer' | 'no_op' | 'refuse'
 export type CompileMode =
   'forbidden' | 'optional' | 'required-after-apply' | 'repair-loop'
 
+export interface SemanticGraderCriterion {
+  id: string
+  description: string
+}
+
+export type SemanticGradingSpec =
+  | {
+      type: 'response_semantics'
+      criteria: SemanticGraderCriterion[]
+    }
+  | {
+      type: 'content_semantics'
+      files: string[]
+      criteria: SemanticGraderCriterion[]
+    }
+
 export type GraderSpec =
   | { type: 'workspace_changed'; expected: boolean }
   | { type: 'no_patch' }
@@ -86,6 +102,7 @@ export interface PilotCase {
     expected_final_status?: 'success'
     max_compile_calls_per_turn: number
   }
+  semantic_grading?: SemanticGradingSpec
   graders: GraderSpec[]
   validation_oracle: {
     patches?: Array<{

@@ -98,6 +98,45 @@ export function validatePilotCase(caseDefinition: PilotCase): string[] {
   if (!caseDefinition.graders?.length) {
     errors.push(`${prefix}: graders must not be empty`)
   }
+  const semantic = caseDefinition.semantic_grading
+  if (semantic) {
+    if (
+      !['response_semantics', 'content_semantics'].includes(semantic.type) ||
+      !semantic.criteria?.length
+    ) {
+      errors.push(
+        `${prefix}: semantic_grading must declare a valid type and non-empty criteria`,
+      )
+    } else {
+      const criterionIds = semantic.criteria.map((criterion) => criterion.id)
+      if (
+        criterionIds.some((id) => !id?.trim()) ||
+        new Set(criterionIds).size !== criterionIds.length
+      ) {
+        errors.push(
+          `${prefix}: semantic_grading criterion ids must be non-empty and unique`,
+        )
+      }
+      if (
+        semantic.criteria.some((criterion) => !criterion.description?.trim())
+      ) {
+        errors.push(
+          `${prefix}: semantic_grading criterion descriptions must be non-empty`,
+        )
+      }
+      if (semantic.type === 'content_semantics') {
+        const fixturePaths = new Set(paths)
+        if (
+          !semantic.files?.length ||
+          semantic.files.some((file) => !fixturePaths.has(file))
+        ) {
+          errors.push(
+            `${prefix}: content_semantics files must exist in the fixture`,
+          )
+        }
+      }
+    }
+  }
   if (
     ['no_op', 'refuse', 'answer'].includes(
       caseDefinition.expected_behavior?.action,

@@ -78,6 +78,9 @@ export function makeV3Case(input: V3CaseInput): V3ExecutableCase {
         : {}),
       max_compile_calls_per_turn: 1,
     },
+    ...(input.semanticGrading
+      ? { semantic_grading: input.semanticGrading }
+      : {}),
     graders: input.graders,
     validation_oracle: {
       ...(input.oraclePatches ? { patches: input.oraclePatches } : {}),

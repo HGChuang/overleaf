@@ -17,6 +17,12 @@ import { EVAL_PROTOCOL_PREFIX } from "./dynamicProtocol.js";
 import { V3_EXECUTABLE_CASES } from "../benchmark-v3/executable/index.js";
 import type { PilotCase } from "./types.js";
 import { readCompletedTrials } from "./baselineResume.js";
+import { writeJsonAtomic } from "../headless/canonicalTrace.js";
+import {
+  SEMANTIC_GRADER_INPUT_FILE,
+  SEMANTIC_GRADER_RESULT_FILE,
+  validateSemanticGraderOutput,
+} from "./semanticGrader.js";
 import {
   evalUserBridgeTimeoutMs,
   waitForChild,
@@ -49,6 +55,8 @@ export interface SchedulerOptions {
   messagesDir?: string;
   messagesJson?: string;
   bridgeCommand?: string;
+  semanticGraderCommand?: string;
+  semanticGraderTimeoutMs: number;
   userId: string;
   composeWrapper: string;
   repoRoot: string;
@@ -69,6 +77,11 @@ export interface SchedulerTrialResult {
   durationMs: number;
   resumed?: boolean;
   schedulerFailure?: string;
+  semanticGrader?: {
+    status: "pass" | "fail" | "error";
+    passed: boolean;
+    error?: string;
+  };
 }
 
 const VALID_STATUSES = new Set<TrialStatus>([
@@ -259,6 +272,23 @@ async function openLog(path: string) {
   return open(path, "a");
 }
 
+function semanticGraderTimeoutMs(): number {
+  const value = Number(process.env.EVAL_SEMANTIC_GRADER_TIMEOUT_MS || 180_000);
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new Error(
+      "EVAL_SEMANTIC_GRADER_TIMEOUT_MS must be a positive number of milliseconds",
+    );
+  }
+  return value;
+}
+
+function hostRunDirectory(runDir: string, repoRoot: string): string {
+  if (runDir.startsWith("/overleaf/")) {
+    return join(repoRoot, runDir.slice("/overleaf/".length));
+  }
+  return runDir;
+}
+
 async function runBridge(
   command: string,
   options: SchedulerOptions,
@@ -376,6 +406,77 @@ async function runTrial(
     );
   }
   return runProcess(options, plan, messages, logDir, started);
+}
+
+async function runSemanticGrader(
+  options: SchedulerOptions,
+  plan: TrialPlan,
+  result: SchedulerTrialResult,
+): Promise<void> {
+  if (
+    !options.semanticGraderCommand ||
+    !plan.caseDefinition.semantic_grading ||
+    !result.runDir ||
+    (result.status !== "PASS" && result.status !== "COPILOT_FAILURE")
+  ) {
+    return;
+  }
+  const runDir = hostRunDirectory(result.runDir, options.repoRoot);
+  const inputPath = join(runDir, SEMANTIC_GRADER_INPUT_FILE);
+  const resultPath = join(runDir, SEMANTIC_GRADER_RESULT_FILE);
+  let inputText: string;
+  try {
+    inputText = await readFile(inputPath, "utf8");
+    const input = JSON.parse(inputText) as {
+      criteria?: Array<{ id: string }>;
+    };
+    const child = spawn("/bin/sh", ["-lc", options.semanticGraderCommand], {
+      cwd: options.repoRoot,
+      stdio: ["pipe", "pipe", "pipe"],
+    });
+    const outputChunks: Buffer[] = [];
+    const stderrChunks: Buffer[] = [];
+    child.stdout?.on("data", (chunk: Buffer) => outputChunks.push(chunk));
+    child.stderr?.on("data", (chunk: Buffer) => stderrChunks.push(chunk));
+    child.stdin?.end(inputText);
+    const exit = await waitForChild(child, options.semanticGraderTimeoutMs);
+    if (exit.code !== 0) {
+      throw new Error(
+        "semantic grader exited with code " +
+          String(exit.code) +
+          ": " +
+          Buffer.concat(stderrChunks).toString("utf8").slice(0, 2000),
+      );
+    }
+    const output = JSON.parse(
+      Buffer.concat(outputChunks).toString("utf8"),
+    ) as unknown;
+    const graded = validateSemanticGraderOutput(
+      output,
+      (input.criteria || []).map((criterion) => ({
+        id: criterion.id,
+        description: "",
+      })),
+    );
+    await writeJsonAtomic(resultPath, graded);
+    result.semanticGrader = {
+      status: graded.status,
+      passed: graded.passed,
+    };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    await writeJsonAtomic(resultPath, {
+      protocol: "overleaf-semantic-grader/v1",
+      status: "error",
+      passed: false,
+      error: message,
+    });
+    result.semanticGrader = {
+      status: "error",
+      passed: false,
+      error: message,
+    };
+  }
 }
 
 async function runWithBridge(
@@ -553,6 +654,14 @@ export async function summarizeBaseline(
     status_counts: statusCounts,
     capability_outcomes: capability,
     infrastructure_outcomes: infrastructure,
+    semantic_grader: {
+      pass: results.filter((item) => item.semanticGrader?.status === "pass")
+        .length,
+      fail: results.filter((item) => item.semanticGrader?.status === "fail")
+        .length,
+      error: results.filter((item) => item.semanticGrader?.status === "error")
+        .length,
+    },
     results,
   };
   await mkdir(dirname(outputPath), { recursive: true });
@@ -586,6 +695,7 @@ async function run(options: SchedulerOptions) {
     while (cursor < pending.length) {
       const plan = pending[cursor++];
       const result = await runTrial(options, plan);
+      await runSemanticGrader(options, plan, result);
       results.push(result);
       process.stdout.write(
         `${JSON.stringify({ case_id: result.caseId, trial_id: result.trialId, status: result.status, duration_ms: result.durationMs })}\n`,
@@ -663,6 +773,8 @@ function parseArgs(argv: string[]): SchedulerOptions {
     messagesDir: process.env.EVAL_USER_MESSAGES_DIR,
     messagesJson: process.env.EVAL_USER_MESSAGES_JSON,
     bridgeCommand: process.env.EVAL_USER_BRIDGE_COMMAND,
+    semanticGraderCommand: process.env.EVAL_SEMANTIC_GRADER_COMMAND,
+    semanticGraderTimeoutMs: semanticGraderTimeoutMs(),
     userId: process.env.EVAL_USER_ID || "",
     composeWrapper: resolve(
       process.env.EVAL_COMPOSE_WRAPPER ||

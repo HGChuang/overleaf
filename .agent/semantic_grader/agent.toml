@@ -1,0 +1,11 @@
+name = "semantic_grader"
+description = """
+Overleaf Copilot Benchmark 的独立语义评分 Subagent。
+它只读取结构化评测证据，不参与用户模拟，也不与 Copilot 对话。
+"""
+
+model = "gpt-5.6-luna"
+sandbox_mode = "read-only"
+entrypoint = ".agent/semantic_grader/run.sh"
+output_schema = ".agent/semantic_grader/output.schema.json"
+instructions = ".agent/semantic_grader/instructions.md"

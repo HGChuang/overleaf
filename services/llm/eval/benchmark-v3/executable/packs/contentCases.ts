@@ -290,6 +290,30 @@ The proof use same trajectory track restriction $\tau=0.5$ and it not claim robu
     ],
     action: "patch",
     compileMode: "required-after-apply",
+    semanticGrading: {
+      type: "content_semantics",
+      files: [
+        "chapters/intro.tex",
+        "chapters/method.tex",
+        "chapters/appendix.tex",
+      ],
+      criteria: [
+        {
+          id: "academic_polish_preserves_meaning",
+          description:
+            "润色后的英文保留原意、学术语气和否定结论，不引入新主张。",
+        },
+        {
+          id: "terminology_and_sentences_improved",
+          description:
+            "统一 trajectory tracking 相关术语，并拆分或改写过长句子以提升清晰度。",
+        },
+        {
+          id: "technical_references_preserved",
+          description: "公式 tau=0.5、图引用和 label 语义保持不变。",
+        },
+      ],
+    },
     protectedInvariants: [
       { file: "chapters/method.tex", value: "\\tau=0.5" },
       { file: "chapters/appendix.tex", value: "\\tau=0.5" },
@@ -633,6 +657,24 @@ We measure social resilience with the same network indicators.
     ],
     action: "patch",
     compileMode: "required-after-apply",
+    semanticGrading: {
+      type: "content_semantics",
+      files: ["zh/intro.tex", "zh/method.tex", "en/intro.tex", "en/method.tex"],
+      criteria: [
+        {
+          id: "missing_paragraphs_synced",
+          description: "补齐中文缺失段落，且内容与对应英文段落语义一致。",
+        },
+        {
+          id: "terminology_unified",
+          description: "关键术语 social resilience 在中文中统一译为社会韧性。",
+        },
+        {
+          id: "paragraph_order_preserved",
+          description: "中英文段落顺序保持不变，不重排现有段落。",
+        },
+      ],
+    },
     protectedInvariants: [
       { file: "en/intro.tex", value: "social resilience" },
       { file: "en/method.tex", value: "social resilience" },

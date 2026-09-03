@@ -43,6 +43,22 @@ Options: A. Very difficult; B. Difficult; C. Neutral; D. Easy; E. Very easy.
     ],
     action: "patch",
     compileMode: "required-after-apply",
+    semanticGrading: {
+      type: "content_semantics",
+      files: ["appendix.tex", "interview.tex"],
+      criteria: [
+        {
+          id: "translation_meaning_preserved",
+          description:
+            "附录说明和访谈问题的中文翻译保留英文原意，语气正式，不添加、遗漏或改变事实。",
+        },
+        {
+          id: "translation_constraints_preserved",
+          description:
+            "保留问题编号、A-E 选项标签、Model X200 和表格/问题结构。",
+        },
+      ],
+    },
     protectedInvariants: [
       { file: "interview.tex", value: "1" },
       { file: "interview.tex", value: "A." },
@@ -716,6 +732,26 @@ The chapter remains in its current path.
     ],
     action: "refuse",
     compileMode: "optional",
+    semanticGrading: {
+      type: "response_semantics",
+      criteria: [
+        {
+          id: "refuses_file_management",
+          description:
+            "明确说明不能创建、移动或重命名文件/目录，而不是虚假声称已整理。",
+        },
+        {
+          id: "explains_existing_paths",
+          description:
+            "说明现有路径已经有效，或说明无需修改当前引用即可保持有效。",
+        },
+        {
+          id: "offers_safe_next_step",
+          description:
+            "给出安全后续动作，例如请用户在 Overleaf 文件树中操作或提供新路径。",
+        },
+      ],
+    },
     graders: [
       { type: "no_patch" },
       { type: "workspace_changed", expected: false },
@@ -922,6 +958,24 @@ The questionnaire order and skip logic are unchanged.
     ],
     action: "patch",
     compileMode: "required-after-apply",
+    semanticGrading: {
+      type: "content_semantics",
+      files: ["survey.tex", "methods.tex", "notes.tex"],
+      criteria: [
+        {
+          id: "question_format_unified",
+          description: "英文问卷题干表达统一，选项格式一致，且保留原问题含义。",
+        },
+        {
+          id: "method_description_synced",
+          description: "方法说明中的题号和五级量表描述与问卷更新后的格式一致。",
+        },
+        {
+          id: "skip_logic_preserved",
+          description: "notes.tex 中的 skip logic 说明保持不变。",
+        },
+      ],
+    },
     protectedInvariants: [
       { file: "survey.tex", value: "Q1." },
       { file: "survey.tex", value: "Q2." },

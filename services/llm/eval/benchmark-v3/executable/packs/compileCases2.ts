@@ -739,6 +739,20 @@ The answer keeps the original lesson numbering.
     continueAfterPatch: true,
     initialCompile: "failure",
     compileMode: "repair-loop",
+    semanticGrading: {
+      type: "content_semantics",
+      files: ["lessons/seven.tex", "answers/seven.tex", "main.tex"],
+      criteria: [
+        {
+          id: "list_error_repaired",
+          description: "修复第七课嵌套列表环境不匹配导致的编译错误。",
+        },
+        {
+          id: "numbering_preserved",
+          description: "保持原有定理编号语义，不因列表修复改变后续编号。",
+        },
+      ],
+    },
     protectedInvariants: [
       { file: "main.tex", value: "\\input{lessons/seven}" },
       {

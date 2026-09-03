@@ -1503,3 +1503,9 @@ terminal，本轮结果明确是 partial baseline，不能解释为完整集合�
 对 `benchmark-v3-baseline-repaired-20260902-f04baac` 的 55 个失败 case family、144 个失败 canonical trial 完成逐条审计。当前 canonical 环境失败为 0；唯一疑似的中文 CJK 环境缺失被当前 CLSI oracle 复验推翻：`CJKutf8` oracle 以 `pdflatex` 编译成功且 0 errors。`v3.interaction-title-recovery.v1` 归因为 Copilot 选择不可用 `ctex` 且未找到局部 `CJKutf8` 修复，而非评测环境不满足。
 
 主要 case-level 归因为 patch semantics 28、response semantics 15、benchmark/grader contract 6、mixed 4、context/target discovery 1、multi-turn recovery 1。下一步应先 adjudicate contract 与 mixed case，再从稳定的 patch/response 语义失败中建立 regression set；不能直接把 144 个 `COPILOT_FAILURE` 全部视为纯模型能力缺陷。完整报告见 `services/llm/eval/benchmark-v3/BASELINE_FAILURE_ANALYSIS_REPAIRED_20260902.md`。
+
+## Iteration 23：semantic_grader shadow 评审
+
+新增独立 `semantic_grader` subagent，位置为 `.agent/semantic_grader/`。它只在 trial 结束后读取结构化输入，不参与 `eval_user` 对话，也不查看 case ID、模型身份或旧判定结果。当前 10 个已确认语义风险 case 显式声明 `semantic_grading`；固定结构、数值、文件范围和编译结果仍只由 deterministic grader 判定。
+
+新的混合流程为：deterministic gate → `semantic-grader-input.json` → 外部 `semantic_grader` → `semantic-grader.json` → scheduler shadow 统计。当前 semantic 结果不改变 canonical `PASS` / `COPILOT_FAILURE`。启用方式与整体设计见 `.agent/semantic_grader/README.md`。

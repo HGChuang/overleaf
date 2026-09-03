@@ -1704,3 +1704,51 @@ Token 总量 9,018,725；wall time 17,495,524 ms；tool calls 1,547；accepted p
 3. 针对计数器独立性和 `renew` vs delete 建立小规模 regression set；
 4. 对歧义场景做澄清优先策略实验，但不直接修改 benchmark；
 5. 用新 experiment ID 重新运行完整 baseline，作为后续行为修改的 before/after 对照。
+
+## Iteration 23 — 新增 semantic_grader shadow 评审
+
+日期：2026-09-03
+
+### 本轮研究的问题
+
+修复 refusal/no-op/澄清/翻译/润色类 case 中固定词面匹配造成的语义假阴性，同时保留防作弊和安全边界。
+
+### Observation / Evidence
+
+Repaired baseline 中存在语义正确但固定关键词不匹配的失败，例如项目目录拒绝、已满足 no-op、无来源数据拒绝和等价翻译。此前 ambiguity audit 也标记 `RESPONSE_WORDING_DEPENDENCY` 风险。
+
+### Root Cause / Hypothesis
+
+Root Cause 是把自然语言语义属性编码成整句或关键词包含判断。假设是：确定性硬 gate 加独立结构化语义评审可以降低假阴性，同时避免让 `eval_user` 兼任裁判或向 Copilot 泄露评分标准。
+
+### Changes
+
+* 新增 `.agent/semantic_grader/`：agent 配置、指令、JSON Schema、Codex exec adapter 和使用说明；
+* `PilotCase` 新增可选 `semantic_grading`，支持 `response_semantics` 和 `content_semantics`；
+* 10 个已审计语义风险 case 显式声明 semantic rubric；
+* runner 生成 `semantic-grader-input.json` 并记录 `semantic_grader_prepared` trace event；
+* scheduler 支持 `EVAL_SEMANTIC_GRADER_COMMAND` 和 `EVAL_SEMANTIC_GRADER_TIMEOUT_MS`，后置调用 semantic grader 并写入 `semantic-grader.json`；
+* scheduler summary 增加 semantic shadow 的 pass/fail/error 统计；
+* 当前为 shadow mode，不改变 canonical status，也不修改 Copilot 行为。
+
+### Validation
+
+* `semanticGrader.test.ts`：5/5 通过，覆盖 10 个显式 case、输入去标识化、目标文件裁剪、输出校验和 adapter 可执行性；
+* `pilot.test.ts`：8/8 通过；
+* `executableCases.test.ts`：11/11 通过；
+* semantic grader 相关 TypeScript 定向检查和 `run.sh` 语法检查通过。
+
+### Benchmark / Metric Before vs After
+
+本轮未重跑 baseline，`75/219` canonical 结果不变。semantic grader 尚处于 shadow mode，没有资格分数；其 pass/fail/error 只用于校准。
+
+### Failure Cases / Regression
+
+未修改 Copilot 行为，因此无行为 regression。已知的 semantic grader 风险是模型评分 variance 和 prompt injection；当前通过只读输入、去标识化、结构化输出、逐 criterion 校验和 shadow mode 控制。
+
+### Recommended next steps
+
+1. 对 10 个 case 的既有 artifacts 运行 shadow regrade，生成 deterministic vs semantic 分歧表；
+2. 为每个 semantic case 增加 positive 等价表达和 adversarial mutation 校准集；
+3. 重复评分测量 variance，输出非法率；
+4. 校准后再设计 authoritative hybrid 判分，并用新 experiment ID 重跑 baseline。
