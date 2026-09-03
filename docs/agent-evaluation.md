@@ -1509,3 +1509,11 @@ terminal，本轮结果明确是 partial baseline，不能解释为完整集合�
 新增独立 `semantic_grader` subagent，位置为 `.agent/semantic_grader/`。它只在 trial 结束后读取结构化输入，不参与 `eval_user` 对话，也不查看 case ID、模型身份或旧判定结果。当前 10 个已确认语义风险 case 显式声明 `semantic_grading`；固定结构、数值、文件范围和编译结果仍只由 deterministic grader 判定。
 
 新的混合流程为：deterministic gate → `semantic-grader-input.json` → 外部 `semantic_grader` → `semantic-grader.json` → scheduler shadow 统计。当前 semantic 结果不改变 canonical `PASS` / `COPILOT_FAILURE`。启用方式与整体设计见 `.agent/semantic_grader/README.md`。
+
+## Iteration 24：semantic_grader shadow 重跑
+
+实验 `benchmark-v3-semantic-shadow-20260903-4c97b47507` 对 10 个 semantic-enabled case 各执行 1 trial，绑定 Git `4c97b4750780d86c12070d9f947fed38dacdf45f`。所有 case 均生成 semantic input、semantic result 和 `semantic_grader_prepared` trace event；semantic grader 无 error。
+
+Canonical 结果为 `PASS=3`、`COPILOT_FAILURE=7`。Semantic shadow 结果为 `pass=9`、`fail=1`。其中 6 个 canonical failure 是 deterministic 固定字符串或固定 patch 范围导致的 false negative，semantic grader 全部判为通过；唯一同时失败的 `v3.result-figure-near-analysis.v1` 是真实 Copilot failure，原因是未先澄清目标图。该结果说明 semantic grader 能有效纠正语义等价但措辞不同的通过行为，同时未把真实失败误判为通过。
+
+完整报告见 `services/llm/eval/benchmark-v3/SEMANTIC_GRADER_SHADOW_20260903.md`。本轮仍是 1-trial shadow 校准，不能作为能力分数或直接晋升为 canonical grader。

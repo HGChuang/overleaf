@@ -1752,3 +1752,62 @@ Root Cause 是把自然语言语义属性编码成整句或关键词包含判断
 2. 为每个 semantic case 增加 positive 等价表达和 adversarial mutation 校准集；
 3. 重复评分测量 variance，输出非法率；
 4. 校准后再设计 authoritative hybrid 判分，并用新 experiment ID 重跑 baseline。
+
+## Iteration 24 — semantic_grader shadow 重跑
+
+日期：2026-09-03
+
+### 本轮研究的问题
+
+验证新引入的 `semantic_grader` 是否在真实评测链路中生效，并观察它能否纠正 deterministic grader 对语义等价表达的误判。
+
+### Observation / Evidence
+
+* 实验：`benchmark-v3-semantic-shadow-20260903-4c97b47507`
+* Git commit：`4c97b4750780d86c12070d9f947fed38dacdf45f`
+* 10 个 semantic-enabled case，各 1 trial；
+* 10/10 生成 `semantic-grader-input.json`；
+* 10/10 生成 `semantic-grader.json`；
+* 10/10 记录 `semantic_grader_prepared` trace event；
+* semantic grader `error=0`；
+* canonical：`PASS=3`，`COPILOT_FAILURE=7`；
+* semantic：`pass=9`，`fail=1`。
+
+### Root Cause
+
+6 个 deterministic failure 来自固定字符串、固定 fact group 或固定 patch 文件范围，无法容纳语义等价的自然表达或“目标文件已满足要求”的情况。`v3.result-figure-near-analysis.v1` 是真实失败，Copilot 未先澄清应移动哪一个结果图。
+
+### Changes
+
+* 修复 `.agent/semantic_grader/run.sh` 的仓库根目录计算错误；
+* 使用独立 `eval_user` bridge 完成 10 个 case 的用户侧交互；
+* 未修改 Copilot 行为；
+* 未改变 canonical grading。
+
+### Benchmark / Metric Before vs After
+
+| Metric | Deterministic | Semantic shadow |
+|---|---:|---:|
+| PASS / pass | 3 / 10 | 9 / 10 |
+| COPILOT_FAILURE / fail | 7 / 10 | 1 / 10 |
+| Error | 0 | 0 |
+
+Semantic grader 纠正了 6 个 deterministic false negative，并保留了 1 个真实 failure。因此本轮观察支持 semantic grader 对语义类 case 有效。
+
+### Failure Cases / Regression
+
+新增真实失败 case：`v3.result-figure-near-analysis.v1`，原因是未先澄清目标图。未发现 Copilot 行为 regression；本轮只改变评测 grader，不改变 Agent。
+
+### Lessons
+
+* 固定字符串判分对翻译、润色、refusal 和 no-op case 的语义等价表达过于脆弱；
+* semantic grader 能有效识别“结果已满足，无需 patch”的场景；
+* shadow 模式可以在不污染 canonical 分数的情况下校准 grader；
+* 1-trial 结果仍需多次重复验证，不能直接晋升为 canonical。
+
+### Recommended next steps
+
+1. 对 10 个 semantic-enabled case 执行多 trial 稳定性测试；
+2. 抽样人工复核 semantic pass/fail，尤其是 refusal 与 no-op；
+3. 评估是否将 semantic grader 逐步晋升为 canonical；
+4. 继续保持 deterministic grader 作为结构、数值和编译结果的权威判分。
