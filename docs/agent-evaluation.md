@@ -1533,3 +1533,7 @@ Canonical 结果为 `PASS=10`、`COPILOT_FAILURE=20`；Semantic shadow 结果为
 最终结果为 219 logical trial 中 `PASS=94`、`COPILOT_FAILURE=125`，trial-level pass rate 为 `42.9%`。Case-level pass@3 为 `37/73=50.7%`，at least 2/3 pass 为 `31/73=42.5%`，all-pass@3 为 `26/73=35.6%`。静态 pass@3 为 `29/53=54.7%`，动态 pass@3 为 `8/20=40.0%`。
 
 这是结果级合成 baseline，不是新的端到端评测；semantic 结果仍是 shadow 结果，尚未晋升 canonical。完整报告见 `services/llm/eval/benchmark-v3/FINAL_BASELINE_20260903.md`，机器可读汇总见 `services/llm/eval/benchmark-v3/final-baseline-summary.json`。
+
+## Iteration 27：补丁语义失败修复实验 1
+
+对 final baseline 中 28 个补丁语义失败 case 应用统一的 `MINIMAL SEMANTIC PATCH PLANNING` 提示策略，绑定 Git `373badfe26d1ec0508a31fac9aa2a4b0083b7432`，重跑 28×3=84 个 canonical trial。结果 `PASS=6`、`COPILOT_FAILURE=78`，canonical `INFRA_FAILURE=0`；只有 `v3.beamer-reference-overflow.v1` 达到 `3/3`。通用最小修改规则未修复 `\renew`、独立计数器、精确值约束、CJK 依赖选择和匿名化空 hunk 等具体 LaTeX 语义问题。报告见 `services/llm/eval/benchmark-v3/PATCH_SEMANTICS_FIX1_20260903.md`。

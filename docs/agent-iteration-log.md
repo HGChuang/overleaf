@@ -1933,3 +1933,52 @@ Deterministic grader 对 10 个语义敏感 case 存在固定字符串或固定 
 2. 讨论是否将 semantic grader 晋升为 canonical；
 3. 用最终 baseline 作为后续 Copilot 优化的对照基线；
 4. 保持 deterministic grader 继续负责结构、数值与编译结果。
+
+## Iteration 27 — 补丁语义失败修复实验 1
+
+日期：2026-09-03
+
+### 本轮研究的问题
+
+针对 final baseline 中归因为“补丁语义”的 28 个 case family，验证统一的 `MINIMAL SEMANTIC PATCH PLANNING` 提示词策略能否纠正范围失控、过度工程化和语义替换不精确的问题。
+
+### Observation / Evidence
+
+* 修改 `services/llm/app/agent/prompts.ts`，新增 `MINIMAL SEMANTIC PATCH PLANNING`；新增 `minimalPatchPolicy.test.ts`，提示词测试与 `tsc --noEmit` 均通过。
+* 28×3=84 个 canonical trial 全部有终端能力结果，`PASS=6`、`COPILOT_FAILURE=78`；首轮因 5 小时模型配额耗尽产生 38 个 `INFRA_FAILURE`，配额恢复后重跑补齐，最终 `INFRA_FAILURE=0`。
+* 仅 `v3.beamer-reference-overflow.v1` 由 `1/3 -> 3/3`；`v3.compile-conditional-macro.v1`、`v3.compile-duplicate-environment.v1`、`v3.content-theorem-numbering.v1`、`v3.survey-longtable-header.v1` 分别下降 1 个 PASS。
+
+### Root Cause
+
+通用“最小语义补丁”没有针对 LaTeX 修复的语义规则。重复定义仍被删除而非 `\renew...`，独立章节/附录仍复用共享计数器，仍偏好加宏包或改调用方；这些需要领域级规则，而非泛化提示。
+
+### Changes
+
+* `services/llm/app/agent/prompts.ts`：新增 `MINIMAL SEMANTIC PATCH PLANNING`；
+* `services/llm/eval/pilot/minimalPatchPolicy.test.ts`：覆盖该策略的加载与门控；
+* 新增报告 `services/llm/eval/benchmark-v3/PATCH_SEMANTICS_FIX1_20260903.md`。
+
+### Benchmark / Metric Before vs After
+
+| Metric | Baseline（28 case） | Fix1 |
+|---|---:|---:|
+| Trial-level PASS | 8 / 84 | 6 / 84 |
+| all-pass@3 case | 0 / 28 | 1 / 28 |
+| at least one PASS case | 6 / 28 | 3 / 28 |
+
+### Failure Cases / Regression
+
+修复未改变大部分失败模式；四个 case 的 trial PASS 波动下降，未发现系统性修复证据。仍需关注：`\renew` 策略、独立计数器、精确值约束、CJK 依赖选择、匿名化空 hunk。
+
+### Lessons
+
+* 通用最小修改提示不足以覆盖 LaTeX 修复语义，需按领域策略拆成单点修复；
+* 长评测必须避开模型配额窗口，避免把 `AccountQuotaExceeded` 混入能力统计；
+* `eval_user` 的 JSON 格式错误需要独立重试，不能与 Copilot 行为失败混淆。
+
+### Recommended next steps
+
+1. 下一轮实现“LaTeX 定义侧修复规则”：`\renew` 与独立计数器，不新增宏包、不改调用方；
+2. 对精确术语/尺寸/label 增加“verbatim target 提取”规则；
+3. 为 CJK 场景增加依赖探测与最小局部 CJK 修复规则；
+4. 为匿名化/占位替换增加非空 replacement 校验，避免 `UNSUPPORTED_PATCH_SEMANTICS`。
