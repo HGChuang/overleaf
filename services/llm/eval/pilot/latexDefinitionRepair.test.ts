@@ -10,6 +10,9 @@ test('edit prompt requires latex definition-side repair policy', () => {
   assert.match(prompt, /\\renewenvironment/)
   assert.match(prompt, /module-specific name or counter/)
   assert.match(prompt, /Do not add a package to the preamble/)
+  assert.match(prompt, /boolean conditional and a caller reports it as undefined/)
+  assert.match(prompt, /flipping the boolean switch to its TRUE value/)
+  assert.match(prompt, /showappendixtrue/)
 })
 
 test('latex definition-side repair policy is absent without submit_patch', () => {
