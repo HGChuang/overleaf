@@ -1811,3 +1811,65 @@ Semantic grader 纠正了 6 个 deterministic false negative，并保留了 1 �
 2. 抽样人工复核 semantic pass/fail，尤其是 refusal 与 no-op；
 3. 评估是否将 semantic grader 逐步晋升为 canonical；
 4. 继续保持 deterministic grader 作为结构、数值和编译结果的权威判分。
+
+## Iteration 25 — semantic_grader 3-trial 稳定性测试
+
+日期：2026-09-03
+
+### 本轮研究的问题
+
+测量 `semantic_grader` 在同一批 10 个 semantic-enabled case 上跨 3 trial 的判分稳定性。
+
+### Observation / Evidence
+
+* 实验：`benchmark-v3-semantic-shadow-3trial-20260903-7968d204de`
+* Git commit：`7968d204de980aec3acaa0f9d23655c08bd2dfa5`
+* 10 个 case × 3 trial = 30 trial；
+* 30/30 生成 `semantic-grader-input.json`；
+* 30/30 生成 `semantic-grader.json`；
+* 30/30 记录 `semantic_grader_prepared` trace event；
+* semantic grader `error=0`；
+* canonical：`PASS=10`，`COPILOT_FAILURE=20`；
+* semantic：`pass=26`，`fail=4`；
+* 9/10 个 case 的 semantic 结果在 3 trial 内完全一致。
+
+### Root Cause
+
+唯一判分翻动的 `v3.content-bilingual-sync.v1` trial 3 中，Copilot 将 `social resilience` 译为“社会恢复力”而非要求的“社会韧性”。这是真实输出差异，不是 semantic grader 随机抖动。`v3.result-figure-near-analysis.v1` 在 3 trial 中均因未先澄清目标图而 fail，结果稳定。
+
+### Changes
+
+* 未修改 Copilot 行为；
+* 未修改 canonical grading；
+* 仅执行 3-trial 稳定性评测并记录结果。
+
+### Benchmark / Metric Before vs After
+
+| Metric | Canonical | Semantic shadow |
+|---|---:|---:|
+| PASS / pass | 10 / 30 | 26 / 30 |
+| COPILOT_FAILURE / fail | 20 / 30 | 4 / 30 |
+| Error | 0 | 0 |
+| Fully consistent cases | 8 / 10 | 9 / 10 |
+
+Semantic grader 在 9/10 个 case 上保持 3-trial 完全一致，且未产生 canonical failure 之外的新失败。
+
+### Failure Cases / Regression
+
+* `v3.content-bilingual-sync.v1` trial 3：术语译为“社会恢复力”，真实行为差异；
+* `v3.result-figure-near-analysis.v1`：3/3 均未先澄清目标图，真实失败。
+* 未发现 semantic grader 引入的随机 regression。
+
+### Lessons
+
+* semantic grader 在选定 case 上具备较好的跨 trial 稳定性；
+* 判分翻动可能来自 Copilot 输出本身变化，不应立即归因于 grader 抖动；
+* 3-trial 一致性不足以证明全部语义场景稳定，但仍支持继续 shadow 使用；
+* 人工抽查和更大样本校准仍是晋升 canonical 前的必要步骤。
+
+### Recommended next steps
+
+1. 扩大 semantic-enabled case 覆盖，特别是 refusal、clarification 和多轮交互；
+2. 对每次 semantic fail 做人工 adjudication；
+3. 引入 repeated-run variance 指标，量化判分稳定性；
+4. 在稳定性充分后再讨论是否将 semantic grader 晋升为 canonical。

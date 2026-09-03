@@ -1517,3 +1517,11 @@ terminal，本轮结果明确是 partial baseline，不能解释为完整集合�
 Canonical 结果为 `PASS=3`、`COPILOT_FAILURE=7`。Semantic shadow 结果为 `pass=9`、`fail=1`。其中 6 个 canonical failure 是 deterministic 固定字符串或固定 patch 范围导致的 false negative，semantic grader 全部判为通过；唯一同时失败的 `v3.result-figure-near-analysis.v1` 是真实 Copilot failure，原因是未先澄清目标图。该结果说明 semantic grader 能有效纠正语义等价但措辞不同的通过行为，同时未把真实失败误判为通过。
 
 完整报告见 `services/llm/eval/benchmark-v3/SEMANTIC_GRADER_SHADOW_20260903.md`。本轮仍是 1-trial shadow 校准，不能作为能力分数或直接晋升为 canonical grader。
+
+## Iteration 25：semantic_grader 3-trial 稳定性测试
+
+实验 `benchmark-v3-semantic-shadow-3trial-20260903-7968d204de` 对 10 个 semantic-enabled case 各执行 3 trial，绑定 Git `7968d204de980aec3acaa0f9d23655c08bd2dfa5`。30 个 trial 全部生成 semantic input、semantic result 和 `semantic_grader_prepared` trace event；semantic grader 无 error。
+
+Canonical 结果为 `PASS=10`、`COPILOT_FAILURE=20`；Semantic shadow 结果为 `pass=26`、`fail=4`。9 / 10 个 case 的 semantic 结果在 3 trial 内完全一致；唯一不一致的 `v3.content-bilingual-sync.v1` 在 trial 3 中将 `social resilience` 译为“社会恢复力”而非要求的“社会韧性”，因此该次 fail 是真实行为差异，不是 grader 抖动。`v3.result-figure-near-analysis.v1` 在 3 trial 中均因未先澄清目标图而 fail。
+
+本轮结果表明 semantic grader 在选定 case 上具备较好的跨 trial 稳定性，且未引入 canonical failure 之外的新失败。完整报告见 `services/llm/eval/benchmark-v3/SEMANTIC_GRADER_STABILITY_20260903.md`。
