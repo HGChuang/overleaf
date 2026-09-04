@@ -2143,3 +2143,20 @@ Deterministic grader 对 10 个语义敏感 case 存在固定字符串或固定 
 - **经验**：工具日志、省略后的历史和首次模型送达必须分别测量；评分误拒会把正确的信息获取误归因为 Agent 失败。输入合同修复值得保留，但一次成功不构成因果提升。
 - **建议下一步**：①旧/正确 currentFile 成对重复对照；②真实规模驱动的独立压力诊断；③已裁定失败的首次错误决策与编译定位链审计。
 - **Commit**：本轮本地提交 hash 在交付的 Iteration Review 中记录；仅提交本轮文件，不 push。完成后 STOP。
+
+
+## Iteration 33 — 评分合同验收与正式报告防误用
+
+日期：2026-09-04。报告：[评分合同验收](agent-scoring-acceptance-20260904.md)。**本轮工程与审查完成，验收结论 NOT_ACCEPTED。**
+
+- **研究问题**：先排除测试环境误判，再决定是否重跑 baseline 或优化 Agent。
+- **Observation / Evidence**：逐项核对 73 个 case 的公开要求/背景/评分，记录潜在唯一实现、措辞、视觉代理及隐藏偏好风险；不将风险数称为误判数。TODO 与未核实数字的实际用户授权和 grader 冲突，符号 fixture 无背景声称的冲突。15 个评分探针暴露同义误拒、关键词误放和中间数据漏检。
+- **Root Cause / Interpretation**：测试把具体实现、预定交互路线和关键词代理当作任务成功；部分隐藏要求未在实际请求中提供，且没有人工 gold。不是仅靠放宽字符串匹配就能修好的问题。
+- **Hypothesis / Changes**：结果语义可规则化的部分用结构检查验证，其余保持未验收；候选 v2 扩展 department/score 两个独立计数器检查，补 22 行问卷数据保持；新增三个合同 INVALID。统一评分自动接入 scheduler，source/compile/hash 绑定，验收未通过不发布正式率；旧 v1、原始 artifacts、Copilot、fixture 均未修改。
+- **Before vs After**：15 个探针与 Agent 提议标签不一致 10 → 6（不是人工准确率）；378/378 v1 状态复现、378/378 候选重判完成。历史 baseline 从 75 PASS / 141 FAIL / 3 INVALID 到 75 / 132 / 12，差异仅为三个 case 的九个 trial 被隔离；其他 cohort 的状态计数不变。没有新增能力收益或正式 baseline。
+- **Failure Cases / Regression**：保留六个未通过探针，覆盖同义 refusal/no-op、虚假完成、替代译文和视觉布局；未放宽成 PASS。新增规则的悬挂计数器、注释假定义、保护内容和编译错误负例均保持失败；数据未知表示不能掩盖既有硬失败。没有观察到其他历史状态回归，不宣称所有评分正确。
+- **Validation**：21/21 定向测试和相关模块类型检查通过；新报告入口用 219 个真实结果验证，官方率 null、比较资格 false，Compose 路径/重复 trial/缺失证据/infra 均有测试。探针编译为 stub，非端到端编译；未调用 Copilot 或裁判模型。
+- **人工证据**：准备 11 份隐藏旧分数的真实 artifact 审阅包及来源 SHA；尚无人工标签，全部 PENDING。通过异步消息请用户确认任务原则并审阅，未代填。
+- **Lessons**：探针和工程测试通过是不同层面的结论；分母缩小不能宣传成功率改善；验收失败必须体现在自动报告中，不能只写在说明文档里。
+- **Next steps**：①用户裁定样本/需求；②据此修订语言、视觉及动态授权评分，并重测正反例；③小量端到端验收后冻结新 baseline。只同意原则不能视为具体样本人工 gold。
+- **Commit**：本轮仅本地提交，hash 随交付的 Iteration Review 记录；不 push。STOP，等待用户裁定下一步。

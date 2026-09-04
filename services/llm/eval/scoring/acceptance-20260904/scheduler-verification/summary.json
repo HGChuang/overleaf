@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "scoring_basis": "frozen_candidate_contract",
+  "contract_id": "v3-scoring-acceptance-candidate-v2-20260904",
+  "contract_sha256": "e3b50d5557e8a9f8feb4188ef52c45f5cac6677251e7336e570877dca5229ec4",
+  "review_sha256": "828e6b4cc74e21e784c37fc72f948a4a354511d9bc27021d4aca587122388837",
+  "calibration_sha256": "15ea2f306e5261474d44d67d23920cc697c9a7817550b55ba60ce2c949527600",
+  "planned_trials": 219,
+  "diagnostic_outcomes": {
+    "PASS": 75,
+    "COPILOT_FAILURE": 132,
+    "INVALID": 12
+  },
+  "comparison_eligible": false,
+  "official_pass_rate": null,
+  "acceptance_status": "NOT_ACCEPTED",
+  "blockers": [
+    "human_gold_not_available",
+    "unresolved_semantic_and_visual_grader_probes",
+    "case_requirements_and_user_protocol_need_adjudication"
+  ],
+  "interpretation": "Diagnostic same-artifact scoring only. INVALID is not PASS; remaining labels are not human-calibrated capability truth. Semantic remains shadow."
+}

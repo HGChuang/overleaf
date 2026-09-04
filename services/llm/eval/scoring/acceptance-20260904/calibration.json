@@ -1,0 +1,23 @@
+{
+  "status": "NOT_ACCEPTED",
+  "human_gold_count": 0,
+  "probe_label_authority": "agent_proposals_not_human_gold",
+  "synthetic_compile_stub": true,
+  "planned_probes": 15,
+  "v1_disagreements_with_proposals": 10,
+  "v2_disagreements_with_proposals": 6,
+  "unresolved_probes": [
+    "refusal_equivalent",
+    "refusal_keyword_false_claim",
+    "noop_equivalent",
+    "caption_false_completion",
+    "flowchart_equivalent_width",
+    "translation_equivalent"
+  ],
+  "blockers": [
+    "human_gold_not_available",
+    "unresolved_semantic_and_visual_grader_probes",
+    "case_requirements_and_user_protocol_need_adjudication"
+  ],
+  "promotion_rule": "Do not edit this status to enable scores. Calibrate/fix, version the contract and review reporter promotion; current reporter always blocks publication."
+}

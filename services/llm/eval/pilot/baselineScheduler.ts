@@ -17,6 +17,7 @@ import { EVAL_PROTOCOL_PREFIX } from "./dynamicProtocol.js";
 import { V3_EXECUTABLE_CASES } from "../benchmark-v3/executable/index.js";
 import type { PilotCase } from "./types.js";
 import { readCompletedTrials } from "./baselineResume.js";
+import { writeAcceptedReport } from "../scoring/acceptedReport.js";
 import { writeJsonAtomic } from "../headless/canonicalTrace.js";
 import {
   SEMANTIC_GRADER_INPUT_FILE,
@@ -634,6 +635,7 @@ async function completedTrialIds(
 export async function summarizeBaseline(
   results: SchedulerTrialResult[],
   outputPath: string,
+  auditOptions: { hostArtifactRoot?: string } = {},
 ) {
   const statusCounts: Record<string, number> = {};
   const capability: Record<string, number> = {};
@@ -646,8 +648,20 @@ export async function summarizeBaseline(
       infrastructure[result.status] = (infrastructure[result.status] || 0) + 1;
     }
   }
+  let unifiedScoring: Record<string, unknown>;
+  try {
+    unifiedScoring = await writeAcceptedReport(results, join(dirname(outputPath), "audited"), auditOptions);
+  } catch (error) {
+    unifiedScoring = { acceptance_status: "INCOMPLETE", comparison_eligible: false,
+      official_pass_rate: null, error: error instanceof Error ? error.message : String(error) };
+    await mkdir(join(dirname(outputPath), "audited"), {recursive: true});
+    await writeJsonAtomic(join(dirname(outputPath), "audited", "summary.json"), unifiedScoring);
+  }
   const report = {
-    schema_version: 1,
+    schema_version: 2,
+    scoring_basis: "raw_legacy_diagnostic",
+    comparison_eligible: false,
+    unified_scoring: unifiedScoring,
     generated_at: new Date().toISOString(),
     experiment_id: results[0]?.experimentId || null,
     planned_trials: results.length,
@@ -718,13 +732,13 @@ async function run(options: SchedulerOptions) {
     options.experimentId,
     "summary.json",
   );
-  const report = await summarizeBaseline(results, reportPath);
+  const report = await summarizeBaseline(results, reportPath, {hostArtifactRoot: options.hostArtifactRoot});
   process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
   process.exitCode =
     report.infrastructure_outcomes.INFRA_FAILURE ||
     report.infrastructure_outcomes.INVALID
       ? 1
-      : 0;
+      : report.unified_scoring.acceptance_status !== "ACCEPTED" ? 2 : 0;
 }
 
 function parseArgs(argv: string[]): SchedulerOptions {

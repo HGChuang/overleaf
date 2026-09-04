@@ -2,7 +2,9 @@
 
 当前实际执行方案与优化方向复审见 [2026-09-04 简报](agent-evaluation-review-20260904.md)。该简报已核对 runner；本文前部包含设计性描述，不能全部视为当前 baseline 已实现能力。
 
-当前评分比较口径见 [P0 评分审计](agent-scoring-audit-20260904.md)：使用冻结的 `v3-scoring-audit-v1-20260904` 对两侧同批 artifacts 重评分；live runner 保留原 deterministic 结果，semantic 继续 shadow。历史 94/219 合成结果不可用作优化比较。
+历史冻结评分比较口径见 [P0 评分审计](agent-scoring-audit-20260904.md)：使用冻结的 `v3-scoring-audit-v1-20260904` 对两侧同批 artifacts 重评分；live runner 保留原 deterministic 结果，semantic 继续 shadow。历史 94/219 合成结果不可用作优化比较。
+
+最新 [评分合同验收](agent-scoring-acceptance-20260904.md) 结论为 **NOT_ACCEPTED**：73 case 已逐项审查，候选 v2 修复部分规则并隔离实际授权冲突，但尚缺人工 gold，六个语义/视觉探针未通过。scheduler 自动生成统一候选评分及验收状态；raw/候选数字均不可直接作为当前正式能力成绩，完整 baseline 暂缓。
 
 上下文送达现状见 [P0 信息链审计](agent-context-delivery-audit-20260904.md)：H1 已按 case 传递活动文件（`case-current-file-v2`）；可选 `EVAL_CONTEXT_TRACE=full` 保存完整输入、工具 IO 和压缩后的模型请求证据。历史 SSE 预览省略不能视作模型输入截断；旧/新输入合同不得直接解释为 Agent 能力变化。
 
