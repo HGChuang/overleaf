@@ -1,8 +1,0 @@
-[
-  {
-    "userTurn": 1,
-    "kind": "user",
-    "text": "已检查全部图注。项目中共有两个图，均位于独立文件中：\n\n**figures/architecture.tex**\n```latex\n\\caption{System architecture and data flow.}\n```\n句首为 \"**S**ystem\"，已使用大写。\n\n**figures/results.tex**\n```latex\n\\caption{Accuracy across evaluation settings.}\n```\n句首为 \"**A**ccuracy\"，已使用大写。\n\n**结论**：所有图注都已采用句首大写（sentence case）的规范，无需修改，因此不提交任何补丁。",
-    "hadPatch": false
-  }
-]

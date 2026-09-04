@@ -1,8 +1,0 @@
-[
-  {
-    "file": "chapters/results.tex",
-    "line": 3,
-    "oldText": "\\begin{table}[h]\n\\centering\n\\caption{Performance values}\n\\label{tab:performance}\n\\begin{tabular}{lrr}",
-    "newText": "\\begin{table}[!ht]\n\\centering\n\\caption{Performance values}\n\\label{tab:performance}\n\\small\n\\setlength{\\tabcolsep}{5pt}\n\\renewcommand{\\arraystretch}{1.1}\n\\begin{tabular}{lrr}"
-  }
-]

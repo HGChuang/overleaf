@@ -1,8 +1,0 @@
-[
-  {
-    "userTurn": 1,
-    "kind": "user",
-    "text": "已确认。以下是附录算法伪代码的引用与标签信息：\n\n## 标签（Label）\n- **标签名**：`alg:appendix-normalize`\n- 位置：`appendix/algorithm.tex` 第 1 行，定义在 `\\section{Normalization pseudocode}` 上：\n\n```latex\n\\section{Normalization pseudocode}\\label{alg:appendix-normalize}\n```\n\n注意：该标签挂在一个 `\\section` 上（不是 `\\begin{algorithm}` 环境），所以 `\\ref{alg:appendix-normalize}` 展开后显示的是**附录章节号**（如 \"Appendix A\"），而不是算法的编号。\n\n## 正文引用位置\n- 引用位于 `sections/method.tex` **第 2 行**（\"Method\" 一节中）：\n\n```latex\nThe normalization procedure is detailed in Appendix~\\ref{alg:appendix-normalize}.\n```\n\n- 这句话通过 `\\ref{alg:appendix-normalize}` 指向附录，正文中会显示为 \"Appendix A\"（或其他章节号，取决于 `main.tex` 的排版）。\n\n## 文档结构确认\n`main.tex` 的导入顺序：\n\n```latex\n\\input{sections/method}\n\\appendix\n\\input{appendix/algorithm}\n```\n\n即正文的 Method 一节先出现，之后进入附录（`\\appendix`）才引入算法伪代码部分。\n\n---\n\n**总结**：正文引用点只有一处 —— `sections/method.tex` 第 2 行的 \"Method\" 节；对应的标签是 `alg:appendix-normalize`，定义在 `appendix/algorithm.tex` 的章节标题上。\n\n另外提示一点：当前 `appendix/algorithm.tex` 中只有一句普通文字（\"Normalize each feature using the training statistics.\"），**并没有实际的 `algorithm`/`algorithmic` 伪代码环境**。如果你期望它是一段真正的伪代码（带 `\\begin{algorithm}`、`\\caption`、`\\label` 等），目前内容是缺失的 —— 需要的话我可以帮你把结构补上。",
-    "hadPatch": false
-  }
-]

@@ -1,8 +1,0 @@
-[
-  {
-    "file": "main.tex",
-    "line": 3,
-    "oldText": "\\newtheorem{theorem}{Theorem}[section]\n\\newtheorem{lemma}{Lemma}[section]\n\\newtheorem{proposition}{Proposition}",
-    "newText": "\\newtheorem{theorem}{Theorem}[section]\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{proposition}[theorem]{Proposition}"
-  }
-]

@@ -1,8 +1,0 @@
-[
-  {
-    "file": "figures.tex",
-    "line": 1,
-    "oldText": "\\section{Figures}\nFigure one: internal authorization, source listed in the project record.\nFigure two: internal authorization, source listed in the project record.\nFigure three: source unknown; it must not be published.",
-    "newText": "\\section{Figures}\n\\textbf{Image copyright notes:}\n\\begin{itemize}\n\\item Figure one: internal authorization; source listed in the project record.\n\\item Figure two: internal authorization; source listed in the project record.\n\\item Figure three: source unknown; it must not be published.\n\\end{itemize}"
-  }
-]

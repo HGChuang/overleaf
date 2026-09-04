@@ -1,9 +1,0 @@
-{
-  "conversationId": "v3.answer-bibliography-configuration.v1-mtiy0416",
-  "message": {
-    "role": "assistant",
-    "content": "这是一个查询请求，我通过读取项目源码来回答。以下是结论：\n\n## 参考文献如何生成\n\n项目使用 **biblatex** + **biber** 后端，而不是传统的 BibTeX：\n\n**`main.tex`**（共 7 行）中的关键配置：\n```latex\n\\usepackage[backend=biber,style=authoryear]{biblatex}  % 加载 biblatex，指定后端和样式\n\\addbibresource{references.bib}                         % 声明文献数据库文件\n```\n\n**`references.bib`** 目前只含一条记录，key 为 `verified`：\n```bibtex\n@article{verified, author={Li, Ming}, title={Verified Study}, year={2024}}\n```\n\n完整的生成流程需要三步：\n1. **声明数据库** —— 已由 `\\addbibresource{references.bib}` 完成；\n2. **在正文中引用** —— 通过 `\\cite{verified}` 之类的命令引用条目 key；\n3. **输出文献列表** —— 通过 `\\printbibliography` 命令在文档中生成参考文献表。\n\n## 引用样式\n\n样式为 **`authoryear`（作者-年份制）**，即文中引用显示为类似 *（Li Ming 2024）* 或 *Li Ming (2024)* 的格式，文献表按作者姓氏排序，而非数字编号（不是 `numeric` 样式）。\n\n## 需要注意的问题\n\n当前文档中 **既没有 `\\cite` 引用命令，也没有 `\\printbibliography`**，正文只有一句 \"A configured bibliography.\"。因此，尽管 `references.bib` 里有一条有效文献，编译输出中实际不会出现任何引用标记或参考文献列表——需要补上引用命令和 `\\printbibliography` 才能让文献真正显示出来。\n\n如果你希望我在 `main.tex` 中加入 `\\cite{verified}` 和 `\\printbibliography` 让参考文献实际生效，告诉我即可，我可以帮你修改。",
-    "blocks": []
-  },
-  "suggestedActions": []
-}

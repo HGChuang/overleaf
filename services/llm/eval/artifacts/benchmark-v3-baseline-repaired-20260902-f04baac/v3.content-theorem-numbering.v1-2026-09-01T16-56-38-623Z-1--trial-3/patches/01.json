@@ -1,8 +1,0 @@
-[
-  {
-    "file": "main.tex",
-    "line": 2,
-    "oldText": "\\usepackage{amsthm}\n\\newtheorem{theorem}{Theorem}[section]\n\\newtheorem{lemma}{Lemma}[section]\n\\newtheorem{proposition}{Proposition}",
-    "newText": "\\usepackage{amsthm}\n\\newtheorem{theorem}{Theorem}[section]\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{proposition}[theorem]{Proposition}"
-  }
-]

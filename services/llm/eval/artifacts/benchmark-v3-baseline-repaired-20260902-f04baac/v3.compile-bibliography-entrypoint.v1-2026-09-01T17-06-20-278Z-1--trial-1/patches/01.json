@@ -1,8 +1,0 @@
-[
-  {
-    "file": "main.tex",
-    "line": 5,
-    "oldText": "\\input{chapters/related}\n\\printbibliography",
-    "newText": "\\input{chapters/related}\n\\input{references}"
-  }
-]

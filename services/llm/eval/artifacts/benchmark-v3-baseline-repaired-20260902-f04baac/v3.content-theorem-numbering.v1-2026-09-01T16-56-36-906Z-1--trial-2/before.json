@@ -1,6 +1,0 @@
-[
-  {
-    "path": "main.tex",
-    "content": "\\documentclass{article}\n\\usepackage{amsthm}\n\\newtheorem{theorem}{Theorem}[section]\n\\newtheorem{lemma}{Lemma}[section]\n\\newtheorem{proposition}{Proposition}\n\\begin{document}\n\\section{Main result}\n\\begin{theorem}\\label{thm:main}\nEvery bounded sequence has a convergent subsequence.\n\\end{theorem}\n\\begin{lemma}\\label{lem:aux}\nThe selected subsequence is bounded.\n\\end{lemma}\n\\begin{proposition}\\label{prop:rate}\nThe convergence rate is monotone.\n\\end{proposition}\n\\begin{proof}\nThe claims follow from compactness.\n\\end{proof}\nTheorem~\\ref{thm:main}, Lemma~\\ref{lem:aux}, and Proposition~\\ref{prop:rate} are used below.\n\\end{document}\n"
-  }
-]

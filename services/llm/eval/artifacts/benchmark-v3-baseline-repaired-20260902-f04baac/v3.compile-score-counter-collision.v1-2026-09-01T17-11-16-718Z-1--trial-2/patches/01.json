@@ -1,8 +1,0 @@
-[
-  {
-    "file": "scores/annex-score.tex",
-    "line": 2,
-    "oldText": "\\section{Annex score}\n\\newcounter{scorefigure}\n\\refstepcounter{scorefigure}\\label{fig:main-score}",
-    "newText": "\\section{Annex score}\n\\refstepcounter{scorefigure}\\label{fig:annex-score}"
-  }
-]
