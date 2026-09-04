@@ -1982,3 +1982,103 @@ Deterministic grader 对 10 个语义敏感 case 存在固定字符串或固定 
 2. 对精确术语/尺寸/label 增加“verbatim target 提取”规则；
 3. 为 CJK 场景增加依赖探测与最小局部 CJK 修复规则；
 4. 为匿名化/占位替换增加非空 replacement 校验，避免 `UNSUPPORTED_PATCH_SEMANTICS`。
+
+
+## Iteration 28 — LaTeX 定义侧修复实验 2
+
+日期：2026-09-04
+
+### 本轮研究的问题
+
+在 28 个“补丁语义”失败 case 中，针对 9 个 compile 类定义侧修复 case，验证 `LATEX DEFINITION-SIDE REPAIR` 规则能否纠正重复定义删除、共享计数器复用、宏包注入等问题。
+
+### Observation / Evidence
+
+* 修改 `services/llm/app/agent/prompts.ts`，新增 `LATEX DEFINITION-SIDE REPAIR`；新增 `services/llm/eval/pilot/latexDefinitionRepair.test.ts`，提示词测试与 `tsc --noEmit` 均通过。
+* Commit：`d51b70c33b8e175da0fb811d929fe2dd93f2b567`；实验：`benchmark-v3-latex-definition-fix-20260904-d51b70c33b`。
+* 9 case × 3 trial = 27 个 canonical trial，`PASS=8`、`COPILOT_FAILURE=19`、`INFRA_FAILURE=0`。
+
+### Root Cause
+
+上一轮通用最小补丁策略未覆盖 LaTeX 定义侧语义：重复定义被删除、模块复用共享计数器、仍向 `main.tex` 加宏包或改调用方。
+
+### Changes
+
+* `services/llm/app/agent/prompts.ts`：新增 `LATEX DEFINITION-SIDE REPAIR`；
+* `services/llm/eval/pilot/latexDefinitionRepair.test.ts`：覆盖策略加载与门控；
+* 新增报告 `services/llm/eval/benchmark-v3/PATCH_SEMANTICS_FIX2_LATEX_DEFINITION_20260904.md`。
+
+### Benchmark / Metric Before vs After
+
+| Metric | Baseline（9 case） | Fix2 |
+|---|---:|---:|
+| Trial-level PASS | 2 / 27 | 8 / 27 |
+| all-pass@3 case | 0 / 9 | 2 / 9 |
+| at least one PASS case | 2 / 9 | 3 / 9 |
+
+改善：`compile-duplicate-environment` `1/3 -> 3/3`、`compile-final-multi-artifact` `0/3 -> 3/3`、`compile-score-counter-collision` `0/3 -> 2/3`。回归：`compile-conditional-macro` `1/3 -> 0/3`。
+
+### Failure Cases / Regression
+
+`compile-conditional-macro` 模型删除了 `\ifshowappendix...\fi` 条件结构而非切换开关，属本轮规则未覆盖的语义破坏。其余 5 个 `0/3` case 保持不变。
+
+### Lessons
+
+* `\renewenvironment` / 独立计数器规则对重复定义与计数器冲突 case 有效；
+* 条件布尔开关是独立语义，需要单独规则，不能靠定义侧规则覆盖。
+
+### Recommended next steps
+
+1. 下一轮增加“条件布尔开关”规则：切换 `true`，保留条件结构与调用方；
+2. 对计数器/标签重命名做“原子重命名”规则，杜绝悬挂引用；
+3. 复核 `compile-proof-environment` 的 oracle（结束符 `\diamond` 与“结束符保留”冲突）。
+
+## Iteration 29 — 条件布尔开关修复实验 3
+
+日期：2026-09-04
+
+### 本轮研究的问题
+
+`compile-conditional-macro` 在上一轮从 `1/3 -> 0/3`，根因是模型删除了 `\ifshowappendix...\fi` 条件结构并移除 `\showappendixfalse`，而不是把开关切到 true。本轮验证单点规则能否纠正。
+
+### Observation / Evidence
+
+* 修改 `services/llm/app/agent/prompts.ts` 的 `LATEX DEFINITION-SIDE REPAIR` 段，新增布尔开关修复规则；`services/llm/eval/pilot/latexDefinitionRepair.test.ts` 补充断言；提示词测试与 `tsc --noEmit` 均通过。
+* Commit：`336a3f77488ffa01f9a62a74a66cc894f2797fcb`；实验：`benchmark-v3-boolean-switch-fix-20260904-336a3f7748`。
+* 6 个上一轮 `0/3` case × 3 trial = 18 个 canonical trial，`PASS=3`、`COPILOT_FAILURE=15`、`INFRA_FAILURE=0`。
+* 抽查 `compile-conditional-macro` trial-1 补丁：模型将 `\showappendixfalse` 改为 `\showappendixtrue`，并保留 `\ifshowappendix...\fi` 与调用方。
+
+### Root Cause
+
+定义被 `\newif...\ifFLAG...\fi` 包裹且调用方报未定义时，缺少“切换开关而非删除条件”的领域约束。
+
+### Changes
+
+* `services/llm/app/agent/prompts.ts`：`LATEX DEFINITION-SIDE REPAIR` 增加布尔开关规则；
+* `services/llm/eval/pilot/latexDefinitionRepair.test.ts`：新增 3 条断言；
+* 新增报告 `services/llm/eval/benchmark-v3/PATCH_SEMANTICS_FIX3_BOOLEAN_SWITCH_20260904.md`。
+
+### Benchmark / Metric Before vs After
+
+| Case | Fix2 | Fix3 |
+|---|---:|---:|
+| `v3.compile-conditional-macro.v1` | 0/3 | **3/3** |
+| 其余 5 个上一轮 0/3 case | 0/3 | 0/3 |
+
+6 case 合计 trial PASS：Fix2 `0/18` -> Fix3 `3/18`。
+
+### Failure Cases / Regression
+
+本轮未观察到回归。剩余 5 个 `0/3` case 与布尔开关规则无关：`compile-algorithm-environment`（宏包注入）、`compile-department-figure-counters`（悬挂引用）、`compile-appendix-label-collision` / `compile-subfigure-counter-recovery`（计数器命名与 canonical 不一致）、`compile-proof-environment`（oracle 疑似不一致）。
+
+### Lessons
+
+* 条件布尔开关是清晰、可单点修复的语义，提示词规则能稳定纠正；
+* 计数器重命名场景的失败要区分“悬挂引用”（可修复）与“canonical 命名偏差”（需复核 benchmark）。
+
+### Recommended next steps
+
+1. 下一轮做“原子重命名”规则：`\newcounter` 与 `\refstepcounter`/`\label`/`\ref` 必须同步更新，直接修复 `compile-department-figure-counters`；
+2. 复核 `compile-appendix-label-collision` / `compile-subfigure-counter-recovery` 的 canonical 命名是否可从用户指令唯一推导；
+3. 复核 `compile-proof-environment` 的 oracle 结束符；
+4. 单独处理 `compile-algorithm-environment` 的宏包注入。
