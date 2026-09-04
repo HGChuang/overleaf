@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "run_id": "run_8737cb32-60a4-427a-aea9-21630264393b",
+  "experiment_id": "context-delivery-20260904",
+  "case_id": "v3.compile-appendix-label-collision.v1",
+  "case_family_id": "v3.compile-appendix-label-collision",
+  "trial_id": "context-delivery-20260904--v3.compile-appendix-label-collision.v1--trial-1",
+  "split": "dev",
+  "git_commit": "602fe64b52757c6da5b2b7db5aba7984747a5370",
+  "model": {
+    "id": "deepseek-v4-flash-ga-260731",
+    "provider": "openai-compat",
+    "api": "openai-completions",
+    "max_tokens": 16000,
+    "context_window": 128000,
+    "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+  },
+  "config": {
+    "context_delivery_version": "case-current-file-v2",
+    "context_trace_enabled": true,
+    "agent_step_limit": 40,
+    "turn_timeout_ms": 300000,
+    "memory_max_messages": 20,
+    "context_snip_max": 50,
+    "context_micro_keep": 3,
+    "temperature": 0.7,
+    "provider_max_retries": 2,
+    "harness_max_chat_turns": 3,
+    "patch_policy": "replacement-only",
+    "compile_timeout_ms": 120000
+  },
+  "config_hash": "21bff58be66f31488f4c40cb87232f9b31de4bedb1a97d9eae436ee22757d543",
+  "prompt_hash": "59fd8dbbeb30a1eb80e0a0c4375b772a758b0949c6ec55ecb60b16882de6f37a",
+  "benchmark_hash": "3c8731df64dc0ce1487c12b70508e62ca4c46db9893b3decbfd3953ee8d5e91f",
+  "fixture_hash": "013f0f18923094693e54d8269961e8622a31f611ebad9e5f47df9593c58200cd",
+  "initial_workspace_hash": "013f0f18923094693e54d8269961e8622a31f611ebad9e5f47df9593c58200cd",
+  "eval_user_session_id": "/root/eval_context_appendix",
+  "started_at": "2026-09-04T09:31:10.557Z",
+  "retry_observability": {
+    "configured_provider_max_retries": 2,
+    "actual_attempts_available": false
+  },
+  "context_trace_sources": {
+    "eval/headless/contextTrace.ts": "bd072778081bc73a68368255ad4b1af4645df57bed5b8f45a40d262acb9e2c3a",
+    "eval/headless/evalContext.ts": "68d4e3fdef2e6c43450d183fc117d4da8226dbde6bcff9242ad72199eb3a968e",
+    "eval/headless/serviceFactory.ts": "8a9e8b71d5131b4fc5ade18d1c477582b566da82f6b4e606b4e62135f1ca2813",
+    "eval/pilot/runPilotCase.ts": "350b8aab481d254f273edfec29aa84828f892d3919f2921143e76f73fd0ed434",
+    "app/services/copilot.service.ts": "5617e4e5ec1f0d171b372d978c3cb3ba3dd87bda1a1679d7842248867fbee2ec",
+    "app/llm/openaiCompatStream.ts": "57e0968d9e1734045b5af06af23a515bfb127cdfa53d1d43d88bd160accdf9c0",
+    "app/agent/compact.ts": "800d04aac1351f10fe5bd40c70e6d37a40bf0d09865b8ee57c4dffc908d9d2cb",
+    "app/agent/memory.ts": "203189674364d786fb0f9d9cf02f14bbc51f593fdf4739b625e742f4a6d1c991",
+    "app/agent/tools/projectTools.ts": "95e4bb673a68e9ffa6d2eb483c147bbb17c83cb73e1748a666407097a162559d",
+    "app/agent/tools/fileMap.ts": "f1d5512d848bf4453a1f975db815c14d5fcf529d909a8c3303bec924a308d459",
+    "app/agent/prompts.ts": "17cb5a6a7bd771a151bdec949039ff0d3cb8dee5c158a21c256ee91ff0bbfc41"
+  },
+  "ended_at": "2026-09-04T09:31:48.489Z",
+  "status": "COPILOT_FAILURE",
+  "failure": {
+    "failure_category": "grader",
+    "failure_phase": "grader",
+    "error_type": "GRADER_ASSERTION_FAILED",
+    "error_source": "pilot_grader_registry",
+    "error_message": "deterministic pilot grader failed",
+    "retryable": false,
+    "related_event_id": "evt_233725a0-0e19-4182-960c-4975b4014c57"
+  },
+  "final_workspace_hash": "b80603e42d7048a2702c65755876c3fb52b272bef1a4d4717c5077d0e88923ff",
+  "context_trace": {
+    "enabled": true,
+    "records": 35,
+    "failures": 0,
+    "complete": true
+  }
+}

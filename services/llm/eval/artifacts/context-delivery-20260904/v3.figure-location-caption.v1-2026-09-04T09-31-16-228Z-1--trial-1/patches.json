@@ -1,0 +1,10 @@
+[
+  [
+    {
+      "file": "main.tex",
+      "line": 5,
+      "oldText": "\\section{Methods}\nThe experiment steps must remain in their original order.\n\\begin{figure}[h]\n\\raggedright\n\\fbox{\\rule{0pt}{3cm}\\rule{0.72\\linewidth}{0pt}}\n\\caption{Experiment photograph (experiment.jpg)}\n\\label{fig:experiment}\n\\end{figure}\n\\section{Results}\nThe result analysis refers to the experiment photograph.",
+      "newText": "\\section{Methods}\nThe experiment steps must remain in their original order.\n\\section{Results}\nThe result analysis refers to the experiment photograph.\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{0.72\\linewidth}{0pt}}\n\\caption{Experiment photograph (experiment.jpg)}\n\\label{fig:experiment}\n\\end{figure}"
+    }
+  ]
+]

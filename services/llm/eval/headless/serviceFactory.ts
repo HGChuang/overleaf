@@ -8,10 +8,11 @@ import { buildUnifiedSystemPrompt } from '../../app/agent/prompts.js'
 import { ClientRegistry } from '../../app/utils/clientRegistry.js'
 import { buildToolPool } from '../../app/agent/tools/provider.js'
 import { createChatModel } from '../../app/llm/modelFactory.js'
-import { streamOpenAICompat } from '../../app/llm/openaiCompatStream.js'
+import { streamOpenAICompat, buildOpenAICompatRequest } from '../../app/llm/openaiCompatStream.js'
 import { CanonicalTraceWriter, hashValue } from './canonicalTrace.js'
 import type { EvalFile } from './evalContext.js'
 import { tracedCompile, type TraceContextAccess } from './tracedCompile.js'
+import { ContextTraceRecorder } from './contextTrace.js'
 import { connectEvalDatabase } from './evalDatabase.js'
 
 export interface UsageRecord {
@@ -35,6 +36,8 @@ export function emptyUsage(): UsageRecord {
 
 export function evalRuntimeConfig() {
   return {
+    context_delivery_version: 'case-current-file-v2',
+    context_trace_enabled: process.env.EVAL_CONTEXT_TRACE === 'full',
     agent_step_limit: Number(settings.COPILOT_AGENT_RECURSION_LIMIT),
     turn_timeout_ms: Number(settings.COPILOT_TURN_TIMEOUT_MS || 300_000),
     memory_max_messages: Number(settings.LLM_MEMORY_MAX_MESSAGES || 20),
@@ -123,6 +126,8 @@ export async function buildTaskService(
   })
   registries.push(registry)
 
+  const contextTrace = new ContextTraceRecorder(process.env.EVAL_CONTEXT_TRACE === 'full', runtimeTrace.runDir, runtimeTrace.trace, runtimeTrace.context)
+
   const streamFn = (async (
     model: unknown,
     context: unknown,
@@ -143,6 +148,10 @@ export async function buildTaskService(
     runtimeTrace.context.setParentEventId(started.eventId)
     await started.committed
 
+    if (contextTrace.enabled) {
+      await contextTrace.capture('model-context', context)
+      await contextTrace.capture('provider-request', buildOpenAICompatRequest(model as never, context as never, options as never))
+    }
     const stream = streamOpenAICompat(
       model as never,
       context as never,
@@ -151,6 +160,7 @@ export async function buildTaskService(
     Promise.resolve(stream)
       .then((result) => result.result())
       .then((message) => {
+        void contextTrace.capture('model-output', message)
         addUsage(usage, message?.usage)
         const completed = runtimeTrace.trace.emit({
           event_type: 'model_completed',
@@ -208,12 +218,13 @@ export async function buildTaskService(
     longTermMemoryStore: noopLongTermMemory,
     streamFn,
     toolPoolFactory: ((context: unknown, dependencies: unknown) =>
-      buildToolPool(context as never, dependencies as never)) as never,
+      contextTrace.wrapTools(buildToolPool(context as never, dependencies as never))) as never,
     webClient: { compileProject } as never,
   })
   return {
     service,
     memoryStore,
+    contextTrace,
     async resolveModelMetadata(userIdentifier: string) {
       const { usingLlmInfo, model } =
         await service.resolveChatModel(userIdentifier)

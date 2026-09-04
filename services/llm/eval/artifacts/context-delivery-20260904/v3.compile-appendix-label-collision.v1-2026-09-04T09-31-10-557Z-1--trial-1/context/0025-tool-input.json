@@ -1,0 +1,20 @@
+{
+  "tool": "submit_patch",
+  "arguments": {
+    "hunks": [
+      {
+        "file": "appendix/table.tex",
+        "line": 2,
+        "oldText": "\\newcounter{resultstable}\n\\refstepcounter{resultstable}",
+        "newText": "\\newcounter{appendixresultstable}\n\\refstepcounter{appendixresultstable}"
+      },
+      {
+        "file": "appendix/table.tex",
+        "line": 5,
+        "oldText": "\\label{tab:results}",
+        "newText": "\\label{tab:appendix-results}"
+      }
+    ],
+    "summary": "In appendix/table.tex: use a module-specific counter (appendixresultstable) to remove the duplicate \\newcounter collision, and relabel the appendix table as tab:appendix-results to match the \\ref in main.tex and avoid the duplicate tab:results label."
+  }
+}

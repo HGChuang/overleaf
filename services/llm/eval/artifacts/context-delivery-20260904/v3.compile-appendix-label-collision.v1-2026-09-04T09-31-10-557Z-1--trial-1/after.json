@@ -1,0 +1,14 @@
+[
+  {
+    "path": "main.tex",
+    "content": "\\documentclass{article}\n\\begin{document}\n\\input{body}\n\\appendix\n\\input{appendix/table}\nSee appendix table~\\ref{tab:appendix-results}.\n\\end{document}\n"
+  },
+  {
+    "path": "body.tex",
+    "content": "\\section{Results}\n\\newcounter{resultstable}\n\\refstepcounter{resultstable}\n\\begin{center}Main results table\\end{center}\n\\label{tab:results}\n"
+  },
+  {
+    "path": "appendix/table.tex",
+    "content": "\\section{Supplementary tables}\n\\newcounter{appendixresultstable}\n\\refstepcounter{appendixresultstable}\n\\begin{center}Appendix results table\\end{center}\n\\label{tab:appendix-results}\n"
+  }
+]

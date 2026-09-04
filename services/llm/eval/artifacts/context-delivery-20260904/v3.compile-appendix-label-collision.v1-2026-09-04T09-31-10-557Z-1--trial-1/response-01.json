@@ -1,0 +1,31 @@
+{
+  "conversationId": "v3.compile-appendix-label-collision.v1-mtmr7vdg",
+  "message": {
+    "role": "assistant",
+    "content": "Proposed 2 changes — review the inline preview, then Accept or Reject.",
+    "blocks": [
+      {
+        "type": "patch",
+        "patch": {
+          "id": "patch_0_266dbdb3",
+          "title": "In appendix/table.tex: use a module-specific counter (appendixresultstable) to remove the duplicate \\newcounter collision, and relabel the appendix table as tab:appendix-results to match the \\ref in main.tex and avoid the duplicate tab:results label.",
+          "hunks": [
+            {
+              "file": "appendix/table.tex",
+              "line": 2,
+              "oldText": "\\newcounter{resultstable}\n\\refstepcounter{resultstable}",
+              "newText": "\\newcounter{appendixresultstable}\n\\refstepcounter{appendixresultstable}"
+            },
+            {
+              "file": "appendix/table.tex",
+              "line": 5,
+              "oldText": "\\label{tab:results}",
+              "newText": "\\label{tab:appendix-results}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "suggestedActions": []
+}

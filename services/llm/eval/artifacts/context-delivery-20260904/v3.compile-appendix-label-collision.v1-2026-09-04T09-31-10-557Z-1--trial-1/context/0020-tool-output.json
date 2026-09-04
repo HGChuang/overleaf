@@ -1,0 +1,12 @@
+{
+  "tool": "search_project",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"matches\":[{\"file\":\"body.tex\",\"line\":5,\"text\":\"\\\\label{tab:results}\"},{\"file\":\"appendix/table.tex\",\"line\":5,\"text\":\"\\\\label{tab:results}\"}],\"total\":2}"
+      }
+    ],
+    "details": {}
+  }
+}

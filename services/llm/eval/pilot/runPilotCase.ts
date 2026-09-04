@@ -1,3 +1,4 @@
+import { contextTraceSourceHashes } from '../headless/contextTrace.js'
 import { randomUUID } from 'node:crypto'
 import { mkdir, readFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
@@ -190,6 +191,7 @@ async function main() {
   const task = {
     id: caseDefinition.case_id,
     mainFile: caseDefinition.fixture.main_file,
+    currentFile: caseDefinition.initial_state.current_file,
     files: filesRef.current,
   }
   const config = evalRuntimeConfig()
@@ -315,6 +317,7 @@ async function main() {
         },
       )
       manifest.model = await serviceResources.resolveModelMetadata(userId)
+      if (config.context_trace_enabled) manifest.context_trace_sources = await contextTraceSourceHashes()
       await writeJsonAtomic(join(runDir, 'run.json'), manifest)
 
       if (caseDefinition.initial_state.compile_status === 'failure') {
@@ -377,6 +380,7 @@ async function main() {
             ;(payload.context as JsonRecord).compileErrors =
               initialCompile.errors
           }
+          await serviceResources.contextTrace.capture('payload', payload)
           const response = (await serviceResources.service.chat(
             userId,
             payload,
@@ -807,6 +811,7 @@ async function main() {
         currentParentEventId,
       )
     }
+    await serviceResources?.contextTrace.flush()
     const persistArtifacts = () =>
       persistJsonArtifacts([
         { path: join(runDir, 'after.json'), value: filesRef.current },
@@ -880,6 +885,7 @@ async function main() {
           status,
           failure,
           final_workspace_hash: result.finalWorkspaceHash,
+          context_trace: serviceResources?.contextTrace.status(),
         })
         return manifest
       }

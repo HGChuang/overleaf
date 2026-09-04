@@ -6,6 +6,7 @@ export interface EvalFile {
 export interface EvalTask {
   id: string
   mainFile: string
+  currentFile?: string
   files: EvalFile[]
 }
 
@@ -28,7 +29,7 @@ export function buildChatPayload(
       files,
     },
     context: {
-      currentFile: task.mainFile,
+      currentFile: task.currentFile ?? task.mainFile,
       selectedText: '',
       attachedFiles: [],
     },

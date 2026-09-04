@@ -1,0 +1,99 @@
+{
+  "contract_id": "v3-scoring-audit-v1-20260904",
+  "contract_sha256": "ee09b6a2f3fb68c2a4753dc57171c70fe3eb73a9f7928e757c1661e3de33c246",
+  "cohort_provenance": {
+    "diagnostic_smoke": {
+      "git": "602fe64b52757c6da5b2b7db5aba7984747a5370",
+      "config_hash": "21bff58be66f31488f4c40cb87232f9b31de4bedb1a97d9eae436ee22757d543",
+      "model": {
+        "id": "deepseek-v4-flash-ga-260731",
+        "provider": "openai-compat",
+        "api": "openai-completions",
+        "max_tokens": 16000,
+        "context_window": 128000,
+        "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+      }
+    }
+  },
+  "source_manifest_sha256": "9215840cbcfe5f612cc7640c0ad016a6340e80650c8aeb07f3cca167867f6018",
+  "interpretation": "Offline same-artifact measurement comparison; not Agent improvement. Semantic remains shadow.",
+  "cohorts": {
+    "diagnostic_smoke": {
+      "planned": 2,
+      "counts": {
+        "PASS": 2,
+        "COPILOT_FAILURE": 0,
+        "INVALID": 0,
+        "INCOMPLETE": 0
+      },
+      "valid_denominator": 2,
+      "before_pass_same_denominator": 1,
+      "after_pass": 2,
+      "pass_rate": 1
+    }
+  },
+  "comparisons": {
+    "fix3_vs_fix2": {
+      "before": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "after": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    }
+  },
+  "legacy_grader_checks_verified": 2,
+  "preserved_execution_failures": 0,
+  "by_case": {
+    "v3.compile-appendix-label-collision.v1": {
+      "diagnostic_smoke": {
+        "planned": 1,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 1,
+        "before_pass_same_denominator": 0,
+        "after_pass": 1,
+        "pass_rate": 1
+      }
+    },
+    "v3.figure-location-caption.v1": {
+      "diagnostic_smoke": {
+        "planned": 1,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 1,
+        "before_pass_same_denominator": 1,
+        "after_pass": 1,
+        "pass_rate": 1
+      }
+    }
+  }
+}

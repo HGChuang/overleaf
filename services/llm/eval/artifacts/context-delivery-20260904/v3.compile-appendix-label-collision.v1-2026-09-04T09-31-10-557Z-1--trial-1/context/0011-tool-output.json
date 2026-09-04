@@ -1,0 +1,12 @@
+{
+  "tool": "read_file",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"found\":true,\"path\":\"main.tex\",\"totalLines\":8,\"content\":\"\\\\documentclass{article}\\n\\\\begin{document}\\n\\\\input{body}\\n\\\\appendix\\n\\\\input{appendix/table}\\nSee appendix table~\\\\ref{tab:appendix-results}.\\n\\\\end{document}\\n\"}"
+      }
+    ],
+    "details": {}
+  }
+}

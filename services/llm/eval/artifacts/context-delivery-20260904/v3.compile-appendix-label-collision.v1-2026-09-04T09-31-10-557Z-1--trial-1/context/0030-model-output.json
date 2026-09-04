@@ -1,0 +1,32 @@
+{
+  "role": "assistant",
+  "content": [
+    {
+      "type": "toolCall",
+      "id": "call_gz24nkkd8xge1oj3o71820tx",
+      "name": "compile_project",
+      "arguments": {}
+    }
+  ],
+  "api": "openai-completions",
+  "provider": "openai-compat",
+  "model": "deepseek-v4-flash-ga-260731",
+  "usage": {
+    "input": 4216,
+    "output": 28,
+    "cacheRead": 4096,
+    "cacheWrite": 0,
+    "reasoning": 0,
+    "totalTokens": 8340,
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 0
+    }
+  },
+  "stopReason": "toolUse",
+  "timestamp": 1788514301721,
+  "responseId": "021788514301742cdb985060772518cf2b73708fa98016ed6e0f4"
+}

@@ -2127,3 +2127,19 @@ Deterministic grader 对 10 个语义敏感 case 存在固定字符串或固定 
 ### Lessons / Next steps
 
 评分必须同时绑定用户实际消息、执行状态和版本化合同；固定措辞可能同时掩盖改善与退步。下一轮建议：①剩余合同与人工 refusal/no-op 校准；②确认 counter 退步的重复性；③Agent 上下文送达审计。本轮提交 hash 随交付记录，仅本地提交，不 push；停止等待用户决定。
+
+
+## Iteration 32 — 上下文送达与工具信息链 P0
+
+日期：2026-09-04。报告：[上下文信息链审计](agent-context-delivery-audit-20260904.md)。
+
+- **研究问题**：失败是否来自上下文未送达，旧工具摘要能否支持该归因。
+- **Observation / Evidence**：冻结 baseline 的 73 case 中 21 个活动文件被错误替换为根文件，覆盖 63/219 trial；1,547 次工具完成有 249 个省略预览；原始项目最长文件 692 字符、最大项目 728 字符。两个新 smoke 共 57 份完整证据，9 次模型调用、13 次工具首次送达均核对一致。附录初始编译错误 file/line 为空，仍通过读取/搜索完成正确修复；后续验证轮发生 3 次旧 search 内容压缩，read 内容保留。
+- **Interpretation / Root Cause**：确认 harness 混淆活动文件与根文件、既有观测只留摘要。未证明这些问题是整体低分的主要原因；长上下文瓶颈缺乏真实规模覆盖。
+- **Hypothesis / 修改**：分离两个文件字段可恢复声明输入；默认关闭的完整 payload/model-context/provider-request/tool IO 记录可区分首次丢失和后续压缩。修复 evalContext/runner、增加 recorder 与配置版本、共用原有 provider serializer；未调整 Agent prompt、读取/压缩策略、Benchmark 或 grader。
+- **Before vs After**：活动文件合同检查 52/73 → 73/73。两个 smoke 原评分 1/2 PASS，同 artifacts 按 Iteration 31 冻结合同重判 2/2；附录差异仅来自已确认的内部命名误拒，不是 Agent 改善。没有成对旧输入实验，不更新整体能力 baseline。
+- **Failure / Regression**：无完整信息丢失导致真实任务失败的因果样本；没有发现定向送达回归，不声称全量无回归。动态多轮、Web 快照/选区/附件、真实大项目和记录开销未覆盖。两次最初启动因调度变量错误在模型调用前退出，修正后各执行一次，无按成绩重试。
+- **Validation**：7/7 边界测试、相关新增模块类型检查、57 份 trace 与执行源文件身份核对、两个真实 smoke、两份冻结合同 replay 完成。扩展 service/runner 类型检查保留两处原有 RedisMock/no-op memory 类型问题。原始 smoke、机器报告、执行时 serializer 字节和复现脚本已保留；源码之后只有缩进清理。
+- **经验**：工具日志、省略后的历史和首次模型送达必须分别测量；评分误拒会把正确的信息获取误归因为 Agent 失败。输入合同修复值得保留，但一次成功不构成因果提升。
+- **建议下一步**：①旧/正确 currentFile 成对重复对照；②真实规模驱动的独立压力诊断；③已裁定失败的首次错误决策与编译定位链审计。
+- **Commit**：本轮本地提交 hash 在交付的 Iteration Review 中记录；仅提交本轮文件，不 push。完成后 STOP。

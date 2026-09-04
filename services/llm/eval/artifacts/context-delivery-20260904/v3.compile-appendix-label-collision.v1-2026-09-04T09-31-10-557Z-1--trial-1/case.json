@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "case_id": "v3.compile-appendix-label-collision.v1",
+  "case_family_id": "v3.compile-appendix-label-collision",
+  "source_candidate_id": "v3.compile.009",
+  "split": "dev",
+  "category": "交叉引用修复",
+  "capabilities": [
+    "C1",
+    "C4",
+    "C5",
+    "C8"
+  ],
+  "difficulty": {
+    "level": "D3",
+    "factors": [
+      "重复标签",
+      "附录独立编号",
+      "跨文件引用"
+    ]
+  },
+  "fixture": {
+    "fixture_id": "v3.compile-appendix-label-collision",
+    "fixture_lineage": "v3.compile.009",
+    "main_file": "main.tex",
+    "compiler": "pdflatex",
+    "files": [
+      {
+        "path": "main.tex",
+        "content": "\\documentclass{article}\n\\begin{document}\n\\input{body}\n\\appendix\n\\input{appendix/table}\nSee appendix table~\\ref{tab:appendix-results}.\n\\end{document}\n"
+      },
+      {
+        "path": "body.tex",
+        "content": "\\section{Results}\n\\newcounter{resultstable}\n\\refstepcounter{resultstable}\n\\begin{center}Main results table\\end{center}\n\\label{tab:results}\n"
+      },
+      {
+        "path": "appendix/table.tex",
+        "content": "\\section{Supplementary tables}\n\\newcounter{resultstable}\n\\refstepcounter{resultstable}\n\\begin{center}Appendix results table\\end{center}\n\\label{tab:results}\n"
+      }
+    ],
+    "sha256": "013f0f18923094693e54d8269961e8622a31f611ebad9e5f47df9593c58200cd"
+  },
+  "project_complexity": {
+    "scale": "multi-small",
+    "context_pressure": "repeated-anchors"
+  },
+  "user_goal": {
+    "public_brief": "附录引用表格时编号不对，正文里也有一个同名标签。请找出原因、修复引用关系，并确认项目能够正常编译。",
+    "interaction_facts": [
+      "正文和附录使用了相同的标签与计数器名称；正文编号不能改变，附录必须有独立标签和计数器。"
+    ]
+  },
+  "initial_state": {
+    "current_file": "appendix/table.tex",
+    "compile_status": "failure",
+    "protected_invariants": [
+      {
+        "file": "body.tex",
+        "value": "\\label{tab:results}"
+      },
+      {
+        "file": "body.tex",
+        "value": "Main results table"
+      },
+      {
+        "file": "main.tex",
+        "value": "See appendix table~\\ref{tab:appendix-results}."
+      }
+    ]
+  },
+  "expected_behavior": {
+    "action": "patch",
+    "max_user_turns": 1
+  },
+  "forbidden_behavior": [
+    "不得编造项目中不存在的事实",
+    "不得修改受保护的内容",
+    "需要编译时不得未经验证就声称成功"
+  ],
+  "patch_policy": {
+    "accepted_semantics": "replacement-only",
+    "allowed_files": [
+      "main.tex",
+      "body.tex",
+      "appendix/table.tex"
+    ],
+    "max_patch_rounds": 3
+  },
+  "compile_policy": {
+    "mode": "repair-loop",
+    "expected_final_status": "success",
+    "max_compile_calls_per_turn": 1
+  },
+  "graders": [
+    {
+      "type": "workspace_changed",
+      "expected": true
+    },
+    {
+      "type": "patch_files",
+      "files": [
+        "appendix/table.tex"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "main.tex",
+      "values": [
+        "See appendix table~\\ref{tab:appendix-results}."
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "body.tex",
+      "values": [
+        "\\label{tab:results}"
+      ]
+    },
+    {
+      "type": "file_contains",
+      "file": "body.tex",
+      "values": [
+        "Main results table"
+      ]
+    },
+    {
+      "type": "file_unchanged",
+      "file": "main.tex"
+    },
+    {
+      "type": "file_unchanged",
+      "file": "body.tex"
+    },
+    {
+      "type": "file_contains",
+      "file": "appendix/table.tex",
+      "values": [
+        "\\newcounter{appendixtable}",
+        "\\refstepcounter{appendixtable}",
+        "\\label{tab:appendix-results}",
+        "Appendix results table"
+      ]
+    },
+    {
+      "type": "file_not_contains",
+      "file": "appendix/table.tex",
+      "values": [
+        "\\newcounter{resultstable}",
+        "\\label{tab:results}"
+      ]
+    },
+    {
+      "type": "compile",
+      "status": "success",
+      "max_errors": 0
+    }
+  ],
+  "validation_oracle": {
+    "patches": [
+      {
+        "file": "appendix/table.tex",
+        "line": 2,
+        "oldText": "\\newcounter{resultstable}",
+        "newText": "\\newcounter{appendixtable}"
+      },
+      {
+        "file": "appendix/table.tex",
+        "line": 3,
+        "oldText": "\\refstepcounter{resultstable}",
+        "newText": "\\refstepcounter{appendixtable}"
+      },
+      {
+        "file": "appendix/table.tex",
+        "line": 5,
+        "oldText": "\\label{tab:results}",
+        "newText": "\\label{tab:appendix-results}"
+      }
+    ],
+    "response": "已为附录表格拆分计数器和标签，保留正文引用，并完成编译验证。",
+    "grader_mutations": [
+      {
+        "mutation_id": "附录标签-只改标签",
+        "description": "只改了标签而继续复用冲突的计数器，根因错误且仍会编译失败。",
+        "patches": [
+          {
+            "file": "appendix/table.tex",
+            "line": 2,
+            "oldText": "\\newcounter{resultstable}",
+            "newText": "\\newcounter{resultstablecopy}"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "failure",
+          "errorCount": 1,
+          "warningCount": 0
+        }
+      },
+      {
+        "mutation_id": "附录标签-修改正文",
+        "description": "通过修改正文标签回避冲突，破坏了正文编号和已存在的引用。",
+        "patches": [
+          {
+            "file": "body.tex",
+            "line": 5,
+            "oldText": "\\label{tab:results}",
+            "newText": "\\label{tab:body-results}"
+          }
+        ],
+        "patch_count": 1,
+        "patch_rejection_count": 0,
+        "responses": [
+          "该变体不能作为根因修复。"
+        ],
+        "compile": {
+          "status": "success",
+          "errorCount": 0,
+          "warningCount": 0
+        }
+      }
+    ]
+  },
+  "harness": {
+    "minimum_support": "H1",
+    "unsupported_is": "skipped"
+  },
+  "metadata": {
+    "tags": [
+      "交叉引用",
+      "重复标签",
+      "附录",
+      "编译引用与文献"
+    ],
+    "language": "zh-CN",
+    "prompt_form": "中文故障报告",
+    "provenance": "llm-generated-user-seed"
+  }
+}

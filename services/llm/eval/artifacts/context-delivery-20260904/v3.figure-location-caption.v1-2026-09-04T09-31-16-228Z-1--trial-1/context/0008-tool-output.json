@@ -1,0 +1,12 @@
+{
+  "tool": "read_file",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"found\":true,\"path\":\"main.tex\",\"totalLines\":15,\"content\":\"\\\\documentclass{article}\\n\\\\usepackage[margin=2cm]{geometry}\\n\\\\begin{document}\\n\\\\section{Methods}\\nThe experiment steps must remain in their original order.\\n\\\\begin{figure}[h]\\n\\\\raggedright\\n\\\\fbox{\\\\rule{0pt}{3cm}\\\\rule{0.72\\\\linewidth}{0pt}}\\n\\\\caption{Experiment photograph (experiment.jpg)}\\n\\\\label{fig:experiment}\\n\\\\end{figure}\\n\\\\section{Results}\\nThe result analysis refers to the experiment photograph.\\n\\\\end{document}\\n\"}"
+      }
+    ],
+    "details": {}
+  }
+}

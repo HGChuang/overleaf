@@ -4,6 +4,8 @@
 
 当前评分比较口径见 [P0 评分审计](agent-scoring-audit-20260904.md)：使用冻结的 `v3-scoring-audit-v1-20260904` 对两侧同批 artifacts 重评分；live runner 保留原 deterministic 结果，semantic 继续 shadow。历史 94/219 合成结果不可用作优化比较。
 
+上下文送达现状见 [P0 信息链审计](agent-context-delivery-audit-20260904.md)：H1 已按 case 传递活动文件（`case-current-file-v2`）；可选 `EVAL_CONTEXT_TRACE=full` 保存完整输入、工具 IO 和压缩后的模型请求证据。历史 SSE 预览省略不能视作模型输入截断；旧/新输入合同不得直接解释为 Agent 能力变化。
+
 本文定义了 `services/llm` 中 Copilot 后端的评估控制平面。文档首先描述当前生产环境中的行为，并将评估机制与未来的 Copilot 优化工作分开。
 
 ## 范围与原则

@@ -190,6 +190,36 @@ function convertTools(tools: Tool[]): OpenAI.Chat.Completions.ChatCompletionTool
 	}));
 }
 
+/** Pure projection of the exact JSON request body; never includes auth or transport headers. */
+export function buildOpenAICompatRequest(
+	model: Model<typeof OPENAI_COMPAT_API>, context: Context, options?: SimpleStreamOptions,
+): Record<string, unknown> {
+	const messages = convertMessages(context);
+	const params: Record<string, unknown> = {
+		model: model.id,
+		messages,
+		stream: true,
+	};
+	if (model.compat?.includeUsage !== false) {
+		params.stream_options = { include_usage: true };
+	}
+	const maxTokens = options?.maxTokens ?? model.maxTokens;
+	if (maxTokens) {
+		params[model.compat?.maxTokensField ?? "max_tokens"] = maxTokens;
+	}
+	if (options?.temperature !== undefined) {
+		params.temperature = options?.temperature;
+	}
+	if (context.tools && context.tools.length > 0) {
+		params.tools = convertTools(context.tools);
+	} else if (hasToolHistory(context.messages)) {
+		// Some proxies require the tools param when the conversation carries
+		// tool_calls / tool results.
+		params.tools = [];
+	}
+	return params;
+}
+
 function parseChunkUsage(rawUsage: {
 	prompt_tokens?: number;
 	completion_tokens?: number;
@@ -271,29 +301,7 @@ export function streamOpenAICompat(
 				defaultHeaders: model.headers,
 			});
 
-			const messages = convertMessages(context);
-			const params: Record<string, unknown> = {
-				model: model.id,
-				messages,
-				stream: true,
-			};
-			if (model.compat?.includeUsage !== false) {
-				params.stream_options = { include_usage: true };
-			}
-			const maxTokens = options?.maxTokens ?? model.maxTokens;
-			if (maxTokens) {
-				params[model.compat?.maxTokensField ?? "max_tokens"] = maxTokens;
-			}
-			if (options?.temperature !== undefined) {
-				params.temperature = options.temperature;
-			}
-			if (context.tools && context.tools.length > 0) {
-				params.tools = convertTools(context.tools);
-			} else if (hasToolHistory(context.messages)) {
-				// Some proxies require the tools param when the conversation carries
-				// tool_calls / tool results.
-				params.tools = [];
-			}
+			const params = buildOpenAICompatRequest(model, context, options);
 
 			const openaiStream = await client.chat.completions.create(
 				params as unknown as OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming,

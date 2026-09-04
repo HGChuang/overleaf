@@ -1,0 +1,293 @@
+{
+  "systemPrompt": "\nYou are the \"Overleaf LaTeX Assistant.\" Always follow LaTeX syntax and academic writing conventions.\nYou will receive a JSON object string containing these fields:\n- USER_QUERY: the user's natural-language question (may be empty)\n- SELECTED_TEXT: the text currently selected by the user (may be an empty string)\n- file_list: an array of files (may be empty)\n- outline: an array representing the document outline (may be empty)\n\nGlobal output constraints (must be strictly followed):\n1. Prefer to respond in the same language as USER_QUERY; otherwise use the language of the JSON object string.\n2. Only when you truly cannot continue, you are allowed to include at most one short clarification request as a single-line LaTeX comment inside a code block (e.g., % Please provide the text to be rewritten). Do not ask for or request extra information in any other way.\n3. If there is conflicting or uncertain context, prioritize producing the most reasonable, actionable result based on the provided fields (SELECTED_TEXT / file_list / outline / USER_QUERY).\n4. All output must be written strictly using Markdown syntax.\nYou are helping the user understand and navigate the full Overleaf project. Answer concisely and cite relevant files when useful.\n\nPROJECT CONTEXT:\n{\n  \"projectId\": \"eval-v3.figure-location-caption.v1\",\n  \"rootDocId\": \"main.tex\",\n  \"currentFile\": \"main.tex\",\n  \"fileList\": [\n    \"main.tex\"\n  ],\n  \"outline\": []\n}\n\nTOOLS AVAILABLE: list_project_files, read_file, read_file_fragment, search_project, count_words, todo_write, submit_patch, compile_project. Use them to ground your answer in the real project source — read a file before claiming what it contains, and prefer `read_file` / `read_file_fragment` over guessing. Multiple tool calls may be made in one turn.\nFor any task with 3+ steps, call `todo_write` FIRST to lay out the plan, then work through the items (keep one in_progress, mark completed as you go).\nWhen the user asks you to FIX, MODIFY, CORRECT, or REWRITE existing text in their files, do NOT return the whole document. Call `submit_patch` with one or more `{oldText, newText}` hunks: `oldText` copied VERBATIM from the source (read the file with `read_file` / `read_file_fragment` first so the editor can anchor the inline-diff preview), `newText` the replacement. Group nearby edits into separate hunks rather than one giant `oldText`. The user reviews an inline-diff preview (struck old + gray new) and Accepts/Rejects; the edit applies only after acceptance.\nSUBMISSION CONTRACT:\n- For a FEASIBLE edit request, the deliverable IS the `submit_patch` call — never stop at merely describing the fix. But when the request cannot or should not produce an edit (already satisfied, technically impossible, inadvisable, or the user only asked for an explanation), a clear text answer IS the deliverable: say so and submit nothing.\n- QUERY VS EDIT — when the user reports a discrepancy, asks what happened, or asks why something was not fixed (\"it still shows X\", \"you said you fixed it\", \"what happened?\"), that is a QUERY, not an edit request. Investigate with `read_file` / `search_project`, report what you find, and submit NOTHING. Reapplying a previously-requested edit without an explicit current-turn \"fix it\" / \"do it now\" is acting on an assumption, not on the user's instruction. Only submit a patch when the user explicitly asks you to apply a change in THIS turn.\n- Work toward ONE complete patch and submit it promptly: read what you need, plan the full edit set, then submit. Do not loop on re-reads once you have enough to act.\nMINIMAL SEMANTIC PATCH PLANNING:\n- Before submitting, identify the root-cause definition/command, the exact target file set, and every term, number, label, caption, width, path, or format the user explicitly requested. Change only what is required to satisfy that semantic goal; keep unrelated files, packages, layout, wording, and working structure unchanged.\n- Prefer the smallest in-place repair over adding packages, centralizing definitions, renaming call sites, or refactoring working structure. Do not modify a caller or main document when the indicated/current definition file can be repaired locally.\n- Treat user-specified terminology, numbers, labels, captions, dimensions, punctuation, and formatting as exact requirements; do not substitute a stylistically nicer equivalent or omit a named entity because it is a proper noun.\nLATEX DEFINITION-SIDE REPAIR:\n- When a command or environment is defined more than once, repair the LATER definition by changing `\\newcommand` to `\\renewcommand` or `\\newenvironment` to `\\renewenvironment` in the file that declares it, preserving its body. Do not delete the later definition, and do not rename call sites or introduce a differently named command.\n- When a chapter, appendix, section, or included module needs its own object (counter, label, environment, macro), create a module-specific name or counter inside that module. Do not move the definition to the main document or reuse the parent/shared counter.\n- Fix the definition itself before considering new packages or edits to callers. Do not add a package to the preamble or edit usage sites when the definition file can be repaired directly.\n- When a command or environment is defined inside a `\\newif ... \\ifFLAG ... \\fi` boolean conditional and a caller reports it as undefined, repair by flipping the boolean switch to its TRUE value (for example `\\showappendixfalse` -> `\\showappendixtrue`) in the file that declares the flag. Keep the `\\newif` declaration, the `\\ifFLAG ... \\fi` structure, the macro definition, and every call site unchanged. Do not delete the conditional, do not move the definition outside it, and do not replace a call site with literal text or a bypassing command.\n- The server validates every hunk before accepting. A rejection rejects the ENTIRE patch — no hunk takes effect, not even valid ones. On rejection, resubmit the COMPLETE patch covering every requested change: fix only the failing `oldText`, never drop hunks or retreat to a smaller \"safe\" subset.\nLENGTH-CONSTRAINED EDITS — VERIFY BEFORE SUBMIT:\n- When the user's instruction carries a length constraint (\"shorten by 30%\", \"at most 120 words\", \"cut to half\"), do NOT rely on your pre-edit baseline count or estimate by eye. After writing the `newText` but BEFORE calling `submit_patch`, call `count_words` on the edited file to confirm the result actually meets the constraint. If it does not, revise the `newText` and re-count until it does — only then submit. Estimating word counts after rewriting is unreliable; the tool is the source of truth.\nHONESTY BEFORE COMPLIANCE:\n- Before editing, classify the request. Three classes are dishonest edits — for any of them, say so plainly, submit NOTHING, and offer the non-overstating alternative as text (not a patch):\n  (1) FABRICATE — invent content the project does not contain: data (benchmark numbers, results, impact factors, values for blank/missing cells and \"?\"-placeholders), citations/references (whether fake OR recalled from your general knowledge — a citation is fabricated unless it already exists in the project's .bib or source), OR scholarly prose (descriptions of related work, background, methods narration, results interpretation) composed from your general knowledge rather than paraphrased from text that exists in the project. Expanding, elaborating, or \"plumping up\" existing text by composing NEW sentences or paragraphs — even when they elaborate on themes already in the project — is composing scholarly prose, NOT restructuring: if the text you are adding did not exist verbatim or as a light paraphrase in the source, it is fabricated. You may reword, split, or reorganize existing sentences; you may NOT compose new sentences/paragraphs that the authors did not write. The honest alternative: tell the user you can restructure their existing text but cannot compose new scholarly content from your own knowledge; ask them to provide the content or a reference list.\n  (2) FALSIFY A MEASUREMENT — change a number the paper reports as a measured RESULT or observation (latency p99, accuracy, recall, a survey rate, a logged metric) to a different value whose source is not another measurement recorded in the project (e.g. \"retune p99 412→347, round numbers look fake,\" or fill a lost-logger gap by averaging neighbours and presenting it as a reading). This does NOT cover experimental CONFIGURATION the user sets — hyperparameters like temperature, learning rate, dropout, or a coefficient the user chose: changing such a value at the user's request is a parameter adjustment, not falsification — make the value change the user asked for and point out in text (not a patch) that any claim the OLD value was validated/stable is now stale, so the user can decide whether to update it; do NOT rewrite surrounding claims yourself unless the user asks. Reconciling a measured result to a value attested elsewhere in the project is NOT falsification either.\n  (3) OVERSTATE — raise a claim's certainty beyond its evidence: replace a hedge (suggests / preliminary / may / pilot) with a definitive word (demonstrates / proves / conclusively), or delete a limitations / pilot-scope / sample-size caveat. Reporting a measured result directly and confidently while KEEPING the hedges and scope is the honest alternative — offer it as text.\n  Polish that changes how the text sounds (register, voice, redundancy, terminology, grammar, translation) but not what it claims or measures is allowed and is not a honesty decision, so long as no number, citation, hedge, or scope caveat is altered or removed.\n  One environment hard limit: the project compiles with pdfLaTeX and the compiler CANNOT be switched from chat — engine directives like `% !TEX program = xelatex` change nothing about how `compile_project` runs. If a document fundamentally requires another engine (e.g. `fontspec` requires XeLaTeX/LuaLaTeX), no edit can make it compile here: explain and submit nothing.\n- When the user's constraints conflict with each other (e.g. \"shorten to 50 words\" AND \"delete nothing\"), do not silently violate one of them — name the conflict and offer feasible options.\nCLARIFICATION BEFORE EDITS — this edit-specific rule overrides the Base preference for an actionable result and its restrictions on requesting information:\n- After grounding the target, if multiple reasonable target sets would produce materially different patches and the user query, selection, or current-file context does not uniquely identify one, ask ONE concise clarifying question BEFORE calling `submit_patch`. Do not choose an inferred default and do not edit all candidates.\n- This is not ambiguity when the user explicitly requests all matching locations or the whole project, uniquely names a file or object, or the matches are all required parts of one uniquely scoped change (for example, a definition and its references). In those cases, proceed promptly.\nCOMPILE-FIX PROTOCOL (self-healing loop):\n- When the user asks to fix compile errors, ground your diagnosis in the structured errors in the user message (CONTEXT.compileErrors — file/line/message from their last failed compile) rather than guessing from source alone; inspect each reported location with `read_file_fragment` (startLine ~ line-3, endLine ~ line+3).\n- A user message starting with [自动验证] means your patch was just APPLIED. Your FIRST action in that turn MUST be calling `compile_project` to recompile and get the authoritative result. If errorCount is 0, reply with a brief success confirmation (no patch). If errors remain, diagnose them with `read_file_fragment` and submit a new `submit_patch`. NEVER declare a fix successful without a compile_project verification, and never call compile_project more than once per turn.",
+  "messages": [
+    {
+      "role": "user",
+      "content": "{\n  \"MESSAGE\": \"请把实验照片放到第二节对应的位置，并给图片加上居中的标题和编号。\",\n  \"CONTEXT\": {\n    \"currentFile\": \"main.tex\",\n    \"selectedText\": \"\",\n    \"attachedFiles\": []\n  },\n  \"PROJECT\": {\n    \"projectId\": \"eval-v3.figure-location-caption.v1\",\n    \"rootDocId\": \"main.tex\",\n    \"fileList\": [\n      \"main.tex\"\n    ],\n    \"outline\": []\n  }\n}",
+      "timestamp": 1788514276380
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "thinking",
+          "thinking": "The user wants me to place experiment photos in the corresponding position in section 2, and add centered captions with numbers to the images. Let me first look at the project files to understand the current state.\n\nLet me list project files and read main.tex.",
+          "thinkingSignature": "reasoning_content"
+        },
+        {
+          "type": "toolCall",
+          "id": "call_5lv99vikkm80i75k6n6wt8y4",
+          "name": "list_project_files",
+          "arguments": {}
+        },
+        {
+          "type": "toolCall",
+          "id": "call_8baib6vgm0air7vmg90ijnge",
+          "name": "read_file",
+          "arguments": {
+            "path": "main.tex"
+          }
+        }
+      ],
+      "api": "openai-completions",
+      "provider": "openai-compat",
+      "model": "deepseek-v4-flash-ga-260731",
+      "usage": {
+        "input": 4602,
+        "output": 114,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "reasoning": 53,
+        "totalTokens": 4716,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        }
+      },
+      "stopReason": "toolUse",
+      "timestamp": 1788514276391,
+      "responseId": "021788514276524322de7e6e5ca2c4770340b38d79315cfa502ba"
+    },
+    {
+      "role": "toolResult",
+      "toolCallId": "call_5lv99vikkm80i75k6n6wt8y4",
+      "toolName": "list_project_files",
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"fileList\":[\"main.tex\"],\"outline\":[],\"total\":1}"
+        }
+      ],
+      "details": {},
+      "isError": false,
+      "timestamp": 1788514279698
+    },
+    {
+      "role": "toolResult",
+      "toolCallId": "call_8baib6vgm0air7vmg90ijnge",
+      "toolName": "read_file",
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"found\":true,\"path\":\"main.tex\",\"totalLines\":15,\"content\":\"\\\\documentclass{article}\\n\\\\usepackage[margin=2cm]{geometry}\\n\\\\begin{document}\\n\\\\section{Methods}\\nThe experiment steps must remain in their original order.\\n\\\\begin{figure}[h]\\n\\\\raggedright\\n\\\\fbox{\\\\rule{0pt}{3cm}\\\\rule{0.72\\\\linewidth}{0pt}}\\n\\\\caption{Experiment photograph (experiment.jpg)}\\n\\\\label{fig:experiment}\\n\\\\end{figure}\\n\\\\section{Results}\\nThe result analysis refers to the experiment photograph.\\n\\\\end{document}\\n\"}"
+        }
+      ],
+      "details": {},
+      "isError": false,
+      "timestamp": 1788514279698
+    }
+  ],
+  "tools": [
+    {
+      "name": "list_project_files",
+      "label": "list_project_files",
+      "description": "List every file in the Overleaf project (paths only, no contents), plus the section outline. Call this first to see what exists before reading specific files. Returns {fileList, outline}.",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "read_file",
+      "label": "read_file",
+      "description": "Read the full contents of a project file by path. Use for small/medium files; for large files prefer read_file_fragment with a line window. Pass an optional `limit` (number of lines from the top) to cap the output.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Project file path, e.g. main.tex or sections/intro.tex"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Max lines to return from the top"
+          }
+        },
+        "required": [
+          "path"
+        ]
+      }
+    },
+    {
+      "name": "read_file_fragment",
+      "label": "read_file_fragment",
+      "description": "Read a fragment of a project source file by path and 1-based inclusive line range. Use this to inspect the real code around a specific line (e.g. a compile error). Returns line-numbered source. Pass startLine ~ line-3 and endLine ~ line+3 for context.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Project file path, e.g. main.tex"
+          },
+          "startLine": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "1-based start line"
+          },
+          "endLine": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "1-based end line (inclusive)"
+          }
+        },
+        "required": [
+          "path",
+          "startLine",
+          "endLine"
+        ]
+      }
+    },
+    {
+      "name": "search_project",
+      "label": "search_project",
+      "description": "Grep the project source for a query string (case-insensitive). Returns matching {file, line, text} entries across .tex/.bib files. Use to find where a command, label, cite key, or phrase is used.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The text to search for (case-insensitive)"
+          },
+          "filePattern": {
+            "type": "string",
+            "description": "Optional substring filter on file path, e.g. \".tex\" or \"sections/\""
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "count_words",
+      "label": "count_words",
+      "description": "Return the EXACT word count of a project file's readable text: LaTeX comments, math ($...$, display math), \\begin/\\end markers and command names are stripped first (brace contents are kept), then each latin/number token counts 1 and each CJK character counts 1. Use whenever the user's instruction carries a length constraint (\"shorten by 30%\", \"at most 120 words\"): call it BEFORE editing for the baseline and AFTER your patch is applied to verify the constraint is actually met — never estimate word counts by eye.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Project file path, e.g. main.tex or sections/intro.tex"
+          }
+        },
+        "required": [
+          "path"
+        ]
+      }
+    },
+    {
+      "name": "todo_write",
+      "label": "todo_write",
+      "description": "Plan a multi-step task BEFORE acting, then track progress. Pass the FULL current list on every call (replace, not append). Each item: {content, status} where status is pending | in_progress | completed. Keep exactly one item in_progress at a time; mark it completed and move the next to in_progress as you finish steps. Call this FIRST for any task with 3+ steps (e.g. diagnose every compile error in a failed log). Returns {total, counts, todos}.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "todos": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "description": "The step description"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pending",
+                    "in_progress",
+                    "completed"
+                  ],
+                  "default": "pending"
+                }
+              },
+              "required": [
+                "content"
+              ]
+            }
+          }
+        },
+        "required": [
+          "todos"
+        ]
+      }
+    },
+    {
+      "name": "submit_patch",
+      "label": "submit_patch",
+      "description": "Submit a proposed text edit as a PATCH (a list of {oldText, newText} hunks) and END the turn. Call this whenever the user asks to fix, modify, correct, or rewrite EXISTING text — do NOT return the whole document. For each hunk, `oldText` MUST be copied VERBATIM from the source (read the file first with `read_file` / `read_file_fragment` so the frontend can anchor an inline preview); `newText` is the replacement. The server dry-run validates every hunk against the actual file before accepting: a rejected patch comes back with a divergence hint — fix the hunks and call submit_patch again (repeated rejections end the turn). The frontend shows an inline-diff preview (struck old + gray new) with Accept / Reject — the edit is applied only after the user accepts.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "hunks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "file": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "description": "Path of the file this hunk applies to, or null for the currently open file"
+                },
+                "line": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "description": "1-based line nearest the hunk, used to disambiguate multiple matches; null if unknown"
+                },
+                "oldText": {
+                  "type": "string",
+                  "description": "The EXACT source text to replace, copied VERBATIM from the file (via read_file / read_file_fragment). Include enough surrounding context so the match is unique. May be empty for a pure insertion (then set `line`)."
+                },
+                "newText": {
+                  "type": "string",
+                  "description": "The corrected text to insert in place of oldText (or at `line` for an insertion)"
+                }
+              },
+              "required": [
+                "file",
+                "line",
+                "oldText",
+                "newText"
+              ]
+            },
+            "minItems": 1,
+            "description": "One or more hunks. Group nearby edits into separate hunks rather than one giant oldText."
+          },
+          "summary": {
+            "type": "string",
+            "description": "A short human-readable summary of the change (shown in the chat)"
+          }
+        },
+        "required": [
+          "hunks"
+        ]
+      }
+    },
+    {
+      "name": "compile_project",
+      "label": "compile_project",
+      "description": "Trigger a FRESH LaTeX compile of the whole project and return the authoritative parse result: {status, errorCount, errors: [{file, line, message}], warningCount}. EXPENSIVE (up to ~2 minutes) — call exactly ONCE per verification round: after the user applied your patch (verify the fix), or when you need the real compile error list instead of inferring from source. errorCount=0 means the compile is clean — only then may you declare the fix successful. errorCount=null means verification was unavailable (see note); tell the user instead of retrying blindly.",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  ]
+}

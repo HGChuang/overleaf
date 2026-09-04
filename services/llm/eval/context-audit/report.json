@@ -1,0 +1,223 @@
+{
+  "historical": {
+    "manifest_sha256": "7312a15e4e98230ff160568f746fa3eee7ff978955d0026388959d032d2de59e",
+    "trials": 219,
+    "cases": 73,
+    "legacy_current_file_mismatch_cases": [
+      "v3.compile-algorithm-environment.v1",
+      "v3.compile-appendix-label-collision.v1",
+      "v3.compile-conditional-macro.v1",
+      "v3.compile-department-figure-counters.v1",
+      "v3.compile-duplicate-environment.v1",
+      "v3.compile-final-multi-artifact.v1",
+      "v3.compile-lesson-list-recovery.v1",
+      "v3.compile-nested-block-recovery.v1",
+      "v3.compile-proof-closure-recovery.v1",
+      "v3.compile-proof-environment.v1",
+      "v3.compile-score-counter-collision.v1",
+      "v3.compile-subfigure-counter-recovery.v1",
+      "v3.compile-wide-table-column-recovery.v1",
+      "v3.interaction-title-clarification.v1",
+      "v3.interaction-trend-chart-recovery.v1",
+      "v3.interaction2-anonymous-review-patch.v1",
+      "v3.interaction2-conference-page-limit-clarification.v1",
+      "v3.interaction2-conflicting-date-refusal.v1",
+      "v3.interaction2-image-rights-refusal.v1",
+      "v3.interaction2-medical-anonymization.v1",
+      "v3.interaction2-theorem-symbol-clarification.v1"
+    ],
+    "exposed_trials_not_proven_causal_failures": 63,
+    "max_file_characters": 692,
+    "files_over_20000_characters": 0,
+    "max_project_characters": 728,
+    "max_project_file_count": 6,
+    "tool_completed": 1547,
+    "clipped_sse_previews": 249,
+    "clipped_sse_previews_by_tool": {
+      "compile_project": 171,
+      "read_file": 32,
+      "todo_write": 24,
+      "search_project": 19,
+      "submit_patch": 1,
+      "read_file_fragment": 2
+    }
+  },
+  "smoke": [
+    {
+      "case_id": "v3.compile-appendix-label-collision.v1",
+      "run_dir": "services/llm/eval/artifacts/context-delivery-20260904/v3.compile-appendix-label-collision.v1-2026-09-04T09-31-10-557Z-1--trial-1",
+      "original_status": "COPILOT_FAILURE",
+      "context_trace": {
+        "enabled": true,
+        "records": 35,
+        "failures": 0,
+        "complete": true
+      },
+      "current_file": "appendix/table.tex",
+      "model_calls": 5,
+      "user_turns": 1,
+      "service_requests": 2,
+      "compile_calls": 3,
+      "source_hashes_verified": true,
+      "archived_executed_sources_with_indentation_only_cleanup": [
+        "app/llm/openaiCompatStream.ts"
+      ],
+      "request_scope": "shared serializer body projection; not real network packet capture",
+      "tool_first_delivery": [
+        {
+          "tool": "list_project_files",
+          "tool_call_id": "call_rvre98ttgb194nsp3m5r0r4o",
+          "output": "context/0009-tool-output.json",
+          "text_characters": 80,
+          "next_request": "context/0014-provider-request.json",
+          "first_delivery": "exact"
+        },
+        {
+          "tool": "read_file",
+          "tool_call_id": "call_585pe1six3rph4989m0j7b0b",
+          "output": "context/0010-tool-output.json",
+          "text_characters": 210,
+          "next_request": "context/0014-provider-request.json",
+          "first_delivery": "exact"
+        },
+        {
+          "tool": "read_file",
+          "tool_call_id": "call_dqpfm2m614ezs1exghlw3a6p",
+          "output": "context/0011-tool-output.json",
+          "text_characters": 223,
+          "next_request": "context/0014-provider-request.json",
+          "first_delivery": "exact"
+        },
+        {
+          "tool": "read_file",
+          "tool_call_id": "call_268elv1cryqpgwpe074ep9mp",
+          "output": "context/0012-tool-output.json",
+          "text_characters": 237,
+          "next_request": "context/0014-provider-request.json",
+          "first_delivery": "exact"
+        },
+        {
+          "tool": "search_project",
+          "tool_call_id": "call_3twcn2pymoubcb54kzy87zr4",
+          "output": "context/0019-tool-output.json",
+          "text_characters": 311,
+          "next_request": "context/0023-provider-request.json",
+          "first_delivery": "exact"
+        },
+        {
+          "tool": "search_project",
+          "tool_call_id": "call_ebq8dcvswot4cu075tf6i7go",
+          "output": "context/0020-tool-output.json",
+          "text_characters": 151,
+          "next_request": "context/0023-provider-request.json",
+          "first_delivery": "exact"
+        },
+        {
+          "tool": "search_project",
+          "tool_call_id": "call_299j75joxyshbc24elsstd3y",
+          "output": "context/0021-tool-output.json",
+          "text_characters": 109,
+          "next_request": "context/0023-provider-request.json",
+          "first_delivery": "exact"
+        },
+        {
+          "tool": "submit_patch",
+          "tool_call_id": "call_f8qqpezryknyev29hvudyejx",
+          "output": "context/0026-tool-output.json",
+          "text_characters": 28,
+          "next_request": "context/0029-provider-request.json",
+          "first_delivery": "exact"
+        },
+        {
+          "tool": "compile_project",
+          "tool_call_id": "call_gz24nkkd8xge1oj3o71820tx",
+          "output": "context/0032-tool-output.json",
+          "text_characters": 3154,
+          "next_request": "context/0034-provider-request.json",
+          "first_delivery": "exact"
+        }
+      ],
+      "later_history_changes": [
+        {
+          "tool": "search_project",
+          "tool_call_id": "call_3twcn2pymoubcb54kzy87zr4",
+          "request": "context/0029-provider-request.json",
+          "state": "changed",
+          "replacement": "[Earlier tool result compacted. Re-run the tool if needed.]"
+        },
+        {
+          "tool": "search_project",
+          "tool_call_id": "call_3twcn2pymoubcb54kzy87zr4",
+          "request": "context/0034-provider-request.json",
+          "state": "changed",
+          "replacement": "[Earlier tool result compacted. Re-run the tool if needed.]"
+        },
+        {
+          "tool": "search_project",
+          "tool_call_id": "call_ebq8dcvswot4cu075tf6i7go",
+          "request": "context/0034-provider-request.json",
+          "state": "changed",
+          "replacement": "[Earlier tool result compacted. Re-run the tool if needed.]"
+        }
+      ]
+    },
+    {
+      "case_id": "v3.figure-location-caption.v1",
+      "run_dir": "services/llm/eval/artifacts/context-delivery-20260904/v3.figure-location-caption.v1-2026-09-04T09-31-16-228Z-1--trial-1",
+      "original_status": "PASS",
+      "context_trace": {
+        "enabled": true,
+        "records": 22,
+        "failures": 0,
+        "complete": true
+      },
+      "current_file": "main.tex",
+      "model_calls": 4,
+      "user_turns": 1,
+      "service_requests": 2,
+      "compile_calls": 2,
+      "source_hashes_verified": true,
+      "archived_executed_sources_with_indentation_only_cleanup": [
+        "app/llm/openaiCompatStream.ts"
+      ],
+      "request_scope": "shared serializer body projection; not real network packet capture",
+      "tool_first_delivery": [
+        {
+          "tool": "list_project_files",
+          "tool_call_id": "call_5lv99vikkm80i75k6n6wt8y4",
+          "output": "context/0007-tool-output.json",
+          "text_characters": 48,
+          "next_request": "context/0010-provider-request.json",
+          "first_delivery": "exact"
+        },
+        {
+          "tool": "read_file",
+          "tool_call_id": "call_8baib6vgm0air7vmg90ijnge",
+          "output": "context/0008-tool-output.json",
+          "text_characters": 496,
+          "next_request": "context/0010-provider-request.json",
+          "first_delivery": "exact"
+        },
+        {
+          "tool": "submit_patch",
+          "tool_call_id": "call_5td2r71oekfzuh96bo3hr3mm",
+          "output": "context/0013-tool-output.json",
+          "text_characters": 28,
+          "next_request": "context/0016-provider-request.json",
+          "first_delivery": "exact"
+        },
+        {
+          "tool": "compile_project",
+          "tool_call_id": "call_w1hzvs7glh7519c49bfcc9v5",
+          "output": "context/0019-tool-output.json",
+          "text_characters": 4801,
+          "next_request": "context/0021-provider-request.json",
+          "first_delivery": "exact"
+        }
+      ],
+      "later_history_changes": []
+    }
+  ],
+  "comparison_eligible": false,
+  "reason": "diagnostic sample; repaired input contract; no paired counterfactual"
+}
