@@ -131,6 +131,8 @@ export interface PilotResponse {
 }
 
 export interface PilotGradeContext {
+  /** Actual delivered user messages, including dynamic follow-ups. */
+  userMessages?: string[]
   caseDefinition: PilotCase
   initialFiles: EvalFile[]
   finalFiles: EvalFile[]

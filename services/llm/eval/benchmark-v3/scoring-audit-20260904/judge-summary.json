@@ -1,0 +1,850 @@
+{
+  "human_gold": false,
+  "independent_judge": "gpt-5.6-luna via existing semantic_grader; configured identity only",
+  "judge_calls": 32,
+  "errors": 0,
+  "same_artifact": {
+    "inputs": 4,
+    "repeats_each": 3,
+    "within_run_unanimous": 4,
+    "historical_disagreements": 1
+  },
+  "known_mutations": {
+    "inputs": 2,
+    "judgments": 6,
+    "rejected": 6,
+    "caveat": "Sensitivity on two constructed negatives, not a population false-positive rate."
+  },
+  "composite_decomposition": {
+    "old_same_10_cases_deterministic": 7,
+    "rerun_same_10_cases_deterministic": 10,
+    "rerun_semantic": 26,
+    "rerun_delta": 3,
+    "same_artifact_semantic_delta": 16,
+    "semantic_pass_with_failed_checks": 16,
+    "with_patch_files_failure": 5
+  },
+  "results": [
+    {
+      "id": "blind-01",
+      "kind": "blind_audit",
+      "source_run_id": "run_ef1eac16-85d5-4e67-9a59-bb8c15fd6576",
+      "case_id": "v3.refuse-fabricated-citation.v1",
+      "dynamic": false,
+      "original_deterministic": "PASS",
+      "historical_semantic": null,
+      "verdicts": [
+        "fail"
+      ],
+      "judgments": [
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/blind-01-1.json",
+          "sha256": "90b7501a3a14b766ea713f7263031156fb216ffce8fa0b915ec75ad41033ba7a"
+        }
+      ]
+    },
+    {
+      "id": "blind-02",
+      "kind": "blind_audit",
+      "source_run_id": "run_806e2dc9-1dc2-4482-9fe3-ffa399c5e921",
+      "case_id": "v3.chemistry-structure-reference.v1",
+      "dynamic": false,
+      "original_deterministic": "PASS",
+      "historical_semantic": null,
+      "verdicts": [
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/blind-02-1.json",
+          "sha256": "08ae8bc5ef4b5c32aac1c87bd18a9589bffe3477838273bcb6df18fe1680a36d"
+        }
+      ]
+    },
+    {
+      "id": "blind-03",
+      "kind": "blind_audit",
+      "source_run_id": "run_135c81d2-be95-42b9-9fed-3a4c5a0af8d8",
+      "case_id": "v3.compile-proof-environment.v1",
+      "dynamic": false,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": null,
+      "verdicts": [
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/blind-03-1.json",
+          "sha256": "ddd2f19dfb6f2fbf57f2854ecb8aa70aeb2d5716df39ca5a64e7cbd63c55b6a8"
+        }
+      ]
+    },
+    {
+      "id": "blind-04",
+      "kind": "blind_audit",
+      "source_run_id": "run_c4bdd5e3-71ad-44ec-a527-929aee24e9ac",
+      "case_id": "v3.compile-subfigure-counter-recovery.v1",
+      "dynamic": false,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": null,
+      "verdicts": [
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/blind-04-1.json",
+          "sha256": "879159467a7351146f36454e503b357c161cd8563174445dae83b59ea3d46d57"
+        }
+      ]
+    },
+    {
+      "id": "blind-05",
+      "kind": "blind_audit",
+      "source_run_id": "run_f028d88a-51c7-4644-9263-4383f0b9db11",
+      "case_id": "v3.interaction2-conference-page-limit-clarification.v1",
+      "dynamic": true,
+      "original_deterministic": "PASS",
+      "historical_semantic": null,
+      "verdicts": [
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/blind-05-1.json",
+          "sha256": "0c093d3f2504765907a62133f256e8803917e610301f7408690faa15b3803c3d"
+        }
+      ]
+    },
+    {
+      "id": "blind-06",
+      "kind": "blind_audit",
+      "source_run_id": "run_67de79a7-58fe-457a-9168-d265b00dae64",
+      "case_id": "v3.compile-chapter-input-recovery.v1",
+      "dynamic": true,
+      "original_deterministic": "PASS",
+      "historical_semantic": null,
+      "verdicts": [
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/blind-06-1.json",
+          "sha256": "6b7c38a44c6ad9b7981c39db3f16bda79431b3577921671a76ff5efe09ab3fca"
+        }
+      ]
+    },
+    {
+      "id": "blind-07",
+      "kind": "blind_audit",
+      "source_run_id": "run_8e89a5e3-e262-4b5a-8a66-948a68b06d8b",
+      "case_id": "v3.content-todo-clarification.v1",
+      "dynamic": true,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": null,
+      "verdicts": [
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/blind-07-1.json",
+          "sha256": "3057240f25a8c95752217f499f6d58b8003b7a31b9ec61b49295e5f2272a7fdd"
+        }
+      ]
+    },
+    {
+      "id": "blind-08",
+      "kind": "blind_audit",
+      "source_run_id": "run_d371c91f-f8ad-41aa-b790-25b39187cb2d",
+      "case_id": "v3.interaction2-theorem-symbol-clarification.v1",
+      "dynamic": true,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": null,
+      "verdicts": [
+        "fail"
+      ],
+      "judgments": [
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/blind-08-1.json",
+          "sha256": "45d6e9b885e137da8ebbbd4f972eecdbb7690128a619e8cb93f8603ef27c5222"
+        }
+      ]
+    },
+    {
+      "id": "blind-09",
+      "kind": "blind_audit",
+      "source_run_id": "run_9f9a544b-c5b1-4838-bdc5-d3930d2dee6c",
+      "case_id": "v3.compile-appendix-label-collision.v1",
+      "dynamic": false,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": null,
+      "verdicts": [
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/blind-09-1.json",
+          "sha256": "87fce9c8e85c3706cfd20f185058ac7b3ec2f704ea3248ba8ccd11f0e3549654"
+        }
+      ]
+    },
+    {
+      "id": "blind-10",
+      "kind": "blind_audit",
+      "source_run_id": "run_74a5fca5-735d-44c5-b07a-2a81c70cf667",
+      "case_id": "v3.compile-subfigure-counter-recovery.v1",
+      "dynamic": false,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": null,
+      "verdicts": [
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/blind-10-1.json",
+          "sha256": "b5db5e4e1b8ecb14b53fdb3977b70a0b8831552bcd8b35ee334220377f6ff890"
+        }
+      ]
+    },
+    {
+      "id": "blind-11",
+      "kind": "blind_audit",
+      "source_run_id": "run_ba9d0f53-4620-46fd-948b-4c9cdefc5819",
+      "case_id": "v3.compile-proof-environment.v1",
+      "dynamic": false,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": null,
+      "verdicts": [
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/blind-11-1.json",
+          "sha256": "2901c97f2bc0f82800e165baac8f08d4410156453ba962f7a9bc1d0d81684490"
+        }
+      ]
+    },
+    {
+      "id": "repeat-01",
+      "kind": "same_artifact_repeat",
+      "source_run_id": "run_b75835c0-b1a0-4da2-b062-d3a8b7de183b",
+      "case_id": "v3.noop-title-already-exact.v1",
+      "dynamic": false,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": "pass",
+      "verdicts": [
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-01-1.json",
+          "sha256": "d9471548333d6d327f1299b1ae6c1450ddbfd63d901de04c4dc59eba56635458"
+        },
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-01-2.json",
+          "sha256": "bb5815e4815b3c7e229bae5b5935b6b157bf1e57268ce4e955e14d575e65d658"
+        },
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-01-3.json",
+          "sha256": "a2fae58051595d371e9b1b53c530c537652e87d2ef3a87266f8777cef6878e4c"
+        }
+      ]
+    },
+    {
+      "id": "repeat-02",
+      "kind": "same_artifact_repeat",
+      "source_run_id": "run_cf453cc4-27a4-4893-998c-427fe9ec0e6d",
+      "case_id": "v3.content-robotics-polish.v1",
+      "dynamic": false,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": "pass",
+      "verdicts": [
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-02-1.json",
+          "sha256": "cf9c73ee781b75d41c8bfe3a25535681f010c81faa7c853a9ede6a98e071b531"
+        },
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-02-2.json",
+          "sha256": "0c91d262339a1112d92fe509b636be7bb0f7fed505a2510d500eca2e3ae0c5f4"
+        },
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-02-3.json",
+          "sha256": "c2426dbfc2e0c00d98c1bbeb66f11fe5ac0e55918ffd896cc9f5a9c2a24eb635"
+        }
+      ]
+    },
+    {
+      "id": "repeat-03",
+      "kind": "same_artifact_repeat",
+      "source_run_id": "run_c7a23d02-066d-4210-8dd1-b019af8007df",
+      "case_id": "v3.content-bilingual-questionnaire-format.v1",
+      "dynamic": true,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": "pass",
+      "verdicts": [
+        "fail",
+        "fail",
+        "fail"
+      ],
+      "judgments": [
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-03-1.json",
+          "sha256": "24612ef62e424f39bdee8f67859a70928d30ed7bd2956cc3b52359c7b1773bca"
+        },
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-03-2.json",
+          "sha256": "e76d4ea86399531b8810e8e8fb41cd293426d85aa8be47f860abbee7c0489287"
+        },
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-03-3.json",
+          "sha256": "e43f7881433b98ca3b4ee331bdb17bfeb8be0790bc536a7eb756b7e4e379a429"
+        }
+      ]
+    },
+    {
+      "id": "repeat-04",
+      "kind": "same_artifact_repeat",
+      "source_run_id": "run_9b36c0b2-57e0-4bb9-9587-c55de1493f32",
+      "case_id": "v3.result-figure-near-analysis.v1",
+      "dynamic": true,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": "fail",
+      "verdicts": [
+        "fail",
+        "fail",
+        "fail"
+      ],
+      "judgments": [
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-04-1.json",
+          "sha256": "df45bd3dc0a2c43ac4552631adb41ab63f330aa84c948b4d6c7704abbc426d62"
+        },
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-04-2.json",
+          "sha256": "9168b75c9498889c28a20e26a472a0b9cdd03f14d9ff09511ef75fb287b9743d"
+        },
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/repeat-04-3.json",
+          "sha256": "3052a6e86417c0012f8efc578576f93db4e02216a63da5d277730b12563e8b0e"
+        }
+      ]
+    },
+    {
+      "id": "negative-01",
+      "kind": "adversarial_mutation",
+      "source_run_id": "run_cf453cc4-27a4-4893-998c-427fe9ec0e6d",
+      "case_id": "v3.content-robotics-polish.v1",
+      "dynamic": false,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": "pass",
+      "verdicts": [
+        "fail",
+        "fail",
+        "fail"
+      ],
+      "judgments": [
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/negative-01-1.json",
+          "sha256": "cf40bcd797e0104c22c484f1b8cc3fafbda44860df7b6371e7f90a370f233075"
+        },
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/negative-01-2.json",
+          "sha256": "c8fc967bce6681781b051d49332d974a06f4c8fd4143ad7aa756cac1ef719657"
+        },
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/negative-01-3.json",
+          "sha256": "57cccb75b7a21f0d841a4d3f65986ae26f7bb5f510e07819a2621b59c9f8b56a"
+        }
+      ]
+    },
+    {
+      "id": "negative-02",
+      "kind": "adversarial_mutation",
+      "source_run_id": "run_cf453cc4-27a4-4893-998c-427fe9ec0e6d",
+      "case_id": "v3.content-robotics-polish.v1",
+      "dynamic": false,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": "pass",
+      "verdicts": [
+        "fail",
+        "fail",
+        "fail"
+      ],
+      "judgments": [
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/negative-02-1.json",
+          "sha256": "bcca5cb11a9d7b7799c0f4afac7272068bbbd1d92f99868ac478064b074e6fa5"
+        },
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/negative-02-2.json",
+          "sha256": "e0378e1d03cab7d2b01a60cc95bda7d324fe4f7341fd3468193d67567ed65827"
+        },
+        {
+          "status": "fail",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/negative-02-3.json",
+          "sha256": "f74d515a8cf289e95a9803ffb64c6839c037c665a31f515caaaef4a8c66f73d8"
+        }
+      ]
+    },
+    {
+      "id": "context-repair-01",
+      "kind": "single_variable_evidence_repair",
+      "source_run_id": "run_c7a23d02-066d-4210-8dd1-b019af8007df",
+      "case_id": "v3.content-bilingual-questionnaire-format.v1",
+      "dynamic": true,
+      "original_deterministic": "COPILOT_FAILURE",
+      "historical_semantic": "pass",
+      "verdicts": [
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "judgments": [
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/context-repair-01-1.json",
+          "sha256": "edbf38a545a2eae2c2b12d80525ef896e1deb3337bb13082c1d9ccbf59052763"
+        },
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/context-repair-01-2.json",
+          "sha256": "817e879933634c502571b1b946744f5bbca3af2363cd550a91debd2d67feb89a"
+        },
+        {
+          "status": "pass",
+          "path": "services/llm/eval/benchmark-v3/scoring-audit-20260904/judge-results/context-repair-01-3.json",
+          "sha256": "0ba63595ae0261b375eacb729181a4163ea5bb7b7a0d59db1b39ab367f57bff0"
+        }
+      ]
+    }
+  ],
+  "shadow_gate_conflicts": [
+    {
+      "run_id": "run_df60d438-ddd2-497b-853a-251c8187ccff",
+      "case_id": "v3.content-appendix-interview-translation.v1",
+      "failed_checks": [
+        {
+          "type": "file_contains",
+          "file": "appendix.tex",
+          "values": [
+            "附录校准说明保留设备型号 Model X200。",
+            "Model X200"
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "interview.tex",
+          "values": [
+            "问题 1：设备使用起来有多容易？",
+            "选项：A. 非常困难；B. 困难；C. 中性；D. 容易；E. 非常容易。",
+            "1",
+            "A."
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_5e91e8dd-e7ac-4b66-be3a-a516d4390339",
+      "case_id": "v3.content-appendix-interview-translation.v1",
+      "failed_checks": [
+        {
+          "type": "file_contains",
+          "file": "appendix.tex",
+          "values": [
+            "附录校准说明保留设备型号 Model X200。",
+            "Model X200"
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "interview.tex",
+          "values": [
+            "问题 1：设备使用起来有多容易？",
+            "选项：A. 非常困难；B. 困难；C. 中性；D. 容易；E. 非常容易。",
+            "1",
+            "A."
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_8d6a11d4-71be-40b5-b8c0-4d03f7dae618",
+      "case_id": "v3.content-appendix-interview-translation.v1",
+      "failed_checks": [
+        {
+          "type": "file_contains",
+          "file": "appendix.tex",
+          "values": [
+            "附录校准说明保留设备型号 Model X200。",
+            "Model X200"
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "interview.tex",
+          "values": [
+            "问题 1：设备使用起来有多容易？",
+            "选项：A. 非常困难；B. 困难；C. 中性；D. 容易；E. 非常容易。",
+            "1",
+            "A."
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_c7a23d02-066d-4210-8dd1-b019af8007df",
+      "case_id": "v3.content-bilingual-questionnaire-format.v1",
+      "failed_checks": [
+        {
+          "type": "file_contains",
+          "file": "survey.tex",
+          "values": [
+            "Q1. How satisfied are you with the service?",
+            "Q2. Would you recommend the service to a colleague?",
+            "5 = Very satisfied.",
+            "5 = Definitely yes.",
+            "Q1.",
+            "Q2."
+          ]
+        },
+        {
+          "type": "file_not_contains",
+          "file": "survey.tex",
+          "values": [
+            "How satisfied are you?"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_f40e182b-73f5-4fc9-b5cc-548e69183d98",
+      "case_id": "v3.content-bilingual-questionnaire-format.v1",
+      "failed_checks": [
+        {
+          "type": "patch_files",
+          "files": [
+            "survey.tex",
+            "methods.tex"
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "survey.tex",
+          "values": [
+            "Q1. How satisfied are you with the service?",
+            "Q2. Would you recommend the service to a colleague?",
+            "5 = Very satisfied.",
+            "5 = Definitely yes.",
+            "Q1.",
+            "Q2."
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "methods.tex",
+          "values": [
+            "five-level scale",
+            "Question 1",
+            "Question 2"
+          ]
+        },
+        {
+          "type": "file_not_contains",
+          "file": "survey.tex",
+          "values": [
+            "How satisfied are you?"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_102d5cd7-18cf-44d0-b8f8-f7186598027d",
+      "case_id": "v3.content-bilingual-questionnaire-format.v1",
+      "failed_checks": [
+        {
+          "type": "patch_files",
+          "files": [
+            "survey.tex",
+            "methods.tex"
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "survey.tex",
+          "values": [
+            "Q1. How satisfied are you with the service?",
+            "Q2. Would you recommend the service to a colleague?",
+            "5 = Very satisfied.",
+            "5 = Definitely yes.",
+            "Q1.",
+            "Q2."
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "methods.tex",
+          "values": [
+            "five-level scale",
+            "Question 1",
+            "Question 2"
+          ]
+        },
+        {
+          "type": "file_not_contains",
+          "file": "survey.tex",
+          "values": [
+            "How satisfied are you?"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_0aa87625-d199-4d11-ad95-9824974c5d25",
+      "case_id": "v3.content-bilingual-sync.v1",
+      "failed_checks": [
+        {
+          "type": "file_contains",
+          "file": "zh/intro.tex",
+          "values": [
+            "中文段落一：社会韧性描述社区网络适应冲击的能力。",
+            "中文段落二：本报告比较不同网络指标。",
+            "现有中文段落：社区网络需要在冲击后恢复。"
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "zh/method.tex",
+          "values": [
+            "术语统一为：社会韧性"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_7fb9879f-5b2d-4abd-8901-e38d1396b250",
+      "case_id": "v3.content-bilingual-sync.v1",
+      "failed_checks": [
+        {
+          "type": "file_contains",
+          "file": "zh/intro.tex",
+          "values": [
+            "中文段落一：社会韧性描述社区网络适应冲击的能力。",
+            "中文段落二：本报告比较不同网络指标。",
+            "现有中文段落：社区网络需要在冲击后恢复。"
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "zh/method.tex",
+          "values": [
+            "术语统一为：社会韧性"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_ef17037a-cba4-43c7-b789-9e38ccfd58fe",
+      "case_id": "v3.content-project-directory-refusal.v1",
+      "failed_checks": [
+        {
+          "type": "response_contains_all",
+          "values": [
+            "不能",
+            "创建或移动文件",
+            "保留现有路径"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_0ec926cc-23a9-4f79-8eab-812a9f946c95",
+      "case_id": "v3.content-project-directory-refusal.v1",
+      "failed_checks": [
+        {
+          "type": "response_contains_all",
+          "values": [
+            "不能",
+            "创建或移动文件",
+            "保留现有路径"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_dd9a389a-568c-4372-83e5-c30b4f4b350b",
+      "case_id": "v3.content-project-directory-refusal.v1",
+      "failed_checks": [
+        {
+          "type": "response_contains_all",
+          "values": [
+            "不能",
+            "创建或移动文件",
+            "保留现有路径"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_cf453cc4-27a4-4893-998c-427fe9ec0e6d",
+      "case_id": "v3.content-robotics-polish.v1",
+      "failed_checks": [
+        {
+          "type": "patch_files",
+          "files": [
+            "chapters/intro.tex",
+            "chapters/method.tex",
+            "chapters/appendix.tex"
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "chapters/appendix.tex",
+          "values": [
+            "trajectory tracking restriction",
+            "\\tau=0.5",
+            "does not claim robustness"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_3247f70b-952e-43f0-97f2-a3fd9f34f6d7",
+      "case_id": "v3.content-robotics-polish.v1",
+      "failed_checks": [
+        {
+          "type": "patch_files",
+          "files": [
+            "chapters/intro.tex",
+            "chapters/method.tex",
+            "chapters/appendix.tex"
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "chapters/appendix.tex",
+          "values": [
+            "trajectory tracking restriction",
+            "\\tau=0.5",
+            "does not claim robustness"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_02f53c21-0e7a-403f-8039-935d67f53c27",
+      "case_id": "v3.content-robotics-polish.v1",
+      "failed_checks": [
+        {
+          "type": "patch_files",
+          "files": [
+            "chapters/intro.tex",
+            "chapters/method.tex",
+            "chapters/appendix.tex"
+          ]
+        },
+        {
+          "type": "file_contains",
+          "file": "chapters/appendix.tex",
+          "values": [
+            "trajectory tracking restriction",
+            "\\tau=0.5",
+            "does not claim robustness"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_33cbd9aa-0288-47b7-8b31-6272f8960b65",
+      "case_id": "v3.noop-theorem-numbering-already-scoped.v1",
+      "failed_checks": [
+        {
+          "type": "response_fact_groups",
+          "groups": [
+            [
+              "定理",
+              "theorem"
+            ],
+            [
+              "section",
+              "节"
+            ],
+            [
+              "已经",
+              "现有",
+              "当前"
+            ],
+            [
+              "无需修改",
+              "不需要调整",
+              "不作修改"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "run_b75835c0-b1a0-4da2-b062-d3a8b7de183b",
+      "case_id": "v3.noop-title-already-exact.v1",
+      "failed_checks": [
+        {
+          "type": "response_fact_groups",
+          "groups": [
+            [
+              "已经",
+              "当前",
+              "现有",
+              "正是"
+            ],
+            [
+              "一致",
+              "相同",
+              "就是",
+              "正是"
+            ],
+            [
+              "无需修改",
+              "无需任何修改",
+              "无需调整",
+              "不需要修改",
+              "不作修改"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -2098,3 +2098,32 @@ Deterministic grader 对 10 个语义敏感 case 存在固定字符串或固定 
 - 经验：断言失败位置不能代替因果根因；局部规则收益、全量收益与评分变化必须分别报告。
 - 推荐方向：①评分及合同审计；②上下文送达审计；③修复闭环/模型与规则对照；④真实任务覆盖与未见 family 验证。详见简报的五项取证计划。
 - Commit：本轮文档提交 hash 在交付时记录；未执行 push。本轮停止，等待用户选择下一轮。
+
+
+## Iteration 31 — 评分可信度与统一比较口径 P0
+
+日期：2026-09-04。
+
+### Observation / Evidence
+
+冻结 baseline、semantic、Fix1/2/3 共 378 个 trial，检查 source/trace/artifact/compile workspace 绑定；376 个 grader 逐 check 复现，2 个未到 grading 的工具失败保留。完成 11 个盲 artifact 的独立模型审阅及固定输入/负例/证据修复对照，共 32 次计划内评分，0 error；未执行新 Copilot trial。
+
+### Interpretation / Root Cause
+
+确认两个内部命名断言误拒合理实现、proof 保留要求与 oracle 冲突、semantic input 丢失实际用户后续消息。历史合成 +19 PASS 中 +3 来自重新运行，+16 才是同批 semantic 改判。盲评也会错拒正确 refusal；模型一致性不是人工准确率。根因包括需求/实现混淆与评分证据不完整，而非仅模型能力不足。
+
+### Changes
+
+新增冻结离线评分合同和 replay 工具，仅替换两个命名断言并将 proof 对称隔离；保留全部原始结果和 hard gate。给 semantic 评分加入真实 userMessages 并加回归测试；标记历史合成结果不可用于比较。报告：[评分审计](agent-scoring-audit-20260904.md)。未修改 Copilot 行为、生产 prompt、fixture、oracle 或公开任务。
+
+### Benchmark / Metric Before vs After
+
+同一有效分母的测量修正：baseline 75/216 → 75/216；Fix1 6/81 → 6/81；Fix2 8/24 → 14/24；Fix3 3/15 → 5/15。每个含 proof 的 cohort 有 3 个 INVALID。跨版本相同子集：baseline→Fix2 为 2/24 → 14/24；Fix2→Fix3 为 6/15 → 5/15。问卷固定输入仅增加实际用户第二轮消息：0/3 → 3/3 PASS；不是 Agent 提升。
+
+### Failure Cases / Regression / Validation
+
+新合同揭示旧 grader 掩盖的 counter 退步：Fix2 两个 case 均 3/3，Fix3 各 1/3，四个 artifacts 回到共享计数器；尚不能确定由 prompt 修改因果导致。TODO 的后续“先不修改”与最终编辑预期、符号 case 的问句正则仍有风险；不自动翻判。语义裁判保留 shadow，无人工 gold 或总体误判率声明。17/17 定向测试和评分模块类型检查通过，378/378 离线 replay 完成；8 个 FAIL→PASS 均来自确认的命名修正，无未解释 PASS→FAIL。
+
+### Lessons / Next steps
+
+评分必须同时绑定用户实际消息、执行状态和版本化合同；固定措辞可能同时掩盖改善与退步。下一轮建议：①剩余合同与人工 refusal/no-op 校准；②确认 counter 退步的重复性；③Agent 上下文送达审计。本轮提交 hash 随交付记录，仅本地提交，不 push；停止等待用户决定。

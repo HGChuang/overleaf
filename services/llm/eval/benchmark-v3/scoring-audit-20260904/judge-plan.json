@@ -1,0 +1,157 @@
+{
+  "model": "gpt-5.6-luna",
+  "instructions_sha256": "c5c6e9b613c340c45f35caa5625b5da5af1ddee33ef3227e9fbe1fb0563d84b2",
+  "human_gold": false,
+  "sample_rule": "2 unique cases per dynamic/static × original pass/fail stratum, SHA256(trial_id) ascending; plus 3 priority risks",
+  "tasks": [
+    {
+      "id": "blind-01",
+      "kind": "blind_audit",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/blind-01.json",
+      "sha256": "f1f4cfda8c98d68fb6a36a75f7dd5e76bc6278e7eef0e762f216c175b7099f98",
+      "repeats": 1,
+      "source_run_id": "run_ef1eac16-85d5-4e67-9a59-bb8c15fd6576"
+    },
+    {
+      "id": "blind-02",
+      "kind": "blind_audit",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/blind-02.json",
+      "sha256": "cefda51598d5a0e56d74d9ad6eb797f024154642bf7a81fd158b3ff3eea8f186",
+      "repeats": 1,
+      "source_run_id": "run_806e2dc9-1dc2-4482-9fe3-ffa399c5e921"
+    },
+    {
+      "id": "blind-03",
+      "kind": "blind_audit",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/blind-03.json",
+      "sha256": "bc0dc1be2171e34a629d8888d9f4c436fe42add31408dec74ece2570f82aad00",
+      "repeats": 1,
+      "source_run_id": "run_135c81d2-be95-42b9-9fed-3a4c5a0af8d8"
+    },
+    {
+      "id": "blind-04",
+      "kind": "blind_audit",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/blind-04.json",
+      "sha256": "c6744fa390fd4eb500a7be6ef68355f7dafd1ca7c9764dcf0bdec4d61ed85a31",
+      "repeats": 1,
+      "source_run_id": "run_c4bdd5e3-71ad-44ec-a527-929aee24e9ac"
+    },
+    {
+      "id": "blind-05",
+      "kind": "blind_audit",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/blind-05.json",
+      "sha256": "d3ee559c6a7dbf99526348233c4aa6193859ad0c7acbfd065bc20d367af56290",
+      "repeats": 1,
+      "source_run_id": "run_f028d88a-51c7-4644-9263-4383f0b9db11"
+    },
+    {
+      "id": "blind-06",
+      "kind": "blind_audit",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/blind-06.json",
+      "sha256": "4ce48fe00e873e90be77a4e291b121b02bfc95ec1c9e59b323fa3b27a1dcc978",
+      "repeats": 1,
+      "source_run_id": "run_67de79a7-58fe-457a-9168-d265b00dae64"
+    },
+    {
+      "id": "blind-07",
+      "kind": "blind_audit",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/blind-07.json",
+      "sha256": "fe85af066fc48ce10f68ce9ae3df278594a9d31b2b85ba7e36d4c1f9e3166b28",
+      "repeats": 1,
+      "source_run_id": "run_8e89a5e3-e262-4b5a-8a66-948a68b06d8b"
+    },
+    {
+      "id": "blind-08",
+      "kind": "blind_audit",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/blind-08.json",
+      "sha256": "78a7079ddd0b6bc0d80a329bbdaa02f236b69161e2c3ff74a961a90abfc94549",
+      "repeats": 1,
+      "source_run_id": "run_d371c91f-f8ad-41aa-b790-25b39187cb2d"
+    },
+    {
+      "id": "blind-09",
+      "kind": "blind_audit",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/blind-09.json",
+      "sha256": "c0bd519e2aed7f746311c3d783c68cc85b5e7313d79c7838a398d12459974906",
+      "repeats": 1,
+      "source_run_id": "run_9f9a544b-c5b1-4838-bdc5-d3930d2dee6c"
+    },
+    {
+      "id": "blind-10",
+      "kind": "blind_audit",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/blind-10.json",
+      "sha256": "a7a23434b02264a14eea2e52871fda94a9cd362a7612f3e10b3ed94815df7a75",
+      "repeats": 1,
+      "source_run_id": "run_74a5fca5-735d-44c5-b07a-2a81c70cf667"
+    },
+    {
+      "id": "blind-11",
+      "kind": "blind_audit",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/blind-11.json",
+      "sha256": "e32bbaf42b627995d2a1cee634a815b4827c348fe028f0de1a016a368ba454ee",
+      "repeats": 1,
+      "source_run_id": "run_ba9d0f53-4620-46fd-948b-4c9cdefc5819"
+    },
+    {
+      "id": "repeat-01",
+      "kind": "same_artifact_repeat",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/repeat-01.json",
+      "sha256": "9b8454940669432ac18cda81153616c3a217659452e642b279f18f733a8fd81c",
+      "repeats": 3,
+      "source_run_id": "run_b75835c0-b1a0-4da2-b062-d3a8b7de183b"
+    },
+    {
+      "id": "repeat-02",
+      "kind": "same_artifact_repeat",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/repeat-02.json",
+      "sha256": "f9d5aa0bea96c0cb51dfee8b3ad350bd05bde91e49a1f497d844e588e66894a3",
+      "repeats": 3,
+      "source_run_id": "run_cf453cc4-27a4-4893-998c-427fe9ec0e6d"
+    },
+    {
+      "id": "repeat-03",
+      "kind": "same_artifact_repeat",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/repeat-03.json",
+      "sha256": "f8ee4b86434dc1e40e89a9e951df35a0164602c573899a36cb46618e493fbaa7",
+      "repeats": 3,
+      "source_run_id": "run_c7a23d02-066d-4210-8dd1-b019af8007df"
+    },
+    {
+      "id": "repeat-04",
+      "kind": "same_artifact_repeat",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/repeat-04.json",
+      "sha256": "3994d7ebbed327ea3818a11bbfa8da7c502832c71631d7dd851a849a12503453",
+      "repeats": 3,
+      "source_run_id": "run_9b36c0b2-57e0-4bb9-9587-c55de1493f32"
+    },
+    {
+      "id": "negative-01",
+      "kind": "adversarial_mutation",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/negative-01.json",
+      "sha256": "411b9e03295c25500ead8b39537ce927f60e313900fe8bb35592044d9ab2cd90",
+      "repeats": 3,
+      "expected": "fail",
+      "mutation": "formula",
+      "source_run_id": "run_cf453cc4-27a4-4893-998c-427fe9ec0e6d"
+    },
+    {
+      "id": "negative-02",
+      "kind": "adversarial_mutation",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/negative-02.json",
+      "sha256": "116f32801c464acd3a0cd6d65074f88a3ec669ee2a136253bb3b6f60a6caa400",
+      "repeats": 3,
+      "expected": "fail",
+      "mutation": "meaning",
+      "source_run_id": "run_cf453cc4-27a4-4893-998c-427fe9ec0e6d"
+    },
+    {
+      "id": "context-repair-01",
+      "kind": "single_variable_evidence_repair",
+      "input": "services/llm/eval/benchmark-v3/scoring-audit-20260904/inputs/context-repair-01.json",
+      "sha256": "7161a12ebda5f3cc00a9ef8db0bf1da10c456613e2b0e58d1e3a2d0ab4623bcf",
+      "repeats": 3,
+      "source_run_id": "run_c7a23d02-066d-4210-8dd1-b019af8007df",
+      "change": "Add actual delivered user messages only; criteria and instructions unchanged."
+    }
+  ]
+}

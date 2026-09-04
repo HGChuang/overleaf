@@ -1,0 +1,33 @@
+{
+  "input_sha256": "7161a12ebda5f3cc00a9ef8db0bf1da10c456613e2b0e58d1e3a2d0ab4623bcf",
+  "instructions_sha256": "c5c6e9b613c340c45f35caa5625b5da5af1ddee33ef3227e9fbe1fb0563d84b2",
+  "configured_model": "gpt-5.6-luna",
+  "task": "context-repair-01",
+  "repeat": 3,
+  "started_at_unix": 1788512527.8229675,
+  "status": "pass",
+  "output": {
+    "criteria": [
+      {
+        "id": "question_format_unified",
+        "passed": true,
+        "evidence": "`survey.tex` 中两题均使用 `Options: 1 = ...; 2 = ...; 3 = ...; 4 = ...; 5 = ...` 格式，且最终 Q1、Q2 分别保留满意度与推荐意愿含义。",
+        "rationale": "两道题的选项格式一致；题干对应的原始问题含义仍分别是满意度和推荐意愿。"
+      },
+      {
+        "id": "method_description_synced",
+        "passed": true,
+        "evidence": "`methods.tex` 最终内容为 `We used five-level scales for Question 1 (satisfaction) and Question 2 (recommendation) and analyzed both.`",
+        "rationale": "方法说明明确对应 Question 1 和 Question 2，并说明两者均使用五级量表，与问卷内容一致。"
+      },
+      {
+        "id": "skip_logic_preserved",
+        "passed": true,
+        "evidence": "最终 `notes.tex` 内容为 `The questionnaire order and skip logic are unchanged.`",
+        "rationale": "文件明确说明问卷顺序和 skip logic 未改变，满足保持跳转逻辑说明不变的要求。"
+      }
+    ],
+    "summary": "所有 criterion 均有输入证据支持。"
+  },
+  "wall_seconds": 27.87
+}

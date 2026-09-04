@@ -2,6 +2,8 @@
 
 当前实际执行方案与优化方向复审见 [2026-09-04 简报](agent-evaluation-review-20260904.md)。该简报已核对 runner；本文前部包含设计性描述，不能全部视为当前 baseline 已实现能力。
 
+当前评分比较口径见 [P0 评分审计](agent-scoring-audit-20260904.md)：使用冻结的 `v3-scoring-audit-v1-20260904` 对两侧同批 artifacts 重评分；live runner 保留原 deterministic 结果，semantic 继续 shadow。历史 94/219 合成结果不可用作优化比较。
+
 本文定义了 `services/llm` 中 Copilot 后端的评估控制平面。文档首先描述当前生产环境中的行为，并将评估机制与未来的 Copilot 优化工作分开。
 
 ## 范围与原则
@@ -1539,3 +1541,14 @@ Canonical 结果为 `PASS=10`、`COPILOT_FAILURE=20`；Semantic shadow 结果为
 ## Iteration 27：补丁语义失败修复实验 1
 
 对 final baseline 中 28 个补丁语义失败 case 应用统一的 `MINIMAL SEMANTIC PATCH PLANNING` 提示策略，绑定 Git `373badfe26d1ec0508a31fac9aa2a4b0083b7432`，重跑 28×3=84 个 canonical trial。结果 `PASS=6`、`COPILOT_FAILURE=78`，canonical `INFRA_FAILURE=0`；只有 `v3.beamer-reference-overflow.v1` 达到 `3/3`。通用最小修改规则未修复 `\renew`、独立计数器、精确值约束、CJK 依赖选择和匿名化空 hunk 等具体 LaTeX 语义问题。报告见 `services/llm/eval/benchmark-v3/PATCH_SEMANTICS_FIX1_20260903.md`。
+
+
+## 当前比较合同：评分审计 P0（Iteration 31）
+
+本轮离线复核 378 个历史 trial，未运行新 Copilot trial。比较入口为 `services/llm/eval/scoring/replayAudit.ts`，冻结合同与源清单位于 `services/llm/eval/benchmark-v3/scoring-audit-20260904/`。评分实现及原始 artifact hash 均检查；376 个旧 grader 逐 check 复现，2 个未进入评分的工具失败原样保留。
+
+两个 counter case 改用独立计数器/一致引用检查，保留文件范围、内容与编译约束；proof 合同冲突统一 INVALID。baseline 为 75/216，原 75/219 的 PASS 数未变化；Fix2 同批评分 8/24 → 14/24，Fix3 3/15 → 5/15。按相同 case 集合比较 Fix2 → Fix3 为 6/15 → 5/15，两个 counter case 各从 3/3 降至 1/3，旧固定命名 grader 曾掩盖该变化。
+
+semantic input 新增实际 user_messages：在固定问卷样本上，仅补齐第二轮用户要求使三次评分从全部失败变为全部通过。4 个旧输入各三次评分本批一致，但有一项不同于历史判定；两个明确反例 6/6 被拒绝。这不足以替代人工校准，semantic 不晋升 canonical。旧合成 94/219 标记不可比较；+19 中 +3 为重新运行变化、+16 为同批 semantic 改判。
+
+正式优化比较必须让两侧都通过同一版本离线合同，排除项对称，缺失/无效 coverage 单列；禁止用 shadow PASS 整体覆盖 hard gate。当前合同仍含语义近似与待裁定的 TODO/符号场景，不声称完整用户成功率。详见评分审计报告。

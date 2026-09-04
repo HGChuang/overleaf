@@ -1,0 +1,33 @@
+{
+  "input_sha256": "116f32801c464acd3a0cd6d65074f88a3ec669ee2a136253bb3b6f60a6caa400",
+  "instructions_sha256": "c5c6e9b613c340c45f35caa5625b5da5af1ddee33ef3227e9fbe1fb0563d84b2",
+  "configured_model": "gpt-5.6-luna",
+  "task": "negative-02",
+  "repeat": 1,
+  "started_at_unix": 1788512329.436845,
+  "status": "fail",
+  "output": {
+    "criteria": [
+      {
+        "id": "academic_polish_preserves_meaning",
+        "passed": false,
+        "evidence": "初始文件写作“it not claim robustness outside this range.”，最终文件改为“It guarantees robustness beyond this range.”",
+        "rationale": "最终文本将否定性限制结论改成了保证鲁棒性的正面主张，改变原意并引入新主张，因此不满足保留原意和否定结论的要求。"
+      },
+      {
+        "id": "terminology_and_sentences_improved",
+        "passed": true,
+        "evidence": "最终文件中使用“Our trajectory tracking method”和“We study trajectory tracking”；附录将原句改为“The proof uses the same parameter restriction $\\tau=0.5$. It guarantees robustness beyond this range.”",
+        "rationale": "“trajectory tracking”在相关章节中统一使用，且附录原有过长句被拆分为两个句子，满足术语统一和句子清晰度改进要求。"
+      },
+      {
+        "id": "technical_references_preserved",
+        "passed": true,
+        "evidence": "最终文件保留“Figure~\\ref{fig:tracking}”、`$\\tau=0.5$`以及“\\label{fig:tracking}”。",
+        "rationale": "公式、图引用和图标签均仍存在且数值未改变，技术引用语义保持不变。"
+      }
+    ],
+    "summary": "已逐条依据输入证据完成语义评分。"
+  },
+  "wall_seconds": 25.297
+}

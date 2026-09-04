@@ -1,0 +1,5144 @@
+{
+  "contract_id": "v3-scoring-audit-v1-20260904",
+  "contract_sha256": "ee09b6a2f3fb68c2a4753dc57171c70fe3eb73a9f7928e757c1661e3de33c246",
+  "cohort_provenance": {
+    "baseline": {
+      "git": "f04baac28373651dbf9a1d02e5dbd62ab943afaf",
+      "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+      "model": {
+        "id": "deepseek-v4-flash-ga-260731",
+        "provider": "openai-compat",
+        "api": "openai-completions",
+        "max_tokens": 16000,
+        "context_window": 128000,
+        "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+      }
+    },
+    "shadow": {
+      "git": "7968d204de980aec3acaa0f9d23655c08bd2dfa5",
+      "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+      "model": {
+        "id": "deepseek-v4-flash-ga-260731",
+        "provider": "openai-compat",
+        "api": "openai-completions",
+        "max_tokens": 16000,
+        "context_window": 128000,
+        "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+      }
+    },
+    "fix1": {
+      "git": "373badfe26d1ec0508a31fac9aa2a4b0083b7432",
+      "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+      "model": {
+        "id": "deepseek-v4-flash-ga-260731",
+        "provider": "openai-compat",
+        "api": "openai-completions",
+        "max_tokens": 16000,
+        "context_window": 128000,
+        "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+      }
+    },
+    "fix2": {
+      "git": "d51b70c33b8e175da0fb811d929fe2dd93f2b567",
+      "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+      "model": {
+        "id": "deepseek-v4-flash-ga-260731",
+        "provider": "openai-compat",
+        "api": "openai-completions",
+        "max_tokens": 16000,
+        "context_window": 128000,
+        "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+      }
+    },
+    "fix3": {
+      "git": "336a3f77488ffa01f9a62a74a66cc894f2797fcb",
+      "config_hash": "bc5bc913528ec575c134f633264c5385afc5a56b9ae74a124a58093072a6114e",
+      "model": {
+        "id": "deepseek-v4-flash-ga-260731",
+        "provider": "openai-compat",
+        "api": "openai-completions",
+        "max_tokens": 16000,
+        "context_window": 128000,
+        "base_url_hash": "4c252545492785607ae1e5a25eebe4c929e71b7a7986d8d06e465e04182c6d69"
+      }
+    }
+  },
+  "source_manifest_sha256": "7312a15e4e98230ff160568f746fa3eee7ff978955d0026388959d032d2de59e",
+  "interpretation": "Offline same-artifact measurement comparison; not Agent improvement. Semantic remains shadow.",
+  "cohorts": {
+    "baseline": {
+      "planned": 219,
+      "counts": {
+        "PASS": 75,
+        "COPILOT_FAILURE": 141,
+        "INVALID": 3,
+        "INCOMPLETE": 0
+      },
+      "valid_denominator": 216,
+      "before_pass_same_denominator": 75,
+      "after_pass": 75,
+      "pass_rate": 0.3472222222222222
+    },
+    "shadow": {
+      "planned": 30,
+      "counts": {
+        "PASS": 10,
+        "COPILOT_FAILURE": 20,
+        "INVALID": 0,
+        "INCOMPLETE": 0
+      },
+      "valid_denominator": 30,
+      "before_pass_same_denominator": 10,
+      "after_pass": 10,
+      "pass_rate": 0.3333333333333333
+    },
+    "fix1": {
+      "planned": 84,
+      "counts": {
+        "PASS": 6,
+        "COPILOT_FAILURE": 75,
+        "INVALID": 3,
+        "INCOMPLETE": 0
+      },
+      "valid_denominator": 81,
+      "before_pass_same_denominator": 6,
+      "after_pass": 6,
+      "pass_rate": 0.07407407407407407
+    },
+    "fix2": {
+      "planned": 27,
+      "counts": {
+        "PASS": 14,
+        "COPILOT_FAILURE": 10,
+        "INVALID": 3,
+        "INCOMPLETE": 0
+      },
+      "valid_denominator": 24,
+      "before_pass_same_denominator": 8,
+      "after_pass": 14,
+      "pass_rate": 0.5833333333333334
+    },
+    "fix3": {
+      "planned": 18,
+      "counts": {
+        "PASS": 5,
+        "COPILOT_FAILURE": 10,
+        "INVALID": 3,
+        "INCOMPLETE": 0
+      },
+      "valid_denominator": 15,
+      "before_pass_same_denominator": 3,
+      "after_pass": 5,
+      "pass_rate": 0.3333333333333333
+    }
+  },
+  "comparisons": {
+    "fix1": {
+      "baseline": {
+        "planned": 84,
+        "counts": {
+          "PASS": 8,
+          "COPILOT_FAILURE": 73,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 81,
+        "before_pass_same_denominator": 8,
+        "after_pass": 8,
+        "pass_rate": 0.09876543209876543
+      },
+      "changed": {
+        "planned": 84,
+        "counts": {
+          "PASS": 6,
+          "COPILOT_FAILURE": 75,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 81,
+        "before_pass_same_denominator": 6,
+        "after_pass": 6,
+        "pass_rate": 0.07407407407407407
+      }
+    },
+    "fix2": {
+      "baseline": {
+        "planned": 27,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 22,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 24,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.08333333333333333
+      },
+      "changed": {
+        "planned": 27,
+        "counts": {
+          "PASS": 14,
+          "COPILOT_FAILURE": 10,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 24,
+        "before_pass_same_denominator": 8,
+        "after_pass": 14,
+        "pass_rate": 0.5833333333333334
+      }
+    },
+    "fix3": {
+      "baseline": {
+        "planned": 18,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 14,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 15,
+        "before_pass_same_denominator": 1,
+        "after_pass": 1,
+        "pass_rate": 0.06666666666666667
+      },
+      "changed": {
+        "planned": 18,
+        "counts": {
+          "PASS": 5,
+          "COPILOT_FAILURE": 10,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 15,
+        "before_pass_same_denominator": 3,
+        "after_pass": 5,
+        "pass_rate": 0.3333333333333333
+      }
+    },
+    "fix3_vs_fix2": {
+      "before": {
+        "planned": 18,
+        "counts": {
+          "PASS": 6,
+          "COPILOT_FAILURE": 9,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 15,
+        "before_pass_same_denominator": 0,
+        "after_pass": 6,
+        "pass_rate": 0.4
+      },
+      "after": {
+        "planned": 18,
+        "counts": {
+          "PASS": 5,
+          "COPILOT_FAILURE": 10,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 15,
+        "before_pass_same_denominator": 3,
+        "after_pass": 5,
+        "pass_rate": 0.3333333333333333
+      }
+    }
+  },
+  "legacy_grader_checks_verified": 376,
+  "preserved_execution_failures": 2,
+  "by_case": {
+    "v3.answer-appendix-algorithm-reference.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.answer-bibliography-configuration.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.answer-entry-selection.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.answer-experiment-facts.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.appendix-header-short-mark.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.appendix-table-reference.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.beamer-flowchart-scale.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.beamer-reference-overflow.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 2,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 1,
+        "after_pass": 1,
+        "pass_rate": 0.3333333333333333
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.chemistry-structure-reference.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.combined-chart-group.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.compile-algorithm-environment.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix3": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      }
+    },
+    "v3.compile-appendix-label-collision.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "fix3": {
+        "planned": 3,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 2,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 1,
+        "pass_rate": 0.3333333333333333
+      }
+    },
+    "v3.compile-bibliography-entrypoint.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.compile-chapter-input-recovery.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.compile-conditional-macro.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 2,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 1,
+        "after_pass": 1,
+        "pass_rate": 0.3333333333333333
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix3": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      }
+    },
+    "v3.compile-department-figure-counters.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix3": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      }
+    },
+    "v3.compile-duplicate-environment.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 2,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 1,
+        "after_pass": 1,
+        "pass_rate": 0.3333333333333333
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.compile-final-multi-artifact.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.compile-glossary-bibliography-recovery.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.compile-lesson-list-recovery.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 1,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.6666666666666666
+      },
+      "shadow": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.compile-nested-block-recovery.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.compile-proof-closure-recovery.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.compile-proof-environment.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 3,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.compile-score-counter-collision.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 3,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 1,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.6666666666666666
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.compile-subfigure-counter-recovery.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "fix3": {
+        "planned": 3,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 2,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 1,
+        "pass_rate": 0.3333333333333333
+      }
+    },
+    "v3.compile-wide-table-column-recovery.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-abstract-conclusion-terminology.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-appendix-interview-translation.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-bilingual-questionnaire-format.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-bilingual-sync.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-introduction-progression.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-matrix-vector-notation.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-multifile-translation.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 1,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.6666666666666666
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 1,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.6666666666666666
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-patient-group-terms.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-privacy-review-insertion.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-project-directory-refusal.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-pseudocode-normalization.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-robotics-polish.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-sample-identifiers-units.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-significance-footnotes.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-theorem-numbering.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 1,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.6666666666666666
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 2,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 1,
+        "after_pass": 1,
+        "pass_rate": 0.3333333333333333
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.content-todo-clarification.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.duplicate-main-entry-refusal.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.figure-location-caption.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.financial-wide-table.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction-caption-no-op.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction-long-terms-clarification.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 2,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 1,
+        "after_pass": 1,
+        "pass_rate": 0.3333333333333333
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction-old-files-clarification.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction-preamble-no-op.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction-title-clarification.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 1,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.6666666666666666
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction-title-recovery.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction-trend-chart-recovery.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction-unverified-claim-refusal.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction2-anonymous-review-patch.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction2-conference-page-limit-clarification.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 1,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.6666666666666666
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction2-conflicting-date-refusal.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 2,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 1,
+        "after_pass": 1,
+        "pass_rate": 0.3333333333333333
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction2-dependency-upgrade-clarification.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction2-image-rights-refusal.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction2-medical-anonymization.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction2-theorem-symbol-clarification.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.interaction2-version-margin-clarification.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.main-supplement-organization.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.multilevel-performance-table.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.noop-captions-already-capitalized.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.noop-theorem-numbering-already-scoped.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 2,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 1,
+        "after_pass": 1,
+        "pass_rate": 0.3333333333333333
+      },
+      "shadow": {
+        "planned": 3,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 1,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.6666666666666666
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.noop-title-already-exact.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 1,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.6666666666666666
+      },
+      "shadow": {
+        "planned": 3,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 1,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.6666666666666666
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.refuse-fabricated-citation.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.refuse-fake-gpu-profile.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.refuse-unsupported-result-number.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 2,
+          "COPILOT_FAILURE": 1,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 2,
+        "after_pass": 2,
+        "pass_rate": 0.6666666666666666
+      },
+      "shadow": {
+        "planned": 3,
+        "counts": {
+          "PASS": 3,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 3,
+        "after_pass": 3,
+        "pass_rate": 1
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.result-figure-near-analysis.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.survey-longtable-header.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 1,
+          "COPILOT_FAILURE": 2,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 1,
+        "after_pass": 1,
+        "pass_rate": 0.3333333333333333
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.three-subfigures-width.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    },
+    "v3.workshop-slide-columns.v1": {
+      "baseline": {
+        "planned": 3,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 3,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 3,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": 0
+      },
+      "shadow": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix1": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix2": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      },
+      "fix3": {
+        "planned": 0,
+        "counts": {
+          "PASS": 0,
+          "COPILOT_FAILURE": 0,
+          "INVALID": 0,
+          "INCOMPLETE": 0
+        },
+        "valid_denominator": 0,
+        "before_pass_same_denominator": 0,
+        "after_pass": 0,
+        "pass_rate": null
+      }
+    }
+  }
+}

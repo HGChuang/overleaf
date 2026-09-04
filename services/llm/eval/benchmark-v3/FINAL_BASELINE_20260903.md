@@ -1,5 +1,7 @@
 # Benchmark v3 final baseline（2026-09-03）
 
+> 2026-09-04 评分审计：本表保留为历史合成结果，不可作为 Agent A/B 比较基准。`+19 PASS` 实际为重新运行的 deterministic 变化 `+3` 与同批 semantic 改判 `+16`；不能全部归为 grader 修正。原文 commit 指报告快照，实际被测 Git 分别为 `f04baac2837` / `7968d204de`。当前比较口径与证据见 [评分审计](../../../../docs/agent-scoring-audit-20260904.md)。
+
 ## Scope
 
 - Source baseline commit：`38439cd3505102aa030f9e1310ad15cc32050a69`

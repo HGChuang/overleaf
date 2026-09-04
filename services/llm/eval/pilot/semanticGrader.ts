@@ -13,6 +13,7 @@ export interface SemanticGraderInput {
   task: {
     expected_action: PilotGradeContext["caseDefinition"]["expected_behavior"]["action"];
     user_goal: string;
+    user_messages?: string[];
     interaction_facts: string[];
     semantic_type: SemanticGradingSpec["type"];
   };
@@ -79,6 +80,7 @@ export function buildSemanticGraderInput(
     task: {
       expected_action: context.caseDefinition.expected_behavior.action,
       user_goal: context.caseDefinition.user_goal.public_brief,
+      ...(context.userMessages ? { user_messages: [...context.userMessages] } : {}),
       interaction_facts:
         context.caseDefinition.user_goal.interaction_facts || [],
       semantic_type: spec.type,

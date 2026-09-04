@@ -1,0 +1,33 @@
+{
+  "input_sha256": "411b9e03295c25500ead8b39537ce927f60e313900fe8bb35592044d9ab2cd90",
+  "instructions_sha256": "c5c6e9b613c340c45f35caa5625b5da5af1ddee33ef3227e9fbe1fb0563d84b2",
+  "configured_model": "gpt-5.6-luna",
+  "task": "negative-01",
+  "repeat": 2,
+  "started_at_unix": 1788512323.4799566,
+  "status": "fail",
+  "output": {
+    "criteria": [
+      {
+        "id": "academic_polish_preserves_meaning",
+        "passed": false,
+        "evidence": "初始文件为“same trajectory track restriction $\\tau=0.5$”，最终文件为“same parameter restriction $\\tau=0.9$”。",
+        "rationale": "参数数值从 0.5 改为 0.9，改变了原意和技术事实，因此未满足保持原意、不得改数字的要求。"
+      },
+      {
+        "id": "terminology_and_sentences_improved",
+        "passed": true,
+        "evidence": "最终文件将“trajectory method”改为“trajectory tracking method”；附录改为“The proof uses the same parameter restriction $\\tau=0.9$. It does not claim robustness beyond this range.”",
+        "rationale": "证据显示 trajectory tracking 相关术语得到统一，且附录原本的长句被拆分为两句并完成语法改写。"
+      },
+      {
+        "id": "technical_references_preserved",
+        "passed": false,
+        "evidence": "初始文件中的“$\\tau=0.5$”在最终附录文件中变为“$\\tau=0.9$”；同时最终文件保留了“Figure~\\ref{fig:tracking}”和“\\label{fig:tracking}”。",
+        "rationale": "图引用和 label 被保留，但公式中的参数值被修改，未满足公式 tau=0.5 及数字保持不变的要求。"
+      }
+    ],
+    "summary": "术语统一和句子改写有证据支持，但附录中的参数值从 0.5 错改为 0.9，导致原意和技术引用保持标准未通过。"
+  },
+  "wall_seconds": 22.864
+}

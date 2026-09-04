@@ -1,0 +1,15 @@
+{
+  "scope": "offline scoring only; no new Copilot trial or CLSI compile",
+  "replayed_trials": 378,
+  "legacy_graders_reproduced": 376,
+  "execution_failures_preserved": 2,
+  "targeted_tests": {
+    "passed": 17,
+    "failed": 0
+  },
+  "typescript_check": "passed (explicit scoring and semantic modules)",
+  "judge_calls": 32,
+  "judge_errors": 0,
+  "contract_sha256": "ee09b6a2f3fb68c2a4753dc57171c70fe3eb73a9f7928e757c1661e3de33c246",
+  "source_manifest_sha256": "7312a15e4e98230ff160568f746fa3eee7ff978955d0026388959d032d2de59e"
+}

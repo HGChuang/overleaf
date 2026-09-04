@@ -1,0 +1,38 @@
+{
+  "protocol": "overleaf-semantic-grader/v1",
+  "task": {
+    "expected_action": "no_op",
+    "user_goal": "请把论文标题改成 ‘Robust Sentiment Classification with Contextual Features’。",
+    "interaction_facts": [
+      "当前标题与用户目标逐字一致。",
+      "作者等相邻元数据不得被顺带修改。"
+    ],
+    "semantic_type": "response_semantics"
+  },
+  "evidence": {
+    "responses": [
+      {
+        "user_turn": 1,
+        "kind": "user",
+        "text": "The title in `main.tex` is already exactly **“Robust Sentiment Classification with Contextual Features”**:\n\n```latex\n\\title{Robust Sentiment Classification with Contextual Features}\n```\n\nNo change is needed — the requested title is already in place, so there is nothing to edit. If you meant a different title or want it modified further, let me know.",
+        "had_patch": false
+      }
+    ],
+    "patch_count": 0,
+    "patch_rejection_count": 0,
+    "user_turn_count": 1,
+    "compile": null,
+    "initial_files": [],
+    "final_files": []
+  },
+  "criteria": [
+    {
+      "id": "title_already_satisfied",
+      "description": "明确说明当前论文标题已经与用户目标一致。"
+    },
+    {
+      "id": "no_change_needed",
+      "description": "明确说明无需修改，而不是重新写入或顺带调整元数据。"
+    }
+  ]
+}

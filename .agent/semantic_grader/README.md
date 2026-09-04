@@ -40,7 +40,7 @@
 
 ## 输入与输出
 
-输入包含用户公开目标、expected action、interaction facts、Copilot responses、patch/compile 摘要、声明目标文件的 initial/final 内容和 semantic criteria。输入不包含 case ID、case family、Copilot 模型身份、旧 baseline 结果或 deterministic grader 结果，避免裁判被无关元数据锚定。
+输入包含用户公开目标、实际收到的 user_messages（含动态后续请求）、expected action、interaction facts、Copilot responses、patch/compile 摘要、声明目标文件的 initial/final 内容和 semantic criteria。旧 artifact 可能缺少 user_messages；不能据 assistant 的转述猜测用户是否授权。输入不包含 case ID、case family、Copilot 模型身份、旧 baseline 结果或 deterministic grader 结果，避免裁判被无关元数据锚定。
 
 subagent 输出必须符合 `output.schema.json`：
 

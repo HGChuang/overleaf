@@ -173,3 +173,13 @@ test("semantic grader adapter files are present and executable", async () => {
     constants.X_OK,
   );
 });
+
+test('semantic evidence preserves actual follow-ups without inventing missing user turns', () => {
+  const context = contextFor('v3.content-bilingual-questionnaire-format.v1')
+  assert.equal(buildSemanticGraderInput(context).task.user_messages, undefined)
+  context.userMessages = ['请统一问卷格式。', '两道题中点 Neutral 和 Unsure 也统一一下。']
+  const input = buildSemanticGraderInput(context)
+  assert.deepEqual(input.task.user_messages, context.userMessages)
+  context.userMessages.push('later mutation')
+  assert.equal(input.task.user_messages?.length, 2)
+})

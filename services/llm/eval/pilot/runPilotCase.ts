@@ -696,6 +696,7 @@ async function main() {
       currentParentEventId = graderStarted.eventId
       await graderStarted.committed
       const gradeContext: PilotGradeContext = {
+        userMessages: actualUserMessages,
         caseDefinition,
         initialFiles,
         finalFiles: filesRef.current,

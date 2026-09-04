@@ -4,13 +4,15 @@
   "name": "benchmark-v3-final-baseline-20260903",
   "source_baseline": {
     "commit": "38439cd3505102aa030f9e1310ad15cc32050a69",
-    "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac"
+    "experiment_id": "benchmark-v3-baseline-repaired-20260902-f04baac",
+    "artifact_git_commit": "f04baac28373651dbf9a1d02e5dbd62ab943afaf"
   },
   "semantic_replacement": {
     "commit": "83f9fdd084381252cff384573a05fdd209ca3f68",
     "experiment_id": "benchmark-v3-semantic-shadow-3trial-20260903-7968d204de",
     "case_count": 10,
-    "rule": "replace deterministic 3-trial outcomes with semantic shadow 3-trial outcomes for the 10 semantic-enabled cases; retain all other baseline outcomes"
+    "rule": "replace deterministic 3-trial outcomes with semantic shadow 3-trial outcomes for the 10 semantic-enabled cases; retain all other baseline outcomes",
+    "artifact_git_commit": "7968d204de980aec3acaa0f9d23655c08bd2dfa5"
   },
   "logical_trials": 219,
   "status_counts": {
@@ -422,5 +424,10 @@
       "source": "repaired_baseline_38439cd350",
       "dynamic": true
     }
-  }
+  },
+  "comparison_eligible": false,
+  "score_kind": "historical_cross_run_semantic_composite",
+  "comparison_contract": "v3-scoring-audit-v1-20260904",
+  "comparison_warning": "Historical 94/219 retained. +19 consists of +3 rerun deterministic changes and +16 same-artifact semantic overrides; semantic does not replace hard gates. Use frozen same-contract replay for comparisons.",
+  "provenance_note": "Existing commit fields identify report snapshots, not the tested revisions; artifact_git_commit is read from run.json."
 }
