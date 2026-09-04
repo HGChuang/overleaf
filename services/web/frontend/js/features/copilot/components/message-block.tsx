@@ -265,6 +265,15 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
   return (
     <div className="copilot-patch">
       {patch.title && <div className="copilot-patch-title">{patch.title}</div>}
+      {patch.verification?.status === 'success' &&
+        patch.verification.errorCount === 0 && (
+          <div
+            className="text-success small"
+            title={patch.verification.workspaceHash}
+          >
+            ✓ Compiled in isolated sandbox · 0 errors
+          </div>
+        )}
       <div className="copilot-patch-hunks">
         {patch.hunks.map((h, i) => (
           <div className="copilot-patch-hunk" key={i}>

@@ -40,6 +40,7 @@ import Modules from './infrastructure/Modules.js'
 import LlmController from './Features/Llm/LlmController.js'
 import CopilotController from './Features/Copilot/CopilotController.js'
 import CopilotCompileController from './Features/Copilot/CopilotCompileController.js'
+import CopilotSandboxCompileController from './Features/Copilot/CopilotSandboxCompileController.js'
 import {
   RateLimiter,
   openProjectRateLimiter,
@@ -1076,6 +1077,11 @@ async function initialize(webRouter, privateApiRouter, publicApiRouter) {
     '/internal/project/:project_id/copilot/compile',
     AuthenticationController.requirePrivateApiAuth(),
     CopilotCompileController.compileAndGetErrors
+  )
+  privateApiRouter.post(
+    '/internal/project/:project_id/copilot/sandbox/compile',
+    AuthenticationController.requirePrivateApiAuth(),
+    CopilotSandboxCompileController.compile
   )
 
   privateApiRouter.post(

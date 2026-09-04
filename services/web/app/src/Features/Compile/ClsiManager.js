@@ -24,6 +24,7 @@ const ClsiFormatChecker = require('./ClsiFormatChecker')
 const DocumentUpdaterHandler = require('../DocumentUpdater/DocumentUpdaterHandler')
 const Metrics = require('@overleaf/metrics')
 const Errors = require('../Errors/Errors')
+const crypto = require('crypto')
 
 const VALID_COMPILERS = ['pdflatex', 'latex', 'xelatex', 'lualatex']
 const OUTPUT_FILE_TIMEOUT_MS = 60000
@@ -95,6 +96,84 @@ async function sendExternalRequest(submissionId, clsiRequest, options) {
     options = {}
   }
   return await _sendBuiltRequest(submissionId, null, clsiRequest, options)
+}
+
+function _sandboxWorkspaceHash(files) {
+  const hash = crypto.createHash('sha256')
+  for (const file of [...files].sort((a, b) =>
+    a.path < b.path ? -1 : a.path > b.path ? 1 : 0
+  )) {
+    const path = String(file.path).replace(/^\/+/, '')
+    const content = String(file.content ?? '')
+    hash.update(`${Buffer.byteLength(path, 'utf8')}:`)
+    hash.update(path)
+    hash.update(`${Buffer.byteLength(content, 'utf8')}:`)
+    hash.update(content)
+  }
+  return hash.digest('hex')
+}
+
+/**
+ * Build a normal full project request (preserving compiler, TeX image and
+ * binary File Store resources), replace only its text documents with a
+ * caller-supplied immutable snapshot, then compile under an unrelated CLSI
+ * submission id. No project/document persistence is mutated.
+ */
+async function sendSandboxRequest(
+  projectId,
+  submissionId,
+  sandboxFiles,
+  baseHash,
+  workspaceHash,
+  options
+) {
+  const request = await _buildRequest(projectId, {
+    ...options,
+    syncType: 'full',
+    forceCompile: true,
+    fileLineErrors: true,
+  })
+  const liveFiles = request.compile.resources
+    .filter(resource => typeof resource.content === 'string')
+    .map(resource => ({
+      path: String(resource.path).replace(/^\/+/, ''),
+      content: resource.content,
+    }))
+  if (_sandboxWorkspaceHash(liveFiles) !== baseHash) {
+    return {
+      status: 'stale-source',
+      outputFiles: [],
+      note: 'live project changed after the sandbox snapshot was created',
+    }
+  }
+
+  const overlay = new Map(sandboxFiles.map(file => [file.path, file.content]))
+  const livePaths = new Set(liveFiles.map(file => file.path))
+  if (
+    overlay.size !== livePaths.size ||
+    [...overlay.keys()].some(path => !livePaths.has(path))
+  ) {
+    return {
+      status: 'invalid-snapshot',
+      outputFiles: [],
+      note: 'sandbox text-file set does not match the project snapshot',
+    }
+  }
+  if (_sandboxWorkspaceHash(sandboxFiles) !== workspaceHash) {
+    return {
+      status: 'invalid-snapshot',
+      outputFiles: [],
+      note: 'sandbox workspace hash mismatch',
+    }
+  }
+
+  request.compile.resources = request.compile.resources.map(resource => {
+    const path = String(resource.path).replace(/^\/+/, '')
+    return typeof resource.content === 'string'
+      ? { ...resource, content: overlay.get(path) }
+      : resource
+  })
+  return await sendExternalRequest(submissionId, request, options)
 }
 
 async function stopCompile(projectId, userId, options) {
@@ -849,6 +928,7 @@ module.exports = {
   promises: {
     sendRequest,
     sendExternalRequest,
+    sendSandboxRequest,
     stopCompile,
     deleteAuxFiles,
     getOutputFileStream,

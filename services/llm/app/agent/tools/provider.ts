@@ -15,6 +15,9 @@ import { buildProjectTools } from './projectTools.js';
 import { buildEditTools } from './editTools.js';
 import { buildTodoTools } from './todoTool.js';
 import { buildCompileTools } from './compileTools.js';
+import { buildSandboxTools } from './sandboxTools.js';
+import { SandboxWorkspace } from '../sandbox/workspace.js';
+import settings from '@overleaf/settings';
 import type { WebApiClient } from '../../llm/webApiClient.js';
 
 export interface ToolPoolDeps {
@@ -24,10 +27,20 @@ export interface ToolPoolDeps {
 }
 
 export function buildToolPool(context = {}, deps: ToolPoolDeps = {}) {
+  const sandboxEnabled =
+    settings.COPILOT_SANDBOX_ENABLED !== false && settings.COPILOT_SANDBOX_ENABLED !== 'false';
+  const project = (context as any).project || {};
+  const defaultFile = (context as any).context?.currentFile || null;
+  const workspace =
+    sandboxEnabled && deps.webClient
+      ? new SandboxWorkspace(Array.isArray(project.files) ? project.files : [], defaultFile)
+      : undefined;
   return [
-    ...buildProjectTools(context),
+    ...buildProjectTools(context, workspace),
     ...buildTodoTools(),
-    ...buildEditTools(context),
+    ...(workspace && deps.webClient
+      ? buildSandboxTools(context, { workspace, webClient: deps.webClient })
+      : buildEditTools(context)),
     ...(deps.webClient ? buildCompileTools(context, { webClient: deps.webClient }) : []),
   ];
 }

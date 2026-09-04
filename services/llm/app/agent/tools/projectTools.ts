@@ -8,6 +8,7 @@
 
 import { defineTool } from './baseTool.js';
 import { buildFileMap, lookupFile, readFileFragment } from './fileMap.js';
+import type { SandboxWorkspace } from '../sandbox/workspace.js';
 
 // Hard output caps. The tool result rides into the model context verbatim and
 // microCompact keeps the most recent tool results INTACT — a couple of
@@ -49,11 +50,16 @@ function countWordsInText(text: string): number {
   return latin.length + cjk.length;
 }
 
-export function buildProjectTools(context: any = {}) {
+export function buildProjectTools(context: any = {}, workspace?: SandboxWorkspace) {
   const project = context.project || {};
   const fileMap = buildFileMap(project.files);
   const fileList = Array.isArray(project.fileList) ? project.fileList : [];
   const outline = Array.isArray(project.outline) ? project.outline : [];
+  const getContent = (path: string) => workspace ? workspace.get(path) : lookupFile(fileMap, path);
+  const currentEntries = () =>
+    workspace
+      ? workspace.files().map((file) => [file.path, file.content] as const)
+      : [...fileMap.entries()];
 
   const listProjectFiles = defineTool({
     name: 'list_project_files',
@@ -77,7 +83,7 @@ export function buildProjectTools(context: any = {}) {
       required: ['path'],
     },
     handler: async ({ path, limit }: { path: string; limit?: number }) => {
-      const content = lookupFile(fileMap, path);
+      const content = getContent(path);
       if (content == null) {
         return JSON.stringify({
           found: false,
@@ -118,7 +124,9 @@ export function buildProjectTools(context: any = {}) {
         Number.isInteger(endLine) && Number.isInteger(startLine)
           ? Math.min(endLine, startLine + MAX_FRAGMENT_LINES - 1)
           : endLine;
-      const fragment = readFileFragment(fileMap, path, startLine, cappedEnd);
+      const fragment = workspace
+        ? readFileFragment(new Map(currentEntries()), path, startLine, cappedEnd)
+        : readFileFragment(fileMap, path, startLine, cappedEnd);
       if (fragment.found && typeof fragment.content === 'string') {
         fragment.content = capContent(fragment.content, fragment.totalLines || 0);
       }
@@ -145,7 +153,7 @@ export function buildProjectTools(context: any = {}) {
       if (!query) return JSON.stringify({ matches: [], note: 'empty query' });
       const needle = String(query).toLowerCase();
       const matches: Array<{ file: string; line: number; text: string }> = [];
-      for (const [path, content] of fileMap.entries()) {
+      for (const [path, content] of currentEntries()) {
         if (filePattern && !path.includes(filePattern)) continue;
         if (typeof content !== 'string') continue;
         const lines = content.split('\n');
@@ -174,7 +182,7 @@ export function buildProjectTools(context: any = {}) {
       required: ['path'],
     },
     handler: async ({ path }: { path: string }) => {
-      const content = lookupFile(fileMap, path);
+      const content = getContent(path);
       if (content == null) {
         return JSON.stringify({ found: false, message: `File not found: ${path}` });
       }

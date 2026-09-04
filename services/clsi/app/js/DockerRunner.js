@@ -243,10 +243,10 @@ const DockerRunner = {
       Volumes: dockerVolumes,
       WorkingDir: '/compile',
       NetworkDisabled: true,
-      Memory: 1024 * 1024 * 1024 * 1024, // 1 Gb
       User: Settings.clsi.docker.user,
       Env: Object.entries(env).map(([key, value]) => `${key}=${value}`),
       HostConfig: {
+        Memory: 1024 * 1024 * 1024, // 1 GiB
         Binds: Object.entries(volumes).map(
           ([hostVol, dockerVol]) => `${hostVol}:${dockerVol}`
         ),
@@ -260,6 +260,7 @@ const DockerRunner = {
         ],
         CapDrop: ['ALL'],
         SecurityOpt: ['no-new-privileges'],
+        PidsLimit: 256,
       },
     }
 

@@ -43,6 +43,12 @@ export function toolStepLabel(step: CopilotToolStep): {
       return { name: 'List project files', detail: null }
     case 'compile_project':
       return { name: 'Compile project', detail: null }
+    case 'sandbox_apply_patch':
+      return { name: 'Stage in sandbox', detail: null }
+    case 'sandbox_compile':
+      return { name: 'Compile sandbox', detail: null }
+    case 'submit_sandbox':
+      return { name: 'Submit verified patch', detail: str(args.summary) }
     case 'submit_patch':
       return { name: 'Submit patch', detail: str(args.summary) }
     case 'todo_write':
@@ -61,7 +67,8 @@ function resultLine(step: CopilotToolStep): string | null {
   if (step.status === 'error') return truncate(raw, 160)
 
   switch (step.name) {
-    case 'compile_project': {
+    case 'compile_project':
+    case 'sandbox_compile': {
       const countMatch = raw.match(/"errorCount"\s*:\s*(\d+|null)/)
       const count = countMatch
         ? countMatch[1] === 'null'
@@ -80,7 +87,8 @@ function resultLine(step: CopilotToolStep): string | null {
       }
       break
     }
-    case 'submit_patch': {
+    case 'submit_patch':
+    case 'submit_sandbox': {
       const hunks = raw.match(/"count"\s*:\s*(\d+)/)
       if (hunks) {
         const n = Number(hunks[1])

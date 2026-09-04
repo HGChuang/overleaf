@@ -58,6 +58,13 @@ export interface Patch {
   id: string
   title?: string
   hunks: PatchHunk[]
+  verification?: {
+    workspaceHash?: string
+    status?: string
+    errorCount?: number | null
+    warningCount?: number | null
+    compileOrdinal?: number
+  }
 }
 
 // One tool invocation in the agent's workflow, rendered Claude Code-style as

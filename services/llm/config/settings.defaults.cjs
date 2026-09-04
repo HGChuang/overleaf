@@ -17,6 +17,10 @@ const COPILOT_CONTEXT_SNIP_MAX = Number(process.env.COPILOT_CONTEXT_SNIP_MAX || 
 const COPILOT_CONTEXT_MICRO_KEEP = Number(process.env.COPILOT_CONTEXT_MICRO_KEEP || 3)
 const COPILOT_CONTEXT_SUMMARIZE_THRESHOLD = Number(process.env.COPILOT_CONTEXT_SUMMARIZE_THRESHOLD || 60000)
 const COPILOT_LTMEM_ENABLED = process.env.COPILOT_LTMEM_ENABLED !== 'false'
+// Shadow sandbox: candidate edits are applied to an in-memory snapshot and
+// compiled through the Web→CLSI broker before a reviewable patch is emitted.
+const COPILOT_SANDBOX_ENABLED = process.env.COPILOT_SANDBOX_ENABLED !== 'false'
+const COPILOT_SANDBOX_MAX_COMPILES = Number(process.env.COPILOT_SANDBOX_MAX_COMPILES || 3)
 // Compile self-healing loop: llm → web private API (service-to-service).
 // WEB_API_USER / WEB_API_PASSWORD come straight from dev.env (no defaults —
 // when unset the client sends no auth and the endpoint will 401).
@@ -43,6 +47,8 @@ module.exports = {
     COPILOT_CONTEXT_MICRO_KEEP,
     COPILOT_CONTEXT_SUMMARIZE_THRESHOLD,
     COPILOT_LTMEM_ENABLED,
+    COPILOT_SANDBOX_ENABLED,
+    COPILOT_SANDBOX_MAX_COMPILES,
     WEB_API_BASE_URL,
     WEB_API_USER,
     WEB_API_PASSWORD,

@@ -18,12 +18,14 @@ export interface PatchHunk {
 export interface RawPatch {
   hunks: unknown[];
   summary: string;
+  verification?: Record<string, unknown>;
 }
 
 export interface PatchBlock {
   id: string;
   title: string;
   hunks: PatchHunk[];
+  verification?: Record<string, unknown>;
 }
 
 // Map a model-produced patch hunk to the API shape, with defensive coercion.
@@ -60,6 +62,18 @@ export function computeRejectedSubmitPatchIds(messages: AgentMessage[]): Set<str
 // calls as content blocks ({type:'toolCall', name, arguments}). Calls whose id
 // is in `rejectedIds` (see computeRejectedSubmitPatchIds) are skipped.
 export function extractSubmittedPatch(messages: AgentMessage[], rejectedIds?: Set<string>): RawPatch | null {
+  // A sandbox submission is derived server-side from the immutable base and
+  // lives in the terminating tool result rather than model-authored args.
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const m = messages[i] as AgentMessage & {
+      toolName?: string;
+      isError?: boolean;
+      details?: { sandboxPatch?: RawPatch };
+    };
+    if (m?.role !== 'toolResult' || m.toolName !== 'submit_sandbox' || m.isError) continue;
+    const patch = m.details?.sandboxPatch;
+    if (patch && Array.isArray(patch.hunks) && patch.hunks.length > 0) return patch;
+  }
   for (let i = messages.length - 1; i >= 0; i--) {
     const m = messages[i];
     if (m?.role !== 'assistant' || !Array.isArray(m.content)) continue;
@@ -92,6 +106,7 @@ export function toPatchBlock(rawPatch: RawPatch | null, index: number): PatchBlo
         ? rawPatch.summary
         : `Proposed change (${hunks.length} hunk${hunks.length === 1 ? '' : 's'})`,
     hunks,
+    ...(rawPatch.verification ? { verification: rawPatch.verification } : {}),
   };
 }
 
@@ -139,6 +154,17 @@ function unwrapUserEnvelope(content: unknown): unknown {
 export function mapMessagesForView(messages: AgentMessage[]) {
   if (!Array.isArray(messages)) return [];
   const rejectedPatchIds = computeRejectedSubmitPatchIds(messages);
+  const sandboxResults = new Map<string, AgentMessage>();
+  for (const message of messages) {
+    if (message.role !== 'toolResult') continue;
+    const result = message as AgentMessage & {
+      toolName?: string;
+      toolCallId?: string;
+    };
+    if (result.toolName === 'submit_sandbox' && result.toolCallId) {
+      sandboxResults.set(result.toolCallId, message);
+    }
+  }
   const view: Array<Record<string, unknown>> = [];
   for (const message of messages) {
     if (message.role === 'toolResult') {
@@ -152,7 +178,17 @@ export function mapMessagesForView(messages: AgentMessage[]) {
       continue;
     }
     // assistant message: text and/or a submit_patch tool call
-    const patch = toPatchBlock(extractSubmittedPatch([message], rejectedPatchIds), view.length);
+    const sandboxCall = Array.isArray(message.content)
+      ? message.content.find(
+          (block) => block.type === 'toolCall' && block.name === 'submit_sandbox'
+        )
+      : undefined;
+    const paired =
+      sandboxCall?.type === 'toolCall' ? sandboxResults.get(sandboxCall.id) : undefined;
+    const patch = toPatchBlock(
+      extractSubmittedPatch(paired ? [message, paired] : [message], rejectedPatchIds),
+      view.length
+    );
     const text = extractTextContent(message);
     if (patch) {
       view.push({

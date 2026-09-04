@@ -24,6 +24,8 @@ export interface CompileProjectResult {
   errors: CompileErrorEntry[];
   warningCount: number | null;
   note?: string;
+  buildId?: string;
+  inputWorkspaceHash?: string;
 }
 
 export class WebApiClient {
@@ -50,6 +52,21 @@ export class WebApiClient {
   async compileProject(projectId: string): Promise<CompileProjectResult> {
     const response = await this.client.post(
       `/internal/project/${encodeURIComponent(projectId)}/copilot/compile`
+    );
+    return response.data as CompileProjectResult;
+  }
+
+  async compileSandbox(
+    projectId: string,
+    body: {
+      baseHash: string;
+      workspaceHash: string;
+      files: Array<{ path: string; content: string }>;
+    }
+  ): Promise<CompileProjectResult> {
+    const response = await this.client.post(
+      `/internal/project/${encodeURIComponent(projectId)}/copilot/sandbox/compile`,
+      body
     );
     return response.data as CompileProjectResult;
   }
