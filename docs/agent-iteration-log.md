@@ -2082,3 +2082,19 @@ Deterministic grader 对 10 个语义敏感 case 存在固定字符串或固定 
 2. 复核 `compile-appendix-label-collision` / `compile-subfigure-counter-recovery` 的 canonical 命名是否可从用户指令唯一推导；
 3. 复核 `compile-proof-environment` 的 oracle 结束符；
 4. 单独处理 `compile-algorithm-environment` 的宏包注入。
+
+
+## Iteration 30 — 当前评测与优化方案复审（仅分析）
+
+日期：2026-09-04。
+
+- 研究问题：当前实际评测边界，以及局部 prompt 优化为何未显示整体收益。
+- Observation / Evidence：核对评测文档、最新三次优化报告、runner/service/context/grader 代码及 proof/counter 原始 artifacts。当前为 H1 内存态 service + CLSI；完整 deterministic baseline 为 75/219，94/219 为 shadow 替换后的合成结果。Fix1 为 8/84 → 6/84，Fix2 为 2/27 → 8/27，非同一全量实验。
+- Interpretation / Root Cause：尚不能确定整体能力瓶颈。已确认 current_file 未按 case 送达；固定命名和 proof oracle 冲突仍污染失败归因。proof 抽查的最终结束符也发生变化，不能直接翻判 PASS。模型能力、信息获取和验证闭环为待验证假设。
+- 本轮修改：新增 [简报](agent-evaluation-review-20260904.md)，在评测文档加入当前方案索引；未改 Agent、Benchmark、grader 或配置。
+- Benchmark / Metric Before vs After：未运行新评测，无新增能力指标；历史分数保持原口径。
+- Failure Cases / Regression：记录 currentFile 偏差与已有评分争议；仅文档变更，未评估新的行为 regression，也不宣称消除了原有回归。
+- 验证：只读代码/报告/最终 artifact 交叉核对，检查本轮文档 Git diff；不为文档改动运行 Agent 测试。
+- 经验：断言失败位置不能代替因果根因；局部规则收益、全量收益与评分变化必须分别报告。
+- 推荐方向：①评分及合同审计；②上下文送达审计；③修复闭环/模型与规则对照；④真实任务覆盖与未见 family 验证。详见简报的五项取证计划。
+- Commit：本轮文档提交 hash 在交付时记录；未执行 push。本轮停止，等待用户选择下一轮。

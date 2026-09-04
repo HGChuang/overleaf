@@ -1,5 +1,7 @@
 # Copilot Agent 评估架构
 
+当前实际执行方案与优化方向复审见 [2026-09-04 简报](agent-evaluation-review-20260904.md)。该简报已核对 runner；本文前部包含设计性描述，不能全部视为当前 baseline 已实现能力。
+
 本文定义了 `services/llm` 中 Copilot 后端的评估控制平面。文档首先描述当前生产环境中的行为，并将评估机制与未来的 Copilot 优化工作分开。
 
 ## 范围与原则
