@@ -1,9 +1,0 @@
-{
-  "conversationId": "v3.combined-chart-group.v1-mtixg0l3",
-  "message": {
-    "role": "assistant",
-    "content": "✅ 编译通过（errorCount = 0，无警告）。\n\n两张图已合并为同一个图组（`sections/results.tex` 中的单个 `figure` 环境）：柱状图在上、折线图在下，各自保留原有说明（`\\caption`）和标签（`fig:model-bar`、`fig:model-line`），因此 `main.tex` 中的 `\\ref{fig:model-bar}` 与 `\\ref{fig:model-line}` 引用依然有效（现在会显示为类似 \"1a\"、\"1b\" 的子图编号）。\n\n如需为整个图组加一条总说明，可以在两个 `subfigure` 之后、`\\end{figure}` 之前补一条 `\\caption{...}`（正文标题需由你提供）。",
-    "blocks": []
-  },
-  "suggestedActions": []
-}

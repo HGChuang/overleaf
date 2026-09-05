@@ -1,8 +1,0 @@
-[
-  {
-    "userTurn": 1,
-    "kind": "user",
-    "text": "根据项目源码，这篇论文（在 SST-2 上的二元情感分类）的主实验信息如下：\n\n**数据集**（`sections/introduction.tex`）\n- 使用 **SST-2**（Stanford Sentiment Treebank 2），任务为二元情感分类（positive / negative）。\n\n**训练/测试划分**（`sections/setup.tex`）\n- 采用 SST-2 的**官方划分**：\n  - 训练集：**67,349** 条\n  - 测试集：**1,821** 条\n- 注意：论文源码中没有提到验证集（validation split）的具体划分。\n\n**评价指标**（`sections/results.tex`）\n- 主要指标为 **Accuracy（准确率）** 和 **Macro-F1**。\n\n需要说明的是，论文目前尚未给出任何具体的评测数值（例如 SST-2 上的准确率或 F1 的具体结果），只声明了采用上述数据集、划分和指标。如果你需要，我可以帮你核对某一部分的细节。",
-    "hadPatch": false
-  }
-]

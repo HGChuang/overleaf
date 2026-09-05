@@ -1,8 +1,0 @@
-[
-  {
-    "userTurn": 1,
-    "kind": "user",
-    "text": "根据项目源码，这篇论文的主实验设置如下（无需修改文档）：\n\n**数据集**\n- **SST-2**（Stanford Sentiment Treebank v2），用于二分类情感分类（`sections/introduction.tex`）。\n\n**训练/测试划分**\n- 采用 SST-2 **官方划分**（`sections/setup.tex`）：\n  - 训练集：**67,349** 个样本\n  - 测试集：**1,821** 个样本\n  - 说明：源码中未提及单独的验证集（validation set）划分。\n\n**评价指标**\n- 主指标为 **Accuracy（准确率）** 和 **Macro-F1（宏平均 F1）**（`sections/results.tex`）。\n\n文件引用：\n- `sections/introduction.tex` — 任务定义（SST-2 二分类）\n- `sections/setup.tex` — 数据集与划分\n- `sections/results.tex` — 评价指标",
-    "hadPatch": false
-  }
-]

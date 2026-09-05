@@ -1,9 +1,0 @@
-{
-  "conversationId": "v3.combined-chart-group.v1-mtixfqcx",
-  "message": {
-    "role": "assistant",
-    "content": "✅ 合并成功，编译通过（errorCount = 0）。\n\n改动在 `sections/results.tex`：\n- 两个独立的 `figure` 环境已合并为**同一个图组**（一个 `figure` + 两个 `subfigure`）。\n- 柱状图在上、折线图在下，各自原 caption（Bar/Line chart explanation）与 label（`fig:model-bar`、`fig:model-line`）均保留。\n- 新增父级 caption（由原两段说明合并而来）与 label `fig:model-combined`，保证图编号与 `Fig.~\\ref{...}` 引用（`main.tex` 中第 4 行）正常显示。\n- 两子图之间用 `\\par\\medskip` 分隔，垂直堆叠。",
-    "blocks": []
-  },
-  "suggestedActions": []
-}

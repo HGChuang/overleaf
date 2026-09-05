@@ -1,8 +1,0 @@
-[
-  {
-    "userTurn": 1,
-    "kind": "user",
-    "text": "这是一个关于项目引用配置的查询问题，我基于项目源码来回答（**无需修改任何文件**）。\n\n## 参考文献是如何生成的\n\n项目采用 **BibLaTeX** 工作流，具体配置如下（见 `main.tex`）：\n\n```latex\n\\usepackage[backend=biber,style=authoryear]{biblatex}  % 第 2 行：加载 biblatex\n\\addbibresource{references.bib}                        % 第 3 行：加载数据源\n```\n\n- **数据来源**：文献条目存放在 `references.bib` 中，目前只有 1 条记录：\n  ```bibtex\n  @article{verified, author={Li, Ming}, title={Verified Study}, year={2024}}\n  ```\n  键值为 `verified`，类型为 `@article`。\n\n- **生成流程**：正确编译需执行 **4 步**：`pdflatex` → `biber` → `pdflatex` → `pdflatex`（先由 `biber` 读取 `.bib` 并生成文献数据库，再用 LaTeX 排版引用与书目）。\n\n## 引用样式\n\n- **样式**：`style=authoryear`（著者–年份制，如 “(Li, 2024)”），与常见“数字制 `numeric`”不同。\n- **后端**：`backend=biber`（比传统 BibTeX 更完整地支持 UTF-8 与各类条目字段）。\n\n## 两点需要注意（潜在问题）\n\n1. **正文中没有引用命令**：`main.tex` 正文仅含 “A configured bibliography.”，没有任何 `\\cite{...}`，因此参考文献不会被真正引用出来。\n2. **缺少 `\\printbibliography`**：文档里没有在 `\\end{document}` 前调用该命令，所以即使有引用，书目列表也不会打印。若想生成书目，需要在正文末尾加入：\n   ```latex\n   \\printbibliography\n   ```\n\n如果你希望我帮你补上 `\\printbibliography` 和示例引用，请告诉我，我会通过补丁方式修改。",
-    "hadPatch": false
-  }
-]

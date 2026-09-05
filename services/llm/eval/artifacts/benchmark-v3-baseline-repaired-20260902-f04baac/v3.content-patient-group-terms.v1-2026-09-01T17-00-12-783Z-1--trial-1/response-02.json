@@ -1,9 +1,0 @@
-{
-  "conversationId": "v3.content-patient-group-terms.v1-mtiwxs3e",
-  "message": {
-    "role": "assistant",
-    "content": "✅ 修复成功，编译通过（errorCount = 0，无警告）。\n\n**本次统一的结果（符合论文规范的首次出现约定）：**\n\n1. **abstract.tex（全文首次出现处）** — 按规范用括号引入缩写：\n   > The treatment group **(TG)** included 128 patients, while the control group **(CG)** included 126 patients.\n\n2. **methods.tex** — 缩写已在摘要定义，说明句改用缩写，避免重复定义：\n   > We use **TG and CG** after their first full names.\n\n3. **flow.tex（参与流程，即流程图图注）** — 定义后统一用缩写：\n   > **TG** had 128 enrolled patients and **CG** had 126.\n\n4. **supplement.tex** — 定义后统一用缩写：\n   > The **TG and CG** labels are used in the supplementary analysis.\n\n**说明：**\n- 论文规范要求缩写首次出现时以「全称 (缩写)」形式给出，且仅在首次出现处定义一次。由于全文（按文档顺序）首次出现是摘要，因此缩写定义放在 `abstract.tex`，其余各处（正文、参与流程、补充材料）一律改用 TG / CG。\n- 项目中无独立 figure/caption 环境，`flow.tex`（Participant flow）即为流程图图注性质的段落，已一并统一。\n- 所有数字（128 / 126）与原有表述均未改动，仅做了术语与格式的统一。",
-    "blocks": []
-  },
-  "suggestedActions": []
-}

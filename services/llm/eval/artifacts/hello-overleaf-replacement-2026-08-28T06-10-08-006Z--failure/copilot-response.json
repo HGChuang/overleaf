@@ -1,9 +1,0 @@
-{
-  "conversationId": "hello-overleaf-replacement-mtcjyd5d",
-  "message": {
-    "role": "assistant",
-    "content": "补丁已成功应用到 `main.tex`：\n\n```latex\n\\newcommand{\\EvalBody}{Hello Overleaf}\n```\n\n我已触发重新编译，但编译验证暂不可用（CLSI 请求失败，`errorCount` 为 null），因此无法给出权威的编译结果。请稍后手动编译一次确认；由于这只是一处纯文本替换（`Hello World` → `Hello Overleaf`），没有改动任何语法结构，预期会正常编译通过。",
-    "blocks": []
-  },
-  "suggestedActions": []
-}
