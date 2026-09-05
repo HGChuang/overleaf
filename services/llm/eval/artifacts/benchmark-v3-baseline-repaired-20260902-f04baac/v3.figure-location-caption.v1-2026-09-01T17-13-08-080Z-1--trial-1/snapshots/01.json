@@ -1,6 +1,0 @@
-[
-  {
-    "path": "main.tex",
-    "content": "\\documentclass{article}\n\\usepackage[margin=2cm]{geometry}\n\\usepackage[justification=centering]{caption}\n\\begin{document}\n\\section{Methods}\nThe experiment steps must remain in their original order.\n\n\\section{Results}\nThe result analysis refers to the experiment photograph (Figure~\\ref{fig:experiment}).\n\\begin{figure}[h]\n\\centering\n\\fbox{\\rule{0pt}{3cm}\\rule{0.72\\linewidth}{0pt}}\n\\caption{Experiment photograph (experiment.jpg)}\n\\label{fig:experiment}\n\\end{figure}\n\\end{document}\n"
-  }
-]

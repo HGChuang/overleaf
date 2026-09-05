@@ -1,6 +1,0 @@
-[
-  {
-    "path": "main.tex",
-    "content": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\section{Introduction}\nTraffic prediction is the focus of this paper; we begin by briefly describing its background and motivation. However, the research gap in this area has not yet been made explicit. To address this gap, our method uses a constrained encoder for traffic prediction. The main contributions are: (1) a calibrated benchmark; (2) a robust encoder; and (3) an open evaluation protocol. On the Metro test set, the proposed method reaches 91.2\\% accuracy \\cite{lee2021}.\n\\begin{thebibliography}{1}\n\\bibitem{lee2021} Lee, 2021.\n\\end{thebibliography}\n\\end{document}\n"
-  }
-]

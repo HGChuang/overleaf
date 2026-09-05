@@ -1,9 +1,0 @@
-{
-  "conversationId": "v3.answer-appendix-algorithm-reference.v1-mtiy09uj",
-  "message": {
-    "role": "assistant",
-    "content": "已确认。项目中算法伪代码的标签与引用关系如下：\n\n**标签定义**（`appendix/algorithm.tex` 第 1 行）\n- 标签：`alg:appendix-normalize`\n- 定义在 `\\section{Normalization pseudocode}` 上。由于 `main.tex` 在 `\\input{appendix/algorithm}` 之前用了 `\\appendix`，该节会被编号为附录节（通常渲染为 “Appendix A”）。\n\n**正文引用位置**（`sections/method.tex` 第 2 行）\n- 在 `\\section{Method}` 中，通过 `Appendix~\\ref{alg:appendix-normalize}` 引用，最终会显示为 “Appendix A”。\n\n**文档结构**（`main.tex`）\n```\n\\input{sections/method}\n\\appendix\n\\input{appendix/algorithm}\n```\n即正文 Method 节里的一句话就是指向该附录伪代码的唯一引用点，两者通过 `alg:appendix-normalize` 标签正确对应（交叉引用可正常解析）。\n\n如果你希望改成 `\\cref`（需要 `cleveref` 宏包）或调整引用文字，告诉我即可。",
-    "blocks": []
-  },
-  "suggestedActions": []
-}

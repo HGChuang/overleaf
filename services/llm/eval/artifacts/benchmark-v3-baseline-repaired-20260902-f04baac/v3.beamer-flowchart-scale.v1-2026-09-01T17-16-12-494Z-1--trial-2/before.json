@@ -1,6 +1,0 @@
-[
-  {
-    "path": "main.tex",
-    "content": "\\documentclass{beamer}\n\\setbeamertemplate{footline}{\\hfill\\scriptsize Footer content\\hfill\\vskip2pt}\n\\begin{document}\n\\begin{frame}{Algorithm flowchart}\n\\begin{center}\nUniversity logo: \\fbox{\\rule{0pt}{0.3cm}\\rule{1.2cm}{0pt}}\\\\[4pt]\n\\fbox{\\begin{minipage}{0.48\\linewidth}\n\\centering Node A $\\rightarrow$ Node B $\\rightarrow$ Node C\n\\end{minipage}}\n\\end{center}\n\\end{frame}\n\\end{document}\n"
-  }
-]

@@ -1,8 +1,0 @@
-[
-  {
-    "file": "main.tex",
-    "line": 1,
-    "oldText": "\\documentclass{article}\n\\begin{document}",
-    "newText": "\\documentclass{article}\n\\usepackage{algorithm}\n\\begin{document}"
-  }
-]

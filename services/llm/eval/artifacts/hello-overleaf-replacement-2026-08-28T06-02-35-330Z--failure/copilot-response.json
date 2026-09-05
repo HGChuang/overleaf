@@ -1,9 +1,0 @@
-{
-  "conversationId": "hello-overleaf-replacement-mtcjonv0",
-  "message": {
-    "role": "assistant",
-    "content": "编译验证暂时不可用（CLSI 服务请求失败，`errorCount` 为 null），因此无法在此环境内确认编译结果。\n\n不过改动本身非常小且安全：`main.tex` 第 2 行的 `\\newcommand{\\EvalBody}{Hello Overleaf}` 已应用，仅修改了命令定义中的文本内容，未涉及任何可能影响编译的语法。待编译服务恢复后，建议再触发一次编译以最终确认。",
-    "blocks": []
-  },
-  "suggestedActions": []
-}

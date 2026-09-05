@@ -1,8 +1,0 @@
-[
-  {
-    "userTurn": 1,
-    "kind": "user",
-    "text": "检查完成：项目中共有 **2 处图注**，均已在句首使用大写字母，无需修改。\n\n| 文件 | 图注内容 | 句首大写？ |\n|------|----------|-----------|\n| `figures/architecture.tex`（第 1 行） | `System architecture and data flow.` | ✅ `S` 大写 |\n| `figures/results.tex`（第 1 行） | `Accuracy across evaluation settings.` | ✅ `A` 大写 |\n\n两处图注均已满足\"句首大写\"的要求，没有发现问题，因此**不提交任何修改**。如果你希望改成其它风格（例如每行首个单词首字母大写而非整句首字母，或统一大小写规则），告诉我即可。",
-    "hadPatch": false
-  }
-]

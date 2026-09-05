@@ -1,8 +1,0 @@
-[
-  {
-    "file": "chapters/results.tex",
-    "line": 4,
-    "oldText": "\\begin{table}[h]\n\\centering\n\\caption{Performance values}\n\\label{tab:performance}\n\\begin{tabular}{lrr}\nSystem & Accuracy & Recall \\\\\nBase & 0.81 & 0.74 \\\\\nNew & 0.86 & 0.79 \\\\\n\\end{tabular}\n\\end{table}",
-    "newText": "\\begin{table}[!ht]\n\\centering\n\\caption{Performance values}\n\\label{tab:performance}\n\\small\n\\setlength{\\tabcolsep}{6pt}\n\\renewcommand{\\arraystretch}{1.05}\n\\begin{tabular}{lrr}\nSystem & Accuracy & Recall \\\\\nBase & 0.81 & 0.74 \\\\\nNew & 0.86 & 0.79 \\\\\n\\end{tabular}\n\\end{table}"
-  }
-]
