@@ -72,7 +72,17 @@ async function sendRequest(projectId, userId, options) {
 async function sendRequestOnce(projectId, userId, options) {
   let req
   try {
-    req = await _buildRequest(projectId, options)
+    if (options.snapshotInput) {
+      const input = options.snapshotInput
+      req = { compile: {
+        options: { compiler: input.compiler, imageName: input.imageName,
+          timeout: options.timeout, compileGroup: options.compileGroup,
+          flags: ['-file-line-error', '-g'], syncType: 'full' },
+        rootResourcePath: input.rootResourcePath, resources: input.resources,
+      } }
+    } else {
+      req = await _buildRequest(projectId, options)
+    }
   } catch (err) {
     if (err.message === 'no main file specified') {
       return {
@@ -86,7 +96,7 @@ async function sendRequestOnce(projectId, userId, options) {
       })
     }
   }
-  return await _sendBuiltRequest(projectId, userId, req, options)
+  return await _sendBuiltRequest(options.snapshotInput?.buildProjectId || projectId, userId, req, options)
 }
 
 // for public API requests where there is no project id

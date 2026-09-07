@@ -10,6 +10,7 @@ describe('CopilotController', function () {
   beforeEach(function () {
     this.fetch = sinon.stub().resolves({
       status: 200,
+      headers: { get: sinon.stub().returns('application/json') },
       json: sinon.stub().resolves({ success: true, data: { ok: true } }),
     })
     this.contextBuilder = {
@@ -55,6 +56,36 @@ describe('CopilotController', function () {
     await this.controller.chat(this.req, this.res)
 
     expect(this.res.statusCode).to.equal(403)
-    expect(this.res.body.error.code).to.equal('COPILOT_FORBIDDEN')
+    expect(this.res.json.firstCall.args[0].error.code).to.equal('COPILOT_FORBIDDEN')
+    expect(this.contextBuilder.buildCopilotBody).not.to.have.been.called
+    expect(this.fetch).not.to.have.been.called
+  })
+
+  it('lists project conversations after checking current access', async function () {
+    this.req.body = {}
+    this.req.method = 'GET'
+    this.req.query = { projectId: 'project-1' }
+    await this.controller.listConversations(this.req, this.res)
+    expect(this.authorizationManager.promises.canUserReadProject).to.have.been.calledWith('user-1', 'project-1')
+    expect(this.fetch.firstCall.args[0]).to.equal('http://llm.example.com/api/v1/copilot/conversations?projectId=project-1')
+  })
+
+  it('checks current project access before reading archived conversations', async function () {
+    this.req.body = {}
+    this.req.method = 'GET'
+    this.req.query = { projectId: 'project-1' }
+    this.req.params = { conversationId: 'conversation-1' }
+    await this.controller.getConversation(this.req, this.res)
+    expect(this.authorizationManager.promises.canUserReadProject).to.have.been.calledWith('user-1', 'project-1')
+    expect(this.fetch.firstCall.args[0]).to.equal('http://llm.example.com/api/v1/copilot/conversations/conversation-1?projectId=project-1')
+  })
+
+  it('rejects history requests without a project scope', async function () {
+    this.req.body = {}
+    this.req.query = {}
+    this.req.params = { conversationId: 'conversation-1' }
+    await this.controller.getConversation(this.req, this.res)
+    expect(this.res.statusCode).to.equal(400)
+    expect(this.fetch).not.to.have.been.called
   })
 })

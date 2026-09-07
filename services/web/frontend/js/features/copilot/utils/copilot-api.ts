@@ -18,7 +18,9 @@ import {
   CopilotError,
   ChatResponseData,
   GetConversationResponseData,
+  ListConversationsResponseData,
 } from './types'
+import getMeta from '@/utils/meta'
 
 const BASE = '/api/v1/copilot'
 
@@ -35,6 +37,9 @@ async function copilotFetch<T>(
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        ...(method === 'POST' && {
+          'X-Csrf-Token': getMeta('ol-csrfToken'),
+        }),
       },
       credentials: 'include',
       body: body !== undefined ? JSON.stringify(body) : undefined,
@@ -89,6 +94,64 @@ export function copilotChat(
   return copilotFetch<ChatResponseData>(`${BASE}/chat`, 'POST', body, signal)
 }
 
+export type CopilotEditorAction =
+  | { kind: 'selection'; mode: number }
+  | {
+      kind: 'completion'
+      leftContext: string
+      rightContext: string
+      language: string
+      maxLength: number
+    }
+
+export function normalizeInlineCompletion(text: string): string {
+  return text
+    .trim()
+    .replace(/^```(?:latex|tex)?\s*\n?/i, '')
+    .replace(/\n?```$/, '')
+    .replace(/^<COMPLETION\s*\/?>/i, '')
+    .replace(/<\/COMPLETION>$/i, '')
+    .trim()
+}
+
+export async function runCopilotEditorAction({
+  projectId,
+  currentFile = null,
+  selectedText = '',
+  message,
+  action,
+  signal,
+}: {
+  projectId: string
+  currentFile?: string | null
+  selectedText?: string
+  message: string
+  action: CopilotEditorAction
+  signal?: AbortSignal
+}): Promise<string> {
+  const source =
+    action.kind === 'completion' ? 'inline-completion' : 'selection'
+  const data = await copilotChat(
+    {
+      projectId,
+      conversation: { source },
+      context: {
+        currentFile,
+        selectedText,
+        editorAction: action,
+      },
+      message: { role: 'user', content: message },
+    },
+    signal
+  )
+  const blockText = (data.message?.blocks || [])
+    .flatMap(block => ('text' in block ? [block.text] : []))
+    .filter(Boolean)
+    .join('\n\n')
+  const text = blockText || data.message?.content || ''
+  return action.kind === 'completion' ? normalizeInlineCompletion(text) : text
+}
+
 // ---------------------------------------------------------------------------
 // SSE streaming chat
 // ---------------------------------------------------------------------------
@@ -97,6 +160,10 @@ export function copilotChat(
 // /chat. `done` carries the same envelope data as the buffered JSON mode;
 // `error` carries the envelope error plus its HTTP status.
 export type CopilotSseEvent =
+  | { type: 'context_compacting'; reason: string }
+  | { type: 'context_compacted'; generation: number; beforeTokens: number; afterTokens: number }
+  | { type: 'context_degraded'; reason: string }
+  | { type: 'context_invalidated'; reason: string }
   | { type: 'text_delta'; delta: string }
   | {
       type: 'tool_start'
@@ -144,6 +211,13 @@ function toSseEvent(frame: SseFrame): CopilotSseEvent | null {
     return null
   }
   switch (frame.event) {
+    case 'context_compacting':
+    case 'context_degraded':
+    case 'context_invalidated':
+      return { type: frame.event, reason: String(payload?.reason || '') }
+    case 'context_compacted':
+      return { type: 'context_compacted', generation: Number(payload?.generation),
+        beforeTokens: Number(payload?.beforeTokens), afterTokens: Number(payload?.afterTokens) }
     case 'text_delta':
       return typeof payload?.delta === 'string'
         ? { type: 'text_delta', delta: payload.delta }
@@ -307,14 +381,42 @@ export async function copilotChatStream(
 
 export function copilotGetConversation(
   conversationId: string,
-  signal?: AbortSignal
+  projectId: string,
+  signal?: AbortSignal,
+  before?: number
 ): Promise<GetConversationResponseData> {
   return copilotFetch<GetConversationResponseData>(
-    `${BASE}/conversations/${encodeURIComponent(conversationId)}`,
+    `${BASE}/conversations/${encodeURIComponent(conversationId)}?projectId=${encodeURIComponent(projectId)}${before !== undefined ? `&before=${before}` : ""}`,
     'GET',
     undefined,
     signal
   )
+}
+
+export function copilotListConversations(projectId: string) {
+  return copilotFetch<ListConversationsResponseData>(
+    `${BASE}/conversations?projectId=${encodeURIComponent(projectId)}`,
+    'GET'
+  )
+}
+
+export function copilotGetContext(conversationId: string, projectId: string) {
+  return copilotFetch<any>(
+    `${BASE}/conversations/${encodeURIComponent(conversationId)}/context?projectId=${encodeURIComponent(projectId)}`,
+    'GET'
+  )
+}
+
+export function copilotGetMemories(projectId: string) {
+  return copilotFetch<any[]>(`${BASE}/memories?projectId=${encodeURIComponent(projectId)}`, 'GET')
+}
+
+export function copilotDecideMemory(projectId: string, memoryId: string, action: 'confirm' | 'delete', value?: string) {
+  return copilotFetch<any>(`${BASE}/memories/${encodeURIComponent(memoryId)}`, 'POST', { projectId, action, value })
+}
+
+export function copilotCompact(conversationId: string, projectId: string) {
+  return copilotFetch<any>(`${BASE}/conversations/${encodeURIComponent(conversationId)}/compact`, 'POST', { projectId })
 }
 
 export { CopilotError } from './types'

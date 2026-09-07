@@ -4,7 +4,7 @@
 // copilot.service.js, which is why the reload path couldn't rebuild patch
 // cards and leaked raw tool-result JSON to the frontend.
 
-import { randomUUID } from 'crypto';
+import { createHash } from 'crypto';
 import type { AgentMessage } from './core/types.js';
 import { extractTextContent } from './messageText.js';
 
@@ -18,6 +18,8 @@ export interface PatchHunk {
 export interface RawPatch {
   hunks: unknown[];
   summary: string;
+  callId?: string;
+  patchId?: string;
 }
 
 export interface PatchBlock {
@@ -45,11 +47,16 @@ export function toPatchHunk(entry: unknown): PatchHunk {
 export function computeRejectedSubmitPatchIds(messages: AgentMessage[]): Set<string> {
   const rejected = new Set<string>();
   for (const m of messages) {
+    if (m.role === 'assistant') for (const block of m.content) {
+      if (block.type === 'toolCall' && block.name === 'submit_patch') rejected.add(block.id);
+    }
     if (m?.role !== 'toolResult') continue;
     const tr = m as { toolName?: string; toolCallId?: string; isError?: boolean; details?: Record<string, unknown> };
     if (tr.toolName !== 'submit_patch' || !tr.toolCallId) continue;
     if (tr.isError || tr.details?.dryRunRejected === true) {
       rejected.add(tr.toolCallId);
+    } else {
+      rejected.delete(tr.toolCallId);
     }
   }
   return rejected;
@@ -71,7 +78,9 @@ export function extractSubmittedPatch(messages: AgentMessage[], rejectedIds?: Se
     const hunks = Array.isArray(args.hunks) ? args.hunks : null;
     if (hunks && hunks.length > 0) {
       return {
-        hunks,
+        hunks: (messages.find(m => m.role === 'toolResult' && m.toolCallId === sp.id) as any)?.details?.patch?.hunks || hunks,
+        patchId: (messages.find(m => m.role === 'toolResult' && m.toolCallId === sp.id) as any)?.details?.patch?.patchId,
+        callId: sp.id,
         summary: typeof args.summary === 'string' ? args.summary : '',
       };
     }
@@ -86,7 +95,7 @@ export function toPatchBlock(rawPatch: RawPatch | null, index: number): PatchBlo
   const hunks = rawPatch.hunks.map(toPatchHunk).filter(h => h.oldText || h.newText);
   if (hunks.length === 0) return null;
   return {
-    id: `patch_${index}_${randomUUID().slice(0, 8)}`,
+    id: rawPatch.patchId || `patch_${createHash('sha256').update(JSON.stringify([rawPatch.callId || index, rawPatch.hunks])).digest('hex').slice(0, 24)}`,
     title:
       typeof rawPatch.summary === 'string' && rawPatch.summary
         ? rawPatch.summary
@@ -122,6 +131,7 @@ function unwrapUserEnvelope(content: unknown): unknown {
       typeof parsed.MESSAGE === 'string' &&
       'CONTEXT' in parsed
     ) {
+      if (parsed.MESSAGE_KIND === 'system_event') return undefined;
       return parsed.MESSAGE;
     }
   } catch {
@@ -145,7 +155,8 @@ export function mapMessagesForView(messages: AgentMessage[]) {
       continue; // agent plumbing, not a chat bubble
     }
     if (message.role === 'user') {
-      view.push({ role: 'user', content: unwrapUserEnvelope(extractTextContent(message)) });
+      const content = unwrapUserEnvelope(extractTextContent(message));
+      if (content !== undefined) view.push({ role: 'user', content });
       continue;
     }
     if (message.role !== 'assistant') {

@@ -46,7 +46,7 @@ async function compile(projectId, userId, options = {}) {
     return { status: 'autocompile-backoff', outputFiles: [] }
   }
 
-  await ProjectRootDocManager.promises.ensureRootDocumentIsSet(projectId)
+  if (!options.snapshotInput) await ProjectRootDocManager.promises.ensureRootDocumentIsSet(projectId)
 
   const limits =
     await CompileManager.promises.getProjectCompileLimits(projectId)

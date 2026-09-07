@@ -6,6 +6,8 @@ export type CreateChatModelFn = (args: {
   baseUrl: string;
   apiKey?: string;
   modelId: string;
+  contextWindow?: number;
+  maxTokens?: number;
 }) => Model<'openai-completions'>;
 
 interface ClientRegistryOptions {
@@ -75,16 +77,17 @@ export class ClientRegistry {
     return this.getOrCreate(baseUrl, apiKey);
   }
 
-  async getChatModel(baseUrl: string, apiKey: string, modelId: string) {
+  async getChatModel(baseUrl: string, apiKey: string, modelId: string, limits: { contextWindow?: number; maxTokens?: number } = {}) {
     const entry = this.getOrCreate(baseUrl, apiKey);
-    if (!entry.chatModels.has(modelId)) {
+    const modelKey = JSON.stringify([modelId, limits.contextWindow ?? null, limits.maxTokens ?? null]);
+    if (!entry.chatModels.has(modelKey)) {
       if (typeof this.createChatModel !== 'function') {
         throw new Error('Chat model factory is not configured');
       }
-      entry.chatModels.set(modelId, this.createChatModel({ baseUrl, apiKey, modelId }));
+      entry.chatModels.set(modelKey, this.createChatModel({ baseUrl, apiKey, modelId, ...limits }));
     }
     entry.lastUsed = Date.now();
-    return { model: entry.chatModels.get(modelId) as Model<'openai-completions'>, semaphore: entry.semaphore, entry };
+    return { model: entry.chatModels.get(modelKey) as Model<'openai-completions'>, semaphore: entry.semaphore, entry };
   }
 
   cleanup() {

@@ -11,6 +11,11 @@ const router = express.Router();
 const controller = new CopilotController();
 
 router.post('/chat', controller.chat.bind(controller));
+router.get('/conversations', controller.listConversations.bind(controller));
 router.get('/conversations/:conversationId', controller.getConversation.bind(controller));
+router.get('/conversations/:conversationId/context', controller.getContext.bind(controller));
+router.get('/memories', controller.memories.bind(controller));
+router.post('/memories/:memoryId', controller.memories.bind(controller));
+router.post('/conversations/:conversationId/compact', controller.compact.bind(controller));
 
 export default router;

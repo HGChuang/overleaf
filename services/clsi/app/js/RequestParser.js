@@ -166,6 +166,14 @@ function _parseResource(resource) {
   if (resource.content != null && typeof resource.content !== 'string') {
     throw new Error('content attribute should be a string')
   }
+  if (resource.encoding != null && resource.encoding !== 'base64') {
+    throw new Error('unsupported resource encoding')
+  }
+  if (resource.encoding === 'base64' && (resource.url != null ||
+    typeof resource.content !== 'string' ||
+    !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(resource.content))) {
+    throw new Error('invalid base64 resource')
+  }
   if (resource.url != null && typeof resource.url !== 'string') {
     throw new Error('url attribute should be a string')
   }
@@ -175,6 +183,7 @@ function _parseResource(resource) {
     modified,
     url: resource.url,
     content: resource.content,
+    encoding: resource.encoding,
   }
 }
 

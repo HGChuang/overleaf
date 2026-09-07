@@ -9,11 +9,9 @@
 // preview in the editor and let the user Accept / Reject each patch without
 // ever leaving the editor.
 //
-// The tool does NOT mutate any project file server-side — on success
-// `terminate: true` ends the agent turn after submission; the actual edit is
-// applied CLIENT-SIDE by the frontend through the existing apply-fix /
-// track-changes path. This keeps the read/structured-only tool posture (no
-// server-side project-mutating tools).
+// The tool persists a proposal but does not mutate project source. The model
+// may compile the returned patchId as an isolated candidate before finishing;
+// source changes only through the authenticated user acceptance endpoint.
 //
 // SERVER-SIDE DRY-RUN (eval iteration 1, attacks failure cluster B
 // "oldText/path hallucination"): before a patch is accepted, every hunk is
@@ -30,6 +28,8 @@
 // terminating rejection) so extractSubmittedPatch can skip them — a patch the
 // server already knows is broken must never become the user's patch card.
 
+import { createHash } from 'node:crypto';
+import type { ToolPoolDeps } from './provider.js';
 import type { AgentTool, AgentToolResult } from '../core/types.js';
 
 // One hunk = a verbatim old→new replacement, optionally anchored to a file/line.
@@ -111,7 +111,7 @@ function divergenceHint(oldText: string, content: string): string {
   );
 }
 
-export function buildEditTools(context: any = {}) {
+export function buildEditTools(context: any = {}, deps: ToolPoolDeps = {}) {
   const project = context.project || {};
   const files: Array<{ path: string; content: string }> = Array.isArray(project.files)
     ? project.files
@@ -147,7 +147,7 @@ export function buildEditTools(context: any = {}) {
     listedPaths.add(clean);
     listedPaths.add(clean.toLowerCase());
   }
-  const defaultFileRaw = context.context?.currentFile || project.rootDocId || null;
+  const defaultFileRaw = context.context?.currentFile || project.files?.find((file: any) => file.docId === project.rootDocId)?.path || null;
   const defaultFile = defaultFileRaw ? normalizeHunkPath(String(defaultFileRaw)) : null;
 
   let consecutiveRejections = 0;
@@ -156,7 +156,7 @@ export function buildEditTools(context: any = {}) {
     name: 'submit_patch',
     label: 'submit_patch',
     description:
-      'Submit a proposed text edit as a PATCH (a list of {oldText, newText} hunks) and END the turn. Call this whenever the user asks to fix, modify, correct, or rewrite EXISTING text — do NOT return the whole document. For each hunk, `oldText` MUST be copied VERBATIM from the source (read the file first with `read_file` / `read_file_fragment` so the frontend can anchor an inline preview); `newText` is the replacement. The server dry-run validates every hunk against the actual file before accepting: a rejected patch comes back with a divergence hint — fix the hunks and call submit_patch again (repeated rejections end the turn). The frontend shows an inline-diff preview (struck old + gray new) with Accept / Reject — the edit is applied only after the user accepts.',
+      'Persist a proposed text edit as a PATCH and return its patchId. Call this whenever the user asks to fix, modify, correct, or rewrite EXISTING text. Copy oldText verbatim from source. The server dry-runs every hunk; correct and resubmit the complete patch after a rejection. When compilation matters, compile_project with the returned patchId before finishing. The authenticated author can later accept or reject individual hunks; submission itself does not edit source.',
     parameters: {
       type: 'object',
       properties: {
@@ -174,6 +174,9 @@ export function buildEditTools(context: any = {}) {
       required: ['hunks'],
     },
     async execute(_toolCallId, params): Promise<AgentToolResult<Record<string, never>>> {
+      if (deps.loadFile) {
+        for (const path of exactMap.keys()) exactMap.set(path, await deps.loadFile(path));
+      }
       const raw = (params ?? {}) as Record<string, unknown>;
       const hunks: unknown[] = Array.isArray(raw.hunks) ? raw.hunks : [];
 
@@ -287,10 +290,22 @@ export function buildEditTools(context: any = {}) {
       }
 
       consecutiveRejections = 0;
+      let submittedPatch: unknown;
+      if (deps.webClient && deps.userId && project.sourceSnapshot?.id) {
+        const patchId = `patch_${createHash('sha256').update(JSON.stringify([_toolCallId, hunks])).digest('hex').slice(0, 24)}`;
+        const canonicalHunks = hunks.map(value => {
+          const h = value as Record<string, unknown>;
+          return { ...h, file: typeof h.file === 'string' && h.file ? resolveExisting(h.file) : defaultFile };
+        });
+        submittedPatch = await deps.webClient.proposePatch(project.projectId, {
+          userId: deps.userId, snapshotId: project.sourceSnapshot.id, patchId,
+          hunks: canonicalHunks, conversationId: context.conversation?.conversationId,
+        });
+      }
       return {
-        content: [{ type: 'text', text: JSON.stringify({ submitted: true, count: hunks.length }) }],
-        details: {},
-        terminate: true,
+        content: [{ type: 'text', text: JSON.stringify({ submitted: true, count: hunks.length,
+          ...(submittedPatch && typeof submittedPatch === 'object' ? submittedPatch : {}) }) }],
+        details: submittedPatch ? { patch: submittedPatch } as unknown as Record<string, never> : {},
       };
     },
   };

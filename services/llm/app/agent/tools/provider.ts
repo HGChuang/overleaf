@@ -11,23 +11,30 @@
 // The MODEL decides which tools to call. That is the "意图识别 = model-driven
 // tool selection" design.
 
+import { buildPaperTools } from './paperTools.js';
 import { buildProjectTools } from './projectTools.js';
 import { buildEditTools } from './editTools.js';
 import { buildTodoTools } from './todoTool.js';
 import { buildCompileTools } from './compileTools.js';
+import { buildMemoryTools } from './memoryTools.js';
 import type { WebApiClient } from '../../llm/webApiClient.js';
 
 export interface ToolPoolDeps {
   /** Required for compile_project; when absent (e.g. unit tests that don't
    * exercise verification) the compile tool is simply omitted from the pool. */
   webClient?: WebApiClient;
+  userId?: string;
+  loadFile?: (path: string) => Promise<string>;
+  proposeMemory?: (args: { value: string; sourceQuote: string; scope: 'project' | 'user' }) => Promise<unknown>;
 }
 
 export function buildToolPool(context = {}, deps: ToolPoolDeps = {}) {
   return [
-    ...buildProjectTools(context),
+    ...buildProjectTools(context, deps),
+    ...buildPaperTools(context, deps),
+    ...buildMemoryTools(deps),
     ...buildTodoTools(),
-    ...buildEditTools(context),
-    ...(deps.webClient ? buildCompileTools(context, { webClient: deps.webClient }) : []),
+    ...buildEditTools(context, deps),
+    ...(deps.webClient ? buildCompileTools(context, { webClient: deps.webClient, userId: deps.userId }) : []),
   ];
 }

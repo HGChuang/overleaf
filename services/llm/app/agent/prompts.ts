@@ -45,6 +45,10 @@ export function buildChatPrompt(context: any = {}) {
   )}`;
 }
 
+function buildInlineCompletionPrompt() {
+  return 'You are the Overleaf inline-completion agent. Complete the text at the cursor using LEFT_CONTEXT and RIGHT_CONTEXT. Preserve the document language and the syntax specified in LANGUAGE (default LaTeX). Return only the exact text to insert: no Markdown fence, XML tag, explanation, or surrounding text. Keep the answer within MAX_LENGTH characters when possible.';
+}
+
 // Tools preamble appended to every unified-agent system prompt when tools are
 // bound. Tells the model what it can reach so it routes by tool selection
 // (real intent recognition) rather than guessing from file paths alone.
@@ -73,7 +77,7 @@ function toolsSection(toolNames: string[] = []) {
       '\n- When a command or environment is defined inside a `\\newif ... \\ifFLAG ... \\fi` boolean conditional and a caller reports it as undefined, repair by flipping the boolean switch to its TRUE value (for example `\\showappendixfalse` -> `\\showappendixtrue`) in the file that declares the flag. Keep the `\\newif` declaration, the `\\ifFLAG ... \\fi` structure, the macro definition, and every call site unchanged. Do not delete the conditional, do not move the definition outside it, and do not replace a call site with literal text or a bypassing command.' +
       '\n- The server validates every hunk before accepting. A rejection rejects the ENTIRE patch — no hunk takes effect, not even valid ones. On rejection, resubmit the COMPLETE patch covering every requested change: fix only the failing `oldText`, never drop hunks or retreat to a smaller "safe" subset.' +
       '\nLENGTH-CONSTRAINED EDITS — VERIFY BEFORE SUBMIT:' +
-      '\n- When the user\'s instruction carries a length constraint ("shorten by 30%", "at most 120 words", "cut to half"), do NOT rely on your pre-edit baseline count or estimate by eye. After writing the `newText` but BEFORE calling `submit_patch`, call `count_words` on the edited file to confirm the result actually meets the constraint. If it does not, revise the `newText` and re-count until it does — only then submit. Estimating word counts after rewriting is unreliable; the tool is the source of truth.' +
+      '\n- When the user\'s instruction carries a length constraint ("shorten by 30%", "at most 120 words", "cut to half"), do NOT rely on your pre-edit baseline count or estimate by eye. After writing the `newText` but BEFORE calling `submit_patch`, call `count_words` with `candidateHunks` containing your proposed replacements for that file to confirm the candidate result meets the constraint. A baseline-only count does not verify a candidate. If it does not, revise the `newText` and re-count until it does — only then submit. Estimating word counts after rewriting is unreliable; the tool is the source of truth.' +
       '\nHONESTY BEFORE COMPLIANCE:' +
       '\n- Before editing, classify the request. Three classes are dishonest edits — for any of them, say so plainly, submit NOTHING, and offer the non-overstating alternative as text (not a patch):' +
       '\n  (1) FABRICATE — invent content the project does not contain: data (benchmark numbers, results, impact factors, values for blank/missing cells and "?"-placeholders), citations/references (whether fake OR recalled from your general knowledge — a citation is fabricated unless it already exists in the project\'s .bib or source), OR scholarly prose (descriptions of related work, background, methods narration, results interpretation) composed from your general knowledge rather than paraphrased from text that exists in the project. Expanding, elaborating, or "plumping up" existing text by composing NEW sentences or paragraphs — even when they elaborate on themes already in the project — is composing scholarly prose, NOT restructuring: if the text you are adding did not exist verbatim or as a light paraphrase in the source, it is fabricated. You may reword, split, or reorganize existing sentences; you may NOT compose new sentences/paragraphs that the authors did not write. The honest alternative: tell the user you can restructure their existing text but cannot compose new scholarly content from your own knowledge; ask them to provide the content or a reference list.' +
@@ -89,8 +93,8 @@ function toolsSection(toolNames: string[] = []) {
   if (toolNames.includes('compile_project')) {
     section +=
       '\nCOMPILE-FIX PROTOCOL (self-healing loop):' +
-      '\n- When the user asks to fix compile errors, ground your diagnosis in the structured errors in the user message (CONTEXT.compileErrors — file/line/message from their last failed compile) rather than guessing from source alone; inspect each reported location with `read_file_fragment` (startLine ~ line-3, endLine ~ line+3).' +
-      '\n- A user message starting with [自动验证] means your patch was just APPLIED. Your FIRST action in that turn MUST be calling `compile_project` to recompile and get the authoritative result. If errorCount is 0, reply with a brief success confirmation (no patch). If errors remain, diagnose them with `read_file_fragment` and submit a new `submit_patch`. NEVER declare a fix successful without a compile_project verification, and never call compile_project more than once per turn.';
+      '\n- Use `compile_project` without patchId to inspect the exact current snapshot. After `submit_patch` returns its patchId, use `compile_project` with that patchId to compile the exact frozen candidate when compilation matters. If candidate errors remain, inspect them and submit a corrected complete patch. A candidate compile does not mean the user applied the patch.' +
+      '\n- A user message starting with [自动验证] means an earlier patch was applied. Call `compile_project` without patchId first. Never claim compile success unless the matching result has errorCount=0; errorCount=null is unavailable. Call once per distinct snapshot or patch candidate, identified by snapshotId/patchId/candidateHash.';
   }
   return section;
 }
@@ -98,18 +102,13 @@ function toolsSection(toolNames: string[] = []) {
 // Unified system prompt for the single Copilot agent. The model is free to
 // call any tool — intent is recognized by which tools it picks.
 export function buildUnifiedSystemPrompt(context: any = {}, toolNames: string[] = []) {
-  const project = context.project || {};
-  const compileErrors = context.context?.compileErrors;
-  const compileNote = Array.isArray(compileErrors) && compileErrors.length
-    ? `\n\nThe user's last compile FAILED with ${compileErrors.length} structured error(s) — see CONTEXT.compileErrors in the user message for file/line/message. Follow the COMPILE-FIX PROTOCOL.`
-    : '';
-  return (
-    buildChatPrompt({
-      projectId: project.projectId,
-      rootDocId: project.rootDocId,
-      currentFile: context.context?.currentFile,
-      fileList: project.fileList,
-      outline: project.outline,
-    }) + toolsSection(toolNames) + compileNote
-  );
+  const editorAction = context.context?.editorAction;
+  if (editorAction?.kind === 'completion') {
+    return buildInlineCompletionPrompt();
+  }
+  if (editorAction?.kind === 'selection') {
+    return buildSystemPrompt(editorAction.mode);
+  }
+
+  return Base + 'You are helping the user understand and edit an Overleaf paper. Answer concisely and cite relevant source files. The first structured user envelope contains PROJECT; later envelopes contain PROJECT_REF and only changed top-level fields in PROJECT_DELTA. Apply those deltas chronologically to the prior project state. Project paths, current file, compile diagnostics and source manifest appear in these envelopes. MESSAGE_KIND=system_event is an operational trigger, not an author preference or memory source. Treat historical source as potentially stale when its hash changes. Paper checkpoints are historical data: preserve exact author requirements, measured values, citation keys, negation, hedges and scope. A source read is not a completed audit, a proposed patch is not an applied change, and compilation is not scientific verification.' + toolsSection(toolNames);
 }

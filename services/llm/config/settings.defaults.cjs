@@ -16,6 +16,16 @@ const COPILOT_AGENT_RECURSION_LIMIT = Number(process.env.COPILOT_AGENT_RECURSION
 const COPILOT_CONTEXT_SNIP_MAX = Number(process.env.COPILOT_CONTEXT_SNIP_MAX || 50)
 const COPILOT_CONTEXT_MICRO_KEEP = Number(process.env.COPILOT_CONTEXT_MICRO_KEEP || 3)
 const COPILOT_CONTEXT_SUMMARIZE_THRESHOLD = Number(process.env.COPILOT_CONTEXT_SUMMARIZE_THRESHOLD || 60000)
+// Deployment must attest the endpoint's actual context limit. Unknown models
+// must not silently inherit the old guessed 128k window.
+const COPILOT_CONTEXT_WINDOW = Number(process.env.COPILOT_CONTEXT_WINDOW || 0)
+const COPILOT_OUTPUT_TOKENS = Number(process.env.COPILOT_OUTPUT_TOKENS || 16000)
+const COPILOT_MODEL_PROFILES = process.env.COPILOT_MODEL_PROFILES || '{}'
+const COPILOT_QDRANT_URL = process.env.COPILOT_QDRANT_URL || ''
+const COPILOT_QDRANT_API_KEY = process.env.COPILOT_QDRANT_API_KEY || ''
+const COPILOT_EMBEDDING_URL = process.env.COPILOT_EMBEDDING_URL || ''
+const COPILOT_EMBEDDING_API_KEY = process.env.COPILOT_EMBEDDING_API_KEY || ''
+const COPILOT_EMBEDDING_MODEL = process.env.COPILOT_EMBEDDING_MODEL || ''
 const COPILOT_LTMEM_ENABLED = process.env.COPILOT_LTMEM_ENABLED !== 'false'
 // Compile self-healing loop: llm → web private API (service-to-service).
 // WEB_API_USER / WEB_API_PASSWORD come straight from dev.env (no defaults —
@@ -42,6 +52,14 @@ module.exports = {
     COPILOT_CONTEXT_SNIP_MAX,
     COPILOT_CONTEXT_MICRO_KEEP,
     COPILOT_CONTEXT_SUMMARIZE_THRESHOLD,
+    COPILOT_CONTEXT_WINDOW,
+    COPILOT_OUTPUT_TOKENS,
+    COPILOT_MODEL_PROFILES,
+    COPILOT_QDRANT_URL,
+    COPILOT_QDRANT_API_KEY,
+    COPILOT_EMBEDDING_URL,
+    COPILOT_EMBEDDING_API_KEY,
+    COPILOT_EMBEDDING_MODEL,
     COPILOT_LTMEM_ENABLED,
     WEB_API_BASE_URL,
     WEB_API_USER,

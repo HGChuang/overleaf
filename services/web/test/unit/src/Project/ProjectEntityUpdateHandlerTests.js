@@ -536,7 +536,7 @@ describe('ProjectEntityUpdateHandler', function () {
         this.rootDocId,
         () => {
           this.ProjectModel.updateOne
-            .calledWith({ _id: projectId }, { rootDoc_id: this.rootDocId })
+            .calledWith({ _id: projectId }, { $set: { rootDoc_id: this.rootDocId }, $inc: { copilotConfigVersion: 1 } })
             .should.equal(true)
           done()
         }
@@ -553,7 +553,7 @@ describe('ProjectEntityUpdateHandler', function () {
         this.rootDocId,
         () => {
           this.ProjectModel.updateOne
-            .calledWith({ _id: projectId }, { rootDoc_id: this.rootDocId })
+            .calledWith({ _id: projectId }, { $set: { rootDoc_id: this.rootDocId }, $inc: { copilotConfigVersion: 1 } })
             .should.equal(false)
           done()
         }
@@ -579,7 +579,7 @@ describe('ProjectEntityUpdateHandler', function () {
     it('should call Project.updateOne', function (done) {
       this.ProjectEntityUpdateHandler.unsetRootDoc(projectId, () => {
         this.ProjectModel.updateOne
-          .calledWith({ _id: projectId }, { $unset: { rootDoc_id: true } })
+          .calledWith({ _id: projectId }, { $unset: { rootDoc_id: true }, $inc: { copilotConfigVersion: 1 } })
           .should.equal(true)
         done()
       })

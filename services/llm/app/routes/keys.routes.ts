@@ -21,8 +21,8 @@ router.put('/usingLlm', controller.updateUsingLlm.bind(controller));
 
 // update using chat or completion model for the given api key name
 router.put('/usingModel', controller.updateUsingModel.bind(controller));
+router.put('/modelLimits', controller.updateModelLimits.bind(controller));
 
 export default router;
-
 
 

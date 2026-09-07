@@ -9,6 +9,7 @@
     "start": "node dist/app.js",
     "dev": "tsx watch app.ts",
     "test:acceptance": "npm run test:acceptance:_run -- --grep=$MOCHA_GREP",
+    "test:context": "NODE_OPTIONS=--import=tsx mocha \"test/unit/context/*.test.ts\" --timeout 20000 --exit",
     "test:unit": "npm run test:unit:_run -- --grep=$MOCHA_GREP",
     "nodemon": "tsx watch app.ts",
     "test:acceptance:_run": "LOG_LEVEL=fatal NODE_OPTIONS=--import=tsx mocha --require ./test/setup.ts --reporter spec --timeout 15000 --exit $@ \"test/acceptance/**/*.ts\"",

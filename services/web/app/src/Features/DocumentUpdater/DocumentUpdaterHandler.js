@@ -74,6 +74,11 @@ function deleteDoc(projectId, docId, ignoreFlushErrors, callback) {
   )
 }
 
+function applyCopilotPatch(projectId, docId, payload, callback) {
+  _makeRequest({ path: `/project/${projectId}/doc/${docId}/copilot-patch`,
+    method: 'POST', json: payload }, projectId, 'copilot-patch', callback)
+}
+
 function getDocument(projectId, docId, fromVersion, callback) {
   _makeRequest(
     {
@@ -542,6 +547,7 @@ module.exports = {
     flushProjectToMongoAndDelete: promisify(flushProjectToMongoAndDelete),
     flushDocToMongo: promisify(flushDocToMongo),
     deleteDoc: promisify(deleteDoc),
+    applyCopilotPatch: promisify(applyCopilotPatch),
     getDocument: promisifyMultiResult(getDocument, [
       'lines',
       'version',

@@ -217,7 +217,7 @@ async function setRootDoc(projectId, newRootDocID) {
   if (ProjectEntityUpdateHandler.isPathValidForRootDoc(docPath)) {
     await Project.updateOne(
       { _id: projectId },
-      { rootDoc_id: newRootDocID }
+      { $set: { rootDoc_id: newRootDocID }, $inc: { copilotConfigVersion: 1 } }
     ).exec()
   } else {
     throw new Errors.UnsupportedFileTypeError(
@@ -230,7 +230,7 @@ async function unsetRootDoc(projectId) {
   logger.debug({ projectId }, 'removing root doc')
   await Project.updateOne(
     { _id: projectId },
-    { $unset: { rootDoc_id: true } }
+    { $unset: { rootDoc_id: true }, $inc: { copilotConfigVersion: 1 } }
   ).exec()
 }
 

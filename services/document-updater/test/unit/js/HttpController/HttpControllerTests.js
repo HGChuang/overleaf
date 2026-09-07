@@ -7,12 +7,14 @@ describe('HttpController', function () {
   beforeEach(function () {
     this.HttpController = SandboxedModule.require(modulePath, {
       requires: {
+        'node:crypto': require('node:crypto'),
         './DocumentManager': (this.DocumentManager = {}),
         './HistoryManager': (this.HistoryManager = {
           flushProjectChangesAsync: sinon.stub(),
         }),
         './ProjectHistoryRedisManager': (this.ProjectHistoryRedisManager = {}),
         './ProjectManager': (this.ProjectManager = {}),
+        './UpdateManager': (this.UpdateManager = { promises: {} }),
         './DeleteQueueManager': (this.DeleteQueueManager = {}),
         './RedisManager': (this.RedisManager = {
           DOC_OPS_TTL: 42,
@@ -34,6 +36,47 @@ describe('HttpController', function () {
       sendStatus: sinon.stub(),
       json: sinon.stub(),
     }
+  })
+
+  describe('applyCopilotPatch', function () {
+    beforeEach(function () {
+      const crypto = require('node:crypto')
+      this.before = 'old text'
+      this.after = 'new text'
+      this.hash = value => crypto.createHash('sha256').update(value).digest('hex')
+      this.req = { params: { project_id: this.project_id, doc_id: this.doc_id }, body: {
+        expectedHash: this.hash(this.before), expectedVersion: 4, content: this.after,
+        operationId: 'operation-1', userId: 'user-1',
+      } }
+      this.DocumentManager.promises = {
+        getDoc: sinon.stub(),
+        setDoc: sinon.stub().resolves(),
+      }
+      this.UpdateManager.promises.lockUpdatesAndDo = sinon.stub().callsFake((fn, projectId, docId) => fn(projectId, docId))
+    })
+
+    it('applies an exact version and hash under the updater lock', async function () {
+      this.DocumentManager.promises.getDoc.onFirstCall().resolves({ lines: [this.before], version: 4 })
+      this.DocumentManager.promises.getDoc.onSecondCall().resolves({ lines: [this.after], version: 5 })
+      await this.HttpController.applyCopilotPatch(this.req, this.res, this.next)
+      this.DocumentManager.promises.setDoc.calledWith(this.project_id, this.doc_id, [this.after],
+        { kind: 'copilot', operationId: 'operation-1' }, 'user-1').should.equal(true)
+      this.res.json.calledWith(sinon.match({ status: 'applied', afterVersion: 5 })).should.equal(true)
+    })
+
+    it('returns a conflict without writing when the baseline changed', async function () {
+      this.DocumentManager.promises.getDoc.resolves({ lines: ['collaborator edit'], version: 5 })
+      await this.HttpController.applyCopilotPatch(this.req, this.res, this.next)
+      this.DocumentManager.promises.setDoc.called.should.equal(false)
+      this.res.json.calledWith(sinon.match({ status: 'conflicted', beforeVersion: 5 })).should.equal(true)
+    })
+
+    it('recognizes an already-applied target idempotently', async function () {
+      this.DocumentManager.promises.getDoc.resolves({ lines: [this.after], version: 5 })
+      await this.HttpController.applyCopilotPatch(this.req, this.res, this.next)
+      this.DocumentManager.promises.setDoc.called.should.equal(false)
+      this.res.json.calledWith(sinon.match({ status: 'applied', idempotent: true })).should.equal(true)
+    })
   })
 
   describe('getDoc', function () {

@@ -7,6 +7,8 @@ type ModelInfo = {
   object: string;
   owned_by: string;
   _id: string;
+  contextWindow?: number;
+  maxTokens?: number;
 };
 
 type UsageInfo = {
@@ -573,6 +575,10 @@ export default function LlmUsageTable() {
                       onChatModelChange={(newModel) => handleChatModelChange(item.name, newModel)}
                       onCodeModelChange={(newModel) => handleCodeModelChange(item.name, newModel)}
                       onDelete={() => handleDelete(item.name)}
+                      modelLimits={item.models.find(model => model.id === item.chatModel)}
+                      onLimitsSaved={limits => setUsageList(previous => previous.map(provider => provider.name === item.name
+                        ? { ...provider, models: provider.models.map(model => model.id === item.chatModel ? { ...model, ...limits } : model) }
+                        : provider))}
                     />
                   );
                 })

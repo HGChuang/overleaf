@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { EditorView } from '@codemirror/view'
 import { marked } from 'marked'
+import getMeta from '@/utils/meta'
+import { runCopilotEditorAction } from '@/features/copilot/utils/copilot-api'
 
 export type FloatingToolbarHandle = {
   show: (view: EditorView) => void;
@@ -110,74 +112,13 @@ const FloatingToolbar = forwardRef<FloatingToolbarHandle, {}>((_, ref) => {
     setAnnotation('')
 
     try {
-      // Get file tree content
-      const fileNames: string[] = []
-      try {
-        const fileTreeElement = document.querySelector('.file-tree')
-        if (fileTreeElement) {
-          const elements = fileTreeElement.querySelectorAll('.entity-name')
-          for (const el of elements) {
-            const name = el.textContent?.trim() || ''
-            if (name) fileNames.push(name)
-          }
-        }
-      } catch (e) {
-        console.error('get fileList error:', e)
-      }
-
-      // Get outline content
-      const outlineItems: string[] = []
-      try {
-        const outlineElement = document.querySelector('.outline-pane')
-        if (outlineElement) {
-          const items = outlineElement.querySelectorAll('.outline-item')
-          for (const item of items) {
-            const t = item.textContent?.trim() || ''
-            if (t) outlineItems.push(t)
-          }
-        }
-      } catch (e) {
-        console.error('get outline error:', e)
-      }
-
-      // Prepare request body
-      const requestBody = {
-        ask: text,
-        selection: selectedText,
-        filelist: fileNames,
-        outline: outlineItems,
-        chatOrCompletion: 0
-      }
-      
-      let response: Response | undefined;
-      try {
-        response = await fetch('http://localhost:9241/api/v1/llm/llm', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          credentials: 'include',
-          body: JSON.stringify(requestBody)
-        });
-      } catch (error) {
-        console.error(error);
-      }
-
-      if (response) {
-        const result = await response.json();
-        if (result?.success) {
-          const dataMd = typeof result.data === 'string'
-            ? result.data
-            : JSON.stringify(result.data)
-          appendMessage({ role: 'assistant', content: dataMd })
-        } else {
-          console.error('API quest fail:', result)
-          appendMessage({ role: 'assistant', content: 'sorry, service is unavailable' })
-        }
-      } else {
-        console.error('API request failed: No response received')
-        appendMessage({ role: 'assistant', content: 'sorry, no response from server' })
-      }
+      const response = await runCopilotEditorAction({
+        projectId: getMeta('ol-project_id'),
+        selectedText,
+        message: text,
+        action: { kind: 'selection', mode: 0 },
+      })
+      appendMessage({ role: 'assistant', content: response })
     } catch (error) {
       console.error('request failed:', error)
       appendMessage({ role: 'assistant', content: 'sorry, request failed, please check your network or try again later.' })

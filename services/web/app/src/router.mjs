@@ -1,3 +1,4 @@
+import CopilotPatchController from './Features/Copilot/CopilotPatchController.js'
 import AdminController from './Features/ServerAdmin/AdminController.js'
 import ErrorController from './Features/Errors/ErrorController.js'
 import Features from './infrastructure/Features.js'
@@ -258,6 +259,7 @@ async function initialize(webRouter, privateApiRouter, publicApiRouter) {
 
   webRouter.csrf.disableDefaultCsrfProtection('/api/v1/llm/usingModel', 'PUT')
   webRouter.put('/api/v1/llm/usingModel', LlmController.usingModel)
+  webRouter.put('/api/v1/llm/modelLimits', LlmController.modelLimits)
 
   // A single unified Copilot endpoint. The body's `intent` field selects
   // chat / compile-diagnose / run-checks / explain-issue; all return the same
@@ -267,8 +269,16 @@ async function initialize(webRouter, privateApiRouter, publicApiRouter) {
   webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/chat', 'POST')
   webRouter.post('/api/v1/copilot/chat', CopilotController.chat)
 
+  webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/conversations', 'GET')
+  webRouter.get('/api/v1/copilot/conversations', CopilotController.listConversations)
   webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/conversations/:conversationId', 'GET')
   webRouter.get('/api/v1/copilot/conversations/:conversationId', CopilotController.getConversation)
+  webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/conversations/:conversationId/context', 'GET')
+  webRouter.get('/api/v1/copilot/conversations/:conversationId/context', CopilotController.getContext)
+  webRouter.csrf.disableDefaultCsrfProtection('/api/v1/copilot/memories', 'GET')
+  webRouter.get('/api/v1/copilot/memories', CopilotController.memories)
+  webRouter.post('/api/v1/copilot/memories/:memoryId', CopilotController.memories)
+  webRouter.post('/api/v1/copilot/conversations/:conversationId/compact', CopilotController.compact)
 
   webRouter.get('/login', UserPagesController.loginPage)
   AuthenticationController.addEndpointToLoginWhitelist('/login')
@@ -1072,10 +1082,26 @@ async function initialize(webRouter, privateApiRouter, publicApiRouter) {
     AuthenticationController.requirePrivateApiAuth(),
     CompileController.compileAndDownloadPdf
   )
+  privateApiRouter.post('/internal/project/:project_id/copilot/patch',
+    AuthenticationController.requirePrivateApiAuth(), CopilotPatchController.propose)
+  privateApiRouter.get('/internal/project/:project_id/copilot/patches/user/:user_id',
+    AuthenticationController.requirePrivateApiAuth(), CopilotPatchController.list)
+  webRouter.get('/project/:project_id/copilot/patch/:patch_id', CopilotPatchController.action)
+  webRouter.post('/project/:project_id/copilot/patch/:patch_id', CopilotPatchController.action)
   privateApiRouter.post(
     '/internal/project/:project_id/copilot/compile',
     AuthenticationController.requirePrivateApiAuth(),
     CopilotCompileController.compileAndGetErrors
+  )
+  privateApiRouter.get(
+    '/internal/project/:project_id/copilot/snapshot/:snapshot_id/user/:user_id',
+    AuthenticationController.requirePrivateApiAuth(),
+    CopilotController.readSnapshot
+  )
+  privateApiRouter.get(
+    '/internal/project/:project_id/copilot/access/:user_id',
+    AuthenticationController.requirePrivateApiAuth(),
+    CopilotController.checkProjectAccess
   )
 
   privateApiRouter.post(

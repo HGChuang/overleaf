@@ -1,7 +1,7 @@
 const { req } = require('@overleaf/logger/serializers')
 const Settings = require('@overleaf/settings')
 const fetch = require('node-fetch')
-async function base(req, res, url) {
+async function base(req, res, url, forwardErrors = false) {
     try {
         const llmUrl = Settings.apis?.llm?.url
         if (!llmUrl) {
@@ -36,6 +36,7 @@ async function base(req, res, url) {
         }
         const response = await fetch(targetUrl, fetchOptions);
         if (!response.ok) {
+            if (forwardErrors) return res.status(response.status).json(await response.json())
             console.log("LLM service responded with error:",await response.text())
             throw new Error(`LLM service responded with status: ${response.status}`)
         }
@@ -61,5 +62,8 @@ module.exports = {
     },
     async usingModel(req, res) {
         return base(req, res, '/api/v1/llm/usingModel')
+    },
+    async modelLimits(req, res) {
+        return base(req, res, '/api/v1/llm/modelLimits', true)
     },
 }

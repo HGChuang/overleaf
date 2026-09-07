@@ -12,7 +12,9 @@ const apiKeySchema = new mongoose.Schema({
         {
           id: String,
           object: String,
-          owned_by: String
+          owned_by: String,
+          contextWindow: Number,
+          maxTokens: Number,
         }
       ],
       usingChatModel: Number,
@@ -30,6 +32,5 @@ export class ApiKeyModel {
     return mongoose.model('users', apiKeySchema);
   }
 }
-
 
 

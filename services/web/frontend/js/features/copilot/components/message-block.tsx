@@ -1,3 +1,4 @@
+import { getJSON, postJSON } from '@/infrastructure/fetch-json'
 // Renders a single MessageBlock by type. Used by the chat message list
 // (Ask/Write/Fix) and the Checks explain view. Markdown/code blocks are
 // rendered via the shared marked renderer; LaTeX copy buttons are handled
@@ -8,7 +9,6 @@ import type { MessageBlock, FileRef, ActionItem, Patch } from '../utils/types'
 import { extractLatexFromMarkdown } from '../utils/markdown'
 import {
   insertIntoEditor,
-  applyFixInEditor,
   applyFixAsTrackedChange,
   showPatchPreview,
   clearPatchPreview,
@@ -152,21 +152,21 @@ const CodeBlock: FC<{ text: string; language?: string }> = ({ text }) => {
   )
 }
 
-// A proposed text edit (from `submit_patch`) rendered as a mini per-hunk diff
-// with Accept / Reject. While pending, the hunks are also shown as an inline-diff
-// GHOST in the source editor (struck old + gray new) via `showPatchPreview`;
-// Accept applies each hunk through the existing `applyFixInEditor` → OT path
-// (with the cross-file open-then-apply sequence when a hunk targets another
-// file), Reject just clears the ghost. Status is local state — no backend
-// round-trip.
+// The backend owns per-hunk status and atomic document receipts. The editor
+// preview is local, while Accept/Reject always updates the persistent record.
 const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
   const editorManager = useEditorManagerContext()
   const { syncToEntry } = useDetachCompileContext()
-  const { features } = useProjectContext()
+  const { features, _id: projectId } = useProjectContext()
   const { notifyPatchAccepted } = useCopilotContext()
   const [status, setStatus] = useState<
-    'pending' | 'accepted' | 'rejected' | 'submitted'
+    'pending' | 'accepted' | 'rejected' | 'submitted' | 'partially_applied' | 'conflicted' | 'unknown'
   >('pending')
+  const [remoteHunks, setRemoteHunks] = useState<Array<{ index: number; status: string }>>(
+    patch.hunks.map((_hunk, index) => ({ index, status: 'proposed' }))
+  )
+  const [selected, setSelected] = useState<Set<number>>(() => new Set(patch.hunks.map((_hunk, index) => index)))
+  const [candidateVerification, setCandidateVerification] = useState<{ status: string; errorCount?: number | null } | null>(null)
   const currentFile = editorManager.currentDocument?.docName || null
   // "Submit as revision" lands the patch as tracked changes attributed to the
   // Copilot pseudo-user; only meaningful when the review UI is available.
@@ -175,11 +175,12 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
   // (re)show the ghost preview when the block mounts or the open doc changes,
   // so cross-file hunks render once the user opens the target file.
   useEffect(() => {
-    if (status === 'pending') {
-      showPatchPreview(patch.hunks)
-    }
+    clearPatchPreview()
+    const preview = patch.hunks.filter((_hunk, index) => selected.has(index) &&
+      (remoteHunks.find(item => item.index === index)?.status || 'proposed') === 'proposed')
+    if (preview.length) showPatchPreview(preview)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, currentFile])
+  }, [status, currentFile, selected, remoteHunks, patch.hunks])
 
   // Clear the ghost when the block unmounts (e.g. new turn supersedes it).
   useEffect(() => {
@@ -188,46 +189,52 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
     }
   }, [])
 
-  const accept = useCallback(async () => {
-    for (const hunk of patch.hunks) {
-      const targetFile = hunk.file || null
-      const edit = {
-        file: targetFile,
-        line: hunk.line ?? null,
-        oldText: hunk.oldText,
-        newText: hunk.newText,
-      }
-      if (!hunk.oldText) {
-        // pure insertion: best-effort insert at the cursor (apply-fix needs an
-        // anchor text; insertions are an edge case the prompt discourages).
-        insertIntoEditor(hunk.newText)
-      } else if (
-        !targetFile ||
-        targetFile === (editorManager.currentDocument?.docName || null)
-      ) {
-        applyFixInEditor(edit)
-      } else {
-        // open the target file, then apply once it has (likely) loaded
-        syncToEntry({ file: targetFile, line: hunk.line ?? undefined })
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise<void>(resolve => setTimeout(resolve, 700))
-        applyFixInEditor(edit)
-      }
+  const [applyError, setApplyError] = useState<string | null>(null)
+  const endpoint = `/project/${projectId}/copilot/patch/${patch.id}`
+  const reflectResult = useCallback((result: { status: string; hunks?: Array<{ index: number; status: string }>; candidateVerification?: { status: string; errorCount?: number | null } }) => {
+    setStatus(result.status === 'applied' ? 'accepted' : result.status === 'proposed' ? 'pending' : result.status as typeof status)
+    if (result.hunks) {
+      setRemoteHunks(result.hunks)
+      setSelected(new Set(result.hunks.filter(hunk => hunk.status === 'proposed').map(hunk => hunk.index)))
     }
-    clearPatchPreview()
-    setStatus('accepted')
-    // Self-healing loop: fire one automatic verification turn
-    // (compile_project) — but only after our edits have round-tripped to the
-    // server, otherwise the verify compile reads pre-patch content and the
-    // agent re-"fixes" an already-fixed file (the accept/verify loop).
-    await waitForEditorOpsToDrain(editorManager.currentDocument)
-    notifyPatchAccepted()
-  }, [patch.hunks, editorManager, syncToEntry, notifyPatchAccepted])
-
-  const reject = useCallback(() => {
-    clearPatchPreview()
-    setStatus('rejected')
+    if (result.candidateVerification) setCandidateVerification(result.candidateVerification)
   }, [])
+  useEffect(() => {
+    let cancelled = false
+    getJSON<{ status: string; hunks: Array<{ index: number; status: string }>; candidateVerification?: { status: string; errorCount?: number | null } }>(endpoint).then(result => {
+      if (!cancelled) reflectResult(result)
+    }).catch(() => { /* Legacy cards have no application record. */ })
+    return () => { cancelled = true }
+  }, [endpoint, reflectResult])
+  useEffect(() => {
+    if (!remoteHunks.some(hunk => hunk.status === 'applying')) return
+    const timer = window.setTimeout(() => {
+      getJSON<{ status: string; hunks: Array<{ index: number; status: string }>; candidateVerification?: { status: string; errorCount?: number | null } }>(endpoint)
+        .then(reflectResult).catch(error => setApplyError(error instanceof Error ? error.message : 'Could not reconcile patch status'))
+    }, 3000)
+    return () => window.clearTimeout(timer)
+  }, [remoteHunks, endpoint, reflectResult])
+
+  const accept = useCallback(async () => {
+    setApplyError(null)
+    try {
+      await waitForEditorOpsToDrain(editorManager.currentDocument)
+      const result = await postJSON<{ status: string; hunks: Array<{ index: number; status: string }> }>(endpoint,
+        { body: { action: 'accept', hunks: [...selected] } })
+      clearPatchPreview()
+      reflectResult(result)
+      if (result.hunks.some(hunk => selected.has(hunk.index) && hunk.status === 'applied')) notifyPatchAccepted()
+    } catch (error) { setApplyError(error instanceof Error ? error.message : 'Patch application failed') }
+  }, [endpoint, editorManager, notifyPatchAccepted, selected, reflectResult])
+
+  const reject = useCallback(async () => {
+    try {
+      const result = await postJSON<{ status: string; hunks: Array<{ index: number; status: string }> }>(endpoint,
+        { body: { action: 'reject', hunks: [...selected] } })
+      clearPatchPreview()
+      reflectResult(result)
+    } catch (error) { setApplyError(error instanceof Error ? error.message : 'Could not record rejection') }
+  }, [endpoint, selected, reflectResult])
 
   // Submit the patch as TRACKED CHANGES attributed to the Copilot pseudo-user:
   // the edits show up in the review panel (struck/added markup) for any
@@ -235,39 +242,58 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
   // insertions have no anchor for the tracked-apply path, so they keep the
   // direct-insert behavior (the prompt discourages them anyway).
   const submitAsRevision = useCallback(async () => {
-    for (const hunk of patch.hunks) {
-      const targetFile = hunk.file || null
-      const edit = {
-        file: targetFile,
-        line: hunk.line ?? null,
-        oldText: hunk.oldText,
-        newText: hunk.newText,
+    setApplyError(null)
+    try {
+      for (const [index, hunk] of patch.hunks.entries()) {
+        if (!selected.has(index)) continue
+        const targetFile = hunk.file || null
+        const edit = {
+          file: targetFile,
+          line: hunk.line ?? null,
+          oldText: hunk.oldText,
+          newText: hunk.newText,
+        }
+        if (!hunk.oldText) {
+          insertIntoEditor(hunk.newText)
+        } else if (
+          !targetFile ||
+          targetFile === (editorManager.currentDocument?.docName || null)
+        ) {
+          applyFixAsTrackedChange(edit)
+        } else {
+          syncToEntry({ file: targetFile, line: hunk.line ?? undefined })
+          // eslint-disable-next-line no-await-in-loop
+          await new Promise<void>(resolve => setTimeout(resolve, 700))
+          applyFixAsTrackedChange(edit)
+        }
       }
-      if (!hunk.oldText) {
-        insertIntoEditor(hunk.newText)
-      } else if (
-        !targetFile ||
-        targetFile === (editorManager.currentDocument?.docName || null)
-      ) {
-        applyFixAsTrackedChange(edit)
-      } else {
-        // open the target file, then apply once it has (likely) loaded
-        syncToEntry({ file: targetFile, line: hunk.line ?? undefined })
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise<void>(resolve => setTimeout(resolve, 700))
-        applyFixAsTrackedChange(edit)
-      }
-    }
-    clearPatchPreview()
-    setStatus('submitted')
-  }, [patch.hunks, editorManager, syncToEntry])
+      clearPatchPreview()
+      await waitForEditorOpsToDrain(editorManager.currentDocument)
+      const result = await postJSON<{ status: string; hunks: Array<{ index: number; status: string }> }>(endpoint,
+        { body: { action: 'revision_submitted', hunks: [...selected] } })
+      reflectResult(result)
+    } catch (error) { setApplyError(error instanceof Error ? error.message : 'Could not submit tracked changes') }
+  }, [patch.hunks, editorManager, syncToEntry, endpoint, selected, reflectResult])
+
+  const hasProposed = remoteHunks.some(hunk => hunk.status === 'proposed')
 
   return (
     <div className="copilot-patch">
+      {applyError && <div role="alert">{applyError}</div>}
+      {candidateVerification && <div role="status">候选编译：{candidateVerification.status}
+        {candidateVerification.errorCount != null ? `（${candidateVerification.errorCount} 个错误）` : ''}</div>}
+      {["partially_applied", "conflicted", "unknown"].includes(status) && <div role="status">{status}</div>}
       {patch.title && <div className="copilot-patch-title">{patch.title}</div>}
       <div className="copilot-patch-hunks">
         {patch.hunks.map((h, i) => (
           <div className="copilot-patch-hunk" key={i}>
+            {(remoteHunks.find(item => item.index === i)?.status || 'proposed') === 'proposed' &&
+              <input type="checkbox" aria-label={`Select patch hunk ${i + 1}`} checked={selected.has(i)}
+                onChange={event => setSelected(current => {
+                  const next = new Set(current)
+                  if (event.target.checked) next.add(i); else next.delete(i)
+                  return next
+                })} />}
             {h.file && (
               <button
                 className="copilot-patch-loc"
@@ -282,6 +308,7 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
             )}
             {h.oldText && <pre className="copilot-patch-old">{h.oldText}</pre>}
             <pre className="copilot-patch-new">{h.newText}</pre>
+            <span>{remoteHunks.find(item => item.index === i)?.status || 'proposed'}</span>
           </div>
         ))}
       </div>
@@ -289,15 +316,16 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
         <span className={`copilot-patch-status copilot-patch-status-${status}`}>
           {status === 'submitted' ? 'submitted as revision' : status}
         </span>
-        {status === 'pending' && (
+        {hasProposed && (
           <>
-            <button className="copilot-btn" onClick={reject}>
+            <button className="copilot-btn" onClick={reject} disabled={selected.size === 0}>
               Reject
             </button>
             {canSubmitAsRevision && (
               <button
                 className="copilot-btn"
                 onClick={submitAsRevision}
+                disabled={selected.size === 0}
                 title="Apply as tracked changes attributed to Copilot, so collaborators can review them in the review panel"
               >
                 Submit as revision
@@ -306,6 +334,7 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
             <button
               className="copilot-btn copilot-btn-primary"
               onClick={accept}
+              disabled={selected.size === 0}
             >
               Accept
             </button>

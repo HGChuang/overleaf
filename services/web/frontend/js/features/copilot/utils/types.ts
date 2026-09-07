@@ -3,7 +3,7 @@
 // endpoints (unified envelope `{ success, data, error, meta }`).
 
 export type CopilotSource =
-  | 'completion'
+  | 'inline-completion'
   | 'selection'
   | 'panel'
   | 'compile'
@@ -154,6 +154,18 @@ export interface ChatResponseData {
 }
 
 export interface GetConversationResponseData {
+  nextBefore?: number | null
   conversationId?: string
   messages?: CopilotMessage[]
+}
+
+export interface ConversationListItem {
+  conversationId: string
+  firstQuestion: string
+  createdAt?: string | null
+  lastActivityAt?: string | null
+}
+
+export interface ListConversationsResponseData {
+  conversations: ConversationListItem[]
 }

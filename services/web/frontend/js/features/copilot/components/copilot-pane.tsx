@@ -9,11 +9,41 @@ import { FC, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import MaterialIcon from '@/shared/components/material-icon'
 import { useCopilotContext } from '../context/copilot-context'
+import { copilotListConversations } from '../utils/copilot-api'
+import type { ConversationListItem } from '../utils/types'
+import { useProjectContext } from '@/shared/context/project-context'
 import ChatView from './copilot-chat-view'
 
 const CopilotPaneImpl: FC = () => {
   const { t } = useTranslation()
-  const { isOpen, setIsOpen, startNewChat, error, clearError } = useCopilotContext()
+  const {
+    isOpen,
+    setIsOpen,
+    startNewChat,
+    switchConversation,
+    conversationId,
+    error,
+    clearError,
+  } = useCopilotContext()
+  const { _id: projectId } = useProjectContext()
+  const [historyOpen, setHistoryOpen] = useState(false)
+  const [historyLoading, setHistoryLoading] = useState(false)
+  const [historyError, setHistoryError] = useState<string | null>(null)
+  const [conversations, setConversations] = useState<ConversationListItem[]>([])
+
+  const toggleHistory = useCallback(() => {
+    const opening = !historyOpen
+    setHistoryOpen(opening)
+    if (!opening) return
+    setHistoryLoading(true)
+    setHistoryError(null)
+    copilotListConversations(projectId)
+      .then(data => setConversations(data.conversations || []))
+      .catch(fetchError =>
+        setHistoryError(fetchError instanceof Error ? fetchError.message : 'Could not load conversation history')
+      )
+      .finally(() => setHistoryLoading(false))
+  }, [historyOpen, projectId])
 
   // keep mounted once opened (mirrors the chat pane's chatOpenedOnce) so
   // composer input/state survive collapse/expand — and so the composer (which
@@ -53,6 +83,15 @@ const CopilotPaneImpl: FC = () => {
           <div className="copilot-header-title">Copilot</div>
           <div className="copilot-header-actions">
             <button
+              className="copilot-icon-btn copilot-history-toggle"
+              onClick={toggleHistory}
+              title="Conversation history"
+              aria-label="Conversation history"
+              aria-expanded={historyOpen}
+            >
+              <MaterialIcon type="history" className="align-middle" />
+            </button>
+            <button
               className="copilot-icon-btn copilot-new-chat"
               onClick={startNewChat}
               title="Start new chat"
@@ -62,6 +101,30 @@ const CopilotPaneImpl: FC = () => {
             </button>
           </div>
         </header>
+
+        {historyOpen && (
+          <div className="copilot-history" aria-label="Conversation history list">
+            {historyLoading && <div className="copilot-history-state">Loading…</div>}
+            {historyError && <div className="copilot-history-state" role="alert">{historyError}</div>}
+            {!historyLoading && !historyError && conversations.length === 0 && (
+              <div className="copilot-history-state">No previous conversations</div>
+            )}
+            {!historyLoading && conversations.map(conversation => (
+              <button
+                type="button"
+                key={conversation.conversationId}
+                className={`copilot-history-row${conversation.conversationId === conversationId ? ' copilot-history-row-active' : ''}`}
+                title={conversation.firstQuestion}
+                onClick={() => {
+                  switchConversation(conversation.conversationId)
+                  setHistoryOpen(false)
+                }}
+              >
+                {conversation.firstQuestion}
+              </button>
+            ))}
+          </div>
+        )}
 
         {error && (
           <div className="copilot-error-banner" role="alert">
@@ -91,6 +154,34 @@ export default CopilotPane
 // ---------------------------------------------------------------------------
 
 const PANE_CSS = `
+.copilot-history {
+  max-height: min(320px, 45vh);
+  overflow-y: auto;
+  padding: 6px;
+  border-bottom: 1px solid var(--copilot-edge);
+  background: var(--copilot-bg);
+}
+.copilot-history-row {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--copilot-fg);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.copilot-history-row:hover, .copilot-history-row-active {
+  background: var(--copilot-hover);
+}
+.copilot-history-state {
+  padding: 10px;
+  color: var(--copilot-fg-muted);
+}
 .copilot-pane {
   /* dark theme tokens (scoped to the pane so they don't leak) */
   --copilot-bg: #313a4b;

@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import keysRoutes from './routes/keys.routes.js';
 import llmRoutes from './routes/llm.routes.js';
 import copilotRoutes from './routes/copilot.routes.js';
+import { ContextMaintenance } from './agent/context/maintenance.js';
 
 export async function createApp() {
   const app = express();
@@ -14,6 +15,7 @@ export async function createApp() {
   app.use('/api/v1/llm', keysRoutes);
   app.use('/api/v1/llm', llmRoutes);
   app.use('/api/v1/copilot', copilotRoutes);
+  new ContextMaintenance().start();
   return app;
 }
 

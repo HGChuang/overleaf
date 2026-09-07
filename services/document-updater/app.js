@@ -148,6 +148,7 @@ app.post(
   HttpController.getProjectDocsAndFlushIfOld
 )
 app.post('/project/:project_id/clearState', HttpController.clearProjectState)
+app.post('/project/:project_id/doc/:doc_id/copilot-patch', HttpController.applyCopilotPatch)
 app.post('/project/:project_id/doc/:doc_id', HttpController.setDoc)
 app.post(
   '/project/:project_id/doc/:doc_id/flush',

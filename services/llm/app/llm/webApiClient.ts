@@ -10,6 +10,7 @@
 
 import settings from '@overleaf/settings';
 import axios, { AxiosInstance } from 'axios';
+import { forbidden } from '../utils/errors.js';
 
 export interface CompileErrorEntry {
   file: string | null;
@@ -24,6 +25,9 @@ export interface CompileProjectResult {
   errors: CompileErrorEntry[];
   warningCount: number | null;
   note?: string;
+  snapshotId?: string;
+  patchId?: string;
+  candidateHash?: string;
 }
 
 export class WebApiClient {
@@ -47,10 +51,51 @@ export class WebApiClient {
     });
   }
 
-  async compileProject(projectId: string): Promise<CompileProjectResult> {
-    const response = await this.client.post(
-      `/internal/project/${encodeURIComponent(projectId)}/copilot/compile`
+  async compileProject(projectId: string, userId?: string, snapshotId?: string, idempotencyKey?: string, patchId?: string): Promise<CompileProjectResult> {
+    try {
+      const response = await this.client.post(
+        `/internal/project/${encodeURIComponent(projectId)}/copilot/compile`, { userId, snapshotId, idempotencyKey, patchId }
+      );
+      return response.data as CompileProjectResult;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 409 && error.response.data) {
+        return error.response.data as CompileProjectResult;
+      }
+      throw error;
+    }
+  }
+
+  async proposePatch(projectId: string, payload: unknown): Promise<any> {
+    return (await this.client.post(`/internal/project/${encodeURIComponent(projectId)}/copilot/patch`, payload)).data;
+  }
+
+  async listPatches(userId: string, projectId: string, conversationId: string, signal?: AbortSignal) {
+    return (await this.client.get(`/internal/project/${encodeURIComponent(projectId)}/copilot/patches/user/${encodeURIComponent(userId)}`,
+      { params: { conversationId }, signal, timeout: 10_000 })).data;
+  }
+
+  async readSnapshot(userId: string, projectId: string, snapshotId: string, path?: string, signal?: AbortSignal): Promise<any> {
+    const response = await this.client.get(
+      `/internal/project/${encodeURIComponent(projectId)}/copilot/snapshot/${encodeURIComponent(snapshotId)}/user/${encodeURIComponent(userId)}`,
+      { params: path === undefined ? {} : { path }, signal, timeout: 30_000 }
     );
-    return response.data as CompileProjectResult;
+    return response.data;
+  }
+
+  async assertSnapshotCurrent(userId: string, projectId: string, snapshotId: string, signal?: AbortSignal) {
+    const response = await this.client.get(
+      `/internal/project/${encodeURIComponent(projectId)}/copilot/snapshot/${encodeURIComponent(snapshotId)}/user/${encodeURIComponent(userId)}`,
+      { params: { current: '1' }, signal, timeout: 30_000 }
+    );
+    if (response.data?.current !== true) throw Object.assign(new Error('The paper changed while Copilot was working. Progress was saved; retry on the current version.'),
+      { code: 'COPILOT_SOURCE_CHANGED', status: 409 });
+  }
+
+  async assertProjectAccess(userId: string, projectId: string, signal?: AbortSignal): Promise<void> {
+    const response = await this.client.get(
+      `/internal/project/${encodeURIComponent(projectId)}/copilot/access/${encodeURIComponent(userId)}`,
+      { signal, timeout: 10_000 }
+    );
+    if (response.data?.allowed !== true) throw forbidden('project access denied');
   }
 }

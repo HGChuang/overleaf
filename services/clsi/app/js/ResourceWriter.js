@@ -353,7 +353,7 @@ module.exports = ResourceWriter = {
                 }
               ) // try and continue compiling even if http resource can not be downloaded at this time
             } else {
-              fs.writeFile(path, resource.content, callback)
+              fs.writeFile(path, resource.encoding === 'base64' ? Buffer.from(resource.content, 'base64') : resource.content, callback)
             }
           }
         )

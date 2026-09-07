@@ -25,6 +25,7 @@ export class CopilotController {
   copilotService: CopilotService;
   contextService: ContextService;
   conversationService: ConversationService;
+  memoryStore: CopilotService['memoryStore'];
 
   constructor({
     copilotService = new CopilotService(),
@@ -32,6 +33,7 @@ export class CopilotController {
     conversationService = new ConversationService(),
   } = {}) {
     this.copilotService = copilotService;
+    this.memoryStore = copilotService.memoryStore;
     this.contextService = contextService;
     this.conversationService = conversationService;
   }
@@ -56,10 +58,11 @@ export class CopilotController {
       const wantsStream = String(req.headers.accept || '').includes('text/event-stream');
 
       if (wantsStream) {
-        await this.chatSse(res, userIdentifier, context, ac.signal);
+        await this.chatSse(res, userIdentifier, context, ac.signal, requestId);
       } else {
         const r = await this.copilotService.chat(userIdentifier, context, {
           signal: ac.signal,
+          requestId,
         });
         const data = {
           conversationId: r.conversationId,
@@ -80,7 +83,8 @@ export class CopilotController {
     res: Response,
     userIdentifier: string,
     context: unknown,
-    signal: AbortSignal
+    signal: AbortSignal,
+    requestId: string
   ) {
     res.writeHead(200, {
       'Content-Type': 'text/event-stream',
@@ -104,11 +108,14 @@ export class CopilotController {
     try {
       const r = await this.copilotService.chat(userIdentifier, context, {
         signal,
+        requestId,
         onEvent: (e: CopilotStreamEvent) => {
           if (e.type === 'text_delta') {
             send('text_delta', { delta: e.delta });
           } else if (e.type === 'tool_start') {
             send('tool_start', { toolCallId: e.toolCallId, toolName: e.toolName, args: e.args });
+          } else if (e.type.startsWith('context_')) {
+            send(e.type, e);
           } else if (e.type === 'tool_end') {
             send('tool_end', {
               toolCallId: e.toolCallId,
@@ -139,13 +146,61 @@ export class CopilotController {
       const userIdentifier = await this.getUserIdentifier(req);
       const data = await this.conversationService.getConversation(
         userIdentifier,
-        String(req.params.conversationId)
+        String(req.params.conversationId),
+        typeof req.query.projectId === 'string' ? req.query.projectId : '',
+        req.query.before === undefined ? undefined : Number(req.query.before)
       );
       res.status(200).json(ok(data, { requestId }));
     } catch (error) {
       const response = fail(error, { requestId });
       res.status(response.status).json(response.body);
     }
+  }
+
+  async listConversations(req: Request, res: Response) {
+    const requestId = getRequestId(req);
+    try {
+      const userIdentifier = await this.getUserIdentifier(req);
+      const data = await this.conversationService.listConversations(
+        userIdentifier,
+        typeof req.query.projectId === 'string' ? req.query.projectId : '',
+      );
+      res.status(200).json(ok(data, { requestId }));
+    } catch (error) {
+      const response = fail(error, { requestId });
+      res.status(response.status).json(response.body);
+    }
+  }
+
+  async getContext(req: Request, res: Response) {
+    const requestId = getRequestId(req);
+    try {
+      const user = await this.getUserIdentifier(req);
+      const data = await this.conversationService.getContext(user, String(req.params.conversationId), String(req.query.projectId || ''));
+      res.status(200).json(ok(data, { requestId }));
+    } catch (error) {
+      const response = fail(error, { requestId }); res.status(response.status).json(response.body);
+    }
+  }
+  async memories(req: Request, res: Response) {
+    const requestId = getRequestId(req);
+    try {
+      const user = await this.getUserIdentifier(req);
+      const projectId = String(req.query.projectId || req.body?.projectId || '');
+      await this.copilotService.webClient.assertProjectAccess(user, projectId);
+      const data = req.method === 'GET'
+        ? await this.memoryStore.list(user, projectId, true)
+        : await this.memoryStore.decide(user, String(req.params.memoryId), req.body?.action, req.body?.value);
+      res.status(200).json(ok(data, { requestId }));
+    } catch (error) { const response = fail(error, { requestId }); res.status(response.status).json(response.body); }
+  }
+  async compact(req: Request, res: Response) {
+    const requestId = getRequestId(req);
+    try {
+      const user = await this.getUserIdentifier(req);
+      const data = await this.copilotService.compact(user, String(req.params.conversationId), String(req.body?.projectId || ''));
+      res.status(200).json(ok(data, { requestId }));
+    } catch (error) { const response = fail(error, { requestId }); res.status(response.status).json(response.body); }
   }
 
   async getUserIdentifier(req: Request) {

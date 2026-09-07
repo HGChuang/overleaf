@@ -10,7 +10,6 @@ export function buildFileMap(files = []) {
     if (!f || !f.path) continue;
     const key = f.path.replace(/^\//, '');
     map.set(key, f.content || '');
-    map.set(key.toLowerCase(), f.content || '');
   }
   return map;
 }
@@ -18,7 +17,9 @@ export function buildFileMap(files = []) {
 export function lookupFile(fileMap, path) {
   if (!path) return null;
   const clean = path.replace(/^\//, '');
-  return fileMap.get(clean) ?? fileMap.get(clean.toLowerCase()) ?? null;
+  if (fileMap.has(clean)) return fileMap.get(clean);
+  const candidates = [...fileMap.keys()].filter(key => key.toLowerCase() === clean.toLowerCase());
+  return candidates.length === 1 ? fileMap.get(candidates[0]) : null;
 }
 
 // Read a 1-based inclusive line window from a file's content. Returns a

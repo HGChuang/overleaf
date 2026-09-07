@@ -9,6 +9,39 @@ const Metrics = require('./Metrics')
 const DeleteQueueManager = require('./DeleteQueueManager')
 const { getTotalSizeOfLines } = require('./Limits')
 const async = require('async')
+const { createHash } = require('node:crypto')
+const UpdateManager = require('./UpdateManager')
+
+async function applyCopilotPatch(req, res, next) {
+  try {
+    const { expectedHash, expectedVersion, content, operationId, userId } = req.body || {}
+    if (typeof content !== 'string' || !/^[a-f0-9]{64}$/.test(expectedHash || '') ||
+      !Number.isSafeInteger(expectedVersion) || typeof operationId !== 'string' || operationId.length > 128) return res.sendStatus(400)
+    const lines = content.split('\n')
+    if (getTotalSizeOfLines(lines) > Settings.max_doc_length) return res.sendStatus(413)
+    const hash = value => createHash('sha256').update(value).digest('hex')
+    const result = await UpdateManager.promises.lockUpdatesAndDo(async (projectId, docId) => {
+      const before = await DocumentManager.promises.getDoc(projectId, docId)
+      const beforeHash = hash(before.lines.join('\n'))
+      const targetHash = hash(content)
+      if (beforeHash === targetHash) {
+        return { status: 'applied', idempotent: true, operationId,
+          beforeHash, beforeVersion: before.version, afterHash: beforeHash, afterVersion: before.version }
+      }
+      if (beforeHash !== expectedHash || before.version !== expectedVersion) {
+        return { status: 'conflicted', beforeHash, beforeVersion: before.version, operationId }
+      }
+      await DocumentManager.promises.setDoc(projectId, docId, lines, {
+        kind: 'copilot',
+        operationId,
+      }, userId)
+      const after = await DocumentManager.promises.getDoc(projectId, docId)
+      return { status: hash(after.lines.join('\n')) === targetHash ? 'applied' : 'unknown',
+        operationId, beforeHash, beforeVersion: before.version, afterHash: hash(after.lines.join('\n')), afterVersion: after.version }
+    }, req.params.project_id, req.params.doc_id)
+    res.json(result)
+  } catch (error) { next(error) }
+}
 
 function getDoc(req, res, next) {
   let fromVersion
@@ -456,6 +489,7 @@ function unblockProject(req, res, next) {
 }
 
 module.exports = {
+  applyCopilotPatch,
   getDoc,
   peekDoc,
   getProjectDocsAndFlushIfOld,

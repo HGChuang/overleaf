@@ -43,6 +43,7 @@ const ProjectSchema = new Schema(
     rootDoc_id: { type: ObjectId },
     rootFolder: [FolderSchema],
     version: { type: Number }, // incremented for every change in the project structure (folders and filenames)
+    copilotConfigVersion: { type: Number }, // compile configuration revision, independent of history's structure sequence
     publicAccesLevel: { type: String, default: 'private' },
     compiler: { type: String, default: 'pdflatex' },
     spellCheckLanguage: { type: String, default: 'en' },

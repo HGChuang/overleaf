@@ -21,7 +21,7 @@ import usePersistedState from '@/shared/hooks/use-persisted-state'
 import { useProjectContext } from '@/shared/context/project-context'
 import { useEditorManagerContext } from '@/features/ide-react/context/editor-manager-context'
 import { useDetachCompileContext } from '@/shared/context/detach-compile-context'
-import { copilotChatStream, CopilotError } from '../utils/copilot-api'
+import { copilotChatStream, copilotGetConversation, CopilotError } from '../utils/copilot-api'
 import type {
   CompileErrorEntry,
   CopilotMessage,
@@ -73,11 +73,15 @@ export interface CopilotContextValue {
   // status + errors
   status: Status
   error: string | null
+  contextStatus: string | null
+  hasEarlierMessages: boolean
+  loadEarlierMessages: () => void
   clearError: () => void
 
   // actions
   sendMessage: (text: string, opts?: { hidden?: boolean }) => void
   startNewChat: () => void
+  switchConversation: (conversationId: string) => void
   continueInCopilot: (seed: ContinueSeed) => void
   // called by PatchBlock after a patch was applied — may trigger an
   // automatic compile-verification turn (self-healing loop)
@@ -104,6 +108,7 @@ function genId(prefix: string): string {
 
 export const CopilotProvider: FC = ({ children }) => {
   const { _id: projectId } = useProjectContext()
+  const [contextStatus, setContextStatus] = useState<string | null>(null)
   const editorManager = useEditorManagerContext()
   // Compile state of the user's last compile (parsed log entries) — pushed to
   // the agent as structured errors so compile-fix turns start from the real
@@ -114,12 +119,50 @@ export const CopilotProvider: FC = ({ children }) => {
   const [isOpen, setIsOpen] = usePersistedState<boolean>('copilot:open', false)
   const conversationIdDefault = useMemo(() => genId('conv_panel'), [])
   const [conversationId, setConversationId] = usePersistedState<string>(
-    'copilot:conv:panel',
+    `copilot:conv:panel:${projectId}`,
     conversationIdDefault
   )
 
   // --- ephemeral state ---
   const [messages, setMessages] = useState<CopilotMessage[]>([])
+  const [historyBefore, setHistoryBefore] = useState<number | null>(null)
+  const historyLoadingRef = useRef(false)
+  const historyAbortRef = useRef<AbortController | null>(null)
+
+  useEffect(() => {
+    const controller = new AbortController()
+    historyAbortRef.current?.abort()
+    historyAbortRef.current = controller
+    setMessages([])
+    setContextStatus(null)
+    setHistoryBefore(null)
+    copilotGetConversation(conversationId, projectId, controller.signal)
+      .then(data => {
+        if (controller.signal.aborted) return
+        // A user can start typing before history loads. Do not overwrite an
+        // active streamed response when this slower read completes.
+        setMessages(previous => previous.length ? previous : (data.messages || []))
+        setHistoryBefore(data.nextBefore ?? null)
+      })
+      .catch(() => { /* New conversations have no journal yet. */ })
+    return () => historyAbortRef.current?.abort()
+  }, [conversationId, projectId])
+
+  const loadEarlierMessages = useCallback(() => {
+    if (historyBefore === null || historyLoadingRef.current) return
+    const controller = new AbortController()
+    historyAbortRef.current?.abort()
+    historyAbortRef.current = controller
+    historyLoadingRef.current = true
+    copilotGetConversation(conversationId, projectId, controller.signal, historyBefore)
+      .then(data => {
+        if (controller.signal.aborted) return
+        setMessages(previous => [...(data.messages || []), ...previous])
+        setHistoryBefore(data.nextBefore ?? null)
+      })
+      .catch(() => { /* Leave the cursor available for another attempt. */ })
+      .finally(() => { historyLoadingRef.current = false })
+  }, [conversationId, projectId, historyBefore])
   const [seedText, setSeedText] = useState<string | null>(null)
   const [selection, setSelection] = useState<CopilotSelection | null>(null)
 
@@ -260,6 +303,20 @@ export const CopilotProvider: FC = ({ children }) => {
     if (chatAbortRef.current) chatAbortRef.current.abort()
   }, [setConversationId])
 
+  const switchConversation = useCallback((nextConversationId: string) => {
+    if (!nextConversationId || nextConversationId === conversationId) return
+    if (chatAbortRef.current) chatAbortRef.current.abort()
+    setStatus('idle')
+    setError(null)
+    setSelection(null)
+    setSeedText(null)
+    setConversationId(nextConversationId)
+    lastSentCompileErrorCountRef.current = 0
+    lastTurnUsedCompileProjectRef.current = false
+    autoVerifyCountRef.current = 0
+    toolStartTimesRef.current.clear()
+  }, [conversationId, setConversationId])
+
   // ----- chat -----
   const sendMessage = useCallback(
     (text: string, opts?: { hidden?: boolean }) => {
@@ -298,7 +355,7 @@ export const CopilotProvider: FC = ({ children }) => {
           attachedFiles: [] as string[],
           ...(compileErrors.length ? { compileErrors } : {}),
         },
-        message: { role: 'user', content },
+        message: { role: 'user', content, origin: opts?.hidden ? 'system_event' : 'author' },
       }
 
       toolStartTimesRef.current.clear()
@@ -314,7 +371,15 @@ export const CopilotProvider: FC = ({ children }) => {
           // Rendering the timeline in order keeps the display faithful to
           // the agent's real interleaving — a text segment never grows above
           // a tool row that followed it.
-          if (event.type === 'text_delta') {
+          if (event.type === 'context_compacting') {
+            setContextStatus('正在整理论文上下文，保留作者要求与工具记录…')
+          } else if (event.type === 'context_compacted') {
+            setContextStatus(`上下文已整理（第 ${event.generation} 次）；完整会话记录仍保留。`)
+          } else if (event.type === 'context_degraded') {
+            setContextStatus('摘要暂不可用，已保留原始作者要求与工具记录。')
+          } else if (event.type === 'context_invalidated') {
+            setContextStatus('论文在处理期间发生变化；本轮进度已保存，请基于最新版本重试。')
+          } else if (event.type === 'text_delta') {
             setMessages(prev => {
               const last = prev[prev.length - 1]
               if (!last?.pending) return prev
@@ -494,12 +559,16 @@ export const CopilotProvider: FC = ({ children }) => {
       selection,
       clearSelection,
       conversationId,
+      contextStatus,
+      hasEarlierMessages: historyBefore !== null,
+      loadEarlierMessages,
       messages,
       status,
       error,
       clearError,
       sendMessage,
       startNewChat,
+      switchConversation,
       continueInCopilot,
       notifyPatchAccepted,
     }),
@@ -512,12 +581,16 @@ export const CopilotProvider: FC = ({ children }) => {
       selection,
       clearSelection,
       conversationId,
+      contextStatus,
+      historyBefore,
+      loadEarlierMessages,
       messages,
       status,
       error,
       clearError,
       sendMessage,
       startNewChat,
+      switchConversation,
       continueInCopilot,
       notifyPatchAccepted,
     ]

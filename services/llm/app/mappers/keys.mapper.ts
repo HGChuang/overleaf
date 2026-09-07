@@ -1,5 +1,7 @@
 import { ApiKeyModel } from '../models/api-key.model.js';
 import { chooseChatModel, chooseCompletionModel } from '../utils/common.js';
+import { validateModelLimits } from '../services/model-limits.js';
+import { badRequest, notFound } from '../utils/errors.js';
 
 export class ApiKeyMapper {
   model: ReturnType<typeof ApiKeyModel.getModel>;
@@ -124,5 +126,18 @@ export class ApiKeyMapper {
     } else {
       throw new Error('invalid chatOrCompletion value');
     }
+  }
+
+  async updateModelLimits(userIdentifier: string, name: string, modelId: string, value: unknown) {
+    if (typeof name !== 'string' || !name || typeof modelId !== 'string' || !modelId) throw badRequest('Provider name and model ID are required.');
+    const limits = validateModelLimits(value);
+    const result = await this.model.updateOne({
+      _id: userIdentifier, llminfo: { $elemMatch: { name, 'models.id': modelId } },
+    }, { $set: {
+      'llminfo.$[provider].models.$[model].contextWindow': limits.contextWindow,
+      'llminfo.$[provider].models.$[model].maxTokens': limits.maxTokens,
+    } }, { arrayFilters: [{ 'provider.name': name }, { 'model.id': modelId }], runValidators: true });
+    if (result.matchedCount !== 1) throw notFound('Provider or model not found in your settings.');
+    return limits;
   }
 }

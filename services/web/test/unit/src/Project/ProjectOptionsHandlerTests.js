@@ -59,7 +59,8 @@ describe('ProjectOptionsHandler', function () {
       await this.handler.promises.setCompiler(projectId, 'xeLaTeX')
       const args = this.projectModel.updateOne.args[0]
       args[0]._id.should.equal(projectId)
-      args[1].compiler.should.equal('xelatex')
+      args[1].$set.compiler.should.equal('xelatex')
+      args[1].$inc.copilotConfigVersion.should.equal(1)
     })
 
     it('should not perform and update on mongo if it is not a recognised compiler', async function () {
@@ -95,7 +96,8 @@ describe('ProjectOptionsHandler', function () {
       await this.handler.promises.setImageName(projectId, 'texlive-1234.5')
       const args = this.projectModel.updateOne.args[0]
       args[0]._id.should.equal(projectId)
-      args[1].imageName.should.equal('docker-repo/subdir/texlive-1234.5')
+      args[1].$set.imageName.should.equal('texlive-1234.5')
+      args[1].$inc.copilotConfigVersion.should.equal(1)
     })
 
     it('should not perform and update on mongo if it is not a reconised image name', async function () {

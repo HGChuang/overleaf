@@ -288,7 +288,8 @@ export const EditorManagerProvider: FC = ({ children }) => {
         }
         if (
           update.meta.origin?.kind === 'file-restore' ||
-          update.meta.origin?.kind === 'project-restore'
+          update.meta.origin?.kind === 'project-restore' ||
+          update.meta.origin?.kind === 'copilot'
         ) {
           return
         }

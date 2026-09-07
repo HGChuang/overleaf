@@ -3,6 +3,7 @@ import { EditorView } from '@codemirror/view'
 import { marked } from "marked"
 import getMeta from '@/utils/meta'
 import { useCopilotContext } from '@/features/copilot'
+import { runCopilotEditorAction } from '@/features/copilot/utils/copilot-api'
 
 export type LLMToolbarHandle = {
   show: (view: EditorView) => void
@@ -84,14 +85,21 @@ const kindTitleMap: Record<ParaphraseKind, string> = {
   algorithm: 'Algorithm Generator',
 }
 
-// generators routed through the new /api/v1/copilot/chat endpoint (tab: write).
-// The legacy numeric-mode path (/api/v1/llm/llm) stays for paraphrase/style/etc.
 const GENERATOR_PROMPTS: Record<'table' | 'formula' | 'algorithm', string> = {
   table: 'Generate a LaTeX table based on the selected content. Return only the LaTeX table code inside a latex code fence.',
   formula: 'Generate a LaTeX formula based on the selected content. Return only the LaTeX formula inside a latex code fence.',
   algorithm: 'Generate a LaTeX algorithm (algorithmic environment) based on the selected content. Return only the LaTeX code inside a latex code fence.',
 }
 const GENERATOR_KINDS: ParaphraseKind[] = ['table', 'formula', 'algorithm']
+const ACTION_PROMPTS: Record<Exclude<ParaphraseKind, 'chat' | 'table' | 'formula' | 'algorithm'>, string> = {
+  paraphrase: 'Paraphrase the selected text while preserving its meaning and LaTeX commands.',
+  style: 'Rewrite the selected text in the chosen academic style while preserving LaTeX commands.',
+  splitjoin: 'Improve the sentence structure of the selected text while preserving its meaning and LaTeX commands.',
+  summarize: 'Summarize the selected text.',
+  explain: 'Explain the selected text clearly.',
+  title: 'Generate a concise academic title from the selected text.',
+  abstract: 'Generate an academic abstract from the selected text.',
+}
 
 /* ---------- component ---------- */
 
@@ -128,52 +136,18 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
   const inputRef = useRef<HTMLTextAreaElement | null>(null)
   const editRef = useRef<HTMLTextAreaElement | null>(null)
 
-  // Collect context helpers (kept from original)
-  const collectContext = () => {
-    const filelist: string[] = []
-    const outline: string[] = []
-    try { document.querySelectorAll('.file-tree .entity-name').forEach(el => { const t = el.textContent?.trim(); if (t) filelist.push(t) }) } catch (e) { /* ignore */ }
-    try { document.querySelectorAll('.outline-pane .outline-item').forEach(el => { const t = el.textContent?.trim(); if (t) outline.push(t) }) } catch (e) { /* ignore */ }
-    return { filelist, outline }
-  }
-
-  const postToAPI = async (mode: number, ask: string) => {
-    const { filelist, outline } = collectContext()
-    const body = { ask, selection: selectionText, filelist, outline, mode }
-    try {
-      const resp = await fetch('/api/v1/llm/llm', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify(body) })
-      if (!resp) throw new Error('no response')
-      const json = await resp.json()
-      if (json?.success) return typeof json.data === 'string' ? json.data : JSON.stringify(json.data)
-      throw new Error(json?.message || 'api error')
-    } catch (err: any) {
-      console.error('LLM API error', err)
-      return `Error: ${err?.message || 'Request failed'}`
-    }
-  }
-
-  // Route the Table/Formula/Algorithm generators through the Copilot chat
-  // endpoint (/api/v1/copilot/chat, source: selection). Project context is
-  // built server-side from projectId. Returns the assistant message text
-  // (joined blocks, falling back to content).
-  const postToCopilot = async (ask: string) => {
+  // Every selection action uses the same Copilot agent endpoint as the panel.
+  // `mode` only selects the task prompt; transport, model resolution, and
+  // execution all go through CopilotService.chat.
+  const postToCopilot = async (ask: string, mode: number) => {
     const projectId = getMeta('ol-project_id')
-    const body = {
-      projectId,
-      conversation: { source: 'selection' },
-      context: { selectedText: selectionText },
-      message: { role: 'user', content: ask },
-    }
     try {
-      const resp = await fetch('/api/v1/copilot/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify(body) })
-      if (!resp) throw new Error('no response')
-      const json = await resp.json()
-      if (json?.success) {
-        const msg = json.data?.message
-        const blocksText = (msg?.blocks || []).map((b: any) => b.text || '').filter(Boolean).join('\n\n')
-        return blocksText || (typeof msg?.content === 'string' ? msg.content : '') || ''
-      }
-      throw new Error(json?.error?.message || 'api error')
+      return await runCopilotEditorAction({
+        projectId,
+        selectedText: selectionText,
+        message: ask,
+        action: { kind: 'selection', mode },
+      })
     } catch (err: any) {
       console.error('Copilot API error', err)
       return `Error: ${err?.message || 'Request failed'}`
@@ -190,7 +164,10 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
     setShowDiff(false)
     setResult('')
 
-    const resp = await postToAPI(mode, (ask ?? query).trim())
+    const entered = (ask ?? query).trim()
+    const prompt = entered ||
+      (k === 'chat' ? 'Help with the selected text.' : ACTION_PROMPTS[k])
+    const resp = await postToCopilot(prompt, mode)
     setResult(resp)
     setLoading(false)
   }
@@ -205,17 +182,17 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
     setEditMode(false)
     setShowDiff(false)
     setResult('')
-    const resp = await postToCopilot(prompt)
+    const resp = await postToCopilot(prompt, 0)
     setResult(resp)
     setLoading(false)
   }
 
-  // regenerate the current result, dispatching to the right backend path.
+  // Regenerate through the same Copilot agent path.
   const regenerate = () => {
     if ((GENERATOR_KINDS as ParaphraseKind[]).includes(kind)) {
       runGenerator(kind as 'table' | 'formula' | 'algorithm')
     } else {
-      startFetch(kindToMode[kind], kind)
+      startFetch(kindToMode[kind] ?? 0, kind)
     }
   }
 
@@ -443,7 +420,7 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
   }
 
   // helper: kind -> mode number for regenerate calls
-  const kindToMode: Record<ParaphraseKind, number> = { paraphrase: 1, style: 2, splitjoin: 5, summarize: 7, explain: 8, title: 9, abstract: 10, chat: 0 }
+  const kindToMode: Partial<Record<ParaphraseKind, number>> = { paraphrase: 1, style: 2, splitjoin: 5, summarize: 7, explain: 8, title: 9, abstract: 10, chat: 0 }
 
   // compute content container maxHeight (50% of viewport height), with sensible min clamp
   const contentMaxHeight = Math.max(140, Math.round(window.innerHeight * 0.5))

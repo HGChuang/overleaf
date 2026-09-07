@@ -79,4 +79,15 @@ export class KeysController {
       res.status(400).json({ success: false, data: error.message });
     }
   }
+
+  async updateModelLimits(req: Request, res: Response) {
+    try {
+      const userIdentifier = await getUserIdentifier(req.cookies?.['overleaf.sid']);
+      const { name, modelId, contextWindow, maxTokens } = req.body || {};
+      const limits = await this.keysService.apiKeyMapper.updateModelLimits(userIdentifier, name, modelId, { contextWindow, maxTokens });
+      res.json({ success: true, data: limits });
+    } catch (error: any) {
+      res.status(error.status || 400).json({ success: false, data: error.message });
+    }
+  }
 }

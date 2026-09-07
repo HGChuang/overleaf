@@ -14,7 +14,7 @@ const ProjectOptionsHandler = {
       throw new Error(`invalid compiler: ${compiler}`)
     }
     const conditions = { _id: projectId }
-    const update = { compiler }
+    const update = { $set: { compiler }, $inc: { copilotConfigVersion: 1 } }
     return Project.updateOne(conditions, update, {})
   },
 
@@ -30,7 +30,7 @@ const ProjectOptionsHandler = {
       throw new Error(`invalid imageName: ${imageName}`)
     }
     const conditions = { _id: projectId }
-    const update = { imageName: imageName }
+    const update = { $set: { imageName }, $inc: { copilotConfigVersion: 1 } }
     return Project.updateOne(conditions, update, {})
   },
 

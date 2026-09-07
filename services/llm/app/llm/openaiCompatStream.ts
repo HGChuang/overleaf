@@ -210,6 +210,10 @@ export function buildOpenAICompatRequest(
 	if (options?.temperature !== undefined) {
 		params.temperature = options?.temperature;
 	}
+	if (model.compat?.promptCacheKey && options?.promptCacheKey) {
+		params.prompt_cache_key = options.promptCacheKey;
+		if (model.compat.promptCacheRetention) params.prompt_cache_retention = model.compat.promptCacheRetention;
+	}
 	if (context.tools && context.tools.length > 0) {
 		params.tools = convertTools(context.tools);
 	} else if (hasToolHistory(context.messages)) {
@@ -237,6 +241,8 @@ function parseChunkUsage(rawUsage: {
 		output: outputTokens,
 		cacheRead: cacheReadTokens,
 		cacheWrite: cacheWriteTokens,
+		cacheReadKnown: rawUsage.prompt_tokens_details?.cached_tokens !== undefined || rawUsage.prompt_cache_hit_tokens !== undefined,
+		cacheWriteKnown: rawUsage.prompt_tokens_details?.cache_write_tokens !== undefined,
 		reasoning: rawUsage.completion_tokens_details?.reasoning_tokens || 0,
 		totalTokens: input + outputTokens + cacheReadTokens + cacheWriteTokens,
 		cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, total: 0 },

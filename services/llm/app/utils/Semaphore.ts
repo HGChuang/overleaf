@@ -9,12 +9,25 @@ export class Semaphore {
     this.queue = [];
   }
 
-  acquire(): Promise<void> {
+  acquire(signal?: AbortSignal): Promise<void> {
+    if (signal?.aborted) return Promise.reject(signal.reason);
     if (this.current < this.max) {
       this.current += 1;
       return Promise.resolve();
     }
-    return new Promise(resolve => this.queue.push(resolve));
+    return new Promise((resolve, reject) => {
+      const ready = () => {
+        signal?.removeEventListener('abort', cancel);
+        resolve();
+      };
+      const cancel = () => {
+        const index = this.queue.indexOf(ready);
+        if (index !== -1) this.queue.splice(index, 1);
+        reject(signal?.reason);
+      };
+      this.queue.push(ready);
+      signal?.addEventListener('abort', cancel, { once: true });
+    });
   }
 
   release() {

@@ -46,6 +46,9 @@ export interface Usage {
 	output: number;
 	cacheRead: number;
 	cacheWrite: number;
+	/** Missing provider telemetry is unknown, not a measured zero. */
+	cacheReadKnown?: boolean;
+	cacheWriteKnown?: boolean;
 	reasoning?: number;
 	totalTokens: number;
 	cost: {
@@ -82,6 +85,8 @@ export interface AssistantMessage {
 	model: string;
 	responseModel?: string;
 	responseId?: string;
+	/** Provider-native replay items (encrypted reasoning, signatures, etc.). */
+	providerItems?: unknown[];
 	usage: Usage;
 	stopReason: StopReason;
 	errorMessage?: string;
@@ -163,6 +168,7 @@ export interface SimpleStreamOptions {
 	signal?: AbortSignal;
 	apiKey?: string;
 	sessionId?: string;
+	promptCacheKey?: string;
 	/** HTTP request timeout (ms) for the underlying provider client. */
 	timeoutMs?: number;
 	/** Client-side retry attempts for transient failures. */
@@ -181,10 +187,19 @@ export interface SimpleStreamOptions {
  * descriptor carries explicit values.
  */
 export interface OpenAICompatOptions {
+	protocol?: "chat-completions" | "responses" | "anthropic-messages";
 	/** Which request field carries the output token cap. Default "max_tokens". */
 	maxTokensField?: "max_tokens" | "max_completion_tokens";
 	/** Send `stream_options: { include_usage: true }`. Default true. */
 	includeUsage?: boolean;
+	/** Explicit deployment capability; never inferred from a model name. */
+	promptCacheKey?: boolean;
+	promptCacheRetention?: "in-memory" | "24h";
+	promptCacheMode?: "implicit" | "explicit";
+	promptCacheTtl?: "5m" | "30m" | "1h";
+	maxCacheBreakpoints?: number;
+	tokenizerId?: string;
+	profileVersion?: string;
 }
 
 export interface ModelCostRates {

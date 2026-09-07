@@ -7,24 +7,8 @@
 // (specifically `context.project`), using the shared `fileMap` helpers.
 
 import { defineTool } from './baseTool.js';
-import { buildFileMap, lookupFile, readFileFragment } from './fileMap.js';
-
-// Hard output caps. The tool result rides into the model context verbatim and
-// microCompact keeps the most recent tool results INTACT — a couple of
-// unbounded full-file reads can blow the whole context window on their own
-// (the 120KB request budget covers the request, not the accumulated history).
-// 20KB ≈ 5-6k tokens, safe alongside the system prompt + a few more results.
-const MAX_READ_CHARS = 20_000;
-const MAX_FRAGMENT_LINES = 200;
-
-function capContent(content: string, totalLines: number): string {
-  if (content.length <= MAX_READ_CHARS) return content;
-  return (
-    content.slice(0, MAX_READ_CHARS) +
-    `\n... [truncated at ${MAX_READ_CHARS} chars of a ${totalLines}-line file — ` +
-    `use read_file_fragment with a line range to read more]`
-  );
-}
+import { buildFileMap, lookupFile } from './fileMap.js';
+import { sourcePage, candidateText, digest } from '../context/source-evidence.js';
 
 // Word-count algorithm vendored from eval/graders/assertGrader.ts
 // (stripLatex + countWords) — KEEP IN SYNC with that file: eval graders judge
@@ -49,11 +33,27 @@ function countWordsInText(text: string): number {
   return latin.length + cjk.length;
 }
 
-export function buildProjectTools(context: any = {}) {
+export function buildProjectTools(context: any = {}, deps: { loadFile?: (path: string) => Promise<string> } = {}) {
   const project = context.project || {};
   const fileMap = buildFileMap(project.files);
+  const contentCache = new Map<string, Promise<string>>();
+  const resolvePath = (path: string) => {
+    const clean = path.replace(/^\//, '');
+    const candidates = [...fileMap.keys()].filter(key => key === clean || key.toLowerCase() === clean.toLowerCase());
+    return fileMap.has(clean) ? clean : candidates.length === 1 ? candidates[0] : null;
+  };
+  const getContent = async (path: string): Promise<string | null> => {
+    const canonical = resolvePath(path);
+    if (!canonical) return null;
+    if (!deps.loadFile) return lookupFile(fileMap, canonical);
+    if (!contentCache.has(canonical)) contentCache.set(canonical, deps.loadFile(canonical));
+    return contentCache.get(canonical)!;
+  };
   const fileList = Array.isArray(project.fileList) ? project.fileList : [];
   const outline = Array.isArray(project.outline) ? project.outline : [];
+  const sourceMeta = new Map((project.files || []).map((file: any) => [file.path, file]));
+  const pageOptions = (path: string) => ({ snapshotId: project.sourceSnapshot?.id,
+    docId: (sourceMeta.get(path) as any)?.docId, version: (sourceMeta.get(path) as any)?.version });
 
   const listProjectFiles = defineTool({
     name: 'list_project_files',
@@ -67,62 +67,43 @@ export function buildProjectTools(context: any = {}) {
   const readFile = defineTool({
     name: 'read_file',
     description:
-      'Read the full contents of a project file by path. Use for small/medium files; for large files prefer read_file_fragment with a line window. Pass an optional `limit` (number of lines from the top) to cap the output.',
+      'Read exact project source, hash and byte range within a 4096-token conservative budget. Follow nextOffsetBytes using offsetBytes to retrieve subsequent pages. A page is partial read coverage, not a completed audit. Optional limit restricts the requested line range.',
     parameters: {
       type: 'object',
       properties: {
         path: { type: 'string', description: 'Project file path, e.g. main.tex or sections/intro.tex' },
         limit: { type: 'integer', minimum: 1, description: 'Max lines to return from the top' },
+        offsetBytes: { type: 'integer', minimum: 0, description: 'Exact nextOffsetBytes returned by the preceding page' },
       },
       required: ['path'],
     },
-    handler: async ({ path, limit }: { path: string; limit?: number }) => {
-      const content = lookupFile(fileMap, path);
-      if (content == null) {
-        return JSON.stringify({
-          found: false,
-          message: `File not found: ${path}`,
-          availablePaths: [...new Set([...fileMap.keys()].filter(k => k === k))].slice(0, 50),
-        });
-      }
-      const lines = content.split('\n');
-      const limited =
-        limit && limit < lines.length
-          ? lines.slice(0, limit).join('\n') + `\n... (${lines.length - limit} more lines)`
-          : content;
-      return JSON.stringify({
-        found: true,
-        path,
-        totalLines: lines.length,
-        content: capContent(limited, lines.length),
-      });
+    handler: async ({ path, limit, offsetBytes }: { path: string; limit?: number; offsetBytes?: number }) => {
+      const content = await getContent(path);
+      if (content == null) return JSON.stringify({ found: false, message: `File not found or ambiguous: ${path}` });
+      const canonical = resolvePath(path)!;
+      return JSON.stringify(sourcePage(canonical, content, { ...pageOptions(canonical), endLine: limit, offsetBytes }));
     },
   });
 
   const readFileFragmentTool = defineTool({
     name: 'read_file_fragment',
     description:
-      'Read a fragment of a project source file by path and 1-based inclusive line range. Use this to inspect the real code around a specific line (e.g. a compile error). Returns line-numbered source. Pass startLine ~ line-3 and endLine ~ line+3 for context.',
+      'Read a fragment of a project source file by path and 1-based inclusive line range. Use this to inspect the real code around a specific line (e.g. a compile error). Returns exact unnumbered source, startLine, content hash and byte cursor. Follow nextOffsetBytes with the same range if truncated. Pass startLine ~ line-3 and endLine ~ line+3 for context.',
     parameters: {
       type: 'object',
       properties: {
         path: { type: 'string', description: 'Project file path, e.g. main.tex' },
         startLine: { type: 'integer', minimum: 1, description: '1-based start line' },
         endLine: { type: 'integer', minimum: 1, description: '1-based end line (inclusive)' },
+        offsetBytes: { type: 'integer', minimum: 0 },
       },
       required: ['path', 'startLine', 'endLine'],
     },
-    handler: async ({ path, startLine, endLine }: { path: string; startLine: number; endLine: number }) => {
-      // Clamp absurd windows: the result is also capped to MAX_READ_CHARS.
-      const cappedEnd =
-        Number.isInteger(endLine) && Number.isInteger(startLine)
-          ? Math.min(endLine, startLine + MAX_FRAGMENT_LINES - 1)
-          : endLine;
-      const fragment = readFileFragment(fileMap, path, startLine, cappedEnd);
-      if (fragment.found && typeof fragment.content === 'string') {
-        fragment.content = capContent(fragment.content, fragment.totalLines || 0);
-      }
-      return JSON.stringify(fragment);
+    handler: async ({ path, startLine, endLine, offsetBytes }: { path: string; startLine: number; endLine: number; offsetBytes?: number }) => {
+      const content = await getContent(path);
+      if (content == null) return JSON.stringify({ found: false, message: `File not found or ambiguous: ${path}` });
+      const canonical = resolvePath(path)!;
+      return JSON.stringify(sourcePage(canonical, content, { ...pageOptions(canonical), startLine, endLine, offsetBytes }));
     },
   });
 
@@ -133,6 +114,7 @@ export function buildProjectTools(context: any = {}) {
     parameters: {
       type: 'object',
       properties: {
+        cursor: { type: 'integer', minimum: 0, description: 'nextCursor from the previous search page' },
         query: { type: 'string', description: 'The text to search for (case-insensitive)' },
         filePattern: {
           type: 'string',
@@ -141,47 +123,56 @@ export function buildProjectTools(context: any = {}) {
       },
       required: ['query'],
     },
-    handler: async ({ query, filePattern }: { query: string; filePattern?: string }) => {
+    handler: async ({ query, filePattern, cursor = 0 }: { query: string; filePattern?: string; cursor?: number }) => {
       if (!query) return JSON.stringify({ matches: [], note: 'empty query' });
       const needle = String(query).toLowerCase();
-      const matches: Array<{ file: string; line: number; text: string }> = [];
-      for (const [path, content] of fileMap.entries()) {
+      const matches: Array<{ file: string; line: number; text: string; sourceHash: string }> = [];
+      let visited = 0;
+      let used = 128;
+      for (const path of fileMap.keys()) {
         if (filePattern && !path.includes(filePattern)) continue;
-        if (typeof content !== 'string') continue;
+        const content = await getContent(path);
+        if (content === null) continue;
         const lines = content.split('\n');
         for (let i = 0; i < lines.length; i++) {
-          if (lines[i].toLowerCase().includes(needle)) {
-            matches.push({ file: path, line: i + 1, text: lines[i].trim().slice(0, 200) });
-            if (matches.length >= 50) {
-              return JSON.stringify({ matches, truncated: true });
-            }
-          }
+          if (!lines[i].toLowerCase().includes(needle)) continue;
+          if (visited++ < cursor) continue;
+          const match = { file: path, line: i + 1, text: lines[i].slice(0, 160), sourceHash: digest(content) };
+          const size = Buffer.byteLength(JSON.stringify(match)) + 1;
+          if (used + size > 3800 && matches.length) return JSON.stringify({ matches, nextCursor: visited - 1, truncated: true });
+          matches.push(match);
+          used += size;
         }
       }
-      return JSON.stringify({ matches, total: matches.length });
+      return JSON.stringify({ matches, nextCursor: null, total: visited, truncated: false });
     },
   });
 
   const countWordsTool = defineTool({
     name: 'count_words',
     description:
-      "Return the EXACT word count of a project file's readable text: LaTeX comments, math ($...$, display math), \\begin/\\end markers and command names are stripped first (brace contents are kept), then each latin/number token counts 1 and each CJK character counts 1. Use whenever the user's instruction carries a length constraint (\"shorten by 30%\", \"at most 120 words\"): call it BEFORE editing for the baseline and AFTER your patch is applied to verify the constraint is actually met — never estimate word counts by eye.",
+      "Return the EXACT word count of a project file's readable text: LaTeX comments, math ($...$, display math), \\begin/\\end markers and command names are stripped first (brace contents are kept), then each latin/number token counts 1 and each CJK character counts 1. Use whenever the user's instruction carries a length constraint (\"shorten by 30%\", \"at most 120 words\"): call it BEFORE editing for the baseline and pass candidateHunks to measure the proposed overlay BEFORE submit_patch. Candidate counts do not prove the edit was applied — never estimate word counts by eye.",
     parameters: {
       type: 'object',
       properties: {
+        candidateHunks: { type: 'array', items: { type: 'object', required: ['oldText', 'newText'], properties: {
+          oldText: { type: 'string' }, newText: { type: 'string' }, line: { type: 'integer', minimum: 1 },
+        } } },
         path: { type: 'string', description: 'Project file path, e.g. main.tex or sections/intro.tex' },
       },
       required: ['path'],
     },
-    handler: async ({ path }: { path: string }) => {
-      const content = lookupFile(fileMap, path);
+    handler: async ({ path, candidateHunks }: { path: string; candidateHunks?: Array<{ oldText: string; newText: string; line?: number }> }) => {
+      const content = await getContent(path);
       if (content == null) {
         return JSON.stringify({ found: false, message: `File not found: ${path}` });
       }
       return JSON.stringify({
         found: true,
         path,
-        wordCount: countWordsInText(stripLatexMarkup(content)),
+        basis: candidateHunks ? 'candidate-overlay-not-applied' : 'request-source',
+        sourceHash: digest(content),
+        wordCount: countWordsInText(stripLatexMarkup(candidateHunks ? candidateText(content, candidateHunks) : content)),
       });
     },
   });

@@ -1,20 +1,19 @@
 const ProjectGetter = require('../Project/ProjectGetter')
 const ProjectEntityHandler = require('../Project/ProjectEntityHandler')
 const ProjectRootDocManager = require('../Project/ProjectRootDocManager')
-const DocumentUpdaterHandler = require('../DocumentUpdater/DocumentUpdaterHandler')
+const CopilotSourceSnapshot = require('./CopilotSourceSnapshot')
 
-async function buildProjectContext(projectId) {
-  // Force document-updater to flush pending doc ops to Mongo before reading,
-  // so the agent sees what the user currently sees in the editor — the same
-  // guarantee the compile path relies on (ClsiManager flushes before build).
-  await DocumentUpdaterHandler.promises.flushProjectToMongo(projectId)
+async function buildProjectContext(projectId, { includeFiles = true } = {}) {
+  if (includeFiles) {
+    const captured = await CopilotSourceSnapshot.capture(projectId)
+    return { projectId, sourceSnapshot: { id: captured.sourceSnapshot.id } }
+  }
   const project = await ProjectGetter.promises.getProjectWithoutDocLines(projectId)
   if (!project) {
     throw new Error(`project not found: ${projectId}`)
   }
 
   const entities = ProjectEntityHandler.getAllEntitiesFromProject(project)
-  const allDocs = await ProjectEntityHandler.promises.getAllDocs(projectId)
   const fileList = [
     ...entities.docs.map(item => item.path.replace(/^\//, '')),
     ...entities.files.map(item => item.path.replace(/^\//, '')),
@@ -32,10 +31,7 @@ async function buildProjectContext(projectId) {
     rootDocId,
     fileList,
     outline: fileList.filter(path => path.endsWith('.tex')),
-    files: Object.entries(allDocs).map(([path, doc]) => ({
-      path: path.replace(/^\//, ''),
-      content: Array.isArray(doc?.lines) ? doc.lines.join('\n') : '',
-    })),
+    files: [],
   }
 }
 
@@ -48,7 +44,12 @@ async function buildProjectContext(projectId) {
 module.exports = {
   async buildCopilotBody(req) {
     const projectId = req.body.projectId || req.body.project?.projectId
-    const project = await buildProjectContext(projectId)
+    const source = req.body.conversation?.source || 'panel'
+    const isEditorAction =
+      source === 'selection' || source === 'inline-completion'
+    const project = await buildProjectContext(projectId, {
+      includeFiles: !isEditorAction,
+    })
 
     const body = {
       conversation:

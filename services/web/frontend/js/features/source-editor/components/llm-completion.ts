@@ -1,18 +1,18 @@
 import { Extension, StateEffect, StateField, EditorState, Prec } from "@codemirror/state";
 import { EditorView, ViewPlugin, ViewUpdate, Decoration, DecorationSet, WidgetType, keymap } from "@codemirror/view";
+import getMeta from '@/utils/meta';
+import { runCopilotEditorAction } from '@/features/copilot/utils/copilot-api';
 // =================================================================================
 // 1. Type Definitions
 // =================================================================================
 
 
 export interface CompletionOptions {
-  cursorOffset: number;
   leftContext: string;
   rightContext: string;
   language: string;
   maxLength: number;
-  fileList: string[];
-  outline: string[];
+  currentFile?: string;
 }
 
 
@@ -22,10 +22,7 @@ type Suggestion = {
   preview: string;
 };
 
-/**
- * LlmCompletio
- */
-type LlmCompletionResult =
+type CopilotCompletionResult =
   | { kind: "ok"; data: string }
   | { kind: "aborted" }
   | { kind: "error"; reason?: string; body?: any };
@@ -163,58 +160,41 @@ function showToast(message: string, durationMs = 3000) {
 // =================================================================================
 
 
-class LlmCompletion {
+class CopilotCompletion {
   /**
    * @param options 
    * @param signal AbortSignal
    * @returns
    */
-  async createCompletion(options: CompletionOptions, signal?: AbortSignal): Promise<LlmCompletionResult> {
+  async createCompletion(options: CompletionOptions, signal?: AbortSignal): Promise<CopilotCompletionResult> {
     try {
-      const res = await fetch(`/api/v1/llm/completion`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(options),
-        signal
+      const data = await runCopilotEditorAction({
+        projectId: getMeta('ol-project_id'),
+        currentFile: options.currentFile,
+        message: 'Complete the text at the cursor.',
+        action: {
+          kind: 'completion',
+          leftContext: options.leftContext,
+          rightContext: options.rightContext,
+          language: options.language,
+          maxLength: options.maxLength,
+        },
+        signal,
       });
-
-      let parsed: any;
-      try {
-        parsed = await res.json();
-      } catch (jsonError) {
-        return { kind: "error", reason: "invalid-json", body: "Response was not valid JSON." };
-      }
-
-      if (!res.ok) {
-        return { kind: "error", reason: "http-error", body: parsed };
-      }
-
-
-      if (parsed && typeof parsed === "object" && typeof parsed.success === "boolean") {
-        if (parsed.success && typeof parsed.data === "string") {
-          return { kind: "ok", data: parsed.data };
-        } else {
-          console.warn("[LlmCompletion] Backend indicated failure:", parsed);
-          return { kind: "error", reason: "backend-failure", body: parsed };
-        }
-      }
-
-      console.error("[LlmCompletion] Unexpected response format:", parsed);
-      return { kind: "error", reason: "unexpected-format", body: parsed };
+      return { kind: "ok", data };
 
     } catch (err: any) {
       if (err.name === "AbortError") {
-        console.debug("[LlmCompletion] Fetch aborted.");
+        console.debug("[CopilotCompletion] Fetch aborted.");
         return { kind: "aborted" };
       }
-      console.error("[LlmCompletion] Network or other error:", err);
+      console.error("[CopilotCompletion] Network or other error:", err);
       return { kind: "error", reason: "network-or-unknown" };
     }
   }
 }
 
-export const llmCompletion = new LlmCompletion();
+export const copilotCompletion = new CopilotCompletion();
 
 
 // =================================================================================
@@ -479,19 +459,16 @@ class InlineCompletionPlugin {
     const requestId = ++this.requestSeq;
     this.latestRequestId = requestId;
 
-    const { filelist, outline } = this.collectProjectContext();
     const language = this.getCurrentFileLanguage();
 
     console.debug(`[InlineCompletionPlugin] Triggering request #${requestId} at pos ${pos}`);
 
-    const result = await llmCompletion.createCompletion({
-      cursorOffset: pos,
+    const result = await copilotCompletion.createCompletion({
       leftContext,
       rightContext,
       language,
       maxLength: this.config.maxLength,
-      fileList: filelist,
-      outline: outline,
+      currentFile: this.getCurrentFileName(),
     }, this.requestAbortController.signal);
 
     // if the request was aborted or stale, ignore the result
@@ -585,43 +562,23 @@ class InlineCompletionPlugin {
   }
 
   /**
-   * getProjectContext
-   */
-  private collectProjectContext() {
-    if (typeof document === 'undefined') return { filelist: [], outline: [] };
-    const filelist: string[] = [];
-    const outline: string[] = [];
-    try {
-      document.querySelectorAll('.file-tree .entity-name').forEach(el => {
-        const text = el.textContent?.trim().replace('texMenu', 'tex');
-        if (text) filelist.push(text);
-      });
-      document.querySelectorAll('.outline-pane .outline-item').forEach(el => {
-        const text = el.textContent?.trim();
-        if (text) outline.push(text);
-      });
-    } catch (e) {
-      console.warn("Error collecting project context:", e);
-    }
-    return { filelist, outline };
-  }
-
-  /**
    * getCurrentFileLanguage
    */
   private getCurrentFileLanguage(): string {
-    if (typeof document === 'undefined') return this.config.language;
+    const fileName = this.getCurrentFileName();
+    const parts = fileName.split('.');
+    return parts.length > 1 ? parts.pop()! : this.config.language;
+  }
+
+  private getCurrentFileName(): string {
+    if (typeof document === 'undefined') return '';
     try {
       const selectedItem = document.querySelector('.file-tree li.selected span');
-      const fileName = selectedItem?.textContent?.trim() || '';
-      const parts = fileName.split('.');
-      if (parts.length > 1) {
-        return parts.pop()!;
-      }
+      return selectedItem?.textContent?.trim() || '';
     } catch (e) {
-      console.warn("Error getting current file language:", e);
+      console.warn("Error getting current file name:", e);
+      return '';
     }
-    return this.config.language;
   }
 
   /**
@@ -716,10 +673,7 @@ function shouldTriggerOnInsertion(update: ViewUpdate, maxInsertThreshold: number
 
 
 export const INLINE_COMPLETION_PLUGIN = ViewPlugin.define(
-  (view: EditorView) => new InlineCompletionPlugin(view),
-  {
-    destroy: (plugin) => plugin.destroy(),
-  }
+  (view: EditorView) => new InlineCompletionPlugin(view)
 );
 
 

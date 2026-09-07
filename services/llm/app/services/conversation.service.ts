@@ -1,33 +1,31 @@
-import { RedisMemoryStore } from '../agent/memory.js';
+import { ContextStore } from '../agent/context/context-store.js';
 import { mapMessagesForView } from '../agent/patchBlocks.js';
-import { notFound } from '../utils/errors.js';
+import { notFound, badRequest } from '../utils/errors.js';
+import { WebApiClient } from '../llm/webApiClient.js';
 
 export class ConversationService {
-  memoryStore: RedisMemoryStore;
+  constructor(private contextStore = new ContextStore(), private webClient = new WebApiClient()) {}
 
-  constructor({ memoryStore = new RedisMemoryStore() } = {}) {
-    this.memoryStore = memoryStore;
+  async getConversation(userIdentifier: string, conversationId: string, projectId: string, before?: number) {
+    if (!projectId) throw badRequest('projectId is required');
+    if (before !== undefined && (!Number.isSafeInteger(before) || before < 0)) throw badRequest('Invalid history cursor');
+    await this.webClient.assertProjectAccess(userIdentifier, projectId);
+    const history = await this.contextStore.historyPage(userIdentifier, conversationId, before);
+    if (!history || history.projectId !== projectId) throw notFound('conversation not found');
+    return { conversationId, messages: mapMessagesForView(history.messages), nextBefore: history.nextBefore };
   }
 
-  async getConversation(userIdentifier: string, conversationId: string) {
-    const threadId = this.buildThreadId(userIdentifier, conversationId);
-    const messages = await this.memoryStore.load(threadId);
-    if (!messages.length) {
-      throw notFound(`conversation not found: ${conversationId}`);
-    }
-    return {
-      conversationId,
-      // View mapping: drop tool-call plumbing and empty intermediate steps,
-      // rebuild patch cards, unwrap the user-message JSON envelope — the raw
-      // stored history is agent plumbing, not chat bubbles.
-      messages: mapMessagesForView(messages),
-    };
+  async listConversations(userIdentifier: string, projectId: string) {
+    if (!projectId) throw badRequest('projectId is required');
+    await this.webClient.assertProjectAccess(userIdentifier, projectId);
+    return { conversations: await this.contextStore.listConversations(userIdentifier, projectId) };
   }
 
-  buildThreadId(userIdentifier: string, conversationId: string): string {
-    if (!userIdentifier || !conversationId) {
-      throw notFound('conversationId is required');
-    }
-    return `${userIdentifier}:${conversationId}`;
+  async getContext(userIdentifier: string, conversationId: string, projectId: string) {
+    if (!projectId) throw badRequest('projectId is required');
+    await this.webClient.assertProjectAccess(userIdentifier, projectId);
+    const value = await this.contextStore.diagnostics(userIdentifier, conversationId, projectId);
+    if (!value) throw notFound('conversation not found');
+    return value;
   }
 }

@@ -29,10 +29,33 @@ function ensureWithinSize(value: unknown, maxBytes: number, message: string) {
 }
 
 function normalizeConversation(conversation: any = {}, defaults: any = {}) {
+  const source = ['panel', 'selection', 'inline-completion'].includes(conversation.source)
+    ? conversation.source
+    : defaults.source || 'panel';
   return {
     conversationId: conversation.conversationId || defaults.conversationId || null,
-    source: conversation.source || defaults.source || 'panel',
+    source,
   };
+}
+
+function normalizeEditorAction(value: any, source: string) {
+  if (source === 'selection') {
+    const mode = Number(value?.mode);
+    return {
+      kind: 'selection' as const,
+      mode: Number.isInteger(mode) && mode >= 0 && mode <= 10 ? mode : 0,
+    };
+  }
+  if (source === 'inline-completion') {
+    return {
+      kind: 'completion' as const,
+      leftContext: String(value?.leftContext || ''),
+      rightContext: String(value?.rightContext || ''),
+      language: String(value?.language || 'latex').slice(0, 32),
+      maxLength: Math.max(1, Math.min(Number(value?.maxLength) || 60, 1_000)),
+    };
+  }
+  return null;
 }
 
 function normalizeProject(project: any = {}) {
@@ -45,6 +68,7 @@ function normalizeProject(project: any = {}) {
     fileList: Array.isArray(project.fileList) ? project.fileList : [],
     outline: Array.isArray(project.outline) ? project.outline : [],
     files: Array.isArray(project.files) ? project.files : [],
+    sourceSnapshot: project.sourceSnapshot || null,
   };
 }
 
@@ -62,6 +86,9 @@ export class ContextService {
 
   normalizeChatContext(payload: any = {}) {
     const project = normalizeProject(payload.project || {});
+    const conversation = normalizeConversation(payload.conversation, {
+      source: 'panel',
+    });
     const context = {
       currentFile: payload.context?.currentFile || null,
       selectedText: payload.context?.selectedText || '',
@@ -69,10 +96,11 @@ export class ContextService {
         ? payload.context.attachedFiles.slice(0, this.maxAttachFiles)
         : [],
       compileErrors: normalizeCompileErrors(payload.context?.compileErrors),
+      editorAction: normalizeEditorAction(
+        payload.context?.editorAction,
+        conversation.source
+      ),
     };
-    const conversation = normalizeConversation(payload.conversation, {
-      source: 'panel',
-    });
     const message = payload.message || {};
     if (message.role !== 'user' || !message.content) {
       throw badRequest('message.role=user and message.content are required');
@@ -85,6 +113,7 @@ export class ContextService {
       message: {
         role: 'user' as const,
         content: message.content,
+        origin: message.origin === 'system_event' ? 'system_event' as const : 'author' as const,
       },
     };
     ensureWithinSize(normalized, this.maxContextBytes, 'chat context is too large');

@@ -1,5 +1,6 @@
 // LlmUsageRow.tsx
 import React from 'react';
+import ModelContextSettings, { ModelLimits } from './ModelContextSettings';
 
 type Props = {
   name: string;
@@ -11,6 +12,8 @@ type Props = {
   onChatModelChange: (newModel: string) => void;
   onCodeModelChange: (newModel: string) => void;
   onDelete: () => void;
+  modelLimits?: { id: string; contextWindow?: number; maxTokens?: number };
+  onLimitsSaved: (limits: ModelLimits) => void;
 };
 
 export default function LlmUsageRow({
@@ -23,6 +26,8 @@ export default function LlmUsageRow({
   onChatModelChange,
   onCodeModelChange,
   onDelete,
+  modelLimits,
+  onLimitsSaved,
 }: Props) {
   return (
     <tr>
@@ -40,6 +45,7 @@ export default function LlmUsageRow({
             </option>
           ))}
         </select>
+        {modelLimits && <ModelContextSettings key={`${name}:${modelLimits.id}`} name={name} model={modelLimits} onSaved={onLimitsSaved} />}
       </td>
       {/* Code completion model dropdown */}
       <td>
