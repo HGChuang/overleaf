@@ -5,7 +5,7 @@
 // collapse/expand. The pane owns a header with a "start new chat" action and
 // a close button; the body is the unified chat view.
 
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import MaterialIcon from '@/shared/components/material-icon'
 import { useCopilotContext } from '../context/copilot-context'
@@ -30,6 +30,7 @@ const CopilotPaneImpl: FC = () => {
   const [historyLoading, setHistoryLoading] = useState(false)
   const [historyError, setHistoryError] = useState<string | null>(null)
   const [conversations, setConversations] = useState<ConversationListItem[]>([])
+  const historyMenuRef = useRef<HTMLDivElement>(null)
 
   const toggleHistory = useCallback(() => {
     const opening = !historyOpen
@@ -55,14 +56,34 @@ const CopilotPaneImpl: FC = () => {
     }
   }, [isOpen])
 
-  // Esc to close
+  useEffect(() => {
+    if (!historyOpen) return
+
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (
+        historyMenuRef.current &&
+        !historyMenuRef.current.contains(event.target as Node)
+      ) {
+        setHistoryOpen(false)
+      }
+    }
+
+    document.addEventListener('pointerdown', closeOnOutsideClick, true)
+    return () =>
+      document.removeEventListener('pointerdown', closeOnOutsideClick, true)
+  }, [historyOpen])
+
+  // Esc closes the history popover first, then the pane.
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsOpen(false)
+      if (e.key !== 'Escape') return
+      if (historyOpen) {
+        setHistoryOpen(false)
+        return
       }
+      setIsOpen(false)
     },
-    [setIsOpen]
+    [historyOpen, setIsOpen]
   )
   useEffect(() => {
     window.addEventListener('keydown', onKeyDown)
@@ -82,15 +103,58 @@ const CopilotPaneImpl: FC = () => {
         <header className="copilot-header">
           <div className="copilot-header-title">Copilot</div>
           <div className="copilot-header-actions">
-            <button
-              className="copilot-icon-btn copilot-history-toggle"
-              onClick={toggleHistory}
-              title="Conversation history"
-              aria-label="Conversation history"
-              aria-expanded={historyOpen}
-            >
-              <MaterialIcon type="history" className="align-middle" />
-            </button>
+            <div className="copilot-history-menu" ref={historyMenuRef}>
+              <button
+                className="copilot-icon-btn copilot-history-toggle"
+                onClick={toggleHistory}
+                title="Conversation history"
+                aria-label="Conversation history"
+                aria-expanded={historyOpen}
+                aria-haspopup="menu"
+              >
+                <MaterialIcon type="history" className="align-middle" />
+              </button>
+              {historyOpen && (
+                <div
+                  className="copilot-history"
+                  role="menu"
+                  aria-label="Conversation history list"
+                >
+                  <div className="copilot-history-title">会话历史</div>
+                  {historyLoading && (
+                    <div className="copilot-history-state">Loading…</div>
+                  )}
+                  {historyError && (
+                    <div className="copilot-history-state" role="alert">
+                      {historyError}
+                    </div>
+                  )}
+                  {!historyLoading &&
+                    !historyError &&
+                    conversations.length === 0 && (
+                      <div className="copilot-history-state">
+                        No previous conversations
+                      </div>
+                    )}
+                  {!historyLoading &&
+                    conversations.map(conversation => (
+                      <button
+                        type="button"
+                        role="menuitem"
+                        key={conversation.conversationId}
+                        className={`copilot-history-row${conversation.conversationId === conversationId ? ' copilot-history-row-active' : ''}`}
+                        title={conversation.firstQuestion}
+                        onClick={() => {
+                          switchConversation(conversation.conversationId)
+                          setHistoryOpen(false)
+                        }}
+                      >
+                        {conversation.firstQuestion}
+                      </button>
+                    ))}
+                </div>
+              )}
+            </div>
             <button
               className="copilot-icon-btn copilot-new-chat"
               onClick={startNewChat}
@@ -101,30 +165,6 @@ const CopilotPaneImpl: FC = () => {
             </button>
           </div>
         </header>
-
-        {historyOpen && (
-          <div className="copilot-history" aria-label="Conversation history list">
-            {historyLoading && <div className="copilot-history-state">Loading…</div>}
-            {historyError && <div className="copilot-history-state" role="alert">{historyError}</div>}
-            {!historyLoading && !historyError && conversations.length === 0 && (
-              <div className="copilot-history-state">No previous conversations</div>
-            )}
-            {!historyLoading && conversations.map(conversation => (
-              <button
-                type="button"
-                key={conversation.conversationId}
-                className={`copilot-history-row${conversation.conversationId === conversationId ? ' copilot-history-row-active' : ''}`}
-                title={conversation.firstQuestion}
-                onClick={() => {
-                  switchConversation(conversation.conversationId)
-                  setHistoryOpen(false)
-                }}
-              >
-                {conversation.firstQuestion}
-              </button>
-            ))}
-          </div>
-        )}
 
         {error && (
           <div className="copilot-error-banner" role="alert">
@@ -154,12 +194,18 @@ export default CopilotPane
 // ---------------------------------------------------------------------------
 
 const PANE_CSS = `
+.copilot-history-menu { position: relative; display: inline-flex; }
 .copilot-history {
-  max-height: min(320px, 45vh);
-  overflow-y: auto;
-  padding: 6px;
-  border-bottom: 1px solid var(--copilot-edge);
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 30;
+  width: min(320px, calc(100vw - 32px)); max-height: min(360px, 55vh);
+  overflow-y: auto; padding: 6px;
+  border: 1px solid var(--copilot-edge); border-radius: 9px;
   background: var(--copilot-bg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.38);
+}
+.copilot-history-title {
+  padding: 6px 10px 8px; color: var(--copilot-fg-muted);
+  font-size: 12px; font-weight: 600;
 }
 .copilot-history-row {
   display: block;
@@ -193,12 +239,14 @@ const PANE_CSS = `
   --copilot-input-bg: #494e55;
 
   display: flex; flex-direction: column; height: 100%; min-height: 0;
+  color-scheme: dark;
   background: var(--copilot-bg);
   color: var(--copilot-fg);
   font-size: 14px;
 }
 
 .copilot-header {
+  position: relative; z-index: 10;
   display: flex; align-items: center; justify-content: space-between;
   padding: 10px 12px;
   border-bottom: 1px solid var(--copilot-edge);
@@ -207,7 +255,7 @@ const PANE_CSS = `
 .copilot-header-title { font-weight: 600; font-size: 15px; }
 .copilot-header-actions { display: flex; align-items: center; gap: 2px; }
 .copilot-icon-btn {
-  border: none; background: transparent; cursor: pointer;
+  border: 1px solid var(--copilot-edge); background: var(--copilot-hover); cursor: pointer;
   color: var(--copilot-fg-muted);
   padding: 4px 6px; border-radius: 6px; line-height: 1;
   display: inline-flex; align-items: center; justify-content: center;
@@ -256,12 +304,50 @@ const PANE_CSS = `
   color: var(--copilot-fg); border-radius: 6px; padding: 6px 10px;
   font-size: 13px; cursor: pointer;
 }
-.copilot-btn:hover { background: #2c343f; }
-.copilot-btn:disabled { opacity: 0.55; cursor: not-allowed; }
-.copilot-btn-primary {
-  background: var(--copilot-accent); border-color: var(--copilot-accent); color: #0b1220;
+.copilot-btn:hover { background: #3a4558; border-color: #59657a; }
+.copilot-btn:focus-visible {
+  outline: 2px solid var(--copilot-accent); outline-offset: 2px;
 }
-.copilot-btn-primary:hover { background: #7bb0ff; }
+.copilot-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.copilot-load-earlier { display: block; margin: 0 auto 12px; }
+
+.copilot-context-details {
+  flex: 0 0 auto; margin: 0 12px 8px; max-height: min(46%, 420px);
+  overflow-y: auto; border: 1px solid var(--copilot-edge); border-radius: 8px;
+  background: var(--copilot-hover);
+}
+.copilot-context-details > summary {
+  position: sticky; top: 0; z-index: 1; padding: 9px 11px; cursor: pointer;
+  background: var(--copilot-hover); color: var(--copilot-fg); font-weight: 600;
+}
+.copilot-context-details[open] > summary { border-bottom: 1px solid var(--copilot-edge); }
+.copilot-context-details > div { padding: 4px 11px 11px; }
+.copilot-context-details p { margin: 8px 0; color: var(--copilot-fg-muted); line-height: 1.4; }
+.copilot-context-actions {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0 14px;
+}
+.copilot-memory-title {
+  margin: 14px 0 8px; font-size: 13px; color: var(--copilot-fg);
+}
+.copilot-memory-empty { padding: 9px 10px; border: 1px dashed var(--copilot-edge); border-radius: 6px; }
+.copilot-memory-list { display: flex; flex-direction: column; gap: 8px; }
+.copilot-memory-row {
+  padding: 9px; border: 1px solid var(--copilot-edge); border-radius: 7px;
+  background: var(--copilot-bg);
+}
+.copilot-memory-input {
+  display: block; box-sizing: border-box; width: 100%; min-width: 0;
+  padding: 7px 9px; border: 1px solid var(--copilot-edge); border-radius: 6px;
+  outline: none; background: var(--copilot-input-bg); color: var(--copilot-fg);
+  font: inherit; line-height: 1.4;
+}
+.copilot-memory-input:focus {
+  border-color: var(--copilot-accent); box-shadow: 0 0 0 2px rgba(91,157,255,0.18);
+}
+.copilot-memory-meta { margin-top: 6px; color: var(--copilot-fg-muted); font-size: 12px; }
+.copilot-memory-actions {
+  display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin-top: 8px;
+}
 
 /* composer */
 .copilot-composer {
@@ -296,10 +382,10 @@ const PANE_CSS = `
 .copilot-send {
   position: absolute; right: 6px; bottom: 6px;
   display: inline-flex; align-items: center; justify-content: center;
-  height: 30px; width: 30px; padding: 0; border: none; border-radius: 8px;
-  background: var(--copilot-accent); color: #0b1220; cursor: pointer;
+  height: 30px; width: 30px; padding: 0; border: 1px solid var(--copilot-edge); border-radius: 8px;
+  background: var(--copilot-hover); color: var(--copilot-fg); cursor: pointer;
 }
-.copilot-send:hover { background: #7bb0ff; }
+.copilot-send:hover { background: #3a4558; border-color: #59657a; }
 .copilot-send:disabled { background: #3a4150; color: #6a7178; cursor: not-allowed; }
 
 /* messages — Claude Code-style single-column flow: every message is

@@ -324,13 +324,13 @@ function firstAuthorQuestion(message: AgentMessage): string | null {
     '',
   ).trim();
   if (!content) return null;
-  if (!content.startsWith('{')) return content.slice(0, 500);
+  if (!content.startsWith('{')) return content;
   try {
     const envelope = JSON.parse(content);
     if (envelope?.MESSAGE_KIND === 'system_event') return null;
     if (typeof envelope?.MESSAGE === 'string' && envelope.MESSAGE.trim()) {
-      return envelope.MESSAGE.trim().slice(0, 500);
+      return envelope.MESSAGE.trim();
     }
   } catch { /* A plain author question may begin with a brace. */ }
-  return content.slice(0, 500);
+  return content;
 }

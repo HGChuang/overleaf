@@ -118,7 +118,7 @@ const SuggestedFix: FC<{ text: string; language?: string }> = ({
           Copy
         </button>
         <button
-          className="copilot-btn copilot-btn-primary"
+          className="copilot-btn"
           onClick={() => insertIntoEditor(latex)}
         >
           Insert
@@ -140,7 +140,7 @@ const CodeBlock: FC<{ text: string; language?: string }> = ({ text }) => {
         Copy
       </button>
       <button
-        className="copilot-code-insert copilot-btn copilot-btn-primary"
+        className="copilot-code-insert copilot-btn"
         onClick={() => insertIntoEditor(latex)}
       >
         Insert
@@ -332,7 +332,7 @@ const PatchBlock: FC<{ patch: Patch }> = ({ patch }) => {
               </button>
             )}
             <button
-              className="copilot-btn copilot-btn-primary"
+              className="copilot-btn"
               onClick={accept}
               disabled={selected.size === 0}
             >

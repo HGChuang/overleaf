@@ -45,6 +45,29 @@ describe('Copilot editor actions', function () {
     })
   })
 
+  it('supplies a non-empty message for button-driven editor actions', async function () {
+    const fetchStub = sinon.stub(globalThis, 'fetch').resolves({
+      ok: true,
+      json: sinon.stub().resolves({
+        success: true,
+        data: { message: { role: 'assistant', content: 'rewritten' } },
+      }),
+    } as unknown as Response)
+
+    await runCopilotEditorAction({
+      projectId: 'project-1',
+      selectedText: 'original',
+      message: '   ',
+      action: { kind: 'selection', mode: 1 },
+    })
+
+    const body = JSON.parse(String((fetchStub.firstCall.args[1] as RequestInit).body))
+    expect(body.message).to.deep.equal({
+      role: 'user',
+      content: 'Transform the selected text according to the requested editor action.',
+    })
+  })
+
   it('routes inline completion through the same endpoint', async function () {
     const fetchStub = sinon.stub(globalThis, 'fetch').resolves({
       ok: true,

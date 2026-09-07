@@ -91,7 +91,7 @@ const GENERATOR_PROMPTS: Record<'table' | 'formula' | 'algorithm', string> = {
   algorithm: 'Generate a LaTeX algorithm (algorithmic environment) based on the selected content. Return only the LaTeX code inside a latex code fence.',
 }
 const GENERATOR_KINDS: ParaphraseKind[] = ['table', 'formula', 'algorithm']
-const ACTION_PROMPTS: Record<Exclude<ParaphraseKind, 'chat' | 'table' | 'formula' | 'algorithm'>, string> = {
+const ACTION_PROMPTS: Partial<Record<ParaphraseKind, string>> = {
   paraphrase: 'Paraphrase the selected text while preserving its meaning and LaTeX commands.',
   style: 'Rewrite the selected text in the chosen academic style while preserving LaTeX commands.',
   splitjoin: 'Improve the sentence structure of the selected text while preserving its meaning and LaTeX commands.',
@@ -165,8 +165,7 @@ const LLMToolbar = forwardRef<LLMToolbarHandle, {}>((_, ref) => {
     setResult('')
 
     const entered = (ask ?? query).trim()
-    const prompt = entered ||
-      (k === 'chat' ? 'Help with the selected text.' : ACTION_PROMPTS[k])
+    const prompt = entered || ACTION_PROMPTS[k] || 'Help with the selected text.'
     const resp = await postToCopilot(prompt, mode)
     setResult(resp)
     setLoading(false)

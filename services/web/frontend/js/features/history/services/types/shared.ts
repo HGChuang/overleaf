@@ -24,6 +24,10 @@ export interface Meta {
           | 'history-migration'
       }
     | {
+        kind: 'copilot'
+        operationId: string
+      }
+    | {
         kind: 'file-restore'
         path: string
         timestamp: number

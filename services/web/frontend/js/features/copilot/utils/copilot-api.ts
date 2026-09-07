@@ -131,6 +131,9 @@ export async function runCopilotEditorAction({
 }): Promise<string> {
   const source =
     action.kind === 'completion' ? 'inline-completion' : 'selection'
+  const userMessage = message.trim() || (action.kind === 'completion'
+    ? 'Complete the text at the cursor.'
+    : 'Transform the selected text according to the requested editor action.')
   const data = await copilotChat(
     {
       projectId,
@@ -140,7 +143,7 @@ export async function runCopilotEditorAction({
         selectedText,
         editorAction: action,
       },
-      message: { role: 'user', content: message },
+      message: { role: 'user', content: userMessage },
     },
     signal
   )

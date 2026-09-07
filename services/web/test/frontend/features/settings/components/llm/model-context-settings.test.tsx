@@ -11,7 +11,7 @@ describe('Model context settings', function () {
     const request = sinon.stub(globalThis, 'fetch').resolves({
       ok: true, status: 200, headers: { get: () => 'application/json' },
       json: async () => ({ success: true, data: { contextWindow: 128000, maxTokens: 16000 } }),
-    } as Response)
+    } as unknown as Response)
     const onSaved = sinon.spy()
     render(<ModelContextSettings name="My provider" model={{ id: 'my-model' }} onSaved={onSaved} />)
     fireEvent.click(screen.getByText('Configure context window'))

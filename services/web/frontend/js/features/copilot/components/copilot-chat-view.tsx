@@ -87,7 +87,12 @@ export const ChatView: FC = () => {
     <div className="copilot-tab-content copilot-tab-chat">
       <div className="copilot-tab-scroll" ref={scrollRef}>
         {hasEarlierMessages && (
-          <button type="button" onClick={loadEarlierMessages} disabled={loading}>
+          <button
+            type="button"
+            className="copilot-btn copilot-load-earlier"
+            onClick={loadEarlierMessages}
+            disabled={loading}
+          >
             加载更早的消息
           </button>
         )}
@@ -134,30 +139,116 @@ export const ChatView: FC = () => {
           </div>}
           {!latestMetric && <p>尚无模型 usage。缓存命中必须以供应商 usage 为准。</p>}
           <p>冻结前缀 {diagnostics.immutablePrefixHash ? diagnostics.immutablePrefixHash.slice(0, 16) : '尚未建立'}；它用于检查稳定性，不代表缓存已经命中。</p>
-          <button type="button" disabled={loading} onClick={refreshDiagnostics}>刷新诊断</button>{' '}
-          <button type="button" disabled={loading} onClick={() => copilotCompact(conversationId, projectId)
-            .then(refreshDiagnostics)
-            .catch(error => setDiagnosticError(error.message))}>立即整理上下文</button>
-          <h4>长期论文记忆</h4>
-          {memories.length === 0 && <p>暂无记忆。</p>}
-          {memories.map(memory => <div key={memory.id}>
-            <input aria-label={`记忆内容 ${memory.id}`} maxLength={1000}
-              value={memoryEdits[memory.id] ?? memory.value}
-              onChange={event => setMemoryEdits(values => ({ ...values, [memory.id]: event.target.value }))} />
-            <span> · {memory.scope} · {memory.status}</span>
-            {memory.status === 'candidate' && <button type="button" onClick={() =>
-              copilotDecideMemory(projectId, memory.id, 'confirm', memoryEdits[memory.id] ?? memory.value).then(updated =>
-                setMemories(items => items.map(item => item.id === updated.id ? updated : item))
-              ).catch(error => setDiagnosticError(error.message))}>确认</button>}
-            {memory.status === 'confirmed' && memoryEdits[memory.id] !== undefined && memoryEdits[memory.id] !== memory.value &&
-              <button type="button" onClick={() =>
-                copilotDecideMemory(projectId, memory.id, 'confirm', memoryEdits[memory.id]).then(updated =>
-                  setMemories(items => items.map(item => item.id === updated.id ? updated : item))
-                ).catch(error => setDiagnosticError(error.message))}>保存</button>}
-            <button type="button" onClick={() => copilotDecideMemory(projectId, memory.id, 'delete').then(() =>
-              setMemories(items => items.filter(item => item.id !== memory.id))
-            ).catch(error => setDiagnosticError(error.message))}>删除</button>
-          </div>)}
+          <div className="copilot-context-actions">
+            <button
+              type="button"
+              className="copilot-btn"
+              disabled={loading}
+              onClick={refreshDiagnostics}
+            >
+              刷新诊断
+            </button>
+            <button
+              type="button"
+              className="copilot-btn"
+              disabled={loading}
+              onClick={() => copilotCompact(conversationId, projectId)
+                .then(refreshDiagnostics)
+                .catch(error => setDiagnosticError(error.message))}
+            >
+              立即整理上下文
+            </button>
+          </div>
+          <h4 className="copilot-memory-title">当前长期记忆</h4>
+          {memories.length === 0 && <p className="copilot-memory-empty">暂无记忆。</p>}
+          <div className="copilot-memory-list">
+            {memories.map(memory => (
+              <div className="copilot-memory-row" key={memory.id}>
+                <input
+                  className="copilot-memory-input"
+                  aria-label={`记忆内容 ${memory.id}`}
+                  maxLength={1000}
+                  value={memoryEdits[memory.id] ?? memory.value}
+                  onChange={event =>
+                    setMemoryEdits(values => ({
+                      ...values,
+                      [memory.id]: event.target.value,
+                    }))
+                  }
+                />
+                <div className="copilot-memory-meta">
+                  {memory.scope} · {memory.status}
+                </div>
+                <div className="copilot-memory-actions">
+                  {memory.status === 'candidate' && (
+                    <button
+                      type="button"
+                      className="copilot-btn"
+                      onClick={() =>
+                        copilotDecideMemory(
+                          projectId,
+                          memory.id,
+                          'confirm',
+                          memoryEdits[memory.id] ?? memory.value
+                        )
+                          .then(updated =>
+                            setMemories(items =>
+                              items.map(item =>
+                                item.id === updated.id ? updated : item
+                              )
+                            )
+                          )
+                          .catch(error => setDiagnosticError(error.message))
+                      }
+                    >
+                      确认
+                    </button>
+                  )}
+                  {memory.status === 'confirmed' &&
+                    memoryEdits[memory.id] !== undefined &&
+                    memoryEdits[memory.id] !== memory.value && (
+                      <button
+                        type="button"
+                        className="copilot-btn"
+                        onClick={() =>
+                          copilotDecideMemory(
+                            projectId,
+                            memory.id,
+                            'confirm',
+                            memoryEdits[memory.id]
+                          )
+                            .then(updated =>
+                              setMemories(items =>
+                                items.map(item =>
+                                  item.id === updated.id ? updated : item
+                                )
+                              )
+                            )
+                            .catch(error => setDiagnosticError(error.message))
+                        }
+                      >
+                        保存
+                      </button>
+                    )}
+                  <button
+                    type="button"
+                    className="copilot-btn"
+                    onClick={() =>
+                      copilotDecideMemory(projectId, memory.id, 'delete')
+                        .then(() =>
+                          setMemories(items =>
+                            items.filter(item => item.id !== memory.id)
+                          )
+                        )
+                        .catch(error => setDiagnosticError(error.message))
+                    }
+                  >
+                    删除
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>}
       </details>
 
