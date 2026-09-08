@@ -1,0 +1,23 @@
+{
+  "id": "cebdc3f07b2ed2f1531d80bd0394ed2d19178cdaa6a8c89de6d7ddc5b854b247",
+  "projectId": "b1be6a2048ff051db1beeb23",
+  "docs": [
+    {
+      "path": "main.tex",
+      "docId": "5a2d166c87c1388e85c323eb",
+      "version": 1,
+      "sha256": "d53bd2bd5f15e1918e1bb741427e0535979b02dd5ccbc43b9538249d99579e4c"
+    },
+    {
+      "path": "macros.tex",
+      "docId": "e71208ba4809a5c80ceb587a",
+      "version": 1,
+      "sha256": "ff8f135d8f862ba0abea9d3e898610e81246f14417a6251d6ba52906ed7eef32"
+    }
+  ],
+  "assets": [],
+  "rootDocId": "5a2d166c87c1388e85c323eb",
+  "compiler": "pdflatex",
+  "imageName": "texlive-full:latest",
+  "assetBytesFrozen": true
+}

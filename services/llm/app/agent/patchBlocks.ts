@@ -70,7 +70,7 @@ export function extractSubmittedPatch(messages: AgentMessage[], rejectedIds?: Se
   for (let i = messages.length - 1; i >= 0; i--) {
     const m = messages[i];
     if (m?.role !== 'assistant' || !Array.isArray(m.content)) continue;
-    const sp = m.content.find(
+    const sp = m.content.findLast(
       b => b.type === 'toolCall' && b.name === 'submit_patch' && !rejectedIds?.has(b.id)
     );
     if (!sp || sp.type !== 'toolCall') continue;

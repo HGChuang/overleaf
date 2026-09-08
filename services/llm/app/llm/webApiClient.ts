@@ -11,6 +11,15 @@
 import settings from '@overleaf/settings';
 import axios, { AxiosInstance } from 'axios';
 import { forbidden } from '../utils/errors.js';
+import { ToolOutcomeUnknownError } from '../agent/core/tool-error.js';
+
+function remoteOperationError(operation: string, error: unknown): unknown {
+  if (axios.isAxiosError(error) && (!error.response || error.response.status >= 500)) {
+    return new ToolOutcomeUnknownError(
+      `${operation} outcome unknown after a transport/server failure (${error.message}). Verify backend state before retrying; this is not evidence of failure.`, error);
+  }
+  return error;
+}
 
 export interface CompileErrorEntry {
   file: string | null;
@@ -28,6 +37,8 @@ export interface CompileProjectResult {
   snapshotId?: string;
   patchId?: string;
   candidateHash?: string;
+  buildId?: string;
+  logComplete?: boolean;
 }
 
 export class WebApiClient {
@@ -51,22 +62,26 @@ export class WebApiClient {
     });
   }
 
-  async compileProject(projectId: string, userId?: string, snapshotId?: string, idempotencyKey?: string, patchId?: string): Promise<CompileProjectResult> {
+  async compileProject(projectId: string, userId?: string, snapshotId?: string, idempotencyKey?: string, patchId?: string, signal?: AbortSignal): Promise<CompileProjectResult> {
+    signal?.throwIfAborted();
     try {
       const response = await this.client.post(
-        `/internal/project/${encodeURIComponent(projectId)}/copilot/compile`, { userId, snapshotId, idempotencyKey, patchId }
+        `/internal/project/${encodeURIComponent(projectId)}/copilot/compile`, { userId, snapshotId, idempotencyKey, patchId }, { signal }
       );
       return response.data as CompileProjectResult;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 409 && error.response.data) {
         return error.response.data as CompileProjectResult;
       }
-      throw error;
+      throw remoteOperationError('Compile', error);
     }
   }
 
-  async proposePatch(projectId: string, payload: unknown): Promise<any> {
-    return (await this.client.post(`/internal/project/${encodeURIComponent(projectId)}/copilot/patch`, payload)).data;
+  async proposePatch(projectId: string, payload: unknown, signal?: AbortSignal): Promise<any> {
+    signal?.throwIfAborted();
+    try {
+      return (await this.client.post(`/internal/project/${encodeURIComponent(projectId)}/copilot/patch`, payload, { signal })).data;
+    } catch (error) { throw remoteOperationError('Patch proposal', error); }
   }
 
   async listPatches(userId: string, projectId: string, conversationId: string, signal?: AbortSignal) {

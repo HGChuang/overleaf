@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "conv_eb47a8b6-7f45-45a2-857a-eceae04c941a",
+    "message": {
+      "role": "assistant",
+      "content": "你的文件里有两个表格，标题都写的是 `Main results`：\n\n- 第 9 行：`\\caption{Main results}\\label{tab:main}`\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`\n\n由于没有收到你的选中范围，我无法确定你指的是哪一个。请告诉我改哪一个，我立刻提交补丁：\n\n```latex\n% 请说明：改 tab:main 那个，还是 tab:replication 那个？\n```",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

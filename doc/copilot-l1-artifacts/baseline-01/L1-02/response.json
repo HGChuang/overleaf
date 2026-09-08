@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "conv_6713b74a-0129-4877-9d95-04d8358608f4",
+    "message": {
+      "role": "assistant",
+      "content": "完成 ✅\n\n**修改内容**（`main.tex` 第 8 行）：\n\n- 修改前：`\\caption{Main results}\\label{tab:main}`\n- 修改后：`\\caption{Ablation results}\\label{tab:main}`\n\n表格数据（`Method & Score` 两行）、标签 `tab:main` 及文档其余源码均保持不变。补丁候选已通过编译验证（`verificationStatus=passed`，0 错误 0 警告）。\n\n请在编辑器内查看内联 diff 并确认应用该补丁。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_eba2544b460d0a3877221b6e",
+            "title": "将 tab:main 表格标题改为 Ablation results",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 8,
+                "oldText": "\\caption{Main results}\\label{tab:main}",
+                "newText": "\\caption{Ablation results}\\label{tab:main}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

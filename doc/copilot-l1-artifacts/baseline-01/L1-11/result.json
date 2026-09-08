@@ -1,0 +1,112 @@
+{
+  "id": "L1-11",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 5,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 633,
+      "output": 79,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 50,
+      "totalTokens": 5832,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 234,
+      "output": 71,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 25,
+      "totalTokens": 5937,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 578,
+      "output": 278,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 115,
+      "totalTokens": 6488,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "input": 2558,
+      "output": 75,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 14,
+      "totalTokens": 6729,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "input": 795,
+      "output": 199,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7138,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 32124,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 16851,
+  "conversationId": "conv_faf32eab-d38e-4061-ad9b-ad394b6978a1",
+  "answer": "已提交补丁 `patch_791cd7dec2e0c8e89186a8ac` 并验证编译通过（`verificationStatus: passed`，0 错误 0 警告）。\n\n**改动内容**（`main.tex`，唯一一处修改）：\n\n- `\\section{Introduction}` → `\\section{Overview}`\n- 正文 \"We study 12 samples.\" 原样保留。\n\n**未做任何改动的内容**：\n\n- `\\iffalse ... \\fi` 块中的 `\\section{Unreleased results}` 与 \"The unverified score is 99.9\\%.\" 保持原样，未启用、未改动——该块仍处于注释禁用状态，不会出现在编译输出中。\n- 其余全部源码（文档类、`\\begin{document}`/`\\end{document}` 等）逐字节保留。\n\n如需应用到文档，请在预览中接受该补丁即可。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

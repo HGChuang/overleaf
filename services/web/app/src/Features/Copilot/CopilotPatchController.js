@@ -17,22 +17,7 @@ async function records() {
   return db.collection('copilot_patch_records')
 }
 
-function applyHunks(text, hunks) {
-  const edits = hunks.map(h => {
-    const at = h.oldText ? text.indexOf(h.oldText) :
-      Number.isInteger(h.line) && h.line >= 1 && h.line <= text.split('\n').length + 1
-        ? text.split('\n').slice(0, h.line - 1).reduce((n, line) => n + line.length + 1, 0) : -1
-    if (at < 0 || at > text.length || (h.oldText && text.indexOf(h.oldText, at + 1) >= 0)) {
-      throw Object.assign(new Error('Patch anchor is missing or ambiguous'), { status: 409 })
-    }
-    return { at, end: at + h.oldText.length, text: h.newText }
-  }).sort((a, b) => a.at - b.at)
-  for (let i = 1; i < edits.length; i++) {
-    if (edits[i].at <= edits[i - 1].at || edits[i].at < edits[i - 1].end) throw new Error('Overlapping hunks')
-  }
-  for (const edit of edits.reverse()) text = text.slice(0, edit.at) + edit.text + text.slice(edit.end)
-  return text
-}
+const { applyHunks } = require('@overleaf/copilot-contracts')
 
 function status(hunks) {
   if (hunks.every(h => h.status === 'applied')) return 'applied'

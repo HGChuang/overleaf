@@ -21,7 +21,8 @@
     "types:check": "tsc --noEmit",
     "eval": "bash ./eval/run-in-compose.sh eval/pilot/runPilotCase.ts",
     "eval:pilot": "bash ./eval/run-in-compose.sh eval/pilot/runPilotCase.ts",
-    "eval:baseline": "tsx eval/pilot/baselineScheduler.ts"
+    "eval:baseline": "tsx eval/pilot/baselineScheduler.ts",
+    "test:l0": "bash harness-checks/run.sh"
   },
   "version": "1.0.0",
   "directories": {
@@ -42,7 +43,8 @@
     "mongoose": "^8.16.3",
     "openai": "^5.11.0",
     "partial-json": "^0.1.7",
-    "typebox": "^1.1.38"
+    "typebox": "^1.1.38",
+    "@overleaf/copilot-contracts": "*"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.8",

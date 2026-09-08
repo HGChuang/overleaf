@@ -1,0 +1,93 @@
+{
+  "id": "L1-07",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1759,
+      "output": 140,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 61,
+      "totalTokens": 5995,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2393,
+      "output": 307,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 95,
+      "totalTokens": 6796,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 949,
+      "output": 95,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 36,
+      "totalTokens": 7188,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "input": 2280,
+      "output": 208,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7608,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 27587,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 14657,
+  "conversationId": "conv_9e71aba1-2e73-463b-a9ba-d7b665fd70bd",
+  "answer": "已完成，补丁已提交（`patch_204569838b3667b2a13347c4`），候选编译验证通过（`verificationStatus=passed`，0 错误 0 警告）。改动共两处：\n\n1. **main.tex**（第 3 行）\n   - 原文：`We compare with the baseline~\\cite{smith2024}.`\n   - 改为：`We compare with the baseline~\\cite{smithBaseline}.`\n\n2. **refs.tex**（第 2 行）\n   - 原文：`\\bibitem{smith2024} A. Smith. A synthetic baseline. 2024.`\n   - 改为：`\\bibitem{smithBaseline} A. Smith. A synthetic baseline. 2024.`\n\n作者、标题、年份及 bibitem 其余内容均未改动。请在右侧预览中接受/拒绝该补丁；接受后键名重命名即生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

@@ -24,7 +24,7 @@ export interface PaperCheckpoint {
     callId: string;
     name: string;
     arguments: unknown;
-    outcome: 'observed' | 'failed' | 'proposed';
+    outcome: 'observed' | 'failed' | 'proposed' | 'unknown';
     resultMessage: number;
     source?: {
       path: string;

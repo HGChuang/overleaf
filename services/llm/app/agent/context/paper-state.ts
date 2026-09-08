@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { compileOutcome } from '@overleaf/copilot-contracts';
 import type { AgentMessage } from '../core/types.js';
 import { extractTextContent } from '../messageText.js';
 import type { PaperCheckpoint } from './types.js';
@@ -96,7 +97,8 @@ export function reducePaperState(messages: AgentMessage[], previous?: PaperCheck
         ['read_file', 'read_file_fragment'].includes(call.name) ? readSourceReference(message) : undefined;
       state.toolLedger.push({
         callId: message.toolCallId, name: call.name, arguments: call.arguments,
-        outcome: message.isError || message.details?.dryRunRejected ? 'failed'
+        outcome: message.details?.executionOutcome === 'unknown' ? 'unknown'
+          : message.isError || message.details?.dryRunRejected ? 'failed'
           : call.name === 'submit_patch' ? 'proposed' : 'observed',
         resultMessage: offset + index,
         ...(source ? { source } : {}),
@@ -121,7 +123,7 @@ export function reducePaperState(messages: AgentMessage[], previous?: PaperCheck
         try { result = JSON.parse(extractTextContent(message)); } catch { /* failed response */ }
         state.verifications.push({ kind: 'compile', snapshotId: result.snapshotId,
           patchId: result.patchId, candidateHash: result.candidateHash,
-          status: message.isError || result.errorCount == null ? 'unavailable' : result.errorCount === 0 ? 'passed' : 'failed',
+          status: message.isError ? 'unavailable' : compileOutcome(result),
           resultMessage: offset + index });
       }
       if (call.name === 'record_paper_review') {

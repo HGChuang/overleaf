@@ -1,0 +1,179 @@
+{
+  "cases": 12,
+  "coreChecksPassed": 12,
+  "calls": 44,
+  "tokens": 289218,
+  "httpAttempts": 44,
+  "elapsedCaseMs": 159218,
+  "money": null,
+  "unchangedFrozenSource": true,
+  "audits": [
+    {
+      "id": "L1-01",
+      "httpAttempts": 3,
+      "wireFinalUsageTokens": 18765,
+      "missingUsage": [],
+      "locationIssues": [],
+      "compileChecks": []
+    },
+    {
+      "id": "L1-02",
+      "httpAttempts": 4,
+      "wireFinalUsageTokens": 25934,
+      "missingUsage": [],
+      "locationIssues": [
+        {
+          "file": "main.tex",
+          "reportedLine": 8,
+          "actualAnchorLine": 10,
+          "oldText": "\\caption{Main results}\\label{tab:main}"
+        }
+      ],
+      "compileChecks": [
+        {
+          "target": "delivered_candidate",
+          "bytesMatch": true,
+          "candidateHash": "e63776df319aa2dc22b533f35618fc0ddaa9223cc56370cec71ee3d5f87d74a1"
+        }
+      ]
+    },
+    {
+      "id": "L1-03",
+      "httpAttempts": 4,
+      "wireFinalUsageTokens": 27421,
+      "missingUsage": [],
+      "locationIssues": [],
+      "compileChecks": [
+        {
+          "target": "delivered_candidate",
+          "bytesMatch": true,
+          "candidateHash": "ee3ee6f8cdaa2ce67f521dc06eb9dacbc2cc6f8463a7be5f734b4113493900bb"
+        }
+      ]
+    },
+    {
+      "id": "L1-04",
+      "httpAttempts": 3,
+      "wireFinalUsageTokens": 19431,
+      "missingUsage": [],
+      "locationIssues": [],
+      "compileChecks": []
+    },
+    {
+      "id": "L1-05",
+      "httpAttempts": 4,
+      "wireFinalUsageTokens": 26586,
+      "missingUsage": [],
+      "locationIssues": [],
+      "compileChecks": [
+        {
+          "target": "delivered_candidate",
+          "bytesMatch": true,
+          "candidateHash": "996b32c18ef607fb73a22d85b42f9e6ed9cbb7829e57dc5ac5b3d8f16c563a04"
+        }
+      ]
+    },
+    {
+      "id": "L1-06",
+      "httpAttempts": 4,
+      "wireFinalUsageTokens": 27172,
+      "missingUsage": [],
+      "locationIssues": [],
+      "compileChecks": [
+        {
+          "target": "snapshot",
+          "bytesMatch": true,
+          "candidateHash": "ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575"
+        },
+        {
+          "target": "delivered_candidate",
+          "bytesMatch": true,
+          "candidateHash": "17d3372aa01af84698a0566824eff0cc88f362078bd1fb4fed8d55746fc02284"
+        }
+      ]
+    },
+    {
+      "id": "L1-07",
+      "httpAttempts": 4,
+      "wireFinalUsageTokens": 27587,
+      "missingUsage": [],
+      "locationIssues": [],
+      "compileChecks": [
+        {
+          "target": "delivered_candidate",
+          "bytesMatch": true,
+          "candidateHash": "b9ad2a0581279dedaf1b0d5030529517bdf4a0ee188aeb4b8dbdd537aa75fce0"
+        }
+      ]
+    },
+    {
+      "id": "L1-08",
+      "httpAttempts": 4,
+      "wireFinalUsageTokens": 27136,
+      "missingUsage": [],
+      "locationIssues": [],
+      "compileChecks": [
+        {
+          "target": "delivered_candidate",
+          "bytesMatch": true,
+          "candidateHash": "a626d858a94698725bd943b6bab642960bfa5e2d9b20e1dc6c9ca17442b86f76"
+        }
+      ]
+    },
+    {
+      "id": "L1-09",
+      "httpAttempts": 2,
+      "wireFinalUsageTokens": 12503,
+      "missingUsage": [],
+      "locationIssues": [],
+      "compileChecks": [],
+      "clarificationCaptionLines": [
+        10,
+        19
+      ]
+    },
+    {
+      "id": "L1-10",
+      "httpAttempts": 2,
+      "wireFinalUsageTokens": 12078,
+      "missingUsage": [],
+      "locationIssues": [],
+      "compileChecks": []
+    },
+    {
+      "id": "L1-11",
+      "httpAttempts": 5,
+      "wireFinalUsageTokens": 32124,
+      "missingUsage": [],
+      "locationIssues": [
+        {
+          "file": "main.tex",
+          "reportedLine": 8,
+          "actualAnchorLine": 7,
+          "oldText": "\\section{Introduction}\nWe study 12 samples."
+        }
+      ],
+      "compileChecks": [
+        {
+          "target": "delivered_candidate",
+          "bytesMatch": true,
+          "candidateHash": "55fb53b37487efbcf59d529d1f322880edc2b341002f285ade04bd0c808c6dd6"
+        }
+      ]
+    },
+    {
+      "id": "L1-12",
+      "httpAttempts": 5,
+      "wireFinalUsageTokens": 32481,
+      "missingUsage": [],
+      "locationIssues": [],
+      "compileChecks": [
+        {
+          "target": "delivered_candidate",
+          "bytesMatch": true,
+          "candidateHash": "7dbb51b44a713f818998934a1e1edd7da95a2232e57826ef70033cedacf0704b"
+        }
+      ]
+    }
+  ]
+}

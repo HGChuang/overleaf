@@ -1,0 +1,83 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:6ef6f5038406c721e0bf9395:patch_204569838b3667b2a13347c4",
+      "conversationId": "conv_9e71aba1-2e73-463b-a9ba-d7b665fd70bd",
+      "createdAt": "2026-09-07T17:27:29.388Z",
+      "documentHeads": {
+        "main.tex": {
+          "hash": "e58a9549519b218d588a98ef3b818577981973e0a488860b92d3ec35d9af0f46",
+          "version": 1
+        },
+        "refs.tex": {
+          "hash": "378d758271452cb32a3dc83a11aed174e95f972b9783c370fe69391b8496919d",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "main.tex",
+          "line": 3,
+          "oldText": "We compare with the baseline~\\cite{smith2024}.",
+          "newText": "We compare with the baseline~\\cite{smithBaseline}.",
+          "index": 0,
+          "docId": "1be368ec295923a186b2efe7",
+          "baselineHash": "e58a9549519b218d588a98ef3b818577981973e0a488860b92d3ec35d9af0f46",
+          "baselineVersion": 1,
+          "status": "proposed"
+        },
+        {
+          "file": "refs.tex",
+          "line": 2,
+          "oldText": "\\bibitem{smith2024} A. Smith. A synthetic baseline. 2024.",
+          "newText": "\\bibitem{smithBaseline} A. Smith. A synthetic baseline. 2024.",
+          "index": 1,
+          "docId": "c34170cb69abccf38578d6ec",
+          "baselineHash": "378d758271452cb32a3dc83a11aed174e95f972b9783c370fe69391b8496919d",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_204569838b3667b2a13347c4",
+      "projectId": "6ef6f5038406c721e0bf9395",
+      "snapshotId": "9f2ffc63c86bc464aaf9c61352c06e26fed545a30d9373bf731ec492dd8f6ccc",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateVerification": {
+        "verificationId": "aaaaaaaaaaaaaaaaaaaaaaaa:6ef6f5038406c721e0bf9395:9f2ffc63c86bc464aaf9c61352c06e26fed545a30d9373bf731ec492dd8f6ccc:patch_204569838b3667b2a13347c4:compile:call_tfc4fyme3pqrtun2c0wpw1l8",
+        "snapshotId": "9f2ffc63c86bc464aaf9c61352c06e26fed545a30d9373bf731ec492dd8f6ccc",
+        "patchId": "patch_204569838b3667b2a13347c4",
+        "candidateHash": "b9ad2a0581279dedaf1b0d5030529517bdf4a0ee188aeb4b8dbdd537aa75fce0",
+        "status": "passed",
+        "errorCount": 0,
+        "warningCount": 0,
+        "verifiedAt": "2026-09-07T17:27:32.791Z"
+      }
+    }
+  ],
+  "verifications": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:6ef6f5038406c721e0bf9395:9f2ffc63c86bc464aaf9c61352c06e26fed545a30d9373bf731ec492dd8f6ccc:patch_204569838b3667b2a13347c4:compile:call_tfc4fyme3pqrtun2c0wpw1l8",
+      "kind": "compile",
+      "patchId": "patch_204569838b3667b2a13347c4",
+      "projectId": "6ef6f5038406c721e0bf9395",
+      "snapshotId": "9f2ffc63c86bc464aaf9c61352c06e26fed545a30d9373bf731ec492dd8f6ccc",
+      "startedAt": "2026-09-07T17:27:31.750Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "b9ad2a0581279dedaf1b0d5030529517bdf4a0ee188aeb4b8dbdd537aa75fce0",
+      "result": {
+        "status": "success",
+        "snapshotId": "9f2ffc63c86bc464aaf9c61352c06e26fed545a30d9373bf731ec492dd8f6ccc",
+        "patchId": "patch_204569838b3667b2a13347c4",
+        "candidateHash": "b9ad2a0581279dedaf1b0d5030529517bdf4a0ee188aeb4b8dbdd537aa75fce0",
+        "manifestHash": "9f2ffc63c86bc464aaf9c61352c06e26fed545a30d9373bf731ec492dd8f6ccc",
+        "buildId": "7c15b6e6-cbd6-43c4-be50-fa011d38ebed",
+        "logComplete": true,
+        "errorCount": 0,
+        "errors": [],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-07T17:27:32.787Z"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "beb8404e6d2998e6dca6da826c71a71749101c613788e9c9ab6f69a18ebad5c9",
+  "projectId": "fb4cf7c29e080294f7b08bd8",
+  "docs": [
+    {
+      "path": "main.tex",
+      "docId": "50386cdc858b9b22fcff6460",
+      "version": 1,
+      "sha256": "86e016c2e62e0f2be27799ad37aa66cdd47c6016e2a936623491dfbb43699c02"
+    },
+    {
+      "path": "sections/method.tex",
+      "docId": "764be57197a794601f800310",
+      "version": 1,
+      "sha256": "e8501216f736b266607ec022f1594934d43f959b400e3cd16001087c02b24de0"
+    }
+  ],
+  "assets": [],
+  "rootDocId": "50386cdc858b9b22fcff6460",
+  "compiler": "pdflatex",
+  "imageName": "texlive-full:latest",
+  "assetBytesFrozen": true
+}

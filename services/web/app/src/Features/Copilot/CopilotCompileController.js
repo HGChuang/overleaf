@@ -10,6 +10,7 @@ const logger = require('@overleaf/logger')
 const CompileManager = require('../Compile/CompileManager')
 const ClsiManager = require('../Compile/ClsiManager')
 const { LatexParser } = require('./LatexLogParser')
+const { compileOutcome } = require('@overleaf/copilot-contracts')
 
 const MAX_LOG_CHARS = 1_000_000
 const MAX_ERRORS = 30
@@ -18,18 +19,7 @@ const MAX_MESSAGE_CHARS = 500
 // Compile statuses for which output.log is expected to exist.
 const LOG_STATUSES = new Set(['success', 'failure', 'stopped-on-first-error'])
 
-function applyHunks(text, hunks) {
-  const edits = hunks.map(hunk => {
-    const at = hunk.oldText ? text.indexOf(hunk.oldText) :
-      Number.isInteger(hunk.line) && hunk.line >= 1 && hunk.line <= text.split('\n').length + 1
-        ? text.split('\n').slice(0, hunk.line - 1).reduce((size, line) => size + line.length + 1, 0) : -1
-    if (at < 0 || (hunk.oldText && text.indexOf(hunk.oldText, at + 1) >= 0)) throw new Error('Candidate patch anchor is missing or ambiguous')
-    return { at, end: at + hunk.oldText.length, value: hunk.newText }
-  }).sort((a, b) => a.at - b.at)
-  for (let index = 1; index < edits.length; index++) if (edits[index].at <= edits[index - 1].at || edits[index].at < edits[index - 1].end) throw new Error('Candidate patch hunks overlap')
-  for (const edit of edits.reverse()) text = text.slice(0, edit.at) + edit.value + text.slice(edit.end)
-  return text
-}
+const { applyHunks } = require('@overleaf/copilot-contracts')
 
 async function candidateInput(projectId, userId, snapshotId, patchId) {
   const store = require('./CopilotSnapshotStore')
@@ -63,7 +53,7 @@ async function saveVerification(userId, projectId, snapshotId, result, verificat
     _id: `${userId}:${projectId}:${result.patchId}`, snapshotId,
   }, { $set: { candidateVerification: {
     verificationId, snapshotId, patchId: result.patchId, candidateHash: result.candidateHash,
-    status: result.errorCount == null ? 'unavailable' : result.errorCount === 0 ? 'passed' : 'failed',
+    status: compileOutcome(result),
     errorCount: result.errorCount, warningCount: result.warningCount, verifiedAt: new Date(),
   } } })
   return result
@@ -78,7 +68,7 @@ async function streamToString(stream, maxChars) {
     size += buf.length
     if (size > maxChars) break
   }
-  return Buffer.concat(chunks).toString('utf8').slice(0, maxChars)
+  return { text: Buffer.concat(chunks).toString('utf8').slice(0, maxChars), complete: size <= maxChars }
 }
 
 module.exports = {
@@ -137,6 +127,7 @@ module.exports = {
         ? undefined
         : ownerId
       let logText
+      let logComplete = false
       try {
         const stream = await ClsiManager.promises.getOutputFileStream(
           snapshotInput.buildProjectId,
@@ -146,7 +137,9 @@ module.exports = {
           buildId,
           'output.log'
         )
-        logText = await streamToString(stream, MAX_LOG_CHARS)
+        const log = await streamToString(stream, MAX_LOG_CHARS)
+        logText = log.text
+        logComplete = log.complete && log.text.trim().length > 0
       } catch (err) {
         // latexmk can no-op on an unchanged project ("Nothing to do …
         // up-to-date" from a stale fdb) and produce no new log — report
@@ -170,6 +163,7 @@ module.exports = {
 
       const result = {
         status, snapshotId, patchId, candidateHash, manifestHash: snapshotId, buildId,
+        logComplete,
         errorCount: errors.length,
         errors: errors.slice(0, MAX_ERRORS).map(entry => ({
           file: entry.file || null,

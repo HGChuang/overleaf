@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "conv_b50a67ef-8caa-49b6-99ea-4926083efdbd",
+    "message": {
+      "role": "assistant",
+      "content": "补丁已提交（`patch_622de14b7b0ce60a9e0910d8`）：\n\n- **macros.tex 第 1 行**：`\\newcommand{\\samplesize}{12}` → `\\newcommand{\\samplesize}{16}`\n- 仅修改宏定义；`\\threshold`（0.05）及 `main.tex` 中的引用 `$\\samplesize$ samples and threshold $\\threshold$` 均保持原样。\n\n请在预览中接受该修改。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_622de14b7b0ce60a9e0910d8",
+            "title": "将 \\\\samplesize 宏定义的值从 12 改为 16（仅改 macros.tex 中的定义，引用与 threshold 不变）",
+            "hunks": [
+              {
+                "file": "macros.tex",
+                "line": 1,
+                "oldText": "\\newcommand{\\samplesize}{12}",
+                "newText": "\\newcommand{\\samplesize}{16}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

@@ -1,0 +1,74 @@
+{
+  "id": "L1-04",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1773,
+      "output": 128,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 49,
+      "totalTokens": 5997,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2309,
+      "output": 171,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 32,
+      "totalTokens": 6576,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 600,
+      "output": 114,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 6858,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19431,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 9169,
+  "conversationId": "conv_b50a67ef-8caa-49b6-99ea-4926083efdbd",
+  "answer": "补丁已提交（`patch_622de14b7b0ce60a9e0910d8`）：\n\n- **macros.tex 第 1 行**：`\\newcommand{\\samplesize}{12}` → `\\newcommand{\\samplesize}{16}`\n- 仅修改宏定义；`\\threshold`（0.05）及 `main.tex` 中的引用 `$\\samplesize$ samples and threshold $\\threshold$` 均保持原样。\n\n请在预览中接受该修改。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

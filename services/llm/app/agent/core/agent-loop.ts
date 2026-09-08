@@ -11,6 +11,7 @@ import { EventStream } from "./event-stream.js";
 import type { AssistantMessage, Context, ToolResultMessage } from "./llm-types.js";
 import { validateToolArguments } from "./validation.js";
 import { getDefaultStreamFn } from "./stream-fn.js";
+import { ToolOutcomeUnknownError } from "./tool-error.js";
 import type {
 	AgentContext,
 	AgentEvent,
@@ -278,6 +279,18 @@ async function runLoop(
  * Stream an assistant response from the LLM.
  * This is where AgentMessage[] gets transformed to Message[] for the LLM.
  */
+function validateAssistantIdentity(message: AssistantMessage): AssistantMessage {
+	const calls = message.content.filter(block => block.type === "toolCall");
+	const ids = calls.map(call => call.id);
+	if (ids.some(id => typeof id !== "string" || !id.trim()) || new Set(ids).size !== ids.length) {
+		// Reject before journal persistence: ambiguous IDs cannot form a durable
+		// intent/result group and must never dispatch a tool.
+		return { ...message, content: message.content.filter(block => block.type !== "toolCall"),
+			providerItems: undefined, stopReason: "error", errorMessage: "Invalid or duplicate tool call IDs" };
+	}
+	return message;
+}
+
 async function streamAssistantResponse(
 	context: AgentContext,
 	config: AgentLoopConfig,
@@ -345,7 +358,7 @@ async function streamAssistantResponse(
 
 			case "done":
 			case "error": {
-				const finalMessage = await response.result();
+				const finalMessage = validateAssistantIdentity(await response.result());
 				if (addedPartial) {
 					context.messages[context.messages.length - 1] = finalMessage;
 				} else {
@@ -360,7 +373,7 @@ async function streamAssistantResponse(
 		}
 	}
 
-	const finalMessage = await response.result();
+	const finalMessage = validateAssistantIdentity(await response.result());
 	if (addedPartial) {
 		context.messages[context.messages.length - 1] = finalMessage;
 	} else {
@@ -440,6 +453,7 @@ async function executeToolCallsSequential(
 ): Promise<ExecutedToolCallBatch> {
 	const finalizedCalls: FinalizedToolCallOutcome[] = [];
 	const messages: ToolResultMessage[] = [];
+	let terminated = false;
 
 	for (const toolCall of toolCalls) {
 		await emit({
@@ -449,7 +463,9 @@ async function executeToolCallsSequential(
 			args: toolCall.arguments,
 		});
 
-		const preparation = await prepareToolCall(currentContext, assistantMessage, toolCall, config, signal);
+		const preparation: PreparedToolCall | ImmediateToolCallOutcome = terminated
+			? { kind: "immediate", result: createErrorToolResult("Tool was not executed: this batch was terminated."), isError: true }
+			: await prepareToolCall(currentContext, assistantMessage, toolCall, config, signal);
 		let finalized: FinalizedToolCallOutcome;
 		if (preparation.kind === "immediate") {
 			finalized = {
@@ -475,9 +491,7 @@ async function executeToolCallsSequential(
 		finalizedCalls.push(finalized);
 		messages.push(toolResultMessage);
 
-		if (signal?.aborted) {
-			break;
-		}
+		terminated ||= finalized.result.terminate === true;
 	}
 
 	return {
@@ -513,9 +527,6 @@ async function executeToolCallsParallel(
 			} satisfies FinalizedToolCallOutcome;
 			await emitToolExecutionEnd(finalized, emit);
 			finalizedCalls.push(finalized);
-			if (signal?.aborted) {
-				break;
-			}
 			continue;
 		}
 
@@ -532,9 +543,6 @@ async function executeToolCallsParallel(
 			await emitToolExecutionEnd(finalized, emit);
 			return finalized;
 		});
-		if (signal?.aborted) {
-			break;
-		}
 	}
 
 	const orderedFinalizedCalls = await Promise.all(
@@ -580,7 +588,9 @@ type FinalizedToolCallOutcome = {
 type FinalizedToolCallEntry = FinalizedToolCallOutcome | (() => Promise<FinalizedToolCallOutcome>);
 
 function shouldTerminateToolBatch(finalizedCalls: FinalizedToolCallOutcome[]): boolean {
-	return finalizedCalls.length > 0 && finalizedCalls.every((finalized) => finalized.result.terminate === true);
+	// In-flight parallel work has settled and every intent has a result before
+	// this decision. A terminating result must not be diluted by a read result.
+	return finalizedCalls.some((finalized) => finalized.result.terminate === true);
 }
 
 function prepareToolCallArguments(tool: AgentTool<any>, toolCall: AgentToolCall): AgentToolCall {
@@ -672,6 +682,7 @@ async function executePreparedToolCall(
 	let acceptingUpdates = true;
 
 	try {
+		signal?.throwIfAborted();
 		const result = await prepared.tool.execute(
 			prepared.toolCall.id,
 			prepared.args as never,
@@ -697,8 +708,13 @@ async function executePreparedToolCall(
 	} catch (error) {
 		acceptingUpdates = false;
 		await Promise.all(updateEvents);
+		const result = createErrorToolResult(error instanceof Error ? error.message : String(error));
+		if (error instanceof ToolOutcomeUnknownError) {
+			result.details = { executionOutcome: "unknown" };
+			result.terminate = true;
+		}
 		return {
-			result: createErrorToolResult(error instanceof Error ? error.message : String(error)),
+			result,
 			isError: true,
 		};
 	} finally {

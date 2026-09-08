@@ -158,7 +158,7 @@ async function* sse(response: Response) {
   let buffer = '';
   while (true) {
     const { done, value } = await reader.read();
-    buffer += decoder.decode(value, { stream: !done }).replace(/\r\n/g, '\n');
+    buffer = (buffer + decoder.decode(value, { stream: !done })).replace(/\r\n/g, '\n');
     let split;
     while ((split = buffer.indexOf('\n\n')) >= 0) {
       const frame = buffer.slice(0, split); buffer = buffer.slice(split + 2);
@@ -218,6 +218,8 @@ export function streamNative(model: Model, context: Context, options?: SimpleStr
       let thinkingProviderIndex = -1;
       let anthropicUsage: any = {};
       const anthropicProviderItems: any[] = [];
+      let terminalSeen = false;
+      let stopReasonSeen = false;
       for await (const event of sse(response)) {
         const type = event.type;
         if (type === 'error' || type === 'response.failed') {
@@ -269,9 +271,15 @@ export function streamNative(model: Model, context: Context, options?: SimpleStr
           const call = calls.get(event.output_index ?? event.index)!; call.arguments = JSON.parse(call.args || '{}'); delete (call as any).args;
           stream.push({ type: 'toolcall_end', contentIndex: output.content.indexOf(call), toolCall: call, partial: output });
         }
-        if (protocol === 'responses' && type === 'response.completed') {
+        if (protocol === 'responses' && (type === 'response.completed' || type === 'response.incomplete')) {
+          terminalSeen = true;
           output.responseId = event.response.id; output.providerItems = (event.response.output || []).filter((item: any) => item.type === 'reasoning');
-          output.usage = price(model, usage(protocol, event.response)); output.stopReason = calls.size ? 'toolUse' : event.response.incomplete_details ? 'length' : 'stop';
+          output.usage = price(model, usage(protocol, event.response));
+          const incomplete = type === 'response.incomplete' || event.response.incomplete_details;
+          if (incomplete && event.response.incomplete_details?.reason !== 'max_output_tokens') {
+            throw new Error('Provider response incomplete without a recoverable output limit');
+          }
+          output.stopReason = incomplete ? 'length' : calls.size ? 'toolUse' : 'stop';
         }
         if (protocol === 'anthropic-messages' && type === 'message_start') {
           output.responseId = event.message?.id;
@@ -280,8 +288,18 @@ export function streamNative(model: Model, context: Context, options?: SimpleStr
         if (protocol === 'anthropic-messages' && type === 'message_delta') {
           anthropicUsage = { ...anthropicUsage, ...(event.usage || {}) };
           output.usage = price(model, usage(protocol, { usage: anthropicUsage }));
-          output.stopReason = event.delta?.stop_reason === 'tool_use' ? 'toolUse' : event.delta?.stop_reason === 'max_tokens' ? 'length' : 'stop';
+          if (event.delta?.stop_reason != null) {
+            stopReasonSeen = true;
+            output.stopReason = event.delta.stop_reason === 'tool_use' ? 'toolUse' : event.delta.stop_reason === 'max_tokens' ? 'length' : 'stop';
+          }
         }
+        if (protocol === 'anthropic-messages' && type === 'message_stop') terminalSeen = true;
+      }
+      if (!terminalSeen || (protocol === 'anthropic-messages' && !stopReasonSeen)) {
+        throw new Error('Provider stream ended without a terminal event');
+      }
+      if (output.stopReason !== 'length' && [...calls.values()].some(call => Object.hasOwn(call, 'args'))) {
+        throw new Error('Provider completed with unfinished tool arguments');
       }
       if (protocol === 'anthropic-messages' && anthropicProviderItems.length) output.providerItems = anthropicProviderItems;
       if (textIndex >= 0) stream.push({ type: 'text_end', contentIndex: textIndex, content: (output.content[textIndex] as any).text, partial: output });

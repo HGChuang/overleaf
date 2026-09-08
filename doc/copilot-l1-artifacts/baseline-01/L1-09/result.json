@@ -1,0 +1,55 @@
+{
+  "id": "L1-09",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1653,
+      "output": 117,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 71,
+      "totalTokens": 5866,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 1121,
+      "output": 396,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 286,
+      "totalTokens": 6637,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 12503,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 6976,
+  "conversationId": "conv_eb47a8b6-7f45-45a2-857a-eceae04c941a",
+  "answer": "你的文件里有两个表格，标题都写的是 `Main results`：\n\n- 第 9 行：`\\caption{Main results}\\label{tab:main}`\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`\n\n由于没有收到你的选中范围，我无法确定你指的是哪一个。请告诉我改哪一个，我立刻提交补丁：\n\n```latex\n% 请说明：改 tab:main 那个，还是 tab:replication 那个？\n```",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

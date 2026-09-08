@@ -9,25 +9,38 @@
 
 import type { WebApiClient } from '../../llm/webApiClient.js';
 import type { AgentTool } from '../core/types.js';
+import { compileOutcome } from '@overleaf/copilot-contracts';
 
 export function buildCompileTools(
   context: any = {},
   { webClient, userId }: { webClient: WebApiClient; userId?: string }
 ) {
   const projectId = context.project?.projectId;
+  const snapshotId = context.project?.sourceSnapshot?.id;
+  const requests = new Map<string, ReturnType<WebApiClient['compileProject']>>();
 
   const compileProject: AgentTool<any, Record<string, never>> = {
     name: 'compile_project',
     label: 'compile_project',
     description:
-      'Compile an immutable whole-project source version and return {snapshotId, patchId?, candidateHash?, status, errorCount, errors, warningCount}. Pass patchId to compile the exact proposed patch over its baseline before asking the author to apply it; omit patchId to verify the current snapshot. A clean candidate compile proves only compilation, not semantic correctness or application. Call once per distinct verification target. errorCount=null means unavailable and must not be retried blindly.',
+      'Compile an immutable whole-project source version and return {snapshotId, patchId?, candidateHash?, status, verificationStatus, errorCount, errors, warningCount}. Only verificationStatus=passed proves successful compilation. Pass patchId to compile the exact proposed patch over its baseline before asking the author to apply it; omit patchId to verify the current snapshot. A clean candidate compile proves only compilation, not semantic correctness or application. Calls for the same target share one request within this turn. Unavailable verification must not be retried blindly.',
     parameters: { type: 'object', properties: { patchId: { type: 'string', pattern: '^patch_[a-f0-9]{24}$' } }, additionalProperties: false },
-    async execute(toolCallId, args: { patchId?: string }) {
+    executionMode: 'sequential',
+    async execute(toolCallId, args: { patchId?: string }, signal) {
+      signal?.throwIfAborted();
       if (!projectId) {
         throw new Error('project.projectId is missing from context');
       }
-      const result = await webClient.compileProject(projectId, userId, context.project?.sourceSnapshot?.id, toolCallId, args.patchId);
-      return { content: [{ type: 'text', text: JSON.stringify(result) }], details: {} };
+      if (!snapshotId) throw new Error('A versioned project snapshot is required for compilation');
+      const target = args.patchId || 'snapshot';
+      // Preserve even a rejected/unknown request for this turn: a new model
+      // call ID is not evidence that it is safe to repeat a remote compile.
+      if (!requests.has(target)) requests.set(target, webClient.compileProject(projectId, userId, snapshotId, toolCallId, args.patchId, signal));
+      const result = await requests.get(target)!;
+      if (result.snapshotId !== snapshotId || (result.patchId || undefined) !== args.patchId) {
+        throw new Error('Compile result does not match the requested snapshot/patch');
+      }
+      return { content: [{ type: 'text', text: JSON.stringify({ ...result, verificationStatus: compileOutcome(result) }) }], details: {} };
     },
   };
 

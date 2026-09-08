@@ -292,6 +292,7 @@ export class CopilotService {
   ) {
     const isEditorAction = Boolean(context.context?.editorAction);
     const conversationId = context.conversation?.conversationId || `conv_${randomUUID()}`;
+    context.conversation = { ...context.conversation, conversationId };
     const abort = new AbortController();
     let semaphore: { acquire(signal?: AbortSignal): Promise<void>; release(): void } | undefined;
     let timedOut = false;
@@ -310,6 +311,9 @@ export class CopilotService {
     try {
       abort.signal.throwIfAborted();
       await this.webClient.assertProjectAccess(userIdentifier, context.project?.projectId, abort.signal);
+      if (!isEditorAction && !/^[a-f0-9]{64}$/.test(context.project?.sourceSnapshot?.id || '')) {
+        throw badRequest('A versioned project snapshot is required for Copilot chat');
+      }
       if (!isEditorAction && context.project.sourceSnapshot?.id) {
         const snapshot = await this.webClient.readSnapshot(userIdentifier, context.project.projectId, context.project.sourceSnapshot.id, undefined, abort.signal);
         context.project.sourceSnapshot = snapshot;
@@ -355,6 +359,7 @@ export class CopilotService {
         }
         for (const [toolCallId, toolName] of pending) await session.append(await session.recoverTool?.(toolCallId) || {
           role: 'toolResult', toolCallId, toolName, isError: true, timestamp: Date.now(),
+          details: { executionOutcome: 'unknown' },
           content: [{ type: 'text', text: 'Execution outcome unknown after interruption. Verify source/state before taking any action; this is not evidence of success or failure.' }],
         });
       }
@@ -470,6 +475,10 @@ export class CopilotService {
         beforeToolCall: async ({ assistantMessage }) => {
           abort.signal.throwIfAborted();
           if (leaseError) throw leaseError;
+          await this.webClient.assertProjectAccess(userIdentifier, context.project.projectId, abort.signal);
+          if (context.project.sourceSnapshot?.id) {
+            await this.webClient.assertSnapshotCurrent(userIdentifier, context.project.projectId, context.project.sourceSnapshot.id, abort.signal);
+          }
           if (batchAssistant !== assistantMessage) { batchAssistant = assistantMessage; batchReservations = 0; }
           if (batchReservations >= 3) return { block: true, reason: 'This batch reached its 12288-token evidence budget. Request additional evidence in the next step.' };
           batchReservations++;
@@ -496,8 +505,10 @@ export class CopilotService {
           return {};
         },
         toolExecution: 'parallel',
-        shouldStopAfterTurn: () => {
-          if (newMessages.filter(m => m.role === 'assistant').length >= AGENT_STEP_LIMIT) {
+        shouldStopAfterTurn: ({ message, toolResults }) => {
+          const needsNextStep = message.content.some(block => block.type === 'toolCall') &&
+            !toolResults.some(result => result.details?.dryRunRejected === true || result.details?.executionOutcome === 'unknown');
+          if (needsNextStep && newMessages.filter(m => m.role === 'assistant').length >= AGENT_STEP_LIMIT) {
             stoppedByBudget = true;
             return true;
           }
@@ -508,7 +519,12 @@ export class CopilotService {
         if (event.type === 'message_end') {
           // Await durability BEFORE tool dispatch or the next provider call.
           // agent_end alone misses work when an exception/abort interrupts a run.
-          if (session) await session.append(event.message);
+          // Once a journal write fails, the loop's synthetic error must not be
+          // inserted inside the still-open tool group. Recovery closes that
+          // group from its durable receipt (or UNKNOWN) on the next request.
+          if (contextError) throw contextError;
+          try { if (session) await session.append(event.message); }
+          catch (error) { contextError = error; onAbort(); throw error; }
           newMessages.push(event.message);
           if (event.message.role === 'assistant') await this.contextMetrics.record({
             requestId: `${requestId}:${newMessages.filter(message => message.role === 'assistant').length}`,
@@ -546,6 +562,7 @@ export class CopilotService {
       if (timedOut) throw timeout('copilot turn timed out — please narrow the request and try again');
       if (abort.signal.aborted || lastAssistant?.stopReason === 'aborted') throw new CopilotError('COPILOT_ABORTED', 'copilot turn aborted', 499);
       if (stoppedByBudget) throw new CopilotError('COPILOT_STEP_LIMIT', 'Copilot hit its step budget; unfinished work is retained.', 500);
+      if (lastAssistant?.stopReason === 'length') throw new CopilotError('COPILOT_OUTPUT_LIMIT', 'Copilot output was truncated; unfinished work is retained.', 500);
       if (lastAssistant?.stopReason === 'error') throw new CopilotError('COPILOT_UPSTREAM_ERROR', lastAssistant.errorMessage || 'model call failed', 500);
       return this.mapResult(newMessages, context, conversationId);
     } catch (error) {
@@ -567,6 +584,13 @@ export class CopilotService {
   // message.content.
   mapResult(messages: AgentMessage[], context: any, conversationId: string) {
     const finalContent = extractTextContent(lastAssistantOf(messages));
+    if (messages.some(message => message.role === 'toolResult' && message.details?.executionOutcome === 'unknown')) {
+      return {
+        conversationId,
+        message: createMessageResponse('操作结果尚未确认，不能据此断言补丁提交或编译成功。已保留进度并停止自动重试，请先核实项目中的补丁和验证记录。'),
+        suggestedActions: [],
+      };
+    }
 
     // Preserve a post-verification explanation when present. If the model only
     // repeats the patch title, use the short generic intro to avoid duplication.

@@ -1,0 +1,34 @@
+{
+  "response": {
+    "conversationId": "conv_971258de-f81c-4f73-894f-3a927ce8656a",
+    "message": {
+      "role": "assistant",
+      "content": "已完成。补丁包含两个 hunk，且编译验证通过（`verificationStatus: passed`，0 错误）：\n\n1. **`sections/method.tex`（第 1 行）**：`\\section{Method}\\label{sec:method}` → `\\section{Method}\\label{sec:approach}` —— 仅重命名标签，节标题 `Method` 保持不变。\n2. **`main.tex`（第 4 行）**：`See Section~\\ref{sec:method}.` → `See Section~\\ref{sec:approach}.` —— 同步更新引用。\n\n正文其余内容、节标题和源码结构均未改动。请在编辑器中审阅内联差异并接受后生效。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_995126ca5f256a83a590da2f",
+            "title": "将标签 sec:method 重命名为 sec:approach，并同步更新 main.tex 中的引用",
+            "hunks": [
+              {
+                "file": "sections/method.tex",
+                "line": 1,
+                "oldText": "\\section{Method}\\label{sec:method}",
+                "newText": "\\section{Method}\\label{sec:approach}"
+              },
+              {
+                "file": "main.tex",
+                "line": 4,
+                "oldText": "See Section~\\ref{sec:method}.",
+                "newText": "See Section~\\ref{sec:approach}."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

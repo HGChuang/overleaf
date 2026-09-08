@@ -343,7 +343,11 @@ export function streamOpenAICompat(
 				} else if (block.type === "thinking") {
 					stream.push({ type: "thinking_end", contentIndex, content: block.thinking, partial: output });
 				} else if (block.type === "toolCall") {
-					block.arguments = parseStreamingJson(block.partialArgs);
+					// Salvage is for streaming previews and explicitly truncated
+					// messages only. A normally finished call must contain valid JSON.
+					block.arguments = output.stopReason === "length"
+						? parseStreamingJson(block.partialArgs)
+						: JSON.parse(block.partialArgs || "{}");
 					// Finalize in-place and strip the scratch buffers so replay only
 					// carries parsed arguments.
 					delete block.partialArgs;

@@ -1,0 +1,93 @@
+{
+  "id": "L1-02",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1657,
+      "output": 105,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 59,
+      "totalTokens": 5858,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2059,
+      "output": 242,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 72,
+      "totalTokens": 6397,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 6564,
+      "output": 105,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 13,
+      "totalTokens": 6669,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "input": 741,
+      "output": 125,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7010,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 25934,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 14474,
+  "conversationId": "conv_6713b74a-0129-4877-9d95-04d8358608f4",
+  "answer": "完成 ✅\n\n**修改内容**（`main.tex` 第 8 行）：\n\n- 修改前：`\\caption{Main results}\\label{tab:main}`\n- 修改后：`\\caption{Ablation results}\\label{tab:main}`\n\n表格数据（`Method & Score` 两行）、标签 `tab:main` 及文档其余源码均保持不变。补丁候选已通过编译验证（`verificationStatus=passed`，0 错误 0 警告）。\n\n请在编辑器内查看内联 diff 并确认应用该补丁。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

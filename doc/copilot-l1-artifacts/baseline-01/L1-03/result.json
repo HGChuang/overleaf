@@ -1,0 +1,93 @@
+{
+  "id": "L1-03",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1764,
+      "output": 134,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 56,
+      "totalTokens": 5994,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2311,
+      "output": 363,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 124,
+      "totalTokens": 6770,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 1924,
+      "output": 94,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 9,
+      "totalTokens": 7138,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "input": 1216,
+      "output": 159,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7519,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 27421,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 14413,
+  "conversationId": "conv_971258de-f81c-4f73-894f-3a927ce8656a",
+  "answer": "已完成。补丁包含两个 hunk，且编译验证通过（`verificationStatus: passed`，0 错误）：\n\n1. **`sections/method.tex`（第 1 行）**：`\\section{Method}\\label{sec:method}` → `\\section{Method}\\label{sec:approach}` —— 仅重命名标签，节标题 `Method` 保持不变。\n2. **`main.tex`（第 4 行）**：`See Section~\\ref{sec:method}.` → `See Section~\\ref{sec:approach}.` —— 同步更新引用。\n\n正文其余内容、节标题和源码结构均未改动。请在编辑器中审阅内联差异并接受后生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

@@ -44,22 +44,4 @@ export function sourcePage(path: string, text: string, options: {
 }
 
 /** Count against a candidate overlay without mutating the request source. */
-export function candidateText(content: string, hunks: Array<{ oldText: string; newText: string; line?: number | null }>): string {
-  const edits = hunks.map(h => {
-    if (!h.oldText) {
-      const lines = content.split('\n');
-      if (!Number.isInteger(h.line) || h.line! < 1 || h.line! > lines.length + 1) throw new Error('Insertion requires a valid line');
-      const start = h.line === lines.length + 1 ? content.length : lines.slice(0, h.line! - 1).reduce((n, line) => n + line.length + 1, 0);
-      return { start, end: start, text: h.newText };
-    }
-    const start = content.indexOf(h.oldText);
-    if (start < 0 || content.indexOf(h.oldText, start + 1) >= 0) throw new Error('Candidate oldText must match exactly once; include more surrounding source');
-    return { start, end: start + h.oldText.length, text: h.newText };
-  }).sort((a, b) => a.start - b.start);
-  for (let i = 1; i < edits.length; i++) {
-    if (edits[i].start < edits[i - 1].end || edits[i].start === edits[i - 1].start) throw new Error('Candidate hunks overlap');
-  }
-  let result = content;
-  for (const edit of edits.reverse()) result = result.slice(0, edit.start) + edit.text + result.slice(edit.end);
-  return result;
-}
+export { applyHunks as candidateText } from '@overleaf/copilot-contracts';

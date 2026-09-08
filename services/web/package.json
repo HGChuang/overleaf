@@ -176,7 +176,8 @@
     "xml-crypto": "^2.1.2",
     "xml2js": "^0.6.2",
     "xregexp": "^4.3.0",
-    "yauzl": "^2.10.0"
+    "yauzl": "^2.10.0",
+    "@overleaf/copilot-contracts": "*"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",

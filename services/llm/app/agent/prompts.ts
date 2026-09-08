@@ -94,7 +94,7 @@ function toolsSection(toolNames: string[] = []) {
     section +=
       '\nCOMPILE-FIX PROTOCOL (self-healing loop):' +
       '\n- Use `compile_project` without patchId to inspect the exact current snapshot. After `submit_patch` returns its patchId, use `compile_project` with that patchId to compile the exact frozen candidate when compilation matters. If candidate errors remain, inspect them and submit a corrected complete patch. A candidate compile does not mean the user applied the patch.' +
-      '\n- A user message starting with [自动验证] means an earlier patch was applied. Call `compile_project` without patchId first. Never claim compile success unless the matching result has errorCount=0; errorCount=null is unavailable. Call once per distinct snapshot or patch candidate, identified by snapshotId/patchId/candidateHash.';
+      '\n- A user message starting with [自动验证] means an earlier patch was applied. Call `compile_project` without patchId first. Never claim compile success unless the matching result has verificationStatus=passed; errorCount=0 alone is insufficient and verificationStatus=unavailable means unverified. Call once per distinct snapshot or patch candidate, identified by snapshotId/patchId/candidateHash.';
   }
   return section;
 }

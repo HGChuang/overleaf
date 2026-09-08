@@ -29,6 +29,7 @@
 // server already knows is broken must never become the user's patch card.
 
 import { createHash } from 'node:crypto';
+import { applyHunks } from '@overleaf/copilot-contracts';
 import type { ToolPoolDeps } from './provider.js';
 import type { AgentTool, AgentToolResult } from '../core/types.js';
 
@@ -43,7 +44,7 @@ const PatchHunkSchema = {
     },
     line: {
       anyOf: [{ type: 'integer' }, { type: 'null' }],
-      description: '1-based line nearest the hunk, used to disambiguate multiple matches; null if unknown',
+      description: '1-based insertion line for empty oldText; otherwise informational. Non-empty oldText must match uniquely.',
     },
     oldText: {
       type: 'string',
@@ -121,15 +122,11 @@ export function buildEditTools(context: any = {}, deps: ToolPoolDeps = {}) {
     if (!f || !f.path) continue;
     exactMap.set(String(f.path).replace(/^\//, ''), f.content || '');
   }
-  // Path resolution tolerates trivial variants (`./x`, leading slash, case) —
-  // the production apply path anchors a hunk by oldText search in the open
-  // document and largely IGNORES hunk.file, so a variant that still names a
-  // real project file would apply fine and must not burn a rejection. Only a
-  // path matching NO text doc even after normalization is a true hallucination
-  // (and production would silently mis-apply it — worth rejecting).
-  const lowerIndex = new Map<string, string>();
+  // Accept trivial path variants only when they identify exactly one file.
+  const lowerIndex = new Map<string, string | null>();
   for (const k of exactMap.keys()) {
-    lowerIndex.set(k.toLowerCase(), k);
+    const lower = k.toLowerCase();
+    lowerIndex.set(lower, lowerIndex.has(lower) ? null : k);
   }
   const normalizeHunkPath = (p: string) => p.replace(/^\.\//, '').replace(/^\//, '');
   const resolveExisting = (p: string): string | null => {
@@ -154,6 +151,7 @@ export function buildEditTools(context: any = {}, deps: ToolPoolDeps = {}) {
 
   const submitPatch: AgentTool<any, Record<string, never>> = {
     name: 'submit_patch',
+    executionMode: 'sequential',
     label: 'submit_patch',
     description:
       'Persist a proposed text edit as a PATCH and return its patchId. Call this whenever the user asks to fix, modify, correct, or rewrite EXISTING text. Copy oldText verbatim from source. The server dry-runs every hunk; correct and resubmit the complete patch after a rejection. When compilation matters, compile_project with the returned patchId before finishing. The authenticated author can later accept or reject individual hunks; submission itself does not edit source.',
@@ -173,16 +171,18 @@ export function buildEditTools(context: any = {}, deps: ToolPoolDeps = {}) {
       },
       required: ['hunks'],
     },
-    async execute(_toolCallId, params): Promise<AgentToolResult<Record<string, never>>> {
+    async execute(_toolCallId, params, signal): Promise<AgentToolResult<Record<string, never>>> {
+      signal?.throwIfAborted();
+      if (!deps.webClient || !deps.userId || !project.sourceSnapshot?.id) {
+        throw new Error('A versioned project snapshot and proposal backend are required to submit a patch');
+      }
       if (deps.loadFile) {
         for (const path of exactMap.keys()) exactMap.set(path, await deps.loadFile(path));
       }
       const raw = (params ?? {}) as Record<string, unknown>;
       const hunks: unknown[] = Array.isArray(raw.hunks) ? raw.hunks : [];
 
-      // No ground truth in context (e.g. unit tests, file-less chats): fail
-      // OPEN, identical to the pre-dry-run behavior — never block a patch we
-      // cannot validate.
+      if (!exactMap.size) throw new Error('No editable source in this snapshot');
       if (exactMap.size > 0) {
         const failures: string[] = [];
         let totalFailures = 0;
@@ -203,7 +203,7 @@ export function buildEditTools(context: any = {}, deps: ToolPoolDeps = {}) {
                 );
               } else {
                 const available = [...exactMap.keys()].slice(0, 20).join(', ');
-                failures.push(`hunk ${i}: unknown file "${fileRaw}" — available files: ${available}`);
+                failures.push(`hunk ${i}: unknown or ambiguous file "${fileRaw}" — available files: ${available}`);
               }
             }
             continue;
@@ -211,21 +211,8 @@ export function buildEditTools(context: any = {}, deps: ToolPoolDeps = {}) {
           const target = file || (defaultFile && exactMap.has(defaultFile) ? defaultFile : null);
           const content = target != null ? exactMap.get(target) : undefined;
           if (content == null) {
-            // file:null hunk and the default file is unresolvable (in
-            // production rootDocId is a Mongo ObjectId — never a path; R4):
-            // fall back to a project-wide check — a verbatim oldText that
-            // occurs in exactly one text doc will anchor fine at apply time.
-            if (!oldText) continue;
-            const anywhere = [...exactMap.values()].some(c => c.includes(oldText));
-            if (!anywhere) {
-              totalFailures++;
-              if (failures.length < MAX_FAILURES_PER_REPORT) {
-                failures.push(
-                  `hunk ${i}: oldText not found in ANY project file. ` +
-                  `Re-read the source with read_file / read_file_fragment and copy oldText VERBATIM.`
-                );
-              }
-            }
+            totalFailures++;
+            if (failures.length < MAX_FAILURES_PER_REPORT) failures.push(`hunk ${i}: an exact editable file path is required`);
             continue;
           }
           // Empty oldText = pure insertion at the line anchor — always legal.
@@ -244,6 +231,20 @@ export function buildEditTools(context: any = {}, deps: ToolPoolDeps = {}) {
               }
               failures.push(report);
             }
+          }
+        }
+
+        if (!totalFailures) {
+          const grouped = new Map<string, any[]>();
+          for (const value of hunks) {
+            const h = value as Record<string, unknown>;
+            const target = typeof h.file === 'string' && h.file ? resolveExisting(h.file)! : defaultFile!;
+            grouped.set(target, [...(grouped.get(target) || []), h]);
+          }
+          for (const [target, edits] of grouped) try { applyHunks(exactMap.get(target)!, edits); }
+          catch (error) {
+            totalFailures++;
+            if (failures.length < MAX_FAILURES_PER_REPORT) failures.push(`hunk group in ${target}: ${error instanceof Error ? error.message : String(error)}`);
           }
         }
 
@@ -300,7 +301,7 @@ export function buildEditTools(context: any = {}, deps: ToolPoolDeps = {}) {
         submittedPatch = await deps.webClient.proposePatch(project.projectId, {
           userId: deps.userId, snapshotId: project.sourceSnapshot.id, patchId,
           hunks: canonicalHunks, conversationId: context.conversation?.conversationId,
-        });
+        }, signal);
       }
       return {
         content: [{ type: 'text', text: JSON.stringify({ submitted: true, count: hunks.length,

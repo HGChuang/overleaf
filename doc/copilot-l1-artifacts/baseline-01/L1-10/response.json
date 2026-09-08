@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "conv_564b1078-1865-4445-9caf-a4614f19ecff",
+    "message": {
+      "role": "assistant",
+      "content": "已确认：`tab:main` 的表格标题已经是 **Ablation results**，与目标一致，无需提出补丁。\n\n来源（main.tex，第 10 行）：\n\n```latex\n\\caption{Ablation results}\\label{tab:main}\n```",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

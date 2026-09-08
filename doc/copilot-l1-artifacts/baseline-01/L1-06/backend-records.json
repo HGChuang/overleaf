@@ -1,0 +1,103 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:dcffc9b1f5c4bed4e5fab2f1:patch_5d12b91b0f3eaf380a32c8fa",
+      "conversationId": "conv_fe5b6fb6-bf9b-4e64-980a-caa110427828",
+      "createdAt": "2026-09-07T17:27:14.906Z",
+      "documentHeads": {
+        "main.tex": {
+          "hash": "15d2bcb699d566af7093cabd6cc84c824cd4a94a889e1221f466b490515f6fbf",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "main.tex",
+          "line": 6,
+          "oldText": "\\item We retain 12 samples.\nProtected conclusion.",
+          "newText": "\\item We retain 12 samples.\n\\end{itemize}\nProtected conclusion.",
+          "index": 0,
+          "docId": "184480ce86ce8b87c8e390e8",
+          "baselineHash": "15d2bcb699d566af7093cabd6cc84c824cd4a94a889e1221f466b490515f6fbf",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_5d12b91b0f3eaf380a32c8fa",
+      "projectId": "dcffc9b1f5c4bed4e5fab2f1",
+      "snapshotId": "ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateVerification": {
+        "verificationId": "aaaaaaaaaaaaaaaaaaaaaaaa:dcffc9b1f5c4bed4e5fab2f1:ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575:patch_5d12b91b0f3eaf380a32c8fa:compile:call_3sos8jfywceslub1r5plucte",
+        "snapshotId": "ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575",
+        "patchId": "patch_5d12b91b0f3eaf380a32c8fa",
+        "candidateHash": "17d3372aa01af84698a0566824eff0cc88f362078bd1fb4fed8d55746fc02284",
+        "status": "passed",
+        "errorCount": 0,
+        "warningCount": 0,
+        "verifiedAt": "2026-09-07T17:27:17.900Z"
+      }
+    }
+  ],
+  "verifications": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:dcffc9b1f5c4bed4e5fab2f1:ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575:snapshot:compile:call_x0h88yc2k5am5ix2yf3g0www",
+      "kind": "compile",
+      "patchId": null,
+      "projectId": "dcffc9b1f5c4bed4e5fab2f1",
+      "snapshotId": "ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575",
+      "startedAt": "2026-09-07T17:27:10.754Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575",
+      "result": {
+        "status": "failure",
+        "snapshotId": "ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575",
+        "patchId": null,
+        "candidateHash": "ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575",
+        "manifestHash": "ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575",
+        "buildId": "3edbb7c3-e931-4258-bad5-a8821253715e",
+        "logComplete": true,
+        "errorCount": 2,
+        "errors": [
+          {
+            "file": "./main.tex",
+            "line": 8,
+            "message": "LaTeX Error: \\begin{itemize} on input line 4 ended by \\end{document}."
+          },
+          {
+            "file": "./main.tex",
+            "line": 8,
+            "message": " ==> Fatal error occurred, no output PDF file produced!"
+          }
+        ],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-07T17:27:11.176Z"
+    },
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:dcffc9b1f5c4bed4e5fab2f1:ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575:patch_5d12b91b0f3eaf380a32c8fa:compile:call_3sos8jfywceslub1r5plucte",
+      "kind": "compile",
+      "patchId": "patch_5d12b91b0f3eaf380a32c8fa",
+      "projectId": "dcffc9b1f5c4bed4e5fab2f1",
+      "snapshotId": "ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575",
+      "startedAt": "2026-09-07T17:27:17.174Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "17d3372aa01af84698a0566824eff0cc88f362078bd1fb4fed8d55746fc02284",
+      "result": {
+        "status": "success",
+        "snapshotId": "ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575",
+        "patchId": "patch_5d12b91b0f3eaf380a32c8fa",
+        "candidateHash": "17d3372aa01af84698a0566824eff0cc88f362078bd1fb4fed8d55746fc02284",
+        "manifestHash": "ad93ccf0c27010b453a45ac4324d118ef675b1ae23d620f6a12d22d2f665b575",
+        "buildId": "6d06f1a9-af82-4d70-8ece-56a0e5a9e957",
+        "logComplete": true,
+        "errorCount": 0,
+        "errors": [],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-07T17:27:17.894Z"
+    }
+  ]
+}

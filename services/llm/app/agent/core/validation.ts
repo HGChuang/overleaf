@@ -66,11 +66,10 @@ function getSubSchemaValidator(schema: JsonSchemaObject): ReturnType<typeof Comp
 }
 
 function coercePrimitiveByType(value: unknown, type: string): unknown {
+	// Null is absence, never an implicit empty edit, zero or false.
+	if (value === null) return value;
 	switch (type) {
 		case "number": {
-			if (value === null) {
-				return 0;
-			}
 			if (typeof value === "string" && value.trim() !== "") {
 				const parsed = Number(value);
 				if (Number.isFinite(parsed)) {
@@ -83,9 +82,6 @@ function coercePrimitiveByType(value: unknown, type: string): unknown {
 			return value;
 		}
 		case "integer": {
-			if (value === null) {
-				return 0;
-			}
 			if (typeof value === "string" && value.trim() !== "") {
 				const parsed = Number(value);
 				if (Number.isInteger(parsed)) {
@@ -98,9 +94,6 @@ function coercePrimitiveByType(value: unknown, type: string): unknown {
 			return value;
 		}
 		case "boolean": {
-			if (value === null) {
-				return false;
-			}
 			if (typeof value === "string") {
 				if (value === "true") {
 					return true;
@@ -120,9 +113,6 @@ function coercePrimitiveByType(value: unknown, type: string): unknown {
 			return value;
 		}
 		case "string": {
-			if (value === null) {
-				return "";
-			}
 			if (typeof value === "number" || typeof value === "boolean") {
 				return String(value);
 			}
@@ -182,6 +172,9 @@ function applySchemaArrayCoercion(value: unknown[], schema: JsonSchemaObject): v
 }
 
 function coerceWithUnionSchema(value: unknown, schemas: JsonSchemaObject[]): unknown {
+	for (const schema of schemas) {
+		if (getSubSchemaValidator(schema)?.Check(value)) return value;
+	}
 	for (const schema of schemas) {
 		const candidate = structuredClone(value);
 		const coerced = coerceWithJsonSchema(candidate, schema);
@@ -286,23 +279,12 @@ export function validateToolCall(tools: Tool[], toolCall: ToolCall): any {
  * @throws Error with formatted message if validation fails
  */
 export function validateToolArguments(tool: Tool, toolCall: ToolCall): any {
-	const args = structuredClone(toolCall.arguments);
-	Value.Convert(tool.parameters, args);
+	let args = structuredClone(toolCall.arguments);
 
 	const validator = getValidator(tool.parameters);
 	if (!Object.getOwnPropertySymbols(tool.parameters).includes(TYPEBOX_KIND)) {
-		const coerced = coerceWithJsonSchema(args, tool.parameters as JsonSchemaObject);
-		if (coerced !== args) {
-			if (typeof args === "object" && args !== null && typeof coerced === "object" && coerced !== null) {
-				for (const key of Object.keys(args)) {
-					delete args[key];
-				}
-				Object.assign(args, coerced);
-			} else {
-				return validator.Check(coerced) ? coerced : args;
-			}
-		}
-	}
+		args = coerceWithJsonSchema(args, tool.parameters as JsonSchemaObject);
+	} else args = Value.Convert(tool.parameters, args);
 
 	if (validator.Check(args)) {
 		return args;
