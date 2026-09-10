@@ -1,0 +1,98 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:07941bf9a3c931f370051d0d:patch_701473e25033fdd9e8de0072",
+      "conversationId": "L1-15",
+      "createdAt": "2026-09-08T18:57:13.406Z",
+      "documentHeads": {
+        "sections/method.tex": {
+          "hash": "06a1dca37e58afc4d65d7550d9dfabf94df427063da271908bb3433633c9606b",
+          "version": 1
+        },
+        "sections/results.tex": {
+          "hash": "a05efd0a56c40725bb93d90c603db3ddacd54aad7c36fb94c8078fd3be0d612a",
+          "version": 1
+        },
+        "appendix.tex": {
+          "hash": "9591cf584630e9d54b5f17ae25625bfd735d3dcfa7a324eb9989d4910d847f2f",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "sections/method.tex",
+          "line": 1,
+          "oldText": "\\section{Method}\\label{sec:method}",
+          "newText": "\\section{Method}\\label{sec:approach}",
+          "index": 0,
+          "docId": "669a7ae4797c0b08752d917e",
+          "baselineHash": "06a1dca37e58afc4d65d7550d9dfabf94df427063da271908bb3433633c9606b",
+          "baselineVersion": 1,
+          "status": "proposed"
+        },
+        {
+          "file": "sections/results.tex",
+          "line": 1,
+          "oldText": "See Section~\\ref{sec:method}.",
+          "newText": "See Section~\\ref{sec:approach}.",
+          "index": 1,
+          "docId": "eb075286685660d112edbd45",
+          "baselineHash": "a05efd0a56c40725bb93d90c603db3ddacd54aad7c36fb94c8078fd3be0d612a",
+          "baselineVersion": 1,
+          "status": "proposed"
+        },
+        {
+          "file": "appendix.tex",
+          "line": 1,
+          "oldText": "Details in Section~\\ref{sec:method}.",
+          "newText": "Details in Section~\\ref{sec:approach}.",
+          "index": 2,
+          "docId": "912c9b6c2ec499f1f1843de5",
+          "baselineHash": "9591cf584630e9d54b5f17ae25625bfd735d3dcfa7a324eb9989d4910d847f2f",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_701473e25033fdd9e8de0072",
+      "projectId": "07941bf9a3c931f370051d0d",
+      "snapshotId": "bef6719f7b242e6dfa51af14e8511306a45661db04afee7dda4af59fd01b645a",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateVerification": {
+        "verificationId": "aaaaaaaaaaaaaaaaaaaaaaaa:07941bf9a3c931f370051d0d:bef6719f7b242e6dfa51af14e8511306a45661db04afee7dda4af59fd01b645a:patch_701473e25033fdd9e8de0072:compile:call_k5u9vbox80n9xgp8s2zog4xw",
+        "snapshotId": "bef6719f7b242e6dfa51af14e8511306a45661db04afee7dda4af59fd01b645a",
+        "patchId": "patch_701473e25033fdd9e8de0072",
+        "candidateHash": "f214ece0eb042ce0f8f2363449e55302e624154887f691cd3fb18558429bc295",
+        "status": "passed",
+        "errorCount": 0,
+        "warningCount": 0,
+        "verifiedAt": "2026-09-08T18:57:16.850Z"
+      }
+    }
+  ],
+  "verifications": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:07941bf9a3c931f370051d0d:bef6719f7b242e6dfa51af14e8511306a45661db04afee7dda4af59fd01b645a:patch_701473e25033fdd9e8de0072:compile:call_k5u9vbox80n9xgp8s2zog4xw",
+      "kind": "compile",
+      "patchId": "patch_701473e25033fdd9e8de0072",
+      "projectId": "07941bf9a3c931f370051d0d",
+      "snapshotId": "bef6719f7b242e6dfa51af14e8511306a45661db04afee7dda4af59fd01b645a",
+      "startedAt": "2026-09-08T18:57:15.710Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "f214ece0eb042ce0f8f2363449e55302e624154887f691cd3fb18558429bc295",
+      "result": {
+        "status": "success",
+        "snapshotId": "bef6719f7b242e6dfa51af14e8511306a45661db04afee7dda4af59fd01b645a",
+        "patchId": "patch_701473e25033fdd9e8de0072",
+        "candidateHash": "f214ece0eb042ce0f8f2363449e55302e624154887f691cd3fb18558429bc295",
+        "manifestHash": "bef6719f7b242e6dfa51af14e8511306a45661db04afee7dda4af59fd01b645a",
+        "buildId": "4dc49d72-beeb-4701-b177-7f4be87b64f1",
+        "logComplete": true,
+        "errorCount": 0,
+        "errors": [],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-08T18:57:16.847Z"
+    }
+  ]
+}

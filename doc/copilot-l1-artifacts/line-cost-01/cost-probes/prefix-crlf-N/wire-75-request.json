@@ -1,0 +1,23 @@
+{
+  "url": "https://ark.cn-beijing.volces.com/api/coding/v3/chat/completions",
+  "body": {
+    "model": "deepseek-v4-flash-ga-260731",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Reply OK."
+      },
+      {
+        "role": "user",
+        "content": "{\"found\":true,\"path\":\"main.tex\",\"sourceHash\":\"b1e7188dbb5f297731f10e24818d69b4a6f5ad090aa6a6e5953f671427b54546\",\"evidenceId\":\"e314293cd8e36fbe0c5e548ddcb05d471a48c9138581d6f8cd406fd89e0675f6\",\"consistency\":\"immutable-snapshot\",\"snapshotId\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"docId\":\"bbbbbbbbbbbbbbbbbbbbbbbb\",\"version\":1,\"startByte\":0,\"endByte\":488,\"startLine\":1,\"totalLines\":27,\"nextOffsetBytes\":null,\"rangeEndByte\":488,\"fileBytes\":488,\"lineNumberedContent\":\"1: % Synthetic location fixture.\\r\\n2: \\r\\n3: % Keep both tables.\\r\\n4: % Line ending fixture.\\r\\n5: \\r\\n6: \\\\documentclass{article}\\r\\n7: \\\\begin{document}\\r\\n8: \\\\begin{table}[h]\\r\\n9: \\\\centering\\r\\n10: \\\\begin{tabular}{lr}\\r\\n11: Method & Score \\\\\\\\\\r\\n12: Baseline & 91.2 \\\\\\\\\\r\\n13: Ours & 94.5\\r\\n14: \\\\end{tabular}\\r\\n15: \\\\caption{Main results}\\\\label{tab:main}\\r\\n16: \\\\end{table}\\r\\n17: \\\\begin{table}[h]\\r\\n18: \\\\centering\\r\\n19: \\\\begin{tabular}{lr}\\r\\n20: Method & Score \\\\\\\\\\r\\n21: Baseline & 91.2 \\\\\\\\\\r\\n22: Ours & 94.5\\r\\n23: \\\\end{tabular}\\r\\n24: \\\\caption{Main results}\\\\label{tab:replication}\\r\\n25: \\\\end{table}\\r\\n26: \\\\end{document}\\r\\n27: \"}"
+      }
+    ],
+    "stream": true,
+    "stream_options": {
+      "include_usage": true
+    },
+    "max_tokens": 1,
+    "temperature": 0
+  },
+  "at": "2026-09-08T14:14:13.474Z"
+}

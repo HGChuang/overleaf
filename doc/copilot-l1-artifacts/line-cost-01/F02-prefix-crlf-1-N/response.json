@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-crlf-1",
+    "message": {
+      "role": "assistant",
+      "content": "项目文件 `main.tex` 中确实存在**两个**标题同为 `Main results` 的表格（第 3 行注释也注明 \"Keep both tables\"）。按您的要求，先列出两个候选，请您确认后再修改：\n\n| 候选 | 标签 (label) | 文件路径 | caption 所在行号 | 该行内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 15 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 24 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格内容完全相同（`Baseline & 91.2` / `Ours & 94.5`），仅 label 不同，无法从表格内容上区分哪一个是“您指的那一个”。\n\n请告诉我改哪一个（例如「改 ①」或「改 tab:replication 那个」），确认后我立刻提交补丁，只改您指定的那一个 caption。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

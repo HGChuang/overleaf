@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-lf-1",
+    "message": {
+      "role": "assistant",
+      "content": "我找到了两处标题为 **Main results** 的表格 caption，都在 `main.tex` 中：\n\n| 候选 | 标签 | 文件 | caption 所在行 | 上下文 |\n|------|------|------|------|------|\n| ① | `tab:main` | `main.tex` | **第 13 行** | 第 1 个 `table`（首个结果表）|\n| ② | `tab:replication` | `main.tex` | **第 22 行** | 第 2 个 `table`（内容与①相同的复制表）|\n\n两处原文都是：\n```latex\n\\caption{Main results}\\label{tab:main}      % 第 13 行\n\\caption{Main results}\\label{tab:replication} % 第 22 行\n```\n\n请确认要改哪一个（例如「改 `tab:main`」或「改第 13 行那个」），我再只针对那一处提交修改，把 caption 改为 **Ablation results**，另一个保持不变。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

@@ -1,0 +1,81 @@
+{
+  "id": "F02-prefix-crlf-2-N",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "N",
+  "pairId": "F02-prefix-crlf-2",
+  "variant": "prefix-crlf",
+  "expectedLocations": {
+    "tab:main": 15,
+    "tab:replication": 24
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 483,
+      "output": 190,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 115,
+      "totalTokens": 6049,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 1011,
+      "output": 115,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 33,
+      "totalTokens": 6502,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 2883,
+      "output": 301,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 103,
+      "totalTokens": 7280,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19831,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 11876,
+  "conversationId": "F02-prefix-crlf-2",
+  "answer": "项目里确实有两个同名的表格 caption，都是 `Main results`。两个候选如下（都在 `main.tex` 中）：\n\n| 候选 | 标签（label） | 文件路径 | caption 所在行号 | caption 内容 |\n|---|---|---|---|---|\n| 1 | `tab:main` | `main.tex` | **第 15 行** | `\\caption{Main results}\\label{tab:main}` |\n| 2 | `tab:replication` | `main.tex` | **第 24 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n注意：两张表的内容也完全相同（都是 Baseline 91.2 / Ours 94.5），无法靠内容区分。请确认要改哪一个（例如回复“改第 1 个 / tab:main”），我再提交只针对那一个 caption 的修改，另一个保持不动。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

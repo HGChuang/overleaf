@@ -1,0 +1,17 @@
+{
+  "id": "8c85df84daf87395167eaf344fd88bd02951b7c3dad550c45303fc778f74658e",
+  "projectId": "5d3fa3a46cc8b1b2550b05fc",
+  "docs": [
+    {
+      "path": "main.tex",
+      "docId": "f848351b6a14d224338cb928",
+      "version": 1,
+      "sha256": "4a1ea87c4fbcfbd37d402b127bace193c2f57e51fc30ad36e6e02bb54b032be7"
+    }
+  ],
+  "assets": [],
+  "rootDocId": "f848351b6a14d224338cb928",
+  "compiler": "pdflatex",
+  "imageName": "texlive-full:latest",
+  "assetBytesFrozen": true
+}

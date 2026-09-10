@@ -1,0 +1,8 @@
+{
+  "files": {
+    "main.tex": "\\documentclass{article}\n\\begin{document}\n\\input{intro}\n\\input{discussion}\n\\input{refs}\n\\end{document}\n",
+    "intro.tex": "Baseline~\\cite{smith2024}.\n",
+    "discussion.tex": "Compare~\\cite{smith2024,jones2023}.\n",
+    "refs.tex": "\\begin{thebibliography}{9}\n\\bibitem{smith2024} A. Smith. Baseline. 2024.\n\\bibitem{jones2023} J. Jones. Control. 2023.\n\\end{thebibliography}\n"
+  }
+}

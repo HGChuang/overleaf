@@ -1,0 +1,93 @@
+{
+  "id": "L1-04",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1793,
+      "output": 131,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 52,
+      "totalTokens": 6020,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 1310,
+      "output": 233,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 50,
+      "totalTokens": 6663,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 683,
+      "output": 71,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 10,
+      "totalTokens": 6898,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "input": 3020,
+      "output": 166,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7282,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 26863,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 13051,
+  "conversationId": "conv_9a76e037-1ec1-4129-80ad-aba7144d003b",
+  "answer": "已提交补丁 **patch_d2d92207599a7bcfb9ed28d3**，编译验证通过（verificationStatus=passed，0 错误）。\n\n改动内容：\n- `macros.tex` 第 1 行：`\\newcommand{\\samplesize}{12}` → `\\newcommand{\\samplesize}{16}`（仅改宏定义值）\n- 未动 `\\threshold`（第 2 行保持 `0.05`）\n- 未动 `main.tex` 中的引用 `We use $\\samplesize$ samples and threshold $\\threshold$.`（第 4 行，引用形式原样保留）\n\n该补丁已提交供您审阅，接受后正文中显示样本数即为 16。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

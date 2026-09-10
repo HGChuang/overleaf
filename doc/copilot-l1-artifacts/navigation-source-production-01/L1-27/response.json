@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-27",
+    "message": {
+      "role": "assistant",
+      "content": "Done. Summary of what was verified and proposed:\n\n**Archived evidence (re-read in full, not just the summary)** — prior-decision.tex (lines 25–26) states:\n- `% FINAL CAPTION: Robustness results`\n- `% Preserve 91.2 percent, 12 samples, and negation.`\nThe first 24 lines are only \"Earlier discussion, not the final decision.\" comments (decision evidence, not the decision itself).\n\n**Current main.tex** (read fresh, snapshot `397d184f…`):\n```\n\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n```\n\n**Patch proposed** — `patch_f44129c9433e9d5c9a004c1d` (single hunk, main.tex line 3):\n- `\\section{Draft}` → `\\section{Robustness results}`\n\nOnly the title was changed, per the FINAL CAPTION. The body — 91.2%, 12 samples, and the negation \"We do not claim significance.\" — is preserved verbatim, as were all other source lines.\n\n**Compile verification**: `compile_project(patchId=patch_f44129…)` → `verificationStatus=passed`, `errorCount=0`, `warningCount=0`. The candidate compiles cleanly. The patch is pending your acceptance; it has not modified the source until you approve it.",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_f44129c9433e9d5c9a004c1d",
+            "title": "Change Draft section title to the FINAL CAPTION decision \"Robustness results\"; keep body (91.2%, 12 samples, negation) unchanged",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Robustness results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

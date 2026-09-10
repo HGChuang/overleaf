@@ -1,0 +1,50 @@
+{
+  "scope": "新增 24 题最终回答与已独立核对的候选/保护字节/编译/回执审阅；不宣称所有自然语言逐句完美。",
+  "coreOutcomes": {
+    "L1-25": "blocked_manual_compact_lease",
+    "L1-29": "core_completed",
+    "L1-31": "core_completed",
+    "L1-13": "core_completed",
+    "L1-14": "core_completed",
+    "L1-15": "core_completed",
+    "L1-16": "core_completed",
+    "L1-17": "core_completed",
+    "L1-18": "core_completed",
+    "L1-19": "core_completed",
+    "L1-20": "core_completed",
+    "L1-21": "core_completed",
+    "L1-22": "core_completed",
+    "L1-23": "core_completed",
+    "L1-24": "core_completed",
+    "L1-26": "blocked_manual_compact_lease",
+    "L1-27": "core_completed",
+    "L1-28": "core_completed",
+    "L1-30": "core_completed",
+    "L1-32": "core_completed",
+    "L1-33": "core_completed",
+    "L1-34": "core_completed",
+    "L1-35": "core_completed",
+    "L1-36": "core_completed"
+  },
+  "confirmedHarnessRootCauses": [
+    {
+      "id": "F-L1-36-01",
+      "cases": [
+        "L1-25",
+        "L1-26"
+      ],
+      "evidence": "首轮超 30 秒摘要后 CAS 失败 + 真实 Mongo 31 秒确定性复现"
+    }
+  ],
+  "coverageReview": {
+    "L1-15": "完整全项目搜索，无命中 main.tex；相关文件取证充分，原自动 coverage false 是保守误报。",
+    "L1-16": "同上。",
+    "L1-21--24": "合法唯一锚点成功；未覆盖非法锚点被拒后的恢复。"
+  },
+  "nonBlockingObservations": [
+    "L1-19 输入链行号措辞有歧义，但目标文件和最终补丁正确。",
+    "L1-35 使用英文回答中文请求；未影响后端任务完成。",
+    "L1-27/28 checkpoint 已给 resultMessage=2，模型仍先浏览消息 0；成本观察，未造成失败。"
+  ],
+  "claims": "候选状态、改动范围与编译成功结论与审计证据相符；没有把 proposed 当已应用。"
+}

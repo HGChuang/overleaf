@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-crlf-1",
+    "message": {
+      "role": "assistant",
+      "content": "项目里有两张标题都是 \"Main results\" 的表格，都位于 `main.tex`。以下是两个候选：\n\n| # | 标签（label） | 文件路径 | caption 所在行号 | 说明 |\n|---|---|---|---|---|\n| 1 | `tab:main` | `main.tex` | **第 15 行** | 第一张表格（第 7–16 行），内容为 Method/Score 两列 |\n| 2 | `tab:replication` | `main.tex` | **第 24 行** | 第二张表格（第 17–26 行），内容与第一张相同 |\n\n两张表格的内容完全相同，只能靠标签和行号区分。请告诉我你要改哪一张（例如「改 `tab:main`，即第 15 行那个」），确认后我会把对应的 `\\caption{Main results}` 改为 `\\caption{Ablation results}`。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

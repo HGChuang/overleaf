@@ -1,0 +1,153 @@
+{
+  "eventHead": 18,
+  "coveredThroughSeq": 8,
+  "projectionThroughSeq": 17,
+  "generation": 1,
+  "checkpoint": {
+    "version": 1,
+    "authorRequests": [
+      {
+        "message": 0,
+        "text": "本轮只允许把 main.tex 的 Draft 节标题改成 Earlier title。必须原样保留 91.2\\%、12 samples、否定结论、statistical 限定、citation 键和文献信息，其他字节不变。",
+        "context": null
+      },
+      {
+        "message": 5,
+        "text": "更正：最终节标题是 Conclusion，撤销 Earlier title。之前所有保留要求仍有效。"
+      }
+    ],
+    "observations": [],
+    "pending": [],
+    "toolLedger": [],
+    "patches": [],
+    "verifications": [],
+    "projectBase": {
+      "projectId": "3a767b18d933bd646d607a20",
+      "sourceSnapshot": {
+        "id": "a5e2b683b19b1579aed60ecde4b0752228bac23d608238ed21c904577b346dc0",
+        "projectId": "3a767b18d933bd646d607a20",
+        "docs": [
+          {
+            "path": "main.tex",
+            "docId": "95d04384969a92b9798fe225",
+            "version": 1,
+            "sha256": "4a1ea87c4fbcfbd37d402b127bace193c2f57e51fc30ad36e6e02bb54b032be7"
+          }
+        ],
+        "assets": [],
+        "rootDocId": "95d04384969a92b9798fe225",
+        "compiler": "pdflatex",
+        "imageName": "texlive-full:latest",
+        "assetBytesFrozen": true
+      },
+      "rootDocId": "95d04384969a92b9798fe225",
+      "fileList": [
+        "main.tex"
+      ],
+      "outline": [
+        "main.tex"
+      ],
+      "files": [
+        {
+          "path": "main.tex",
+          "docId": "95d04384969a92b9798fe225",
+          "version": 1,
+          "sha256": "4a1ea87c4fbcfbd37d402b127bace193c2f57e51fc30ad36e6e02bb54b032be7"
+        }
+      ],
+      "sourceManifest": [
+        {
+          "path": "main.tex",
+          "docId": "95d04384969a92b9798fe225",
+          "version": 1,
+          "sha256": "4a1ea87c4fbcfbd37d402b127bace193c2f57e51fc30ad36e6e02bb54b032be7"
+        }
+      ]
+    }
+  },
+  "paperIndex": {
+    "snapshotId": "a5e2b683b19b1579aed60ecde4b0752228bac23d608238ed21c904577b346dc0",
+    "sourceWindows": 0,
+    "reviewedWindows": 0,
+    "staleReviews": 0,
+    "semanticStatus": "not_built"
+  },
+  "immutablePrefixHash": "4314faee59af70e81483f05e9a7e4d0798ec1c484ac619cc25b813ba148aed60",
+  "metrics": [
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 32966,
+      "reportedInput": 7763,
+      "ordinaryInput": 1619,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "output": 254,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 5183,
+      "ttftMs": 874,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T19:07:58.691Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 31402,
+      "reportedInput": 7456,
+      "ordinaryInput": 3360,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 102,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 992,
+      "ttftMs": 620,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T19:07:52.436Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 28695,
+      "reportedInput": 6972,
+      "ordinaryInput": 828,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "output": 329,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 5480,
+      "ttftMs": 928,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T19:07:51.396Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 25737,
+      "reportedInput": 6335,
+      "ordinaryInput": 2239,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 305,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 4664,
+      "ttftMs": 697,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T19:07:45.874Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 52234,
+      "reportedInput": 10596,
+      "ordinaryInput": 5476,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "output": 2179,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 18233,
+      "ttftMs": null,
+      "reason": "summary_warm",
+      "occurredAt": "2026-09-08T19:07:41.198Z"
+    }
+  ]
+}

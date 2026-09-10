@@ -1,0 +1,167 @@
+{
+  "id": "NAVC-long-1-A",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "NAVC-long-1",
+  "variant": "long",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 2,
+    "historyAttempts": 3,
+    "offTargetAttempts": 0,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 3,
+    "reads": [
+      {
+        "message": 2,
+        "offset": 0
+      },
+      {
+        "message": 2,
+        "offset": 800
+      },
+      {
+        "message": 2,
+        "offset": 1600
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 6,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 3408,
+      "output": 388,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 280,
+      "totalTokens": 7892,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 4483,
+      "output": 143,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 82,
+      "totalTokens": 8722,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 1534,
+      "output": 79,
+      "cacheRead": 7424,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 17,
+      "totalTokens": 9037,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 498,
+      "output": 663,
+      "cacheRead": 8704,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 387,
+      "totalTokens": 9865,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 5928,
+      "output": 93,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 10,
+      "totalTokens": 10117,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 2140,
+      "output": 382,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 137,
+      "totalTokens": 10714,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 56347,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 30088,
+  "conversationId": "NAVC-long-1",
+  "answer": "完成。\n\n**归档证据（prior-decision.tex，消息 2 原始工具输出，非摘要）**：\n- 第 25 行 `% FINAL CAPTION: Robustness results`\n- 第 26 行 `% Preserve 91.2 percent, 12 samples, and negation.`\n- 前 24 行全部为 `% Earlier discussion, not the final decision.`（明确排除旧讨论）\n\n**依据 FINAL CAPTION 的修改**（当前 `main.tex` 第 3 行）：\n- `\\section{Draft}` → `\\section{Robustness results}`\n\n**保持不变**：`\\documentclass{article}`、`\\begin/\\end{document}`、第 4 行数据与否定结论 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.`\n\n**验证**：候选 patch_1046f542d2ec5ff283628ac4 编译通过 — `verificationStatus=passed`，errorCount=0，warningCount=0。文件其余内容（注释、数值、引用）均未改动。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

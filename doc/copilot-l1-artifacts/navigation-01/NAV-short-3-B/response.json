@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "NAV-short-3",
+    "message": {
+      "role": "assistant",
+      "content": "Done. Summary of the verified change:\n\n**Evidence (re-read from archive, message 2)** — `prior-decision.tex` (hash `924c67e8…`):\n```\n% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n```\n\n**Current source read before editing** — `main.tex` (hash `f5e82b47…`, snapshot `eb7331e4…`):\n```\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n```\n\n**Candidate patch (`patch_74df037b4a05d3392d0215a6`)** — one minimal hunk in `main.tex`:\n- `\\section{Draft}` → `\\section{Sensitivity results}` (the FINAL CAPTION decision)\n\n**Untouched, as required:** the body line keeps the data (**91.2%**, **12 samples**) and the negation (**\"We do not claim significance.\"**); no comments, values, or citations were altered.\n\n**Compile verification:** `verificationStatus=passed`, `errorCount=0`, `warningCount=0` (candidateHash `8a6c5360…`).\n\nThe patch is proposed, not yet applied — please review the inline diff and Accept it in the editor.",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_74df037b4a05d3392d0215a6",
+            "title": "Rename the Draft section heading to the FINAL CAPTION decision \"Sensitivity results\"; body text (91.2%, 12 samples, negation) unchanged.",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Sensitivity results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

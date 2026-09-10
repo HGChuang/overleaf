@@ -1,0 +1,121 @@
+{
+  "id": "L1-14",
+  "family": "scoped-override",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 5,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 888,
+      "output": 132,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 103,
+      "totalTokens": 6140,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2102,
+      "output": 114,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 6312,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 937,
+      "output": 500,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 213,
+      "totalTokens": 7581,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 3675,
+      "output": 62,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7833,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 1900,
+      "output": 310,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 72,
+      "totalTokens": 8354,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 36220,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 21216,
+  "conversationId": "L1-14",
+  "answer": "✅ 补丁已提交并编译验证通过。\n\n**修改内容（仅 1 处 hunk，`sections/results.tex`）：**\n\n```latex\n% 修改前                          % 修改后\n{\\renewcommand{\\threshold}{0.05}   {\\renewcommand{\\threshold}{0.01}\n Local threshold $\\threshold$.}     Local threshold $\\threshold$.}\n```\n\n**保持不变的部分：**\n\n- `defs.tex`：全局 `\\newcommand{\\threshold}{0.05}`（全局阈值仍为 0.05，main.tex 中 Results 前后输出的全局值不受影响）\n- `main.tex`：未改动\n- 所有注释、数值、引用、排版结构原样保留\n\n**编译验证：** `verificationStatus=passed`，`errorCount=0`，`warningCount=0`（snapshot `5923f3da…`，候选 hash `205be831…`）。\n\n补丁 ID 为 `patch_9f4ba8ce9e50cf84b730c33a`，请在编辑器中审阅并接受后生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

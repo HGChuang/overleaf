@@ -1,0 +1,83 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:dc51b169f083706e65c517a0:patch_8ec4c61d6dc47d78909e685a",
+      "conversationId": "L1-03",
+      "createdAt": "2026-09-08T18:53:59.723Z",
+      "documentHeads": {
+        "main.tex": {
+          "hash": "86e016c2e62e0f2be27799ad37aa66cdd47c6016e2a936623491dfbb43699c02",
+          "version": 1
+        },
+        "sections/method.tex": {
+          "hash": "e8501216f736b266607ec022f1594934d43f959b400e3cd16001087c02b24de0",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "sections/method.tex",
+          "line": 1,
+          "oldText": "\\section{Method}\\label{sec:method}",
+          "newText": "\\section{Method}\\label{sec:approach}",
+          "index": 0,
+          "docId": "557f3e6ba900122a7608e557",
+          "baselineHash": "e8501216f736b266607ec022f1594934d43f959b400e3cd16001087c02b24de0",
+          "baselineVersion": 1,
+          "status": "proposed"
+        },
+        {
+          "file": "main.tex",
+          "line": 4,
+          "oldText": "See Section~\\ref{sec:method}.",
+          "newText": "See Section~\\ref{sec:approach}.",
+          "index": 1,
+          "docId": "0b807e4969cc64c3fcef4d55",
+          "baselineHash": "86e016c2e62e0f2be27799ad37aa66cdd47c6016e2a936623491dfbb43699c02",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_8ec4c61d6dc47d78909e685a",
+      "projectId": "dc51b169f083706e65c517a0",
+      "snapshotId": "89555572ba2db7755976625494161c673b1e3ce09ed4ba512b8eaeb9dae0203a",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateVerification": {
+        "verificationId": "aaaaaaaaaaaaaaaaaaaaaaaa:dc51b169f083706e65c517a0:89555572ba2db7755976625494161c673b1e3ce09ed4ba512b8eaeb9dae0203a:patch_8ec4c61d6dc47d78909e685a:compile:call_0r4dehiemlispjl6psr03roh",
+        "snapshotId": "89555572ba2db7755976625494161c673b1e3ce09ed4ba512b8eaeb9dae0203a",
+        "patchId": "patch_8ec4c61d6dc47d78909e685a",
+        "candidateHash": "ee3ee6f8cdaa2ce67f521dc06eb9dacbc2cc6f8463a7be5f734b4113493900bb",
+        "status": "passed",
+        "errorCount": 0,
+        "warningCount": 0,
+        "verifiedAt": "2026-09-08T18:54:03.432Z"
+      }
+    }
+  ],
+  "verifications": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:dc51b169f083706e65c517a0:89555572ba2db7755976625494161c673b1e3ce09ed4ba512b8eaeb9dae0203a:patch_8ec4c61d6dc47d78909e685a:compile:call_0r4dehiemlispjl6psr03roh",
+      "kind": "compile",
+      "patchId": "patch_8ec4c61d6dc47d78909e685a",
+      "projectId": "dc51b169f083706e65c517a0",
+      "snapshotId": "89555572ba2db7755976625494161c673b1e3ce09ed4ba512b8eaeb9dae0203a",
+      "startedAt": "2026-09-08T18:54:02.279Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "ee3ee6f8cdaa2ce67f521dc06eb9dacbc2cc6f8463a7be5f734b4113493900bb",
+      "result": {
+        "status": "success",
+        "snapshotId": "89555572ba2db7755976625494161c673b1e3ce09ed4ba512b8eaeb9dae0203a",
+        "patchId": "patch_8ec4c61d6dc47d78909e685a",
+        "candidateHash": "ee3ee6f8cdaa2ce67f521dc06eb9dacbc2cc6f8463a7be5f734b4113493900bb",
+        "manifestHash": "89555572ba2db7755976625494161c673b1e3ce09ed4ba512b8eaeb9dae0203a",
+        "buildId": "25a022ee-505a-4fd3-acf6-1f6a71e02ad4",
+        "logComplete": true,
+        "errorCount": 0,
+        "errors": [],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-08T18:54:03.427Z"
+    }
+  ]
+}

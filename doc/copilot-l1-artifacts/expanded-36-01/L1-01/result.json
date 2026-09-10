@@ -1,0 +1,81 @@
+{
+  "id": "L1-01",
+  "family": "read-symbol",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 1798,
+      "output": 84,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 40,
+      "totalTokens": 5978,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2048,
+      "output": 120,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 37,
+      "totalTokens": 6264,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 374,
+      "output": 90,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 6608,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 18850,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 6833,
+  "conversationId": "L1-01",
+  "answer": "**定义位置**：`macros.tex` 第 2 行\n\n```latex\n\\newcommand{\\threshold}{0.05}\n```\n\n**当前数值**：`0.05`\n\n**使用位置**：`main.tex` 第 4 行 — `We use $\\samplesize$ samples and threshold $\\threshold$.`（渲染为 \"threshold 0.05\"）。\n\n未修改任何源码。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

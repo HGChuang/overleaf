@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-29",
+    "message": {
+      "role": "assistant",
+      "content": "完成。摘要如下：\n\n**核对目录**\n- `list_project_files` 回执超出工具预算被归档；已按指示用 `read_context_history` 读回原始回执（绝对消息索引 3）首页，确认文件列表以 `main.tex` 开头，与信封 `fileList` 一致（另有 `supplement/record-000…064` 归档源码，均未改动）。\n\n**定位目标**（`main.tex`，hash `ee9ae0…`）\n- 第 3 行：`\\section{Draft}` ← 需改的节标题\n- 第 4 行：`Protected 91.2 percent.` ← 保留\n\n**候选补丁**：`patch_f2fb127afdd40cdc76d0c940`\n- `main.tex` 第 3 行 `\\section{Draft}` → `\\section{Final}`，仅此一处，未触碰任何其他源码、注释、数值或引用。\n\n**编译验证**：`compile_project(patchId)` → `verificationStatus: passed`，`errorCount: 0`，`warningCount: 0`（candidateHash `40f589…`）。\n\n该补丁目前为 **proposed** 状态，请在编辑器中审阅并接受后才会真正写入源码。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_f2fb127afdd40cdc76d0c940",
+            "title": "将 main.tex 的节标题 Draft 改为 Final",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Final}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

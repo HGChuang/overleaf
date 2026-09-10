@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-original-2",
+    "message": {
+      "role": "assistant",
+      "content": "项目里有两个表格的标题都叫 “Main results”，而你要求“只改我指的那一个”，但当前没有收到你选中的内容（selectedText 为空），两个候选标题内容完全一样，无法确定你指的是哪一个：\n\n- `main.tex` 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n- `main.tex` 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n为避免改错表格，请先确认要改哪一个：\n\n```latex\n% 请告诉我改哪一个：第 10 行的 tab:main，还是第 19 行的 tab:replication？（或在编辑器中选中对应的表格标题）\n```",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

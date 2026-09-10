@@ -1,0 +1,111 @@
+{
+  "coverageFailures": [],
+  "historyReads": [
+    {
+      "message": 0
+    },
+    {
+      "message": 0,
+      "offset": 800
+    },
+    {
+      "message": 0,
+      "offset": 1600
+    },
+    {
+      "message": 1
+    },
+    {
+      "message": 2
+    },
+    {
+      "message": 2,
+      "offset": 800
+    },
+    {
+      "message": 2,
+      "offset": 1600
+    }
+  ],
+  "liveArchives": 0,
+  "epochCommits": 1,
+  "compactions": [],
+  "evidenceFiles": [
+    "prior-decision.tex",
+    "main.tex"
+  ],
+  "requests": [
+    {
+      "callId": 1,
+      "estimatedInput": 53463,
+      "effectiveInputBudget": 945904,
+      "summary": true
+    },
+    {
+      "callId": 2,
+      "estimatedInput": 30986,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 3,
+      "estimatedInput": 35612,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 4,
+      "estimatedInput": 39189,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 5,
+      "estimatedInput": 41855,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 6,
+      "estimatedInput": 46216,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 7,
+      "estimatedInput": 48303,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 8,
+      "estimatedInput": 49730,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 9,
+      "estimatedInput": 54156,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 10,
+      "estimatedInput": 55980,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 11,
+      "estimatedInput": 57283,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 12,
+      "estimatedInput": 58936,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    }
+  ]
+}

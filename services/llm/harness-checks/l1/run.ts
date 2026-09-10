@@ -2,7 +2,10 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import mongoose from 'mongoose';
 import settings from '@overleaf/settings';
-import { cases, referenceFiles } from './cases.mjs';
+import { cases as baselineCases, referenceFiles } from './cases.mjs';
+import { lineCases, lineExperiment, numberReadResult, costCases, costExperiment, costReadResult } from './line-experiment.mjs';
+import { buildToolPool } from '../../app/agent/tools/provider.js';
+import { sourcePage } from '../../app/agent/context/source-evidence.js';
 import { checkFiles, checkAnswer, materialize } from './oracle.mjs';
 import { compileFiles, startBackend, hash, writeJson } from './backend.js';
 import { CopilotService, AGENT_STEP_LIMIT } from '../../app/services/copilot.service.js';
@@ -13,9 +16,23 @@ import { streamConfiguredModel } from '../../app/llm/nativeStream.js';
 import { createChatModel } from '../../app/llm/modelFactory.js';
 import { Semaphore } from '../../app/utils/Semaphore.js';
 import redis from '../../config/redis.js';
+import { expandedCases } from './expanded-cases.mjs';
+import { seedHistory, stressChecks } from './stress.js';
+import { withHistorySourceLookup } from '../../app/agent/context/history-source-lookup.js';
+import { sourceNavigationCases, sourceNavigationExperiment } from './navigation-source-experiment.mjs';
+import { ContextManager } from '../../app/agent/context/context-manager.js';
+import { navigationCases, navigationExperiment, navigationDescription, navigationChecks, navigationConciseCases, navigationConciseExperiment, navigationConciseDescription, navigationBaselineDescription } from './navigation-experiment.mjs';
 
 redis.disconnect();
 const mode = process.env.L1_MODE;
+import { productionLineCases } from './line-production.mjs';
+const sourceNavigation = process.env.L1_EXPERIMENT === 'navigation-source';
+const conciseNavigation = process.env.L1_EXPERIMENT === 'navigation-concise';
+const navigation = sourceNavigation || conciseNavigation || process.env.L1_EXPERIMENT === 'navigation';
+const expanded = process.env.L1_EXPERIMENT === 'expanded-36';
+const costMode = process.env.L1_EXPERIMENT === 'lines-cost';
+const experiment = costMode || process.env.L1_EXPERIMENT === 'f-l1-02';
+const cases = sourceNavigation ? sourceNavigationCases : conciseNavigation ? navigationConciseCases : navigation ? navigationCases : expanded ? expandedCases : process.env.L1_EXPERIMENT === 'lines-production' ? productionLineCases : costMode ? costCases : experiment ? lineCases : baselineCases;
 const out = '/output';
 const userId = 'a'.repeat(24); // Synthetic user, never the configured account's identity.
 const sourceManifest = JSON.parse(fs.readFileSync(`${out}/source-manifest-current.json`, 'utf8'));
@@ -98,6 +115,7 @@ async function evaluate() {
   const descriptor = createChatModel({ baseUrl: cfg.baseUrl, modelId: cfg.model.id,
     contextWindow: cfg.model.contextWindow, maxTokens: cfg.model.maxTokens });
   const config = { version: 1, datasetHash, sourceManifest, compilerImage, runtimeImage,
+    experiment: sourceNavigation ? sourceNavigationExperiment : conciseNavigation ? navigationConciseExperiment : navigation ? navigationExperiment : expanded ? { id: "expanded-36", syntheticHistory: true, effectiveWindowOverride: "per-case, explicit in dataset; provider unchanged" } : costMode ? costExperiment : experiment ? lineExperiment : null,
     model: descriptor, providerConfigName: cfg.name, steps: AGENT_STEP_LIMIT,
     turnTimeoutMs: 300000, modelTimeoutMs: 60000, totalTokenCap: null,
     temperature: 0.7, semanticIndex: 'disabled', priceStatus: 'unknown',
@@ -153,13 +171,23 @@ async function evaluate() {
       }
       save('state', { status: 'running', configHash, startedAt: new Date().toISOString() });
       const started = Date.now();
-      const projectId = hash(configHash + c.id).slice(0, 24);
+      if (experiment || expanded || navigation) {
+        // Only the isolated test DB; retain indexes while clearing all state
+        // so paired arms cannot inherit memories, receipts or calibration.
+        for (const collection of await mongoose.connection.db!.collections()) await collection.deleteMany({});
+      }
+      const projectId = hash(configHash + (experiment || navigation ? c.pairId : c.id)).slice(0, 24);
+      const priorSnapshot = c.seed?.policy ? await backend.seed(projectId, { ...c.files, 'prior-decision.tex': c.seed.policy }) : null;
       const snapshot = await backend.seed(projectId, c.files);
+      const caseDescriptor = c.effectiveWindow ? { ...descriptor, contextWindow: c.effectiveWindow } : descriptor;
       save('snapshot', snapshot);
       const journal = new ContextStore();
+      let activeSession:any;
+      const wrappedHistoryTools=new WeakSet<object>();
       const observedStore: any = Object.create(journal);
       observedStore.open = async (scope: any) => {
         const session = await journal.open(scope);
+        activeSession=session;
         log('session_open', scope);
         return { ...session,
           append: async (m: any) => { await session.append(m); log('journal_append', m); },
@@ -168,28 +196,69 @@ async function evaluate() {
         };
       };
       let calls = 0;
+      let phase = 'task';
       const usage: any[] = [];
       const streamFn: any = async (m: any, ctx: any, opts: any) => {
         if (++calls > AGENT_STEP_LIMIT + 4) throw new Error('L1 per-case model-call circuit breaker');
+        if(sourceNavigation){
+          const historyTool=ctx.tools.find((t:any)=>t.name==='read_context_history');
+          if(!wrappedHistoryTools.has(historyTool)){
+            assert.equal(historyTool.parameters.properties.path,undefined,'Source-selector experiment requires the frozen legacy reader; production now exposes path');
+            if(c.arm==='D'){Object.assign(historyTool,withHistorySourceLookup(historyTool,activeSession));wrappedHistoryTools.add(historyTool);}
+          }
+        }
+        if(navigation&&!sourceNavigation){
+          assert.equal(ctx.tools.find((t:any)=>t.name==='read_context_history').description,navigationBaselineDescription,'Navigation experiment requires frozen baseline; production description changed');
+          if(c.arm!=='A')ctx={...ctx,tools:ctx.tools.map((t:any)=>t.name==='read_context_history'?{...t,description:conciseNavigation?navigationConciseDescription:navigationDescription}:t)};
+        }
         const callId = calls;
-        log('model_request', { callId, model: m, context: ctx,
+        const callPhase = phase;
+        log('model_request', { callId, phase: callPhase, model: m, context: ctx,
           options: { temperature: opts?.temperature, maxTokens: opts?.maxTokens ?? m.maxTokens, timeoutMs: opts?.timeoutMs ?? 60000 } });
         const stream = await streamConfiguredModel(m, ctx, opts);
         void stream.result().then(message => {
-          usage.push({ callId, ...message.usage, reported: message.usage.totalTokens > 0 });
+          usage.push({ callId, phase: callPhase, ...message.usage, reported: message.usage.totalTokens > 0 });
           log('model_response', { callId, message });
         });
         return stream;
       };
       const service = new CopilotService({ contextStore: observedStore, webClient: backend.web, streamFn,
-        clientRegistry: { getChatModel: async () => ({ model: descriptor, semaphore: new Semaphore(1) }) } as any });
+        ...(experiment ? { toolPoolFactory: (ctx: any, deps: any) => buildToolPool(ctx, deps).map(tool => {
+          if (!['read_file', 'read_file_fragment'].includes(tool.name)) return tool;
+          return { ...tool,
+            ...(costMode ? { description: tool.description.replace('exact unnumbered source', 'exact source') +
+              ' Source is returned as content, lineNumberedContent (N: text), or lines ([line,text]). Line annotations are metadata: exclude them from quotes and patches; join tuple texts with LF, preserving CR.' } : {}),
+            execute: async (...args: any[]) => {
+            const raw = await (tool.execute as any)(...args);
+            const shown = costMode ? costReadResult(raw, c.arm) : c.arm === 'B' ? numberReadResult(tool.name, raw) : raw;
+            log('read_evidence', { arm: c.arm, tool: tool.name, raw, shown });
+            return shown;
+          } };
+        }) } : {}),
+        clientRegistry: { getChatModel: async () => ({ model: caseDescriptor, semaphore: new Semaphore(1) }) } as any });
       service.resolveChatModel = async () => ({ usingLlmInfo: cfg, model: cfg.model } as any);
       const context = new ContextService().normalizeChatContext({
+        ...(experiment || expanded || navigation ? { conversation: { conversationId: experiment || navigation ? c.pairId : c.id, source: 'panel' } } : {}),
         project: { projectId, sourceSnapshot: { id: snapshot.id } },
         message: { role: 'user', content: c.prompt },
       });
       let response: any, error: any;
-      try { response = await service.chat(userId, context, { onEvent: event => log('service_event', event) }); }
+      try {
+        if(c.seed){
+          await seedHistory(c,journal,{userId,projectId,conversationId:context.conversation.conversationId,source:'panel'},priorSnapshot||snapshot,backend.web);
+          save('seed-history',await journal.history(userId,context.conversation.conversationId));
+          if(c.seed.navigationCheckpoint){
+            const session=await observedStore.open({userId,projectId,conversationId:context.conversation.conversationId,source:'panel'});
+            try{const manager=new ContextManager({system:'',tools:[],window:caseDescriptor.contextWindow,output:caseDescriptor.maxTokens,
+              commit:epoch=>session.commit(epoch),summarize:async()=>null});
+              await manager.prepare(session.messages,'manual');
+            }finally{await session.close();}
+            save('navigation-checkpoint',await journal.diagnostics(userId,context.conversation.conversationId,projectId));
+          }
+          if(c.seed.manualCompact){phase='manual_compact';save('manual-compact',await service.compact(userId,context.conversation.conversationId,projectId));}
+        }
+        phase='task';
+        response = await service.chat(userId, context, { onEvent: event => log('service_event', event) }); }
       catch (e: any) { error = { code: e.code || null, message: e.message }; }
       save('response', { response: response || null, error: error || null });
       const history = await journal.history(userId, context.conversation.conversationId);
@@ -229,11 +298,19 @@ async function evaluate() {
         }
       } else failures = checkAnswer(c, text, proposals);
       if (error) failures.unshift(`chat error: ${error.code || error.message}`);
+      const diagnostics = await journal.diagnostics(userId,context.conversation.conversationId,projectId);
+      save('diagnostics',diagnostics);
+      const events = fs.readFileSync(`${activeDir}/events.jsonl`,'utf8').trim().split('\n').map(line=>JSON.parse(line));
+      const coverage = expanded || navigation ? stressChecks(c,events,history?.messages||[],diagnostics) : null;
+      if(coverage)save('coverage',coverage);
+      const nav=navigation?navigationChecks(c,history?.messages||[]):null;
+      if(nav){save('navigation',nav);failures.push(...nav.failures);}
       const category = harnessFailures.length ? 'harness_failure' : error
         ? /LIMIT|TIMEOUT|circuit breaker/.test(error.code || error.message) ? 'budget_exhausted' : /UPSTREAM/.test(error.code || '') ? 'provider_failure' : 'inconclusive'
         : failures.length ? 'task_failure' : 'checks_passed_pending_review';
-      const row = { id: c.id, category, checksPassed: !failures.length && !harnessFailures.length,
-        failures, harnessFailures, calls, usage, reportedTotalTokens: usage.reduce((n, u) => n + u.totalTokens, 0),
+      const row = { id: c.id, family: c.family, effectiveWindow: caseDescriptor.contextWindow, category, checksPassed: !failures.length && !harnessFailures.length,
+        ...(experiment || navigation ? { arm: c.arm, pairId: c.pairId, variant: c.variant, expectedLocations: c.expectedLocations } : {}),
+        ...(nav?{navigation:nav}:{}), failures, harnessFailures, ...(coverage ? { coverageFailures:coverage.coverageFailures, mechanismCovered:!coverage.coverageFailures.length } : {}), calls, usage, reportedTotalTokens: usage.reduce((n, u) => n + u.totalTokens, 0),
         usageComplete: usage.length === calls && usage.every(u => u.reported), monetaryCost: null,
         elapsedMs: Date.now() - started, conversationId: context.conversation.conversationId,
         answer: text, reviewRequired: 'Inspect answer for supported claims; lexical answer checks alone do not establish semantic success.' };
@@ -243,6 +320,23 @@ async function evaluate() {
         '| Case | 自动检查 | 类别 | 模型调用 | 实报 token |\n|---|---|---|---:|---:|\n' +
         rows.map(r => `| ${r.id} | ${r.checksPassed ? 'PASS' : 'FAIL'} | ${r.category} | ${r.calls} | ${r.reportedTotalTokens}${r.usageComplete ? '' : '（不完整）'} |`).join('\n') + '\n');
       console.log(`${c.id}: ${category}; calls=${calls}; tokens=${row.reportedTotalTokens}; ${failures.join('; ')}`);
+    }
+    if (costMode && rows.length === cases.length) {
+      // Separate tokenizer/cost probe, NOT a Copilot task score: identical
+      // messages except the source representation, one output token requested.
+      for (const c of cases.filter(c => c.pairId.endsWith('-1'))) {
+        activeDir = `${out}/cost-probes/${c.variant}-${c.arm}`;
+        if (fs.existsSync(`${activeDir}/result.json`)) continue;
+        const page = sourcePage('main.tex', c.files['main.tex'], { snapshotId: 'a'.repeat(64), docId: 'b'.repeat(24), version: 1 });
+        const view = costReadResult({ content: [{ type: 'text', text: JSON.stringify(page) }] }, c.arm).content[0].text;
+        const stream = await streamConfiguredModel(descriptor, { systemPrompt: 'Reply OK.', messages: [{ role: 'user', content: view, timestamp: 0 }] },
+          { apiKey: cfg.apiKey, temperature: 0, maxTokens: 1, maxRetries: 0 });
+        const response = await stream.result();
+        save('result', { arm: c.arm, variant: c.variant, sourceView: JSON.parse(view), sourceBytes: Buffer.byteLength(view),
+          inputTokens: response.usage.totalTokens > 0 ? response.usage.input + response.usage.cacheRead + response.usage.cacheWrite : null,
+          usage: response.usage, stopReason: response.stopReason, errorMessage: response.errorMessage || null });
+        console.log(`cost probe ${c.variant}-${c.arm}: input=${response.usage.input + response.usage.cacheRead + response.usage.cacheWrite}`);
+      }
     }
   } finally {
     await Promise.allSettled(wireTaps);

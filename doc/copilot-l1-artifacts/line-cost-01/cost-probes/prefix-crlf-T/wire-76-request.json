@@ -1,0 +1,23 @@
+{
+  "url": "https://ark.cn-beijing.volces.com/api/coding/v3/chat/completions",
+  "body": {
+    "model": "deepseek-v4-flash-ga-260731",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Reply OK."
+      },
+      {
+        "role": "user",
+        "content": "{\"found\":true,\"path\":\"main.tex\",\"sourceHash\":\"b1e7188dbb5f297731f10e24818d69b4a6f5ad090aa6a6e5953f671427b54546\",\"evidenceId\":\"e314293cd8e36fbe0c5e548ddcb05d471a48c9138581d6f8cd406fd89e0675f6\",\"consistency\":\"immutable-snapshot\",\"snapshotId\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"docId\":\"bbbbbbbbbbbbbbbbbbbbbbbb\",\"version\":1,\"startByte\":0,\"endByte\":488,\"startLine\":1,\"totalLines\":27,\"nextOffsetBytes\":null,\"rangeEndByte\":488,\"fileBytes\":488,\"lines\":[[1,\"% Synthetic location fixture.\\r\"],[2,\"\\r\"],[3,\"% Keep both tables.\\r\"],[4,\"% Line ending fixture.\\r\"],[5,\"\\r\"],[6,\"\\\\documentclass{article}\\r\"],[7,\"\\\\begin{document}\\r\"],[8,\"\\\\begin{table}[h]\\r\"],[9,\"\\\\centering\\r\"],[10,\"\\\\begin{tabular}{lr}\\r\"],[11,\"Method & Score \\\\\\\\\\r\"],[12,\"Baseline & 91.2 \\\\\\\\\\r\"],[13,\"Ours & 94.5\\r\"],[14,\"\\\\end{tabular}\\r\"],[15,\"\\\\caption{Main results}\\\\label{tab:main}\\r\"],[16,\"\\\\end{table}\\r\"],[17,\"\\\\begin{table}[h]\\r\"],[18,\"\\\\centering\\r\"],[19,\"\\\\begin{tabular}{lr}\\r\"],[20,\"Method & Score \\\\\\\\\\r\"],[21,\"Baseline & 91.2 \\\\\\\\\\r\"],[22,\"Ours & 94.5\\r\"],[23,\"\\\\end{tabular}\\r\"],[24,\"\\\\caption{Main results}\\\\label{tab:replication}\\r\"],[25,\"\\\\end{table}\\r\"],[26,\"\\\\end{document}\\r\"],[27,\"\"]]}"
+      }
+    ],
+    "stream": true,
+    "stream_options": {
+      "include_usage": true
+    },
+    "max_tokens": 1,
+    "temperature": 0
+  },
+  "at": "2026-09-08T14:14:15.684Z"
+}

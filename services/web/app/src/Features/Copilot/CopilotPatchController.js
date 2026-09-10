@@ -17,7 +17,7 @@ async function records() {
   return db.collection('copilot_patch_records')
 }
 
-const { applyHunks } = require('@overleaf/copilot-contracts')
+const { applyHunks, normalizeHunks } = require('@overleaf/copilot-contracts')
 
 function status(hunks) {
   if (hunks.every(h => h.status === 'applied')) return 'applied'
@@ -89,7 +89,8 @@ module.exports = {
       })
       for (const file of new Set(normalized.map(h => h.file))) {
         const source = await Snapshots.readFile(projectId, snapshotId, file)
-        applyHunks(source.content, normalized.filter(h => h.file === file))
+        const located = normalizeHunks(source.content, normalized.filter(h => h.file === file))
+        for (const hunk of located) normalized[hunk.index] = hunk
       }
       const collection = await records()
       const _id = key(userId, projectId, patchId)

@@ -1,0 +1,101 @@
+{
+  "id": "L1-21",
+  "family": "duplicate-anchor",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 1699,
+      "output": 85,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 39,
+      "totalTokens": 5880,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 1073,
+      "output": 227,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 70,
+      "totalTokens": 6420,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 2494,
+      "output": 80,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 10,
+      "totalTokens": 6670,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 736,
+      "output": 171,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 19,
+      "totalTokens": 7051,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 26021,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 12423,
+  "conversationId": "L1-21",
+  "answer": "完成 ✅\n\n**补丁**:`patch_5ac1024be5d21c29bd8ebb3c`(单个 hunk)\n\n- `main.tex` 第 8 行:`\\caption{Results}\\label{tab:second}` → `\\caption{Replication results}\\label{tab:second}`\n- 只改动了 `tab:second` 的标题;`tab:first`(第 4 行)、表格内容、标签、注释、数值和引用均未动。\n\n**编译验证**:`verificationStatus=passed`,errorCount=0,warningCount=0。候选补丁编译通过,等你在内联 diff 预览中接受后即生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

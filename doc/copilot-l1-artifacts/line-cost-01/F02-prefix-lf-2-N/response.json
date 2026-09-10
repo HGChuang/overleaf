@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-lf-2",
+    "message": {
+      "role": "assistant",
+      "content": "项目里正好有两个 caption 为 **Main results** 的表格（都在 `main.tex` 中），请确认要改哪一个：\n\n| 编号 | 标签 (label) | 文件路径 | caption 所在行号 | 当前 caption |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 22 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n（来源：`search_project` 结果与 `main.tex` 第 13、22 行的源码，文件 hash `22d72ce…`。）\n\n请告诉我改 ① 还是 ②（例如\"改第 13 行那个\"），我再提交 `submit_patch` 把对应的 caption 改为 `Ablation results`，不会动另一个。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

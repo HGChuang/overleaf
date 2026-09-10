@@ -1,0 +1,198 @@
+{
+  "id": "NAV-short-3-B",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "B",
+  "pairId": "NAV-short-3",
+  "variant": "short",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 2,
+    "historyAttempts": 1,
+    "offTargetAttempts": 0,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 1,
+    "reads": [
+      {
+        "message": 2
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 8,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 2220,
+      "output": 388,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 234,
+      "totalTokens": 7984,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 693,
+      "output": 165,
+      "cacheRead": 7424,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 120,
+      "totalTokens": 8282,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 751,
+      "output": 598,
+      "cacheRead": 7936,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 438,
+      "totalTokens": 9285,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 1111,
+      "output": 982,
+      "cacheRead": 8448,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 704,
+      "totalTokens": 10541,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 6584,
+      "output": 130,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 10810,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 6872,
+      "output": 118,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 28,
+      "totalTokens": 11086,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 7,
+      "phase": "task",
+      "input": 11297,
+      "output": 152,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 11449,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 8,
+      "phase": "task",
+      "input": 1336,
+      "output": 291,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 11867,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 81304,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 41604,
+  "conversationId": "NAV-short-3",
+  "answer": "Done. Summary of the verified change:\n\n**Evidence (re-read from archive, message 2)** — `prior-decision.tex` (hash `924c67e8…`):\n```\n% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n```\n\n**Current source read before editing** — `main.tex` (hash `f5e82b47…`, snapshot `eb7331e4…`):\n```\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n```\n\n**Candidate patch (`patch_74df037b4a05d3392d0215a6`)** — one minimal hunk in `main.tex`:\n- `\\section{Draft}` → `\\section{Sensitivity results}` (the FINAL CAPTION decision)\n\n**Untouched, as required:** the body line keeps the data (**91.2%**, **12 samples**) and the negation (**\"We do not claim significance.\"**); no comments, values, or citations were altered.\n\n**Compile verification:** `verificationStatus=passed`, `errorCount=0`, `warningCount=0` (candidateHash `8a6c5360…`).\n\nThe patch is proposed, not yet applied — please review the inline diff and Accept it in the editor.",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

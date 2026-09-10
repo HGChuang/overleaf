@@ -1,0 +1,141 @@
+{
+  "scope": "逐例核对所有明确源位置、补丁状态、候选保护区/编译；额外自然语言质量单列，不将核心验收等同完美回答。",
+  "cases": [
+    {
+      "id": "L1-01",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "L1-02",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "L1-03",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "L1-04",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "L1-05",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": "行号与修复正确，但解释将 txetbf 说成 texttt 的拼写变体；这是额外文字解释错误，不影响补丁。"
+    },
+    {
+      "id": "L1-06",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "L1-07",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "L1-08",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "L1-09",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "L1-10",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "L1-11",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "L1-12",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "LINES-original",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "LINES-prefix-lf",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "LINES-prefix-crlf",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": null
+    },
+    {
+      "id": "LINES-crlf-literal-edit",
+      "lineClaims": "pass",
+      "coreOutcome": "pass",
+      "annotationInPatch": false,
+      "annotationInQuote": false,
+      "minorSemanticNote": "行号、原文编号和 CRLF 正确；末尾称字面文本变更没有诚实性/一致性风险缺乏依据，应省略。这是额外解释问题。"
+    }
+  ],
+  "conclusion": {
+    "coreOutcomesPassed": 16,
+    "lineClaimsPassed": 16,
+    "minorSemanticIssues": 2,
+    "allReadPagesExact": 19,
+    "canonicalHunks": 13,
+    "toolErrors": 0
+  }
+}

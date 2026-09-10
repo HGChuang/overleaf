@@ -1,0 +1,4 @@
+{
+  "main.tex": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\input{equations}\n\\end{document}\n",
+  "equations.tex": "\\begin{align}\nx &= 12 \\\\\ny &= 16\n\\end{align}\n"
+}

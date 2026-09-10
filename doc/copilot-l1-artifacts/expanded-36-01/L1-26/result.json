@@ -1,0 +1,47 @@
+{
+  "id": "L1-26",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "inconclusive",
+  "checksPassed": false,
+  "failures": [
+    "chat error: Context epoch CAS failed",
+    "no delivered persisted proposal"
+  ],
+  "harnessFailures": [],
+  "coverageFailures": [
+    "required archived evidence was not read back",
+    "manual archive did not commit an epoch"
+  ],
+  "mechanismCovered": false,
+  "calls": 1,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "manual_compact",
+      "input": 8694,
+      "output": 5491,
+      "cacheRead": 2048,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 5288,
+      "totalTokens": 16233,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 16233,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 55374,
+  "conversationId": "L1-26",
+  "answer": "",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

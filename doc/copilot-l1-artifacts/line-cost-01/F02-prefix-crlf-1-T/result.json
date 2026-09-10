@@ -1,0 +1,100 @@
+{
+  "id": "F02-prefix-crlf-1-T",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "T",
+  "pairId": "F02-prefix-crlf-1",
+  "variant": "prefix-crlf",
+  "expectedLocations": {
+    "tab:main": 15,
+    "tab:replication": 24
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 231,
+      "output": 92,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 63,
+      "totalTokens": 5955,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 357,
+      "output": 91,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 16,
+      "totalTokens": 6080,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 2322,
+      "output": 123,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 77,
+      "totalTokens": 6541,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "input": 904,
+      "output": 416,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 132,
+      "totalTokens": 7464,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 26040,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 14092,
+  "conversationId": "F02-prefix-crlf-1",
+  "answer": "项目里 `main.tex` 中有**两个**表格的 caption 都叫 \"Main results\"，内容完全相同，只能靠 `\\label` 区分。按你的要求，先列出候选，等你确认后再改：\n\n## 候选一\n- **标签**：`tab:main`\n- **文件**：`main.tex`\n- **caption 所在行**：**第 15 行**\n- 内容：`\\caption{Main results}\\label{tab:main}`\n- 上下文：文件中的第一个表格（行 8–16），数据行为 Baseline 91.2 / Ours 94.5\n\n## 候选二\n- **标签**：`tab:replication`\n- **文件**：`main.tex`\n- **caption 所在行**：**第 24 行**\n- 内容：`\\caption{Main results}\\label{tab:replication}`\n- 上下文：文件中的第二个表格（行 17–25），数据与第一个表格相同\n\n两个表格内容完全一致，我无法从内容上判断你指的是哪一个。请告诉我改成 \"Ablation results\" 的是**候选一（tab:main，第 15 行）**还是**候选二（tab:replication，第 24 行）**，确认后我再提交补丁。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

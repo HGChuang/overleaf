@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-crlf-3",
+    "message": {
+      "role": "assistant",
+      "content": "项目里确实有**两个**标题都是 \"Main results\" 的表格，都在 `main.tex`（唯一文件）中。两个候选如下：\n\n| 候选 | 表格标签 | 文件路径 | caption 所在行号 | 行内容 |\n|---|---|---|---|---|\n| ① | `tab:main`（第 1 个表格） | `main.tex` | 第 15 行 | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication`（第 2 个表格） | `main.tex` | 第 24 行 | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格内容完全相同（Method/Score，Baseline 91.2 / Ours 94.5），区别只在标签和位置。\n\n请告诉我您要改哪一个（例如\"改 ① `tab:main`\"或\"改 ② `tab:replication`\"），我确认后再提交修改为 `Ablation results` 的补丁。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-lf-2",
+    "message": {
+      "role": "assistant",
+      "content": "项目里只有一个文件 `main.tex`，其中有**两个** caption 都是 \"Main results\" 的表格，符合你说的\"候选有两个\"。请确认改哪一个：\n\n| 候选 | 标签 (label) | 文件路径 | caption 所在行号 | 行内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 22 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格内容目前完全相同（都是 Baseline/Ours 的 Score 表），仅 label 不同。\n\n请回复要改哪一个（例如\"改①号 `tab:main`\"或\"改第 22 行那个\"），确认后我再提交补丁，只把那一处 caption 改成 **Ablation results**，另一处保持 \"Main results\" 不动。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

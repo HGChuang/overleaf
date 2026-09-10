@@ -1,0 +1,91 @@
+{
+  "datasetHash": "1e279890c28acbcaa48e926419c5f6047c5dd68fcc0195b21dec925c6803b930",
+  "compilerImage": "sha256:67d2cde2de5bb1472c53baf382d861ab9f6aedbe338dd29ecb5c3ded0107e8b5",
+  "rows": [
+    {
+      "id": "NAVS-short-1-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVS-short-1-D",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVS-short-2-D",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVS-short-2-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVS-long-1-D",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVS-long-1-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVS-long-2-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVS-long-2-D",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVS-late-long-1-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVS-late-long-1-D",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVS-late-long-2-D",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVS-late-long-2-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    }
+  ],
+  "completedAt": "2026-09-09T15:01:14.306Z"
+}

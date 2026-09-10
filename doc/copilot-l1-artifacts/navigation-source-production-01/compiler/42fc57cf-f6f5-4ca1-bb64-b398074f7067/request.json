@@ -1,0 +1,7 @@
+{
+  "files": {
+    "main.tex": "\\documentclass{article}\n\\input{defs}\n\\begin{document}\nGlobal $\\threshold$.\n\\input{sections/results}\nGlobal $\\threshold$.\n\\end{document}\n",
+    "defs.tex": "\\newcommand{\\threshold}{0.05}\n",
+    "sections/results.tex": "\\section{Results}\n{\\renewcommand{\\threshold}{0.05}\nLocal threshold $\\threshold$.}\n"
+  }
+}

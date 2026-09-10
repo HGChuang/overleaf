@@ -1,0 +1,81 @@
+{
+  "id": "F02-prefix-crlf-2-B",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "B",
+  "pairId": "F02-prefix-crlf-2",
+  "variant": "prefix-crlf",
+  "expectedLocations": {
+    "tab:main": 15,
+    "tab:replication": 24
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 403,
+      "output": 246,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 186,
+      "totalTokens": 6025,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 850,
+      "output": 116,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 70,
+      "totalTokens": 6342,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 2926,
+      "output": 410,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 216,
+      "totalTokens": 7432,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19799,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 12543,
+  "conversationId": "F02-prefix-crlf-2",
+  "answer": "文件里确实有两个 caption 为 **Main results** 的表格，都在 `main.tex` 中。以下是两个候选：\n\n| 候选 | label | 文件 | caption 行号 | caption 原文 |\n|---|---|---|---|---|\n| A | `tab:main` | `main.tex` | 第 15 行 | `\\caption{Main results}\\label{tab:main}` |\n| B | `tab:replication` | `main.tex` | 第 24 行 | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格内容完全相同（第 8–16 行和第 17–25 行分别是各自完整的 `table` 环境），唯一的区分点是 label。\n\n请确认要改哪一个（例如\"改 A / tab:main\"，或\"两个都改\"），我再提交修改 patch。在你确认之前，我不会改动任何文件。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

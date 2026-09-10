@@ -1,0 +1,62 @@
+{
+  "id": "F02-original-1-D",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "D",
+  "pairId": "F02-original-1",
+  "variant": "original",
+  "expectedLocations": {
+    "tab:main": 10,
+    "tab:replication": 19
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 3789,
+      "output": 118,
+      "cacheRead": 2048,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 41,
+      "totalTokens": 5955,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 6693,
+      "output": 1961,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 1752,
+      "totalTokens": 8654,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 14609,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 21421,
+  "conversationId": "F02-original-1",
+  "answer": "我查看了 `main.tex`，发现里面有 **两个** 表格的标题都是 `Main results`，内容也完全一样，所以我没法确定你指的是哪一个：\n\n- 第 1 个表格：`\\caption{Main results}\\label{tab:main}`（第 10 行）\n- 第 2 个表格：`\\caption{Main results}\\label{tab:replication}`（第 19 行）\n\n既然你要求“只改我指的那一个”，我需要先确认目标，否则改错表格就违背你的意图了：\n\n```latex\n% 请问你指的是哪个表格？\n% 1) 第 10 行, label 为 tab:main 的表格\n% 2) 第 19 行, label 为 tab:replication 的表格\n% 请告诉我编号（或对应的 label），我再只改那一个。\n```\n\n确认后我会立即用 `submit_patch` 只改那一处标题。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

@@ -1,0 +1,36 @@
+{
+  "coverageFailures": [],
+  "historyReads": [],
+  "liveArchives": 0,
+  "epochCommits": 0,
+  "compactions": [],
+  "evidenceFiles": [
+    "results.tex"
+  ],
+  "requests": [
+    {
+      "callId": 1,
+      "estimatedInput": 23796,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 2,
+      "estimatedInput": 25634,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 3,
+      "estimatedInput": 28450,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 4,
+      "estimatedInput": 29945,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    }
+  ]
+}

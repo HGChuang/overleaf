@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "NAV-late-long-3",
+    "message": {
+      "role": "assistant",
+      "content": "已完成。\n\n**决策依据（归档原始证据）**：`prior-decision.tex` 第 25–26 行\n- `% FINAL CAPTION: Held-out results`\n- `% Preserve 91.2 percent, 12 samples, and negation.`\n\n**提交的候选补丁** `patch_c91748e6b4808578fdcc6af6`（main.tex，第 3 行）：\n\n```diff\n- \\section{Draft}\n+ \\section{Held-out results}\n```\n\n**未改动**：正文 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.`（91.2%、12 samples、否定结论均保留），`\\documentclass`、注释、其他源码一概不动。\n\n**编译验证**：`verificationStatus = passed`，`errorCount = 0`，`warningCount = 0`（候选哈希 `eb77f3d2…`）。\n\n补丁仅处于 proposed 状态，请在行内 diff 预览中点击 Accept 才会真正写入源码。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_c91748e6b4808578fdcc6af6",
+            "title": "按 prior-decision.tex 的 FINAL CAPTION 决策，将 main.tex 的 Draft 标题改为 Held-out results",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Held-out results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

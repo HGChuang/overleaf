@@ -1,0 +1,5 @@
+{
+  "files": {
+    "main.tex": "\\documentclass{article}\r\n\\begin{document}\r\n\\section{Main}\r\n\\begin{verbatim}\r\nscore: 91.2\r\nsamples: 12\r\n\\end{verbatim}\r\n\\section{Replication}\r\n\\begin{verbatim}\r\nscore: 91.2\r\nsamples: 12\r\n\\end{verbatim}\r\n\\end{document}\r\n"
+  }
+}

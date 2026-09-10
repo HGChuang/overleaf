@@ -1,0 +1,986 @@
+[
+  {
+    "id": "NAVC-short-1-A",
+    "family": "archived-policy",
+    "effectiveWindow": 1000000,
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "A",
+    "pairId": "NAVC-short-1",
+    "variant": "short",
+    "navigation": {
+      "evidencePassed": true,
+      "failures": [],
+      "targetMessage": 2,
+      "historyAttempts": 1,
+      "offTargetAttempts": 0,
+      "duplicateTargetAttempts": 0,
+      "targetSuccessfulPages": 1,
+      "reads": [
+        {
+          "message": 2
+        }
+      ]
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "coverageFailures": [],
+    "mechanismCovered": true,
+    "calls": 4,
+    "usage": [
+      {
+        "callId": 1,
+        "phase": "task",
+        "input": 3452,
+        "output": 477,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 385,
+        "totalTokens": 8025,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "phase": "task",
+        "input": 2588,
+        "output": 1154,
+        "cacheRead": 6144,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 846,
+        "totalTokens": 9886,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "phase": "task",
+        "input": 5944,
+        "output": 89,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 0,
+        "totalTokens": 10129,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 4,
+        "phase": "task",
+        "input": 2158,
+        "output": 316,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 27,
+        "totalTokens": 10666,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 38706,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 43576,
+    "conversationId": "NAVC-short-1",
+    "answer": "完成。总结如下：\n\n**归档证据（原文，非摘要）** — `prior-decision.tex`（snapshot `3a22002…`，`read_context_history` message 2 中的原始 `read_file` 结果）：\n\n```\n% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n```\n\n**当前源码核对** — `main.tex`（`01297fe…`，哈希 `f5e82b4…` 与基线一致）标题为 `\\section{Draft}`。\n\n**提交的候选补丁**（`patch_75af1a27a645f183affc7f17`，1 个 hunk）：\n\n- `\\section{Draft}` → `\\section{Sensitivity results}`\n- 正文 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.` 原样保留（数据 91.2%、12 samples、否定结论均未动），未改动任何其他源码、注释、数值或引用。\n\n**编译验证**：`verificationStatus=passed`，`errorCount=0`，`warningCount=0`（candidateHash `8a6c5360…`）。候选编译通过，但补丁尚未被接受前不会写入源码，请在预览中确认接受。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "NAVC-short-1-C",
+    "family": "archived-policy",
+    "effectiveWindow": 1000000,
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "C",
+    "pairId": "NAVC-short-1",
+    "variant": "short",
+    "navigation": {
+      "evidencePassed": true,
+      "failures": [],
+      "targetMessage": 2,
+      "historyAttempts": 1,
+      "offTargetAttempts": 0,
+      "duplicateTargetAttempts": 0,
+      "targetSuccessfulPages": 1,
+      "reads": [
+        {
+          "message": 2
+        }
+      ]
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "coverageFailures": [],
+    "mechanismCovered": true,
+    "calls": 5,
+    "usage": [
+      {
+        "callId": 1,
+        "phase": "task",
+        "input": 7578,
+        "output": 325,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 265,
+        "totalTokens": 7903,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "phase": "task",
+        "input": 6292,
+        "output": 156,
+        "cacheRead": 2048,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 110,
+        "totalTokens": 8496,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "phase": "task",
+        "input": 576,
+        "output": 441,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 235,
+        "totalTokens": 9209,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 4,
+        "phase": "task",
+        "input": 5274,
+        "output": 64,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 0,
+        "totalTokens": 9434,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 5,
+        "phase": "task",
+        "input": 943,
+        "output": 235,
+        "cacheRead": 8704,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 0,
+        "totalTokens": 9882,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 44924,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 23440,
+    "conversationId": "NAVC-short-1",
+    "answer": "Done.\n\n**决策依据（归档原文，message 2）** — `prior-decision.tex` 逐字内容：\n```latex\n% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n```\n\n**当前源码 `main.tex`（snapshot `01297fe7…`）：**\n```latex\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n```\n\n**已提交的候选补丁** `patch_6a5724ce…`：\n- 仅将第 3 行 `\\section{Draft}` 改为 `\\section{Sensitivity results}`\n- 第 4 行的 91.2%、12 samples、否定表述（\"We do not claim significance\"）全部保留未动\n\n**编译验证**：`verificationStatus = passed`，0 错误、0 警告（candidateHash `8a6c5360…`）。\n\n补丁仍处于 *proposed* 状态，请在预览中确认后接受才会写入源码。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "NAVC-long-1-C",
+    "family": "archived-policy",
+    "effectiveWindow": 1000000,
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "C",
+    "pairId": "NAVC-long-1",
+    "variant": "long",
+    "navigation": {
+      "evidencePassed": true,
+      "failures": [],
+      "targetMessage": 2,
+      "historyAttempts": 4,
+      "offTargetAttempts": 1,
+      "duplicateTargetAttempts": 0,
+      "targetSuccessfulPages": 3,
+      "reads": [
+        {
+          "message": 0
+        },
+        {
+          "message": 2
+        },
+        {
+          "message": 2,
+          "offset": 800
+        },
+        {
+          "message": 2,
+          "offset": 1600
+        }
+      ]
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "coverageFailures": [],
+    "mechanismCovered": true,
+    "calls": 9,
+    "usage": [
+      {
+        "callId": 1,
+        "phase": "task",
+        "input": 2158,
+        "output": 656,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 454,
+        "totalTokens": 8190,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "phase": "task",
+        "input": 4709,
+        "output": 154,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 61,
+        "totalTokens": 8959,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "phase": "task",
+        "input": 1154,
+        "output": 94,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 20,
+        "totalTokens": 9440,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 4,
+        "phase": "task",
+        "input": 1486,
+        "output": 65,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 3,
+        "totalTokens": 9743,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 5,
+        "phase": "task",
+        "input": 1716,
+        "output": 284,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 218,
+        "totalTokens": 10192,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 6,
+        "phase": "task",
+        "input": 3039,
+        "output": 967,
+        "cacheRead": 7424,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 580,
+        "totalTokens": 11430,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 7,
+        "phase": "task",
+        "input": 9674,
+        "output": 87,
+        "cacheRead": 2048,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 0,
+        "totalTokens": 11809,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 8,
+        "phase": "task",
+        "input": 7931,
+        "output": 180,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 26,
+        "totalTokens": 12207,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 9,
+        "phase": "task",
+        "input": 4142,
+        "output": 338,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 0,
+        "totalTokens": 12672,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 94642,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 44791,
+    "conversationId": "NAVC-long-1",
+    "answer": "完成。以下是执行摘要：\n\n**归档证据（prior-decision.tex，message 2 的完整工具结果）**——非摘要、完整逐行原文：\n- 第 1–24 行：全部为 `% Earlier discussion, not the final decision.`（仅作决策证据）\n- 第 25 行：`% FINAL CAPTION: Robustness results`\n- 第 26 行：`% Preserve 91.2 percent, 12 samples, and negation.`\n\n**当前源码（main.tex，读取后再提交）**：\n```\n1: \\documentclass{article}\n2: \\begin{document}\n3: \\section{Draft}\n4: Accuracy is 91.2\\% on 12 samples. We do not claim significance.\n5: \\end{document}\n```\n\n**已提交候选补丁**（`patch_1eac6997aac5606b130ffcfa`，1 个 hunk）：\n- `\\section{Draft}` → `\\section{Robustness results}`（第 3 行）\n\n**保留项**：第 4 行正文未做任何改动——数值 `91.2\\%`、`12 samples`、否定结论 `We do not claim significance` 全部原样保留。\n\n**编译验证**：`verificationStatus=passed`，`errorCount=0`，`warningCount=0`（candidateHash `2e5f34…`）。\n\n补丁处于 **proposed** 状态，需你在 diff 预览中接受后才会写入源文件。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "NAVC-long-1-A",
+    "family": "archived-policy",
+    "effectiveWindow": 1000000,
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "A",
+    "pairId": "NAVC-long-1",
+    "variant": "long",
+    "navigation": {
+      "evidencePassed": true,
+      "failures": [],
+      "targetMessage": 2,
+      "historyAttempts": 3,
+      "offTargetAttempts": 0,
+      "duplicateTargetAttempts": 0,
+      "targetSuccessfulPages": 3,
+      "reads": [
+        {
+          "message": 2,
+          "offset": 0
+        },
+        {
+          "message": 2,
+          "offset": 800
+        },
+        {
+          "message": 2,
+          "offset": 1600
+        }
+      ]
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "coverageFailures": [],
+    "mechanismCovered": true,
+    "calls": 6,
+    "usage": [
+      {
+        "callId": 1,
+        "phase": "task",
+        "input": 3408,
+        "output": 388,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 280,
+        "totalTokens": 7892,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "phase": "task",
+        "input": 4483,
+        "output": 143,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 82,
+        "totalTokens": 8722,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "phase": "task",
+        "input": 1534,
+        "output": 79,
+        "cacheRead": 7424,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 17,
+        "totalTokens": 9037,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 4,
+        "phase": "task",
+        "input": 498,
+        "output": 663,
+        "cacheRead": 8704,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 387,
+        "totalTokens": 9865,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 5,
+        "phase": "task",
+        "input": 5928,
+        "output": 93,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 10,
+        "totalTokens": 10117,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 6,
+        "phase": "task",
+        "input": 2140,
+        "output": 382,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 137,
+        "totalTokens": 10714,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 56347,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 30088,
+    "conversationId": "NAVC-long-1",
+    "answer": "完成。\n\n**归档证据（prior-decision.tex，消息 2 原始工具输出，非摘要）**：\n- 第 25 行 `% FINAL CAPTION: Robustness results`\n- 第 26 行 `% Preserve 91.2 percent, 12 samples, and negation.`\n- 前 24 行全部为 `% Earlier discussion, not the final decision.`（明确排除旧讨论）\n\n**依据 FINAL CAPTION 的修改**（当前 `main.tex` 第 3 行）：\n- `\\section{Draft}` → `\\section{Robustness results}`\n\n**保持不变**：`\\documentclass{article}`、`\\begin/\\end{document}`、第 4 行数据与否定结论 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.`\n\n**验证**：候选 patch_1046f542d2ec5ff283628ac4 编译通过 — `verificationStatus=passed`，errorCount=0，warningCount=0。文件其余内容（注释、数值、引用）均未改动。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "NAVC-late-long-1-A",
+    "family": "archived-policy",
+    "effectiveWindow": 1000000,
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "A",
+    "pairId": "NAVC-late-long-1",
+    "variant": "late-long",
+    "navigation": {
+      "evidencePassed": true,
+      "failures": [],
+      "targetMessage": 6,
+      "historyAttempts": 3,
+      "offTargetAttempts": 0,
+      "duplicateTargetAttempts": 0,
+      "targetSuccessfulPages": 3,
+      "reads": [
+        {
+          "message": 6
+        },
+        {
+          "message": 6,
+          "offset": 800
+        },
+        {
+          "message": 6,
+          "offset": 1600
+        }
+      ]
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "coverageFailures": [],
+    "mechanismCovered": true,
+    "calls": 6,
+    "usage": [
+      {
+        "callId": 1,
+        "phase": "task",
+        "input": 3482,
+        "output": 442,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 323,
+        "totalTokens": 8020,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "phase": "task",
+        "input": 2577,
+        "output": 215,
+        "cacheRead": 6144,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 78,
+        "totalTokens": 8936,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "phase": "task",
+        "input": 1009,
+        "output": 164,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 81,
+        "totalTokens": 9365,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 4,
+        "phase": "task",
+        "input": 1338,
+        "output": 1125,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 738,
+        "totalTokens": 10655,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 5,
+        "phase": "task",
+        "input": 2661,
+        "output": 96,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 10,
+        "totalTokens": 10949,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 6,
+        "phase": "task",
+        "input": 928,
+        "output": 335,
+        "cacheRead": 10240,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 12,
+        "totalTokens": 11503,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 59428,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 47495,
+    "conversationId": "NAVC-late-long-1",
+    "answer": "Done. Summary of what was done:\n\n**Evidence retrieved** (archived tool result for `prior-decision.tex`, message 6, full 27 lines read):\n- Lines 1–24 are explicitly marked `% Earlier discussion, not the final decision.` — treated as evidence only.\n- Line 25: `% FINAL CAPTION: Held-out results` — the binding decision.\n- Line 26: `% Preserve 91.2 percent, 12 samples, and negation.` — the preservation constraints.\n\n**Edit applied (candidate proposed):** In current `main.tex` (read fresh before editing, hash `f5e82b47…`), the section title `\\section{Draft}` was changed to `\\section{Held-out results}` per the FINAL CAPTION. The body line `Accuracy is 91.2\\% on 12 samples. We do not claim significance.` is untouched — the measured values (91.2%, 12 samples) and the negation (\"We do not claim significance.\") are preserved exactly. No comments, numbers, or other source was altered.\n\n**Compile verification:** `compile_project` on the candidate (`patch_acac36ba9f05c28c62852b35`) → `errorCount=0`, `warningCount=0`, **`verificationStatus=passed`** (candidate hash `eb77f3d2…`).\n\nThe patch is submitted for your review — accept the inline-diff hunk to apply the title change.",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "NAVC-late-long-1-C",
+    "family": "archived-policy",
+    "effectiveWindow": 1000000,
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "C",
+    "pairId": "NAVC-late-long-1",
+    "variant": "late-long",
+    "navigation": {
+      "evidencePassed": true,
+      "failures": [],
+      "targetMessage": 6,
+      "historyAttempts": 3,
+      "offTargetAttempts": 0,
+      "duplicateTargetAttempts": 0,
+      "targetSuccessfulPages": 3,
+      "reads": [
+        {
+          "message": 6
+        },
+        {
+          "message": 6,
+          "offset": 800
+        },
+        {
+          "message": 6,
+          "offset": 1600
+        }
+      ]
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "coverageFailures": [],
+    "mechanismCovered": true,
+    "calls": 6,
+    "usage": [
+      {
+        "callId": 1,
+        "phase": "task",
+        "input": 3512,
+        "output": 293,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 201,
+        "totalTokens": 7901,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "phase": "task",
+        "input": 2458,
+        "output": 154,
+        "cacheRead": 6144,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 93,
+        "totalTokens": 8756,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "phase": "task",
+        "input": 3616,
+        "output": 97,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 35,
+        "totalTokens": 9089,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 4,
+        "phase": "task",
+        "input": 1064,
+        "output": 612,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 339,
+        "totalTokens": 9868,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 5,
+        "phase": "task",
+        "input": 1321,
+        "output": 59,
+        "cacheRead": 8704,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 0,
+        "totalTokens": 10084,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 6,
+        "phase": "task",
+        "input": 2113,
+        "output": 224,
+        "cacheRead": 8192,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 0,
+        "totalTokens": 10529,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 56227,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 32879,
+    "conversationId": "NAVC-late-long-1",
+    "answer": "候选补丁已提交并通过编译验证（`verificationStatus=passed`，errorCount=0）。\n\n**决策依据**（来自归档原始证据，非摘要）：`prior-decision.tex` 第 25 行 `% FINAL CAPTION: Held-out results`，第 26 行 `% Preserve 91.2 percent, 12 samples, and negation.`（前 24 行均为 \"Earlier discussion, not the final decision.\"）。\n\n**改动**（main.tex，单个 hunk）：\n- `\\section{Draft}` → `\\section{Held-out results}`\n\n**未改动**：正文 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.`（数据 91.2%、12 samples、否定结论均保留）、`\\documentclass`、`\\begin/\\end{document}` 及全部注释。\n\n补丁 `patch_c02b8ebe601091d2a83e8276` 处于 proposed 状态，请在审阅面板接受后生效。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  }
+]

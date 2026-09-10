@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "NAVS-short-1",
+    "message": {
+      "role": "assistant",
+      "content": "候选补丁已提交并编译验证通过。\n\n**归档证据（原文，非摘要）** — `prior-decision.tex`（历史快照，证据ID `88949808…`，共 88 字节）：\n```\n1: % FINAL CAPTION: Sensitivity results\n2: % Preserve 91.2 percent, 12 samples, and negation.\n3: \n```\n（注意：`prior-decision.tex` 已不在当前项目文件列表中，仅存在于归档证据中。）\n\n**当前源码** `main.tex`（提交前重新读取，哈希 `f5e82b47…` 与归档一致）：\n```latex\n\\documentclass{article}\n\\begin{document}\n\\section{Draft}                          % ← 按 FINAL CAPTION 改标题\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n```\n\n**补丁** `patch_558b01270107ab802d03e0a6`（1 个 hunk）：\n- `\\section{Draft}` → `\\section{Sensitivity results}`\n\n**验证**：`compile_project`（带该 patchId）→ `errorCount=0`，`warningCount=0`，`verificationStatus=passed`（candidateHash `8a6c5360…`）。\n\n数据与否定结论原样保留：`91.2%`、`12 samples`、`We do not claim significance.` 均未改动；未要求改变的文档类、环境、注释、数值与引用全部保持原状。补丁处于 proposed 状态，需你在内联 diff 预览中接受后才会写入源码。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_558b01270107ab802d03e0a6",
+            "title": "Rename Draft section title to Sensitivity results per prior FINAL CAPTION decision; data and negation preserved.",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Sensitivity results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

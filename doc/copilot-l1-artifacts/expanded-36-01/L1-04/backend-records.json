@@ -1,0 +1,33 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:969bbcb1403ba5f514324352:patch_4789bb6bfbbd04049ae6566c",
+      "conversationId": "L1-04",
+      "createdAt": "2026-09-08T18:54:12.960Z",
+      "documentHeads": {
+        "macros.tex": {
+          "hash": "ff8f135d8f862ba0abea9d3e898610e81246f14417a6251d6ba52906ed7eef32",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "macros.tex",
+          "line": 1,
+          "oldText": "\\newcommand{\\samplesize}{12}",
+          "newText": "\\newcommand{\\samplesize}{16}",
+          "index": 0,
+          "docId": "c60c0823a9b63e53cf1f89e3",
+          "baselineHash": "ff8f135d8f862ba0abea9d3e898610e81246f14417a6251d6ba52906ed7eef32",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_4789bb6bfbbd04049ae6566c",
+      "projectId": "969bbcb1403ba5f514324352",
+      "snapshotId": "f1c67c07501fb7ce9015e1adb7e2fbcc9e758f24014ec60183fad3f4ac066f36",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "verifications": []
+}

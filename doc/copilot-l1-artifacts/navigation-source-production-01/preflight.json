@@ -1,0 +1,259 @@
+{
+  "datasetHash": "ac28e21e57d1e51a5121864953721bfa310e9f35dcf764b64c36d59f1e9097c8",
+  "compilerImage": "sha256:67d2cde2de5bb1472c53baf382d861ab9f6aedbe338dd29ecb5c3ded0107e8b5",
+  "rows": [
+    {
+      "id": "L1-01",
+      "valid": true,
+      "negativeControls": 6,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-02",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-03",
+      "valid": true,
+      "negativeControls": 5,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-04",
+      "valid": true,
+      "negativeControls": 5,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-05",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "failure",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-06",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "failure",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-07",
+      "valid": true,
+      "negativeControls": 5,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-08",
+      "valid": true,
+      "negativeControls": 5,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-09",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-10",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-11",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-12",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-13",
+      "valid": true,
+      "negativeControls": 7,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-14",
+      "valid": true,
+      "negativeControls": 7,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-15",
+      "valid": true,
+      "negativeControls": 9,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-16",
+      "valid": true,
+      "negativeControls": 9,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-17",
+      "valid": true,
+      "negativeControls": 7,
+      "baselineStatus": "failure",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-18",
+      "valid": true,
+      "negativeControls": 5,
+      "baselineStatus": "failure",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-19",
+      "valid": true,
+      "negativeControls": 9,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-20",
+      "valid": true,
+      "negativeControls": 9,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-21",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-22",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-23",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-24",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-25",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-26",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-27",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-28",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-29",
+      "valid": true,
+      "negativeControls": 133,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-30",
+      "valid": true,
+      "negativeControls": 163,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-31",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-32",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-33",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-34",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-35",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-36",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    }
+  ],
+  "completedAt": "2026-09-09T15:11:51.173Z"
+}

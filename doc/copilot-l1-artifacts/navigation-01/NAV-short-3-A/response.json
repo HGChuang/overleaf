@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "NAV-short-3",
+    "message": {
+      "role": "assistant",
+      "content": "完成。已按 prior-decision.tex 的 FINAL CAPTION 决策提交候选补丁并通过编译验证。\n\n**归档原始证据**（`read_context_history` 消息 2，完整 3 行工具结果，非摘要）：\n```\n1: % FINAL CAPTION: Sensitivity results\n2: % Preserve 91.2 percent, 12 samples, and negation.\n3: \n```\n\n**决策**：标题用 **\"Sensitivity results\"**。\n\n**已提交补丁** `patch_ee4490d2d44ab5c0efdc14ab`（仅 1 个 hunk）：\n- `main.tex` 第 3 行：`\\section{Draft}` → `\\section{Sensitivity results}`\n\n**保留未改动**：\n- 数据与否定结论（第 4 行 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.`）原样保留\n- 文档结构、注释、数值、引用均未触碰\n\n**编译验证**：`verificationStatus = passed`，`errorCount = 0`，`warningCount = 0`（candidateHash `8a6c5360…`）。\n\n补丁处于 **proposed** 状态，需你在内联 diff 预览中接受后才会应用到源码。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_ee4490d2d44ab5c0efdc14ab",
+            "title": "Change the section title from \\\"Draft\\\" to \\\"Sensitivity results\\\" per FINAL CAPTION in prior-decision.tex; body data and negation untouched.",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Sensitivity results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

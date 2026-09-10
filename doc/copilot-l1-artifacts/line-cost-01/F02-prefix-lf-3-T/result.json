@@ -1,0 +1,81 @@
+{
+  "id": "F02-prefix-lf-3-T",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "T",
+  "pairId": "F02-prefix-lf-3",
+  "variant": "prefix-lf",
+  "expectedLocations": {
+    "tab:main": 13,
+    "tab:replication": 22
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1762,
+      "output": 138,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 78,
+      "totalTokens": 5996,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2103,
+      "output": 208,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 126,
+      "totalTokens": 6407,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 707,
+      "output": 387,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 159,
+      "totalTokens": 7238,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19641,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 15512,
+  "conversationId": "F02-prefix-lf-3",
+  "answer": "项目里只有 `main.tex` 一个文件，其中标题为 **Main results** 的 caption 恰好有两处。按你的要求，先列出候选供你确认，暂不提交修改：\n\n| 候选 | label | 文件路径 | caption 行号 | 所在表格内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | 第 13 行（`\\caption{Main results}\\label{tab:main}`） | 第一个 `table`，含 Baseline 91.2 / Ours 94.5 |\n| ② | `tab:replication` | `main.tex` | 第 22 行（`\\caption{Main results}\\label{tab:replication}`） | 第二个 `table`，数据与第一个相同 |\n\n请告诉我改哪一个（例如「改 ① tab:main」或「改第 13 行那个」），确认后我再提交 patch，把对应 caption 改成 **Ablation results**，且只动你指定的那一处。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

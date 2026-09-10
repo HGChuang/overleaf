@@ -1,0 +1,32 @@
+{
+  "eventHead": 11,
+  "coveredThroughSeq": -1,
+  "projectionThroughSeq": 10,
+  "generation": 0,
+  "checkpoint": null,
+  "paperIndex": {
+    "snapshotId": "ad5833894915fc3d9fbd950f8ad8eb4a5a75df43b1559f8645b5039f6ebe79d3",
+    "sourceWindows": 0,
+    "reviewedWindows": 0,
+    "staleReviews": 0,
+    "semanticStatus": "not_built"
+  },
+  "immutablePrefixHash": null,
+  "metrics": [
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 52215,
+      "reportedInput": 10733,
+      "ordinaryInput": 10733,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "output": 3986,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 72555,
+      "ttftMs": null,
+      "reason": "summary_warm",
+      "occurredAt": "2026-09-08T18:50:46.075Z"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "files": {
+    "main.tex": "\\documentclass{article}\r\n\\begin{document}\r\n\\section{Conclusion}\r\nAccuracy is 91.2\\% on 12 samples. We do not claim statistical significance~\\cite{smith2024}.\r\n\\begin{thebibliography}{1}\r\n\\bibitem{smith2024} A. Smith. Baseline. 2024.\r\n\\end{thebibliography}\r\n\\end{document}\r\n"
+  }
+}

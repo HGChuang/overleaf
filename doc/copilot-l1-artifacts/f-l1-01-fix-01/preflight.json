@@ -1,0 +1,91 @@
+{
+  "datasetHash": "53df8b7a55ffcc53ae094991fc2e29f5ba715414ce02112f5cfc7cc43197e87c",
+  "compilerImage": "sha256:67d2cde2de5bb1472c53baf382d861ab9f6aedbe338dd29ecb5c3ded0107e8b5",
+  "rows": [
+    {
+      "id": "L1-01",
+      "valid": true,
+      "negativeControls": 6,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-02",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-03",
+      "valid": true,
+      "negativeControls": 5,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-04",
+      "valid": true,
+      "negativeControls": 5,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-05",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "failure",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-06",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "failure",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-07",
+      "valid": true,
+      "negativeControls": 5,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-08",
+      "valid": true,
+      "negativeControls": 5,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-09",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-10",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-11",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "L1-12",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    }
+  ],
+  "completedAt": "2026-09-08T12:02:53.470Z"
+}

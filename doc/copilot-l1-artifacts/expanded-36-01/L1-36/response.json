@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-36",
+    "message": {
+      "role": "assistant",
+      "content": "完成。按最终授权（节标题定为 **Conclusion**），仅提交了最小范围修改并编译验证通过：\n\n**提交的候选**（`patch_722e241beb49fa5779f2cb9d`）\n- `main.tex` 第 3 行：`\\section{Draft}` → `\\section{Conclusion}`\n- 仅此一处；`91.2\\%`、`12 samples`、否定结论（\"do not claim statistical significance\"）、statistical 限定、`\\cite{smith2024}` 键及文献条目均原样保留。\n\n**编译验证**\n- 状态：`success`，`verificationStatus=passed`，errorCount=0，warningCount=0。\n\n候选已在待审核状态，等你接受后即生效；此编译仅验证该候选可编译，不代表已应用。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_722e241beb49fa5779f2cb9d",
+            "title": "将 Draft 节标题改为 Conclusion，其余内容保持不变",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Conclusion}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

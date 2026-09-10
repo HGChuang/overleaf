@@ -1,0 +1,23 @@
+{
+  "id": "861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681",
+  "projectId": "01377d47421e7b1cf47602fc",
+  "docs": [
+    {
+      "path": "main.tex",
+      "docId": "343da4522a96ab8e0c358c86",
+      "version": 1,
+      "sha256": "f2f118007444d197e813f57b08b2b5d3825596693f34b4ad038d96dc304c7b0c"
+    },
+    {
+      "path": "equations.tex",
+      "docId": "c6d662d4b52e1812326c891c",
+      "version": 1,
+      "sha256": "5f0c072bfc5a5ea0359194e32d9b879dee15b342a55c65c194c8e313f0037982"
+    }
+  ],
+  "assets": [],
+  "rootDocId": "343da4522a96ab8e0c358c86",
+  "compiler": "pdflatex",
+  "imageName": "texlive-full:latest",
+  "assetBytesFrozen": true
+}

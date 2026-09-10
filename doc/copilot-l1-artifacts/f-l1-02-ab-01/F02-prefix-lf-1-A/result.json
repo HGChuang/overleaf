@@ -1,0 +1,62 @@
+{
+  "id": "F02-prefix-lf-1-A",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "F02-prefix-lf-1",
+  "variant": "prefix-lf",
+  "expectedLocations": {
+    "tab:main": 13,
+    "tab:replication": 22
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 141,
+      "output": 157,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 80,
+      "totalTokens": 5930,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2387,
+      "output": 399,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 164,
+      "totalTokens": 6882,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 12812,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 8138,
+  "conversationId": "F02-prefix-lf-1",
+  "answer": "我找到了两处标题为 **Main results** 的表格 caption，都在 `main.tex` 中：\n\n| 候选 | 标签 | 文件 | caption 所在行 | 上下文 |\n|------|------|------|------|------|\n| ① | `tab:main` | `main.tex` | **第 13 行** | 第 1 个 `table`（首个结果表）|\n| ② | `tab:replication` | `main.tex` | **第 22 行** | 第 2 个 `table`（内容与①相同的复制表）|\n\n两处原文都是：\n```latex\n\\caption{Main results}\\label{tab:main}      % 第 13 行\n\\caption{Main results}\\label{tab:replication} % 第 22 行\n```\n\n请确认要改哪一个（例如「改 `tab:main`」或「改第 13 行那个」），我再只针对那一处提交修改，把 caption 改为 **Ablation results**，另一个保持不变。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

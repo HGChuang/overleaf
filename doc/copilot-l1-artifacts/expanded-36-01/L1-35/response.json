@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-35",
+    "message": {
+      "role": "assistant",
+      "content": "Done. Summary:\n\n- **Patch submitted**: `patch_8031e3d75cb4a35d90d5eaf2`\n- **Only change**: `main.tex` line 3 — `\\section{Draft}` → `\\section{Discussion}`\n- **Compile verification**: `verificationStatus=passed`, errorCount=0, warningCount=0 (candidate hash `4e47477d…`)\n\nScope kept exactly as agreed: the 91.2\\%, 12 samples, the negation (\"do not claim\"), the statistical qualifier, the citation key `smith2024`, and the bibliography entry all remain byte-for-byte unchanged. The patch is a **candidate** — it takes effect only after you accept it in the diff preview.",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_8031e3d75cb4a35d90d5eaf2",
+            "title": "Rename the Draft section title to Discussion in main.tex (only change).",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Discussion}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

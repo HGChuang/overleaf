@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-32",
+    "message": {
+      "role": "assistant",
+      "content": "完成。按前面确定的最终修改执行如下，未扩大范围：\n\n**候选补丁**（`patch_a2ea76043a346a1e9984dee7`）\n- 唯一改动：`main.tex` 第 3 行 `\\section{Draft}` → `\\section{Results}`（按更正后的最终要求，撤销 \"Earlier title\"）\n- 其余全部字节原样保留：`91.2\\%`、`12 samples`、否定结论 \"We do not claim statistical significance\"、`\\cite{smith2024}` 键及 `\\bibitem{smith2024}` 文献信息均未触碰\n\n**编译验证**\n- 候选编译 `verificationStatus: passed`，`errorCount: 0`，`warningCount: 0`\n\n该补丁仍处于 **proposed** 状态，尚未写入源文件；请在行内 diff 预览中接受后生效。接受后再做一次快照编译即可最终确认。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_a2ea76043a346a1e9984dee7",
+            "title": "Rename the Draft section title to Results (only change; all other bytes preserved)",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

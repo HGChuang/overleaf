@@ -1,0 +1,93 @@
+{
+  "id": "L1-03",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1798,
+      "output": 173,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 60,
+      "totalTokens": 6067,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2646,
+      "output": 411,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 179,
+      "totalTokens": 7153,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 2313,
+      "output": 86,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 13,
+      "totalTokens": 7519,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "input": 1594,
+      "output": 191,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 21,
+      "totalTokens": 7929,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 28668,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 19895,
+  "conversationId": "conv_532c46b3-1a75-44f5-a427-adda0447abeb",
+  "answer": "已完成。变更内容如下：\n\n**补丁 `patch_39b40a1c78dddb0295207c59`（共 2 处改动）**\n\n| 文件 | 行 | 修改 |\n|---|---|---|\n| `sections/method.tex` | 1 | `\\label{sec:method}` → `\\label{sec:approach}` |\n| `main.tex` | 4 | `\\ref{sec:method}` → `\\ref{sec:approach}` |\n\n**验证结果**：编译通过（`verificationStatus=passed`，0 错误，0 警告）。标签定义与所有引用已同步更新，节标题 \"Method\"、正文内容及其他源码均保持原样。请在编辑器中审阅并接受此补丁即可生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

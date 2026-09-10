@@ -1,0 +1,8 @@
+{
+  "files": {
+    "main.tex": "\\documentclass{article}\n\\begin{document}\n\\input{sections/method}\n\\input{sections/results}\n\\input{appendix}\n\\end{document}\n",
+    "sections/method.tex": "\\section{Method}\\label{sec:approach}\nProtected method.\n",
+    "sections/results.tex": "See Section~\\ref{sec:approach}.\n",
+    "appendix.tex": "Details in Section~\\ref{sec:approach}.\n% Keep label spelling in this historical comment: sec:method\n"
+  }
+}

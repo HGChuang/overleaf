@@ -1,0 +1,98 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:2489d574ca4366ddf1c60ba3:patch_36bd81e23175f7d9be5f0f71",
+      "conversationId": "L1-20",
+      "createdAt": "2026-09-08T18:59:20.155Z",
+      "documentHeads": {
+        "defs.tex": {
+          "hash": "7d7bd1442862b89636ecff73ddf2d1535343aed2f6ef5b4fa7586d2e91de7a69",
+          "version": 1
+        },
+        "abstract.tex": {
+          "hash": "7bf5c3db7d178b334fba7223f8c77ff89ba72696dbf56718c2324a9875335e37",
+          "version": 1
+        },
+        "conclusion.tex": {
+          "hash": "eaf846c96580613e385816ac02f1752100580d830cfdf4e7ab945ce6fee612b5",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "defs.tex",
+          "line": 1,
+          "oldText": "\\newcommand{\\samplesize}{12}",
+          "newText": "\\newcommand{\\samplesize}{16}",
+          "index": 0,
+          "docId": "6ceb7aaff4307ba700547afc",
+          "baselineHash": "7d7bd1442862b89636ecff73ddf2d1535343aed2f6ef5b4fa7586d2e91de7a69",
+          "baselineVersion": 1,
+          "status": "proposed"
+        },
+        {
+          "file": "abstract.tex",
+          "line": 1,
+          "oldText": "Current experiment uses 12 samples. Control uses 12 samples.",
+          "newText": "Current experiment uses 16 samples. Control uses 12 samples.",
+          "index": 1,
+          "docId": "bcef19d7c181d38baef9f985",
+          "baselineHash": "7bf5c3db7d178b334fba7223f8c77ff89ba72696dbf56718c2324a9875335e37",
+          "baselineVersion": 1,
+          "status": "proposed"
+        },
+        {
+          "file": "conclusion.tex",
+          "line": 1,
+          "oldText": "Our current experiment retains 12 samples.",
+          "newText": "Our current experiment retains 16 samples.",
+          "index": 2,
+          "docId": "11fdc04fe1180a457b6f988e",
+          "baselineHash": "eaf846c96580613e385816ac02f1752100580d830cfdf4e7ab945ce6fee612b5",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_36bd81e23175f7d9be5f0f71",
+      "projectId": "2489d574ca4366ddf1c60ba3",
+      "snapshotId": "489996c274654d2112d0970bfa0bd6e36665aaf831e141775ab4f4f75d5b327e",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateVerification": {
+        "verificationId": "aaaaaaaaaaaaaaaaaaaaaaaa:2489d574ca4366ddf1c60ba3:489996c274654d2112d0970bfa0bd6e36665aaf831e141775ab4f4f75d5b327e:patch_36bd81e23175f7d9be5f0f71:compile:call_e3rxjt7gqxa0awtfgw8bar05",
+        "snapshotId": "489996c274654d2112d0970bfa0bd6e36665aaf831e141775ab4f4f75d5b327e",
+        "patchId": "patch_36bd81e23175f7d9be5f0f71",
+        "candidateHash": "05e5eac1ecd07ee6ddea41a83c458841a9ec01c6412af0d4de7e82409e2bd943",
+        "status": "passed",
+        "errorCount": 0,
+        "warningCount": 0,
+        "verifiedAt": "2026-09-08T18:59:23.752Z"
+      }
+    }
+  ],
+  "verifications": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:2489d574ca4366ddf1c60ba3:489996c274654d2112d0970bfa0bd6e36665aaf831e141775ab4f4f75d5b327e:patch_36bd81e23175f7d9be5f0f71:compile:call_e3rxjt7gqxa0awtfgw8bar05",
+      "kind": "compile",
+      "patchId": "patch_36bd81e23175f7d9be5f0f71",
+      "projectId": "2489d574ca4366ddf1c60ba3",
+      "snapshotId": "489996c274654d2112d0970bfa0bd6e36665aaf831e141775ab4f4f75d5b327e",
+      "startedAt": "2026-09-08T18:59:22.999Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "05e5eac1ecd07ee6ddea41a83c458841a9ec01c6412af0d4de7e82409e2bd943",
+      "result": {
+        "status": "success",
+        "snapshotId": "489996c274654d2112d0970bfa0bd6e36665aaf831e141775ab4f4f75d5b327e",
+        "patchId": "patch_36bd81e23175f7d9be5f0f71",
+        "candidateHash": "05e5eac1ecd07ee6ddea41a83c458841a9ec01c6412af0d4de7e82409e2bd943",
+        "manifestHash": "489996c274654d2112d0970bfa0bd6e36665aaf831e141775ab4f4f75d5b327e",
+        "buildId": "03b897d7-958e-4517-a817-77f964c532b6",
+        "logComplete": true,
+        "errorCount": 0,
+        "errors": [],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-08T18:59:23.748Z"
+    }
+  ]
+}

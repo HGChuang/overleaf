@@ -1,0 +1,164 @@
+{
+  "eventHead": 18,
+  "coveredThroughSeq": 5,
+  "projectionThroughSeq": 17,
+  "generation": 1,
+  "checkpoint": {
+    "version": 1,
+    "authorRequests": [
+      {
+        "message": 0,
+        "text": "本轮只允许把 main.tex 的 Draft 节标题改成 Overview。必须原样保留 91.2\\%、12 samples、否定结论、statistical 限定、citation 键和文献信息，其他字节不变。",
+        "context": null
+      }
+    ],
+    "observations": [],
+    "pending": [],
+    "toolLedger": [],
+    "patches": [],
+    "verifications": [],
+    "projectBase": {
+      "projectId": "6618489a0907c815a686121a",
+      "sourceSnapshot": {
+        "id": "428287820909e634ac94ee738eacc3c52f2e15e2251dd7cffe3424a9183c48f2",
+        "projectId": "6618489a0907c815a686121a",
+        "docs": [
+          {
+            "path": "main.tex",
+            "docId": "ba3e590c5cc8884188ab6ec8",
+            "version": 1,
+            "sha256": "d05c8681af2ae601c6eeee6f847948126da52b8dba05cd62de81b534faa738fb"
+          }
+        ],
+        "assets": [],
+        "rootDocId": "ba3e590c5cc8884188ab6ec8",
+        "compiler": "pdflatex",
+        "imageName": "texlive-full:latest",
+        "assetBytesFrozen": true
+      },
+      "rootDocId": "ba3e590c5cc8884188ab6ec8",
+      "fileList": [
+        "main.tex"
+      ],
+      "outline": [
+        "main.tex"
+      ],
+      "files": [
+        {
+          "path": "main.tex",
+          "docId": "ba3e590c5cc8884188ab6ec8",
+          "version": 1,
+          "sha256": "d05c8681af2ae601c6eeee6f847948126da52b8dba05cd62de81b534faa738fb"
+        }
+      ],
+      "sourceManifest": [
+        {
+          "path": "main.tex",
+          "docId": "ba3e590c5cc8884188ab6ec8",
+          "version": 1,
+          "sha256": "d05c8681af2ae601c6eeee6f847948126da52b8dba05cd62de81b534faa738fb"
+        }
+      ]
+    }
+  },
+  "paperIndex": {
+    "snapshotId": "428287820909e634ac94ee738eacc3c52f2e15e2251dd7cffe3424a9183c48f2",
+    "sourceWindows": 0,
+    "reviewedWindows": 0,
+    "staleReviews": 0,
+    "semanticStatus": "not_built"
+  },
+  "immutablePrefixHash": "b6ffc6a932ca66af0d01ad3cf4705b88050d3afc6a74ba456fd84462ddea92fb",
+  "metrics": [
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 33264,
+      "reportedInput": 7660,
+      "ordinaryInput": 1516,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "output": 223,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 4780,
+      "ttftMs": 1116,
+      "reason": "capacity",
+      "occurredAt": "2026-09-09T03:40:35.963Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 31701,
+      "reportedInput": 7363,
+      "ordinaryInput": 1219,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "output": 96,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 3002,
+      "ttftMs": 1752,
+      "reason": "capacity",
+      "occurredAt": "2026-09-09T03:40:30.111Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 29301,
+      "reportedInput": 6961,
+      "ordinaryInput": 817,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "output": 252,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 5335,
+      "ttftMs": 1606,
+      "reason": "capacity",
+      "occurredAt": "2026-09-09T03:40:27.031Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 27467,
+      "reportedInput": 6566,
+      "ordinaryInput": 422,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "output": 73,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 2498,
+      "ttftMs": 1214,
+      "reason": "capacity",
+      "occurredAt": "2026-09-09T03:40:21.655Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 25602,
+      "reportedInput": 6303,
+      "ordinaryInput": 2207,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 146,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 2831,
+      "ttftMs": 844,
+      "reason": "capacity",
+      "occurredAt": "2026-09-09T03:40:19.092Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 44523,
+      "reportedInput": 0,
+      "ordinaryInput": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "output": 0,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 45003,
+      "ttftMs": null,
+      "reason": "summary_warm",
+      "occurredAt": "2026-09-09T03:40:16.246Z"
+    }
+  ]
+}

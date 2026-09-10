@@ -1,0 +1,296 @@
+{
+  "eventHead": 38,
+  "coveredThroughSeq": 8,
+  "projectionThroughSeq": 37,
+  "generation": 1,
+  "checkpoint": {
+    "version": 1,
+    "authorRequests": [
+      {
+        "message": 0,
+        "text": "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。",
+        "context": null
+      }
+    ],
+    "observations": [],
+    "pending": [],
+    "toolLedger": [
+      {
+        "callId": "historical_policy",
+        "name": "read_file",
+        "arguments": {
+          "path": "prior-decision.tex"
+        },
+        "outcome": "observed",
+        "resultMessage": 2,
+        "source": {
+          "path": "prior-decision.tex",
+          "sha256": "6be2f8590bf9668d44dc20f698c9109614537b0ed66f55570ae30592d11b7205",
+          "evidenceId": "17cf20ec1a8b93266d7885ff0d1f36ecd349ca985a1c2e0ab26f57249d46eab0",
+          "startByte": 0,
+          "endByte": 1191,
+          "fileBytes": 1191,
+          "snapshotId": "b1e03c86e7b837acba466e392047a4a3469c9b775ca1d1e53b31f7d5c48c86de",
+          "docId": "0926b73a304172be1130817f",
+          "version": 1,
+          "freshness": "matching"
+        }
+      }
+    ],
+    "patches": [],
+    "verifications": [],
+    "projectBase": {
+      "projectId": "fee1cd745ec917b793dd6a48",
+      "sourceSnapshot": {
+        "id": "b1e03c86e7b837acba466e392047a4a3469c9b775ca1d1e53b31f7d5c48c86de",
+        "projectId": "fee1cd745ec917b793dd6a48",
+        "docs": [
+          {
+            "path": "main.tex",
+            "docId": "926fc2c07ffb7b2f7a321087",
+            "version": 1,
+            "sha256": "f5e82b478c336df63a2f3539ce0b8f455bddd0df3742cbe1d50da312657bf7eb"
+          },
+          {
+            "path": "prior-decision.tex",
+            "docId": "0926b73a304172be1130817f",
+            "version": 1,
+            "sha256": "6be2f8590bf9668d44dc20f698c9109614537b0ed66f55570ae30592d11b7205"
+          }
+        ],
+        "assets": [],
+        "rootDocId": "926fc2c07ffb7b2f7a321087",
+        "compiler": "pdflatex",
+        "imageName": "texlive-full:latest",
+        "assetBytesFrozen": true
+      },
+      "rootDocId": "926fc2c07ffb7b2f7a321087",
+      "fileList": [
+        "main.tex",
+        "prior-decision.tex"
+      ],
+      "outline": [
+        "main.tex",
+        "prior-decision.tex"
+      ],
+      "files": [
+        {
+          "path": "main.tex",
+          "docId": "926fc2c07ffb7b2f7a321087",
+          "version": 1,
+          "sha256": "f5e82b478c336df63a2f3539ce0b8f455bddd0df3742cbe1d50da312657bf7eb"
+        },
+        {
+          "path": "prior-decision.tex",
+          "docId": "0926b73a304172be1130817f",
+          "version": 1,
+          "sha256": "6be2f8590bf9668d44dc20f698c9109614537b0ed66f55570ae30592d11b7205"
+        }
+      ],
+      "sourceManifest": [
+        {
+          "path": "main.tex",
+          "docId": "926fc2c07ffb7b2f7a321087",
+          "version": 1,
+          "sha256": "f5e82b478c336df63a2f3539ce0b8f455bddd0df3742cbe1d50da312657bf7eb"
+        },
+        {
+          "path": "prior-decision.tex",
+          "docId": "0926b73a304172be1130817f",
+          "version": 1,
+          "sha256": "6be2f8590bf9668d44dc20f698c9109614537b0ed66f55570ae30592d11b7205"
+        }
+      ]
+    }
+  },
+  "paperIndex": {
+    "snapshotId": "9ba4af9f88cdc45a0c3165cf927930fb3b16335effc3e3273ec5d897e7af57ae",
+    "sourceWindows": 1,
+    "reviewedWindows": 0,
+    "staleReviews": 0,
+    "semanticStatus": "disabled"
+  },
+  "immutablePrefixHash": "a33287f1ba4d3fdec60b9e41e30d2567d92068233550ae490059008c906d768c",
+  "metrics": [
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 59268,
+      "reportedInput": 13263,
+      "ordinaryInput": 5071,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "output": 319,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 7406,
+      "ttftMs": 1978,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:57:04.427Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 57430,
+      "reportedInput": 12968,
+      "ordinaryInput": 1448,
+      "cacheRead": 11520,
+      "cacheWrite": 0,
+      "output": 160,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 3972,
+      "ttftMs": 3182,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:56:56.982Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 56006,
+      "reportedInput": 12676,
+      "ordinaryInput": 2436,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "output": 81,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 5753,
+      "ttftMs": 3481,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:56:51.889Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 50812,
+      "reportedInput": 11592,
+      "ordinaryInput": 2632,
+      "cacheRead": 8960,
+      "cacheWrite": 0,
+      "output": 786,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 7765,
+      "ttftMs": 2143,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:56:45.999Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 48547,
+      "reportedInput": 11107,
+      "ordinaryInput": 355,
+      "cacheRead": 10752,
+      "cacheWrite": 0,
+      "output": 207,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 4379,
+      "ttftMs": 3027,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:56:38.176Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 46882,
+      "reportedInput": 10846,
+      "ordinaryInput": 8542,
+      "cacheRead": 2304,
+      "cacheWrite": 0,
+      "output": 96,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 3207,
+      "ttftMs": 2476,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:56:33.753Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 44953,
+      "reportedInput": 10533,
+      "ordinaryInput": 5157,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "output": 75,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 3163,
+      "ttftMs": 2690,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:56:30.519Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 42734,
+      "reportedInput": 10058,
+      "ordinaryInput": 5962,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 85,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 1500,
+      "ttftMs": 875,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:56:27.303Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 40966,
+      "reportedInput": 9775,
+      "ordinaryInput": 5679,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 126,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 3674,
+      "ttftMs": 1469,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:56:25.768Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 37799,
+      "reportedInput": 9098,
+      "ordinaryInput": 650,
+      "cacheRead": 8448,
+      "cacheWrite": 0,
+      "output": 596,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 5858,
+      "ttftMs": 1447,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:56:21.945Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 35524,
+      "reportedInput": 8556,
+      "ordinaryInput": 1132,
+      "cacheRead": 7424,
+      "cacheWrite": 0,
+      "output": 69,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 1773,
+      "ttftMs": 1349,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:56:16.039Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 30986,
+      "reportedInput": 7534,
+      "ordinaryInput": 3438,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 421,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 14728,
+      "ttftMs": 2424,
+      "reason": null,
+      "occurredAt": "2026-09-09T09:56:14.203Z"
+    }
+  ]
+}

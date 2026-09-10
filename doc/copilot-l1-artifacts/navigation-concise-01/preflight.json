@@ -1,0 +1,49 @@
+{
+  "datasetHash": "498d8b99ee91fbdeffde852721c02401379a4cdb669aae2ee018e9a644b8d1c9",
+  "compilerImage": "sha256:67d2cde2de5bb1472c53baf382d861ab9f6aedbe338dd29ecb5c3ded0107e8b5",
+  "rows": [
+    {
+      "id": "NAVC-short-1-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVC-short-1-C",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVC-long-1-C",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVC-long-1-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVC-late-long-1-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAVC-late-long-1-C",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    }
+  ],
+  "completedAt": "2026-09-09T10:07:47.398Z"
+}

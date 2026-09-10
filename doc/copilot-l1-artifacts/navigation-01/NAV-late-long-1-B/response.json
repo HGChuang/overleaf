@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "NAV-late-long-1",
+    "message": {
+      "role": "assistant",
+      "content": "完成。\n\n**归档证据（message 6 原始工具结果）** — `prior-decision.tex` 第 25–26 行：\n```\n25: % FINAL CAPTION: Held-out results\n26: % Preserve 91.2 percent, 12 samples, and negation.\n```\n（第 1–24 行均为 `% Earlier discussion, not the final decision.`，即早期讨论，不作为决策依据。）\n\n**当前源码** `main.tex`（6 行，快照 `5964d00d...`）中待改内容仅为第 3 行 `\\section{Draft}`。\n\n**候选补丁** `patch_907922419952f628a1f9663f`（单 hunk，仅改标题）：\n- `\\section{Draft}` → `\\section{Held-out results}`\n\n**保留未动**：正文第 4 行数据与否定结论 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.` 原样保留；`\\documentclass`、`\\begin{document}`、`\\end{document}` 及全部注释、数值、引用均未改动。\n\n**编译验证**：`verificationStatus = passed`，`errorCount = 0`，`warningCount = 0`（buildId `26c89ed7-...`）。\n\n补丁为候选状态，需你在内联 diff 预览中确认接受后才会写入源码。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_907922419952f628a1f9663f",
+            "title": "Retitle section Draft -> Held-out results per FINAL CAPTION decision; body text (91.2%, 12 samples, negation) unchanged",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Held-out results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

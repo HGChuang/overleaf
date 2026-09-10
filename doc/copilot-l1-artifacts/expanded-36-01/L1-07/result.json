@@ -1,0 +1,81 @@
+{
+  "id": "L1-07",
+  "family": "cross-file-citation",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 769,
+      "output": 196,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 85,
+      "totalTokens": 6085,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 1140,
+      "output": 364,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 107,
+      "totalTokens": 7136,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 3340,
+      "output": 157,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7593,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 20814,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 10677,
+  "conversationId": "L1-07",
+  "answer": "补丁已提交（`patch_faaedc40e94fc3bc32b6c43f`），共 2 个 hunk：\n\n1. **main.tex**（第 3 行）：`\\cite{smith2024}` → `\\cite{smithBaseline}`\n2. **refs.tex**（第 2 行）：`\\bibitem{smith2024}` → `\\bibitem{smithBaseline}`\n\n作者、标题、年份（A. Smith. A synthetic baseline. 2024.）及其余源码均保持不变。请在右侧内联预览中确认并接受更改；接受后 `\\cite` 与 `\\bibitem` 的键名将一致。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

@@ -1,6 +1,6 @@
 // One immutable-baseline overlay contract for counts, proposals and compiles.
-function applyHunks(content, hunks) {
-  const edits = hunks.map(h => {
+function locateHunks(content, hunks) {
+  const edits = hunks.map((h, index) => {
     if (typeof h.oldText !== 'string' || typeof h.newText !== 'string') {
       throw new Error('Invalid patch hunk');
     }
@@ -18,13 +18,31 @@ function applyHunks(content, hunks) {
         throw Object.assign(new Error('Patch anchor is missing or ambiguous; copy more surrounding source'), { status: 409 });
       }
     }
-    return { start, end: start + h.oldText.length, text: h.newText };
+    return { index, start, end: start + h.oldText.length, text: h.newText };
   }).sort((a, b) => a.start - b.start);
   for (let i = 1; i < edits.length; i++) {
     if (edits[i].start <= edits[i - 1].start || edits[i].start < edits[i - 1].end) {
       throw new Error('Patch hunks overlap');
     }
   }
+  return edits;
+}
+
+// Replacement lines are evidence from the immutable source, not model input.
+// Insertion lines are validated operation parameters: retain the EOF slot even
+// when it shares an offset with the final (empty or unterminated) source line.
+function normalizeHunks(content, hunks) {
+  const normalized = new Array(hunks.length);
+  for (const edit of locateHunks(content, hunks)) {
+    const hunk = hunks[edit.index];
+    normalized[edit.index] = { ...hunk, line: hunk.oldText
+      ? content.slice(0, edit.start).split('\n').length : hunk.line };
+  }
+  return normalized;
+}
+
+function applyHunks(content, hunks) {
+  const edits = locateHunks(content, hunks);
   for (const edit of edits.reverse()) content = content.slice(0, edit.start) + edit.text + content.slice(edit.end);
   return content;
 }
@@ -37,4 +55,5 @@ function compileOutcome(result) {
 }
 
 exports.applyHunks = applyHunks;
+exports.normalizeHunks = normalizeHunks;
 exports.compileOutcome = compileOutcome;

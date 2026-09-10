@@ -1,0 +1,112 @@
+{
+  "id": "L1-12",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 5,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1703,
+      "output": 120,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 42,
+      "totalTokens": 5919,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2849,
+      "output": 132,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 50,
+      "totalTokens": 7077,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 1200,
+      "output": 258,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 85,
+      "totalTokens": 7602,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "input": 3677,
+      "output": 106,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 13,
+      "totalTokens": 7879,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "input": 2970,
+      "output": 164,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 8254,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 36731,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 18020,
+  "conversationId": "conv_4c090c21-9922-4d87-bdfa-8c63c701cc64",
+  "answer": "修改已提交并验证通过。\n\n**改动内容**（`main.tex` 第 171 行）：\n- 前：`\\caption{Main results}\\label{tab:main}`\n- 后：`\\caption{Ablation results}\\label{tab:main}`\n\n**保持不变**：标签 `tab:main`、表格数据（如第 169 行的 `Ours & 94.5`）、所有源码注释及其余源码。\n\n**编译结果**：`verificationStatus = passed`，0 错误 0 警告，补丁候选（`patch_4390cb9b67ea50f7b578d93f`）可正常编译。请在右侧内联预览中确认后点击 Accept 应用该改动。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-34",
+    "message": {
+      "role": "assistant",
+      "content": "已按你最终确定的修改提交候选并编译验证：\n\n**修改内容**（唯一变更）\n- `main.tex` 第 3 行：`\\section{Draft}` → `\\section{Analysis}`\n\n**原样保留（未动任何字节）**\n- `91.2\\%`、`12 samples`\n- 否定结论：`We do not claim statistical significance`\n- 引用键 `\\cite{smith2024}` 及文献条目 `A. Smith. Baseline. 2024.`\n- 其余所有内容与格式\n\n**编译验证**\n- 候选 `patch_0e0275473314cc7b3754bab6`：`errorCount=0`，`warningCount=0`，`verificationStatus=passed`（候选编译通过仅证明可编译，补丁需你在 diff 预览中接受后才实际生效）。\n\n范围未扩大，仅此一处节标题修改。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_0e0275473314cc7b3754bab6",
+            "title": "将 main.tex 中 \\section{Draft} 改为 \\section{Analysis}，其余内容原样保留",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Analysis}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-11",
+    "message": {
+      "role": "assistant",
+      "content": "✅ 已完成并编译验证通过（`verificationStatus=passed`，0 错误 0 警告）。\n\n**改动内容**（仅 1 处 hunk）：\n- `main.tex` 第 7 行：`\\section{Introduction}` → `\\section{Overview}`\n\n**原样保留的部分**：\n- `\\iffalse ... \\fi` 中的未发布实验内容（第 3–6 行 `Unreleased results` 节）未被启用或改动；\n- 其余所有源码、`\\documentclass`、`\\begin{document}` 等均未触碰。\n\n请在右侧 diff 预览中确认后点击 **Accept** 应用该补丁。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_350b222271daea667f7ec8a3",
+            "title": "把 Introduction 节标题改为 Overview，其余源码不变",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 7,
+                "oldText": "\\section{Introduction}",
+                "newText": "\\section{Overview}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

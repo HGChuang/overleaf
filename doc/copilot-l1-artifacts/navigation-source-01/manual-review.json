@@ -1,0 +1,8 @@
+{
+  "status": "reviewed",
+  "cases": 12,
+  "corePassed": 12,
+  "claims": "候选修改、保护字节、编译成功和proposed状态与独立审计一致，不保证所有自然语言或前端描述准确。",
+  "observations": [],
+  "decision": "adopt named source lookup; retain ambiguity selection and original message reader"
+}

@@ -1,0 +1,216 @@
+{
+  "id": "NAV-long-2-A",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "NAV-long-2",
+  "variant": "long",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 2,
+    "historyAttempts": 6,
+    "offTargetAttempts": 3,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 3,
+    "reads": [
+      {
+        "message": 0
+      },
+      {
+        "message": 0,
+        "offset": 800
+      },
+      {
+        "message": 2
+      },
+      {
+        "message": 2,
+        "offset": 800
+      },
+      {
+        "message": 2,
+        "offset": 1600
+      },
+      {
+        "message": 1
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 8,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 3445,
+      "output": 530,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 438,
+      "totalTokens": 8071,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2697,
+      "output": 196,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 104,
+      "totalTokens": 9037,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 1703,
+      "output": 80,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 19,
+      "totalTokens": 9975,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 2021,
+      "output": 62,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 10275,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 2248,
+      "output": 1537,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 1392,
+      "totalTokens": 11977,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 1910,
+      "output": 701,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 327,
+      "totalTokens": 12851,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 7,
+      "phase": "task",
+      "input": 2771,
+      "output": 75,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 13086,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 8,
+      "phase": "task",
+      "input": 1015,
+      "output": 561,
+      "cacheRead": 12288,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 192,
+      "totalTokens": 13864,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 89136,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 76219,
+  "conversationId": "NAV-long-2",
+  "answer": "Done. Summary of what I did:\n\n**1. Re-read the archived original tool evidence** (via `read_context_history`, message 2 — the full raw `read_file` result for `prior-decision.tex`, not a summary). Its complete content is:\n\n```\n1–24: % Earlier discussion, not the final decision.\n25:   % FINAL CAPTION: Robustness results\n26:   % Preserve 91.2 percent, 12 samples, and negation.\n```\n\nNo later archive messages amend this decision (message 1 is only the tool call itself). Note: `prior-decision.tex` no longer exists in the current project (file list now contains only `main.tex`), so the decision lives solely in the archive — which is what you asked me to base the edit on.\n\n**2. Edited `main.tex` (current snapshot `c4dc379b…`) per the FINAL CAPTION decision** — one hunk, title only:\n\n- `\\section{Draft}` → `\\section{Robustness results}`\n\nEverything else is untouched: the body still reads `Accuracy is 91.2\\% on 12 samples. We do not claim significance.` — preserving the 91.2% value, the 12 samples, and the negation, exactly as required by line 26 of the decision.\n\n**3. Compile verification of the candidate** (`patch_7d5d432baa45ad37a8d85dd2`): `verificationStatus=passed`, `errorCount=0`, `warningCount=0`.\n\nThe patch is proposed and awaiting your acceptance — it is not yet applied to the source. If you accept it, the section heading will become \"Robustness results\".",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

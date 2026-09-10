@@ -1,0 +1,3 @@
+{
+  "main.tex": "\\documentclass{article}\r\n% 1: literal metadata-looking comment\r\n\\begin{document}\r\n\\begin{verbatim}\r\n1: Measured accuracy is 94.5 percent.\r\n2: We retained 16 samples.\r\n\\end{verbatim}\r\nProtected conclusion.\r\n\\end{document}\r\n"
+}

@@ -1,0 +1,34 @@
+{
+  "response": {
+    "conversationId": "conv_532c46b3-1a75-44f5-a427-adda0447abeb",
+    "message": {
+      "role": "assistant",
+      "content": "已完成。变更内容如下：\n\n**补丁 `patch_39b40a1c78dddb0295207c59`（共 2 处改动）**\n\n| 文件 | 行 | 修改 |\n|---|---|---|\n| `sections/method.tex` | 1 | `\\label{sec:method}` → `\\label{sec:approach}` |\n| `main.tex` | 4 | `\\ref{sec:method}` → `\\ref{sec:approach}` |\n\n**验证结果**：编译通过（`verificationStatus=passed`，0 错误，0 警告）。标签定义与所有引用已同步更新，节标题 \"Method\"、正文内容及其他源码均保持原样。请在编辑器中审阅并接受此补丁即可生效。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_39b40a1c78dddb0295207c59",
+            "title": "将标签 sec:method 重命名为 sec:approach，并同步更新 main.tex 中的引用",
+            "hunks": [
+              {
+                "file": "sections/method.tex",
+                "line": 1,
+                "oldText": "\\section{Method}\\label{sec:method}",
+                "newText": "\\section{Method}\\label{sec:approach}"
+              },
+              {
+                "file": "main.tex",
+                "line": 4,
+                "oldText": "See Section~\\ref{sec:method}.",
+                "newText": "See Section~\\ref{sec:approach}."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

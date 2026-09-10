@@ -1,0 +1,133 @@
+{
+  "datasetHash": "f1466ed85a98cb131b86fb39fc735b4283146d7cac86a265341f983702469ed3",
+  "compilerImage": "sha256:67d2cde2de5bb1472c53baf382d861ab9f6aedbe338dd29ecb5c3ded0107e8b5",
+  "rows": [
+    {
+      "id": "NAV-short-1-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-short-1-B",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-short-2-B",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-short-2-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-short-3-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-short-3-B",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-long-1-B",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-long-1-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-long-2-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-long-2-B",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-long-3-B",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-long-3-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-late-long-1-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-late-long-1-B",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-late-long-2-B",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-late-long-2-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-late-long-3-A",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "NAV-late-long-3-B",
+      "valid": true,
+      "negativeControls": 3,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    }
+  ],
+  "completedAt": "2026-09-09T09:50:40.416Z"
+}

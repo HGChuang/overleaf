@@ -1,0 +1,251 @@
+{
+  "eventHead": 34,
+  "coveredThroughSeq": 12,
+  "projectionThroughSeq": 33,
+  "generation": 1,
+  "checkpoint": {
+    "version": 1,
+    "authorRequests": [
+      {
+        "message": 0,
+        "text": "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。",
+        "context": null
+      }
+    ],
+    "observations": [],
+    "pending": [],
+    "toolLedger": [
+      {
+        "callId": "historical_policy",
+        "name": "read_file",
+        "arguments": {
+          "path": "prior-decision.tex"
+        },
+        "outcome": "observed",
+        "resultMessage": 6,
+        "source": {
+          "path": "prior-decision.tex",
+          "sha256": "eaf7a23312ee2aaf2a5f347b10e0fe1b401052f86f1772f67bead9bc9a63c1d8",
+          "evidenceId": "872e3cba87fd902c8db3da2920a20cabfa7755704ddb82a2e917490ac5daae1e",
+          "startByte": 0,
+          "endByte": 1189,
+          "fileBytes": 1189,
+          "snapshotId": "bb647e9c077fbb9a7a3d926f0e393542d7adce48e4464bc0f64ff5fbc02fbe1a",
+          "docId": "f116bffbf9f766db084e17f9",
+          "version": 1,
+          "freshness": "matching"
+        }
+      }
+    ],
+    "patches": [],
+    "verifications": [],
+    "projectBase": {
+      "projectId": "7db0b618d2b68243dcc456b8",
+      "sourceSnapshot": {
+        "id": "bb647e9c077fbb9a7a3d926f0e393542d7adce48e4464bc0f64ff5fbc02fbe1a",
+        "projectId": "7db0b618d2b68243dcc456b8",
+        "docs": [
+          {
+            "path": "main.tex",
+            "docId": "3fc73d7a8583d6c8f3c79e14",
+            "version": 1,
+            "sha256": "f5e82b478c336df63a2f3539ce0b8f455bddd0df3742cbe1d50da312657bf7eb"
+          },
+          {
+            "path": "prior-decision.tex",
+            "docId": "f116bffbf9f766db084e17f9",
+            "version": 1,
+            "sha256": "eaf7a23312ee2aaf2a5f347b10e0fe1b401052f86f1772f67bead9bc9a63c1d8"
+          }
+        ],
+        "assets": [],
+        "rootDocId": "3fc73d7a8583d6c8f3c79e14",
+        "compiler": "pdflatex",
+        "imageName": "texlive-full:latest",
+        "assetBytesFrozen": true
+      },
+      "rootDocId": "3fc73d7a8583d6c8f3c79e14",
+      "fileList": [
+        "main.tex",
+        "prior-decision.tex"
+      ],
+      "outline": [
+        "main.tex",
+        "prior-decision.tex"
+      ],
+      "files": [
+        {
+          "path": "main.tex",
+          "docId": "3fc73d7a8583d6c8f3c79e14",
+          "version": 1,
+          "sha256": "f5e82b478c336df63a2f3539ce0b8f455bddd0df3742cbe1d50da312657bf7eb"
+        },
+        {
+          "path": "prior-decision.tex",
+          "docId": "f116bffbf9f766db084e17f9",
+          "version": 1,
+          "sha256": "eaf7a23312ee2aaf2a5f347b10e0fe1b401052f86f1772f67bead9bc9a63c1d8"
+        }
+      ],
+      "sourceManifest": [
+        {
+          "path": "main.tex",
+          "docId": "3fc73d7a8583d6c8f3c79e14",
+          "version": 1,
+          "sha256": "f5e82b478c336df63a2f3539ce0b8f455bddd0df3742cbe1d50da312657bf7eb"
+        },
+        {
+          "path": "prior-decision.tex",
+          "docId": "f116bffbf9f766db084e17f9",
+          "version": 1,
+          "sha256": "eaf7a23312ee2aaf2a5f347b10e0fe1b401052f86f1772f67bead9bc9a63c1d8"
+        }
+      ]
+    }
+  },
+  "paperIndex": {
+    "snapshotId": "4c8074eae54791b3cd2b8a1285fdb94bd16d1fd39930c4b90d51d929c70e519f",
+    "sourceWindows": 0,
+    "reviewedWindows": 0,
+    "staleReviews": 0,
+    "semanticStatus": "not_built"
+  },
+  "immutablePrefixHash": "64f3d194ebf7cf82d8f60cf1c98eb1abaa39b0e7f0c60acf534df89a4dfc6674",
+  "metrics": [
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 52243,
+      "reportedInput": 11934,
+      "ordinaryInput": 1694,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "output": 344,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 7253,
+      "ttftMs": 1688,
+      "reason": null,
+      "occurredAt": "2026-09-09T10:03:28.603Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 50696,
+      "reportedInput": 11685,
+      "ordinaryInput": 4261,
+      "cacheRead": 7424,
+      "cacheWrite": 0,
+      "output": 135,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 5923,
+      "ttftMs": 3449,
+      "reason": null,
+      "occurredAt": "2026-09-09T10:03:21.311Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 49173,
+      "reportedInput": 11387,
+      "ordinaryInput": 1147,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "output": 81,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 2125,
+      "ttftMs": 1043,
+      "reason": null,
+      "occurredAt": "2026-09-09T10:03:14.296Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 47401,
+      "reportedInput": 11102,
+      "ordinaryInput": 2910,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "output": 124,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 2711,
+      "ttftMs": 1474,
+      "reason": null,
+      "occurredAt": "2026-09-09T10:03:12.076Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 42708,
+      "reportedInput": 10070,
+      "ordinaryInput": 1878,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "output": 908,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 14724,
+      "ttftMs": 989,
+      "reason": null,
+      "occurredAt": "2026-09-09T10:03:09.331Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 41123,
+      "reportedInput": 9824,
+      "ordinaryInput": 5728,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 81,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 4104,
+      "ttftMs": 2894,
+      "reason": null,
+      "occurredAt": "2026-09-09T10:02:54.578Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 39058,
+      "reportedInput": 9485,
+      "ordinaryInput": 781,
+      "cacheRead": 8704,
+      "cacheWrite": 0,
+      "output": 101,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 1083,
+      "ttftMs": 522,
+      "reason": null,
+      "occurredAt": "2026-09-09T10:02:50.440Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 36287,
+      "reportedInput": 8884,
+      "ordinaryInput": 4788,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 203,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 1972,
+      "ttftMs": 663,
+      "reason": null,
+      "occurredAt": "2026-09-09T10:02:49.307Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 30986,
+      "reportedInput": 7596,
+      "ordinaryInput": 2220,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "output": 524,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 6435,
+      "ttftMs": 2194,
+      "reason": null,
+      "occurredAt": "2026-09-09T10:02:47.260Z"
+    }
+  ]
+}

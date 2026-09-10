@@ -85,6 +85,37 @@ const valid: Array<[string, string, any[], string]> = [
   ['CRLF and Unicode', '甲\r\n乙😀\r\n', [{ oldText: '乙😀', newText: '丙' }], '甲\r\n丙\r\n'],
   ['multiple immutable anchors', 'abc def ghi', [{ oldText: 'abc', newText: 'long' }, { oldText: 'ghi', newText: 'z' }], 'long def z'],
 ];
+for (const [name, source, hunks, lines, expected] of [
+  ['wrong model line', 'intro\ncaption\nend', [{ oldText: 'caption', newText: 'title', line: 99 }], [2], 'intro\ntitle\nend'],
+  ['missing line and Unicode CRLF multiline anchor', '甲😀\r\n前缀乙\r\n丙\r\n末', [{ oldText: '乙\r\n丙', newText: '新' }], [2], '甲😀\r\n前缀新\r\n末'],
+  ['immutable baseline and input order', 'first\nsecond\nthird', [{ oldText: 'third', newText: 'last', line: 1 }, { oldText: 'first', newText: 'one\ntwo', line: 8 }], [3, 1], 'one\ntwo\nsecond\nlast'],
+  ['EOF insertion without newline', 'abc', [{ oldText: '', newText: 'X', line: 2 }], [2], 'abcX'],
+  ['empty file insertion', '', [{ oldText: '', newText: 'X', line: 1 }], [1], 'X'],
+  ['line-start insertion', 'a\nb', [{ oldText: '', newText: 'X\n', line: 2 }], [2], 'a\nX\nb'],
+] as Array<[string, string, any[], number[], string]>) test(`F-L1-01: ${name} returns authoritative positions without changing candidate bytes`, async () => {
+  const b = backend(source);
+  const input = hunks.map(h => ({ ...h, file: 'main.tex' }));
+  const original = structuredClone(input);
+  const proposed = await b.propose(input);
+  assert.deepEqual(proposed.hunks.map((h: any) => h.line), lines);
+  assert.deepEqual(input, original, 'Do not mutate caller arguments');
+  const saved = [...b.tables.get('copilot_patch_records')!.values()][0];
+  assert.deepEqual(saved.hunks.map((h: any) => h.line), lines);
+  assert.deepEqual((await b.propose(input)).hunks, proposed.hunks, 'Idempotent receipt');
+  await b.compile();
+  assert.equal(Buffer.from(b.compiled[0].resources[0].content, 'base64').toString(), expected);
+});
+
+test('F-L1-01: submit tool forwards the authoritative backend line in both model text and receipt', async () => {
+  const f = fixture([]);
+  f.context.project.files = [{ path: 'main.tex', content: 'Hello world.\n' }];
+  const b = backend();
+  f.web.proposePatch = async (_p: any, payload: any) => b.propose(payload.hunks);
+  const tool = buildEditTools(f.context, { webClient: f.web, userId })[0];
+  const result = await tool.execute('p1', { hunks: [{ file: 'main.tex', oldText: 'world', newText: 'paper', line: 99 }] });
+  assert.equal(JSON.parse((result.content[0] as any).text).hunks[0].line, 1);
+  assert.equal((result.details as any).patch.hunks[0].line, 1);
+});
 for (const [name, source, hunks, expected] of valid) test(`C08: ${name} has identical count/proposal/candidate bytes`, async () => {
   // Explicit expected strings are independent of the shared implementation.
   assert.equal(applyHunks(source, hunks), expected);

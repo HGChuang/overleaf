@@ -1,0 +1,23 @@
+{
+  "url": "https://ark.cn-beijing.volces.com/api/coding/v3/chat/completions",
+  "body": {
+    "model": "deepseek-v4-flash-ga-260731",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Reply OK."
+      },
+      {
+        "role": "user",
+        "content": "{\"found\":true,\"path\":\"main.tex\",\"sourceHash\":\"58dccc20bd6de3df5961594c54bf9a4510d283be7109ffc7a3413ff6947b2085\",\"evidenceId\":\"a751bf6e857c66c9a7b7b029c4df0bd42e8ecf8f02b8eef7d02e735a0229de61\",\"consistency\":\"immutable-snapshot\",\"snapshotId\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"docId\":\"bbbbbbbbbbbbbbbbbbbbbbbb\",\"version\":1,\"startByte\":0,\"endByte\":387,\"startLine\":1,\"totalLines\":22,\"nextOffsetBytes\":null,\"rangeEndByte\":387,\"fileBytes\":387,\"lineNumberedContent\":\"1: \\\\documentclass{article}\\n2: \\\\begin{document}\\n3: \\\\begin{table}[h]\\n4: \\\\centering\\n5: \\\\begin{tabular}{lr}\\n6: Method & Score \\\\\\\\\\n7: Baseline & 91.2 \\\\\\\\\\n8: Ours & 94.5\\n9: \\\\end{tabular}\\n10: \\\\caption{Main results}\\\\label{tab:main}\\n11: \\\\end{table}\\n12: \\\\begin{table}[h]\\n13: \\\\centering\\n14: \\\\begin{tabular}{lr}\\n15: Method & Score \\\\\\\\\\n16: Baseline & 91.2 \\\\\\\\\\n17: Ours & 94.5\\n18: \\\\end{tabular}\\n19: \\\\caption{Main results}\\\\label{tab:replication}\\n20: \\\\end{table}\\n21: \\\\end{document}\\n22: \"}"
+      }
+    ],
+    "stream": true,
+    "stream_options": {
+      "include_usage": true
+    },
+    "max_tokens": 1,
+    "temperature": 0
+  },
+  "at": "2026-09-08T14:13:16.549Z"
+}

@@ -1,0 +1,62 @@
+{
+  "eventHead": 6,
+  "coveredThroughSeq": -1,
+  "projectionThroughSeq": 5,
+  "generation": 0,
+  "checkpoint": null,
+  "paperIndex": {
+    "snapshotId": "aa65f66dcd60e4dfd36cdb1ad76023c309843f7a42a28da0a3653c27fba0535f",
+    "sourceWindows": 0,
+    "reviewedWindows": 0,
+    "staleReviews": 0,
+    "semanticStatus": "not_built"
+  },
+  "immutablePrefixHash": null,
+  "metrics": [
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 26900,
+      "reportedInput": 6518,
+      "ordinaryInput": 374,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "output": 90,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 1884,
+      "ttftMs": 784,
+      "reason": null,
+      "occurredAt": "2026-09-08T18:53:46.073Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 25224,
+      "reportedInput": 6144,
+      "ordinaryInput": 2048,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 120,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 2042,
+      "ttftMs": 772,
+      "reason": null,
+      "occurredAt": "2026-09-08T18:53:44.136Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 23727,
+      "reportedInput": 5894,
+      "ordinaryInput": 1798,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 84,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 2286,
+      "ttftMs": 1176,
+      "reason": null,
+      "occurredAt": "2026-09-08T18:53:41.965Z"
+    }
+  ]
+}

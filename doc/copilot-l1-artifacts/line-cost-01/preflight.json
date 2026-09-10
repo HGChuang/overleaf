@@ -1,0 +1,196 @@
+{
+  "datasetHash": "606ccb2e7d5a2584f585e2909978920c5ea2458dc0a65c3b9c8d242884370d14",
+  "compilerImage": "sha256:67d2cde2de5bb1472c53baf382d861ab9f6aedbe338dd29ecb5c3ded0107e8b5",
+  "rows": [
+    {
+      "id": "F02-original-1-D",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-original-1-N",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-original-1-T",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-original-2-N",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-original-2-T",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-original-2-D",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-original-3-T",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-original-3-D",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-original-3-N",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-lf-1-D",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-lf-1-N",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-lf-1-T",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-lf-2-N",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-lf-2-T",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-lf-2-D",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-lf-3-T",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-lf-3-D",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-lf-3-N",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-crlf-1-D",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-crlf-1-N",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-crlf-1-T",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-crlf-2-N",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-crlf-2-T",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-crlf-2-D",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-crlf-3-T",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-crlf-3-D",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    },
+    {
+      "id": "F02-prefix-crlf-3-N",
+      "valid": true,
+      "negativeControls": 4,
+      "baselineStatus": "success",
+      "referenceStatus": "success"
+    }
+  ],
+  "completedAt": "2026-09-08T14:06:39.684Z"
+}

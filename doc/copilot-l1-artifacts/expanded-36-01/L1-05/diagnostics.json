@@ -1,0 +1,92 @@
+{
+  "eventHead": 11,
+  "coveredThroughSeq": -1,
+  "projectionThroughSeq": 10,
+  "generation": 0,
+  "checkpoint": null,
+  "paperIndex": {
+    "snapshotId": "b717f87133775c0fddcfde4438b19d226a53f37bde95b05096c2fde0d5a09fc6",
+    "sourceWindows": 0,
+    "reviewedWindows": 0,
+    "staleReviews": 0,
+    "semanticStatus": "not_built"
+  },
+  "immutablePrefixHash": null,
+  "metrics": [
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 32222,
+      "reportedInput": 7495,
+      "ordinaryInput": 3399,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 345,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 5988,
+      "ttftMs": 920,
+      "reason": null,
+      "occurredAt": "2026-09-08T18:54:36.331Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 30713,
+      "reportedInput": 7183,
+      "ordinaryInput": 527,
+      "cacheRead": 6656,
+      "cacheWrite": 0,
+      "output": 84,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 2265,
+      "ttftMs": 1850,
+      "reason": null,
+      "occurredAt": "2026-09-08T18:54:29.671Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 28228,
+      "reportedInput": 6741,
+      "ordinaryInput": 597,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "output": 276,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 4037,
+      "ttftMs": 2521,
+      "reason": null,
+      "occurredAt": "2026-09-08T18:54:27.288Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 25754,
+      "reportedInput": 6240,
+      "ordinaryInput": 608,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "output": 281,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 3343,
+      "ttftMs": 1773,
+      "reason": null,
+      "occurredAt": "2026-09-08T18:54:22.556Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 23477,
+      "reportedInput": 5799,
+      "ordinaryInput": 679,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "output": 129,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 2489,
+      "ttftMs": 1858,
+      "reason": null,
+      "occurredAt": "2026-09-08T18:54:19.133Z"
+    }
+  ]
+}

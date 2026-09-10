@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-original-1",
+    "message": {
+      "role": "assistant",
+      "content": "我在 main.tex 里搜到了**两个**标题都是 \"Main results\" 的表格：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n因为您强调\"只改我指的那一个\"，而当前没有选中任何内容，两个表格的标题又完全相同，我不想猜错改错表格。\n\n```latex\n% main.tex 中有两个表格标题都是 \"Main results\"（第10行 \\label{tab:main}；第19行 \\label{tab:replication}）。您要改哪一个？\n```",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

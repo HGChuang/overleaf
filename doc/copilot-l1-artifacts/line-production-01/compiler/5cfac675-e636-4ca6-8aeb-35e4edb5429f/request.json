@@ -1,0 +1,6 @@
+{
+  "files": {
+    "main.tex": "\\documentclass{article}\n\\begin{document}\n\\input{sections/method}\nSee Section~\\ref{sec:method}.\n\\end{document}\n",
+    "sections/method.tex": "\\section{Method}\\label{sec:method}\nWe use 12 samples and retain all observations.\n"
+  }
+}

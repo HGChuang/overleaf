@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "NAVC-long-1",
+    "message": {
+      "role": "assistant",
+      "content": "完成。\n\n**归档证据（prior-decision.tex，消息 2 原始工具输出，非摘要）**：\n- 第 25 行 `% FINAL CAPTION: Robustness results`\n- 第 26 行 `% Preserve 91.2 percent, 12 samples, and negation.`\n- 前 24 行全部为 `% Earlier discussion, not the final decision.`（明确排除旧讨论）\n\n**依据 FINAL CAPTION 的修改**（当前 `main.tex` 第 3 行）：\n- `\\section{Draft}` → `\\section{Robustness results}`\n\n**保持不变**：`\\documentclass{article}`、`\\begin/\\end{document}`、第 4 行数据与否定结论 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.`\n\n**验证**：候选 patch_1046f542d2ec5ff283628ac4 编译通过 — `verificationStatus=passed`，errorCount=0，warningCount=0。文件其余内容（注释、数值、引用）均未改动。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_1046f542d2ec5ff283628ac4",
+            "title": "按 FINAL CAPTION 将 main.tex 的 Draft 标题改为 Robustness results",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Robustness results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

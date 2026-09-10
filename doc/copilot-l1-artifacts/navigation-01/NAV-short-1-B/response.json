@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "NAV-short-1",
+    "message": {
+      "role": "assistant",
+      "content": "Done. The candidate is submitted and compiles cleanly.\n\n## What was done\n\n**1. Archived evidence re-read (raw tool result, message 2):** `prior-decision.tex` contained exactly:\n```\n% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n```\nThe FINAL CAPTION decision is therefore **\"Sensitivity results\"**, with an explicit preservation requirement for 91.2%, 12 samples, and the negation.\n\n**2. Current source read first** (main.tex, hash `f5e82b…`):\n```latex\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n```\n\n**3. Minimal patch** (patch `patch_22df385119832537de3a329f`):\n- `\\section{Draft}` → `\\section{Sensitivity results}`\n- Body line untouched — 91.2%, 12 samples, and \"We do not claim significance\" (the negation) are preserved verbatim.\n\n**4. Compile verification:** `verificationStatus=passed`, errorCount=0, warningCount=0 (candidateHash `8a6c5360…`).\n\nNo other source, comments, numbers, or references were modified. The patch is pending your acceptance in the inline-diff preview; it applies only after you accept it.",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_22df385119832537de3a329f",
+            "title": "Rename section title Draft -> Sensitivity results per FINAL CAPTION decision; body data (91.2%, 12 samples) and negation unchanged.",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Sensitivity results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

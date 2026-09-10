@@ -1,0 +1,7 @@
+{
+  "files": {
+    "main.tex": "\\documentclass{article}\n\\input{config/aliases}\n\\begin{document}\nWe retain $\\samplesize$ samples.\n\\end{document}\n",
+    "config/aliases.tex": "\\input{config/constants}\n\\newcommand{\\samplesize}{\\cohortsize}\n",
+    "config/constants.tex": "\\newcommand{\\cohortsize}{12}\n\\newcommand{\\unusedsize}{12}\n"
+  }
+}

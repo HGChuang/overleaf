@@ -1,0 +1,256 @@
+{
+  "id": "NAV-long-3-A",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "NAV-long-3",
+  "variant": "long",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 2,
+    "historyAttempts": 6,
+    "offTargetAttempts": 3,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 3,
+    "reads": [
+      {
+        "message": 0
+      },
+      {
+        "message": 0,
+        "offset": 800
+      },
+      {
+        "message": 1
+      },
+      {
+        "message": 2
+      },
+      {
+        "message": 2,
+        "offset": 800
+      },
+      {
+        "message": 2,
+        "offset": 1600
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 10,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 3428,
+      "output": 496,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 312,
+      "totalTokens": 8020,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 4085,
+      "output": 206,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 95,
+      "totalTokens": 8387,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 2976,
+      "output": 242,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 150,
+      "totalTokens": 9362,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 5889,
+      "output": 126,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 43,
+      "totalTokens": 10111,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 6401,
+      "output": 80,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 19,
+      "totalTokens": 10577,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 6719,
+      "output": 99,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 37,
+      "totalTokens": 10914,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 7,
+      "phase": "task",
+      "input": 2889,
+      "output": 1144,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 701,
+      "totalTokens": 12225,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 8,
+      "phase": "task",
+      "input": 2271,
+      "output": 101,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 16,
+      "totalTokens": 12612,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 9,
+      "phase": "task",
+      "input": 2583,
+      "output": 180,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 32,
+      "totalTokens": 13003,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 10,
+      "phase": "task",
+      "input": 838,
+      "output": 389,
+      "cacheRead": 12288,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 13515,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 108726,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 59425,
+  "conversationId": "NAV-long-3",
+  "answer": "完成。过程与结果如下：\n\n**1. 归档证据（非摘要，原始工具输出）**\n- `read_context_history` message 2 恢复了 `read_file(\"prior-decision.tex\")` 的完整原始结果（sourceHash `6be2f859…`，snapshot `8450a811…`）：第 1–24 行均为 `% Earlier discussion, not the final decision.`，关键决策在第 25–26 行：\n  - `% FINAL CAPTION: Robustness results`\n  - `% Preserve 91.2 percent, 12 samples, and negation.`\n\n**2. 当前源码核对**\n- `main.tex`（sourceHash `f5e82b478c…`，与本次 manifest 一致）第 3 行为 `\\section{Draft}`，第 4 行为数据与否定结论。\n\n**3. 提交的候选补丁**（`patch_c192e46edc445708de9b5706`）\n- `main.tex` 第 3 行：`\\section{Draft}` → `\\section{Robustness results}`\n- 严格按 FINAL CAPTION 决策，只改标题；`91.2\\%`、`12 samples`、`We do not claim significance.` 及所有注释/其他源码均未改动。\n\n**4. 编译验证**\n- `compile_project(patch_c192e46edc445708de9b5706)`：`verificationStatus=passed`，`errorCount=0`，`warningCount=0`（candidateHash `2e5f3478…`）。\n\n补丁目前是 **proposed（未应用）** 状态，需要你在内联 diff 预览中接受后才会写入源码。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

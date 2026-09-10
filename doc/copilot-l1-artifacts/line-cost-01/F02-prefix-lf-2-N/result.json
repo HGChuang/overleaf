@@ -1,0 +1,62 @@
+{
+  "id": "F02-prefix-lf-2-N",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "N",
+  "pairId": "F02-prefix-lf-2",
+  "variant": "prefix-lf",
+  "expectedLocations": {
+    "tab:main": 13,
+    "tab:replication": 22
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1761,
+      "output": 156,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 79,
+      "totalTokens": 6013,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 1245,
+      "output": 369,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 152,
+      "totalTokens": 6990,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 13003,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 5443,
+  "conversationId": "F02-prefix-lf-2",
+  "answer": "项目里正好有两个 caption 为 **Main results** 的表格（都在 `main.tex` 中），请确认要改哪一个：\n\n| 编号 | 标签 (label) | 文件路径 | caption 所在行号 | 当前 caption |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 22 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n（来源：`search_project` 结果与 `main.tex` 第 13、22 行的源码，文件 hash `22d72ce…`。）\n\n请告诉我改 ① 还是 ②（例如\"改第 13 行那个\"），我再提交 `submit_patch` 把对应的 caption 改为 `Ablation results`，不会动另一个。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

@@ -1,0 +1,62 @@
+{
+  "id": "F02-original-2-A",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "F02-original-2",
+  "variant": "original",
+  "expectedLocations": {
+    "tab:main": 10,
+    "tab:replication": 19
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 383,
+      "output": 84,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 38,
+      "totalTokens": 5843,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 592,
+      "output": 2326,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 2201,
+      "totalTokens": 8550,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 14393,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 26007,
+  "conversationId": "F02-original-2",
+  "answer": "项目里 `main.tex` 有两个表格，**标题都是 `Main results`**，目前无法从选中内容（selectedText 为空）确定你指的是哪一个：\n\n1. 第一个表格，标签 `tab:main`（第 8 行附近）\n2. 第二个表格，标签 `tab:replication`（第 17 行附近）\n\n因为你明确要求\"只改我指的那一个\"，我不想改错，所以先确认一下。\n\n```latex\n% 请问改哪一个？第一个（label tab:main）还是第二个（label tab:replication）？\n```",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

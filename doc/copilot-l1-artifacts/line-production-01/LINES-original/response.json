@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "conv_95542ee3-8141-4564-8baa-e3e8f219bad8",
+    "message": {
+      "role": "assistant",
+      "content": "项目里 `main.tex` 中有**两个**表格的标题都是 `Main results`：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表）\n\n由于你的选择文本（selectedText）为空，我无法判断\"我指的那一个\"是哪一张。两张标题完全相同，改错目标会产生不同的结果，所以先请你确认一下：\n\n% 有两个表格标题都是 \"Main results\"（第 10 行 label=tab:main，第 19 行 label=tab:replication）。你要改成 \"Ablation results\" 的是哪一个？（例如：第一个表 / tab:main，或第二个表 / tab:replication）\n\n确认后我会立即提交只针对那一处的补丁。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

@@ -1,0 +1,62 @@
+{
+  "id": "F02-original-2-T",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "T",
+  "pairId": "F02-original-2",
+  "variant": "original",
+  "expectedLocations": {
+    "tab:main": 10,
+    "tab:replication": 19
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 192,
+      "output": 93,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 47,
+      "totalTokens": 5917,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2241,
+      "output": 933,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 776,
+      "totalTokens": 7270,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 13187,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 19555,
+  "conversationId": "F02-original-2",
+  "answer": "我在 main.tex 里找到了两个标题都是 **Main results** 的表格，内容完全一样，分别带 `\\label{tab:main}`（第 10 行）和 `\\label{tab:replication}`（第 19 行）。你要求\"只改我指的那一个\"，但这次没有附带任何选中文本或指针信息，两个候选项会产生不同的改动位置，无法唯一确定目标。\n\n```latex\n% 请指出要改哪一个：是 \\label{tab:main} 的表格（第 10 行），还是 \\label{tab:replication} 的表格（第 19 行）？\n```\n\n确认后我会立即用 submit_patch 只改你指定的那一处。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

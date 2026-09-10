@@ -1,0 +1,49 @@
+{
+  "coverageFailures": [],
+  "historyReads": [],
+  "liveArchives": 0,
+  "epochCommits": 1,
+  "compactions": [
+    {
+      "type": "context_compacted",
+      "generation": 1,
+      "beforeTokens": 47549,
+      "afterTokens": 25735
+    }
+  ],
+  "evidenceFiles": [
+    "main.tex"
+  ],
+  "requests": [
+    {
+      "callId": 1,
+      "estimatedInput": 48458,
+      "effectiveInputBudget": 58163,
+      "summary": true
+    },
+    {
+      "callId": 2,
+      "estimatedInput": 25735,
+      "effectiveInputBudget": 46259,
+      "summary": false
+    },
+    {
+      "callId": 3,
+      "estimatedInput": 27900,
+      "effectiveInputBudget": 46259,
+      "summary": false
+    },
+    {
+      "callId": 4,
+      "estimatedInput": 30359,
+      "effectiveInputBudget": 46259,
+      "summary": false
+    },
+    {
+      "callId": 5,
+      "estimatedInput": 31792,
+      "effectiveInputBudget": 46259,
+      "summary": false
+    }
+  ]
+}

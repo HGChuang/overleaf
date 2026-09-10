@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "conv_ba9b49bf-cac5-46d3-a76b-69bf1a1d368d",
+    "message": {
+      "role": "assistant",
+      "content": "项目里有两个标题都是 \"Main results\" 的表格，且你没有选中任何文本，所以无法确定\"你指的那一个\"是哪一个：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n请告诉我改哪一个：是按 `tab:main` 标签的那个（第 10 行），还是 `tab:replication` 那个（第 19 行）？或者你也可以在 Overleaf 里选中对应那一行再发一次请求。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

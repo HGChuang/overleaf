@@ -1,0 +1,131 @@
+{
+  "id": "NAV-late-long-2-B",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "harness_failure",
+  "checksPassed": false,
+  "arm": "B",
+  "pairId": "NAV-late-long-2",
+  "variant": "late-long",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 6,
+    "historyAttempts": 3,
+    "offTargetAttempts": 0,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 3,
+    "reads": [
+      {
+        "message": 6
+      },
+      {
+        "message": 6,
+        "offset": 800
+      },
+      {
+        "message": 6,
+        "offset": 1600
+      }
+    ]
+  },
+  "failures": [
+    "chat error: COPILOT_UPSTREAM_ERROR",
+    "no delivered persisted proposal"
+  ],
+  "harnessFailures": [
+    "journal pairing: open tool group\n\n25 !== 26\n"
+  ],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 3569,
+      "output": 487,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 395,
+      "totalTokens": 8152,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2713,
+      "output": 290,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 168,
+      "totalTokens": 9147,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 1220,
+      "output": 126,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 64,
+      "totalTokens": 9538,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 5605,
+      "output": 587,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 452,
+      "totalTokens": 10288,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 37125,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 26635,
+  "conversationId": "NAV-late-long-2",
+  "answer": "",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

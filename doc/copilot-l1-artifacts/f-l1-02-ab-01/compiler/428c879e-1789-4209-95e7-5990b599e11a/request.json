@@ -1,0 +1,5 @@
+{
+  "files": {
+    "main.tex": "% Synthetic location fixture.\n% Preserve manuscript source.\n\n\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "NAVC-short-1",
+    "message": {
+      "role": "assistant",
+      "content": "完成。总结如下：\n\n**归档证据（原文，非摘要）** — `prior-decision.tex`（snapshot `3a22002…`，`read_context_history` message 2 中的原始 `read_file` 结果）：\n\n```\n% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n```\n\n**当前源码核对** — `main.tex`（`01297fe…`，哈希 `f5e82b4…` 与基线一致）标题为 `\\section{Draft}`。\n\n**提交的候选补丁**（`patch_75af1a27a645f183affc7f17`，1 个 hunk）：\n\n- `\\section{Draft}` → `\\section{Sensitivity results}`\n- 正文 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.` 原样保留（数据 91.2%、12 samples、否定结论均未动），未改动任何其他源码、注释、数值或引用。\n\n**编译验证**：`verificationStatus=passed`，`errorCount=0`，`warningCount=0`（candidateHash `8a6c5360…`）。候选编译通过，但补丁尚未被接受前不会写入源码，请在预览中确认接受。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_75af1a27a645f183affc7f17",
+            "title": "按 prior-decision.tex 的 FINAL CAPTION 决策，将 Draft 标题改为 Sensitivity results；正文数据与否定结论不变。",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Sensitivity results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

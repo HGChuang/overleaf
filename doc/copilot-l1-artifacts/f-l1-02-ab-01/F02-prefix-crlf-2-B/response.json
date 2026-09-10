@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-crlf-2",
+    "message": {
+      "role": "assistant",
+      "content": "文件里确实有两个 caption 为 **Main results** 的表格，都在 `main.tex` 中。以下是两个候选：\n\n| 候选 | label | 文件 | caption 行号 | caption 原文 |\n|---|---|---|---|---|\n| A | `tab:main` | `main.tex` | 第 15 行 | `\\caption{Main results}\\label{tab:main}` |\n| B | `tab:replication` | `main.tex` | 第 24 行 | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格内容完全相同（第 8–16 行和第 17–25 行分别是各自完整的 `table` 环境），唯一的区分点是 label。\n\n请确认要改哪一个（例如\"改 A / tab:main\"，或\"两个都改\"），我再提交修改 patch。在你确认之前，我不会改动任何文件。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

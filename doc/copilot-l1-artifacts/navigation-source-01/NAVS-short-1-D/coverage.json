@@ -1,0 +1,47 @@
+{
+  "coverageFailures": [],
+  "historyReads": [
+    {
+      "path": "prior-decision.tex"
+    }
+  ],
+  "liveArchives": 0,
+  "epochCommits": 1,
+  "compactions": [],
+  "evidenceFiles": [
+    "prior-decision.tex",
+    "main.tex"
+  ],
+  "requests": [
+    {
+      "callId": 1,
+      "estimatedInput": 31330,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 2,
+      "estimatedInput": 36623,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 3,
+      "estimatedInput": 43958,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 4,
+      "estimatedInput": 45518,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 5,
+      "estimatedInput": 47331,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    }
+  ]
+}

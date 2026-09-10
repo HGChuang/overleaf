@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-31",
+    "message": {
+      "role": "assistant",
+      "content": "完成。候选补丁已提交并编译验证通过：\n\n**修改内容（唯一一处）**\n- `main.tex` 第 3 行：`\\section{Draft}` → `\\section{Overview}`\n\n**范围确认（未动其他任何字节）**\n- `91.2\\%`、`12 samples`、否定结论 `We do not claim statistical significance`、`statistical` 限定、citation 键 `smith2024` 及文献条目 `A. Smith. Baseline. 2024.` 均原样保留。\n\n**编译验证**\n- `patchId`: `patch_ee3014d1674e9282651098cd`\n- 状态：`success`，`verificationStatus = passed`，`errorCount = 0`，`warningCount = 0`\n\n候选尚未应用到源文件，等待你在内联 diff 预览中接受即可生效。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_ee3014d1674e9282651098cd",
+            "title": "Change section title from \"Draft\" to \"Overview\" in main.tex (only change)",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Overview}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

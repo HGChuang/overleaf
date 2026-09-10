@@ -1,0 +1,62 @@
+{
+  "id": "F02-original-1-B",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "B",
+  "pairId": "F02-original-1",
+  "variant": "original",
+  "expectedLocations": {
+    "tab:main": 10,
+    "tab:replication": 19
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 116,
+      "output": 115,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 38,
+      "totalTokens": 5863,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2499,
+      "output": 2397,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 2245,
+      "totalTokens": 8992,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 14855,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 42038,
+  "conversationId": "F02-original-1",
+  "answer": "我在 main.tex 里搜到了**两个**标题都是 \"Main results\" 的表格：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n因为您强调\"只改我指的那一个\"，而当前没有选中任何内容，两个表格的标题又完全相同，我不想猜错改错表格。\n\n```latex\n% main.tex 中有两个表格标题都是 \"Main results\"（第10行 \\label{tab:main}；第19行 \\label{tab:replication}）。您要改哪一个？\n```",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

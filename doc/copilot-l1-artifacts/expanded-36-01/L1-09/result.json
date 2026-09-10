@@ -1,0 +1,81 @@
+{
+  "id": "L1-09",
+  "family": "ambiguous-target",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 655,
+      "output": 122,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 62,
+      "totalTokens": 5897,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 6090,
+      "output": 352,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 306,
+      "totalTokens": 6442,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 2764,
+      "output": 1228,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 1043,
+      "totalTokens": 8088,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 20427,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 27998,
+  "conversationId": "L1-09",
+  "answer": "我查了项目（只有 `main.tex`），发现里面**有两个**标题完全相同的表格，都是 `\\caption{Main results}`：\n\n- 第 10 行：表格 1，标签 `tab:main`（第 3–11 行）\n- 第 19 行：表格 2，标签 `tab:replication`（第 12–20 行）\n\n你这次没有附带选中内容，我无法确定你\"指\"的是哪一个。两个候选会得到不同的修改结果，所以需要你确认一下：\n\n```latex\n% 两个表格的标题都是 \"Main results\"（第10行 label tab:main，第19行 label tab:replication）。请问要改哪一个？请回复 1 或 2。\n```\n\n收到确认后我会立刻用 `submit_patch` 只改那一个表格的标题。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

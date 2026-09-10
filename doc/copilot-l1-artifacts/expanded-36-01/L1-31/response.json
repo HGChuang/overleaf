@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-31",
+    "message": {
+      "role": "assistant",
+      "content": "完成。按要求仅提交了候选修改并验证通过：\n\n**候选补丁：** `patch_b171df8f509f015750f5b3f8`（状态：proposed，待你接受）\n\n**唯一的修改（`main.tex` 第 3 行）：**\n- `\\section{Draft}` → `\\section{Overview}`\n\n**编译验证：** `verificationStatus = passed`，errorCount = 0，warningCount = 0（pdflatex）。\n\n**未扩大范围**——其余字节原样保留：`Accuracy is 91.2\\% on 12 samples.`、否定结论 `We do not claim statistical significance`、citation 键 `smith2024` 及 `thebibliography` 文献信息均未改动。\n\n补丁已生成候选项，请在内联 diff 预览中接受该 hunk 后即生效。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_b171df8f509f015750f5b3f8",
+            "title": "Rename the Draft section heading to Overview in main.tex",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Overview}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

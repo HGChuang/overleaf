@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-lf-1",
+    "message": {
+      "role": "assistant",
+      "content": "项目里有两个表格的 caption 都写着 “Main results”，两处都在 `main.tex` 中。按你的要求，先列出候选，请你确认后再改：\n\n| 候选 | 标签 (label) | 文件 | caption 所在行号 | caption 内容 |\n|---|---|---|---|---|\n| A | `tab:main` | `main.tex` | **第 13 行** | `\\caption{Main results}\\label{tab:main}` |\n| B | `tab:replication` | `main.tex` | **第 22 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n（两处表格内容完全相同，仅 label 不同，无法通过内容区分。）\n\n请告诉我你要改哪一个（A 或 B），或者如果两个都要改也可以说明。确认后我再提交修改。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

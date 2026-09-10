@@ -1,0 +1,22 @@
+{
+  "evidencePassed": true,
+  "failures": [],
+  "targetMessage": 2,
+  "historyAttempts": 3,
+  "offTargetAttempts": 0,
+  "duplicateTargetAttempts": 0,
+  "targetSuccessfulPages": 3,
+  "reads": [
+    {
+      "path": "prior-decision.tex"
+    },
+    {
+      "path": "prior-decision.tex",
+      "offset": 800
+    },
+    {
+      "offset": 1600,
+      "path": "prior-decision.tex"
+    }
+  ]
+}

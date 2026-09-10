@@ -1,0 +1,121 @@
+{
+  "id": "L1-35",
+  "family": "window-constraint-retention",
+  "effectiveWindow": 65536,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 5,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 4854,
+      "output": 5214,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 4919,
+      "totalTokens": 15188,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2222,
+      "output": 242,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 196,
+      "totalTokens": 6560,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 2791,
+      "output": 358,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 152,
+      "totalTokens": 7245,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 1256,
+      "output": 104,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 10,
+      "totalTokens": 7504,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 3628,
+      "output": 196,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 31,
+      "totalTokens": 7920,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 44417,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 51591,
+  "conversationId": "L1-35",
+  "answer": "Done. Summary:\n\n- **Patch submitted**: `patch_8031e3d75cb4a35d90d5eaf2`\n- **Only change**: `main.tex` line 3 — `\\section{Draft}` → `\\section{Discussion}`\n- **Compile verification**: `verificationStatus=passed`, errorCount=0, warningCount=0 (candidate hash `4e47477d…`)\n\nScope kept exactly as agreed: the 91.2\\%, 12 samples, the negation (\"do not claim\"), the statistical qualifier, the citation key `smith2024`, and the bibliography entry all remain byte-for-byte unchanged. The patch is a **candidate** — it takes effect only after you accept it in the diff preview.",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

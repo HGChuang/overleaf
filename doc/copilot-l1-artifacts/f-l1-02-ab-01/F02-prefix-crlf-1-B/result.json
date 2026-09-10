@@ -1,0 +1,81 @@
+{
+  "id": "F02-prefix-crlf-1-B",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "B",
+  "pairId": "F02-prefix-crlf-1",
+  "variant": "prefix-crlf",
+  "expectedLocations": {
+    "tab:main": 15,
+    "tab:replication": 24
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 5775,
+      "output": 164,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 89,
+      "totalTokens": 5939,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2181,
+      "output": 112,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 66,
+      "totalTokens": 6389,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 2969,
+      "output": 307,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 101,
+      "totalTokens": 7372,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19700,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 9953,
+  "conversationId": "F02-prefix-crlf-1",
+  "answer": "项目里有两个表格的标题都是 \"Main results\"，都在 `main.tex` 中。按你的要求，先列出两个候选供你确认：\n\n| 候选 | Label | 文件 | caption 行号 | caption 内容 |\n|---|---|---|---|---|\n| A（第 1 个表格） | `tab:main` | `main.tex` | **第 15 行** | `\\caption{Main results}\\label{tab:main}` |\n| B（第 2 个表格） | `tab:replication` | `main.tex` | **第 24 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格内容完全相同，只有 label 不同。请告诉我你要改哪一个（A 或 B），或者直接说对应的 label（`tab:main` / `tab:replication`），确认后我再提交把它的标题改为 **Ablation results** 的补丁。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

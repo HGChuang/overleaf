@@ -1,0 +1,98 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:6458bb8046460ce083662400:patch_a8eb9ea83f2001f4a2681f56",
+      "conversationId": "L1-17",
+      "createdAt": "2026-09-08T18:58:01.425Z",
+      "documentHeads": {
+        "commands.tex": {
+          "hash": "9fef54bd8e1fe2509f110762d7720dd6fb53509a515f6098481bc7e4ffae8916",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "commands.tex",
+          "line": 1,
+          "oldText": "\\newcommand{\\highlight}[1]{\\txetbf{#1}}",
+          "newText": "\\newcommand{\\highlight}[1]{\\textbf{#1}}",
+          "index": 0,
+          "docId": "67df8d02affbb53fe6d8eadf",
+          "baselineHash": "9fef54bd8e1fe2509f110762d7720dd6fb53509a515f6098481bc7e4ffae8916",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_a8eb9ea83f2001f4a2681f56",
+      "projectId": "6458bb8046460ce083662400",
+      "snapshotId": "6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateVerification": {
+        "verificationId": "aaaaaaaaaaaaaaaaaaaaaaaa:6458bb8046460ce083662400:6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff:patch_a8eb9ea83f2001f4a2681f56:compile:call_3lzd5avh1td2qi8xaq6fovwx",
+        "snapshotId": "6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff",
+        "patchId": "patch_a8eb9ea83f2001f4a2681f56",
+        "candidateHash": "2584c126e5f0cf7f7c4a79bb190802380460f85e0a392c826c30951cd35a9c27",
+        "status": "passed",
+        "errorCount": 0,
+        "warningCount": 0,
+        "verifiedAt": "2026-09-08T18:58:04.740Z"
+      }
+    }
+  ],
+  "verifications": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:6458bb8046460ce083662400:6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff:snapshot:compile:call_sfen7kbnmzzm1lmpqwkq30jr",
+      "kind": "compile",
+      "patchId": null,
+      "projectId": "6458bb8046460ce083662400",
+      "snapshotId": "6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff",
+      "startedAt": "2026-09-08T18:57:56.870Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff",
+      "result": {
+        "status": "failure",
+        "snapshotId": "6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff",
+        "patchId": null,
+        "candidateHash": "6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff",
+        "manifestHash": "6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff",
+        "buildId": "4af3b202-1f3d-4649-8115-d33188549268",
+        "logComplete": true,
+        "errorCount": 1,
+        "errors": [
+          {
+            "file": "./body.tex",
+            "line": 1,
+            "message": "Undefined control sequence."
+          }
+        ],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-08T18:57:57.410Z"
+    },
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:6458bb8046460ce083662400:6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff:patch_a8eb9ea83f2001f4a2681f56:compile:call_3lzd5avh1td2qi8xaq6fovwx",
+      "kind": "compile",
+      "patchId": "patch_a8eb9ea83f2001f4a2681f56",
+      "projectId": "6458bb8046460ce083662400",
+      "snapshotId": "6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff",
+      "startedAt": "2026-09-08T18:58:03.899Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "2584c126e5f0cf7f7c4a79bb190802380460f85e0a392c826c30951cd35a9c27",
+      "result": {
+        "status": "success",
+        "snapshotId": "6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff",
+        "patchId": "patch_a8eb9ea83f2001f4a2681f56",
+        "candidateHash": "2584c126e5f0cf7f7c4a79bb190802380460f85e0a392c826c30951cd35a9c27",
+        "manifestHash": "6d498188c00e1244ba90389ffdd1e934fca66178bf4daffe15b3873ab5b10eff",
+        "buildId": "afd8f931-7f85-45f2-bba8-ae4651c00c5d",
+        "logComplete": true,
+        "errorCount": 0,
+        "errors": [],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-08T18:58:04.735Z"
+    }
+  ]
+}

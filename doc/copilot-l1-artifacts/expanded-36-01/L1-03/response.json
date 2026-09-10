@@ -1,0 +1,34 @@
+{
+  "response": {
+    "conversationId": "L1-03",
+    "message": {
+      "role": "assistant",
+      "content": "✅ 修改完成，候选补丁编译通过（`verificationStatus=passed`，0 错误、0 警告）。\n\n**改动内容**（2 处，节标题 \"Method\" 与其余源码未动）：\n\n| 文件 | 行 | 修改 |\n|---|---|---|\n| `sections/method.tex` | 1 | `\\label{sec:method}` → `\\label{sec:approach}` |\n| `main.tex` | 4 | `\\ref{sec:method}` → `\\ref{sec:approach}` |\n\n项目中 `sec:method` 仅此两处，已全部同步。请在编辑器内审阅内联 diff 并接受补丁后生效。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_8ec4c61d6dc47d78909e685a",
+            "title": "将标签 sec:method 重命名为 sec:approach，并同步更新 main.tex 中的引用",
+            "hunks": [
+              {
+                "file": "sections/method.tex",
+                "line": 1,
+                "oldText": "\\section{Method}\\label{sec:method}",
+                "newText": "\\section{Method}\\label{sec:approach}"
+              },
+              {
+                "file": "main.tex",
+                "line": 4,
+                "oldText": "See Section~\\ref{sec:method}.",
+                "newText": "See Section~\\ref{sec:approach}."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

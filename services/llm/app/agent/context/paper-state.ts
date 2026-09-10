@@ -3,18 +3,19 @@ import { compileOutcome } from '@overleaf/copilot-contracts';
 import type { AgentMessage } from '../core/types.js';
 import { extractTextContent } from '../messageText.js';
 import type { PaperCheckpoint } from './types.js';
+import { sourcePageText } from './source-evidence.js';
 
 type SourceReference = NonNullable<PaperCheckpoint['toolLedger'][number]['source']>;
 
 function readSourceReference(message: AgentMessage): SourceReference | undefined {
   try {
     const value = JSON.parse(extractTextContent(message));
+    const source = sourcePageText(value);
     if (value.found !== true || typeof value.path !== 'string' ||
         typeof value.sourceHash !== 'string' || !/^[a-f0-9]{64}$/.test(value.sourceHash) ||
-        typeof value.content !== 'string' ||
         ![value.startByte, value.endByte, value.fileBytes].every(Number.isSafeInteger) ||
         value.startByte < 0 || value.endByte < value.startByte || value.fileBytes < value.endByte ||
-        Buffer.byteLength(value.content) !== value.endByte - value.startByte) return;
+        Buffer.byteLength(source) !== value.endByte - value.startByte) return;
     const expected = createHash('sha256').update(`${value.path}:${value.sourceHash}:${value.startByte}:${value.endByte}`).digest('hex');
     if (value.evidenceId !== expected) return;
     return { path: value.path, sha256: value.sourceHash, evidenceId: value.evidenceId,

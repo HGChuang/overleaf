@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-lf-3",
+    "message": {
+      "role": "assistant",
+      "content": "项目里有两个 caption 都是 **\"Main results\"** 的表格，都位于 `main.tex`（项目只有一个文件）。两个候选如下：\n\n| # | 标签 (`\\label`) | 文件 | caption 所在行号 |\n|---|---|---|---|\n| 1 | `tab:main` | `main.tex` | 第 13 行 |\n| 2 | `tab:replication` | `main.tex` | 第 22 行 |\n\n两处原文都是：\n\n- 第 13 行：`\\caption{Main results}\\label{tab:main}`\n- 第 22 行：`\\caption{Main results}\\label{tab:replication}`\n\n请告诉我改哪一个（例如“改第 13 行那个 / 改 `tab:main`”），我再把那一处的标题改成 **Ablation results**。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

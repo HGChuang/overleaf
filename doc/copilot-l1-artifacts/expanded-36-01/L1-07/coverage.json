@@ -1,0 +1,31 @@
+{
+  "coverageFailures": [],
+  "historyReads": [],
+  "liveArchives": 0,
+  "epochCommits": 0,
+  "compactions": [],
+  "evidenceFiles": [
+    "main.tex",
+    "refs.tex"
+  ],
+  "requests": [
+    {
+      "callId": 1,
+      "estimatedInput": 23726,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 2,
+      "estimatedInput": 27381,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 3,
+      "estimatedInput": 30764,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    }
+  ]
+}

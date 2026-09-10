@@ -1,0 +1,141 @@
+{
+  "id": "L1-19",
+  "family": "active-include-decoy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 6,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 988,
+      "output": 437,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 236,
+      "totalTokens": 6545,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2021,
+      "output": 254,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 170,
+      "totalTokens": 7395,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 3780,
+      "output": 550,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 224,
+      "totalTokens": 8426,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 1794,
+      "output": 92,
+      "cacheRead": 6912,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 8798,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 2862,
+      "output": 149,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 14,
+      "totalTokens": 9155,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 817,
+      "output": 206,
+      "cacheRead": 8448,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 9471,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 49790,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 24305,
+  "conversationId": "L1-19",
+  "answer": "完成。\n\n**输入链确认**：`main.tex` → `\\input{driver}`（driver.tex 第 2 行）→ `\\input{sections/method}`。`draft/method.tex` 未被加载（driver.tex 第 1 行注释 `% draft/method is historical.` 明确其为历史文件）。\n\n**候选 patch**（`patch_636e3927883b7c3fda006fc6`）：\n- 仅修改 `sections/method.tex` 第 1 行：`\\section{Method}` → `\\section{Approach}`\n- `draft/method.tex` 完全未改动\n\n**编译验证**：verificationStatus = **passed**，0 errors，0 warnings。\n\n其余源码、注释、数值（如 \"We retain 12 samples.\"）与引用均未改变。请在审阅面板接受该 hunk 以应用修改。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

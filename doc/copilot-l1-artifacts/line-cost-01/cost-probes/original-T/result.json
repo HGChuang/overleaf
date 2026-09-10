@@ -1,0 +1,132 @@
+{
+  "arm": "T",
+  "variant": "original",
+  "sourceView": {
+    "found": true,
+    "path": "main.tex",
+    "sourceHash": "58dccc20bd6de3df5961594c54bf9a4510d283be7109ffc7a3413ff6947b2085",
+    "evidenceId": "a751bf6e857c66c9a7b7b029c4df0bd42e8ecf8f02b8eef7d02e735a0229de61",
+    "consistency": "immutable-snapshot",
+    "snapshotId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "docId": "bbbbbbbbbbbbbbbbbbbbbbbb",
+    "version": 1,
+    "startByte": 0,
+    "endByte": 387,
+    "startLine": 1,
+    "totalLines": 22,
+    "nextOffsetBytes": null,
+    "rangeEndByte": 387,
+    "fileBytes": 387,
+    "lines": [
+      [
+        1,
+        "\\documentclass{article}"
+      ],
+      [
+        2,
+        "\\begin{document}"
+      ],
+      [
+        3,
+        "\\begin{table}[h]"
+      ],
+      [
+        4,
+        "\\centering"
+      ],
+      [
+        5,
+        "\\begin{tabular}{lr}"
+      ],
+      [
+        6,
+        "Method & Score \\\\"
+      ],
+      [
+        7,
+        "Baseline & 91.2 \\\\"
+      ],
+      [
+        8,
+        "Ours & 94.5"
+      ],
+      [
+        9,
+        "\\end{tabular}"
+      ],
+      [
+        10,
+        "\\caption{Main results}\\label{tab:main}"
+      ],
+      [
+        11,
+        "\\end{table}"
+      ],
+      [
+        12,
+        "\\begin{table}[h]"
+      ],
+      [
+        13,
+        "\\centering"
+      ],
+      [
+        14,
+        "\\begin{tabular}{lr}"
+      ],
+      [
+        15,
+        "Method & Score \\\\"
+      ],
+      [
+        16,
+        "Baseline & 91.2 \\\\"
+      ],
+      [
+        17,
+        "Ours & 94.5"
+      ],
+      [
+        18,
+        "\\end{tabular}"
+      ],
+      [
+        19,
+        "\\caption{Main results}\\label{tab:replication}"
+      ],
+      [
+        20,
+        "\\end{table}"
+      ],
+      [
+        21,
+        "\\end{document}"
+      ],
+      [
+        22,
+        ""
+      ]
+    ]
+  },
+  "sourceBytes": 1038,
+  "inputTokens": 469,
+  "usage": {
+    "input": 469,
+    "output": 290,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "cacheReadKnown": true,
+    "cacheWriteKnown": false,
+    "reasoning": 288,
+    "totalTokens": 759,
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 0
+    }
+  },
+  "stopReason": "length",
+  "errorMessage": null
+}

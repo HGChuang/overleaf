@@ -1,0 +1,55 @@
+{
+  "id": "L1-10",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 666,
+      "output": 137,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 59,
+      "totalTokens": 5923,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2261,
+      "output": 97,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 33,
+      "totalTokens": 6454,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 12377,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 8704,
+  "conversationId": "conv_0438f011-544b-4224-b7c5-998baa9a4144",
+  "answer": "已经确认，无需修改。\n\n在 `main.tex` 第 10 行，`tab:main` 的表格标题已经是 **Ablation results**：\n\n```latex\n\\caption{Ablation results}\\label{tab:main}\n```\n\n目标已达成，因此不需要提出补丁。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

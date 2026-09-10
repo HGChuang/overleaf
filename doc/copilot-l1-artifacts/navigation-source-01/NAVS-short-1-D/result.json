@@ -1,0 +1,138 @@
+{
+  "id": "NAVS-short-1-D",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "D",
+  "pairId": "NAVS-short-1",
+  "variant": "short",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 2,
+    "historyAttempts": 1,
+    "offTargetAttempts": 0,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 1,
+    "reads": [
+      {
+        "path": "prior-decision.tex"
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 5,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 5077,
+      "output": 405,
+      "cacheRead": 2560,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 174,
+      "totalTokens": 8042,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 4762,
+      "output": 1238,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 753,
+      "totalTokens": 10096,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 2245,
+      "output": 106,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 12,
+      "totalTokens": 10543,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 3323,
+      "output": 162,
+      "cacheRead": 7424,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 10909,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 547,
+      "output": 396,
+      "cacheRead": 10496,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 11439,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 51029,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 25037,
+  "conversationId": "NAVS-short-1",
+  "answer": "完成。已按归档证据中的 FINAL CAPTION 决策修改 `main.tex` 的标题。\n\n## 证据与决策链\n- **归档工具证据**（`read_context_history` → prior-decision.tex，快照 `3892edf…`，源哈希 `924c67e8…`）原文逐行回读：\n  ```\n  1: % FINAL CAPTION: Sensitivity results\n  2: % Preserve 91.2 percent, 12 samples, and negation.\n  ```\n- **当前源码**（`main.tex`，快照 `6d372ed…`）第 3 行为 `\\section{Draft}`，第 4 行正文已含需保留的数据与否定结论。\n\n## 提交的补丁（`patch_5d4a003f0c4627c6648e40e3`）\n```diff\n- \\section{Draft}\n+ \\section{Sensitivity results}\n  Accuracy is 91.2\\% on 12 samples. We do not claim significance.\n```\n\n- 仅改标题：`Draft` → `Sensitivity results`（对应 FINAL CAPTION）。\n- **数据与否定结论原样保留**：`91.2\\%`、`12 samples`、`We do not claim significance.` 均未改动；其余源码、注释、数值、引用零变更。\n\n## 编译验证\n`compile_project(patch_5d4a003f0c4627c6648e40e3)` → **`verificationStatus: passed`**，`errorCount: 0`，`warningCount: 0`（candidateHash `8a6c5360…`）。\n\n补丁仍在 **proposed** 状态，需你在编辑器的内联 diff 预览中 Accept 后才会真正应用到源码。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

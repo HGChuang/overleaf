@@ -1,0 +1,312 @@
+{
+  "sourceUnchangedAtAudit": true,
+  "identicalInitialPayloadGroups": 9,
+  "cases": [
+    {
+      "id": "F02-original-1-D",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-original-1-N",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-original-1-T",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": false,
+      "allStatedLocationsCorrect": true,
+      "note": "Only correct table ranges; exact caption omitted",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-original-2-N",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-original-2-T",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-original-2-D",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-original-3-T",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-original-3-D",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-original-3-N",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-lf-1-D",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-lf-1-N",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-lf-1-T",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-lf-2-N",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-lf-2-T",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-lf-2-D",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-lf-3-T",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-lf-3-D",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-lf-3-N",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-crlf-1-D",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-crlf-1-N",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-crlf-1-T",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-crlf-2-N",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-crlf-2-T",
+      "reads": 0,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-crlf-2-D",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-crlf-3-T",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-crlf-3-D",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": false
+    },
+    {
+      "id": "F02-prefix-crlf-3-N",
+      "reads": 1,
+      "wireUsageVerified": true,
+      "presentationOnlyVerified": true,
+      "captionExact": true,
+      "allStatedLocationsCorrect": true,
+      "note": "Reviewed caption locations and additional ranges against source",
+      "quoteAnnotationLeak": true
+    }
+  ],
+  "summary": {
+    "D": {
+      "exactCaptionPairs": 9,
+      "readExposed": 9,
+      "calls": 21,
+      "tokens": 141024,
+      "probeInput": {
+        "original": 619,
+        "prefix-crlf": 721,
+        "prefix-lf": 652
+      }
+    },
+    "N": {
+      "exactCaptionPairs": 9,
+      "readExposed": 9,
+      "calls": 23,
+      "tokens": 151995,
+      "probeInput": {
+        "original": 464,
+        "prefix-crlf": 520,
+        "prefix-lf": 483
+      }
+    },
+    "T": {
+      "exactCaptionPairs": 8,
+      "readExposed": 8,
+      "calls": 23,
+      "tokens": 149239,
+      "probeInput": {
+        "original": 469,
+        "prefix-crlf": 547,
+        "prefix-lf": 488
+      }
+    }
+  },
+  "probeTotalTokens": 12107
+}

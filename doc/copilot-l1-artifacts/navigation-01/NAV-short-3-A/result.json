@@ -1,0 +1,172 @@
+{
+  "id": "NAV-short-3-A",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "NAV-short-3",
+  "variant": "short",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 2,
+    "historyAttempts": 5,
+    "offTargetAttempts": 3,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 2,
+    "reads": [
+      {
+        "message": 0
+      },
+      {
+        "message": 0,
+        "offset": 800
+      },
+      {
+        "message": 1
+      },
+      {
+        "message": 2
+      },
+      {
+        "message": 2,
+        "offset": 800
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 6,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 3435,
+      "output": 313,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 236,
+      "totalTokens": 7844,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 3197,
+      "output": 558,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 435,
+      "totalTokens": 9131,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 4019,
+      "output": 840,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 751,
+      "totalTokens": 11003,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 2589,
+      "output": 536,
+      "cacheRead": 8448,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 255,
+      "totalTokens": 11573,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 979,
+      "output": 85,
+      "cacheRead": 10752,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 14,
+      "totalTokens": 11816,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 7931,
+      "output": 328,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 38,
+      "totalTokens": 12355,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 63722,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 56537,
+  "conversationId": "NAV-short-3",
+  "answer": "完成。已按 prior-decision.tex 的 FINAL CAPTION 决策提交候选补丁并通过编译验证。\n\n**归档原始证据**（`read_context_history` 消息 2，完整 3 行工具结果，非摘要）：\n```\n1: % FINAL CAPTION: Sensitivity results\n2: % Preserve 91.2 percent, 12 samples, and negation.\n3: \n```\n\n**决策**：标题用 **\"Sensitivity results\"**。\n\n**已提交补丁** `patch_ee4490d2d44ab5c0efdc14ab`（仅 1 个 hunk）：\n- `main.tex` 第 3 行：`\\section{Draft}` → `\\section{Sensitivity results}`\n\n**保留未改动**：\n- 数据与否定结论（第 4 行 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.`）原样保留\n- 文档结构、注释、数值、引用均未触碰\n\n**编译验证**：`verificationStatus = passed`，`errorCount = 0`，`warningCount = 0`（candidateHash `8a6c5360…`）。\n\n补丁处于 **proposed** 状态，需你在内联 diff 预览中接受后才会应用到源码。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

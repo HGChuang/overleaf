@@ -1,0 +1,25 @@
+{
+  "evidencePassed": true,
+  "failures": [],
+  "targetMessage": 6,
+  "historyAttempts": 4,
+  "offTargetAttempts": 1,
+  "duplicateTargetAttempts": 0,
+  "targetSuccessfulPages": 3,
+  "reads": [
+    {
+      "message": 0
+    },
+    {
+      "message": 6
+    },
+    {
+      "message": 6,
+      "offset": 800
+    },
+    {
+      "message": 6,
+      "offset": 1600
+    }
+  ]
+}

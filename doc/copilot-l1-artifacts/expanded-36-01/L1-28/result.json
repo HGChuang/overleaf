@@ -1,0 +1,281 @@
+{
+  "id": "L1-28",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 13,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "manual_compact",
+      "input": 5917,
+      "output": 909,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 735,
+      "totalTokens": 11946,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 3475,
+      "output": 553,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 321,
+      "totalTokens": 8124,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 3408,
+      "output": 208,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 147,
+      "totalTokens": 8992,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 775,
+      "output": 175,
+      "cacheRead": 8704,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 113,
+      "totalTokens": 9654,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 4347,
+      "output": 296,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 251,
+      "totalTokens": 10019,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 960,
+      "output": 83,
+      "cacheRead": 9216,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 38,
+      "totalTokens": 10259,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 7,
+      "phase": "task",
+      "input": 672,
+      "output": 61,
+      "cacheRead": 9984,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 10717,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 8,
+      "phase": "task",
+      "input": 3533,
+      "output": 62,
+      "cacheRead": 7424,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 11019,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 9,
+      "phase": "task",
+      "input": 686,
+      "output": 416,
+      "cacheRead": 10496,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 141,
+      "totalTokens": 11598,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 10,
+      "phase": "task",
+      "input": 1000,
+      "output": 684,
+      "cacheRead": 11008,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 294,
+      "totalTokens": 12692,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 11,
+      "phase": "task",
+      "input": 1208,
+      "output": 226,
+      "cacheRead": 11776,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 13210,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 12,
+      "phase": "task",
+      "input": 2803,
+      "output": 179,
+      "cacheRead": 10752,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 27,
+      "totalTokens": 13734,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 13,
+      "phase": "task",
+      "input": 1059,
+      "output": 343,
+      "cacheRead": 12800,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 14202,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 146166,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 69294,
+  "conversationId": "L1-28",
+  "answer": "完成。步骤与结果如下：\n\n**1. 归档原始证据（`read_context_history` message 2）**\n`prior-decision.tex` 的逐行内容为：\n```\n1–24: % Earlier discussion, not the final decision.\n25:   % FINAL CAPTION: Held-out results\n26:   % Preserve 91.2 percent, 12 samples, and negation.\n```\n即最终决策标题为 **Held-out results**，且必须保留 91.2%、12 samples 与否定结论。\n\n**2. 当前源码（`main.tex`，sha256 `f5e82b47…`）**\n```\n3: \\section{Draft}\n4: Accuracy is 91.2\\% on 12 samples. We do not claim significance.\n```\n\n**3. 候选补丁（单 hunk）**\n`\\section{Draft}` → `\\section{Held-out results}`\n- patchId: `patch_bf5113f95596fbd6bdc17398`\n- 仅改动标题行；第 4 行的数据（91.2%、12 samples）与否定结论（\"We do not claim significance\"）未动，其余源码、注释、数值、引用全部保留。\n\n**4. 编译验证**\n`compile_project(patch_bf5113f95596fbd6bdc17398)` → `verificationStatus: passed`，errorCount 0，warningCount 0。\n\n补丁为 **proposed（候选）** 状态，尚未应用到源码——请在内联 diff 预览中 Accept 后才会生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

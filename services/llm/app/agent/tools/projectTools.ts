@@ -8,7 +8,7 @@
 
 import { defineTool } from './baseTool.js';
 import { buildFileMap, lookupFile } from './fileMap.js';
-import { sourcePage, candidateText, digest } from '../context/source-evidence.js';
+import { readSourcePage, candidateText, digest } from '../context/source-evidence.js';
 
 // Word-count algorithm vendored from eval/graders/assertGrader.ts
 // (stripLatex + countWords) — KEEP IN SYNC with that file: eval graders judge
@@ -67,7 +67,7 @@ export function buildProjectTools(context: any = {}, deps: { loadFile?: (path: s
   const readFile = defineTool({
     name: 'read_file',
     description:
-      'Read exact project source, hash and byte range within a 4096-token conservative budget. Follow nextOffsetBytes using offsetBytes to retrieve subsequent pages. A page is partial read coverage, not a completed audit. Optional limit restricts the requested line range.',
+      'Read source as lineNumberedContent (N: text), hash and byte range within 4096 bytes. N is the authoritative 1-based source line; remove only this outer prefix in quotes and patches, preserving source whitespace/CRLF. Follow nextOffsetBytes using offsetBytes; pages may split a line. A page is partial coverage, not a completed audit. Optional limit restricts the line range.',
     parameters: {
       type: 'object',
       properties: {
@@ -81,14 +81,14 @@ export function buildProjectTools(context: any = {}, deps: { loadFile?: (path: s
       const content = await getContent(path);
       if (content == null) return JSON.stringify({ found: false, message: `File not found or ambiguous: ${path}` });
       const canonical = resolvePath(path)!;
-      return JSON.stringify(sourcePage(canonical, content, { ...pageOptions(canonical), endLine: limit, offsetBytes }));
+      return JSON.stringify(readSourcePage(canonical, content, { ...pageOptions(canonical), endLine: limit, offsetBytes }));
     },
   });
 
   const readFileFragmentTool = defineTool({
     name: 'read_file_fragment',
     description:
-      'Read a fragment of a project source file by path and 1-based inclusive line range. Use this to inspect the real code around a specific line (e.g. a compile error). Returns exact unnumbered source, startLine, content hash and byte cursor. Follow nextOffsetBytes with the same range if truncated. Pass startLine ~ line-3 and endLine ~ line+3 for context.',
+      'Read a 1-based inclusive source line range as lineNumberedContent (N: text), hash and byte cursor within 4096 bytes. N is the authoritative source line; remove only this outer prefix in quotes and patches, preserving source whitespace/CRLF. Follow nextOffsetBytes with the same range; pages may split a line. For compile errors, request a few surrounding lines.',
     parameters: {
       type: 'object',
       properties: {
@@ -103,7 +103,7 @@ export function buildProjectTools(context: any = {}, deps: { loadFile?: (path: s
       const content = await getContent(path);
       if (content == null) return JSON.stringify({ found: false, message: `File not found or ambiguous: ${path}` });
       const canonical = resolvePath(path)!;
-      return JSON.stringify(sourcePage(canonical, content, { ...pageOptions(canonical), startLine, endLine, offsetBytes }));
+      return JSON.stringify(readSourcePage(canonical, content, { ...pageOptions(canonical), startLine, endLine, offsetBytes }));
     },
   });
 

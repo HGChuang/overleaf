@@ -17,6 +17,7 @@ import { isPromptTooLong } from '../agent/recovery.js';
 import { ConversationService } from './conversation.service.js';
 import { ContextManager } from '../agent/context/context-manager.js';
 import { cacheRoutingKey } from '../agent/context/cache-policy.js';
+import { withHistorySourceLookup } from '../agent/context/history-source-lookup.js';
 import { ContextStore, type ContextSession } from '../agent/context/context-store.js';
 import { inputBudget, requestTokens } from '../agent/context/budget.js';
 import { ContextCapacityError, type ContextEvent } from '../agent/context/types.js';
@@ -376,7 +377,7 @@ export class CopilotService {
         proposeMemory: session ? args => this.memoryStore.propose({ ...args, userId: userIdentifier,
           projectId: context.project.projectId, conversationId, messages: session!.messages }) : undefined,
       });
-      if (session) tools.push(defineTool({
+      if (session) tools.push(withHistorySourceLookup(defineTool({
         name: 'read_context_history',
         description: 'Read exact archived conversation evidence by absolute message index from PAPER_CHECKPOINT. Historical source may be stale; read current project source before editing. Returns a bounded page of text with a continuation offset.',
         parameters: { type: 'object', required: ['message'], properties: {
@@ -390,7 +391,7 @@ export class CopilotService {
           const content = text.slice(offset, offset + 800);
           return JSON.stringify({ message, offset, content, nextOffset: offset + content.length < text.length ? offset + content.length : null, historical: true });
         },
-      }));
+      }), session));
       const systemPrompt = buildUnifiedSystemPrompt(context, tools.map(t => t.name));
       const userMessage = buildUserMessage(context, projectStateFromMessages(history));
       let summaryArtifactKey: string | undefined;
@@ -654,6 +655,10 @@ export class CopilotService {
   async compact(userIdentifier: string, conversationId: string, projectId: string) {
     await this.webClient.assertProjectAccess(userIdentifier, projectId);
     const session = await this.contextStore.open({ userId: userIdentifier, projectId, conversationId, source: 'panel' });
+    const leaseAbort = new AbortController();
+    const renewal = setInterval(() => {
+      session.renew().catch(error => leaseAbort.abort(error));
+    }, 10_000);
     try {
       const latest = [...session.messages].reverse().find(message => message.role === 'user');
       if (!latest) throw badRequest('conversation has no messages to compact');
@@ -688,7 +693,10 @@ export class CopilotService {
       let summaryArtifactKey: string | undefined;
       const compactRequestId = randomUUID();
       const manager = new ContextManager({ system, tools, window: descriptor.contextWindow,
-        output: descriptor.maxTokens, epoch: session.epoch, commit: epoch => session.commit(epoch),
+        output: descriptor.maxTokens, epoch: session.epoch, commit: async epoch => {
+          leaseAbort.signal.throwIfAborted();
+          await session.commit(epoch);
+        },
         summarize: async ({ messages, instruction, boundary, warm }) => {
           const cacheKey = summaryCacheKey({ user: userIdentifier, project: projectId,
             conversation: conversationId }, descriptor, system, tools, messages, instruction);
@@ -701,7 +709,8 @@ export class CopilotService {
           const summaryStarted = Date.now();
           const response = await this.streamFn(descriptor, { systemPrompt: system, tools,
             messages: [...messages, { role: 'user', content: instruction, timestamp: 0 }] },
-          { apiKey: usingLlmInfo.apiKey, promptCacheKey, maxTokens: 4096, timeoutMs: 45_000, maxRetries: 0 });
+          { apiKey: usingLlmInfo.apiKey, promptCacheKey, maxTokens: 4096, timeoutMs: 45_000, maxRetries: 0,
+            signal: AbortSignal.any([leaseAbort.signal, AbortSignal.timeout(45_000)]) });
           for await (const _ of response) { /* summary has no executor */ }
           const result = await response.result();
           await this.contextMetrics.record({ requestId: `${compactRequestId}:summary:${boundary}`,
@@ -717,10 +726,11 @@ export class CopilotService {
           if (summaryArtifactKey) await this.contextStore.saveSummary(summaryArtifactKey, summary);
         } });
       const projected = await manager.prepare(session.messages, 'manual');
+      leaseAbort.signal.throwIfAborted();
       const diagnostics = await this.contextStore.diagnostics(userIdentifier, conversationId, projectId);
       return { generation: diagnostics?.generation || 0, projectedMessages: projected.length,
         coveredThroughSeq: diagnostics?.coveredThroughSeq ?? -1 };
-    } finally { await session.close(); }
+    } finally { clearInterval(renewal); await session.close(); }
   }
 
   async resolveChatModel(userIdentifier: string) {

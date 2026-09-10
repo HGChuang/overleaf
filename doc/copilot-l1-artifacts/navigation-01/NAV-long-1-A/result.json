@@ -1,0 +1,303 @@
+{
+  "id": "NAV-long-1-A",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "NAV-long-1",
+  "variant": "long",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 2,
+    "historyAttempts": 7,
+    "offTargetAttempts": 4,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 3,
+    "reads": [
+      {
+        "message": 0,
+        "offset": 0
+      },
+      {
+        "message": 0,
+        "offset": 800
+      },
+      {
+        "message": 0,
+        "offset": 1600
+      },
+      {
+        "message": 1,
+        "offset": 0
+      },
+      {
+        "message": 2,
+        "offset": 0
+      },
+      {
+        "message": 2,
+        "offset": 800
+      },
+      {
+        "message": 2,
+        "offset": 1600
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 12,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 3438,
+      "output": 421,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 212,
+      "totalTokens": 7955,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 1132,
+      "output": 69,
+      "cacheRead": 7424,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 8,
+      "totalTokens": 8625,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 650,
+      "output": 596,
+      "cacheRead": 8448,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 447,
+      "totalTokens": 9694,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 5679,
+      "output": 126,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 65,
+      "totalTokens": 9901,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 5962,
+      "output": 85,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 24,
+      "totalTokens": 10143,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 5157,
+      "output": 75,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 14,
+      "totalTokens": 10608,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 7,
+      "phase": "task",
+      "input": 8542,
+      "output": 96,
+      "cacheRead": 2304,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 34,
+      "totalTokens": 10942,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 8,
+      "phase": "task",
+      "input": 355,
+      "output": 207,
+      "cacheRead": 10752,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 134,
+      "totalTokens": 11314,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 9,
+      "phase": "task",
+      "input": 2632,
+      "output": 786,
+      "cacheRead": 8960,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 315,
+      "totalTokens": 12378,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 10,
+      "phase": "task",
+      "input": 2436,
+      "output": 81,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 12757,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 11,
+      "phase": "task",
+      "input": 1448,
+      "output": 160,
+      "cacheRead": 11520,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 13128,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 12,
+      "phase": "task",
+      "input": 5071,
+      "output": 319,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 13582,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 131027,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 66429,
+  "conversationId": "NAV-long-1",
+  "answer": "完成。\n\n**决策依据（归档原始证据，消息 2 的完整工具窗口）** — `prior-decision.tex` 第 25–26 行：\n```\n25: % FINAL CAPTION: Robustness results\n26: % Preserve 91.2 percent, 12 samples, and negation.\n```\n其余 24 行均为 `% Earlier discussion, not the final decision.`，仅作决策证据，未采用。\n\n**当前 `main.tex` 源码**（读取于快照 `9ba4af9f…`，与 manifest 哈希一致）：\n```\n\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n```\n\n**提交的候选补丁**（`patch_384528bf62af069d83737bd7`，单 hunk）：\n- `\\section{Draft}` → `\\section{Robustness results}`\n\n**保留未要求改变的内容**：正文数据 `91.2\\%`、`12 samples`、否定结论 `We do not claim significance` 均未改动；注释、其余源码不动。\n\n**编译验证**：`compile_project(patchId)` 返回 `verificationStatus=passed`、`errorCount=0`、`warningCount=0`，候选编译通过。\n\n补丁处于 *proposed* 状态，等待你在内联 diff 预览中接受后才会写入源码。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

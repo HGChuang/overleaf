@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "conv_3a79d513-7ac8-46b8-abbd-d4d958700a9a",
+    "message": {
+      "role": "assistant",
+      "content": "项目里共有 **两处** 标题为 “Main results” 的表格，都在 `main.tex` 中，分别是：\n\n| 序号 | 标签 (label) | 文件路径 | caption 所在行号 | 当前内容 |\n|---|---|---|---|---|\n| 候选 A | `tab:main` | `main.tex` | **第 15 行** | `\\caption{Main results}\\label{tab:main}` |\n| 候选 B | `tab:replication` | `main.tex` | **第 24 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n请确认要改哪一个（A 或 B），我确认后只改动你指定的那一处，把 caption 改为 `Ablation results`，另一处保持 `Main results` 不变。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

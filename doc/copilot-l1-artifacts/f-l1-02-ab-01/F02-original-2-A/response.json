@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-original-2",
+    "message": {
+      "role": "assistant",
+      "content": "项目里 `main.tex` 有两个表格，**标题都是 `Main results`**，目前无法从选中内容（selectedText 为空）确定你指的是哪一个：\n\n1. 第一个表格，标签 `tab:main`（第 8 行附近）\n2. 第二个表格，标签 `tab:replication`（第 17 行附近）\n\n因为你明确要求\"只改我指的那一个\"，我不想改错，所以先确认一下。\n\n```latex\n% 请问改哪一个？第一个（label tab:main）还是第二个（label tab:replication）？\n```",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

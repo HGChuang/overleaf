@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "L1-01",
+    "message": {
+      "role": "assistant",
+      "content": "**定义位置**：`macros.tex` 第 2 行\n\n```latex\n\\newcommand{\\threshold}{0.05}\n```\n\n**当前数值**：`0.05`\n\n**使用位置**：`main.tex` 第 4 行 — `We use $\\samplesize$ samples and threshold $\\threshold$.`（渲染为 \"threshold 0.05\"）。\n\n未修改任何源码。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

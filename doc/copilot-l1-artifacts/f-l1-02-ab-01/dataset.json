@@ -1,0 +1,434 @@
+[
+  {
+    "id": "F02-original-1-A",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-original-1",
+    "arm": "A",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    }
+  },
+  {
+    "id": "F02-original-1-B",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-original-1",
+    "arm": "B",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    }
+  },
+  {
+    "id": "F02-original-2-B",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-original-2",
+    "arm": "B",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    }
+  },
+  {
+    "id": "F02-original-2-A",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-original-2",
+    "arm": "A",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    }
+  },
+  {
+    "id": "F02-original-3-A",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-original-3",
+    "arm": "A",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    }
+  },
+  {
+    "id": "F02-original-3-B",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-original-3",
+    "arm": "B",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    }
+  },
+  {
+    "id": "F02-prefix-lf-1-B",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\n% Preserve manuscript source.\n\n\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-lf-1",
+    "arm": "B",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    }
+  },
+  {
+    "id": "F02-prefix-lf-1-A",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\n% Preserve manuscript source.\n\n\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-lf-1",
+    "arm": "A",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    }
+  },
+  {
+    "id": "F02-prefix-lf-2-A",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\n% Preserve manuscript source.\n\n\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-lf-2",
+    "arm": "A",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    }
+  },
+  {
+    "id": "F02-prefix-lf-2-B",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\n% Preserve manuscript source.\n\n\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-lf-2",
+    "arm": "B",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    }
+  },
+  {
+    "id": "F02-prefix-lf-3-B",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\n% Preserve manuscript source.\n\n\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-lf-3",
+    "arm": "B",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    }
+  },
+  {
+    "id": "F02-prefix-lf-3-A",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\n% Preserve manuscript source.\n\n\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:main}\n\\end{table}\n\\begin{table}[h]\n\\centering\n\\begin{tabular}{lr}\nMethod & Score \\\\\nBaseline & 91.2 \\\\\nOurs & 94.5\n\\end{tabular}\n\\caption{Main results}\\label{tab:replication}\n\\end{table}\n\\end{document}\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-lf-3",
+    "arm": "A",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    }
+  },
+  {
+    "id": "F02-prefix-crlf-1-A",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\r\n\r\n% Keep both tables.\r\n% Line ending fixture.\r\n\r\n\\documentclass{article}\r\n\\begin{document}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:main}\r\n\\end{table}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:replication}\r\n\\end{table}\r\n\\end{document}\r\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-crlf-1",
+    "arm": "A",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    }
+  },
+  {
+    "id": "F02-prefix-crlf-1-B",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\r\n\r\n% Keep both tables.\r\n% Line ending fixture.\r\n\r\n\\documentclass{article}\r\n\\begin{document}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:main}\r\n\\end{table}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:replication}\r\n\\end{table}\r\n\\end{document}\r\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-crlf-1",
+    "arm": "B",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    }
+  },
+  {
+    "id": "F02-prefix-crlf-2-B",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\r\n\r\n% Keep both tables.\r\n% Line ending fixture.\r\n\r\n\\documentclass{article}\r\n\\begin{document}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:main}\r\n\\end{table}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:replication}\r\n\\end{table}\r\n\\end{document}\r\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-crlf-2",
+    "arm": "B",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    }
+  },
+  {
+    "id": "F02-prefix-crlf-2-A",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\r\n\r\n% Keep both tables.\r\n% Line ending fixture.\r\n\r\n\\documentclass{article}\r\n\\begin{document}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:main}\r\n\\end{table}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:replication}\r\n\\end{table}\r\n\\end{document}\r\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-crlf-2",
+    "arm": "A",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    }
+  },
+  {
+    "id": "F02-prefix-crlf-3-A",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\r\n\r\n% Keep both tables.\r\n% Line ending fixture.\r\n\r\n\\documentclass{article}\r\n\\begin{document}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:main}\r\n\\end{table}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:replication}\r\n\\end{table}\r\n\\end{document}\r\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-crlf-3",
+    "arm": "A",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    }
+  },
+  {
+    "id": "F02-prefix-crlf-3-B",
+    "family": "line-evidence-ab",
+    "split": "dev",
+    "outcome": "clarification",
+    "prompt": "把标题为 Main results 的表格标题改成 Ablation results。只改我指的那一个。请先列出两个候选的标签、文件路径和各自 caption 所在的准确行号，再让我确认。",
+    "files": {
+      "main.tex": "% Synthetic location fixture.\r\n\r\n% Keep both tables.\r\n% Line ending fixture.\r\n\r\n\\documentclass{article}\r\n\\begin{document}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:main}\r\n\\end{table}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:replication}\r\n\\end{table}\r\n\\end{document}\r\n"
+    },
+    "regions": [],
+    "baselineCompiles": true,
+    "compileRequired": false,
+    "answerChecks": [
+      "(两个|两张|两处|2|two|both)",
+      "(哪|确认|指定|which|clarif)"
+    ],
+    "pairId": "F02-prefix-crlf-3",
+    "arm": "B",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    }
+  }
+]

@@ -1,0 +1,186 @@
+{
+  "id": "NAV-late-long-3-A",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "NAV-late-long-3",
+  "variant": "late-long",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 6,
+    "historyAttempts": 3,
+    "offTargetAttempts": 0,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 3,
+    "reads": [
+      {
+        "message": 6
+      },
+      {
+        "message": 6,
+        "offset": 800
+      },
+      {
+        "message": 6,
+        "offset": 1600
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 7,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 3463,
+      "output": 425,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 233,
+      "totalTokens": 7984,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 4430,
+      "output": 136,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 43,
+      "totalTokens": 8662,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 5071,
+      "output": 206,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 144,
+      "totalTokens": 9373,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 1092,
+      "output": 1080,
+      "cacheRead": 8448,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 680,
+      "totalTokens": 10620,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 5526,
+      "output": 194,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 11096,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 5286,
+      "output": 144,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 11574,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 7,
+      "phase": "task",
+      "input": 1450,
+      "output": 308,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 11998,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 71307,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 36467,
+  "conversationId": "NAV-late-long-3",
+  "answer": "已完成。归档证据与当前源码均重新读取后再提交：\n\n**归档证据（`prior-decision.tex` 原始工具结果，消息 6）**\n- 第 1–24 行均为 `% Earlier discussion, not the final decision.`（旧讨论，不作决策依据）\n- 第 25–26 行为最终决策：\n  - `% FINAL CAPTION: Held-out results`\n  - `% Preserve 91.2 percent, 12 samples, and negation.`\n\n**当前源码（`main.tex`，snapshot `620dfbd…`）**\n```\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n```\n\n**提交的候选补丁**（`patch_5e4c0faee860f4fc4d24722e`，单 hunk）\n- `\\section{Draft}` → `\\section{Held-out results}`\n\n按 FINAL CAPTION 决策改标题；数据（91.2%、12 samples）与否定结论（\"We do not claim significance.\"）逐字保留，未动其他任何源码、注释或引用。\n\n**编译验证**：`verificationStatus = passed`，`errorCount = 0`，`warningCount = 0`（build `e5456a4f…`）。候选已提交，待你在内联 diff 预览中接受后即生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-original-1",
+    "message": {
+      "role": "assistant",
+      "content": "项目里有两个表格的标题都是 “Main results”，内容也完全相同，唯一区别是标签：\n\n- 第 3–11 行：`\\caption{Main results}\\label{tab:main}`（第一个表）\n- 第 12–20 行：`\\caption{Main results}\\label{tab:replication}`（第二个表）\n\n你要求“只改我指的那一个”，但当前没有选中文本，我无法判断你指的是哪一个。请确认一下：\n\n```latex\n% 请指出要改哪一个：\\label{tab:main} 还是 \\label{tab:replication}？\n```",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

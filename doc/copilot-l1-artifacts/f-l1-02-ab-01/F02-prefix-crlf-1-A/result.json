@@ -1,0 +1,81 @@
+{
+  "id": "F02-prefix-crlf-1-A",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "F02-prefix-crlf-1",
+  "variant": "prefix-crlf",
+  "expectedLocations": {
+    "tab:main": 15,
+    "tab:replication": 24
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 399,
+      "output": 163,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 88,
+      "totalTokens": 5938,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 900,
+      "output": 113,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 67,
+      "totalTokens": 6389,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 662,
+      "output": 375,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 171,
+      "totalTokens": 7181,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19508,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 7306,
+  "conversationId": "F02-prefix-crlf-1",
+  "answer": "项目里有两张标题都是 \"Main results\" 的表格，都位于 `main.tex`。以下是两个候选：\n\n| # | 标签（label） | 文件路径 | caption 所在行号 | 说明 |\n|---|---|---|---|---|\n| 1 | `tab:main` | `main.tex` | **第 15 行** | 第一张表格（第 7–16 行），内容为 Method/Score 两列 |\n| 2 | `tab:replication` | `main.tex` | **第 24 行** | 第二张表格（第 17–26 行），内容与第一张相同 |\n\n两张表格的内容完全相同，只能靠标签和行号区分。请告诉我你要改哪一张（例如「改 `tab:main`，即第 15 行那个」），确认后我会把对应的 `\\caption{Main results}` 改为 `\\caption{Ablation results}`。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

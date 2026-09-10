@@ -1,0 +1,457 @@
+{
+  "cases": [
+    {
+      "id": "F02-original-1-A",
+      "pairId": "F02-original-1",
+      "arm": "A",
+      "variant": "original",
+      "coreChecksPassed": true,
+      "calls": 3,
+      "tokens": 19274,
+      "inputTokens": 18369,
+      "outputTokens": 905,
+      "elapsedMs": 11286,
+      "readCount": 1,
+      "rawBytes": 916,
+      "shownBytes": 916,
+      "presentationDeltaBytes": 0,
+      "expectedLocations": {
+        "tab:main": 10,
+        "tab:replication": 19
+      },
+      "answer": "项目里有两个一模一样的表格，标题都是 `Main results`（表体内容也完全相同），你并没有通过选中文本或上下文指明是哪一张，所以我需要先确认再改——因为你要求\"只改那一个\"。\n\n两个候选分别是：\n\n1. **第 10 行**：`\\caption{Main results}\\label{tab:main}`（第一张表）\n2. **第 19 行**：`\\caption{Main results}\\label{tab:replication}`（第二张表）\n\n请告诉我你要改的是哪一张（例如\"改 `tab:main` 那张\"或\"改第一张\"），我会只提交那一个表格的标题修改，另一张保持 `Main results` 不变。"
+    },
+    {
+      "id": "F02-original-1-B",
+      "pairId": "F02-original-1",
+      "arm": "B",
+      "variant": "original",
+      "coreChecksPassed": true,
+      "calls": 2,
+      "tokens": 14855,
+      "inputTokens": 12343,
+      "outputTokens": 2512,
+      "elapsedMs": 42038,
+      "readCount": 1,
+      "rawBytes": 916,
+      "shownBytes": 1453,
+      "presentationDeltaBytes": 537,
+      "expectedLocations": {
+        "tab:main": 10,
+        "tab:replication": 19
+      },
+      "answer": "我在 main.tex 里搜到了**两个**标题都是 \"Main results\" 的表格：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n因为您强调\"只改我指的那一个\"，而当前没有选中任何内容，两个表格的标题又完全相同，我不想猜错改错表格。\n\n```latex\n% main.tex 中有两个表格标题都是 \"Main results\"（第10行 \\label{tab:main}；第19行 \\label{tab:replication}）。您要改哪一个？\n```"
+    },
+    {
+      "id": "F02-original-2-B",
+      "pairId": "F02-original-2",
+      "arm": "B",
+      "variant": "original",
+      "coreChecksPassed": true,
+      "calls": 2,
+      "tokens": 13258,
+      "inputTokens": 12397,
+      "outputTokens": 861,
+      "elapsedMs": 14223,
+      "readCount": 1,
+      "rawBytes": 916,
+      "shownBytes": 1453,
+      "presentationDeltaBytes": 537,
+      "expectedLocations": {
+        "tab:main": 10,
+        "tab:replication": 19
+      },
+      "answer": "项目里有两张表格的标题都是 **Main results**，分别在第 10 行（`\\label{tab:main}`）和第 19 行（`\\label{tab:replication}`），内容和标题完全一样，无法从您的消息或当前选区判断您指的是哪一张。\n\n```latex\n% 请确认要改哪一张：第 10 行 \\label{tab:main} 的表格，还是第 19 行 \\label{tab:replication} 的表格？\n```\n\n确认后我会只改那一张的 `\\caption`，另一张保持不动。"
+    },
+    {
+      "id": "F02-original-2-A",
+      "pairId": "F02-original-2",
+      "arm": "A",
+      "variant": "original",
+      "coreChecksPassed": true,
+      "calls": 2,
+      "tokens": 14393,
+      "inputTokens": 11983,
+      "outputTokens": 2410,
+      "elapsedMs": 26007,
+      "readCount": 1,
+      "rawBytes": 916,
+      "shownBytes": 916,
+      "presentationDeltaBytes": 0,
+      "expectedLocations": {
+        "tab:main": 10,
+        "tab:replication": 19
+      },
+      "answer": "项目里 `main.tex` 有两个表格，**标题都是 `Main results`**，目前无法从选中内容（selectedText 为空）确定你指的是哪一个：\n\n1. 第一个表格，标签 `tab:main`（第 8 行附近）\n2. 第二个表格，标签 `tab:replication`（第 17 行附近）\n\n因为你明确要求\"只改我指的那一个\"，我不想改错，所以先确认一下。\n\n```latex\n% 请问改哪一个？第一个（label tab:main）还是第二个（label tab:replication）？\n```"
+    },
+    {
+      "id": "F02-original-3-A",
+      "pairId": "F02-original-3",
+      "arm": "A",
+      "variant": "original",
+      "coreChecksPassed": true,
+      "calls": 2,
+      "tokens": 12879,
+      "inputTokens": 11952,
+      "outputTokens": 927,
+      "elapsedMs": 8297,
+      "readCount": 1,
+      "rawBytes": 916,
+      "shownBytes": 916,
+      "presentationDeltaBytes": 0,
+      "expectedLocations": {
+        "tab:main": 10,
+        "tab:replication": 19
+      },
+      "answer": "当前文件里有**两处**表格标题都是 `Main results`：\n\n- 第 7 行：`\\caption{Main results}\\label{tab:main}`\n- 第 16 行：`\\caption{Main results}\\label{tab:replication}`\n\n由于我没有收到你的选中区域信息，无法确定你指的是哪一个，且你明确要求\"只改那一个\"，我不能擅自二选一或两处都改。\n\n```latex\n% 请告诉我改哪一个：\\label{tab:main}（第一个表）还是 \\label{tab:replication}（第二个表）？\n```"
+    },
+    {
+      "id": "F02-original-3-B",
+      "pairId": "F02-original-3",
+      "arm": "B",
+      "variant": "original",
+      "coreChecksPassed": true,
+      "calls": 2,
+      "tokens": 12902,
+      "inputTokens": 12148,
+      "outputTokens": 754,
+      "elapsedMs": 6077,
+      "readCount": 1,
+      "rawBytes": 916,
+      "shownBytes": 1453,
+      "presentationDeltaBytes": 537,
+      "expectedLocations": {
+        "tab:main": 10,
+        "tab:replication": 19
+      },
+      "answer": "我读了 `main.tex`，发现里面有**两个**表格的标题都是 `Main results`：\n\n1. 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n2. 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n你提到\"只改我指的那一个\"，但当前没有选中任何文本，我无法确定你指的是哪一个。请确认要改哪一个：\n\n% 请问要改第一个表格（\\label{tab:main}）还是第二个表格（\\label{tab:replication}）的标题？\n\n确认后我会立即提交对应的补丁。"
+    },
+    {
+      "id": "F02-prefix-lf-1-B",
+      "pairId": "F02-prefix-lf-1",
+      "arm": "B",
+      "variant": "prefix-lf",
+      "coreChecksPassed": true,
+      "calls": 3,
+      "tokens": 19897,
+      "inputTokens": 19056,
+      "outputTokens": 841,
+      "elapsedMs": 14104,
+      "readCount": 1,
+      "rawBytes": 980,
+      "shownBytes": 1593,
+      "presentationDeltaBytes": 613,
+      "expectedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      },
+      "answer": "项目里共有 **两个** 标题为 \"Main results\" 的表格，都在同一个文件 `main.tex` 中（共 25 行）：\n\n| 候选 | 标签（label） | 文件路径 | caption 所在行号 | 表格位置 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** | 第一个 `table` 环境内（6–14 行） |\n| ② | `tab:replication` | `main.tex` | **第 22 行** | 第二个 `table` 环境内（15–23 行） |\n\n两处的原始代码分别是：\n\n- 第 13 行：`\\caption{Main results}\\label{tab:main}`\n- 第 22 行：`\\caption{Main results}\\label{tab:replication}`\n\n请告诉我改哪一个（例如\"改①\"或\"改 `tab:main` 那个\"），确认后我再提交补丁，把该处 caption 改为 `Ablation results`。"
+    },
+    {
+      "id": "F02-prefix-lf-1-A",
+      "pairId": "F02-prefix-lf-1",
+      "arm": "A",
+      "variant": "prefix-lf",
+      "coreChecksPassed": true,
+      "calls": 2,
+      "tokens": 12812,
+      "inputTokens": 12256,
+      "outputTokens": 556,
+      "elapsedMs": 8138,
+      "readCount": 1,
+      "rawBytes": 980,
+      "shownBytes": 980,
+      "presentationDeltaBytes": 0,
+      "expectedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      },
+      "answer": "我找到了两处标题为 **Main results** 的表格 caption，都在 `main.tex` 中：\n\n| 候选 | 标签 | 文件 | caption 所在行 | 上下文 |\n|------|------|------|------|------|\n| ① | `tab:main` | `main.tex` | **第 13 行** | 第 1 个 `table`（首个结果表）|\n| ② | `tab:replication` | `main.tex` | **第 22 行** | 第 2 个 `table`（内容与①相同的复制表）|\n\n两处原文都是：\n```latex\n\\caption{Main results}\\label{tab:main}      % 第 13 行\n\\caption{Main results}\\label{tab:replication} % 第 22 行\n```\n\n请确认要改哪一个（例如「改 `tab:main`」或「改第 13 行那个」），我再只针对那一处提交修改，把 caption 改为 **Ablation results**，另一个保持不变。"
+    },
+    {
+      "id": "F02-prefix-lf-2-A",
+      "pairId": "F02-prefix-lf-2",
+      "arm": "A",
+      "variant": "prefix-lf",
+      "coreChecksPassed": true,
+      "calls": 2,
+      "tokens": 12832,
+      "inputTokens": 12287,
+      "outputTokens": 545,
+      "elapsedMs": 6607,
+      "readCount": 1,
+      "rawBytes": 980,
+      "shownBytes": 980,
+      "presentationDeltaBytes": 0,
+      "expectedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      },
+      "answer": "找到了两处「Main results」表格标题，都位于 **main.tex**（共 25 行）。为避免改错，先列出两个候选供你确认：\n\n| 候选 | 标签 (`\\label`) | 文件 | caption 所在行号 | caption 原文 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 22 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n对应的表格正文分别在第 5–15 行（第一个 `table` 环境）和第 16–24 行（第二个 `table` 环境），内容目前完全相同（Baseline 91.2 / Ours 94.5）。\n\n请告诉我改哪一个（① 还是 ②），我再提交只针对那一处的修改。"
+    },
+    {
+      "id": "F02-prefix-lf-2-B",
+      "pairId": "F02-prefix-lf-2",
+      "arm": "B",
+      "variant": "prefix-lf",
+      "coreChecksPassed": true,
+      "calls": 2,
+      "tokens": 12903,
+      "inputTokens": 12508,
+      "outputTokens": 395,
+      "elapsedMs": 3949,
+      "readCount": 1,
+      "rawBytes": 980,
+      "shownBytes": 1593,
+      "presentationDeltaBytes": 613,
+      "expectedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      },
+      "answer": "项目里共有两个 caption 为 \"Main results\" 的表格，两个候选如下：\n\n| 候选 | 标签 (label) | 文件路径 | caption 所在行 |\n|------|--------------|----------|----------------|\n| A | `tab:main` | `main.tex` | 第 13 行 |\n| B | `tab:replication` | `main.tex` | 第 22 行 |\n\n对应源码（`main.tex`）：\n\n- 候选 A（第 13 行）：`\\caption{Main results}\\label{tab:main}`\n- 候选 B（第 22 行）：`\\caption{Main results}\\label{tab:replication}`\n\n请确认您指的是哪一个（例如「改 A，`tab:main`」或「改 B，`tab:replication`」），我再提交只改动那一个 caption 的 patch。"
+    },
+    {
+      "id": "F02-prefix-lf-3-B",
+      "pairId": "F02-prefix-lf-3",
+      "arm": "B",
+      "variant": "prefix-lf",
+      "coreChecksPassed": true,
+      "calls": 2,
+      "tokens": 13066,
+      "inputTokens": 12511,
+      "outputTokens": 555,
+      "elapsedMs": 6094,
+      "readCount": 1,
+      "rawBytes": 980,
+      "shownBytes": 1593,
+      "presentationDeltaBytes": 613,
+      "expectedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      },
+      "answer": "已在 `main.tex` 中找到两处标题为 **Main results** 的表格，请你确认要改哪一个（我暂未提交任何修改）：\n\n| 候选 | 标签（label） | 文件路径 | caption 所在行号 | 该行内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 22 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n两处 caption 文字完全相同，只有 label 不同（`tab:main` 是文档中第一张表，`tab:replication` 是第二张）。\n\n请回复你要改的是 **①（`tab:main`）** 还是 **②（`tab:replication`）**，我再据此把对应 caption 改成 `Ablation results`。"
+    },
+    {
+      "id": "F02-prefix-lf-3-A",
+      "pairId": "F02-prefix-lf-3",
+      "arm": "A",
+      "variant": "prefix-lf",
+      "coreChecksPassed": true,
+      "calls": 3,
+      "tokens": 19643,
+      "inputTokens": 18943,
+      "outputTokens": 700,
+      "elapsedMs": 11888,
+      "readCount": 2,
+      "rawBytes": 1960,
+      "shownBytes": 1960,
+      "presentationDeltaBytes": 0,
+      "expectedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      },
+      "answer": "文件里确实有**两个**表格，标题都写着 `Main results`，无法凭\"标题\"区分。请确认要改哪一个。\n\n**候选 1**\n- 标签：`\\label{tab:main}`\n- 文件：`main.tex`\n- caption 所在行：**第 11 行**（`\\caption{Main results}\\label{tab:main}`）\n- 内容：Method/Score 表格，Baseline 91.2、Ours 94.5（第 5–11 行的第一个 `table` 环境）\n\n**候选 2**\n- 标签：`\\label{tab:replication}`\n- 文件：`main.tex`\n- caption 所在行：**第 20 行**（`\\caption{Main results}\\label{tab:replication}`）\n- 内容：Method/Score 表格，Baseline 91.2、Ours 94.5（第 14–20 行的第二个 `table` 环境）\n\n告诉我改哪一个（例如\"改 `tab:main`\"），我再提交 patch。当前**未做任何修改**。"
+    },
+    {
+      "id": "F02-prefix-crlf-1-A",
+      "pairId": "F02-prefix-crlf-1",
+      "arm": "A",
+      "variant": "prefix-crlf",
+      "coreChecksPassed": true,
+      "calls": 3,
+      "tokens": 19508,
+      "inputTokens": 18857,
+      "outputTokens": 651,
+      "elapsedMs": 7306,
+      "readCount": 1,
+      "rawBytes": 1048,
+      "shownBytes": 1048,
+      "presentationDeltaBytes": 0,
+      "expectedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "answer": "项目里有两张标题都是 \"Main results\" 的表格，都位于 `main.tex`。以下是两个候选：\n\n| # | 标签（label） | 文件路径 | caption 所在行号 | 说明 |\n|---|---|---|---|---|\n| 1 | `tab:main` | `main.tex` | **第 15 行** | 第一张表格（第 7–16 行），内容为 Method/Score 两列 |\n| 2 | `tab:replication` | `main.tex` | **第 24 行** | 第二张表格（第 17–26 行），内容与第一张相同 |\n\n两张表格的内容完全相同，只能靠标签和行号区分。请告诉我你要改哪一张（例如「改 `tab:main`，即第 15 行那个」），确认后我会把对应的 `\\caption{Main results}` 改为 `\\caption{Ablation results}`。"
+    },
+    {
+      "id": "F02-prefix-crlf-1-B",
+      "pairId": "F02-prefix-crlf-1",
+      "arm": "B",
+      "variant": "prefix-crlf",
+      "coreChecksPassed": true,
+      "calls": 3,
+      "tokens": 19700,
+      "inputTokens": 19117,
+      "outputTokens": 583,
+      "elapsedMs": 9953,
+      "readCount": 1,
+      "rawBytes": 1048,
+      "shownBytes": 1737,
+      "presentationDeltaBytes": 689,
+      "expectedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "answer": "项目里有两个表格的标题都是 \"Main results\"，都在 `main.tex` 中。按你的要求，先列出两个候选供你确认：\n\n| 候选 | Label | 文件 | caption 行号 | caption 内容 |\n|---|---|---|---|---|\n| A（第 1 个表格） | `tab:main` | `main.tex` | **第 15 行** | `\\caption{Main results}\\label{tab:main}` |\n| B（第 2 个表格） | `tab:replication` | `main.tex` | **第 24 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格内容完全相同，只有 label 不同。请告诉我你要改哪一个（A 或 B），或者直接说对应的 label（`tab:main` / `tab:replication`），确认后我再提交把它的标题改为 **Ablation results** 的补丁。"
+    },
+    {
+      "id": "F02-prefix-crlf-2-B",
+      "pairId": "F02-prefix-crlf-2",
+      "arm": "B",
+      "variant": "prefix-crlf",
+      "coreChecksPassed": true,
+      "calls": 3,
+      "tokens": 19799,
+      "inputTokens": 19027,
+      "outputTokens": 772,
+      "elapsedMs": 12543,
+      "readCount": 1,
+      "rawBytes": 1048,
+      "shownBytes": 1737,
+      "presentationDeltaBytes": 689,
+      "expectedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "answer": "文件里确实有两个 caption 为 **Main results** 的表格，都在 `main.tex` 中。以下是两个候选：\n\n| 候选 | label | 文件 | caption 行号 | caption 原文 |\n|---|---|---|---|---|\n| A | `tab:main` | `main.tex` | 第 15 行 | `\\caption{Main results}\\label{tab:main}` |\n| B | `tab:replication` | `main.tex` | 第 24 行 | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格内容完全相同（第 8–16 行和第 17–25 行分别是各自完整的 `table` 环境），唯一的区分点是 label。\n\n请确认要改哪一个（例如\"改 A / tab:main\"，或\"两个都改\"），我再提交修改 patch。在你确认之前，我不会改动任何文件。"
+    },
+    {
+      "id": "F02-prefix-crlf-2-A",
+      "pairId": "F02-prefix-crlf-2",
+      "arm": "A",
+      "variant": "prefix-crlf",
+      "coreChecksPassed": true,
+      "calls": 3,
+      "tokens": 19693,
+      "inputTokens": 18851,
+      "outputTokens": 842,
+      "elapsedMs": 13002,
+      "readCount": 1,
+      "rawBytes": 1048,
+      "shownBytes": 1048,
+      "presentationDeltaBytes": 0,
+      "expectedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "answer": "项目里有两个 caption 完全相同的表格，都位于唯一的文件 `main.tex` 中。两个候选如下：\n\n| 候选 | 标签 | 文件 | caption 所在行号 | caption 内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 15 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 24 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n请确认要改哪一个（例如「改 ①」或「改 `tab:main` 那个」）。确认后我只会把对应的那一个 caption 改成 `Ablation results`，另一个保持不变。"
+    },
+    {
+      "id": "F02-prefix-crlf-3-A",
+      "pairId": "F02-prefix-crlf-3",
+      "arm": "A",
+      "variant": "prefix-crlf",
+      "coreChecksPassed": true,
+      "calls": 3,
+      "tokens": 19614,
+      "inputTokens": 18679,
+      "outputTokens": 935,
+      "elapsedMs": 10288,
+      "readCount": 1,
+      "rawBytes": 1048,
+      "shownBytes": 1048,
+      "presentationDeltaBytes": 0,
+      "expectedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "answer": "项目里确实有**两个**标题都是 \"Main results\" 的表格，都在 `main.tex`（唯一文件）中。两个候选如下：\n\n| 候选 | 表格标签 | 文件路径 | caption 所在行号 | 行内容 |\n|---|---|---|---|---|\n| ① | `tab:main`（第 1 个表格） | `main.tex` | 第 15 行 | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication`（第 2 个表格） | `main.tex` | 第 24 行 | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格内容完全相同（Method/Score，Baseline 91.2 / Ours 94.5），区别只在标签和位置。\n\n请告诉我您要改哪一个（例如\"改 ① `tab:main`\"或\"改 ② `tab:replication`\"），我确认后再提交修改为 `Ablation results` 的补丁。"
+    },
+    {
+      "id": "F02-prefix-crlf-3-B",
+      "pairId": "F02-prefix-crlf-3",
+      "arm": "B",
+      "variant": "prefix-crlf",
+      "coreChecksPassed": true,
+      "calls": 2,
+      "tokens": 12830,
+      "inputTokens": 12387,
+      "outputTokens": 443,
+      "elapsedMs": 5828,
+      "readCount": 1,
+      "rawBytes": 1048,
+      "shownBytes": 1737,
+      "presentationDeltaBytes": 689,
+      "expectedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "answer": "已在项目源文件中核对完毕。`main.tex` 里确实有两个 caption 都是 \"Main results\" 的表格，两个候选如下：\n\n| 候选 | 标签 | 文件路径 | caption 行号 | 内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | 第 15 行 | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | 第 24 行 | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格的内容完全相同（Baseline 91.2 / Ours 94.5），仅标签不同。\n\n请确认要改哪一个（例如 \"改 ①\" 或 \"改 tab:main\"），我再提交补丁，把对应的 caption 改为 **Ablation results**。"
+    }
+  ],
+  "pairs": [
+    {
+      "pairId": "F02-original-1",
+      "initialPayloadIdentical": true,
+      "initialPayloadHash": "21aa6bb5e9e90a694c0136f197f184e0e388c73063eb89e4dd6519fe52bbfe65",
+      "bothArmsReadSource": true,
+      "tokenDeltaBMinusA": -4419,
+      "callDeltaBMinusA": -1
+    },
+    {
+      "pairId": "F02-original-2",
+      "initialPayloadIdentical": true,
+      "initialPayloadHash": "1141d63e552c797af8746e0ac54c11fecaebc0675225d5d32386accdb1426c7f",
+      "bothArmsReadSource": true,
+      "tokenDeltaBMinusA": -1135,
+      "callDeltaBMinusA": 0
+    },
+    {
+      "pairId": "F02-original-3",
+      "initialPayloadIdentical": true,
+      "initialPayloadHash": "b8dd394c830558b5d596ff5f15e12122a925bed2e3cf0c3f6e445172bf2493ac",
+      "bothArmsReadSource": true,
+      "tokenDeltaBMinusA": 23,
+      "callDeltaBMinusA": 0
+    },
+    {
+      "pairId": "F02-prefix-lf-1",
+      "initialPayloadIdentical": true,
+      "initialPayloadHash": "39717b3687b61e504cc5cdf4d267915533ff103ef6fef62f0e94f7bb34380738",
+      "bothArmsReadSource": true,
+      "tokenDeltaBMinusA": 7085,
+      "callDeltaBMinusA": 1
+    },
+    {
+      "pairId": "F02-prefix-lf-2",
+      "initialPayloadIdentical": true,
+      "initialPayloadHash": "4ca906db92c3137ecd77f4f29bca508f43713141ceb3729d9c5ef3fa45195b9f",
+      "bothArmsReadSource": true,
+      "tokenDeltaBMinusA": 71,
+      "callDeltaBMinusA": 0
+    },
+    {
+      "pairId": "F02-prefix-lf-3",
+      "initialPayloadIdentical": true,
+      "initialPayloadHash": "1b4c7db0b1865a0620f0cf362a1e06466058d6dacc9664ee052a570b65582fe8",
+      "bothArmsReadSource": true,
+      "tokenDeltaBMinusA": -6577,
+      "callDeltaBMinusA": -1
+    },
+    {
+      "pairId": "F02-prefix-crlf-1",
+      "initialPayloadIdentical": true,
+      "initialPayloadHash": "7c661915f92e07845417d894ccfcfa95b906bd0f34f8c3bcc4af4243343016a8",
+      "bothArmsReadSource": true,
+      "tokenDeltaBMinusA": 192,
+      "callDeltaBMinusA": 0
+    },
+    {
+      "pairId": "F02-prefix-crlf-2",
+      "initialPayloadIdentical": true,
+      "initialPayloadHash": "bb063b79cffd8cfdbf502da9dbcd6856ee98b8bc4740e9a19f11c9ef772f99e7",
+      "bothArmsReadSource": true,
+      "tokenDeltaBMinusA": 106,
+      "callDeltaBMinusA": 0
+    },
+    {
+      "pairId": "F02-prefix-crlf-3",
+      "initialPayloadIdentical": true,
+      "initialPayloadHash": "eab11583128a57d270f7de8a2e189ad5d6135dae8a9ef5b782ccdbf4bbc0c0d2",
+      "bothArmsReadSource": true,
+      "tokenDeltaBMinusA": -6784,
+      "callDeltaBMinusA": -1
+    }
+  ],
+  "sourceUnchanged": true
+}

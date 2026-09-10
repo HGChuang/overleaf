@@ -1,0 +1,101 @@
+{
+  "id": "L1-24",
+  "family": "duplicate-crlf-block",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 699,
+      "output": 126,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 65,
+      "totalTokens": 5945,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2224,
+      "output": 547,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 304,
+      "totalTokens": 6867,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 1451,
+      "output": 59,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7142,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 2245,
+      "output": 212,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7577,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 27531,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 16634,
+  "conversationId": "L1-24",
+  "answer": "补丁已提交并通过编译验证。\n\n**改动摘要**（`main.tex`，patch `patch_29b9afd688a9670d78296399`）：\n- **Replication 块**（`\\section{Replication}` 后的 verbatim）：`score: 91.2` → `score: 94.5`，`samples: 12` 保持不变。\n- **Main 块**（`\\section{Main}` 后的 verbatim）：未改动，仍为 `score: 91.2`。\n- 通过将 `oldText` 锚定到 `\\section{Replication}` 使匹配唯一，只命中目标块。\n- CRLF 行尾已在补丁中逐字保留（`\\r\\n` 未改变）。\n- 编译结果：`verificationStatus=passed`，0 错误，0 警告。\n\n请在右侧预览中确认并 Accept 该补丁；接受后即应用到源文件。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-original-3",
+    "message": {
+      "role": "assistant",
+      "content": "项目里有两个表格的标题都写着 `Main results`：\n\n- `main.tex` 第 10 行：`\\caption{Main results}\\label{tab:main}`\n- `main.tex` 第 19 行：`\\caption{Main results}\\label{tab:replication}`\n\n您强调\"只改我指的那一个\"，但当前没有选中文本，无法判断您指的是哪一个。\n\n```latex\n% 请问要改哪一个：\\label{tab:main}（第 10 行）还是 \\label{tab:replication}（第 19 行）？\n```\n\n确认后我立即提交修改。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

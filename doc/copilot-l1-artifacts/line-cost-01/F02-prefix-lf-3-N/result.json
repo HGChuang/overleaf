@@ -1,0 +1,81 @@
+{
+  "id": "F02-prefix-lf-3-N",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "N",
+  "pairId": "F02-prefix-lf-3",
+  "variant": "prefix-lf",
+  "expectedLocations": {
+    "tab:main": 13,
+    "tab:replication": 22
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 482,
+      "output": 234,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 159,
+      "totalTokens": 6092,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2338,
+      "output": 118,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 72,
+      "totalTokens": 6552,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 2895,
+      "output": 331,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 105,
+      "totalTokens": 7322,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19966,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 10747,
+  "conversationId": "F02-prefix-lf-3",
+  "answer": "项目里共有 **两个** 标题为 \"Main results\" 的表格，都位于 `main.tex`（唯一的源文件）。按你的要求，先列出两个候选，等你确认后再改：\n\n| 候选 | 标签 (label) | 文件路径 | caption 所在行号 |\n|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** |\n| ② | `tab:replication` | `main.tex` | **第 22 行** |\n\n两个表格内容目前完全相同（Baseline 91.2 / Ours 94.5），仅 label 和位置不同。当前源码：\n\n- 第 13 行：`\\caption{Main results}\\label{tab:main}`\n- 第 22 行：`\\caption{Main results}\\label{tab:replication}`\n\n请确认要改哪一个（例如「改 ① tab:main」或「改 ② tab:replication」），我随后只对那一个提交修改。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

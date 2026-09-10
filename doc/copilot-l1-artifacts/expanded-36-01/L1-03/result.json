@@ -1,0 +1,101 @@
+{
+  "id": "L1-03",
+  "family": "cross-file-label",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 1795,
+      "output": 171,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 58,
+      "totalTokens": 6062,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 1610,
+      "output": 396,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 133,
+      "totalTokens": 7126,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 2288,
+      "output": 103,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 9,
+      "totalTokens": 7511,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 3628,
+      "output": 167,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 14,
+      "totalTokens": 7891,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 28590,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 12621,
+  "conversationId": "L1-03",
+  "answer": "✅ 修改完成，候选补丁编译通过（`verificationStatus=passed`，0 错误、0 警告）。\n\n**改动内容**（2 处，节标题 \"Method\" 与其余源码未动）：\n\n| 文件 | 行 | 修改 |\n|---|---|---|\n| `sections/method.tex` | 1 | `\\label{sec:method}` → `\\label{sec:approach}` |\n| `main.tex` | 4 | `\\ref{sec:method}` → `\\ref{sec:approach}` |\n\n项目中 `sec:method` 仅此两处，已全部同步。请在编辑器内审阅内联 diff 并接受补丁后生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

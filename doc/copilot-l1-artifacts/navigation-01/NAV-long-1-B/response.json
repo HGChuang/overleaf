@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "NAV-long-1",
+    "message": {
+      "role": "assistant",
+      "content": "完成。汇总如下：\n\n**决策依据（归档原始证据）** — prior-decision.tex 第 25–26 行：\n- `% FINAL CAPTION: Robustness results`（最终标题决策）\n- `% Preserve 91.2 percent, 12 samples, and negation.`（须保留数据与否定结论）\n- 第 1–24 行均为 `% Earlier discussion, not the final decision.`，不作为编辑依据。\n\n**候选补丁**（patch_712096a8bedad0a6a281a265，单 hunk）：\n```latex\n- \\section{Draft}\n+ \\section{Robustness results}\n```\n正文 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.` 未改动——91.2%、12 samples、以及否定结论（we do not claim significance）全部保留。\n\n**编译验证**：`verificationStatus=passed`，errorCount=0，warningCount=0（candidateHash 2e5f34…）。\n\n补丁尚处于 *proposed* 状态，需你在预览中 Accept 后才会写入源码。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_712096a8bedad0a6a281a265",
+            "title": "按 prior-decision.tex 的 FINAL CAPTION 决策，将标题 \\section{Draft} 改为 \\section{Robustness results}；数据与否定结论未动。",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Robustness results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

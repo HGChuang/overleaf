@@ -1,0 +1,48 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:83afbe1c7a1a16e8798d2e94:patch_faaedc40e94fc3bc32b6c43f",
+      "conversationId": "L1-07",
+      "createdAt": "2026-09-08T18:54:59.450Z",
+      "documentHeads": {
+        "main.tex": {
+          "hash": "e58a9549519b218d588a98ef3b818577981973e0a488860b92d3ec35d9af0f46",
+          "version": 1
+        },
+        "refs.tex": {
+          "hash": "378d758271452cb32a3dc83a11aed174e95f972b9783c370fe69391b8496919d",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "main.tex",
+          "line": 3,
+          "oldText": "We compare with the baseline~\\cite{smith2024}.",
+          "newText": "We compare with the baseline~\\cite{smithBaseline}.",
+          "index": 0,
+          "docId": "bcd03b7c01ee3896820ef394",
+          "baselineHash": "e58a9549519b218d588a98ef3b818577981973e0a488860b92d3ec35d9af0f46",
+          "baselineVersion": 1,
+          "status": "proposed"
+        },
+        {
+          "file": "refs.tex",
+          "line": 2,
+          "oldText": "\\bibitem{smith2024} A. Smith. A synthetic baseline. 2024.",
+          "newText": "\\bibitem{smithBaseline} A. Smith. A synthetic baseline. 2024.",
+          "index": 1,
+          "docId": "0d9be045784945050a652ddf",
+          "baselineHash": "378d758271452cb32a3dc83a11aed174e95f972b9783c370fe69391b8496919d",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_faaedc40e94fc3bc32b6c43f",
+      "projectId": "83afbe1c7a1a16e8798d2e94",
+      "snapshotId": "ca09928e5fd079ba879bbc2d87bc5e27d64459f74e81f5f7373bf93a449e8785",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "verifications": []
+}

@@ -1,0 +1,8 @@
+{
+  "files": {
+    "main.tex": "\\documentclass{article}\n\\input{defs}\n\\begin{document}\n\\input{abstract}\n\\input{conclusion}\n$\\samplesize$ samples.\n\\end{document}\n",
+    "defs.tex": "\\newcommand{\\samplesize}{16}\n",
+    "abstract.tex": "Current experiment uses 16 samples. Control uses 12 samples.\n",
+    "conclusion.tex": "Our current experiment retains 16 samples.\n"
+  }
+}

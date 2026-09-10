@@ -1,0 +1,101 @@
+{
+  "id": "L1-08",
+  "family": "constrained-prose",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 1812,
+      "output": 116,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 70,
+      "totalTokens": 6024,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 1165,
+      "output": 321,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 176,
+      "totalTokens": 6606,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 639,
+      "output": 85,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 25,
+      "totalTokens": 6868,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 2987,
+      "output": 148,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7231,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 26729,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 13569,
+  "conversationId": "L1-08",
+  "answer": "已提交补丁 `patch_e6eca3851a4d896b37f16cb5`，候选编译通过（verificationStatus=passed，0 错误 0 警告）。\n\n**修改内容**（results.tex 第一段，仅一处）：\n\n- 前：`In this study, we report that accuracy is 91.2\\% on 12 samples.`\n- 后：`Accuracy is 91.2\\% on 12 samples.`\n\n保留了 `91.2\\%`、`12 samples`、否定结论 `We do not claim statistical significance` 及 citation `\\cite{smith2024}`，未新增任何事实。请在预览中 Accept 后生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

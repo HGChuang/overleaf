@@ -1,0 +1,121 @@
+{
+  "id": "L1-30",
+  "family": "oversize-live-receipt",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 5,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 13787,
+      "output": 471,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 392,
+      "totalTokens": 18354,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 13377,
+      "output": 340,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 227,
+      "totalTokens": 18837,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 972,
+      "output": 346,
+      "cacheRead": 18432,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 153,
+      "totalTokens": 19750,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 3529,
+      "output": 108,
+      "cacheRead": 16384,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 16,
+      "totalTokens": 20021,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 16142,
+      "output": 255,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 26,
+      "totalTokens": 20493,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 97455,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 27276,
+  "conversationId": "L1-30",
+  "answer": "完成。汇总如下：\n\n1. **目录核对**：`list_project_files` 回执被归档，已通过 `read_context_history` 读回原始回执首页，确认根文档为 `main.tex`（另含 `supplement/record-000…079` 归档源文件，均未改动）。\n2. **目标定位**：`main.tex` 第 3 行 `\\section{Draft}`（全文唯一匹配）。\n3. **候选补丁**：`patch_f5116b7d3cde6a981af5757d` — 仅将 `\\section{Draft}` → `\\section{Final}`；正文 `Protected 91.2 percent.`、文档结构与注释均保留原样。\n4. **编译验证**：`verificationStatus = passed`，`errorCount = 0`，`warningCount = 0`（候选 `d00aacb3…`）。\n\n该补丁现处于 proposed 状态，等待你在内联 diff 预览中接受后才会真正应用到源码。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

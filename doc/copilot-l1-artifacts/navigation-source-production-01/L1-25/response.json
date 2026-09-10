@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-25",
+    "message": {
+      "role": "assistant",
+      "content": "✅ 候选补丁已提交并编译验证通过。\n\n**补丁**（`patch_96f3e5f21241b9293a1013a9`，main.tex 第 3 行）：\n- 旧：`\\section{Draft}`\n- 新：`\\section{Sensitivity results}`\n\n**编译结果**：`verificationStatus=passed`，errorCount=0，warningCount=0。\n\n**说明**：\n- 依据为归档中 prior-decision.tex 的原始证据（非摘要）：`% FINAL CAPTION: Sensitivity results` 与 `% Preserve 91.2 percent, 12 samples, and negation.`\n- 仅改标题；第 4 行的数据（`91.2\\%`、`12 samples`）与否定结论（`We do not claim significance.`）原样保留，其余源码、注释、引用均未改动。\n- 该补丁仍处于 `proposed` 状态，需你在内联 diff 预览中 Accept 后才真正生效；接受后如需再编译确认可随时告诉我。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_96f3e5f21241b9293a1013a9",
+            "title": "按 prior-decision.tex 的 FINAL CAPTION 将 main.tex 的 Draft 标题改为 Sensitivity results，保留数据与否定结论",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Sensitivity results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

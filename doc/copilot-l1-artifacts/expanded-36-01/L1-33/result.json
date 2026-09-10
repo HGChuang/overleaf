@@ -1,0 +1,121 @@
+{
+  "id": "L1-33",
+  "family": "window-constraint-retention",
+  "effectiveWindow": 65536,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 5,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 4840,
+      "output": 2954,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 2792,
+      "totalTokens": 12914,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2208,
+      "output": 118,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 72,
+      "totalTokens": 6422,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 1365,
+      "output": 185,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 41,
+      "totalTokens": 6926,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 930,
+      "output": 57,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7131,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 1189,
+      "output": 208,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 20,
+      "totalTokens": 7541,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 40934,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 37010,
+  "conversationId": "L1-33",
+  "answer": "完成。修改已作为候选补丁提交并通过编译验证：\n\n- **补丁 ID**：`patch_1343c8043cc1094746deb239`\n- **改动**：main.tex 第 3 行 `\\section{Draft}` → `\\section{Evaluation}`（唯一改动，其他字节不变）\n- **编译验证**：`verificationStatus=passed`，errorCount=0，warningCount=0\n\n按要求原样保留的内容均未触碰：`91.2\\%`、`12 samples`、否定结论 `We do not claim statistical significance`、`statistical` 限定、citation 键 `smith2024` 及文献条目 `A. Smith. Baseline. 2024.`。\n\n补丁仍处于 `proposed` 状态，需要你在编辑器中接受/拒绝该 hunk 后才会真正写入源文件。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

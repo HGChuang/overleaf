@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-02",
+    "message": {
+      "role": "assistant",
+      "content": "已提交补丁 `patch_e9ae2e260f39026d08a30e18`：\n\n- `main.tex` 第 10 行：`\\caption{Main results}` → `\\caption{Ablation results}`\n- 保留了表格数据、`\\label{tab:main}` 及其余全部源码不变。\n\n请在编辑器中审阅并接受该修改（内联差异预览会以删除线+灰色显示改动）。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_e9ae2e260f39026d08a30e18",
+            "title": "将 tab:main 表格标题改为 Ablation results",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 10,
+                "oldText": "\\caption{Main results}\\label{tab:main}",
+                "newText": "\\caption{Ablation results}\\label{tab:main}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

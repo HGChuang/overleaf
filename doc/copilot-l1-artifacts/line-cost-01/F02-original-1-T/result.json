@@ -1,0 +1,81 @@
+{
+  "id": "F02-original-1-T",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "T",
+  "pairId": "F02-original-1",
+  "variant": "original",
+  "expectedLocations": {
+    "tab:main": 10,
+    "tab:replication": 19
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1741,
+      "output": 119,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 59,
+      "totalTokens": 5956,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2053,
+      "output": 138,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 62,
+      "totalTokens": 6287,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 6716,
+      "output": 759,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 626,
+      "totalTokens": 7475,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19718,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 10875,
+  "conversationId": "F02-original-1",
+  "answer": "项目里有两个表格的标题都是 “Main results”，内容也完全相同，唯一区别是标签：\n\n- 第 3–11 行：`\\caption{Main results}\\label{tab:main}`（第一个表）\n- 第 12–20 行：`\\caption{Main results}\\label{tab:replication}`（第二个表）\n\n你要求“只改我指的那一个”，但当前没有选中文本，我无法判断你指的是哪一个。请确认一下：\n\n```latex\n% 请指出要改哪一个：\\label{tab:main} 还是 \\label{tab:replication}？\n```",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

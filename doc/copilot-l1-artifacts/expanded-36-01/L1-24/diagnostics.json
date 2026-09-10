@@ -1,0 +1,77 @@
+{
+  "eventHead": 9,
+  "coveredThroughSeq": -1,
+  "projectionThroughSeq": 8,
+  "generation": 0,
+  "checkpoint": null,
+  "paperIndex": {
+    "snapshotId": "6f22bf2cf86058145b72307f718bfe2f9f04109afd89dce5d7c3b7712f1c8872",
+    "sourceWindows": 0,
+    "reviewedWindows": 0,
+    "staleReviews": 0,
+    "semanticStatus": "not_built"
+  },
+  "immutablePrefixHash": null,
+  "metrics": [
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 30867,
+      "reportedInput": 7365,
+      "ordinaryInput": 2245,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "output": 212,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 4063,
+      "ttftMs": 2404,
+      "reason": null,
+      "occurredAt": "2026-09-08T19:00:35.250Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 29565,
+      "reportedInput": 7083,
+      "ordinaryInput": 1451,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "output": 59,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 2502,
+      "ttftMs": 2184,
+      "reason": null,
+      "occurredAt": "2026-09-08T19:00:30.098Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 25911,
+      "reportedInput": 6320,
+      "ordinaryInput": 2224,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 547,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 4105,
+      "ttftMs": 802,
+      "reason": null,
+      "occurredAt": "2026-09-08T19:00:27.495Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 23542,
+      "reportedInput": 5819,
+      "ordinaryInput": 699,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "output": 126,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 3413,
+      "ttftMs": 2452,
+      "reason": null,
+      "occurredAt": "2026-09-08T19:00:23.311Z"
+    }
+  ]
+}

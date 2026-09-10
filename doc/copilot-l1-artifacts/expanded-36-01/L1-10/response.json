@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "L1-10",
+    "message": {
+      "role": "assistant",
+      "content": "已检查 `main.tex`（第 10 行）：\n\n```latex\n\\caption{Ablation results}\\label{tab:main}\n```\n\n表格 `tab:main` 的标题**已经是 \"Ablation results\"**，符合目标，因此无需提出补丁。\n\n（表格内容：Baseline 91.2 / Ours 94.5，位于第 6–8 行，未受影响。）",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

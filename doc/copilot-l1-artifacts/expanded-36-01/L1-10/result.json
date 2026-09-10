@@ -1,0 +1,61 @@
+{
+  "id": "L1-10",
+  "family": "already-satisfied",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 1693,
+      "output": 88,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 42,
+      "totalTokens": 5877,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 1101,
+      "output": 122,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 32,
+      "totalTokens": 6343,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 12220,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 4718,
+  "conversationId": "L1-10",
+  "answer": "已检查 `main.tex`（第 10 行）：\n\n```latex\n\\caption{Ablation results}\\label{tab:main}\n```\n\n表格 `tab:main` 的标题**已经是 \"Ablation results\"**，符合目标，因此无需提出补丁。\n\n（表格内容：Baseline 91.2 / Ours 94.5，位于第 6–8 行，未受影响。）",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

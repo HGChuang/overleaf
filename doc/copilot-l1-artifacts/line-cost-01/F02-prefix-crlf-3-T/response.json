@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-crlf-3",
+    "message": {
+      "role": "assistant",
+      "content": "文件已读完。`main.tex`（共 27 行）中有两个 caption 都为 **Main results** 的表格，分别是：\n\n| 候选 | 标签 | 文件路径 | caption 所在行号 |\n|------|------|----------|------------------|\n| ① | `tab:main` | `main.tex` | **第 15 行**：`\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 24 行**：`\\caption{Main results}\\label{tab:replication}` |\n\n请确认要改哪一个（例如「改 ①」或「改 `tab:replication` 那个」），我再提交对应的 `submit_patch`。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

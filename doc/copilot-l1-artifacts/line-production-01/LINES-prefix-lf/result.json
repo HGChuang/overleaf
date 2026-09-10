@@ -1,0 +1,55 @@
+{
+  "id": "LINES-prefix-lf",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 689,
+      "output": 127,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 81,
+      "totalTokens": 5936,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 1260,
+      "output": 417,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 184,
+      "totalTokens": 6797,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 12733,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 7773,
+  "conversationId": "conv_ffbfffff-b0e3-40ed-be38-be6a2fb3b236",
+  "answer": "文件 `main.tex` 中有两个标题完全相同的表格（caption 都是 `Main results`）。按照你的要求，我先列出两个候选，不直接修改：\n\n## 候选 1\n- **标签 (label)：** `tab:main`\n- **文件路径：** `main.tex`\n- **caption 行号：** 第 **13** 行\n- 对应源码：`\\caption{Main results}\\label{tab:main}`\n\n## 候选 2\n- **标签 (label)：** `tab:replication`\n- **文件路径：** `main.tex`\n- **caption 行号：** 第 **22** 行\n- 对应源码：`\\caption{Main results}\\label{tab:replication}`\n\n两个表格的内容完全一样，只能靠 label 区分：第 13 行是 `tab:main`，第 22 行是 `tab:replication`。\n\n请确认要改哪一个（例如「改 `tab:main`」或「改第 13 行那个」），我再提交修改。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

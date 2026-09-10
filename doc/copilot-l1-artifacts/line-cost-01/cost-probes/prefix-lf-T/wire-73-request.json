@@ -1,0 +1,23 @@
+{
+  "url": "https://ark.cn-beijing.volces.com/api/coding/v3/chat/completions",
+  "body": {
+    "model": "deepseek-v4-flash-ga-260731",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Reply OK."
+      },
+      {
+        "role": "user",
+        "content": "{\"found\":true,\"path\":\"main.tex\",\"sourceHash\":\"22d72ce35a9469af1ceaa308ce2af630c5e9b45c5e548d0e7e9e7ae5bb17f637\",\"evidenceId\":\"a4db5a797ffe639b72054ab8d9d2342fda135ffadd3c3ba6d288d46f172fe949\",\"consistency\":\"immutable-snapshot\",\"snapshotId\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"docId\":\"bbbbbbbbbbbbbbbbbbbbbbbb\",\"version\":1,\"startByte\":0,\"endByte\":448,\"startLine\":1,\"totalLines\":25,\"nextOffsetBytes\":null,\"rangeEndByte\":448,\"fileBytes\":448,\"lines\":[[1,\"% Synthetic location fixture.\"],[2,\"% Preserve manuscript source.\"],[3,\"\"],[4,\"\\\\documentclass{article}\"],[5,\"\\\\begin{document}\"],[6,\"\\\\begin{table}[h]\"],[7,\"\\\\centering\"],[8,\"\\\\begin{tabular}{lr}\"],[9,\"Method & Score \\\\\\\\\"],[10,\"Baseline & 91.2 \\\\\\\\\"],[11,\"Ours & 94.5\"],[12,\"\\\\end{tabular}\"],[13,\"\\\\caption{Main results}\\\\label{tab:main}\"],[14,\"\\\\end{table}\"],[15,\"\\\\begin{table}[h]\"],[16,\"\\\\centering\"],[17,\"\\\\begin{tabular}{lr}\"],[18,\"Method & Score \\\\\\\\\"],[19,\"Baseline & 91.2 \\\\\\\\\"],[20,\"Ours & 94.5\"],[21,\"\\\\end{tabular}\"],[22,\"\\\\caption{Main results}\\\\label{tab:replication}\"],[23,\"\\\\end{table}\"],[24,\"\\\\end{document}\"],[25,\"\"]]}"
+      }
+    ],
+    "stream": true,
+    "stream_options": {
+      "include_usage": true
+    },
+    "max_tokens": 1,
+    "temperature": 0
+  },
+  "at": "2026-09-08T14:13:47.457Z"
+}

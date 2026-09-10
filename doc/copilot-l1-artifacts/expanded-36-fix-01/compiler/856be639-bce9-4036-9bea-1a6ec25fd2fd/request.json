@@ -1,0 +1,5 @@
+{
+  "files": {
+    "main.tex": "\\documentclass{article}\n\\begin{document}\n\\begin{table}[h]\n\\caption{Results}\\label{tab:first}\nA\n\\end{table}\n\\begin{table}[h]\n\\caption{Results}\\label{tab:second}\nB\n\\end{table}\n\\end{document}\n"
+  }
+}

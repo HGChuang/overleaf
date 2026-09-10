@@ -1,0 +1,93 @@
+{
+  "id": "LINES-crlf-literal-edit",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1728,
+      "output": 67,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 21,
+      "totalTokens": 5891,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2111,
+      "output": 948,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 664,
+      "totalTokens": 7155,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 1287,
+      "output": 108,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 12,
+      "totalTokens": 7539,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "input": 2639,
+      "output": 344,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 31,
+      "totalTokens": 8103,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 28688,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 24852,
+  "conversationId": "conv_f564ff65-3aec-4209-b48e-126a4554e464",
+  "answer": "完成。补丁已提交并通过编译验证。\n\n## 结果\n\n**提交的补丁**（`patch_3c1b1787b1a0a2ae096abaed`，main.tex，2 个 hunk）：\n\n| 位置 | 原文 | 改后 |\n|------|------|------|\n| verbatim 第 1 行 | `1: Measured accuracy is 91.2 percent.` | `1: Measured accuracy is 94.5 percent.` |\n| verbatim 第 2 行 | `2: We retained 12 samples.` | `2: We retained 16 samples.` |\n\n**编译验证**：`verificationStatus=passed`，`errorCount=0`，`warningCount=0`。\n\n**说明**：\n- 保留了每行开头的 `1: ` / `2: ` 前缀（它们是 verbatim 的内容，不是行号）。\n- 仅替换两处数字，行内其余文本、CRLF 换行、`\\begin{verbatim}`/`\\end{verbatim}` 及文件其他全部源码均未改动。\n- 请在编辑器的内联 diff 预览中 **Accept** 该补丁后生效；目前只是提议状态，尚未写入源文件。\n\n补充一句：这些数字位于 verbatim 字面文本中，改后仍是“字面量”而非测量结果声明，因此无诚实性/一致性风险。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

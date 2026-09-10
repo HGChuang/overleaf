@@ -1,0 +1,13 @@
+{
+  "id": "F-NAV-02",
+  "coreFailure": "NAV-late-long-2-B",
+  "evidence": {
+    "wire": "wire-109-response.txt",
+    "name": "todo_write",
+    "arguments": "{\"todos\": [{\"content\": \"Re-read archived prior-decision.tex evidence (FINAL CAPTION)\", \"status\": \"completed\"}, {\"content\": \"Read current main.tex source\", \"status\": \"completed\"}, {\"content\": \"Submit patch: \\section{Draft} -> \\section{Held-out results}\", \"status\": \"in_progress\"}, {\"content\": \"Compile-verify the candidate patch\", \"status\": \"pending\"}]}",
+    "parseError": "Invalid \\escape: line 1 column 207 (char 206)"
+  },
+  "mechanism": "openaiCompatStream.finishBlock strict JSON.parse throws; agent-loop exits error before tool results. Not an HTTP outage.",
+  "causalityLimit": "Failure follows successful navigation. Cannot establish that description has no effect on sampled model output; retain in task-success denominator.",
+  "productionFix": "Not changed in navigation experiment."
+}

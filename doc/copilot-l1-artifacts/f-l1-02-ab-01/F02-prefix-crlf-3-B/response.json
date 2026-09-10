@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-crlf-3",
+    "message": {
+      "role": "assistant",
+      "content": "已在项目源文件中核对完毕。`main.tex` 里确实有两个 caption 都是 \"Main results\" 的表格，两个候选如下：\n\n| 候选 | 标签 | 文件路径 | caption 行号 | 内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | 第 15 行 | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | 第 24 行 | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格的内容完全相同（Baseline 91.2 / Ours 94.5），仅标签不同。\n\n请确认要改哪一个（例如 \"改 ①\" 或 \"改 tab:main\"），我再提交补丁，把对应的 caption 改为 **Ablation results**。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

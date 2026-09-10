@@ -1,0 +1,98 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:01377d47421e7b1cf47602fc:patch_56ac8e2de6c2a58b1787c639",
+      "conversationId": "L1-18",
+      "createdAt": "2026-09-08T18:58:27.710Z",
+      "documentHeads": {
+        "main.tex": {
+          "hash": "f2f118007444d197e813f57b08b2b5d3825596693f34b4ad038d96dc304c7b0c",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "main.tex",
+          "line": 1,
+          "oldText": "\\documentclass{article}\n\\begin{document}",
+          "newText": "\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}",
+          "index": 0,
+          "docId": "343da4522a96ab8e0c358c86",
+          "baselineHash": "f2f118007444d197e813f57b08b2b5d3825596693f34b4ad038d96dc304c7b0c",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_56ac8e2de6c2a58b1787c639",
+      "projectId": "01377d47421e7b1cf47602fc",
+      "snapshotId": "861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateVerification": {
+        "verificationId": "aaaaaaaaaaaaaaaaaaaaaaaa:01377d47421e7b1cf47602fc:861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681:patch_56ac8e2de6c2a58b1787c639:compile:call_37tayhxylifwgd04wwi2rown",
+        "snapshotId": "861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681",
+        "patchId": "patch_56ac8e2de6c2a58b1787c639",
+        "candidateHash": "112d0ff3beed93f21e89f18cd542dc2417c3b5abba141a0f3af2b0cf26aac41c",
+        "status": "passed",
+        "errorCount": 0,
+        "warningCount": 0,
+        "verifiedAt": "2026-09-08T18:58:31.377Z"
+      }
+    }
+  ],
+  "verifications": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:01377d47421e7b1cf47602fc:861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681:snapshot:compile:call_uzop2s7duhkb3owf01yx9m47",
+      "kind": "compile",
+      "patchId": null,
+      "projectId": "01377d47421e7b1cf47602fc",
+      "snapshotId": "861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681",
+      "startedAt": "2026-09-08T18:58:20.286Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681",
+      "result": {
+        "status": "failure",
+        "snapshotId": "861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681",
+        "patchId": null,
+        "candidateHash": "861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681",
+        "manifestHash": "861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681",
+        "buildId": "509b4148-a088-4025-995f-d01ee5bc12b2",
+        "logComplete": true,
+        "errorCount": 1,
+        "errors": [
+          {
+            "file": "./equations.tex",
+            "line": 1,
+            "message": "LaTeX Error: Environment align undefined."
+          }
+        ],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-08T18:58:20.817Z"
+    },
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:01377d47421e7b1cf47602fc:861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681:patch_56ac8e2de6c2a58b1787c639:compile:call_37tayhxylifwgd04wwi2rown",
+      "kind": "compile",
+      "patchId": "patch_56ac8e2de6c2a58b1787c639",
+      "projectId": "01377d47421e7b1cf47602fc",
+      "snapshotId": "861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681",
+      "startedAt": "2026-09-08T18:58:30.647Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "112d0ff3beed93f21e89f18cd542dc2417c3b5abba141a0f3af2b0cf26aac41c",
+      "result": {
+        "status": "success",
+        "snapshotId": "861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681",
+        "patchId": "patch_56ac8e2de6c2a58b1787c639",
+        "candidateHash": "112d0ff3beed93f21e89f18cd542dc2417c3b5abba141a0f3af2b0cf26aac41c",
+        "manifestHash": "861b7bdc0e8862fb3b62cff4cd2512b46b584f3c39b40c287f7d5e9b9432a681",
+        "buildId": "dd8bd492-be4c-4406-ade2-f147b2581770",
+        "logComplete": true,
+        "errorCount": 0,
+        "errors": [],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-08T18:58:31.372Z"
+    }
+  ]
+}

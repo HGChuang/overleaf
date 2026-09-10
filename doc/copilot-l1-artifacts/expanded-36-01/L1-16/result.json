@@ -1,0 +1,123 @@
+{
+  "id": "L1-16",
+  "family": "citation-fanout",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [
+    "dependency evidence missing: main.tex"
+  ],
+  "mechanismCovered": false,
+  "calls": 5,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 2008,
+      "output": 213,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 152,
+      "totalTokens": 6317,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2517,
+      "output": 298,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 168,
+      "totalTokens": 6911,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 1521,
+      "output": 490,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 175,
+      "totalTokens": 8155,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 2430,
+      "output": 87,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 15,
+      "totalTokens": 8661,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 3755,
+      "output": 252,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 31,
+      "totalTokens": 9127,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 39171,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 21209,
+  "conversationId": "L1-16",
+  "answer": "编译验证通过 ✅\n\n**补丁** `patch_e61d2f98014cde69fbf9f8c0`（3 处 hunk，全部接受后生效）：\n\n| 文件 | 修改 |\n|---|---|\n| `intro.tex` | `\\cite{smith2024}` → `\\cite{smithBaseline}` |\n| `discussion.tex` | 多键引用 `\\cite{smith2024,jones2023}` → `\\cite{smithBaseline,jones2023}` |\n| `refs.tex` | `\\bibitem{smith2024}` → `\\bibitem{smithBaseline}`（条目内容 `A. Smith. Baseline. 2024.` 未变） |\n\n**编译结果**：`verificationStatus=passed`，`errorCount=0`，`warningCount=0`。\n\n其他键（`jones2023`）、文献信息、注释和数值均未改动。请在预览中确认并接受各 hunk 后生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

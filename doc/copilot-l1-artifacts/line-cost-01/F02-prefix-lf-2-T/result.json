@@ -1,0 +1,81 @@
+{
+  "id": "F02-prefix-lf-2-T",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "T",
+  "pairId": "F02-prefix-lf-2",
+  "variant": "prefix-lf",
+  "expectedLocations": {
+    "tab:main": 13,
+    "tab:replication": 22
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 481,
+      "output": 120,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 60,
+      "totalTokens": 5977,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2084,
+      "output": 132,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 86,
+      "totalTokens": 6312,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 612,
+      "output": 267,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 50,
+      "totalTokens": 7023,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19312,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 11075,
+  "conversationId": "F02-prefix-lf-2",
+  "answer": "项目里共有两个 caption 都是 \"Main results\" 的表格，都在 `main.tex`。两个候选如下：\n\n| 候选 | 标签 | 文件 | caption 行号 | 所在 table |\n|---|---|---|---|---|\n| A | `tab:main` | `main.tex` | **第 13 行** | 第 6–14 行的 `table`（内容：Baseline 91.2 / Ours 94.5） |\n| B | `tab:replication` | `main.tex` | **第 22 行** | 第 15–23 行的 `table`（内容：与 A 相同） |\n\n对应源码：\n\n- 第 13 行：`\\caption{Main results}\\label{tab:main}`\n- 第 22 行：`\\caption{Main results}\\label{tab:replication}`\n\n请确认要改哪一个（A 或 B），我再提交只改那一个 caption 的补丁。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

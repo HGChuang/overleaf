@@ -1,0 +1,62 @@
+{
+  "id": "F02-original-2-D",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "D",
+  "pairId": "F02-original-2",
+  "variant": "original",
+  "expectedLocations": {
+    "tab:main": 10,
+    "tab:replication": 19
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 5824,
+      "output": 124,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 47,
+      "totalTokens": 5948,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2581,
+      "output": 607,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 492,
+      "totalTokens": 7284,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 13232,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 13753,
+  "conversationId": "F02-original-2",
+  "answer": "项目里有两张表格的标题都是 \"Main results\"，而你的选中内容为空，我无法确定你指的是哪一张：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一张表）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二张表）\n\n% 请告诉我改哪一张：第一张（tab:main）还是第二张（tab:replication）？\n\n收到你的确认后我会只修改那一处。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

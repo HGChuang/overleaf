@@ -1,0 +1,234 @@
+{
+  "complete": true,
+  "pairs": 6,
+  "totals": {
+    "A": {
+      "corePassed": 6,
+      "evidencePassed": 6,
+      "calls": 45,
+      "offTarget": 12,
+      "duplicate": 0,
+      "targetPages": 14,
+      "historyAttempts": 26,
+      "namedAttempts": 0,
+      "input": 455031,
+      "output": 16264,
+      "missing": 0,
+      "elapsedMs": 202165
+    },
+    "D": {
+      "corePassed": 6,
+      "evidencePassed": 6,
+      "calls": 37,
+      "offTarget": 0,
+      "duplicate": 0,
+      "targetPages": 14,
+      "historyAttempts": 14,
+      "namedAttempts": 14,
+      "input": 357219,
+      "output": 12670,
+      "missing": 0,
+      "elapsedMs": 161296
+    }
+  },
+  "details": [
+    {
+      "pairId": "NAVS-short-1",
+      "A": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 8,
+        "namedAttempts": 0,
+        "offTarget": 4,
+        "duplicate": 0,
+        "targetPages": 1,
+        "historyAttempts": 5,
+        "input": 78124,
+        "output": 2448,
+        "missing": 0,
+        "elapsedMs": 29404
+      },
+      "D": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 5,
+        "namedAttempts": 1,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 1,
+        "historyAttempts": 1,
+        "input": 48722,
+        "output": 2307,
+        "missing": 0,
+        "elapsedMs": 25037
+      },
+      "firstWireOnlyHistoryInterface": true,
+      "seedIdentical": true
+    },
+    {
+      "pairId": "NAVS-short-2",
+      "A": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 7,
+        "namedAttempts": 0,
+        "offTarget": 3,
+        "duplicate": 0,
+        "targetPages": 1,
+        "historyAttempts": 4,
+        "input": 72895,
+        "output": 2802,
+        "missing": 0,
+        "elapsedMs": 31018
+      },
+      "D": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 4,
+        "namedAttempts": 1,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 1,
+        "historyAttempts": 1,
+        "input": 36517,
+        "output": 1757,
+        "missing": 0,
+        "elapsedMs": 19850
+      },
+      "firstWireOnlyHistoryInterface": true,
+      "seedIdentical": true
+    },
+    {
+      "pairId": "NAVS-long-1",
+      "A": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 6,
+        "namedAttempts": 0,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 3,
+        "input": 57015,
+        "output": 2797,
+        "missing": 0,
+        "elapsedMs": 34155
+      },
+      "D": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 6,
+        "namedAttempts": 3,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 3,
+        "input": 56174,
+        "output": 1853,
+        "missing": 0,
+        "elapsedMs": 30592
+      },
+      "firstWireOnlyHistoryInterface": true,
+      "seedIdentical": true
+    },
+    {
+      "pairId": "NAVS-long-2",
+      "A": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 8,
+        "namedAttempts": 0,
+        "offTarget": 3,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 6,
+        "input": 79910,
+        "output": 2270,
+        "missing": 0,
+        "elapsedMs": 26331
+      },
+      "D": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 8,
+        "namedAttempts": 3,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 3,
+        "input": 77896,
+        "output": 2139,
+        "missing": 0,
+        "elapsedMs": 26732
+      },
+      "firstWireOnlyHistoryInterface": true,
+      "seedIdentical": true
+    },
+    {
+      "pairId": "NAVS-late-long-1",
+      "A": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 10,
+        "namedAttempts": 0,
+        "offTarget": 2,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 5,
+        "input": 110767,
+        "output": 3638,
+        "missing": 0,
+        "elapsedMs": 52926
+      },
+      "D": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 7,
+        "namedAttempts": 3,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 3,
+        "input": 70119,
+        "output": 2554,
+        "missing": 0,
+        "elapsedMs": 33157
+      },
+      "firstWireOnlyHistoryInterface": true,
+      "seedIdentical": true
+    },
+    {
+      "pairId": "NAVS-late-long-2",
+      "A": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 6,
+        "namedAttempts": 0,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 3,
+        "input": 56320,
+        "output": 2309,
+        "missing": 0,
+        "elapsedMs": 28331
+      },
+      "D": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 7,
+        "namedAttempts": 3,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 3,
+        "input": 67791,
+        "output": 2060,
+        "missing": 0,
+        "elapsedMs": 25928
+      },
+      "firstWireOnlyHistoryInterface": true,
+      "seedIdentical": true
+    }
+  ]
+}

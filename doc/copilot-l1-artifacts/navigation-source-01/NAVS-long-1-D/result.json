@@ -1,0 +1,166 @@
+{
+  "id": "NAVS-long-1-D",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "D",
+  "pairId": "NAVS-long-1",
+  "variant": "long",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 2,
+    "historyAttempts": 3,
+    "offTargetAttempts": 0,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 3,
+    "reads": [
+      {
+        "path": "prior-decision.tex"
+      },
+      {
+        "path": "prior-decision.tex",
+        "offset": 800
+      },
+      {
+        "offset": 1600,
+        "path": "prior-decision.tex"
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 6,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 2503,
+      "output": 488,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 392,
+      "totalTokens": 8111,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 3424,
+      "output": 172,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 107,
+      "totalTokens": 8972,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 506,
+      "output": 141,
+      "cacheRead": 8704,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 75,
+      "totalTokens": 9351,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 556,
+      "output": 702,
+      "cacheRead": 8960,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 429,
+      "totalTokens": 10218,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 1158,
+      "output": 59,
+      "cacheRead": 9216,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 10433,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 411,
+      "output": 291,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 22,
+      "totalTokens": 10942,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 58027,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 30592,
+  "conversationId": "NAVS-long-1",
+  "answer": "已完成。\n\n**归档证据（prior-decision.tex，原始工具证据）**\n- 第 1–24 行均为注释 `% Earlier discussion, not the final decision.`（旧记录，仅作决策证据）\n- 第 25–26 行为最终决策：\n  - `% FINAL CAPTION: Robustness results`\n  - `% Preserve 91.2 percent, 12 samples, and negation.`\n\n**提交的候选补丁**（`patch_6fb416d7921431b3069d60bf`）\n\n`main.tex` 第 3 行：\n- 旧：`\\section{Draft}`\n- 新：`\\section{Robustness results}`\n\n**编译验证**：`verificationStatus=passed`，`errorCount=0`，`warningCount=0`，candidateHash `2e5f3478…`。\n\n未改动的部分：第 4 行的数据 `91.2\\%`、`12 samples` 以及否定结论 `We do not claim significance.` 全部原样保留，无其他文件、注释、数值或引用被触碰。补丁仍处于 proposed 状态，需你在预览中接受后才会应用到源文件。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

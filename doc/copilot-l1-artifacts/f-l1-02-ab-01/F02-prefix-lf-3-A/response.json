@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-lf-3",
+    "message": {
+      "role": "assistant",
+      "content": "文件里确实有**两个**表格，标题都写着 `Main results`，无法凭\"标题\"区分。请确认要改哪一个。\n\n**候选 1**\n- 标签：`\\label{tab:main}`\n- 文件：`main.tex`\n- caption 所在行：**第 11 行**（`\\caption{Main results}\\label{tab:main}`）\n- 内容：Method/Score 表格，Baseline 91.2、Ours 94.5（第 5–11 行的第一个 `table` 环境）\n\n**候选 2**\n- 标签：`\\label{tab:replication}`\n- 文件：`main.tex`\n- caption 所在行：**第 20 行**（`\\caption{Main results}\\label{tab:replication}`）\n- 内容：Method/Score 表格，Baseline 91.2、Ours 94.5（第 14–20 行的第二个 `table` 环境）\n\n告诉我改哪一个（例如\"改 `tab:main`\"），我再提交 patch。当前**未做任何修改**。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

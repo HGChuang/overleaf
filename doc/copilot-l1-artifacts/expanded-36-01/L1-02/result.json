@@ -1,0 +1,81 @@
+{
+  "id": "L1-02",
+  "family": "caption",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 671,
+      "output": 69,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 23,
+      "totalTokens": 5860,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2092,
+      "output": 204,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 82,
+      "totalTokens": 6392,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 417,
+      "output": 98,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 6659,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 18911,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 8948,
+  "conversationId": "L1-02",
+  "answer": "已提交补丁 `patch_e9ae2e260f39026d08a30e18`：\n\n- `main.tex` 第 10 行：`\\caption{Main results}` → `\\caption{Ablation results}`\n- 保留了表格数据、`\\label{tab:main}` 及其余全部源码不变。\n\n请在编辑器中审阅并接受该修改（内联差异预览会以删除线+灰色显示改动）。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

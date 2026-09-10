@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-original-1",
+    "message": {
+      "role": "assistant",
+      "content": "项目里有两个一模一样的表格，标题都是 `Main results`（表体内容也完全相同），你并没有通过选中文本或上下文指明是哪一张，所以我需要先确认再改——因为你要求\"只改那一个\"。\n\n两个候选分别是：\n\n1. **第 10 行**：`\\caption{Main results}\\label{tab:main}`（第一张表）\n2. **第 19 行**：`\\caption{Main results}\\label{tab:replication}`（第二张表）\n\n请告诉我你要改的是哪一张（例如\"改 `tab:main` 那张\"或\"改第一张\"），我会只提交那一个表格的标题修改，另一张保持 `Main results` 不变。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

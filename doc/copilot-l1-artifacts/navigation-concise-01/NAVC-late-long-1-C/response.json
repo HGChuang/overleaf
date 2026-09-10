@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "NAVC-late-long-1",
+    "message": {
+      "role": "assistant",
+      "content": "候选补丁已提交并通过编译验证（`verificationStatus=passed`，errorCount=0）。\n\n**决策依据**（来自归档原始证据，非摘要）：`prior-decision.tex` 第 25 行 `% FINAL CAPTION: Held-out results`，第 26 行 `% Preserve 91.2 percent, 12 samples, and negation.`（前 24 行均为 \"Earlier discussion, not the final decision.\"）。\n\n**改动**（main.tex，单个 hunk）：\n- `\\section{Draft}` → `\\section{Held-out results}`\n\n**未改动**：正文 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.`（数据 91.2%、12 samples、否定结论均保留）、`\\documentclass`、`\\begin/\\end{document}` 及全部注释。\n\n补丁 `patch_c02b8ebe601091d2a83e8276` 处于 proposed 状态，请在审阅面板接受后生效。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_c02b8ebe601091d2a83e8276",
+            "title": "按 prior-decision.tex FINAL CAPTION 将 main.tex 章节标题 Draft 改为 Held-out results",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Held-out results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

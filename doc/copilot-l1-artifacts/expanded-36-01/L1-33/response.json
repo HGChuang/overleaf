@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-33",
+    "message": {
+      "role": "assistant",
+      "content": "完成。修改已作为候选补丁提交并通过编译验证：\n\n- **补丁 ID**：`patch_1343c8043cc1094746deb239`\n- **改动**：main.tex 第 3 行 `\\section{Draft}` → `\\section{Evaluation}`（唯一改动，其他字节不变）\n- **编译验证**：`verificationStatus=passed`，errorCount=0，warningCount=0\n\n按要求原样保留的内容均未触碰：`91.2\\%`、`12 samples`、否定结论 `We do not claim statistical significance`、`statistical` 限定、citation 键 `smith2024` 及文献条目 `A. Smith. Baseline. 2024.`。\n\n补丁仍处于 `proposed` 状态，需要你在编辑器中接受/拒绝该 hunk 后才会真正写入源文件。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_1343c8043cc1094746deb239",
+            "title": "Rename section heading Draft to Evaluation (single byte-exact change)",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Evaluation}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

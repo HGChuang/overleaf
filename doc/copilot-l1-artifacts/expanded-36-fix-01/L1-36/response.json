@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-36",
+    "message": {
+      "role": "assistant",
+      "content": "已完成，范围严格限定为最终确认的唯一修改：\n\n**候选补丁** `patch_ba6208a3916d7ead49dc7e55`（main.tex，单 hunk）\n- `\\section{Draft}` → `\\section{Conclusion}`\n\n**编译验证**：`verificationStatus=passed`，errorCount=0，warningCount=0（pdfLaTeX，candidateHash `f09dc65…`）。\n\n**逐项核对保留要求**（补丁之外零改动）：\n- `91.2\\%` — 原样保留 ✓\n- `12 samples` — 原样保留 ✓\n- 否定结论 \"We do not claim statistical significance\" — 原样保留 ✓\n- citation 键 `\\cite{smith2024}` 与文献信息 `\\bibitem{smith2024} A. Smith. Baseline. 2024.` — 原样保留 ✓\n\n注意：该补丁目前是 **proposed（候选）** 状态，尚未写入源文件，需你在 diff 预览中 Accept 后才会生效。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_ba6208a3916d7ead49dc7e55",
+            "title": "Rename section title Draft → Conclusion (single-line change only)",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Conclusion}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

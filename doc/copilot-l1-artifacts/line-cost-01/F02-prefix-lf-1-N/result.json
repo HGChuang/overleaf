@@ -1,0 +1,81 @@
+{
+  "id": "F02-prefix-lf-1-N",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "N",
+  "pairId": "F02-prefix-lf-1",
+  "variant": "prefix-lf",
+  "expectedLocations": {
+    "tab:main": 13,
+    "tab:replication": 22
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 228,
+      "output": 148,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 88,
+      "totalTokens": 6008,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2115,
+      "output": 132,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 86,
+      "totalTokens": 6343,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 639,
+      "output": 558,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 303,
+      "totalTokens": 7341,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19692,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 14709,
+  "conversationId": "F02-prefix-lf-1",
+  "answer": "已定位到 `main.tex` 中有**两个**表格，标题都写的是 `Main results`，需要你确认改哪一个：\n\n**候选 1**\n- 标签（label）：`tab:main`\n- 文件：`main.tex`\n- caption 所在行：**第 13 行**\n- 内容：`\\caption{Main results}\\label{tab:main}`（位于第 6–14 行的第一个 `table` 环境）\n\n**候选 2**\n- 标签（label）：`tab:replication`\n- 文件：`main.tex`\n- caption 所在行：**第 22 行**\n- 内容：`\\caption{Main results}\\label{tab:replication}`（位于第 15–23 行的第二个 `table` 环境）\n\n两个表格内容完全相同（`Baseline 91.2 / Ours 94.5`），只能靠 label 或行号区分。\n\n请确认要改哪一个（例如“改 `tab:main`”或“改第 13 行那个”），确认后我再提交把该处 `Main results` 改成 `Ablation results` 的补丁。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

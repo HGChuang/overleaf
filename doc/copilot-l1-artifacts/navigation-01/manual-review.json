@@ -1,0 +1,18 @@
+{
+  "status": "reviewed",
+  "corePassed": 17,
+  "cases": 18,
+  "productionChanged": false,
+  "decision": "do_not_adopt",
+  "claims": "成功任务最终回答的目标修改、保护内容、候选状态、编译结果与独立审计一致。少量英语回答不计核心失败。",
+  "failures": [
+    {
+      "id": "NAV-late-long-2-B",
+      "failures": [
+        "chat error: COPILOT_UPSTREAM_ERROR",
+        "no delivered persisted proposal"
+      ],
+      "attribution": "F-NAV-02, malformed tool arguments after successful target evidence retrieval"
+    }
+  ]
+}

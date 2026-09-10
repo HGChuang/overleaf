@@ -1,0 +1,166 @@
+{
+  "cases": [
+    {
+      "id": "F02-original-1-D",
+      "firstTools": [
+        "read_file",
+        "search_project"
+      ],
+      "callsBeforeFirstReadEvidence": 1,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-original-1-N",
+      "firstTools": [
+        "read_file",
+        "search_project"
+      ],
+      "callsBeforeFirstReadEvidence": 1,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-original-2-N",
+      "firstTools": [
+        "search_project",
+        "list_project_files"
+      ],
+      "callsBeforeFirstReadEvidence": 2,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-original-2-D",
+      "firstTools": [
+        "search_project",
+        "read_file"
+      ],
+      "callsBeforeFirstReadEvidence": 1,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-original-3-D",
+      "firstTools": [
+        "search_project",
+        "read_file"
+      ],
+      "callsBeforeFirstReadEvidence": 1,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-original-3-N",
+      "firstTools": [
+        "read_file"
+      ],
+      "callsBeforeFirstReadEvidence": 1,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-lf-1-D",
+      "firstTools": [
+        "read_file",
+        "search_project"
+      ],
+      "callsBeforeFirstReadEvidence": 1,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-lf-1-N",
+      "firstTools": [
+        "list_project_files",
+        "search_project"
+      ],
+      "callsBeforeFirstReadEvidence": 2,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-lf-2-N",
+      "firstTools": [
+        "search_project",
+        "read_file"
+      ],
+      "callsBeforeFirstReadEvidence": 1,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-lf-2-D",
+      "firstTools": [
+        "list_project_files",
+        "search_project"
+      ],
+      "callsBeforeFirstReadEvidence": 2,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-lf-3-D",
+      "firstTools": [
+        "search_project",
+        "list_project_files"
+      ],
+      "callsBeforeFirstReadEvidence": 2,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-lf-3-N",
+      "firstTools": [
+        "search_project",
+        "search_project"
+      ],
+      "callsBeforeFirstReadEvidence": 2,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-crlf-1-D",
+      "firstTools": [
+        "search_project",
+        "read_file"
+      ],
+      "callsBeforeFirstReadEvidence": 1,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-crlf-1-N",
+      "firstTools": [
+        "read_file",
+        "search_project"
+      ],
+      "callsBeforeFirstReadEvidence": 1,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-crlf-2-N",
+      "firstTools": [
+        "search_project",
+        "search_project"
+      ],
+      "callsBeforeFirstReadEvidence": 2,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-crlf-2-D",
+      "firstTools": [
+        "search_project",
+        "read_file"
+      ],
+      "callsBeforeFirstReadEvidence": 1,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-crlf-3-D",
+      "firstTools": [
+        "search_project",
+        "list_project_files"
+      ],
+      "callsBeforeFirstReadEvidence": 2,
+      "callsAfterFirstReadEvidence": 1
+    },
+    {
+      "id": "F02-prefix-crlf-3-N",
+      "firstTools": [
+        "search_project",
+        "list_project_files"
+      ],
+      "callsBeforeFirstReadEvidence": 2,
+      "callsAfterFirstReadEvidence": 1
+    }
+  ],
+  "conclusion": "D and N always require exactly one model call after the first numbered read. The two-call aggregate difference is entirely before exposure to the presentation intervention, with paired initial payloads already verified identical."
+}

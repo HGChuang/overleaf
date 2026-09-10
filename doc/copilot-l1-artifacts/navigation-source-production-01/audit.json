@@ -1,0 +1,100 @@
+{
+  "summary": {
+    "cases": 4,
+    "corePassed": 4,
+    "mechanismCovered": 4,
+    "calls": 24,
+    "reportedTokens": 261719,
+    "unknownUsageRequests": 1,
+    "archives": 1,
+    "rehydrations": 5,
+    "sourcePages": 4,
+    "canonicalHunks": 4,
+    "sourceUnchanged": true
+  },
+  "cases": [
+    {
+      "id": "L1-25",
+      "corePassed": true,
+      "mechanismCovered": true,
+      "failures": [],
+      "coverageFailures": [],
+      "authorConstraintsPreserved": true,
+      "calls": 5,
+      "tokens": 50269,
+      "wireTotal": 50269,
+      "missingWireUsage": 0,
+      "archives": 0,
+      "rehydrations": 1,
+      "sourcePages": 1,
+      "canonicalHunks": 1,
+      "errors": [],
+      "compactions": [],
+      "answer": "✅ 候选补丁已提交并编译验证通过。\n\n**补丁**（`patch_96f3e5f21241b9293a1013a9`，main.tex 第 3 行）：\n- 旧：`\\section{Draft}`\n- 新：`\\section{Sensitivity results}`\n\n**编译结果**：`verificationStatus=passed`，errorCount=0，warningCount=0。\n\n**说明**：\n- 依据为归档中 prior-decision.tex 的原始证据（非摘要）：`% FINAL CAPTION: Sensitivity results` 与 `% Preserve 91.2 percent, 12 samples, and negation.`\n- 仅改标题；第 4 行的数据（`91.2\\%`、`12 samples`）与否定结论（`We do not claim significance.`）原样保留，其余源码、注释、引用均未改动。\n- 该补丁仍处于 `proposed` 状态，需你在内联 diff 预览中 Accept 后才真正生效；接受后如需再编译确认可随时告诉我。"
+    },
+    {
+      "id": "L1-27",
+      "corePassed": true,
+      "mechanismCovered": true,
+      "failures": [],
+      "coverageFailures": [],
+      "authorConstraintsPreserved": true,
+      "calls": 9,
+      "tokens": 93531,
+      "wireTotal": 93531,
+      "missingWireUsage": 0,
+      "archives": 0,
+      "rehydrations": 3,
+      "sourcePages": 1,
+      "canonicalHunks": 1,
+      "errors": [],
+      "compactions": [],
+      "answer": "Done. Summary of what was verified and proposed:\n\n**Archived evidence (re-read in full, not just the summary)** — prior-decision.tex (lines 25–26) states:\n- `% FINAL CAPTION: Robustness results`\n- `% Preserve 91.2 percent, 12 samples, and negation.`\nThe first 24 lines are only \"Earlier discussion, not the final decision.\" comments (decision evidence, not the decision itself).\n\n**Current main.tex** (read fresh, snapshot `397d184f…`):\n```\n\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n```\n\n**Patch proposed** — `patch_f44129c9433e9d5c9a004c1d` (single hunk, main.tex line 3):\n- `\\section{Draft}` → `\\section{Robustness results}`\n\nOnly the title was changed, per the FINAL CAPTION. The body — 91.2%, 12 samples, and the negation \"We do not claim significance.\" — is preserved verbatim, as were all other source lines.\n\n**Compile verification**: `compile_project(patchId=patch_f44129…)` → `verificationStatus=passed`, `errorCount=0`, `warningCount=0`. The candidate compiles cleanly. The patch is pending your acceptance; it has not modified the source until you approve it."
+    },
+    {
+      "id": "L1-29",
+      "corePassed": true,
+      "mechanismCovered": true,
+      "failures": [],
+      "coverageFailures": [],
+      "authorConstraintsPreserved": null,
+      "calls": 5,
+      "tokens": 87521,
+      "wireTotal": 87521,
+      "missingWireUsage": 0,
+      "archives": 1,
+      "rehydrations": 1,
+      "sourcePages": 1,
+      "canonicalHunks": 1,
+      "errors": [],
+      "compactions": [],
+      "answer": "已完成。步骤与结果如下：\n\n**1. 目录核对** — `list_project_files` 回执因超出预算被归档，已按您的要求读回原始回执首页（message 2），确认项目目录以 **`main.tex`** 为首（其余为 `supplement/record-*` 归档源文件）。\n\n**2. 确认目标文本** — 直接读取 `main.tex`（哈希 `ee9ae035…`，第 3 行）：\n```\n1: \\documentclass{article}\n2: \\begin{document}\n3: \\section{Draft}\n4: Protected 91.2 percent.\n5: \\end{document}\n```\n\n**3. 提交候选** — 单一 hunk：`\\section{Draft}` → `\\section{Final}`（`patch_1c3fa63c399b146cd7409ae4`）。未改动 `\\documentclass`、`Protected 91.2 percent.`、`\\end{document}`，也未触碰任何 supplement 文件、注释、数值或引用。\n\n**4. 编译验证** — 对候选（candidateHash `40f58901…`）执行 pdfLaTeX：\n- `verificationStatus: passed`，`errorCount: 0`，`warningCount: 0` ✓\n\n候选中待您在界面审阅（struck `Draft` + gray `Final`）后接受才会生效；接受后即完成。"
+    },
+    {
+      "id": "L1-36",
+      "corePassed": true,
+      "mechanismCovered": true,
+      "failures": [],
+      "coverageFailures": [],
+      "authorConstraintsPreserved": true,
+      "calls": 5,
+      "tokens": 30398,
+      "wireTotal": 30398,
+      "missingWireUsage": 1,
+      "archives": 0,
+      "rehydrations": 0,
+      "sourcePages": 1,
+      "canonicalHunks": 1,
+      "errors": [],
+      "compactions": [
+        {
+          "type": "context_compacted",
+          "generation": 1,
+          "beforeTokens": 51673,
+          "afterTokens": 26085
+        }
+      ],
+      "answer": "完成。结果如下：\n\n**提交的候选补丁**（`patch_2aca430df28f8e8cb76e33a8`）\n\n| 文件 | 行 | 修改 |\n|---|---|---|\n| main.tex | 3 | `\\section{Draft}` → `\\section{Conclusion}` |\n\n**编译验证**：`verificationStatus=passed`，errorCount=0，warningCount=0 ✓\n\n**范围确认**：本次唯一改动是节标题。以下内容已按你的保留要求原样未动：\n- 数值 `91.2\\%`\n- `12 samples`\n- 否定结论 `We do not claim statistical significance`\n- statistical 限定（`do not claim`）\n- citation 键 `smith2024` 及 `\\bibitem{smith2024} A. Smith. Baseline. 2024.` 文献信息\n\n补丁仍处于 *proposed* 状态，请在界面中审阅内联 diff（`Draft` 划线删除、`Conclusion` 灰色新增）并接受后才会真正写入源文件。"
+    }
+  ]
+}

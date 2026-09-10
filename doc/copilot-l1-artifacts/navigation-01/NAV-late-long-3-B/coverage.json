@@ -1,0 +1,73 @@
+{
+  "coverageFailures": [],
+  "historyReads": [
+    {
+      "message": 6
+    },
+    {
+      "message": 6,
+      "offset": 800
+    },
+    {
+      "message": 6,
+      "offset": 1600
+    }
+  ],
+  "liveArchives": 0,
+  "epochCommits": 1,
+  "compactions": [],
+  "evidenceFiles": [
+    "prior-decision.tex",
+    "main.tex"
+  ],
+  "requests": [
+    {
+      "callId": 1,
+      "estimatedInput": 31289,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 2,
+      "estimatedInput": 36728,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 3,
+      "estimatedInput": 38903,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 4,
+      "estimatedInput": 40418,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 5,
+      "estimatedInput": 46143,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 6,
+      "estimatedInput": 47896,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 7,
+      "estimatedInput": 49199,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 8,
+      "estimatedInput": 50801,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    }
+  ]
+}

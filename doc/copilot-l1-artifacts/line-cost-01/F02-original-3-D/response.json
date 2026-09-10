@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-original-3",
+    "message": {
+      "role": "assistant",
+      "content": "文件里有**两处**标题都是 `Main results` 的表格，内容完全相同，只有 label 不同：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n因为你说了\"只改我指的那一个\"，但没有选中文本，我需要确认是哪一个再改：\n\n```latex\n% 请问要改的是第一个表格（tab:main，第 10 行）还是第二个表格（tab:replication，第 19 行）？\n```",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

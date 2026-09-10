@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "conv_4c090c21-9922-4d87-bdfa-8c63c701cc64",
+    "message": {
+      "role": "assistant",
+      "content": "修改已提交并验证通过。\n\n**改动内容**（`main.tex` 第 171 行）：\n- 前：`\\caption{Main results}\\label{tab:main}`\n- 后：`\\caption{Ablation results}\\label{tab:main}`\n\n**保持不变**：标签 `tab:main`、表格数据（如第 169 行的 `Ours & 94.5`）、所有源码注释及其余源码。\n\n**编译结果**：`verificationStatus = passed`，0 错误 0 警告，补丁候选（`patch_4390cb9b67ea50f7b578d93f`）可正常编译。请在右侧内联预览中确认后点击 Accept 应用该改动。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_4390cb9b67ea50f7b578d93f",
+            "title": "Change the caption of the table labeled tab:main to \"Ablation results\"",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 171,
+                "oldText": "\\caption{Main results}\\label{tab:main}",
+                "newText": "\\caption{Ablation results}\\label{tab:main}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

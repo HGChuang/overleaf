@@ -1,0 +1,98 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:3ac46d6bc37b0cb8e810bbce:patch_e61d2f98014cde69fbf9f8c0",
+      "conversationId": "L1-16",
+      "createdAt": "2026-09-08T18:57:37.056Z",
+      "documentHeads": {
+        "intro.tex": {
+          "hash": "cb44b63487279a3962f2a63335acc5f6742a9f02b3e265fd218106178a8da965",
+          "version": 1
+        },
+        "discussion.tex": {
+          "hash": "df4e0bb4e7e648ced62edd14c38c4055f0ce1fcb7e13e22bcaf4c22c6395c727",
+          "version": 1
+        },
+        "refs.tex": {
+          "hash": "d2ac848b069f85559ab34072049b47977de198dc9f2b454e511d41aadcd6a3a1",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "intro.tex",
+          "line": 1,
+          "oldText": "Baseline~\\cite{smith2024}.",
+          "newText": "Baseline~\\cite{smithBaseline}.",
+          "index": 0,
+          "docId": "d623867c4041c886235fb7dd",
+          "baselineHash": "cb44b63487279a3962f2a63335acc5f6742a9f02b3e265fd218106178a8da965",
+          "baselineVersion": 1,
+          "status": "proposed"
+        },
+        {
+          "file": "discussion.tex",
+          "line": 1,
+          "oldText": "Compare~\\cite{smith2024,jones2023}.",
+          "newText": "Compare~\\cite{smithBaseline,jones2023}.",
+          "index": 1,
+          "docId": "235f6ff7ae07a0ccc0a3f467",
+          "baselineHash": "df4e0bb4e7e648ced62edd14c38c4055f0ce1fcb7e13e22bcaf4c22c6395c727",
+          "baselineVersion": 1,
+          "status": "proposed"
+        },
+        {
+          "file": "refs.tex",
+          "line": 2,
+          "oldText": "\\bibitem{smith2024} A. Smith. Baseline. 2024.",
+          "newText": "\\bibitem{smithBaseline} A. Smith. Baseline. 2024.",
+          "index": 2,
+          "docId": "64c78cd6af47fc2f66e09b95",
+          "baselineHash": "d2ac848b069f85559ab34072049b47977de198dc9f2b454e511d41aadcd6a3a1",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_e61d2f98014cde69fbf9f8c0",
+      "projectId": "3ac46d6bc37b0cb8e810bbce",
+      "snapshotId": "0937191127c134c819d166ad763e5bdc529ac38ecccdb4bc3e1634a8560e3b93",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateVerification": {
+        "verificationId": "aaaaaaaaaaaaaaaaaaaaaaaa:3ac46d6bc37b0cb8e810bbce:0937191127c134c819d166ad763e5bdc529ac38ecccdb4bc3e1634a8560e3b93:patch_e61d2f98014cde69fbf9f8c0:compile:call_i0dx0ifujelkxml2dxvgh4op",
+        "snapshotId": "0937191127c134c819d166ad763e5bdc529ac38ecccdb4bc3e1634a8560e3b93",
+        "patchId": "patch_e61d2f98014cde69fbf9f8c0",
+        "candidateHash": "bdb1b98a29b257422f754e6467c05e3080ce54a76905dad0188d6b61be04d5c8",
+        "status": "passed",
+        "errorCount": 0,
+        "warningCount": 0,
+        "verifiedAt": "2026-09-08T18:57:39.992Z"
+      }
+    }
+  ],
+  "verifications": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:3ac46d6bc37b0cb8e810bbce:0937191127c134c819d166ad763e5bdc529ac38ecccdb4bc3e1634a8560e3b93:patch_e61d2f98014cde69fbf9f8c0:compile:call_i0dx0ifujelkxml2dxvgh4op",
+      "kind": "compile",
+      "patchId": "patch_e61d2f98014cde69fbf9f8c0",
+      "projectId": "3ac46d6bc37b0cb8e810bbce",
+      "snapshotId": "0937191127c134c819d166ad763e5bdc529ac38ecccdb4bc3e1634a8560e3b93",
+      "startedAt": "2026-09-08T18:57:38.831Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "bdb1b98a29b257422f754e6467c05e3080ce54a76905dad0188d6b61be04d5c8",
+      "result": {
+        "status": "success",
+        "snapshotId": "0937191127c134c819d166ad763e5bdc529ac38ecccdb4bc3e1634a8560e3b93",
+        "patchId": "patch_e61d2f98014cde69fbf9f8c0",
+        "candidateHash": "bdb1b98a29b257422f754e6467c05e3080ce54a76905dad0188d6b61be04d5c8",
+        "manifestHash": "0937191127c134c819d166ad763e5bdc529ac38ecccdb4bc3e1634a8560e3b93",
+        "buildId": "49ce22ff-74a0-40a6-913b-fe58be0f135c",
+        "logComplete": true,
+        "errorCount": 0,
+        "errors": [],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-08T18:57:39.988Z"
+    }
+  ]
+}

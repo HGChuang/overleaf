@@ -1,0 +1,217 @@
+{
+  "projectId": "a17db727ed674193b9283564",
+  "messages": [
+    {
+      "role": "user",
+      "timestamp": 0,
+      "content": "{\"MESSAGE\":\"后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。\",\"MESSAGE_KIND\":\"author\",\"PROJECT\":{\"projectId\":\"a17db727ed674193b9283564\",\"sourceSnapshot\":{\"id\":\"7638e96c304505d5242b9a418d4214977ec89d6f76d23f12cb460a5bdaac17cb\",\"projectId\":\"a17db727ed674193b9283564\",\"docs\":[{\"path\":\"main.tex\",\"docId\":\"87a019afc41372a9a0e18269\",\"version\":1,\"sha256\":\"f5e82b478c336df63a2f3539ce0b8f455bddd0df3742cbe1d50da312657bf7eb\"},{\"path\":\"prior-decision.tex\",\"docId\":\"2555329180d307aa4715a1dc\",\"version\":1,\"sha256\":\"924c67e8c1ce0c949223c7358b2fdfdcda6dffa1e0ab40142d6d3687d9bd877b\"}],\"assets\":[],\"rootDocId\":\"87a019afc41372a9a0e18269\",\"compiler\":\"pdflatex\",\"imageName\":\"texlive-full:latest\",\"assetBytesFrozen\":true},\"rootDocId\":\"87a019afc41372a9a0e18269\",\"fileList\":[\"main.tex\",\"prior-decision.tex\"],\"outline\":[\"main.tex\",\"prior-decision.tex\"],\"files\":[{\"path\":\"main.tex\",\"docId\":\"87a019afc41372a9a0e18269\",\"version\":1,\"sha256\":\"f5e82b478c336df63a2f3539ce0b8f455bddd0df3742cbe1d50da312657bf7eb\"},{\"path\":\"prior-decision.tex\",\"docId\":\"2555329180d307aa4715a1dc\",\"version\":1,\"sha256\":\"924c67e8c1ce0c949223c7358b2fdfdcda6dffa1e0ab40142d6d3687d9bd877b\"}],\"sourceManifest\":[{\"path\":\"main.tex\",\"docId\":\"87a019afc41372a9a0e18269\",\"version\":1,\"sha256\":\"f5e82b478c336df63a2f3539ce0b8f455bddd0df3742cbe1d50da312657bf7eb\"},{\"path\":\"prior-decision.tex\",\"docId\":\"2555329180d307aa4715a1dc\",\"version\":1,\"sha256\":\"924c67e8c1ce0c949223c7358b2fdfdcda6dffa1e0ab40142d6d3687d9bd877b\"}]}}"
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "toolCall",
+          "id": "historical_policy",
+          "name": "read_file",
+          "arguments": {
+            "path": "prior-decision.tex"
+          }
+        }
+      ],
+      "stopReason": "toolUse",
+      "timestamp": 0,
+      "api": "openai-completions",
+      "provider": "openai-compat",
+      "model": "synthetic-history-fixture",
+      "usage": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "totalTokens": 0
+      }
+    },
+    {
+      "role": "toolResult",
+      "toolCallId": "historical_policy",
+      "toolName": "read_file",
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"found\":true,\"path\":\"prior-decision.tex\",\"sourceHash\":\"924c67e8c1ce0c949223c7358b2fdfdcda6dffa1e0ab40142d6d3687d9bd877b\",\"evidenceId\":\"88949808079a15ee3c115acb109d53603818b6a6080f7e63b4154b092972e00d\",\"consistency\":\"immutable-snapshot\",\"snapshotId\":\"7638e96c304505d5242b9a418d4214977ec89d6f76d23f12cb460a5bdaac17cb\",\"docId\":\"2555329180d307aa4715a1dc\",\"version\":1,\"startByte\":0,\"endByte\":88,\"startLine\":1,\"totalLines\":3,\"nextOffsetBytes\":null,\"rangeEndByte\":88,\"fileBytes\":88,\"lineNumberedContent\":\"1: % FINAL CAPTION: Sensitivity results\\n2: % Preserve 91.2 percent, 12 samples, and negation.\\n3: \"}"
+        }
+      ],
+      "details": {},
+      "isError": false,
+      "timestamp": 0
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progress note adds no author requirement. Historical review 1: manuscript structure was inspected; this progre"
+        }
+      ],
+      "stopReason": "stop",
+      "timestamp": 0,
+      "api": "openai-completions",
+      "provider": "openai-compat",
+      "model": "synthetic-history-fixture",
+      "usage": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "totalTokens": 0
+      }
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progress note adds no author requirement. Historical review 2: manuscript structure was inspected; this progre"
+        }
+      ],
+      "stopReason": "stop",
+      "timestamp": 0,
+      "api": "openai-completions",
+      "provider": "openai-compat",
+      "model": "synthetic-history-fixture",
+      "usage": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "totalTokens": 0
+      }
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progress note adds no author requirement. Historical review 3: manuscript structure was inspected; this progre"
+        }
+      ],
+      "stopReason": "stop",
+      "timestamp": 0,
+      "api": "openai-completions",
+      "provider": "openai-compat",
+      "model": "synthetic-history-fixture",
+      "usage": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "totalTokens": 0
+      }
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progress note adds no author requirement. Historical review 4: manuscript structure was inspected; this progre"
+        }
+      ],
+      "stopReason": "stop",
+      "timestamp": 0,
+      "api": "openai-completions",
+      "provider": "openai-compat",
+      "model": "synthetic-history-fixture",
+      "usage": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "totalTokens": 0
+      }
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progress note adds no author requirement. Historical review 5: manuscript structure was inspected; this progre"
+        }
+      ],
+      "stopReason": "stop",
+      "timestamp": 0,
+      "api": "openai-completions",
+      "provider": "openai-compat",
+      "model": "synthetic-history-fixture",
+      "usage": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "totalTokens": 0
+      }
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progress note adds no author requirement. Historical review 6: manuscript structure was inspected; this progre"
+        }
+      ],
+      "stopReason": "stop",
+      "timestamp": 0,
+      "api": "openai-completions",
+      "provider": "openai-compat",
+      "model": "synthetic-history-fixture",
+      "usage": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "totalTokens": 0
+      }
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progress note adds no author requirement. Historical review 7: manuscript structure was inspected; this progre"
+        }
+      ],
+      "stopReason": "stop",
+      "timestamp": 0,
+      "api": "openai-completions",
+      "provider": "openai-compat",
+      "model": "synthetic-history-fixture",
+      "usage": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "totalTokens": 0
+      }
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "The requested edit is pending; no patch has been proposed or applied."
+        }
+      ],
+      "stopReason": "stop",
+      "timestamp": 0,
+      "api": "openai-completions",
+      "provider": "openai-compat",
+      "model": "synthetic-history-fixture",
+      "usage": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "totalTokens": 0
+      }
+    }
+  ]
+}

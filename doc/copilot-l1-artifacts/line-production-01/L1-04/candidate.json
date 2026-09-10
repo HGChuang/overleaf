@@ -1,0 +1,4 @@
+{
+  "main.tex": "\\documentclass{article}\n\\input{macros}\n\\begin{document}\nWe use $\\samplesize$ samples and threshold $\\threshold$.\n\\end{document}\n",
+  "macros.tex": "\\newcommand{\\samplesize}{16}\n\\newcommand{\\threshold}{0.05}\n"
+}

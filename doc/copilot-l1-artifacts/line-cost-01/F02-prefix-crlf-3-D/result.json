@@ -1,0 +1,81 @@
+{
+  "id": "F02-prefix-crlf-3-D",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "D",
+  "pairId": "F02-prefix-crlf-3",
+  "variant": "prefix-crlf",
+  "expectedLocations": {
+    "tab:main": 15,
+    "tab:replication": 24
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1760,
+      "output": 232,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 172,
+      "totalTokens": 6088,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 913,
+      "output": 110,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 64,
+      "totalTokens": 6399,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 934,
+      "output": 416,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 260,
+      "totalTokens": 7494,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19981,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 13778,
+  "conversationId": "F02-prefix-crlf-3",
+  "answer": "两个候选表格都位于 `main.tex`，caption 文本完全相同（`\\caption{Main results}`），只能靠 label 区分：\n\n| 候选 | Label | 文件路径 | Caption 所在行号 | 行内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | 第 15 行 | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | 第 24 行 | `\\caption{Main results}\\label{tab:replication}` |\n\n请告诉我你要改哪一个（例如\"改 `tab:main` 那个\"），确认后我再执行修改。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

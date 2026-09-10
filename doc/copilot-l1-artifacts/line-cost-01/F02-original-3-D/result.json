@@ -1,0 +1,62 @@
+{
+  "id": "F02-original-3-D",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "D",
+  "pairId": "F02-original-3",
+  "variant": "original",
+  "expectedLocations": {
+    "tab:main": 10,
+    "tab:replication": 19
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1735,
+      "output": 137,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 60,
+      "totalTokens": 5968,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 1327,
+      "output": 1032,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 896,
+      "totalTokens": 7735,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 13703,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 12480,
+  "conversationId": "F02-original-3",
+  "answer": "文件里有**两处**标题都是 `Main results` 的表格，内容完全相同，只有 label 不同：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n因为你说了\"只改我指的那一个\"，但没有选中文本，我需要确认是哪一个再改：\n\n```latex\n% 请问要改的是第一个表格（tab:main，第 10 行）还是第二个表格（tab:replication，第 19 行）？\n```",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

@@ -1,0 +1,5 @@
+{
+  "main.tex": "\\documentclass{article}\n\\input{commands}\n\\begin{document}\n\\input{body}\n\\end{document}\n",
+  "commands.tex": "\\newcommand{\\highlight}[1]{\\textbf{#1}}\n",
+  "body.tex": "Score 91.2\\%. \\highlight{Important finding}\n"
+}

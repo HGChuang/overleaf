@@ -6,6 +6,7 @@ mongo_name="copilot-l0-mongo-$$"
 cleanup() { docker rm -f "$mongo_name" >/dev/null 2>&1 || true; }
 trap cleanup EXIT INT TERM
 docker image inspect --format 'L0 runtime image: {{.Id}}' "$runtime_image"
+# The file timeout also covers the 31-second real-lease compaction regression.
 # A new replica set, no host port/volume and no external network. The test
 # process shares only this container's loopback, never a development database.
 docker run -d --name "$mongo_name" --network none --tmpfs /data/db mongo:5 \
@@ -29,4 +30,4 @@ docker run --rm --network "container:$mongo_name" --user root \
   -e COPILOT_AGENT_RECURSION_LIMIT=4 -e COPILOT_CONTEXT_WINDOW=200000 \
   -e L0_MONGO_URL='mongodb://127.0.0.1:27017/copilot_l0?replicaSet=l0' \
   --entrypoint sh "$runtime_image" -c \
-  'ln -sfn /overleaf/libraries/copilot-contracts /overleaf/node_modules/@overleaf/copilot-contracts && node --version && node --import tsx --test --test-concurrency=1 --test-timeout=20000 harness-checks/*.test.ts && /overleaf/node_modules/.bin/tsc --noEmit -p tsconfig.json && echo "L0 business TypeScript check: PASS"'
+  'ln -sfn /overleaf/libraries/copilot-contracts /overleaf/node_modules/@overleaf/copilot-contracts && node --version && node --import tsx --test --test-concurrency=1 --test-timeout=45000 harness-checks/*.test.ts && /overleaf/node_modules/.bin/tsc --noEmit -p tsconfig.json && echo "L0 business TypeScript check: PASS"'

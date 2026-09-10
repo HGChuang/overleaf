@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-lf-1",
+    "message": {
+      "role": "assistant",
+      "content": "项目里共有 **两个** 标题为 \"Main results\" 的表格，都在同一个文件 `main.tex` 中（共 25 行）：\n\n| 候选 | 标签（label） | 文件路径 | caption 所在行号 | 表格位置 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** | 第一个 `table` 环境内（6–14 行） |\n| ② | `tab:replication` | `main.tex` | **第 22 行** | 第二个 `table` 环境内（15–23 行） |\n\n两处的原始代码分别是：\n\n- 第 13 行：`\\caption{Main results}\\label{tab:main}`\n- 第 22 行：`\\caption{Main results}\\label{tab:replication}`\n\n请告诉我改哪一个（例如\"改①\"或\"改 `tab:main` 那个\"），确认后我再提交补丁，把该处 caption 改为 `Ablation results`。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

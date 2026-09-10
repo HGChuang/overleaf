@@ -1,0 +1,118 @@
+{
+  "id": "NAV-short-2-A",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "NAV-short-2",
+  "variant": "short",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 2,
+    "historyAttempts": 1,
+    "offTargetAttempts": 0,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 1,
+    "reads": [
+      {
+        "message": 2
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 3448,
+      "output": 453,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 361,
+      "totalTokens": 7997,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 1277,
+      "output": 953,
+      "cacheRead": 7424,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 659,
+      "totalTokens": 9654,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 4436,
+      "output": 61,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 9873,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 352,
+      "output": 361,
+      "cacheRead": 9728,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 37,
+      "totalTokens": 10441,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 37965,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 21018,
+  "conversationId": "NAV-short-2",
+  "answer": "已完成。\n\n## 决策依据（归档原始证据，非摘要）\n`prior-decision.tex` 原始工具证据（snapshot `88df442e…`，sha256 `924c67e8…`）内容为：\n```\n% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n```\nFINAL CAPTION = **Sensitivity results**，且明确要求保留 91.2 percent、12 samples 与否定表述。\n\n## 修改内容\n- **main.tex**（当前源码 snapshot `948b2607…`，共 6 行）：第 3 行 `\\section{Draft}` → `\\section{Sensitivity results}`\n- 第 4 行正文 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.` **保持不变**（已含 91.2%、12 samples、否定结论）\n- 未改动任何其他源码、注释、数值或引用\n\n## 编译验证\n`compile_project(patchId=patch_9dd04c3df9b02553f2cf5575)` → **verificationStatus: passed**，errorCount=0，warningCount=0（candidateHash `8a6c5360…`）。\n\n补丁仍处于 **proposed** 状态（patchId `patch_9dd04c3df9b02553f2cf5575`），需你在 diff 预览中 Accept 后才会写入源码。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

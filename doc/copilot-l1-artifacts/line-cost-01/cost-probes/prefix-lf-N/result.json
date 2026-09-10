@@ -1,0 +1,43 @@
+{
+  "arm": "N",
+  "variant": "prefix-lf",
+  "sourceView": {
+    "found": true,
+    "path": "main.tex",
+    "sourceHash": "22d72ce35a9469af1ceaa308ce2af630c5e9b45c5e548d0e7e9e7ae5bb17f637",
+    "evidenceId": "a4db5a797ffe639b72054ab8d9d2342fda135ffadd3c3ba6d288d46f172fe949",
+    "consistency": "immutable-snapshot",
+    "snapshotId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "docId": "bbbbbbbbbbbbbbbbbbbbbbbb",
+    "version": 1,
+    "startByte": 0,
+    "endByte": 448,
+    "startLine": 1,
+    "totalLines": 25,
+    "nextOffsetBytes": null,
+    "rangeEndByte": 448,
+    "fileBytes": 448,
+    "lineNumberedContent": "1: % Synthetic location fixture.\n2: % Preserve manuscript source.\n3: \n4: \\documentclass{article}\n5: \\begin{document}\n6: \\begin{table}[h]\n7: \\centering\n8: \\begin{tabular}{lr}\n9: Method & Score \\\\\n10: Baseline & 91.2 \\\\\n11: Ours & 94.5\n12: \\end{tabular}\n13: \\caption{Main results}\\label{tab:main}\n14: \\end{table}\n15: \\begin{table}[h]\n16: \\centering\n17: \\begin{tabular}{lr}\n18: Method & Score \\\\\n19: Baseline & 91.2 \\\\\n20: Ours & 94.5\n21: \\end{tabular}\n22: \\caption{Main results}\\label{tab:replication}\n23: \\end{table}\n24: \\end{document}\n25: "
+  },
+  "sourceBytes": 1083,
+  "inputTokens": 483,
+  "usage": {
+    "input": 483,
+    "output": 1511,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "cacheReadKnown": true,
+    "cacheWriteKnown": false,
+    "reasoning": 1509,
+    "totalTokens": 1994,
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 0
+    }
+  },
+  "stopReason": "length",
+  "errorMessage": null
+}

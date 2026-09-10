@@ -1,0 +1,23 @@
+{
+  "url": "https://ark.cn-beijing.volces.com/api/coding/v3/chat/completions",
+  "body": {
+    "model": "deepseek-v4-flash-ga-260731",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Reply OK."
+      },
+      {
+        "role": "user",
+        "content": "{\"found\":true,\"path\":\"main.tex\",\"sourceHash\":\"22d72ce35a9469af1ceaa308ce2af630c5e9b45c5e548d0e7e9e7ae5bb17f637\",\"evidenceId\":\"a4db5a797ffe639b72054ab8d9d2342fda135ffadd3c3ba6d288d46f172fe949\",\"consistency\":\"immutable-snapshot\",\"snapshotId\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"docId\":\"bbbbbbbbbbbbbbbbbbbbbbbb\",\"version\":1,\"startByte\":0,\"endByte\":448,\"startLine\":1,\"totalLines\":25,\"content\":\"% Synthetic location fixture.\\n% Preserve manuscript source.\\n\\n\\\\documentclass{article}\\n\\\\begin{document}\\n\\\\begin{table}[h]\\n\\\\centering\\n\\\\begin{tabular}{lr}\\nMethod & Score \\\\\\\\\\nBaseline & 91.2 \\\\\\\\\\nOurs & 94.5\\n\\\\end{tabular}\\n\\\\caption{Main results}\\\\label{tab:main}\\n\\\\end{table}\\n\\\\begin{table}[h]\\n\\\\centering\\n\\\\begin{tabular}{lr}\\nMethod & Score \\\\\\\\\\nBaseline & 91.2 \\\\\\\\\\nOurs & 94.5\\n\\\\end{tabular}\\n\\\\caption{Main results}\\\\label{tab:replication}\\n\\\\end{table}\\n\\\\end{document}\\n\",\"nextOffsetBytes\":null,\"rangeEndByte\":448,\"fileBytes\":448,\"lineNumberedContent\":\"1: % Synthetic location fixture.\\n2: % Preserve manuscript source.\\n3: \\n4: \\\\documentclass{article}\\n5: \\\\begin{document}\\n6: \\\\begin{table}[h]\\n7: \\\\centering\\n8: \\\\begin{tabular}{lr}\\n9: Method & Score \\\\\\\\\\n10: Baseline & 91.2 \\\\\\\\\\n11: Ours & 94.5\\n12: \\\\end{tabular}\\n13: \\\\caption{Main results}\\\\label{tab:main}\\n14: \\\\end{table}\\n15: \\\\begin{table}[h]\\n16: \\\\centering\\n17: \\\\begin{tabular}{lr}\\n18: Method & Score \\\\\\\\\\n19: Baseline & 91.2 \\\\\\\\\\n20: Ours & 94.5\\n21: \\\\end{tabular}\\n22: \\\\caption{Main results}\\\\label{tab:replication}\\n23: \\\\end{table}\\n24: \\\\end{document}\\n25: \"}"
+      }
+    ],
+    "stream": true,
+    "stream_options": {
+      "include_usage": true
+    },
+    "max_tokens": 1,
+    "temperature": 0
+  },
+  "at": "2026-09-08T14:13:27.563Z"
+}

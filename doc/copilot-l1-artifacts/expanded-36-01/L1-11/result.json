@@ -1,0 +1,101 @@
+{
+  "id": "L1-11",
+  "family": "preserve-disabled-branch",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 676,
+      "output": 79,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 18,
+      "totalTokens": 5875,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2112,
+      "output": 232,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 80,
+      "totalTokens": 6440,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 451,
+      "output": 132,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 44,
+      "totalTokens": 6727,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 1821,
+      "output": 151,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7092,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 26134,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 13002,
+  "conversationId": "L1-11",
+  "answer": "✅ 已完成并编译验证通过（`verificationStatus=passed`，0 错误 0 警告）。\n\n**改动内容**（仅 1 处 hunk）：\n- `main.tex` 第 7 行：`\\section{Introduction}` → `\\section{Overview}`\n\n**原样保留的部分**：\n- `\\iffalse ... \\fi` 中的未发布实验内容（第 3–6 行 `Unreleased results` 节）未被启用或改动；\n- 其余所有源码、`\\documentclass`、`\\begin{document}` 等均未触碰。\n\n请在右侧 diff 预览中确认后点击 **Accept** 应用该补丁。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

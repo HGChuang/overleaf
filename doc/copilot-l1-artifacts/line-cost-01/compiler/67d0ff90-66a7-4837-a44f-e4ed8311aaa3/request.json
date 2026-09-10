@@ -1,0 +1,5 @@
+{
+  "files": {
+    "main.tex": "% Synthetic location fixture.\r\n\r\n% Keep both tables.\r\n% Line ending fixture.\r\n\r\n\\documentclass{article}\r\n\\begin{document}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:main}\r\n\\end{table}\r\n\\begin{table}[h]\r\n\\centering\r\n\\begin{tabular}{lr}\r\nMethod & Score \\\\\r\nBaseline & 91.2 \\\\\r\nOurs & 94.5\r\n\\end{tabular}\r\n\\caption{Main results}\\label{tab:replication}\r\n\\end{table}\r\n\\end{document}\r\n"
+  }
+}

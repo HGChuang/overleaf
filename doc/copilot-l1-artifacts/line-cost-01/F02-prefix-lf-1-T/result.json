@@ -1,0 +1,62 @@
+{
+  "id": "F02-prefix-lf-1-T",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "T",
+  "pairId": "F02-prefix-lf-1",
+  "variant": "prefix-lf",
+  "expectedLocations": {
+    "tab:main": 13,
+    "tab:replication": 22
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1764,
+      "output": 107,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 61,
+      "totalTokens": 5967,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2316,
+      "output": 289,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 119,
+      "totalTokens": 6701,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 12668,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 4647,
+  "conversationId": "F02-prefix-lf-1",
+  "answer": "文件里确实有两个 caption 为 \"Main results\" 的表格，都在 `main.tex` 中（该文件共 25 行）：\n\n| 候选 | 标签 | 文件路径 | caption 行号 | 所在行内容 |\n|------|------|----------|--------------|------------|\n| 1 | `tab:main` | main.tex | 第 13 行 | `\\caption{Main results}\\label{tab:main}` |\n| 2 | `tab:replication` | main.tex | 第 22 行 | `\\caption{Main results}\\label{tab:replication}` |\n\n请确认要改哪一个（例如\"改 tab:main\"或\"改第 13 行那个\"），我再提交只针对那一个的修改。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

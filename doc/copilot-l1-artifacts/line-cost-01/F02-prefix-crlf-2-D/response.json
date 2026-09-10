@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-crlf-2",
+    "message": {
+      "role": "assistant",
+      "content": "好的，我找到了项目中所有 caption 为 `Main results` 的表格，共有两个候选。按你的要求先列出，**暂不修改**，等你确认后再改。\n\n| 候选 | 标签 (label) | 文件路径 | caption 准确行号 |\n|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 15 行** — `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 24 行** — `\\caption{Main results}\\label{tab:replication}` |\n\n两个候选都位于同一文件 `main.tex`，结构完全相同（Method & Score，Baseline 91.2 / Ours 94.5），仅 label 不同（`tab:main` 与 `tab:replication`）。\n\n请告诉我你要改哪一个（① 还是 ②），我就只把那一处的 caption 改成 `Ablation results`。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

@@ -1,0 +1,439 @@
+{
+  "method": "Direct review of all final responses against immutable source; no LLM judge",
+  "summary": {
+    "A": {
+      "trials": 9,
+      "corePassed": 9,
+      "bothCaptionLinesExact": 6,
+      "allReportedLocationsExact": 4,
+      "approximate": 1,
+      "wrongExactCaptionTrials": 2
+    },
+    "B": {
+      "trials": 9,
+      "corePassed": 9,
+      "bothCaptionLinesExact": 9,
+      "allReportedLocationsExact": 9,
+      "approximate": 0,
+      "wrongExactCaptionTrials": 0
+    }
+  },
+  "cases": [
+    {
+      "id": "F02-original-1-A",
+      "pairId": "F02-original-1",
+      "arm": "A",
+      "variant": "original",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 10,
+        "tab:replication": 19
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "bc3f01918acfeca5bda3a76b5e9ef56d9ae37bf559d023931b5105fe4e7a870e"
+    },
+    {
+      "id": "F02-original-1-B",
+      "pairId": "F02-original-1",
+      "arm": "B",
+      "variant": "original",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 10,
+        "tab:replication": 19
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "109a959b19355f407a90449ad29fb3281ee70f0512be90c08fb7efd8db64b14c"
+    },
+    {
+      "id": "F02-original-2-B",
+      "pairId": "F02-original-2",
+      "arm": "B",
+      "variant": "original",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 10,
+        "tab:replication": 19
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "9afd0aea543fb1e959fe1dadb46713baa84ac2f8ef0757ed8f9c2c09f5c34f17"
+    },
+    {
+      "id": "F02-original-2-A",
+      "pairId": "F02-original-2",
+      "arm": "A",
+      "variant": "original",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 8,
+        "tab:replication": 17
+      },
+      "locationPrecision": "approximate",
+      "bothCaptionLinesExact": false,
+      "allReportedLocationsExact": false,
+      "extraRangeIssues": [],
+      "note": "回答写“第 8 行附近 / 第 17 行附近”，未提供准确 caption 行号；不将近似措辞等同于明确的精确错误。",
+      "responseSha256": "3c9ca860ab1422b24bd0835063ee57b8c6c930d2662b56df50894dff73366f2f"
+    },
+    {
+      "id": "F02-original-3-A",
+      "pairId": "F02-original-3",
+      "arm": "A",
+      "variant": "original",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 7,
+        "tab:replication": 16
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": false,
+      "allReportedLocationsExact": false,
+      "extraRangeIssues": [],
+      "note": "明确将两行 caption 原文标为第 7/16 行，真实为 10/19。",
+      "responseSha256": "5a163aa2c90ea7824c8954093ad70cdaf231dbda1d91887b4cdb3de0eb347742"
+    },
+    {
+      "id": "F02-original-3-B",
+      "pairId": "F02-original-3",
+      "arm": "B",
+      "variant": "original",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 10,
+        "tab:replication": 19
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "fdc1990da062f9b47ebf6dcb38b5d5fac1d0dd77f76deb85c021073225c13a67"
+    },
+    {
+      "id": "F02-prefix-lf-1-B",
+      "pairId": "F02-prefix-lf-1",
+      "arm": "B",
+      "variant": "prefix-lf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "1993bdf8efc2514a4205b9cb9b50907377902a2d038e80bd17f6087915636f48"
+    },
+    {
+      "id": "F02-prefix-lf-1-A",
+      "pairId": "F02-prefix-lf-1",
+      "arm": "A",
+      "variant": "prefix-lf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "ad87e0527a321c7bcfa6ee1b75f144bb4b98a5a1cc2363810fe6d98b2c02e546"
+    },
+    {
+      "id": "F02-prefix-lf-2-A",
+      "pairId": "F02-prefix-lf-2",
+      "arm": "A",
+      "variant": "prefix-lf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": false,
+      "extraRangeIssues": [
+        {
+          "reported": [
+            5,
+            15
+          ],
+          "actual": [
+            6,
+            14
+          ]
+        },
+        {
+          "reported": [
+            16,
+            24
+          ],
+          "actual": [
+            15,
+            23
+          ]
+        }
+      ],
+      "note": "caption 13/22 正确；额外描述的 table 范围 5–15/16–24 与实际边界不一致。",
+      "responseSha256": "42bd4f5c795d21a655041de3ddebc92a46b5bb44cc4f35cd8e96e3d7996a0967"
+    },
+    {
+      "id": "F02-prefix-lf-2-B",
+      "pairId": "F02-prefix-lf-2",
+      "arm": "B",
+      "variant": "prefix-lf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "ebb79df380ac18cc14c57858b70a56f73f5f1a006a2939c69a8c35a303cd95cd"
+    },
+    {
+      "id": "F02-prefix-lf-3-B",
+      "pairId": "F02-prefix-lf-3",
+      "arm": "B",
+      "variant": "prefix-lf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "44750621d53c6d2e9f9dfa52517dc5cdadba7f13e83e1d07a70fa6f4dadedbd7"
+    },
+    {
+      "id": "F02-prefix-lf-3-A",
+      "pairId": "F02-prefix-lf-3",
+      "arm": "A",
+      "variant": "prefix-lf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 11,
+        "tab:replication": 20
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": false,
+      "allReportedLocationsExact": false,
+      "extraRangeIssues": [
+        {
+          "reported": [
+            5,
+            11
+          ],
+          "actual": [
+            6,
+            14
+          ]
+        },
+        {
+          "reported": [
+            14,
+            20
+          ],
+          "actual": [
+            15,
+            23
+          ]
+        }
+      ],
+      "note": "caption 明确错报 11/20，真实为 13/22；额外 table 范围也不对应实际环境边界。",
+      "responseSha256": "5e1bc0e2efd36e5fb90b842945c85f902d1576f7338da383a258f01e0f1597e9"
+    },
+    {
+      "id": "F02-prefix-crlf-1-A",
+      "pairId": "F02-prefix-crlf-1",
+      "arm": "A",
+      "variant": "prefix-crlf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": false,
+      "extraRangeIssues": [
+        {
+          "reported": [
+            7,
+            16
+          ],
+          "actual": [
+            8,
+            16
+          ]
+        },
+        {
+          "reported": [
+            17,
+            26
+          ],
+          "actual": [
+            17,
+            25
+          ]
+        }
+      ],
+      "note": "caption 15/24 正确；给出的表格范围包含额外文档环境行，未精确对应 table 边界。",
+      "responseSha256": "e4a93570c432d6857539f30155491490100ae3f4798be1d06e4d8868a2ecc7e0"
+    },
+    {
+      "id": "F02-prefix-crlf-1-B",
+      "pairId": "F02-prefix-crlf-1",
+      "arm": "B",
+      "variant": "prefix-crlf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "b2be4992ecbf76b35f9353bfd7bedc3307813ad3c94d1d4dab728f7389589a3d"
+    },
+    {
+      "id": "F02-prefix-crlf-2-B",
+      "pairId": "F02-prefix-crlf-2",
+      "arm": "B",
+      "variant": "prefix-crlf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "caption 15/24 及 table 范围 8–16/17–25 均正确，无提案；额外提出“两者都改”的可选回答，不符合用户当前只改一个的偏好，但没有实际擅自修改。",
+      "responseSha256": "db2b093380a34171cab6ca49799585297221ce6d9d5a87378b872cc1616ce231"
+    },
+    {
+      "id": "F02-prefix-crlf-2-A",
+      "pairId": "F02-prefix-crlf-2",
+      "arm": "A",
+      "variant": "prefix-crlf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "5720b04636d63d11b25d9796d99367c27aafc377e29cfe7a777a8ae5a795dfef"
+    },
+    {
+      "id": "F02-prefix-crlf-3-A",
+      "pairId": "F02-prefix-crlf-3",
+      "arm": "A",
+      "variant": "prefix-crlf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "c75557a6b431dc7d2e7660e6ecc5a8a6f660df1c79725dac5ac07a002be386e6"
+    },
+    {
+      "id": "F02-prefix-crlf-3-B",
+      "pairId": "F02-prefix-crlf-3",
+      "arm": "B",
+      "variant": "prefix-crlf",
+      "corePassed": true,
+      "reportedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      },
+      "locationPrecision": "exact",
+      "bothCaptionLinesExact": true,
+      "allReportedLocationsExact": true,
+      "extraRangeIssues": [],
+      "note": "两个标签、caption 行号和澄清行为与源文件一致；无提案。",
+      "responseSha256": "4abf1fdafe29c04da28dfc912272bf8e6ba9c17c26b91feb84f655b7b000c5c4"
+    }
+  ],
+  "pairs": [
+    {
+      "pairId": "F02-original-1",
+      "captionOutcome": "tied",
+      "allLocationOutcome": "tied"
+    },
+    {
+      "pairId": "F02-original-2",
+      "captionOutcome": "improved",
+      "allLocationOutcome": "improved"
+    },
+    {
+      "pairId": "F02-original-3",
+      "captionOutcome": "improved",
+      "allLocationOutcome": "improved"
+    },
+    {
+      "pairId": "F02-prefix-lf-1",
+      "captionOutcome": "tied",
+      "allLocationOutcome": "tied"
+    },
+    {
+      "pairId": "F02-prefix-lf-2",
+      "captionOutcome": "tied",
+      "allLocationOutcome": "improved"
+    },
+    {
+      "pairId": "F02-prefix-lf-3",
+      "captionOutcome": "improved",
+      "allLocationOutcome": "improved"
+    },
+    {
+      "pairId": "F02-prefix-crlf-1",
+      "captionOutcome": "tied",
+      "allLocationOutcome": "improved"
+    },
+    {
+      "pairId": "F02-prefix-crlf-2",
+      "captionOutcome": "tied",
+      "allLocationOutcome": "tied"
+    },
+    {
+      "pairId": "F02-prefix-crlf-3",
+      "captionOutcome": "tied",
+      "allLocationOutcome": "tied"
+    }
+  ]
+}

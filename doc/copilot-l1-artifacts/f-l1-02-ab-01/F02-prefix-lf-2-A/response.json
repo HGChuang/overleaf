@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-lf-2",
+    "message": {
+      "role": "assistant",
+      "content": "找到了两处「Main results」表格标题，都位于 **main.tex**（共 25 行）。为避免改错，先列出两个候选供你确认：\n\n| 候选 | 标签 (`\\label`) | 文件 | caption 所在行号 | caption 原文 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 22 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n对应的表格正文分别在第 5–15 行（第一个 `table` 环境）和第 16–24 行（第二个 `table` 环境），内容目前完全相同（Baseline 91.2 / Ours 94.5）。\n\n请告诉我改哪一个（① 还是 ②），我再提交只针对那一处的修改。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

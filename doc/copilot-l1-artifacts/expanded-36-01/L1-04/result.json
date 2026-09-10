@@ -1,0 +1,81 @@
+{
+  "id": "L1-04",
+  "family": "macro-value",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 1795,
+      "output": 100,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 53,
+      "totalTokens": 5991,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 1126,
+      "output": 200,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 43,
+      "totalTokens": 6446,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 471,
+      "output": 136,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 6751,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19188,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 8747,
+  "conversationId": "L1-04",
+  "answer": "补丁已提交，供您审阅后接受：\n\n**变更内容**（`macros.tex` 第 1 行）：\n- `\\newcommand{\\samplesize}{12}` → `\\newcommand{\\samplesize}{16}`\n\n**保持不变的部分**：\n- `\\threshold` 定义（第 2 行 `\\newcommand{\\threshold}{0.05}`）\n- 所有对 `\\samplesize` 的引用形式\n- 其余源码\n\n只改动了宏定义本身，符合您的要求。patchId: `patch_4789bb6bfbbd04049ae6566c`。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

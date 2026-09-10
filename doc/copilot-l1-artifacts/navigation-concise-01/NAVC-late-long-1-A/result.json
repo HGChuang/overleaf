@@ -1,0 +1,166 @@
+{
+  "id": "NAVC-late-long-1-A",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "NAVC-late-long-1",
+  "variant": "late-long",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 6,
+    "historyAttempts": 3,
+    "offTargetAttempts": 0,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 3,
+    "reads": [
+      {
+        "message": 6
+      },
+      {
+        "message": 6,
+        "offset": 800
+      },
+      {
+        "message": 6,
+        "offset": 1600
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 6,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 3482,
+      "output": 442,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 323,
+      "totalTokens": 8020,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2577,
+      "output": 215,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 78,
+      "totalTokens": 8936,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 1009,
+      "output": 164,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 81,
+      "totalTokens": 9365,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 1338,
+      "output": 1125,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 738,
+      "totalTokens": 10655,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 2661,
+      "output": 96,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 10,
+      "totalTokens": 10949,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 928,
+      "output": 335,
+      "cacheRead": 10240,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 12,
+      "totalTokens": 11503,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 59428,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 47495,
+  "conversationId": "NAVC-late-long-1",
+  "answer": "Done. Summary of what was done:\n\n**Evidence retrieved** (archived tool result for `prior-decision.tex`, message 6, full 27 lines read):\n- Lines 1–24 are explicitly marked `% Earlier discussion, not the final decision.` — treated as evidence only.\n- Line 25: `% FINAL CAPTION: Held-out results` — the binding decision.\n- Line 26: `% Preserve 91.2 percent, 12 samples, and negation.` — the preservation constraints.\n\n**Edit applied (candidate proposed):** In current `main.tex` (read fresh before editing, hash `f5e82b47…`), the section title `\\section{Draft}` was changed to `\\section{Held-out results}` per the FINAL CAPTION. The body line `Accuracy is 91.2\\% on 12 samples. We do not claim significance.` is untouched — the measured values (91.2%, 12 samples) and the negation (\"We do not claim significance.\") are preserved exactly. No comments, numbers, or other source was altered.\n\n**Compile verification:** `compile_project` on the candidate (`patch_acac36ba9f05c28c62852b35`) → `errorCount=0`, `warningCount=0`, **`verificationStatus=passed`** (candidate hash `eb77f3d2…`).\n\nThe patch is submitted for your review — accept the inline-diff hunk to apply the title change.",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

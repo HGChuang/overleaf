@@ -1,0 +1,470 @@
+[
+  {
+    "id": "NAVS-short-1-A",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Sensitivity results}",
+        "rule": {
+          "exact": "\\section{Sensitivity results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 0
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": false,
+    "pairId": "NAVS-short-1",
+    "arm": "A",
+    "variant": "short",
+    "targetMessage": 2
+  },
+  {
+    "id": "NAVS-short-1-D",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Sensitivity results}",
+        "rule": {
+          "exact": "\\section{Sensitivity results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 0
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": false,
+    "pairId": "NAVS-short-1",
+    "arm": "D",
+    "variant": "short",
+    "targetMessage": 2
+  },
+  {
+    "id": "NAVS-short-2-D",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Sensitivity results}",
+        "rule": {
+          "exact": "\\section{Sensitivity results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 0
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": false,
+    "pairId": "NAVS-short-2",
+    "arm": "D",
+    "variant": "short",
+    "targetMessage": 2
+  },
+  {
+    "id": "NAVS-short-2-A",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Sensitivity results}",
+        "rule": {
+          "exact": "\\section{Sensitivity results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 0
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": false,
+    "pairId": "NAVS-short-2",
+    "arm": "A",
+    "variant": "short",
+    "targetMessage": 2
+  },
+  {
+    "id": "NAVS-long-1-D",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Robustness results}",
+        "rule": {
+          "exact": "\\section{Robustness results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% FINAL CAPTION: Robustness results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 0
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": true,
+    "pairId": "NAVS-long-1",
+    "arm": "D",
+    "variant": "long",
+    "targetMessage": 2
+  },
+  {
+    "id": "NAVS-long-1-A",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Robustness results}",
+        "rule": {
+          "exact": "\\section{Robustness results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% FINAL CAPTION: Robustness results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 0
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": true,
+    "pairId": "NAVS-long-1",
+    "arm": "A",
+    "variant": "long",
+    "targetMessage": 2
+  },
+  {
+    "id": "NAVS-long-2-A",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Robustness results}",
+        "rule": {
+          "exact": "\\section{Robustness results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% FINAL CAPTION: Robustness results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 0
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": true,
+    "pairId": "NAVS-long-2",
+    "arm": "A",
+    "variant": "long",
+    "targetMessage": 2
+  },
+  {
+    "id": "NAVS-long-2-D",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Robustness results}",
+        "rule": {
+          "exact": "\\section{Robustness results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% FINAL CAPTION: Robustness results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 0
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": true,
+    "pairId": "NAVS-long-2",
+    "arm": "D",
+    "variant": "long",
+    "targetMessage": 2
+  },
+  {
+    "id": "NAVS-late-long-1-A",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Held-out results}",
+        "rule": {
+          "exact": "\\section{Held-out results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% FINAL CAPTION: Held-out results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 4
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": true,
+    "pairId": "NAVS-late-long-1",
+    "arm": "A",
+    "variant": "late-long",
+    "targetMessage": 6
+  },
+  {
+    "id": "NAVS-late-long-1-D",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Held-out results}",
+        "rule": {
+          "exact": "\\section{Held-out results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% FINAL CAPTION: Held-out results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 4
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": true,
+    "pairId": "NAVS-late-long-1",
+    "arm": "D",
+    "variant": "late-long",
+    "targetMessage": 6
+  },
+  {
+    "id": "NAVS-late-long-2-D",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Held-out results}",
+        "rule": {
+          "exact": "\\section{Held-out results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% FINAL CAPTION: Held-out results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 4
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": true,
+    "pairId": "NAVS-late-long-2",
+    "arm": "D",
+    "variant": "late-long",
+    "targetMessage": 6
+  },
+  {
+    "id": "NAVS-late-long-2-A",
+    "family": "archived-policy",
+    "split": "dev",
+    "outcome": "proposal",
+    "prompt": "请重新读回会话归档中 prior-decision.tex 的原始工具证据（不是只看摘要），按 FINAL CAPTION 决定改 main.tex 的 Draft 标题。读取当前源码后再提交，保留数据与否定结论。只提交候选并编译验证；保留所有未要求改变的源码、注释、数值和引用。",
+    "files": {
+      "main.tex": "\\documentclass{article}\n\\begin{document}\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n\\end{document}\n"
+    },
+    "regions": [
+      {
+        "file": "main.tex",
+        "before": "\\section{Draft}",
+        "reference": "\\section{Held-out results}",
+        "rule": {
+          "exact": "\\section{Held-out results}"
+        }
+      }
+    ],
+    "baselineCompiles": true,
+    "compileRequired": true,
+    "agentCompileRequired": true,
+    "seed": {
+      "manualCompact": false,
+      "policy": "% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% Earlier discussion, not the final decision.\n% FINAL CAPTION: Held-out results\n% Preserve 91.2 percent, 12 samples, and negation.\n",
+      "authorTexts": [
+        "后续按 prior-decision.tex 的 FINAL CAPTION 决策；旧记录只作决策证据，编辑前必须读当前源码。"
+      ],
+      "fillerBytes": 24000,
+      "navigationCheckpoint": true,
+      "policyLeadMessages": 4
+    },
+    "requireHistory": true,
+    "requireHistoryContinuation": true,
+    "pairId": "NAVS-late-long-2",
+    "arm": "A",
+    "variant": "late-long",
+    "targetMessage": 6
+  }
+]

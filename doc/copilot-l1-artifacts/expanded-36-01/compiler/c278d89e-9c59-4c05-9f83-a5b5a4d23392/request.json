@@ -1,0 +1,8 @@
+{
+  "files": {
+    "main.tex": "\\documentclass{article}\n\\begin{document}\n\\input{driver}\n\\end{document}\n",
+    "driver.tex": "% draft/method is historical.\n\\input{sections/method}\n",
+    "sections/method.tex": "\\section{Approach}\nWe retain 12 samples.\n",
+    "draft/method.tex": "\\section{Method}\nWe retain 12 samples.\n"
+  }
+}

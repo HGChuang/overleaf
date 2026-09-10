@@ -1,0 +1,186 @@
+{
+  "id": "NAVS-late-long-2-D",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "D",
+  "pairId": "NAVS-late-long-2",
+  "variant": "late-long",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 6,
+    "historyAttempts": 3,
+    "offTargetAttempts": 0,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 3,
+    "reads": [
+      {
+        "path": "prior-decision.tex"
+      },
+      {
+        "offset": 800,
+        "path": "prior-decision.tex"
+      },
+      {
+        "offset": 1600,
+        "path": "prior-decision.tex"
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 7,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 2027,
+      "output": 360,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 186,
+      "totalTokens": 8019,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 4434,
+      "output": 193,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 73,
+      "totalTokens": 8723,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 784,
+      "output": 164,
+      "cacheRead": 8448,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 83,
+      "totalTokens": 9396,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 2136,
+      "output": 777,
+      "cacheRead": 7424,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 399,
+      "totalTokens": 10337,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 6525,
+      "output": 121,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 30,
+      "totalTokens": 10742,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 1481,
+      "output": 168,
+      "cacheRead": 9472,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 31,
+      "totalTokens": 11121,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 7,
+      "phase": "task",
+      "input": 2276,
+      "output": 277,
+      "cacheRead": 8960,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 11513,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 69851,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 25928,
+  "conversationId": "NAVS-late-long-2",
+  "answer": "已完成。\n\n**归档证据（prior-decision.tex，逐行读回）**\n- 第 1–24 行均为 `% Earlier discussion, not the final decision.`\n- 第 25 行：`% FINAL CAPTION: Held-out results`\n- 第 26 行：`% Preserve 91.2 percent, 12 samples, and negation.`\n\n**当前源码（main.tex，snapshot `d25266cd…`，编译前已重读）**\n```\n3: \\section{Draft}\n4: Accuracy is 91.2\\% on 12 samples. We do not claim significance.\n```\n\n**提交的候选补丁**（`patch_9147fda7a49eb0c1b461ad34`，单 hunk）\n- `\\section{Draft}` → `\\section{Held-out results}`\n\n**编译验证**：`verificationStatus = passed`，`errorCount = 0`，`warningCount = 0`。\n\n未改动的部分：91.2% 数据、12 samples、否定句 `We do not claim significance.`，以及 main.tex 中其余全部源码与注释。补丁处于 proposed 状态，需你在内联 diff 预览中接受后才真正写入文件。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

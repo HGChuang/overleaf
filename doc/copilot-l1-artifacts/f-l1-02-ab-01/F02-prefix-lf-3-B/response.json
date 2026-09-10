@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-lf-3",
+    "message": {
+      "role": "assistant",
+      "content": "已在 `main.tex` 中找到两处标题为 **Main results** 的表格，请你确认要改哪一个（我暂未提交任何修改）：\n\n| 候选 | 标签（label） | 文件路径 | caption 所在行号 | 该行内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 22 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n两处 caption 文字完全相同，只有 label 不同（`tab:main` 是文档中第一张表，`tab:replication` 是第二张）。\n\n请回复你要改的是 **①（`tab:main`）** 还是 **②（`tab:replication`）**，我再据此把对应 caption 改成 `Ablation results`。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

@@ -1,0 +1,93 @@
+{
+  "id": "L1-07",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1793,
+      "output": 169,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 58,
+      "totalTokens": 6058,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2646,
+      "output": 355,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 100,
+      "totalTokens": 7097,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 2280,
+      "output": 60,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7460,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "input": 497,
+      "output": 171,
+      "cacheRead": 7168,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 18,
+      "totalTokens": 7836,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 28451,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 17682,
+  "conversationId": "conv_70778135-f935-4d29-a5d1-767c5a2472db",
+  "answer": "已完成。补丁 `patch_e2ca58f13c0af3575bc50dd5` 已提交，包含两处修改，编译验证通过（verificationStatus=passed, errorCount=0）：\n\n- **main.tex（第 3 行）**：`\\cite{smith2024}` → `\\cite{smithBaseline}`\n- **refs.tex（第 2 行）**：`\\bibitem{smith2024}` → `\\bibitem{smithBaseline}`，bibitem 内容（作者 A. Smith、标题 A synthetic baseline、年份 2024）原样保留。\n\n请在内联 diff 预览中 Accept 该补丁后生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

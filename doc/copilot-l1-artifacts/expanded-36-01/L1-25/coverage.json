@@ -1,0 +1,21 @@
+{
+  "coverageFailures": [
+    "required archived evidence was not read back",
+    "manual archive did not commit an epoch"
+  ],
+  "historyReads": [],
+  "liveArchives": 0,
+  "epochCommits": 0,
+  "compactions": [],
+  "evidenceFiles": [
+    "prior-decision.tex"
+  ],
+  "requests": [
+    {
+      "callId": 1,
+      "estimatedInput": 52215,
+      "effectiveInputBudget": 945904,
+      "summary": true
+    }
+  ]
+}

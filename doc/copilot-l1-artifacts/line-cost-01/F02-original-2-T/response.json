@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-original-2",
+    "message": {
+      "role": "assistant",
+      "content": "我在 main.tex 里找到了两个标题都是 **Main results** 的表格，内容完全一样，分别带 `\\label{tab:main}`（第 10 行）和 `\\label{tab:replication}`（第 19 行）。你要求\"只改我指的那一个\"，但这次没有附带任何选中文本或指针信息，两个候选项会产生不同的改动位置，无法唯一确定目标。\n\n```latex\n% 请指出要改哪一个：是 \\label{tab:main} 的表格（第 10 行），还是 \\label{tab:replication} 的表格（第 19 行）？\n```\n\n确认后我会立即用 submit_patch 只改你指定的那一处。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

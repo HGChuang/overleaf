@@ -1,0 +1,11 @@
+{
+  "status": "reviewed",
+  "cases": 4,
+  "corePassed": 4,
+  "claims": "候选修改、保护字节、编译成功和proposed状态与独立审计一致，不保证所有自然语言或前端描述准确。",
+  "observations": [
+    "生产L1-27英文回答。",
+    "生产L1-36对statistical限定的解释括注不准确，但原文限定及否定按字节保留。"
+  ],
+  "decision": "adopt named source lookup; retain ambiguity selection and original message reader"
+}

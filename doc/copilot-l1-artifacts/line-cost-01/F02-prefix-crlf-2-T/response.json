@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-crlf-2",
+    "message": {
+      "role": "assistant",
+      "content": "项目里有两个表格的 caption 都是 \"Main results\"，都在唯一文件 `main.tex` 中。两个候选如下：\n\n| # | 标签 (label) | 文件路径 | caption 所在行号 |\n|---|---|---|---|\n| 候选 A | `tab:main` | `main.tex` | **第 15 行** |\n| 候选 B | `tab:replication` | `main.tex` | **第 24 行** |\n\n对应源码（已核对）：\n\n- 第 15 行：`\\caption{Main results}\\label{tab:main}`\n- 第 24 行：`\\caption{Main results}\\label{tab:replication}`\n\n请确认要改哪一个（A 或 B），我只会改你指的那一个。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

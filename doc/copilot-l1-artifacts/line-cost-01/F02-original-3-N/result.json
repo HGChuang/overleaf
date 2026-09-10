@@ -1,0 +1,62 @@
+{
+  "id": "F02-original-3-N",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "N",
+  "pairId": "F02-original-3",
+  "variant": "original",
+  "expectedLocations": {
+    "tab:main": 10,
+    "tab:replication": 19
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1735,
+      "output": 96,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 50,
+      "totalTokens": 5927,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2252,
+      "output": 881,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 727,
+      "totalTokens": 7229,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 13156,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 16870,
+  "conversationId": "F02-original-3",
+  "answer": "main.tex 里有**两个**表格，标题都叫 “Main results”，内容完全一样，唯一区别是标签：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`\n\n您说“只改我指的那一个”，但当前没有选中文本，我无法确定您指的是哪一个（改 `tab:main` 和改 `tab:replication` 是两个不同的修改），所以先确认一下：\n\n```latex\n% 您指的是哪一个表格？第一个（\\label{tab:main}）还是第二个（\\label{tab:replication}）？\n```",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

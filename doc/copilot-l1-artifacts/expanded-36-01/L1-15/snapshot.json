@@ -1,0 +1,35 @@
+{
+  "id": "bef6719f7b242e6dfa51af14e8511306a45661db04afee7dda4af59fd01b645a",
+  "projectId": "07941bf9a3c931f370051d0d",
+  "docs": [
+    {
+      "path": "main.tex",
+      "docId": "66dca06fd1f35b02700826fe",
+      "version": 1,
+      "sha256": "3ee92121349565e8c1cdfeb7a31ecad203f2dbf91d409f66a69cc9855822f948"
+    },
+    {
+      "path": "sections/method.tex",
+      "docId": "669a7ae4797c0b08752d917e",
+      "version": 1,
+      "sha256": "06a1dca37e58afc4d65d7550d9dfabf94df427063da271908bb3433633c9606b"
+    },
+    {
+      "path": "sections/results.tex",
+      "docId": "eb075286685660d112edbd45",
+      "version": 1,
+      "sha256": "a05efd0a56c40725bb93d90c603db3ddacd54aad7c36fb94c8078fd3be0d612a"
+    },
+    {
+      "path": "appendix.tex",
+      "docId": "912c9b6c2ec499f1f1843de5",
+      "version": 1,
+      "sha256": "9591cf584630e9d54b5f17ae25625bfd735d3dcfa7a324eb9989d4910d847f2f"
+    }
+  ],
+  "assets": [],
+  "rootDocId": "66dca06fd1f35b02700826fe",
+  "compiler": "pdflatex",
+  "imageName": "texlive-full:latest",
+  "assetBytesFrozen": true
+}

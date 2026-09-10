@@ -1,0 +1,81 @@
+{
+  "id": "F02-original-2-N",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "N",
+  "pairId": "F02-original-2",
+  "variant": "original",
+  "expectedLocations": {
+    "tab:main": 10,
+    "tab:replication": 19
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 448,
+      "output": 106,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 46,
+      "totalTokens": 5930,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 2027,
+      "output": 133,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 87,
+      "totalTokens": 6256,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 1295,
+      "output": 1016,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 854,
+      "totalTokens": 7687,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19873,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 12488,
+  "conversationId": "F02-original-2",
+  "answer": "项目里有两个表格的标题都叫 “Main results”，而你要求“只改我指的那一个”，但当前没有收到你选中的内容（selectedText 为空），两个候选标题内容完全一样，无法确定你指的是哪一个：\n\n- `main.tex` 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n- `main.tex` 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n为避免改错表格，请先确认要改哪一个：\n\n```latex\n% 请告诉我改哪一个：第 10 行的 tab:main，还是第 19 行的 tab:replication？（或在编辑器中选中对应的表格标题）\n```",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

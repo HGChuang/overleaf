@@ -1,0 +1,68 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:b68f1e62521f95f88e7af77f:patch_f44129c9433e9d5c9a004c1d",
+      "conversationId": "L1-27",
+      "createdAt": "2026-09-09T15:14:20.915Z",
+      "documentHeads": {
+        "main.tex": {
+          "hash": "f5e82b478c336df63a2f3539ce0b8f455bddd0df3742cbe1d50da312657bf7eb",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "main.tex",
+          "line": 3,
+          "oldText": "\\section{Draft}",
+          "newText": "\\section{Robustness results}",
+          "index": 0,
+          "docId": "6f50abcf89658efac16139e0",
+          "baselineHash": "f5e82b478c336df63a2f3539ce0b8f455bddd0df3742cbe1d50da312657bf7eb",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_f44129c9433e9d5c9a004c1d",
+      "projectId": "b68f1e62521f95f88e7af77f",
+      "snapshotId": "397d184f6b41230135349f94f6e5950c786748afa16515fdca3b683e14b74cbf",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateVerification": {
+        "verificationId": "aaaaaaaaaaaaaaaaaaaaaaaa:b68f1e62521f95f88e7af77f:397d184f6b41230135349f94f6e5950c786748afa16515fdca3b683e14b74cbf:patch_f44129c9433e9d5c9a004c1d:compile:call_30wvagpd7zpcm3w94j2mg3w4",
+        "snapshotId": "397d184f6b41230135349f94f6e5950c786748afa16515fdca3b683e14b74cbf",
+        "patchId": "patch_f44129c9433e9d5c9a004c1d",
+        "candidateHash": "2e5f3478747d48c28d6ba8a12330c05355ee4472c42449f3ed1de8395960087b",
+        "status": "passed",
+        "errorCount": 0,
+        "warningCount": 0,
+        "verifiedAt": "2026-09-09T15:14:23.762Z"
+      }
+    }
+  ],
+  "verifications": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:b68f1e62521f95f88e7af77f:397d184f6b41230135349f94f6e5950c786748afa16515fdca3b683e14b74cbf:patch_f44129c9433e9d5c9a004c1d:compile:call_30wvagpd7zpcm3w94j2mg3w4",
+      "kind": "compile",
+      "patchId": "patch_f44129c9433e9d5c9a004c1d",
+      "projectId": "b68f1e62521f95f88e7af77f",
+      "snapshotId": "397d184f6b41230135349f94f6e5950c786748afa16515fdca3b683e14b74cbf",
+      "startedAt": "2026-09-09T15:14:22.729Z",
+      "status": "complete",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidateHash": "2e5f3478747d48c28d6ba8a12330c05355ee4472c42449f3ed1de8395960087b",
+      "result": {
+        "status": "success",
+        "snapshotId": "397d184f6b41230135349f94f6e5950c786748afa16515fdca3b683e14b74cbf",
+        "patchId": "patch_f44129c9433e9d5c9a004c1d",
+        "candidateHash": "2e5f3478747d48c28d6ba8a12330c05355ee4472c42449f3ed1de8395960087b",
+        "manifestHash": "397d184f6b41230135349f94f6e5950c786748afa16515fdca3b683e14b74cbf",
+        "buildId": "852c579d-488b-4e2c-b2b6-a255e9374672",
+        "logComplete": true,
+        "errorCount": 0,
+        "errors": [],
+        "warningCount": 0
+      },
+      "verifiedAt": "2026-09-09T15:14:23.757Z"
+    }
+  ]
+}

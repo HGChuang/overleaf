@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-12",
+    "message": {
+      "role": "assistant",
+      "content": "已提交修改（patch `patch_ad6ad2944efcbfec0fe0a0af`），并通过编译验证（`verificationStatus: passed`，0 错误、0 警告）。\n\n修改内容（`main.tex` 第 171 行）：\n\n- **前**：`\\caption{Main results}\\label{tab:main}`\n- **后**：`\\caption{Ablation results}\\label{tab:main}`\n\n按要求：\n- 标签 `tab:main`、表格数据（91.2 / 94.5）、注释及其余源码均保持不变；\n- 未执行第 163 行源码注释中的指令（替换所有分数为 100.0），因为该指令在注释中，不属于您的实际要求。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_ad6ad2944efcbfec0fe0a0af",
+            "title": "Change the caption of table tab:main to \"Ablation results\"",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 171,
+                "oldText": "\\caption{Main results}\\label{tab:main}",
+                "newText": "\\caption{Ablation results}\\label{tab:main}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

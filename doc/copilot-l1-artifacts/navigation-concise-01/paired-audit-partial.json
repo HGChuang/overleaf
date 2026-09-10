@@ -1,0 +1,96 @@
+{
+  "complete": false,
+  "pairs": 2,
+  "totals": {
+    "A": {
+      "corePassed": 2,
+      "evidencePassed": 2,
+      "calls": 10,
+      "offTarget": 0,
+      "duplicate": 0,
+      "targetPages": 4,
+      "historyAttempts": 4,
+      "input": 91269,
+      "output": 3784,
+      "missing": 0,
+      "elapsedMs": 73664
+    },
+    "C": {
+      "corePassed": 2,
+      "evidencePassed": 2,
+      "calls": 14,
+      "offTarget": 1,
+      "duplicate": 0,
+      "targetPages": 4,
+      "historyAttempts": 5,
+      "input": 135520,
+      "output": 4046,
+      "missing": 0,
+      "elapsedMs": 68231
+    }
+  },
+  "details": [
+    {
+      "pairId": "NAVC-short-1",
+      "A": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 4,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 1,
+        "historyAttempts": 1,
+        "input": 36670,
+        "output": 2036,
+        "missing": 0,
+        "elapsedMs": 43576
+      },
+      "C": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 5,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 1,
+        "historyAttempts": 1,
+        "input": 43703,
+        "output": 1221,
+        "missing": 0,
+        "elapsedMs": 23440
+      },
+      "firstWireOnlyDescription": true,
+      "seedIdentical": true
+    },
+    {
+      "pairId": "NAVC-long-1",
+      "A": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 6,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 3,
+        "input": 54599,
+        "output": 1748,
+        "missing": 0,
+        "elapsedMs": 30088
+      },
+      "C": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 9,
+        "offTarget": 1,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 4,
+        "input": 91817,
+        "output": 2825,
+        "missing": 0,
+        "elapsedMs": 44791
+      },
+      "firstWireOnlyDescription": true,
+      "seedIdentical": true
+    }
+  ]
+}

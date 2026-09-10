@@ -1,0 +1,149 @@
+{
+  "eventHead": 16,
+  "coveredThroughSeq": 6,
+  "projectionThroughSeq": 15,
+  "generation": 1,
+  "checkpoint": {
+    "version": 1,
+    "authorRequests": [
+      {
+        "message": 0,
+        "text": "本轮只允许把 main.tex 的 Draft 节标题改成 Discussion。必须原样保留 91.2\\%、12 samples、否定结论、statistical 限定、citation 键和文献信息，其他字节不变。",
+        "context": null
+      }
+    ],
+    "observations": [],
+    "pending": [],
+    "toolLedger": [],
+    "patches": [],
+    "verifications": [],
+    "projectBase": {
+      "projectId": "2c530e017ed0000fd082e667",
+      "sourceSnapshot": {
+        "id": "348af6e2a9b40a4f5de5c5cdc7d544db47a65febe142a594700ad1efc83aac29",
+        "projectId": "2c530e017ed0000fd082e667",
+        "docs": [
+          {
+            "path": "main.tex",
+            "docId": "9072c0ddc504de1b73b56480",
+            "version": 1,
+            "sha256": "d05c8681af2ae601c6eeee6f847948126da52b8dba05cd62de81b534faa738fb"
+          }
+        ],
+        "assets": [],
+        "rootDocId": "9072c0ddc504de1b73b56480",
+        "compiler": "pdflatex",
+        "imageName": "texlive-full:latest",
+        "assetBytesFrozen": true
+      },
+      "rootDocId": "9072c0ddc504de1b73b56480",
+      "fileList": [
+        "main.tex"
+      ],
+      "outline": [
+        "main.tex"
+      ],
+      "files": [
+        {
+          "path": "main.tex",
+          "docId": "9072c0ddc504de1b73b56480",
+          "version": 1,
+          "sha256": "d05c8681af2ae601c6eeee6f847948126da52b8dba05cd62de81b534faa738fb"
+        }
+      ],
+      "sourceManifest": [
+        {
+          "path": "main.tex",
+          "docId": "9072c0ddc504de1b73b56480",
+          "version": 1,
+          "sha256": "d05c8681af2ae601c6eeee6f847948126da52b8dba05cd62de81b534faa738fb"
+        }
+      ]
+    }
+  },
+  "paperIndex": {
+    "snapshotId": "348af6e2a9b40a4f5de5c5cdc7d544db47a65febe142a594700ad1efc83aac29",
+    "sourceWindows": 0,
+    "reviewedWindows": 0,
+    "staleReviews": 0,
+    "semanticStatus": "not_built"
+  },
+  "immutablePrefixHash": "54de43a9136def4a99bd05f01e7b637ab206d1f23af5d91301a1f6b7a53c74d1",
+  "metrics": [
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 32619,
+      "reportedInput": 7724,
+      "ordinaryInput": 3628,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 196,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 1478,
+      "ttftMs": 614,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T19:07:21.776Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 31062,
+      "reportedInput": 7400,
+      "ordinaryInput": 1256,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "output": 104,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 2120,
+      "ttftMs": 1055,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T19:07:19.145Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 28225,
+      "reportedInput": 6887,
+      "ordinaryInput": 2791,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 358,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 5879,
+      "ttftMs": 1062,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T19:07:16.974Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 25604,
+      "reportedInput": 6318,
+      "ordinaryInput": 2222,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 242,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 3261,
+      "ttftMs": 1984,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T19:07:11.066Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 48299,
+      "reportedInput": 9974,
+      "ordinaryInput": 4854,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "output": 5214,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 36422,
+      "ttftMs": null,
+      "reason": "summary_warm",
+      "occurredAt": "2026-09-08T19:07:07.787Z"
+    }
+  ]
+}

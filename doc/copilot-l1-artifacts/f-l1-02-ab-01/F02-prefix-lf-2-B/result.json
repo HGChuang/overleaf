@@ -1,0 +1,62 @@
+{
+  "id": "F02-prefix-lf-2-B",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "B",
+  "pairId": "F02-prefix-lf-2",
+  "variant": "prefix-lf",
+  "expectedLocations": {
+    "tab:main": 13,
+    "tab:replication": 22
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 2,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 664,
+      "output": 160,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 83,
+      "totalTokens": 5944,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 1092,
+      "output": 235,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 41,
+      "totalTokens": 6959,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 12903,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 3949,
+  "conversationId": "F02-prefix-lf-2",
+  "answer": "项目里共有两个 caption 为 \"Main results\" 的表格，两个候选如下：\n\n| 候选 | 标签 (label) | 文件路径 | caption 所在行 |\n|------|--------------|----------|----------------|\n| A | `tab:main` | `main.tex` | 第 13 行 |\n| B | `tab:replication` | `main.tex` | 第 22 行 |\n\n对应源码（`main.tex`）：\n\n- 候选 A（第 13 行）：`\\caption{Main results}\\label{tab:main}`\n- 候选 B（第 22 行）：`\\caption{Main results}\\label{tab:replication}`\n\n请确认您指的是哪一个（例如「改 A，`tab:main`」或「改 B，`tab:replication`」），我再提交只改动那一个 caption 的 patch。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

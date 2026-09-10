@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "NAV-short-2",
+    "message": {
+      "role": "assistant",
+      "content": "已完成。\n\n## 决策依据（归档原始证据，非摘要）\n`prior-decision.tex` 原始工具证据（snapshot `88df442e…`，sha256 `924c67e8…`）内容为：\n```\n% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n```\nFINAL CAPTION = **Sensitivity results**，且明确要求保留 91.2 percent、12 samples 与否定表述。\n\n## 修改内容\n- **main.tex**（当前源码 snapshot `948b2607…`，共 6 行）：第 3 行 `\\section{Draft}` → `\\section{Sensitivity results}`\n- 第 4 行正文 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.` **保持不变**（已含 91.2%、12 samples、否定结论）\n- 未改动任何其他源码、注释、数值或引用\n\n## 编译验证\n`compile_project(patchId=patch_9dd04c3df9b02553f2cf5575)` → **verificationStatus: passed**，errorCount=0，warningCount=0（candidateHash `8a6c5360…`）。\n\n补丁仍处于 **proposed** 状态（patchId `patch_9dd04c3df9b02553f2cf5575`），需你在 diff 预览中 Accept 后才会写入源码。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_9dd04c3df9b02553f2cf5575",
+            "title": "按 prior-decision.tex 的 FINAL CAPTION 将 main.tex 章节标题 Draft 改为 Sensitivity results",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 3,
+                "oldText": "\\section{Draft}",
+                "newText": "\\section{Sensitivity results}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

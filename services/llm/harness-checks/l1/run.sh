@@ -12,9 +12,11 @@ secret_dir=$(mktemp -d)
 mongo_name="copilot-l1-mongo-$$"
 tex_name="copilot-l1-tex-$$"
 runtime_name="copilot-l1-runtime-$$"
+config_mongo_started=false
 cleanup() {
   docker rm -f "$runtime_name" "$tex_name" "$mongo_name" >/dev/null 2>&1 || true
   rm -rf "$secret_dir"
+  if [[ "$config_mongo_started" == true ]]; then docker stop develop-mongo-1 >/dev/null 2>&1 || true; fi
 }
 trap cleanup EXIT
 trap 'exit 130' INT TERM
@@ -36,6 +38,14 @@ manifest = {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
 (out / 'source-manifest-current.json').write_text(json.dumps(manifest, indent=2))
 PY
 if [[ "$mode" == run ]]; then
+  if [[ "${L1_START_CONFIG_MONGO:-0}" == 1 && $(docker inspect --format '{{.State.Running}}' develop-mongo-1) != true ]]; then
+    docker start develop-mongo-1 >/dev/null
+    config_mongo_started=true
+    for attempt in {1..60}; do
+      if docker exec develop-mongo-1 mongo --quiet --eval 'db.adminCommand({ping:1}).ok' >/dev/null 2>&1; then break; fi
+      sleep 0.5
+    done
+  fi
   # Secret stays in a mode-600 temporary file, never stdout or artifacts.
   docker exec develop-mongo-1 mongo --quiet sharelatex --eval '
     var entries=[]; db.users.find({"llminfo.name":"huoshan"},{llminfo:1}).forEach(function(u){u.llminfo.forEach(function(p){
@@ -43,7 +53,19 @@ if [[ "$mode" == run ]]; then
     });}); if(entries.length!==1 || !entries[0].apiKey) throw new Error("Expected one configured huoshan DeepSeek model"); print(JSON.stringify(entries[0]));
   ' > "$secret_dir/model.json"
   chmod 600 "$secret_dir/model.json"
-  docker exec develop-llm-1 node -e 'process.stdout.write(process.env.COPILOT_MODEL_PROFILES || "{}")' > "$secret_dir/profiles.json"
+  # Read the saved deployment profile even when the app container is stopped.
+  # Do not print or persist its other environment values.
+  python3 - "$secret_dir/profiles.json" <<'PY'
+import json, subprocess, sys
+from pathlib import Path
+values = json.loads(subprocess.check_output(['docker', 'inspect', '--format', '{{json .Config.Env}}', 'develop-llm-1']))
+profile = next((v.partition('=')[2] for v in values if v.startswith('COPILOT_MODEL_PROFILES=')), '{}')
+Path(sys.argv[1]).write_text(profile)
+PY
+  if [[ "$config_mongo_started" == true ]]; then
+    docker stop develop-mongo-1 >/dev/null
+    config_mongo_started=false
+  fi
 else
   echo '{}' > "$secret_dir/model.json"
   echo '{}' > "$secret_dir/profiles.json"
@@ -73,8 +95,9 @@ docker run --rm --name "$runtime_name" --network "container:$mongo_name" --user 
   -v "$root/libraries/settings:/overleaf/libraries/settings:ro" \
   -v "$out:/output" -v "$out/compiler:/spool" -v "$secret_dir:/secrets:ro" \
   -e L1_MODE="$mode" -e L1_CASES="$case_ids" \
+  -e L1_EXPERIMENT="${L1_EXPERIMENT:-}" \
   -e MONGO_URL='mongodb://127.0.0.1:27017/copilot_l1?replicaSet=l1' \
   -e COPILOT_AGENT_RECURSION_LIMIT=12 -e COPILOT_TURN_TIMEOUT_MS=300000 \
   -e COPILOT_QDRANT_URL= -e COPILOT_EMBEDDING_URL= \
   --entrypoint sh "$runtime_image" -c \
-  'ln -sfn /overleaf/libraries/copilot-contracts /overleaf/node_modules/@overleaf/copilot-contracts && /overleaf/node_modules/.bin/tsc -p harness-checks/l1/tsconfig.json && node --import tsx harness-checks/l1/run.ts'
+  'ln -sfn /overleaf/libraries/copilot-contracts /overleaf/node_modules/@overleaf/copilot-contracts && /overleaf/node_modules/.bin/tsc -p harness-checks/l1/tsconfig.json && node --import tsx --test harness-checks/l1/*.test.ts && node --import tsx harness-checks/l1/run.ts'

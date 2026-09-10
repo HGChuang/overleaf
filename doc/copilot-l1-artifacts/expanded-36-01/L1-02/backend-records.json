@@ -1,0 +1,33 @@
+{
+  "proposals": [
+    {
+      "_id": "aaaaaaaaaaaaaaaaaaaaaaaa:9ff2bc8e30ce0382d14b48d9:patch_e9ae2e260f39026d08a30e18",
+      "conversationId": "L1-02",
+      "createdAt": "2026-09-08T18:53:51.747Z",
+      "documentHeads": {
+        "main.tex": {
+          "hash": "75370118783af4333a592a654149f2518a5e910c64ee7b2facf6966937c6d766",
+          "version": 1
+        }
+      },
+      "hunks": [
+        {
+          "file": "main.tex",
+          "line": 10,
+          "oldText": "\\caption{Main results}\\label{tab:main}",
+          "newText": "\\caption{Ablation results}\\label{tab:main}",
+          "index": 0,
+          "docId": "9bde8ba1c00a88d24dc4efaa",
+          "baselineHash": "75370118783af4333a592a654149f2518a5e910c64ee7b2facf6966937c6d766",
+          "baselineVersion": 1,
+          "status": "proposed"
+        }
+      ],
+      "patchId": "patch_e9ae2e260f39026d08a30e18",
+      "projectId": "9ff2bc8e30ce0382d14b48d9",
+      "snapshotId": "68f34c1360ff0b6f30754126008b6467dc4e132284c82c57b6f504f9bc0938c7",
+      "userId": "aaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "verifications": []
+}

@@ -1,0 +1,439 @@
+{
+  "summary": {
+    "cases": 16,
+    "automaticPassed": 16,
+    "calls": 57,
+    "tokens": 386904,
+    "sourcePages": 19,
+    "canonicalHunks": 13,
+    "sourceUnchangedAtAudit": true,
+    "semanticReview": "pending"
+  },
+  "cases": [
+    {
+      "id": "L1-01",
+      "automaticPassed": true,
+      "wireRequests": 3,
+      "calls": 3,
+      "tokens": 18917,
+      "sourcePages": [
+        {
+          "path": "macros.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 59,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [],
+      "toolErrors": [],
+      "answer": "`\\threshold` 的定义如下，未做任何修改：\n\n- **定义文件**：`macros.tex`（第 2 行）\n  ```latex\n  \\newcommand{\\threshold}{0.05}\n  ```\n- **当前数值**：**0.05**\n\n它通过 `\\newcommand` 定义为常量 0.05；在 `main.tex` 第 4 行被引用（`We use $\\samplesize$ samples and threshold $\\threshold$.`），展开后即为 0.05。若之后用 `\\renewcommand` 重新定义，则以最后一次定义为准——目前项目中没有其他重定义。",
+      "expectedLocations": null
+    },
+    {
+      "id": "L1-02",
+      "automaticPassed": true,
+      "wireRequests": 5,
+      "calls": 5,
+      "tokens": 32996,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 218,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [
+        {
+          "file": "main.tex",
+          "line": 10,
+          "insertion": false
+        }
+      ],
+      "toolErrors": [],
+      "answer": "已完成 ✅\n\n**修改内容**（`main.tex` 第 10 行）：\n- `\\caption{Main results}` → `\\caption{Ablation results}`\n- 标签 `\\label{tab:main}`、表格数据（Method/Score 行）及其余源码均未改动。\n\n**编译验证**：`verificationStatus=passed`，0 错误、0 警告。\n\n补丁已提交为 `patch_6a79249fa4be1c1c0c1c8a77`，请在差异预览中接受后生效。",
+      "expectedLocations": null
+    },
+    {
+      "id": "L1-03",
+      "automaticPassed": true,
+      "wireRequests": 4,
+      "calls": 4,
+      "tokens": 28668,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 110,
+          "nextOffsetBytes": null
+        },
+        {
+          "path": "sections/method.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 82,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [
+        {
+          "file": "sections/method.tex",
+          "line": 1,
+          "insertion": false
+        },
+        {
+          "file": "main.tex",
+          "line": 4,
+          "insertion": false
+        }
+      ],
+      "toolErrors": [],
+      "answer": "已完成。变更内容如下：\n\n**补丁 `patch_39b40a1c78dddb0295207c59`（共 2 处改动）**\n\n| 文件 | 行 | 修改 |\n|---|---|---|\n| `sections/method.tex` | 1 | `\\label{sec:method}` → `\\label{sec:approach}` |\n| `main.tex` | 4 | `\\ref{sec:method}` → `\\ref{sec:approach}` |\n\n**验证结果**：编译通过（`verificationStatus=passed`，0 错误，0 警告）。标签定义与所有引用已同步更新，节标题 \"Method\"、正文内容及其他源码均保持原样。请在编辑器中审阅并接受此补丁即可生效。",
+      "expectedLocations": null
+    },
+    {
+      "id": "L1-04",
+      "automaticPassed": true,
+      "wireRequests": 4,
+      "calls": 4,
+      "tokens": 26863,
+      "sourcePages": [
+        {
+          "path": "macros.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 59,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [
+        {
+          "file": "macros.tex",
+          "line": 1,
+          "insertion": false
+        }
+      ],
+      "toolErrors": [],
+      "answer": "已提交补丁 **patch_d2d92207599a7bcfb9ed28d3**，编译验证通过（verificationStatus=passed，0 错误）。\n\n改动内容：\n- `macros.tex` 第 1 行：`\\newcommand{\\samplesize}{12}` → `\\newcommand{\\samplesize}{16}`（仅改宏定义值）\n- 未动 `\\threshold`（第 2 行保持 `0.05`）\n- 未动 `main.tex` 中的引用 `We use $\\samplesize$ samples and threshold $\\threshold$.`（第 4 行，引用形式原样保留）\n\n该补丁已提交供您审阅，接受后正文中显示样本数即为 16。",
+      "expectedLocations": null
+    },
+    {
+      "id": "L1-05",
+      "automaticPassed": true,
+      "wireRequests": 4,
+      "calls": 4,
+      "tokens": 26760,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 142,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [
+        {
+          "file": "main.tex",
+          "line": 4,
+          "insertion": false
+        }
+      ],
+      "toolErrors": [],
+      "answer": "已提交补丁并编译验证通过 ✅\n\n**问题定位**（`main.tex` 第 4 行）：\n- `\\txetbf{Important finding}` 中的 `\\txetbf` 是未定义的命令（`\\texttt` 的拼写错误变体），导致 \"Undefined control sequence\" 编译错误。\n\n**修复内容**（补丁 `patch_0e80688ec770f54de9a01d1c`）：\n- `\\txetbf{Important finding}` → `\\textbf{Important finding}`\n\n**验证结果**：\n- 候选补丁编译：`verificationStatus = passed`，`errorCount = 0`，无警告。\n- 唯一改动是第 4 行；第 3 行的数值 `91.2\\%` 及所有其他文字、源码均保持不变。\n\n请在接受内联差异预览后应用该补丁。",
+      "expectedLocations": null
+    },
+    {
+      "id": "L1-06",
+      "automaticPassed": true,
+      "wireRequests": 5,
+      "calls": 5,
+      "tokens": 35345,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 172,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [
+        {
+          "file": "main.tex",
+          "line": 6,
+          "insertion": false
+        }
+      ],
+      "toolErrors": [],
+      "answer": "✅ 修复完成并编译验证通过。\n\n**问题根因**：`main.tex` 第 4 行的 `\\begin{itemize}` 缺少配对的 `\\end{itemize}`，导致列表环境一直吞到第 8 行的 `\\end{document}`，报错 `\\begin{itemize} on input line 4 ended by \\end{document}.`（致命错误，无 PDF 输出）。\n\n**所做修改**（单个 hunk，仅在第二个列表项之后插入一行 `\\end{itemize}`）：\n\n| 修改前 | 修改后 |\n|---|---|\n| `\\item We retain 12 samples.` | `\\item We retain 12 samples.` |\n| `Protected conclusion.` | `\\end{itemize}` |\n| | `Protected conclusion.` |\n\n**未改动**：\n- 两个列表项的原文：`Accuracy is 91.2\\%.` 和 `We retain 12 samples.` 及其顺序；\n- 列表外所有内容（文档类、引言、结论、`\\end{document}`）。\n\n**编译验证结果**：`verificationStatus = passed`，`errorCount = 0`，`warningCount = 0`。补丁 ID：`patch_497e6fd0725e875ab8ac5375`。\n\n请在编辑器中接受该补丁使其生效（当前仅为候选状态，尚未写入源文件）。",
+      "expectedLocations": null
+    },
+    {
+      "id": "L1-07",
+      "automaticPassed": true,
+      "wireRequests": 4,
+      "calls": 4,
+      "tokens": 28451,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 116,
+          "nextOffsetBytes": null
+        },
+        {
+          "path": "refs.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 107,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [
+        {
+          "file": "main.tex",
+          "line": 3,
+          "insertion": false
+        },
+        {
+          "file": "refs.tex",
+          "line": 2,
+          "insertion": false
+        }
+      ],
+      "toolErrors": [],
+      "answer": "已完成。补丁 `patch_e2ca58f13c0af3575bc50dd5` 已提交，包含两处修改，编译验证通过（verificationStatus=passed, errorCount=0）：\n\n- **main.tex（第 3 行）**：`\\cite{smith2024}` → `\\cite{smithBaseline}`\n- **refs.tex（第 2 行）**：`\\bibitem{smith2024}` → `\\bibitem{smithBaseline}`，bibitem 内容（作者 A. Smith、标题 A synthetic baseline、年份 2024）原样保留。\n\n请在内联 diff 预览中 Accept 该补丁后生效。",
+      "expectedLocations": null
+    },
+    {
+      "id": "L1-08",
+      "automaticPassed": true,
+      "wireRequests": 4,
+      "calls": 4,
+      "tokens": 27065,
+      "sourcePages": [
+        {
+          "path": "results.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 123,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [
+        {
+          "file": "results.tex",
+          "line": 1,
+          "insertion": false
+        }
+      ],
+      "toolErrors": [],
+      "answer": "✅ 补丁已提交并通过编译验证（`verificationStatus: passed`，0 错误 0 警告）。\n\n最终效果（`results.tex` 第 1 行）：\n\n```latex\nAccuracy is 91.2\\% on 12 samples. We do not claim statistical significance~\\cite{smith2024}.\n```\n\n请在预览中确认并接受该补丁。",
+      "expectedLocations": null
+    },
+    {
+      "id": "L1-09",
+      "automaticPassed": true,
+      "wireRequests": 2,
+      "calls": 2,
+      "tokens": 13146,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 387,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [],
+      "toolErrors": [],
+      "answer": "项目里有两个标题都是 \"Main results\" 的表格，且你没有选中任何文本，所以无法确定\"你指的那一个\"是哪一个：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n请告诉我改哪一个：是按 `tab:main` 标签的那个（第 10 行），还是 `tab:replication` 那个（第 19 行）？或者你也可以在 Overleaf 里选中对应那一行再发一次请求。",
+      "expectedLocations": null
+    },
+    {
+      "id": "L1-10",
+      "automaticPassed": true,
+      "wireRequests": 2,
+      "calls": 2,
+      "tokens": 12377,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 222,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [],
+      "toolErrors": [],
+      "answer": "已经确认，无需修改。\n\n在 `main.tex` 第 10 行，`tab:main` 的表格标题已经是 **Ablation results**：\n\n```latex\n\\caption{Ablation results}\\label{tab:main}\n```\n\n目标已达成，因此不需要提出补丁。",
+      "expectedLocations": null
+    },
+    {
+      "id": "L1-11",
+      "automaticPassed": true,
+      "wireRequests": 4,
+      "calls": 4,
+      "tokens": 25876,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 174,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [
+        {
+          "file": "main.tex",
+          "line": 7,
+          "insertion": false
+        }
+      ],
+      "toolErrors": [],
+      "answer": "已完成修改。补丁 `patch_865cc67bae64814ee747a1d6` 已提交并编译通过（`verificationStatus=passed`，无错误、无警告）。\n\n**修改内容**（`main.tex` 第 7 行）：\n- 原：`\\section{Introduction}`\n- 新：`\\section{Overview}`\n\n**未改动部分**：\n- 第 3–6 行的 `\\iffalse ... \\fi` 块（未发布的 \"Unreleased results\" 实验内容）保持原样，未启用、未修改其中任何代码。\n- 其余所有源码均原样保留。\n\n请在 Overleaf 的 diff 预览中确认并接受该修改。",
+      "expectedLocations": null
+    },
+    {
+      "id": "L1-12",
+      "automaticPassed": true,
+      "wireRequests": 5,
+      "calls": 5,
+      "tokens": 36731,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 3000,
+          "nextOffsetBytes": 3000
+        },
+        {
+          "path": "main.tex",
+          "startLine": 169,
+          "startByte": 11155,
+          "endByte": 11247,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [
+        {
+          "file": "main.tex",
+          "line": 171,
+          "insertion": false
+        }
+      ],
+      "toolErrors": [],
+      "answer": "修改已提交并验证通过。\n\n**改动内容**（`main.tex` 第 171 行）：\n- 前：`\\caption{Main results}\\label{tab:main}`\n- 后：`\\caption{Ablation results}\\label{tab:main}`\n\n**保持不变**：标签 `tab:main`、表格数据（如第 169 行的 `Ours & 94.5`）、所有源码注释及其余源码。\n\n**编译结果**：`verificationStatus = passed`，0 错误 0 警告，补丁候选（`patch_4390cb9b67ea50f7b578d93f`）可正常编译。请在右侧内联预览中确认后点击 Accept 应用该改动。",
+      "expectedLocations": null
+    },
+    {
+      "id": "LINES-original",
+      "automaticPassed": true,
+      "wireRequests": 3,
+      "calls": 3,
+      "tokens": 19354,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 387,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [],
+      "toolErrors": [],
+      "answer": "项目里 `main.tex` 中有**两个**表格的标题都是 `Main results`：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表）\n\n由于你的选择文本（selectedText）为空，我无法判断\"我指的那一个\"是哪一张。两张标题完全相同，改错目标会产生不同的结果，所以先请你确认一下：\n\n% 有两个表格标题都是 \"Main results\"（第 10 行 label=tab:main，第 19 行 label=tab:replication）。你要改成 \"Ablation results\" 的是哪一个？（例如：第一个表 / tab:main，或第二个表 / tab:replication）\n\n确认后我会立即提交只针对那一处的补丁。",
+      "expectedLocations": {
+        "tab:main": 10,
+        "tab:replication": 19
+      }
+    },
+    {
+      "id": "LINES-prefix-lf",
+      "automaticPassed": true,
+      "wireRequests": 2,
+      "calls": 2,
+      "tokens": 12733,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 448,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [],
+      "toolErrors": [],
+      "answer": "文件 `main.tex` 中有两个标题完全相同的表格（caption 都是 `Main results`）。按照你的要求，我先列出两个候选，不直接修改：\n\n## 候选 1\n- **标签 (label)：** `tab:main`\n- **文件路径：** `main.tex`\n- **caption 行号：** 第 **13** 行\n- 对应源码：`\\caption{Main results}\\label{tab:main}`\n\n## 候选 2\n- **标签 (label)：** `tab:replication`\n- **文件路径：** `main.tex`\n- **caption 行号：** 第 **22** 行\n- 对应源码：`\\caption{Main results}\\label{tab:replication}`\n\n两个表格的内容完全一样，只能靠 label 区分：第 13 行是 `tab:main`，第 22 行是 `tab:replication`。\n\n请确认要改哪一个（例如「改 `tab:main`」或「改第 13 行那个」），我再提交修改。",
+      "expectedLocations": {
+        "tab:main": 13,
+        "tab:replication": 22
+      }
+    },
+    {
+      "id": "LINES-prefix-crlf",
+      "automaticPassed": true,
+      "wireRequests": 2,
+      "calls": 2,
+      "tokens": 12934,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 488,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [],
+      "toolErrors": [],
+      "answer": "项目里共有 **两处** 标题为 “Main results” 的表格，都在 `main.tex` 中，分别是：\n\n| 序号 | 标签 (label) | 文件路径 | caption 所在行号 | 当前内容 |\n|---|---|---|---|---|\n| 候选 A | `tab:main` | `main.tex` | **第 15 行** | `\\caption{Main results}\\label{tab:main}` |\n| 候选 B | `tab:replication` | `main.tex` | **第 24 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n请确认要改哪一个（A 或 B），我确认后只改动你指定的那一处，把 caption 改为 `Ablation results`，另一处保持 `Main results` 不变。",
+      "expectedLocations": {
+        "tab:main": 15,
+        "tab:replication": 24
+      }
+    },
+    {
+      "id": "LINES-crlf-literal-edit",
+      "automaticPassed": true,
+      "wireRequests": 4,
+      "calls": 4,
+      "tokens": 28688,
+      "sourcePages": [
+        {
+          "path": "main.tex",
+          "startLine": 1,
+          "startByte": 0,
+          "endByte": 222,
+          "nextOffsetBytes": null
+        }
+      ],
+      "canonicalHunks": [
+        {
+          "file": "main.tex",
+          "line": 5,
+          "insertion": false
+        },
+        {
+          "file": "main.tex",
+          "line": 6,
+          "insertion": false
+        }
+      ],
+      "toolErrors": [],
+      "answer": "完成。补丁已提交并通过编译验证。\n\n## 结果\n\n**提交的补丁**（`patch_3c1b1787b1a0a2ae096abaed`，main.tex，2 个 hunk）：\n\n| 位置 | 原文 | 改后 |\n|------|------|------|\n| verbatim 第 1 行 | `1: Measured accuracy is 91.2 percent.` | `1: Measured accuracy is 94.5 percent.` |\n| verbatim 第 2 行 | `2: We retained 12 samples.` | `2: We retained 16 samples.` |\n\n**编译验证**：`verificationStatus=passed`，`errorCount=0`，`warningCount=0`。\n\n**说明**：\n- 保留了每行开头的 `1: ` / `2: ` 前缀（它们是 verbatim 的内容，不是行号）。\n- 仅替换两处数字，行内其余文本、CRLF 换行、`\\begin{verbatim}`/`\\end{verbatim}` 及文件其他全部源码均未改动。\n- 请在编辑器的内联 diff 预览中 **Accept** 该补丁后生效；目前只是提议状态，尚未写入源文件。\n\n补充一句：这些数字位于 verbatim 字面文本中，改后仍是“字面量”而非测量结果声明，因此无诚实性/一致性风险。",
+      "expectedLocations": null
+    }
+  ]
+}

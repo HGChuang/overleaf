@@ -1,0 +1,166 @@
+{
+  "id": "NAVS-long-1-A",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "NAVS-long-1",
+  "variant": "long",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 2,
+    "historyAttempts": 3,
+    "offTargetAttempts": 0,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 3,
+    "reads": [
+      {
+        "message": 2
+      },
+      {
+        "message": 2,
+        "offset": 800
+      },
+      {
+        "message": 2,
+        "offset": 1600
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 6,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 3433,
+      "output": 422,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 330,
+      "totalTokens": 7951,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 4546,
+      "output": 114,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 53,
+      "totalTokens": 8756,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 3616,
+      "output": 89,
+      "cacheRead": 5376,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 27,
+      "totalTokens": 9081,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 542,
+      "output": 1761,
+      "cacheRead": 8704,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 1423,
+      "totalTokens": 11007,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 2717,
+      "output": 60,
+      "cacheRead": 8448,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 11225,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 6,
+      "phase": "task",
+      "input": 2481,
+      "output": 351,
+      "cacheRead": 8960,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 53,
+      "totalTokens": 11792,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 59812,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 34155,
+  "conversationId": "NAVS-long-1",
+  "answer": "已完成。按归档中 `prior-decision.tex` 的 FINAL CAPTION 决策处理。\n\n## 归档证据（完整重读，非摘要）\n\n`prior-decision.tex` 全文 27 行，其中：\n- 第 1–24 行：`% Earlier discussion, not the final decision.`（明确为早期讨论，不作决策依据）\n- **第 25 行：`% FINAL CAPTION: Robustness results`**（最终决策）\n- 第 26 行：`% Preserve 91.2 percent, 12 samples, and negation.`（保留数据与否定结论的要求）\n\n## 提交的补丁\n\n`main.tex` 仅改标题，正文（数据与否定结论）原样保留：\n\n```latex\n- \\section{Draft}\n+ \\section{Robustness results}\n```\n\n正文 `Accuracy is 91.2\\% on 12 samples. We do not claim significance.` 未作任何改动，注释、数值、引用均未触碰。\n\n## 编译验证\n\n- **patchId**: `patch_3fea08536b7c865323b8fb36`\n- **verificationStatus**: `passed`（errorCount=0, warningCount=0）\n\n说明：该补丁为候选状态，尚未写入源文件——请在右侧内联差异预览中确认并接受。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

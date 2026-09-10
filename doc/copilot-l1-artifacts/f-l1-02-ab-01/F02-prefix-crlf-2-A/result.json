@@ -1,0 +1,81 @@
+{
+  "id": "F02-prefix-crlf-2-A",
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "A",
+  "pairId": "F02-prefix-crlf-2",
+  "variant": "prefix-crlf",
+  "expectedLocations": {
+    "tab:main": 15,
+    "tab:replication": 24
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "calls": 3,
+  "usage": [
+    {
+      "callId": 1,
+      "input": 1683,
+      "output": 274,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 214,
+      "totalTokens": 6053,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "input": 622,
+      "output": 143,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 97,
+      "totalTokens": 6397,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "input": 2722,
+      "output": 425,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 252,
+      "totalTokens": 7243,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 19693,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 13002,
+  "conversationId": "F02-prefix-crlf-2",
+  "answer": "项目里有两个 caption 完全相同的表格，都位于唯一的文件 `main.tex` 中。两个候选如下：\n\n| 候选 | 标签 | 文件 | caption 所在行号 | caption 内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 15 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 24 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n请确认要改哪一个（例如「改 ①」或「改 `tab:main` 那个」）。确认后我只会把对应的那一个 caption 改成 `Ablation results`，另一个保持不变。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

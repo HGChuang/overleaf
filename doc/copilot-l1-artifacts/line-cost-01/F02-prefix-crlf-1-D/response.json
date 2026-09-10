@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-crlf-1",
+    "message": {
+      "role": "assistant",
+      "content": "搜索结果显示，`main.tex` 中恰好有两个 caption 为 **Main results** 的表格（全项目仅此两处）。按你的要求，先列出候选，等你确认后再修改，暂不提交任何编辑：\n\n| 候选 | 标签 (`\\label`) | 文件路径 | caption 所在行号 |\n|------|----------------|----------|------------------|\n| ① | `tab:main` | `main.tex` | **第 15 行** |\n| ② | `tab:replication` | `main.tex` | **第 24 行** |\n\n两处来源（已核对原文）：\n\n- `main.tex:15` → `\\caption{Main results}\\label{tab:main}`\n- `main.tex:24` → `\\caption{Main results}\\label{tab:replication}`\n\n请告诉我改哪一个（①、② 或两者都改），我再调用 `submit_patch` 提交修改。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

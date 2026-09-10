@@ -1,0 +1,127 @@
+{
+  "complete": true,
+  "pairs": 3,
+  "totals": {
+    "A": {
+      "corePassed": 3,
+      "evidencePassed": 3,
+      "calls": 16,
+      "offTarget": 0,
+      "duplicate": 0,
+      "targetPages": 7,
+      "historyAttempts": 7,
+      "input": 148320,
+      "output": 6161,
+      "missing": 0,
+      "elapsedMs": 121159
+    },
+    "C": {
+      "corePassed": 3,
+      "evidencePassed": 3,
+      "calls": 20,
+      "offTarget": 1,
+      "duplicate": 0,
+      "targetPages": 7,
+      "historyAttempts": 8,
+      "input": 190308,
+      "output": 5485,
+      "missing": 0,
+      "elapsedMs": 101110
+    }
+  },
+  "details": [
+    {
+      "pairId": "NAVC-short-1",
+      "A": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 4,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 1,
+        "historyAttempts": 1,
+        "input": 36670,
+        "output": 2036,
+        "missing": 0,
+        "elapsedMs": 43576
+      },
+      "C": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 5,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 1,
+        "historyAttempts": 1,
+        "input": 43703,
+        "output": 1221,
+        "missing": 0,
+        "elapsedMs": 23440
+      },
+      "firstWireOnlyDescription": true,
+      "seedIdentical": true
+    },
+    {
+      "pairId": "NAVC-long-1",
+      "A": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 6,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 3,
+        "input": 54599,
+        "output": 1748,
+        "missing": 0,
+        "elapsedMs": 30088
+      },
+      "C": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 9,
+        "offTarget": 1,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 4,
+        "input": 91817,
+        "output": 2825,
+        "missing": 0,
+        "elapsedMs": 44791
+      },
+      "firstWireOnlyDescription": true,
+      "seedIdentical": true
+    },
+    {
+      "pairId": "NAVC-late-long-1",
+      "A": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 6,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 3,
+        "input": 57051,
+        "output": 2377,
+        "missing": 0,
+        "elapsedMs": 47495
+      },
+      "C": {
+        "corePassed": true,
+        "evidencePassed": true,
+        "calls": 6,
+        "offTarget": 0,
+        "duplicate": 0,
+        "targetPages": 3,
+        "historyAttempts": 3,
+        "input": 54788,
+        "output": 1439,
+        "missing": 0,
+        "elapsedMs": 32879
+      },
+      "firstWireOnlyDescription": true,
+      "seedIdentical": true
+    }
+  ]
+}

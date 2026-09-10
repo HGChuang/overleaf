@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-original-2",
+    "message": {
+      "role": "assistant",
+      "content": "项目里有两张表格的标题都是 **Main results**，分别在第 10 行（`\\label{tab:main}`）和第 19 行（`\\label{tab:replication}`），内容和标题完全一样，无法从您的消息或当前选区判断您指的是哪一张。\n\n```latex\n% 请确认要改哪一张：第 10 行 \\label{tab:main} 的表格，还是第 19 行 \\label{tab:replication} 的表格？\n```\n\n确认后我会只改那一张的 `\\caption`，另一张保持不动。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

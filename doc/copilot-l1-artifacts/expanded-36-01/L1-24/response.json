@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-24",
+    "message": {
+      "role": "assistant",
+      "content": "补丁已提交并通过编译验证。\n\n**改动摘要**（`main.tex`，patch `patch_29b9afd688a9670d78296399`）：\n- **Replication 块**（`\\section{Replication}` 后的 verbatim）：`score: 91.2` → `score: 94.5`，`samples: 12` 保持不变。\n- **Main 块**（`\\section{Main}` 后的 verbatim）：未改动，仍为 `score: 91.2`。\n- 通过将 `oldText` 锚定到 `\\section{Replication}` 使匹配唯一，只命中目标块。\n- CRLF 行尾已在补丁中逐字保留（`\\r\\n` 未改变）。\n- 编译结果：`verificationStatus=passed`，0 错误，0 警告。\n\n请在右侧预览中确认并 Accept 该补丁；接受后即应用到源文件。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_29b9afd688a9670d78296399",
+            "title": "Change only the Replication verbatim block score from 91.2 to 94.5; Main block untouched; CRLF preserved.",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 8,
+                "oldText": "\\section{Replication}\r\n\\begin{verbatim}\r\nscore: 91.2\r\nsamples: 12\r\n\\end{verbatim}",
+                "newText": "\\section{Replication}\r\n\\begin{verbatim}\r\nscore: 94.5\r\nsamples: 12\r\n\\end{verbatim}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

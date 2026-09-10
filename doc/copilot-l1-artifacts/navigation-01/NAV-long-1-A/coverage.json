@@ -1,0 +1,114 @@
+{
+  "coverageFailures": [],
+  "historyReads": [
+    {
+      "message": 0,
+      "offset": 0
+    },
+    {
+      "message": 0,
+      "offset": 800
+    },
+    {
+      "message": 0,
+      "offset": 1600
+    },
+    {
+      "message": 1,
+      "offset": 0
+    },
+    {
+      "message": 2,
+      "offset": 0
+    },
+    {
+      "message": 2,
+      "offset": 800
+    },
+    {
+      "message": 2,
+      "offset": 1600
+    }
+  ],
+  "liveArchives": 0,
+  "epochCommits": 1,
+  "compactions": [],
+  "evidenceFiles": [
+    "prior-decision.tex",
+    "main.tex"
+  ],
+  "requests": [
+    {
+      "callId": 1,
+      "estimatedInput": 30986,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 2,
+      "estimatedInput": 35524,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 3,
+      "estimatedInput": 37799,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 4,
+      "estimatedInput": 40966,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 5,
+      "estimatedInput": 42734,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 6,
+      "estimatedInput": 44953,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 7,
+      "estimatedInput": 46882,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 8,
+      "estimatedInput": 48547,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 9,
+      "estimatedInput": 50812,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 10,
+      "estimatedInput": 56006,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 11,
+      "estimatedInput": 57430,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    },
+    {
+      "callId": 12,
+      "estimatedInput": 59268,
+      "effectiveInputBudget": 934000,
+      "summary": false
+    }
+  ]
+}

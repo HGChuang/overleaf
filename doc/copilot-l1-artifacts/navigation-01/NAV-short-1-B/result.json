@@ -1,0 +1,118 @@
+{
+  "id": "NAV-short-1-B",
+  "family": "archived-policy",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "arm": "B",
+  "pairId": "NAV-short-1",
+  "variant": "short",
+  "navigation": {
+    "evidencePassed": true,
+    "failures": [],
+    "targetMessage": 2,
+    "historyAttempts": 1,
+    "offTargetAttempts": 0,
+    "duplicateTargetAttempts": 0,
+    "targetSuccessfulPages": 1,
+    "reads": [
+      {
+        "message": 2
+      }
+    ]
+  },
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 4,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 3518,
+      "output": 546,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 454,
+      "totalTokens": 8160,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 4770,
+      "output": 756,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 520,
+      "totalTokens": 9622,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 3631,
+      "output": 57,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 9832,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 1853,
+      "output": 317,
+      "cacheRead": 8192,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 17,
+      "totalTokens": 10362,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 37976,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 26760,
+  "conversationId": "NAV-short-1",
+  "answer": "Done. The candidate is submitted and compiles cleanly.\n\n## What was done\n\n**1. Archived evidence re-read (raw tool result, message 2):** `prior-decision.tex` contained exactly:\n```\n% FINAL CAPTION: Sensitivity results\n% Preserve 91.2 percent, 12 samples, and negation.\n```\nThe FINAL CAPTION decision is therefore **\"Sensitivity results\"**, with an explicit preservation requirement for 91.2%, 12 samples, and the negation.\n\n**2. Current source read first** (main.tex, hash `f5e82b…`):\n```latex\n\\section{Draft}\nAccuracy is 91.2\\% on 12 samples. We do not claim significance.\n```\n\n**3. Minimal patch** (patch `patch_22df385119832537de3a329f`):\n- `\\section{Draft}` → `\\section{Sensitivity results}`\n- Body line untouched — 91.2%, 12 samples, and \"We do not claim significance\" (the negation) are preserved verbatim.\n\n**4. Compile verification:** `verificationStatus=passed`, errorCount=0, warningCount=0 (candidateHash `8a6c5360…`).\n\nNo other source, comments, numbers, or references were modified. The patch is pending your acceptance in the inline-diff preview; it applies only after you accept it.",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

@@ -1,0 +1,121 @@
+{
+  "id": "L1-20",
+  "family": "compound-dependency",
+  "effectiveWindow": 1000000,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 5,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 1998,
+      "output": 231,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 87,
+      "totalTokens": 6325,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2950,
+      "output": 575,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 430,
+      "totalTokens": 7621,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 3081,
+      "output": 684,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 315,
+      "totalTokens": 8885,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 4162,
+      "output": 92,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 9374,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 3443,
+      "output": 287,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 14,
+      "totalTokens": 9874,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 42079,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 24846,
+  "conversationId": "L1-20",
+  "answer": "候选补丁已提交并通过编译验证（`verificationStatus: passed`，0 错误、0 警告）。\n\n## 变更摘要（patch_36bd81e23175f7d9be5f0f71）\n\n| 文件 | 修改 |\n|---|---|\n| `defs.tex:1` | `\\newcommand{\\samplesize}{12}` → `\\newcommand{\\samplesize}{16}` |\n| `abstract.tex:1` | \"Current experiment uses 12 samples. Control uses 12 samples.\" → \"Current experiment uses **16** samples. Control uses **12** samples.\" |\n| `conclusion.tex:1` | \"Our current experiment retains 12 samples.\" → \"Our current experiment retains **16** samples.\" |\n\n## 说明\n- **样本宏**：`\\samplesize` 已改为 16；`main.tex:6` 中通过宏渲染的样本数随之变为 16，无需改动 `main.tex` 本体。\n- **对照实验保留 12**：摘要中 \"Control uses 12 samples.\" 未改动。\n- 未触碰其他源码、注释、数值或引用。补丁尚未应用，需你在内联 diff 预览中接受各 hunk 后才会写入文件。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

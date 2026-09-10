@@ -1,0 +1,149 @@
+{
+  "eventHead": 15,
+  "coveredThroughSeq": 5,
+  "projectionThroughSeq": 14,
+  "generation": 1,
+  "checkpoint": {
+    "version": 1,
+    "authorRequests": [
+      {
+        "message": 0,
+        "text": "本轮只允许把 main.tex 的 Draft 节标题改成 Overview。必须原样保留 91.2\\%、12 samples、否定结论、statistical 限定、citation 键和文献信息，其他字节不变。",
+        "context": null
+      }
+    ],
+    "observations": [],
+    "pending": [],
+    "toolLedger": [],
+    "patches": [],
+    "verifications": [],
+    "projectBase": {
+      "projectId": "74879da18e551bd789aeb0e4",
+      "sourceSnapshot": {
+        "id": "988460e604e04343260f6173fc8b37bc2651693e8b9f9a2ba8b82f14099ea9bc",
+        "projectId": "74879da18e551bd789aeb0e4",
+        "docs": [
+          {
+            "path": "main.tex",
+            "docId": "a8748ec9d93c932285e0f170",
+            "version": 1,
+            "sha256": "d05c8681af2ae601c6eeee6f847948126da52b8dba05cd62de81b534faa738fb"
+          }
+        ],
+        "assets": [],
+        "rootDocId": "a8748ec9d93c932285e0f170",
+        "compiler": "pdflatex",
+        "imageName": "texlive-full:latest",
+        "assetBytesFrozen": true
+      },
+      "rootDocId": "a8748ec9d93c932285e0f170",
+      "fileList": [
+        "main.tex"
+      ],
+      "outline": [
+        "main.tex"
+      ],
+      "files": [
+        {
+          "path": "main.tex",
+          "docId": "a8748ec9d93c932285e0f170",
+          "version": 1,
+          "sha256": "d05c8681af2ae601c6eeee6f847948126da52b8dba05cd62de81b534faa738fb"
+        }
+      ],
+      "sourceManifest": [
+        {
+          "path": "main.tex",
+          "docId": "a8748ec9d93c932285e0f170",
+          "version": 1,
+          "sha256": "d05c8681af2ae601c6eeee6f847948126da52b8dba05cd62de81b534faa738fb"
+        }
+      ]
+    }
+  },
+  "paperIndex": {
+    "snapshotId": "988460e604e04343260f6173fc8b37bc2651693e8b9f9a2ba8b82f14099ea9bc",
+    "sourceWindows": 0,
+    "reviewedWindows": 0,
+    "staleReviews": 0,
+    "semanticStatus": "not_built"
+  },
+  "immutablePrefixHash": "09a7353b5285078527472c6c0f78cf13054551793c8b8c1ae9c371acfc3f83ce",
+  "metrics": [
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 32576,
+      "reportedInput": 7676,
+      "ordinaryInput": 1532,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "output": 288,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 5252,
+      "ttftMs": 797,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T18:52:21.195Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 31020,
+      "reportedInput": 7372,
+      "ordinaryInput": 3276,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "output": 98,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 1972,
+      "ttftMs": 993,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T18:52:14.759Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 28324,
+      "reportedInput": 6896,
+      "ordinaryInput": 752,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "output": 323,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 3596,
+      "ttftMs": 1885,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T18:52:12.731Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 25602,
+      "reportedInput": 6312,
+      "ordinaryInput": 1192,
+      "cacheRead": 5120,
+      "cacheWrite": 0,
+      "output": 260,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 3774,
+      "ttftMs": 2205,
+      "reason": "capacity",
+      "occurredAt": "2026-09-08T18:52:09.071Z"
+    },
+    {
+      "model": "deepseek-v4-flash-ga-260731",
+      "estimatedInput": 44523,
+      "reportedInput": 0,
+      "ordinaryInput": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "output": 0,
+      "usageCompleteness": "partial",
+      "cost": null,
+      "latencyMs": 45018,
+      "ttftMs": null,
+      "reason": "summary_warm",
+      "occurredAt": "2026-09-08T18:52:05.270Z"
+    }
+  ]
+}

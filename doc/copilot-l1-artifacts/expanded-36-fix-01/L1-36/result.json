@@ -1,0 +1,121 @@
+{
+  "id": "L1-36",
+  "family": "window-constraint-retention",
+  "effectiveWindow": 65536,
+  "category": "checks_passed_pending_review",
+  "checksPassed": true,
+  "failures": [],
+  "harnessFailures": [],
+  "coverageFailures": [],
+  "mechanismCovered": true,
+  "calls": 5,
+  "usage": [
+    {
+      "callId": 1,
+      "phase": "task",
+      "input": 6509,
+      "output": 3213,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 3033,
+      "totalTokens": 13818,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 2,
+      "phase": "task",
+      "input": 2236,
+      "output": 318,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 257,
+      "totalTokens": 6650,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 3,
+      "phase": "task",
+      "input": 2913,
+      "output": 414,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 236,
+      "totalTokens": 7423,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 4,
+      "phase": "task",
+      "input": 3481,
+      "output": 67,
+      "cacheRead": 4096,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 0,
+      "totalTokens": 7644,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    },
+    {
+      "callId": 5,
+      "phase": "task",
+      "input": 1701,
+      "output": 315,
+      "cacheRead": 6144,
+      "cacheWrite": 0,
+      "cacheReadKnown": true,
+      "cacheWriteKnown": false,
+      "reasoning": 81,
+      "totalTokens": 8160,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      },
+      "reported": true
+    }
+  ],
+  "reportedTotalTokens": 43695,
+  "usageComplete": true,
+  "monetaryCost": null,
+  "elapsedMs": 40921,
+  "conversationId": "L1-36",
+  "answer": "已完成，范围严格限定为最终确认的唯一修改：\n\n**候选补丁** `patch_ba6208a3916d7ead49dc7e55`（main.tex，单 hunk）\n- `\\section{Draft}` → `\\section{Conclusion}`\n\n**编译验证**：`verificationStatus=passed`，errorCount=0，warningCount=0（pdfLaTeX，candidateHash `f09dc65…`）。\n\n**逐项核对保留要求**（补丁之外零改动）：\n- `91.2\\%` — 原样保留 ✓\n- `12 samples` — 原样保留 ✓\n- 否定结论 \"We do not claim statistical significance\" — 原样保留 ✓\n- citation 键 `\\cite{smith2024}` 与文献信息 `\\bibitem{smith2024} A. Smith. Baseline. 2024.` — 原样保留 ✓\n\n注意：该补丁目前是 **proposed（候选）** 状态，尚未写入源文件，需你在 diff 预览中 Accept 后才会生效。",
+  "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+}

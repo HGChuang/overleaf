@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "L1-21",
+    "message": {
+      "role": "assistant",
+      "content": "完成 ✅\n\n**补丁**:`patch_5ac1024be5d21c29bd8ebb3c`(单个 hunk)\n\n- `main.tex` 第 8 行:`\\caption{Results}\\label{tab:second}` → `\\caption{Replication results}\\label{tab:second}`\n- 只改动了 `tab:second` 的标题;`tab:first`(第 4 行)、表格内容、标签、注释、数值和引用均未动。\n\n**编译验证**:`verificationStatus=passed`,errorCount=0,warningCount=0。候选补丁编译通过,等你在内联 diff 预览中接受后即生效。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_5ac1024be5d21c29bd8ebb3c",
+            "title": "Change only tab:second's caption from Results to Replication results",
+            "hunks": [
+              {
+                "file": "main.tex",
+                "line": 8,
+                "oldText": "\\caption{Results}\\label{tab:second}",
+                "newText": "\\caption{Replication results}\\label{tab:second}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

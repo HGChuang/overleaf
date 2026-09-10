@@ -1,0 +1,1923 @@
+[
+  {
+    "id": "F02-original-1-D",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "D",
+    "pairId": "F02-original-1",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 3789,
+        "output": 118,
+        "cacheRead": 2048,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 41,
+        "totalTokens": 5955,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 6693,
+        "output": 1961,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 1752,
+        "totalTokens": 8654,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 14609,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 21421,
+    "conversationId": "F02-original-1",
+    "answer": "我查看了 `main.tex`，发现里面有 **两个** 表格的标题都是 `Main results`，内容也完全一样，所以我没法确定你指的是哪一个：\n\n- 第 1 个表格：`\\caption{Main results}\\label{tab:main}`（第 10 行）\n- 第 2 个表格：`\\caption{Main results}\\label{tab:replication}`（第 19 行）\n\n既然你要求“只改我指的那一个”，我需要先确认目标，否则改错表格就违背你的意图了：\n\n```latex\n% 请问你指的是哪个表格？\n% 1) 第 10 行, label 为 tab:main 的表格\n% 2) 第 19 行, label 为 tab:replication 的表格\n% 请告诉我编号（或对应的 label），我再只改那一个。\n```\n\n确认后我会立即用 `submit_patch` 只改那一处标题。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-original-1-N",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "N",
+    "pairId": "F02-original-1",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1741,
+        "output": 125,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 48,
+        "totalTokens": 5962,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2449,
+        "output": 1159,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 1001,
+        "totalTokens": 7704,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 13666,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 22922,
+    "conversationId": "F02-original-1",
+    "answer": "我检查了 `main.tex`（共 22 行），发现**两个**表格的标题都是 `Main results`：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`\n\n由于你要求\"只改我指的那一个\"，但本次没有附带选中文本，我无法确定你指的是哪一个。两个候选会产生不同的修改，请确认后再提交补丁：\n\n```latex\n% 请问要改的是第一个表格（\\label{tab:main}，第 10 行）还是第二个（\\label{tab:replication}，第 19 行）？\n```",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-original-1-T",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "T",
+    "pairId": "F02-original-1",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 3,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1741,
+        "output": 119,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 59,
+        "totalTokens": 5956,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2053,
+        "output": 138,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 62,
+        "totalTokens": 6287,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 6716,
+        "output": 759,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 626,
+        "totalTokens": 7475,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 19718,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 10875,
+    "conversationId": "F02-original-1",
+    "answer": "项目里有两个表格的标题都是 “Main results”，内容也完全相同，唯一区别是标签：\n\n- 第 3–11 行：`\\caption{Main results}\\label{tab:main}`（第一个表）\n- 第 12–20 行：`\\caption{Main results}\\label{tab:replication}`（第二个表）\n\n你要求“只改我指的那一个”，但当前没有选中文本，我无法判断你指的是哪一个。请确认一下：\n\n```latex\n% 请指出要改哪一个：\\label{tab:main} 还是 \\label{tab:replication}？\n```",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-original-2-N",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "N",
+    "pairId": "F02-original-2",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 3,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 448,
+        "output": 106,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 46,
+        "totalTokens": 5930,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2027,
+        "output": 133,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 87,
+        "totalTokens": 6256,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 1295,
+        "output": 1016,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 854,
+        "totalTokens": 7687,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 19873,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 12488,
+    "conversationId": "F02-original-2",
+    "answer": "项目里有两个表格的标题都叫 “Main results”，而你要求“只改我指的那一个”，但当前没有收到你选中的内容（selectedText 为空），两个候选标题内容完全一样，无法确定你指的是哪一个：\n\n- `main.tex` 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n- `main.tex` 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n为避免改错表格，请先确认要改哪一个：\n\n```latex\n% 请告诉我改哪一个：第 10 行的 tab:main，还是第 19 行的 tab:replication？（或在编辑器中选中对应的表格标题）\n```",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-original-2-T",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "T",
+    "pairId": "F02-original-2",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 192,
+        "output": 93,
+        "cacheRead": 5632,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 47,
+        "totalTokens": 5917,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2241,
+        "output": 933,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 776,
+        "totalTokens": 7270,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 13187,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 19555,
+    "conversationId": "F02-original-2",
+    "answer": "我在 main.tex 里找到了两个标题都是 **Main results** 的表格，内容完全一样，分别带 `\\label{tab:main}`（第 10 行）和 `\\label{tab:replication}`（第 19 行）。你要求\"只改我指的那一个\"，但这次没有附带任何选中文本或指针信息，两个候选项会产生不同的改动位置，无法唯一确定目标。\n\n```latex\n% 请指出要改哪一个：是 \\label{tab:main} 的表格（第 10 行），还是 \\label{tab:replication} 的表格（第 19 行）？\n```\n\n确认后我会立即用 submit_patch 只改你指定的那一处。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-original-2-D",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "D",
+    "pairId": "F02-original-2",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 5824,
+        "output": 124,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 47,
+        "totalTokens": 5948,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2581,
+        "output": 607,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 492,
+        "totalTokens": 7284,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 13232,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 13753,
+    "conversationId": "F02-original-2",
+    "answer": "项目里有两张表格的标题都是 \"Main results\"，而你的选中内容为空，我无法确定你指的是哪一张：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一张表）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二张表）\n\n% 请告诉我改哪一张：第一张（tab:main）还是第二张（tab:replication）？\n\n收到你的确认后我会只修改那一处。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-original-3-T",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "T",
+    "pairId": "F02-original-3",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1735,
+        "output": 111,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 34,
+        "totalTokens": 5942,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2431,
+        "output": 738,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 598,
+        "totalTokens": 7265,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 13207,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 15515,
+    "conversationId": "F02-original-3",
+    "answer": "项目里有两个表格的标题都写着 `Main results`：\n\n- `main.tex` 第 10 行：`\\caption{Main results}\\label{tab:main}`\n- `main.tex` 第 19 行：`\\caption{Main results}\\label{tab:replication}`\n\n您强调\"只改我指的那一个\"，但当前没有选中文本，无法判断您指的是哪一个。\n\n```latex\n% 请问要改哪一个：\\label{tab:main}（第 10 行）还是 \\label{tab:replication}（第 19 行）？\n```\n\n确认后我立即提交修改。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-original-3-D",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "D",
+    "pairId": "F02-original-3",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1735,
+        "output": 137,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 60,
+        "totalTokens": 5968,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 1327,
+        "output": 1032,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 896,
+        "totalTokens": 7735,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 13703,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 12480,
+    "conversationId": "F02-original-3",
+    "answer": "文件里有**两处**标题都是 `Main results` 的表格，内容完全相同，只有 label 不同：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`（第一个表格）\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`（第二个表格）\n\n因为你说了\"只改我指的那一个\"，但没有选中文本，我需要确认是哪一个再改：\n\n```latex\n% 请问要改的是第一个表格（tab:main，第 10 行）还是第二个表格（tab:replication，第 19 行）？\n```",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-original-3-N",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "N",
+    "pairId": "F02-original-3",
+    "variant": "original",
+    "expectedLocations": {
+      "tab:main": 10,
+      "tab:replication": 19
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1735,
+        "output": 96,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 50,
+        "totalTokens": 5927,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2252,
+        "output": 881,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 727,
+        "totalTokens": 7229,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 13156,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 16870,
+    "conversationId": "F02-original-3",
+    "answer": "main.tex 里有**两个**表格，标题都叫 “Main results”，内容完全一样，唯一区别是标签：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`\n\n您说“只改我指的那一个”，但当前没有选中文本，我无法确定您指的是哪一个（改 `tab:main` 和改 `tab:replication` 是两个不同的修改），所以先确认一下：\n\n```latex\n% 您指的是哪一个表格？第一个（\\label{tab:main}）还是第二个（\\label{tab:replication}）？\n```",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-lf-1-D",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "D",
+    "pairId": "F02-prefix-lf-1",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 484,
+        "output": 142,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 65,
+        "totalTokens": 6002,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2684,
+        "output": 456,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 273,
+        "totalTokens": 7236,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 13238,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 6728,
+    "conversationId": "F02-prefix-lf-1",
+    "answer": "项目里有两个表格的 caption 都写着 “Main results”，两处都在 `main.tex` 中。按你的要求，先列出候选，请你确认后再改：\n\n| 候选 | 标签 (label) | 文件 | caption 所在行号 | caption 内容 |\n|---|---|---|---|---|\n| A | `tab:main` | `main.tex` | **第 13 行** | `\\caption{Main results}\\label{tab:main}` |\n| B | `tab:replication` | `main.tex` | **第 22 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n（两处表格内容完全相同，仅 label 不同，无法通过内容区分。）\n\n请告诉我你要改哪一个（A 或 B），或者如果两个都要改也可以说明。确认后我再提交修改。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-lf-1-N",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "N",
+    "pairId": "F02-prefix-lf-1",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 3,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 228,
+        "output": 148,
+        "cacheRead": 5632,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 88,
+        "totalTokens": 6008,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2115,
+        "output": 132,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 86,
+        "totalTokens": 6343,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 639,
+        "output": 558,
+        "cacheRead": 6144,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 303,
+        "totalTokens": 7341,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 19692,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 14709,
+    "conversationId": "F02-prefix-lf-1",
+    "answer": "已定位到 `main.tex` 中有**两个**表格，标题都写的是 `Main results`，需要你确认改哪一个：\n\n**候选 1**\n- 标签（label）：`tab:main`\n- 文件：`main.tex`\n- caption 所在行：**第 13 行**\n- 内容：`\\caption{Main results}\\label{tab:main}`（位于第 6–14 行的第一个 `table` 环境）\n\n**候选 2**\n- 标签（label）：`tab:replication`\n- 文件：`main.tex`\n- caption 所在行：**第 22 行**\n- 内容：`\\caption{Main results}\\label{tab:replication}`（位于第 15–23 行的第二个 `table` 环境）\n\n两个表格内容完全相同（`Baseline 91.2 / Ours 94.5`），只能靠 label 或行号区分。\n\n请确认要改哪一个（例如“改 `tab:main`”或“改第 13 行那个”），确认后我再提交把该处 `Main results` 改成 `Ablation results` 的补丁。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-lf-1-T",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "T",
+    "pairId": "F02-prefix-lf-1",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1764,
+        "output": 107,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 61,
+        "totalTokens": 5967,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2316,
+        "output": 289,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 119,
+        "totalTokens": 6701,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 12668,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 4647,
+    "conversationId": "F02-prefix-lf-1",
+    "answer": "文件里确实有两个 caption 为 \"Main results\" 的表格，都在 `main.tex` 中（该文件共 25 行）：\n\n| 候选 | 标签 | 文件路径 | caption 行号 | 所在行内容 |\n|------|------|----------|--------------|------------|\n| 1 | `tab:main` | main.tex | 第 13 行 | `\\caption{Main results}\\label{tab:main}` |\n| 2 | `tab:replication` | main.tex | 第 22 行 | `\\caption{Main results}\\label{tab:replication}` |\n\n请确认要改哪一个（例如\"改 tab:main\"或\"改第 13 行那个\"），我再提交只针对那一个的修改。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-lf-2-N",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "N",
+    "pairId": "F02-prefix-lf-2",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1761,
+        "output": 156,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 79,
+        "totalTokens": 6013,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 1245,
+        "output": 369,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 152,
+        "totalTokens": 6990,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 13003,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 5443,
+    "conversationId": "F02-prefix-lf-2",
+    "answer": "项目里正好有两个 caption 为 **Main results** 的表格（都在 `main.tex` 中），请确认要改哪一个：\n\n| 编号 | 标签 (label) | 文件路径 | caption 所在行号 | 当前 caption |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 22 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n（来源：`search_project` 结果与 `main.tex` 第 13、22 行的源码，文件 hash `22d72ce…`。）\n\n请告诉我改 ① 还是 ②（例如\"改第 13 行那个\"），我再提交 `submit_patch` 把对应的 caption 改为 `Ablation results`，不会动另一个。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-lf-2-T",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "T",
+    "pairId": "F02-prefix-lf-2",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 3,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 481,
+        "output": 120,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 60,
+        "totalTokens": 5977,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2084,
+        "output": 132,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 86,
+        "totalTokens": 6312,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 612,
+        "output": 267,
+        "cacheRead": 6144,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 50,
+        "totalTokens": 7023,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 19312,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 11075,
+    "conversationId": "F02-prefix-lf-2",
+    "answer": "项目里共有两个 caption 都是 \"Main results\" 的表格，都在 `main.tex`。两个候选如下：\n\n| 候选 | 标签 | 文件 | caption 行号 | 所在 table |\n|---|---|---|---|---|\n| A | `tab:main` | `main.tex` | **第 13 行** | 第 6–14 行的 `table`（内容：Baseline 91.2 / Ours 94.5） |\n| B | `tab:replication` | `main.tex` | **第 22 行** | 第 15–23 行的 `table`（内容：与 A 相同） |\n\n对应源码：\n\n- 第 13 行：`\\caption{Main results}\\label{tab:main}`\n- 第 22 行：`\\caption{Main results}\\label{tab:replication}`\n\n请确认要改哪一个（A 或 B），我再提交只改那一个 caption 的补丁。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-lf-2-D",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "D",
+    "pairId": "F02-prefix-lf-2",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 3,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 481,
+        "output": 156,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 96,
+        "totalTokens": 6013,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 584,
+        "output": 120,
+        "cacheRead": 5632,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 50,
+        "totalTokens": 6336,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 2848,
+        "output": 396,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 173,
+        "totalTokens": 7340,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 19689,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 12302,
+    "conversationId": "F02-prefix-lf-2",
+    "answer": "项目里只有一个文件 `main.tex`，其中有**两个** caption 都是 \"Main results\" 的表格，符合你说的\"候选有两个\"。请确认改哪一个：\n\n| 候选 | 标签 (label) | 文件路径 | caption 所在行号 | 行内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 22 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格内容目前完全相同（都是 Baseline/Ours 的 Score 表），仅 label 不同。\n\n请回复要改哪一个（例如\"改①号 `tab:main`\"或\"改第 22 行那个\"），确认后我再提交补丁，只把那一处 caption 改成 **Ablation results**，另一处保持 \"Main results\" 不动。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-lf-3-T",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "T",
+    "pairId": "F02-prefix-lf-3",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 3,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1762,
+        "output": 138,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 78,
+        "totalTokens": 5996,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2103,
+        "output": 208,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 126,
+        "totalTokens": 6407,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 707,
+        "output": 387,
+        "cacheRead": 6144,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 159,
+        "totalTokens": 7238,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 19641,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 15512,
+    "conversationId": "F02-prefix-lf-3",
+    "answer": "项目里只有 `main.tex` 一个文件，其中标题为 **Main results** 的 caption 恰好有两处。按你的要求，先列出候选供你确认，暂不提交修改：\n\n| 候选 | label | 文件路径 | caption 行号 | 所在表格内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | 第 13 行（`\\caption{Main results}\\label{tab:main}`） | 第一个 `table`，含 Baseline 91.2 / Ours 94.5 |\n| ② | `tab:replication` | `main.tex` | 第 22 行（`\\caption{Main results}\\label{tab:replication}`） | 第二个 `table`，数据与第一个相同 |\n\n请告诉我改哪一个（例如「改 ① tab:main」或「改第 13 行那个」），确认后我再提交 patch，把对应 caption 改成 **Ablation results**，且只动你指定的那一处。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-lf-3-D",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "D",
+    "pairId": "F02-prefix-lf-3",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 3,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1762,
+        "output": 156,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 96,
+        "totalTokens": 6014,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 841,
+        "output": 132,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 86,
+        "totalTokens": 6349,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 2861,
+        "output": 234,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 45,
+        "totalTokens": 7191,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 19554,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 10549,
+    "conversationId": "F02-prefix-lf-3",
+    "answer": "项目里有两个 caption 都是 **\"Main results\"** 的表格，都位于 `main.tex`（项目只有一个文件）。两个候选如下：\n\n| # | 标签 (`\\label`) | 文件 | caption 所在行号 |\n|---|---|---|---|\n| 1 | `tab:main` | `main.tex` | 第 13 行 |\n| 2 | `tab:replication` | `main.tex` | 第 22 行 |\n\n两处原文都是：\n\n- 第 13 行：`\\caption{Main results}\\label{tab:main}`\n- 第 22 行：`\\caption{Main results}\\label{tab:replication}`\n\n请告诉我改哪一个（例如“改第 13 行那个 / 改 `tab:main`”），我再把那一处的标题改成 **Ablation results**。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-lf-3-N",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "N",
+    "pairId": "F02-prefix-lf-3",
+    "variant": "prefix-lf",
+    "expectedLocations": {
+      "tab:main": 13,
+      "tab:replication": 22
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 3,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 482,
+        "output": 234,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 159,
+        "totalTokens": 6092,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2338,
+        "output": 118,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 72,
+        "totalTokens": 6552,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 2895,
+        "output": 331,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 105,
+        "totalTokens": 7322,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 19966,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 10747,
+    "conversationId": "F02-prefix-lf-3",
+    "answer": "项目里共有 **两个** 标题为 \"Main results\" 的表格，都位于 `main.tex`（唯一的源文件）。按你的要求，先列出两个候选，等你确认后再改：\n\n| 候选 | 标签 (label) | 文件路径 | caption 所在行号 |\n|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 13 行** |\n| ② | `tab:replication` | `main.tex` | **第 22 行** |\n\n两个表格内容目前完全相同（Baseline 91.2 / Ours 94.5），仅 label 和位置不同。当前源码：\n\n- 第 13 行：`\\caption{Main results}\\label{tab:main}`\n- 第 22 行：`\\caption{Main results}\\label{tab:replication}`\n\n请确认要改哪一个（例如「改 ① tab:main」或「改 ② tab:replication」），我随后只对那一个提交修改。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-crlf-1-D",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "D",
+    "pairId": "F02-prefix-crlf-1",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1767,
+        "output": 233,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 156,
+        "totalTokens": 6096,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2848,
+        "output": 349,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 139,
+        "totalTokens": 7293,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 13389,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 8780,
+    "conversationId": "F02-prefix-crlf-1",
+    "answer": "搜索结果显示，`main.tex` 中恰好有两个 caption 为 **Main results** 的表格（全项目仅此两处）。按你的要求，先列出候选，等你确认后再修改，暂不提交任何编辑：\n\n| 候选 | 标签 (`\\label`) | 文件路径 | caption 所在行号 |\n|------|----------------|----------|------------------|\n| ① | `tab:main` | `main.tex` | **第 15 行** |\n| ② | `tab:replication` | `main.tex` | **第 24 行** |\n\n两处来源（已核对原文）：\n\n- `main.tex:15` → `\\caption{Main results}\\label{tab:main}`\n- `main.tex:24` → `\\caption{Main results}\\label{tab:replication}`\n\n请告诉我改哪一个（①、② 或两者都改），我再调用 `submit_patch` 提交修改。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-crlf-1-N",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "N",
+    "pairId": "F02-prefix-crlf-1",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 487,
+        "output": 186,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 96,
+        "totalTokens": 6049,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2600,
+        "output": 346,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 104,
+        "totalTokens": 7042,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 13091,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 9479,
+    "conversationId": "F02-prefix-crlf-1",
+    "answer": "项目文件 `main.tex` 中确实存在**两个**标题同为 `Main results` 的表格（第 3 行注释也注明 \"Keep both tables\"）。按您的要求，先列出两个候选，请您确认后再修改：\n\n| 候选 | 标签 (label) | 文件路径 | caption 所在行号 | 该行内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 15 行** | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 24 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n两个表格内容完全相同（`Baseline & 91.2` / `Ours & 94.5`），仅 label 不同，无法从表格内容上区分哪一个是“您指的那一个”。\n\n请告诉我改哪一个（例如「改 ①」或「改 tab:replication 那个」），确认后我立刻提交补丁，只改您指定的那一个 caption。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-crlf-1-T",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "T",
+    "pairId": "F02-prefix-crlf-1",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 4,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 231,
+        "output": 92,
+        "cacheRead": 5632,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 63,
+        "totalTokens": 5955,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 357,
+        "output": 91,
+        "cacheRead": 5632,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 16,
+        "totalTokens": 6080,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 2322,
+        "output": 123,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 77,
+        "totalTokens": 6541,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 4,
+        "input": 904,
+        "output": 416,
+        "cacheRead": 6144,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 132,
+        "totalTokens": 7464,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 26040,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 14092,
+    "conversationId": "F02-prefix-crlf-1",
+    "answer": "项目里 `main.tex` 中有**两个**表格的 caption 都叫 \"Main results\"，内容完全相同，只能靠 `\\label` 区分。按你的要求，先列出候选，等你确认后再改：\n\n## 候选一\n- **标签**：`tab:main`\n- **文件**：`main.tex`\n- **caption 所在行**：**第 15 行**\n- 内容：`\\caption{Main results}\\label{tab:main}`\n- 上下文：文件中的第一个表格（行 8–16），数据行为 Baseline 91.2 / Ours 94.5\n\n## 候选二\n- **标签**：`tab:replication`\n- **文件**：`main.tex`\n- **caption 所在行**：**第 24 行**\n- 内容：`\\caption{Main results}\\label{tab:replication}`\n- 上下文：文件中的第二个表格（行 17–25），数据与第一个表格相同\n\n两个表格内容完全一致，我无法从内容上判断你指的是哪一个。请告诉我改成 \"Ablation results\" 的是**候选一（tab:main，第 15 行）**还是**候选二（tab:replication，第 24 行）**，确认后我再提交补丁。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-crlf-2-N",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "N",
+    "pairId": "F02-prefix-crlf-2",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 3,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 483,
+        "output": 190,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 115,
+        "totalTokens": 6049,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 1011,
+        "output": 115,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 33,
+        "totalTokens": 6502,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 2883,
+        "output": 301,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 103,
+        "totalTokens": 7280,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 19831,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 11876,
+    "conversationId": "F02-prefix-crlf-2",
+    "answer": "项目里确实有两个同名的表格 caption，都是 `Main results`。两个候选如下（都在 `main.tex` 中）：\n\n| 候选 | 标签（label） | 文件路径 | caption 所在行号 | caption 内容 |\n|---|---|---|---|---|\n| 1 | `tab:main` | `main.tex` | **第 15 行** | `\\caption{Main results}\\label{tab:main}` |\n| 2 | `tab:replication` | `main.tex` | **第 24 行** | `\\caption{Main results}\\label{tab:replication}` |\n\n注意：两张表的内容也完全相同（都是 Baseline 91.2 / Ours 94.5），无法靠内容区分。请确认要改哪一个（例如回复“改第 1 个 / tab:main”），我再提交只针对那一个 caption 的修改，另一个保持不动。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-crlf-2-T",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "T",
+    "pairId": "F02-prefix-crlf-2",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 227,
+        "output": 182,
+        "cacheRead": 5632,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 92,
+        "totalTokens": 6041,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2313,
+        "output": 265,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 94,
+        "totalTokens": 6674,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 12715,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 7482,
+    "conversationId": "F02-prefix-crlf-2",
+    "answer": "项目里有两个表格的 caption 都是 \"Main results\"，都在唯一文件 `main.tex` 中。两个候选如下：\n\n| # | 标签 (label) | 文件路径 | caption 所在行号 |\n|---|---|---|---|\n| 候选 A | `tab:main` | `main.tex` | **第 15 行** |\n| 候选 B | `tab:replication` | `main.tex` | **第 24 行** |\n\n对应源码（已核对）：\n\n- 第 15 行：`\\caption{Main results}\\label{tab:main}`\n- 第 24 行：`\\caption{Main results}\\label{tab:replication}`\n\n请确认要改哪一个（A 或 B），我只会改你指的那一个。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-crlf-2-D",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "D",
+    "pairId": "F02-prefix-crlf-2",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1763,
+        "output": 345,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 268,
+        "totalTokens": 6204,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 1417,
+        "output": 376,
+        "cacheRead": 5632,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 157,
+        "totalTokens": 7425,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 13629,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 7436,
+    "conversationId": "F02-prefix-crlf-2",
+    "answer": "好的，我找到了项目中所有 caption 为 `Main results` 的表格，共有两个候选。按你的要求先列出，**暂不修改**，等你确认后再改。\n\n| 候选 | 标签 (label) | 文件路径 | caption 准确行号 |\n|---|---|---|---|\n| ① | `tab:main` | `main.tex` | **第 15 行** — `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 24 行** — `\\caption{Main results}\\label{tab:replication}` |\n\n两个候选都位于同一文件 `main.tex`，结构完全相同（Method & Score，Baseline 91.2 / Ours 94.5），仅 label 不同（`tab:main` 与 `tab:replication`）。\n\n请告诉我你要改哪一个（① 还是 ②），我就只把那一处的 caption 改成 `Ablation results`。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-crlf-3-T",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "T",
+    "pairId": "F02-prefix-crlf-3",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 2,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1760,
+        "output": 122,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 76,
+        "totalTokens": 5978,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2387,
+        "output": 290,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 119,
+        "totalTokens": 6773,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 12751,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 8537,
+    "conversationId": "F02-prefix-crlf-3",
+    "answer": "文件已读完。`main.tex`（共 27 行）中有两个 caption 都为 **Main results** 的表格，分别是：\n\n| 候选 | 标签 | 文件路径 | caption 所在行号 |\n|------|------|----------|------------------|\n| ① | `tab:main` | `main.tex` | **第 15 行**：`\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | **第 24 行**：`\\caption{Main results}\\label{tab:replication}` |\n\n请确认要改哪一个（例如「改 ①」或「改 `tab:replication` 那个」），我再提交对应的 `submit_patch`。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-crlf-3-D",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "D",
+    "pairId": "F02-prefix-crlf-3",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 3,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1760,
+        "output": 232,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 172,
+        "totalTokens": 6088,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 913,
+        "output": 110,
+        "cacheRead": 5376,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 64,
+        "totalTokens": 6399,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 934,
+        "output": 416,
+        "cacheRead": 6144,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 260,
+        "totalTokens": 7494,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 19981,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 13778,
+    "conversationId": "F02-prefix-crlf-3",
+    "answer": "两个候选表格都位于 `main.tex`，caption 文本完全相同（`\\caption{Main results}`），只能靠 label 区分：\n\n| 候选 | Label | 文件路径 | Caption 所在行号 | 行内容 |\n|---|---|---|---|---|\n| ① | `tab:main` | `main.tex` | 第 15 行 | `\\caption{Main results}\\label{tab:main}` |\n| ② | `tab:replication` | `main.tex` | 第 24 行 | `\\caption{Main results}\\label{tab:replication}` |\n\n请告诉我你要改哪一个（例如\"改 `tab:main` 那个\"），确认后我再执行修改。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  },
+  {
+    "id": "F02-prefix-crlf-3-N",
+    "category": "checks_passed_pending_review",
+    "checksPassed": true,
+    "arm": "N",
+    "pairId": "F02-prefix-crlf-3",
+    "variant": "prefix-crlf",
+    "expectedLocations": {
+      "tab:main": 15,
+      "tab:replication": 24
+    },
+    "failures": [],
+    "harnessFailures": [],
+    "calls": 3,
+    "usage": [
+      {
+        "callId": 1,
+        "input": 1760,
+        "output": 209,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 149,
+        "totalTokens": 6065,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 2,
+        "input": 2170,
+        "output": 116,
+        "cacheRead": 4096,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 70,
+        "totalTokens": 6382,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      },
+      {
+        "callId": 3,
+        "input": 1228,
+        "output": 410,
+        "cacheRead": 5632,
+        "cacheWrite": 0,
+        "cacheReadKnown": true,
+        "cacheWriteKnown": false,
+        "reasoning": 164,
+        "totalTokens": 7270,
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "total": 0
+        },
+        "reported": true
+      }
+    ],
+    "reportedTotalTokens": 19717,
+    "usageComplete": true,
+    "monetaryCost": null,
+    "elapsedMs": 9196,
+    "conversationId": "F02-prefix-crlf-3",
+    "answer": "项目里有两张表格都用了「Main results」作标题，我先把两个候选列出来，等你确认改哪一个，再动手。\n\n## 候选 1（第一张表）\n\n- 标签：`\\label{tab:main}`\n- 文件：`main.tex`\n- caption 所在行：**第 15 行**\n\n```latex\n15: \\caption{Main results}\\label{tab:main}\n```\n\n## 候选 2（第二张表）\n\n- 标签：`\\label{tab:replication}`\n- 文件：`main.tex`\n- caption 所在行：**第 24 行**\n\n```latex\n24: \\caption{Main results}\\label{tab:replication}\n```\n\n两张表的表格内容（第 8–16 行 vs 第 17–25 行）完全一样，仅 `\\label` 不同。请告诉我你要改的是 **`tab:main`** 还是 **`tab:replication`**，确认后我会只把那一处的 `\\caption{Main results}` 改成 `\\caption{Ablation results}`（`\\label` 保持不变）。",
+    "reviewRequired": "Inspect answer for supported claims; lexical answer checks alone do not establish semantic success."
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-original-1",
+    "message": {
+      "role": "assistant",
+      "content": "我检查了 `main.tex`（共 22 行），发现**两个**表格的标题都是 `Main results`：\n\n- 第 10 行：`\\caption{Main results}\\label{tab:main}`\n- 第 19 行：`\\caption{Main results}\\label{tab:replication}`\n\n由于你要求\"只改我指的那一个\"，但本次没有附带选中文本，我无法确定你指的是哪一个。两个候选会产生不同的修改，请确认后再提交补丁：\n\n```latex\n% 请问要改的是第一个表格（\\label{tab:main}，第 10 行）还是第二个（\\label{tab:replication}，第 19 行）？\n```",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

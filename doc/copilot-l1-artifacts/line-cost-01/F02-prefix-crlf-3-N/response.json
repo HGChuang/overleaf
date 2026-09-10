@@ -1,0 +1,12 @@
+{
+  "response": {
+    "conversationId": "F02-prefix-crlf-3",
+    "message": {
+      "role": "assistant",
+      "content": "项目里有两张表格都用了「Main results」作标题，我先把两个候选列出来，等你确认改哪一个，再动手。\n\n## 候选 1（第一张表）\n\n- 标签：`\\label{tab:main}`\n- 文件：`main.tex`\n- caption 所在行：**第 15 行**\n\n```latex\n15: \\caption{Main results}\\label{tab:main}\n```\n\n## 候选 2（第二张表）\n\n- 标签：`\\label{tab:replication}`\n- 文件：`main.tex`\n- caption 所在行：**第 24 行**\n\n```latex\n24: \\caption{Main results}\\label{tab:replication}\n```\n\n两张表的表格内容（第 8–16 行 vs 第 17–25 行）完全一样，仅 `\\label` 不同。请告诉我你要改的是 **`tab:main`** 还是 **`tab:replication`**，确认后我会只把那一处的 `\\caption{Main results}` 改成 `\\caption{Ablation results}`（`\\label` 保持不变）。",
+      "blocks": []
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}

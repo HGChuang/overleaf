@@ -1,0 +1,28 @@
+{
+  "response": {
+    "conversationId": "conv_4174b708-39b1-4ee5-b927-25b83fc1eb22",
+    "message": {
+      "role": "assistant",
+      "content": "✅ 补丁已提交并通过编译验证（`verificationStatus: passed`，0 错误 0 警告）。\n\n最终效果（`results.tex` 第 1 行）：\n\n```latex\nAccuracy is 91.2\\% on 12 samples. We do not claim statistical significance~\\cite{smith2024}.\n```\n\n请在预览中确认并接受该补丁。",
+      "blocks": [
+        {
+          "type": "patch",
+          "patch": {
+            "id": "patch_ff893377a6644a0fcdd1533b",
+            "title": "Trim first sentence of results.tex: drop the opening phrase and capitalize Accuracy; keep 91.2%, 12 samples, the negative claim, and the citation unchanged.",
+            "hunks": [
+              {
+                "file": "results.tex",
+                "line": 1,
+                "oldText": "In this study, we report that accuracy is 91.2\\% on 12 samples.",
+                "newText": "Accuracy is 91.2\\% on 12 samples."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "suggestedActions": []
+  },
+  "error": null
+}
